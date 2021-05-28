@@ -141,7 +141,7 @@
                             'WIN32_LEAN_AND_MEAN'
                         ],
                         'library_dirs': [
-                            '<(NIM_SDK_DIR)/nim_sdk/lib/',
+                            '<(NIM_SDK_DIR)/lib/',
                         ],
                         'link_settings': {
                             'libraries': [
