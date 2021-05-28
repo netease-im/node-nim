@@ -4,9 +4,13 @@
   "description": "NetEase IM nodejs package based on NetEase IM C++ SDK",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test"
   },
   "keywords": [],
   "author": "NetEase IM",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "eslint": "^7.27.0",
+    "mocha": "^8.4.0"
+  }
 }

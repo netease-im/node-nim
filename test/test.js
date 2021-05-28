@@ -1,7 +1,6 @@
 const assert = require('assert');
-const NIMChatRoom = require('../build/Release/nim-chatroom')
+// const NIMChatRoom = require('../build/Release/nim-chatroom')
 const NIM = require('../build/Release/nim')
-
 
 /**
  * NIM instance
@@ -21,7 +20,7 @@ const tools = new NIM.Tool()
 /**
  * ChatRoom instance
  */
-const chatroom = new NIMChatRoom.ChatRoom()
+// const chatroom = new NIMChatRoom.ChatRoom()
 
 const current = process.cwd()
 process.chdir(`${current}/build/Release`)
@@ -836,7 +835,7 @@ describe('NIM Test Suite', () => {
   })
 })
 
-describe('NIMChatRoom Test Suite', () => {
+describe.skip('NIMChatRoom Test Suite', () => {
   before((done) => {
     client.Login(appKey, mainUser, mainUserPwd, (loginResult) => {
       if (loginResult.login_step === 3) {
