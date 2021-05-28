@@ -1,12 +1,12 @@
 {
   "name": "nim",
   "version": "1.0.0",
-  "description": "NetEase IM nodejs package based on NetEase IM C++ SDK",
+  "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
   "main": "index.js",
   "scripts": {
     "test": "mocha test"
   },
-  "keywords": [],
+  "keywords": ["NetEase", "NIM", "ChatRoom", "IM SDK"],
   "author": "NetEase IM",
   "license": "ISC",
   "dependencies": {
