@@ -1,0 +1,12 @@
+{
+  "name": "nim",
+  "version": "1.0.0",
+  "description": "NetEase IM nodejs package based on NetEase IM C++ SDK",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "NetEase IM",
+  "license": "ISC"
+}
