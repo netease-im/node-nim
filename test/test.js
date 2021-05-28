@@ -1,6 +1,6 @@
 const assert = require('assert');
-// const NIMChatRoom = require('../build/Release/nim-chatroom')
-const NIM = require('../build/Release/nim')
+// const NIMChatRoom = require('../build/Release/node-nim-chatroom')
+const NIM = require('../build/Release/node-nim')
 
 /**
  * NIM instance

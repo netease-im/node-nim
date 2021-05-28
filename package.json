@@ -1,5 +1,5 @@
 {
-  "name": "nim",
+  "name": "node-nim",
   "version": "1.0.0",
   "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "test": "mocha test"
   },
   "keywords": ["NetEase", "NIM", "ChatRoom", "IM SDK"],
-  "author": "NetEase IM",
+  "author": "Dylan",
   "license": "ISC",
   "dependencies": {
     "eslint": "^7.27.0",
