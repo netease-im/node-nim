@@ -4,13 +4,35 @@
   "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test"
+    "test": "mocha test",
+    "install": "just install"
   },
-  "keywords": ["NetEase", "NIM", "ChatRoom", "IM SDK"],
+  "keywords": [
+    "netease",
+    "nim",
+    "chatroom",
+    "im sdk",
+    "nim sdk",
+    "nim node",
+    "nim electron"
+  ],
   "author": "Dylan",
   "license": "ISC",
   "dependencies": {
-    "eslint": "^7.27.0",
-    "mocha": "^8.4.0"
+    "download": "^8.0.0",
+    "extract-zip": "^2.0.1",
+    "just-task": "^1.4.1",
+    "mocha": "^8.4.0",
+    "node-gyp": "^8.1.0",
+    "shelljs": "^0.8.4",
+    "tar": "^6.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.28.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-standard": "^5.0.0"
   }
 }

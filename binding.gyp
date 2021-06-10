@@ -1,7 +1,7 @@
 {
     "variables": {
-        "NIM_SDK_DIR%": "<(PRODUCT_DIR)/../../",
-        "SOURCE_DIR": "<(PRODUCT_DIR)/../../"
+        "NIM_SDK_DIR%": "<(PRODUCT_DIR)../../nim_sdk",
+        "SOURCE_DIR": "<(PRODUCT_DIR)../../"
     },
     "targets": [
         {
