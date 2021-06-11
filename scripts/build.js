@@ -4,11 +4,11 @@ const path = require('path')
 const fs = require('fs')
 
 // workaround to find executable when install as dependency
-let gypPath = `${path.resolve(__dirname, '../../node-gyp/bin/node-gyp.js')}`
+let gypPath = `${path.resolve(__dirname, '../node-gyp/bin/node-gyp.js')}`
 
 if (!fs.existsSync(gypPath)) {
-  logger.info(`gypExec not found at ${gypPath}, switch`)
   gypPath = `${path.resolve(__dirname, '../node_modules/node-gyp/bin/node-gyp.js')}`
+  logger.info(`node-gyp path: ${gypPath}`)
 }
 const gypExec = `node ${gypPath}`
 
@@ -28,12 +28,17 @@ module.exports = ({
 
   /** get command string */
   const command = [`${gypExec} configure`]
+  /** cmake generate vistual studio solution */
   const cmakeGenerate = ['cmake']
+  /** NIM SDK C++ wrapper source folder */
   cmakeGenerate.push(`${path.join(cachePath, 'wrapper')}`)
+  /** build cache folder */
   cmakeGenerate.push(`-B${path.join(cachePath, 'build')}`)
-  cmakeGenerate.push('-G"Visual Studio 15 2017"')
+  /** support XP */
   cmakeGenerate.push('-T"v141_xp"')
+  /** install prefix */
   cmakeGenerate.push(`-DCMAKE_INSTALL_PREFIX=${cachePath}`)
+  /** build shared library */
   cmakeGenerate.push('-DBUILD_SHARED_LIBS=ON')
 
   const cmakeBuild = [`cmake --build ${path.join(cachePath, 'build')}`]
@@ -42,6 +47,9 @@ module.exports = ({
   if (platform === 'win32') {
     // command.push(`--arch=${arch} --msvs_version=${msvsVersion}`)
     command.push(`--arch=${arch} --msvs_version=${msvsVersion}`)
+    cmakeGenerate.push('-G"Visual Studio 15 2017"')
+  } else {
+    cmakeGenerate.push('-G"Visual Studio 15 2017 Win64"')
   }
 
   // check runtime
@@ -66,10 +74,10 @@ module.exports = ({
 
   /** start build */
   logger.info(commandStr)
-  logger.info('Platform:', platform)
-  logger.info('Electron Version:', electronVersion)
-  logger.info('Runtime:', runtime)
-  logger.info('Building...')
+  logger.info('platform:', platform)
+  logger.info('electron Version:', electronVersion)
+  logger.info('runtime:', runtime)
+  logger.info('building...')
 
   logger.info(cmakeGenerate.join(' '))
   logger.info(cmakeBuild.join(' '))
@@ -93,7 +101,7 @@ module.exports = ({
       process.exit(1)
     }
 
-    shell.exec(commandStr, {silent}, (code, stdout, stderr) => {
+    shell.exec(commandStr, { silent }, (code, stdout, stderr) => {
       // handle error
       logger.info(`configure done ${stdout}`)
       if (code !== 0) {
@@ -103,18 +111,18 @@ module.exports = ({
 
       if (debug) {
         // handle success
-        logger.info('Complete, please go to `/build` and build manually')
+        logger.info('complete, please go to `/build` and build manually.')
         process.exit(0)
       } else {
         shell.exec(`${gypExec} build`, { silent }, (code, stdout, stderr) => {
           // handle error
           if (code !== 0) {
-            logger.error('build error!!!!!')
+            logger.error('Failed to build C++ addon manually.')
             logger.error(stderr)
             process.exit(1)
           }
           // handle success
-          logger.info('Build complete')
+          logger.info('build complete')
           process.exit(0)
         })
       }
