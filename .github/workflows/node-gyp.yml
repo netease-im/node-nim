@@ -25,8 +25,17 @@ jobs:
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
 
-    - name: Build C++ wrapper
-      working-directory: ${{env.GITHUB_WORKSPACE}}
-      # Add additional options to the MSBuild command line here (like platform or verbosity level).
-      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
-      run: npm i
+    # Build ia32
+    - run: npm i --runtime=electron --dist-url=https://atom.io/download/electron --target=8.0.0 --target_arch=ia32 --target_platform=win32
+    - run: npm run package --runtime=electron --dist-url=https://atom.io/download/electron --target=8.0.0 --target_arch=ia32 --target_platform=win32
+    
+    # Build x64
+    - run: npm run build_wrapper --platform=win32 --arch=x64
+    - run: npm run rebuild --runtime=electron --dist-url=https://atom.io/download/electron --target=8.0.0 --target_arch=x64 --target_platform=win32
+    - run: npm run package --runtime=electron --dist-url=https://atom.io/download/electron --target=8.0.0 --target_arch=x64 --target_platform=win32
+    
+    # 
+    - uses: actions/upload-artifact@v2
+      with:
+        name: node-nim-electron-artifacts
+        path: build/stage/package
