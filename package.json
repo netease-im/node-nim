@@ -9,7 +9,7 @@
   "scripts": {
     "test": "mocha test",
     "build_wrapper": "just build_wrapper",
-    "install": "node-pre-gyp install --fallback-to-build",
+    "install": "just build_wrapper && node-pre-gyp install --fallback-to-build",
     "build": "node-pre-gyp build --build-from-source",
     "rebuild": "node-pre-gyp rebuild",
     "prebuilt:rebuild": "just download",
