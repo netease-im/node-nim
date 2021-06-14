@@ -4,8 +4,8 @@ import NIMFriend from './api/friend';
 import NIMGlobal from './api/global';
 import NIMMsgLog from './api/msglog';
 import NIMNOS from './api/nos';
-import NIMOnlineSession from './api/online_session'
-import NIMPassThroughProxy from './api/pass_through_proxy'
+import NIMOnlineSession from './api/online_session';
+import NIMPassThroughProxy from './api/pass_through_proxy';
 import NIMSession from './api/session';
 import NIMSubscribeEvent from './api/subscribe_event';
 import NIMSuperTeam from './api/super_team';
@@ -14,6 +14,7 @@ import NIMTalk from './api/talk';
 import NIMTeam from './api/team';
 import NIMTool from './api/tool';
 import NIMUser from './api/user';
+
 const NIMSDK = { NIMClient, 
     NIMDataSync, 
     NIMFriend, 
@@ -29,6 +30,7 @@ const NIMSDK = { NIMClient,
     NIMTalk,
     NIMTeam,
     NIMTool,
-    NIMUser    
+    NIMUser
 };
+
 export default NIMSDK;

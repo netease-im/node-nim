@@ -1,41 +1,21 @@
 const { logger } = require('just-task')
 const shell = require('shelljs')
 const path = require('path')
-const fs = require('fs')
-
-// workaround to find executable when install as dependency
-let gypPath = `${path.resolve(__dirname, '../node-gyp/bin/node-gyp.js')}`
-
-if (!fs.existsSync(gypPath)) {
-  gypPath = `${path.resolve(__dirname, '../node_modules/node-gyp/bin/node-gyp.js')}`
-  logger.info(`node-gyp path: ${gypPath}`)
-}
-const gypExec = `node ${gypPath}`
 
 module.exports = ({
-  electronVersion = '8.1.1',
-  runtime = 'electron',
   platform = process.platform,
+  arch = process.arch,
   debug = false,
-  silent = false,
-  msvsVersion = '2017',
-  arch = 'ia32',
-  distUrl = 'https://electronjs.org/headers',
   cachePath = ''
 }) => {
-  logger.info(`start building [${runtime}-${electronVersion}]`)
-  logger.info(path.resolve(__dirname))
+  logger.info(`[node-nim] Start building C++ wrapper [${platform}-${arch}]`)
 
-  /** get command string */
-  const command = [`${gypExec} configure`]
   /** cmake generate vistual studio solution */
   const cmakeGenerate = ['cmake']
   /** NIM SDK C++ wrapper source folder */
   cmakeGenerate.push(`${path.join(cachePath, 'wrapper')}`)
   /** build cache folder */
   cmakeGenerate.push(`-B${path.join(cachePath, 'build')}`)
-  /** support XP */
-  cmakeGenerate.push('-T"v141_xp"')
   /** install prefix */
   cmakeGenerate.push(`-DCMAKE_INSTALL_PREFIX=${cachePath}`)
   /** build shared library */
@@ -44,88 +24,36 @@ module.exports = ({
   const cmakeBuild = [`cmake --build ${path.join(cachePath, 'build')}`]
 
   // check platform
-  if (platform === 'win32') {
+  if (arch === 'ia32') {
     // command.push(`--arch=${arch} --msvs_version=${msvsVersion}`)
-    command.push(`--arch=${arch} --msvs_version=${msvsVersion}`)
     cmakeGenerate.push('-G"Visual Studio 15 2017"')
   } else {
     cmakeGenerate.push('-G"Visual Studio 15 2017 Win64"')
   }
 
-  // check runtime
-  if (runtime === 'electron') {
-    command.push(`--target=${electronVersion} --dist-url=${distUrl}`)
-  }
-
   // check debug
   if (debug) {
-    command.push('--debug')
     cmakeBuild.push('--config Debug')
-    if (platform === 'darwin') {
-      // MUST AT THE END OF THE COMMAND ARR
-      command.push('-- -f xcode')
-    }
   } else {
     cmakeBuild.push('--config Release')
   }
   cmakeBuild.push('--target install')
 
-  const commandStr = command.join(' ')
-
   /** start build */
-  logger.info(commandStr)
-  logger.info('platform:', platform)
-  logger.info('electron Version:', electronVersion)
-  logger.info('runtime:', runtime)
-  logger.info('building...')
+  logger.info('[node-nim] Arch:', arch)
+  logger.info('[node-nim] Platform:', platform)
+  logger.info('[node-nim] Building...')
 
-  logger.info(cmakeGenerate.join(' '))
-  logger.info(cmakeBuild.join(' '))
-  logger.info(commandStr)
+  logger.info(`[node-nim] ${cmakeGenerate.join(' ')}`)
+  logger.info(`[node-nim] ${cmakeBuild.join(' ')}`)
 
   if (shell.exec(cmakeGenerate.join(' ')).code !== 0) {
-    logger.error('Failed to generate NIM C++ wrapper solution.')
+    logger.error('[node-nim] Failed to generate NIM C++ wrapper solution.')
     process.exit(1)
   }
 
   if (shell.exec(cmakeBuild.join(' ')).code !== 0) {
-    logger.error('Failed to build NIM C++ wrapper.')
+    logger.error('[node-nim] Failed to build NIM C++ wrapper.')
     process.exit(1)
   }
-
-  shell.exec(`${gypExec} clean`, { silent }, (code, stdout, stderr) => {
-    // handle error
-    logger.info(`clean done ${stdout}`)
-    if (code !== 0) {
-      logger.error(stderr)
-      process.exit(1)
-    }
-
-    shell.exec(commandStr, { silent }, (code, stdout, stderr) => {
-      // handle error
-      logger.info(`configure done ${stdout}`)
-      if (code !== 0) {
-        logger.error(stderr)
-        process.exit(1)
-      }
-
-      if (debug) {
-        // handle success
-        logger.info('complete, please go to `/build` and build manually.')
-        process.exit(0)
-      } else {
-        shell.exec(`${gypExec} build`, { silent }, (code, stdout, stderr) => {
-          // handle error
-          if (code !== 0) {
-            logger.error('Failed to build C++ addon manually.')
-            logger.error(stderr)
-            process.exit(1)
-          }
-          // handle success
-          logger.info('build complete')
-          process.exit(0)
-        })
-      }
-    })
-  })
 }

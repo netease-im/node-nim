@@ -1,4 +1,16 @@
-import { NIMClientAPI, NIMSDKConfig, NIMLogoutType, NIMLoginState, NIMLoginCallback, NIMLogoutCallback, NIMKickoutCallback, NIMMultispotCallback, NIMKickotherCallback, NIMSyncMultiportPushConfigCallback, NIMGetServerCurrentTimeCallback } from "./client_def";
+import {
+    NIMClientAPI, 
+    NIMSDKConfig,
+    NIMLogoutType,
+    NIMLoginState,
+    NIMLoginCallback,
+    NIMLogoutCallback,
+    NIMKickoutCallback,
+    NIMMultispotCallback,
+    NIMKickotherCallback,
+    NIMSyncMultiportPushConfigCallback,
+    NIMGetServerCurrentTimeCallback
+} from "./client_def";
 import nim from './nim';
 import ev from 'events';
 
@@ -32,10 +44,6 @@ class NIMClient extends ev.EventEmitter {
     cleanUp(jsonExtension: string): void {
         return this.client.CleanUp(jsonExtension);
     }
-
-    // setCallbackFunction(cb: Function): void {
-    //     return this.client.SetCallbackFunction(cb);
-    // }
 
     getSDKConfig(): NIMSDKConfig {
         return this.client.GetSDKConfig();

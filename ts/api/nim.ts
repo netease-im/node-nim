@@ -1,11 +1,5 @@
-var nim_path = '';
-if (process.platform == 'win32') {
-    nim_path = '../../../../static/nim_sdk/win32/nim_electron_sdk';
-} else if (process.platform == 'darwin') {
-    nim_path = '../../../../static/nim_sdk/darwin/nim_electron_sdk';
-} else {
-
-}
-const nim = require(nim_path);
+var binary = require('@mapbox/node-pre-gyp');
+var path = require('path');
+var binding_path = binary.find(path.resolve(path.join(__dirname,'../../package.json')));
+var nim = require(binding_path);
 export default nim;
-
