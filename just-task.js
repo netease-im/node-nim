@@ -106,14 +106,14 @@ task('install', () => {
   const rootPkgMeta = require(path.join(process.env.INIT_CWD, 'package.json'))
 
   if (rootPkgMeta.devDependencies && rootPkgMeta.devDependencies.electron) {
-    // 13.1.2 => 13.1
-    target = rootPkgMeta.devDependencies.electron.replace(/^.*?(\d+.+?\d).*/, '$1')
+    // v13.1.2 => 13.1.2, remove prefix 'v'
+    target = rootPkgMeta.devDependencies.electron.replace(/^.*?(\d+.+\d).*/, '$1')
   } else {
     target = process.version.match(/^v(\d+\.\d+)/)[1]
     runtime = 'node'
   }
-  const nodeAbi = `${runtime}-v${target}`
-
+  // 13.1.2 => 13.1, match major.minor only
+  const nodeAbi = `${runtime}-v${target.replace(/^(\d+.+?\d+).*/, '$1')}`
   return new Promise((resolve, reject) => {
     const host = 'https://yx-web-nosdn.netease.im'
     const remotePath = 'package'
