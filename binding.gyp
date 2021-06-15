@@ -5,7 +5,7 @@
     },
     "targets": [
         {
-            'target_name': '<(module_name)',
+            'target_name': 'nim',
             'includes': [
                 # './common.gypi',
             ],
@@ -125,6 +125,14 @@
                 [
                     'OS=="win"',
                     {
+                        'copies': [{
+                            'destination': '<(PRODUCT_DIR)',
+                            'files': [
+                                '<(NIM_SDK_DIR)/bin/nim.dll',
+                                '<(NIM_SDK_DIR)/bin/h_available.dll',
+                                '<(NIM_SDK_DIR)/bin/nim_cpp_wrapper.dll',
+                            ]
+                        }],
                         'defines': [
                             'NIM_WIN_DESKTOP_ONLY_SDK',
                             'NIM_SDK_DLL_IMPORT',
@@ -184,6 +192,12 @@
                 [
                     'OS=="mac"',
                     {
+                        'copies': [{
+                            'destination': '<(PRODUCT_DIR)',
+                            'files': [
+                                '<(NIM_SDK_DIR)/framework/nim.framework',
+                            ]
+                        }],
                         'defines': [
                             'NIM_SDK_DLL_IMPORT',
                             'OS_MACOSX'
@@ -226,39 +240,6 @@
                         }
                     }
                 ]
-            ]
-        },
-        {
-            'target_name': 'action_after_build',
-            'type': 'none',
-            'dependencies': ['<(module_name)'],
-            'copies': [
-                {
-                    'conditions': [
-                        [
-                            'OS=="win"',
-                            {
-                                'files': [
-                                    '<(PRODUCT_DIR)/<(module_name).node',
-                                    '<(NIM_SDK_DIR)/bin/nim.dll',
-                                    '<(NIM_SDK_DIR)/bin/h_available.dll',
-                                    '<(NIM_SDK_DIR)/bin/nim_cpp_wrapper.dll'
-                                ],
-								'destination': '<(module_path)'
-                            }
-                        ],
-                        [
-                            'OS=="mac"',
-                            {
-                                'files': [
-                                    '<(PRODUCT_DIR)/<(module_name).node',
-                                    '<(NIM_SDK_DIR)/framework/nim.framework'
-                                ],
-								'destination': '<(module_path)'
-                            }
-                        ]
-                    ]
-                }
             ]
         }
     ]

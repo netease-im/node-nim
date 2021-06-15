@@ -1,53 +1,146 @@
-const { task, logger, option, argv } = require('just-task')
+const { task, option, logger, argv } = require('just-scripts')
 const fs = require('fs')
 const download = require('download')
-const tar = require('tar')
 const path = require('path')
-const build = require('./scripts/build')
-const cleanup = require('./scripts/cleanup')
+const fetchWrapper = require('./scripts/fetch_wrapper')
+const buildWrapper = require('./scripts/build_wrapper')
+const buildAddon = require('./scripts/build_addon')
+const packAddon = require('./scripts/pack_addon')
+
+const packageMeta = require(path.join(__dirname, 'package.json'))
+
+option('target')
+option('target_platform', { default: process.platform, choices: ['darwin', 'win32', 'linux'] })
+option('target_arch', { default: process.arch, choices: ['ia32', 'x64'] })
+option('runtime', { default: 'electron', choices: ['electron', 'node'] })
+option('debug', { default: false, boolean: true })
+option('silent', { default: false, boolean: true })
+
 const nativeUrl = 'https://yx-web-nosdn.netease.im/package/1619595742/NIM_CrossPlatform_SDK_v8.4.0.zip?download=NIM_CrossPlatform_SDK_v8.4.0.zip'
 
-option('platform', { default: 'win32' })
-option('arch', { default: 'ia32' })
-
-// trigger when run npm install
-task('build_wrapper', () => {
-  logger.info(`[node-nim] Start build C++ wrapper, platform: ${argv().platform}, arch: ${argv().arch}`)
-  const buildPath = path.join(__dirname, 'build')
+task('fetch-wrapper', () => {
   const cachePath = path.join(__dirname, 'nim_sdk')
   const temporaryPath = path.join(__dirname, 'temporary')
+  return fetchWrapper({
+    fetchUrl: nativeUrl,
+    temporaryPath,
+    extractPath: cachePath
+  })
+})
+
+task('build-wrapper', () => {
+  const platform = argv().target_platform
+  const arch = argv().target_arch
+  const sourcePath = path.join(__dirname, 'nim_sdk')
+  return buildWrapper({
+    platform,
+    arch,
+    sourcePath
+  })
+})
+
+task('build', () => {
+  const target = argv().target
+  const platform = argv().target_platform
+  const arch = argv().target_arch
+  const runtime = argv().runtime
+  const version = packageMeta.version
+  const packageName = packageMeta.name
+  const sourcePath = path.join(__dirname, 'nim_sdk')
+
+  logger.info(JSON.stringify(argv()))
+
   return new Promise((resolve, reject) => {
-    cleanup(buildPath).then(() => {
-      cleanup(cachePath).then(() => {
-        download(nativeUrl, temporaryPath, {
-          strip: 1,
-          extract: true
-        }).then(() => {
-          const files = fs.readdirSync(temporaryPath)
-          const matchPlatform = process.platform === 'win32' ? 'windows' : 'macosx'
-          const matchArch = process.arch === 'ia32' ? 'x86' : 'x64'
-          for (let i = 0; i < files.length; i++) {
-            if (files[i].indexOf(matchPlatform) !== -1 && files[i].indexOf(matchArch) !== -1) {
-              const sourceFile = path.join(temporaryPath, files[i])
-              if (!fs.existsSync(cachePath)) {
-                fs.mkdirSync(cachePath)
-              }
-              logger.info(`[node-nim] Extract file from ${sourceFile} to ${cachePath}`)
-              tar.extract({
-                file: sourceFile,
-                cwd: cachePath,
-                sync: true
-              })
-              build({
-                cachePath,
-                arch: argv().arch,
-                platform: argv().platform
-              })
-              resolve()
-            }
-          }
-        })
+    buildWrapper({
+      platform,
+      arch,
+      sourcePath
+    }).then(() => {
+      return buildAddon({
+        target,
+        runtime,
+        platform,
+        arch
       })
+    }).then(() => {
+      return packAddon({
+        packageName,
+        version,
+        target,
+        platform,
+        arch,
+        runtime
+      })
+    }).then(() => resolve())
+  })
+})
+
+task('package', () => {
+  logger.info(JSON.stringify(argv()))
+  const target = argv().target
+  const platform = argv().target_platform
+  const arch = argv().target_arch
+  const runtime = argv().runtime
+  const version = packageMeta.version
+  const packageName = packageMeta.name
+  return packAddon({
+    packageName,
+    version,
+    target,
+    platform,
+    arch,
+    runtime
+  })
+})
+
+task('install', () => {
+  let target = '5.0.8'
+  let runtime = 'electron'
+  const targetPlatform = process.platform
+  const targetArch = process.arch
+  const curPkgMeta = require(path.join(__dirname, 'package.json'))
+  const rootPkgMeta = require(path.join(process.env.INIT_CWD, 'package.json'))
+
+  if (rootPkgMeta.devDependencies && rootPkgMeta.devDependencies.electron) {
+    // 13.1.2 => 13.1
+    target = rootPkgMeta.devDependencies.electron.replace(/^.*?(\d+.+?\d).*/, '$1')
+  } else {
+    target = process.version.match(/^v(\d+\.\d+)/)[1]
+    runtime = 'node'
+  }
+  const nodeAbi = `${runtime}-v${target}`
+
+  return new Promise((resolve, reject) => {
+    const host = 'https://yx-web-nosdn.netease.im'
+    const remotePath = 'package'
+    const packageName = `${curPkgMeta.name}-v${curPkgMeta.version}-${nodeAbi}-${targetPlatform}-${targetArch}.tar.gz`
+    const localPath = 'build/Release'
+    fs.rmdirSync(path.join(__dirname, localPath), { recursive: true })
+    download(`${host}/${remotePath}/${packageName}`, path.join(__dirname, localPath), {
+      strip: 1,
+      extract: true
+    }).then(() => {
+      logger.info(`[install] Download prebuilt binaries from ${host}/${remotePath}/${packageName}`)
+      resolve()
+    }).catch(err => {
+      logger.warn(`[install] Failed to download package from: ${host}/${remotePath}/${packageName}, error code: ${err.statusCode}`)
+      logger.info('[install] Start build from local source file.')
+      const cachePath = path.join(__dirname, 'nim_sdk')
+      const temporaryPath = path.join(__dirname, 'temporary')
+      fetchWrapper({
+        fetchUrl: nativeUrl,
+        temporaryPath,
+        extractPath: cachePath
+      }).then(() => {
+        return buildWrapper({
+          sourcePath: cachePath
+        })
+      }).then(() => {
+        return buildAddon({
+          target,
+          runtime
+        })
+      }).then(() => resolve())
     })
   })
 })

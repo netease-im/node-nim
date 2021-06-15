@@ -8,22 +8,16 @@
   "license": "ISC",
   "scripts": {
     "test": "mocha test",
-    "build_wrapper": "just build_wrapper",
-    "install": "just build_wrapper && node-pre-gyp install --fallback-to-build",
-    "build": "node-pre-gyp build --build-from-source",
-    "rebuild": "node-pre-gyp rebuild",
-    "prebuilt:rebuild": "just download",
-    "package": "node-pre-gyp package",
+    "install": "just install",
     "build:ts": "rimraf ./js && tsc -p config_ts.json",
     "build:types": "rimraf ./types && tsc -p config_dts.json",
     "prebuilt:ts": "npm run build:types"
   },
   "dependencies": {
-    "@mapbox/node-pre-gyp": "^1.0.5",
+    "bindings": "^1.5.0",
     "download": "^8.0.0",
     "extract-zip": "^2.0.1",
     "just-task": "^1.4.1",
-    "mocha": "^8.4.0",
     "node-gyp": "^8.1.0",
     "shelljs": "^0.8.4",
     "tar": "^6.1.0"
@@ -35,15 +29,10 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-standard": "^5.0.0",
+    "just-scripts": "^1.5.4",
+    "mocha": "^8.4.0",
     "typescript": "^4.3.2",
     "typescript-eslint": "0.0.1-alpha.0"
-  },
-  "binary": {
-    "module_name": "node_nim",
-    "module_path": "./lib/binding/{node_abi}-{platform}-{arch}/",
-    "remote_path": "./package/",
-    "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
-    "host": "https://yx-web-nosdn.netease.im"
   },
   "keywords": [
     "netease",
