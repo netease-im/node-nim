@@ -1,19 +1,36 @@
-# NetEase IM nodejs addon wrapper
+# NetEase IM Node.js addon wrapper
 
 ## Build environment
 
  - CMake 3.10 or higher
  - Visual Studio 2017 or MSBuild 2017
 
-## Build
+## Command line
 
-An example of build C++ node addon for Electron-v8.0.0
+|Options|Descroption|
+|---|---|
+|fetch-wrapper|Download NIM C++ SDK source files and C binary files|
+|build-wrapper|Build NIM C++ SDK|
+|package|Package the compiled artifacts|
+|build|Build with specified parameters (build-wrapper+package)|
+
+Examples:
+
+Fetch C++ wrapper source files and build C++ addon for node.js.
 
 ```bash
-# Building NIM C++ wrapper before build node addon
-yarn run build_wrapper --platform=win32 --arch=ia32
-# Building node addon
-yarn run rebuild  --runtime=electron --dist-url=https://atom.io/download/electron --target=8.0.0 --target_arch=ia32 --target_platform=win32
-# Packing artifacts
-yarn run package  --runtime=electron --dist-url=https://atom.io/download/electron --target=8.0.0 --target_arch=ia32 --target_platform=win32
+npx just fetch-wrapper --target_platform=win32 --target_arch=ia32
+npx just build --runtime=electron --target=13.1.2 --target_platform=win32 --target_arch=ia32
+```
+
+Just build NIM C++ wrapper, needs `npx just fetch-wrapper` before.
+
+```bash
+npx just build-wrapper --target_platform=win32 --target_arch=ia32
+```
+
+Packing a compiled artifact as `.tar.gz` in `packages` folder.
+
+```bash
+npx just package --runtime=electron --target=13.1.2 --target_platform=win32 --target_arch=ia32
 ```
