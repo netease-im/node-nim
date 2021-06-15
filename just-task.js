@@ -19,12 +19,16 @@ option('silent', { default: false, boolean: true })
 const nativeUrl = 'https://yx-web-nosdn.netease.im/package/1619595742/NIM_CrossPlatform_SDK_v8.4.0.zip?download=NIM_CrossPlatform_SDK_v8.4.0.zip'
 
 task('fetch-wrapper', () => {
+  const platform = argv().target_platform
+  const arch = argv().target_arch
   const cachePath = path.join(__dirname, 'nim_sdk')
   const temporaryPath = path.join(__dirname, 'temporary')
   return fetchWrapper({
     fetchUrl: nativeUrl,
     temporaryPath,
-    extractPath: cachePath
+    extractPath: cachePath,
+    platform,
+    arch
   })
 })
 
