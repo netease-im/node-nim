@@ -26,16 +26,9 @@ jobs:
       uses: microsoft/setup-msbuild@v1.0.2
 
     # Build ia32
-    - run: npm i --runtime=electron --dist-url=https://atom.io/download/electron --target=8.0.0 --target_arch=ia32 --target_platform=win32
-    - run: npm run package --runtime=electron --dist-url=https://atom.io/download/electron --target=8.0.0 --target_arch=ia32 --target_platform=win32
-    
-    # Build x64
-    - run: npm run build_wrapper --platform=win32 --arch=x64
-    - run: npm run rebuild --runtime=electron --dist-url=https://atom.io/download/electron --target=8.0.0 --target_arch=x64 --target_platform=win32
-    - run: npm run package --runtime=electron --dist-url=https://atom.io/download/electron --target=8.0.0 --target_arch=x64 --target_platform=win32
-    
-    # 
+    - run: npx just fetch-wrapper --target_platform=win32 --target_arch=ia32
+    - run: npx just build --runtime=electron --target=13.1.2 --target_platform=win32 --target_arch=ia32
+    # Upload artifacts
     - uses: actions/upload-artifact@v2
       with:
-        name: node-nim-electron-artifacts
-        path: build/stage/package
+        path: ${{ github.workspace }}/build/*.tar.gz
