@@ -8,10 +8,11 @@
   "license": "ISC",
   "scripts": {
     "test": "mocha test",
+    "preinstall": "npm run build:ts",
     "install": "just install",
-    "build:ts": "rimraf ./js && tsc -p config_ts.json",
     "build:types": "rimraf ./types && tsc -p config_dts.json",
-    "prebuilt:ts": "npm run build:types"
+    "prebuild:ts": "npm run build:types",
+    "build:ts": "rimraf ./js && tsc -p config_ts.json"
   },
   "dependencies": {
     "bindings": "^1.5.0",
