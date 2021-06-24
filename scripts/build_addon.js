@@ -19,7 +19,7 @@ module.exports = ({
   debug = false,
   silent = false,
   msvcVersion = '2017',
-  distUrl = 'https://electronjs.org/headers',
+  distUrl = 'https://electronjs.org/headers'
 }) => {
   return new Promise((resolve, reject) => {
     logger.info(`[build] start building [${runtime}-${target}]`)
