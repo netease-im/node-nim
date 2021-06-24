@@ -27,8 +27,7 @@ module.exports = ({
       file: targetFile,
       cwd: artifactsDirectory,
       filter: (path, stat) => {
-        if (path.indexOf('.pdb') !== -1 || path.indexOf('.node') !== -1 ||
-            path.indexOf('.dll') !== -1 || path.indexOf('.framework') !== -1) {
+        if (path.match(/.pdb|.dll|.node|.framework/g) !== null) {
           logger.info(`[package] ${path}`)
           return true
         }

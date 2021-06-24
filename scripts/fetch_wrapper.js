@@ -18,8 +18,9 @@ module.exports = ({
     }).then(() => {
       const files = fs.readdirSync(temporaryPath)
       const matchPlatform = platform === 'win32' ? 'windows' : 'macosx'
-      const matchArch = arch === 'ia32' ? 'x86' : 'x64'
+      const matchArch = arch === 'ia32' ? 'x86' : (platform === 'win32' ? 'x64' : 'x86_64')
       for (let i = 0; i < files.length; i++) {
+        logger.info(`[fetch] found resource: ${files[i]}`)
         if (files[i].indexOf(matchPlatform) !== -1 && files[i].indexOf(matchArch) !== -1) {
           const sourceFile = path.join(temporaryPath, files[i])
           if (!fs.existsSync(extractPath)) {

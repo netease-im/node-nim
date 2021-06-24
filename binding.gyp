@@ -1,7 +1,7 @@
 {
     "variables": {
-        "NIM_SDK_DIR%": "<(PRODUCT_DIR)../../nim_sdk",
-        "SOURCE_DIR": "<(PRODUCT_DIR)../../"
+        "NIM_SDK_DIR%": "<(PRODUCT_DIR)/../../nim_sdk",
+        "SOURCE_DIR": "<(PRODUCT_DIR)/../../"
     },
     "targets": [
         {
@@ -195,7 +195,8 @@
                         'copies': [{
                             'destination': '<(PRODUCT_DIR)',
                             'files': [
-                                '<(NIM_SDK_DIR)/framework/nim.framework',
+                                'nim_sdk/framework/nim.framework',
+                                'nim_sdk/lib/libh_available.dylib'
                             ]
                         }],
                         'defines': [
@@ -203,18 +204,18 @@
                             'OS_MACOSX'
                         ],
                         'mac_framework_dirs': [
-                            '<(NIM_SDK_DIR)/framework'
+                            '../nim_sdk/framework'
                         ],
                         'library_dirs': [
-                            '<(NIM_SDK_DIR)/lib',
+                            '../nim_sdk/lib',
                         ],
                         'link_settings': {
                             'libraries': [
                                 'libnim_wrapper_util.a',
                                 'libnim_cpp_wrapper.a',
                                 'nim.framework',
-                                '-rpath <(NIM_SDK_DIR)/framework/',
-                                '-rpath <(NIM_SDK_DIR)/lib/'
+                                '-rpath nim_sdk/framework/',
+                                '-rpath nim_sdk/lib/'
                             ]
                         },
                         'defines!': [
@@ -224,8 +225,8 @@
                         ],
                         'include_dirs': [
                             '<(SOURCE_DIR)/src/',
-                            '<(NIM_SDK_DIR)/include/',
-                            '<(NIM_SDK_DIR)/framework/nim.framework/Headers/',
+                            'nim_sdk/include/',
+                            'nim_sdk/framework/nim.framework/Headers/',
                         ],
                         'xcode_settings': {
                             'ARCHS': ['x86_64'],

@@ -16,8 +16,8 @@ module.exports = ({
     cmakeGenerate.push(`-B${temporaryPath}`)
     cmakeGenerate.push('-T"v141_xp"')
     cmakeGenerate.push(`-DCMAKE_INSTALL_PREFIX=${sourcePath}`)
-    cmakeGenerate.push('-DBUILD_SHARED_LIBS=ON')
     if (platform === 'win32') {
+      cmakeGenerate.push('-DBUILD_SHARED_LIBS=ON')
       cmakeGenerate.push(arch === 'ia32' ? '-G"Visual Studio 15 2017"' : '-G"Visual Studio 15 2017 Win64"')
     } else if (platform === 'darwin') {
       cmakeGenerate.push('-G"Xcode"')

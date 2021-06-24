@@ -44,8 +44,8 @@ task('build-wrapper', () => {
 
 task('build', () => {
   const target = argv().target
-  const platform = argv().target_platform
-  const arch = argv().target_arch
+  const platform = argv().target_platform || process.platform
+  const arch = argv().target_arch || process.arch
   const runtime = argv().runtime
   const version = packageMeta.version
   const packageName = packageMeta.name
