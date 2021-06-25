@@ -1,4 +1,6 @@
 const nim = require('bindings')('nim');
 const path = require('path');
-process.env.PATH = `${path.resolve(path.join(__dirname, '../../build/Release'))};${process.env.PATH}`
+const asarPath = path.join(__dirname, '../../build/Release/');
+const unpackedPath = asarPath.replace('app.asar', 'app.asar.unpacked');
+process.env.PATH = `${unpackedPath};${process.env.PATH}`;
 export default nim;
