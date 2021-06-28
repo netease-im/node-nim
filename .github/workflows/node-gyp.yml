@@ -12,7 +12,7 @@ env:
   BUILD_CONFIGURATION: Release
 
 jobs:
-  macos:
+  darwin:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
@@ -32,7 +32,7 @@ jobs:
       with:
         path: ${{ github.workspace }}/packages/*.tar.gz
     
-  windows:
+  win32:
     runs-on: windows-2016
     steps:
     - uses: actions/checkout@v2
