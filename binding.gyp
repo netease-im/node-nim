@@ -214,7 +214,7 @@
                                 'libnim_wrapper_util.a',
                                 'libnim_cpp_wrapper.a',
                                 'nim.framework',
-                                '-Wl,-rpath,./'
+                                '-Wl,-rpath,@loader_path'
                             ]
                         },
                         'defines!': [
