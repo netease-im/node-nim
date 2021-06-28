@@ -20,7 +20,7 @@ module.exports = ({
       cmakeGenerate.push('-DBUILD_SHARED_LIBS=ON')
       cmakeGenerate.push(arch === 'ia32' ? '-G"Visual Studio 15 2017"' : '-G"Visual Studio 15 2017 Win64"')
     } else if (platform === 'darwin') {
-      cmakeGenerate.push('-G"Xcode"')
+      cmakeGenerate.push('-G"Xcode" -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9')
     } else {
       reject(new Error('Unsupported platform.'))
     }
