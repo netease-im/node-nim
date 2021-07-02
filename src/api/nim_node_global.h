@@ -21,7 +21,7 @@ public:
     NIM_SDK_NODE_API(DeleteSDKCachedFileAsync);
     NIM_SDK_NODE_API(SDKFeedbackAsync);
     NIM_SDK_NODE_API(RegSDKDBError);
-    // NIM_SDK_NODE_API(UploadSDKLog);
+    NIM_SDK_NODE_API(UploadSDKLog);
 
 protected:
     Global(Isolate* isolate);

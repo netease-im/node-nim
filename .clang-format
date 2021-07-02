@@ -1,5 +1,5 @@
 BasedOnStyle: Chromium
-ColumnLimit: 80
+ColumnLimit: 150
 BreakBeforeBraces: Attach
 IndentWidth: 4
 BreakConstructorInitializers: BeforeComma

@@ -1,6 +1,5 @@
 /** @enum NIMSDKLogLevel NIM SDK log级别，级别越高，log越详细 */
-export enum NIMSDKLogLevel
-{
+export enum NIMSDKLogLevel {
 	kNIMSDKLogLevelFatal = 1,	/**< SDK Fatal级别Log*/
 	kNIMSDKLogLevelError = 2,	/**< SDK Error级别Log*/
 	kNIMSDKLogLevelWarn = 3,	/**< SDK Warn级别Log*/
@@ -9,26 +8,23 @@ export enum NIMSDKLogLevel
 }
 
 /** @enum NIMSDKException 异常 */
-export enum NIMSDKException
-{
+export enum NIMSDKException {
 	kNIMSDKExceptionSpaceEmpty = 1,	/**< 当前数据目录所在盘符空间紧张或用完, log: {"free_space" : %lf, "message":""}, free_space单位M*/
 }
 
 /** @enum NIMProxyDetectStep 代理测试步骤 */
-export enum NIMProxyDetectStep
-{
-	kNIMProxyDetectStepAllComplete			= 5,	/**< 探测代理有效性结束*/
+export enum NIMProxyDetectStep {
+	kNIMProxyDetectStepAllComplete = 5,	/**< 探测代理有效性结束*/
 }
 
 /** @enum NIMProxyType 代理类型 */
-export enum NIMProxyType
-{
-	kNIMProxyNone		= 0,	/**< 不使用代理*/
-	kNIMProxyHttp11		= 1,	/**< HTTP 1.1 Proxy（暂不支持）*/
-	kNIMProxySocks4		= 4,	/**< Socks4 Proxy*/
-	kNIMProxySocks4a	= 5,	/**< Socks4a Proxy*/
-	kNIMProxySocks5		= 6,	/**< Socks5 Proxy*/
-	kNIMProxyNrtc		= 10,	/**< 云信音视频私有代理，只在nim_vchat_set_proxy中有效 */
+export enum NIMProxyType {
+	kNIMProxyNone = 0,	/**< 不使用代理*/
+	kNIMProxyHttp11 = 1,	/**< HTTP 1.1 Proxy（暂不支持）*/
+	kNIMProxySocks4 = 4,	/**< Socks4 Proxy*/
+	kNIMProxySocks4a = 5,	/**< Socks4a Proxy*/
+	kNIMProxySocks5 = 6,	/**< Socks5 Proxy*/
+	kNIMProxyNrtc = 10,	/**< 云信音视频私有代理，只在nim_vchat_set_proxy中有效 */
 }
 
 /** @enum NIMCachedFileType 查询/删除SDK文件缓存信息文件类型 */
@@ -40,13 +36,12 @@ export enum NIMCachedFileType {
 }
 
 /** @enum NIMDBOperation 对DB进行的操作类型 */
-export enum NIMDBOperation
-{
-	kNIMDBOperationInsert	= 0x0001,	/**< 写操作*/
-	kNIMDBOperationRead		= 0x0002,	/**< 读操作*/
-	kNIMDBOperationUpdate	= 0x0004,	/**< 更新操作*/
-	kNIMDBOperationDelete	= 0x0008,	/**< 删除操作*/
-}; 
+export enum NIMDBOperation {
+	kNIMDBOperationInsert = 0x0001,	/**< 写操作*/
+	kNIMDBOperationRead = 0x0002,	/**< 读操作*/
+	kNIMDBOperationUpdate = 0x0004,	/**< 更新操作*/
+	kNIMDBOperationDelete = 0x0008,	/**< 删除操作*/
+};
 
 export interface NIMExceptionCallback {
 	(exception: NIMSDKException, log: string): void;
@@ -87,6 +82,10 @@ export interface NIMSDKDBErrorCallback {
 	(result: NINSDKDBErrorInfo): void;
 }
 
+export interface NIMUploadSDKLogCallback {
+	(rescode: number): void;
+}
+
 export interface NIMGlobalAPI {
 	SetExceptionReportCallback(cb: NIMExceptionCallback, jsonExtension: string): void;
 
@@ -101,4 +100,6 @@ export interface NIMGlobalAPI {
 	SDKFeedbackAsync(url: string, cb: NIMSDKFeedbackCallback, jsonExtension: string): void;
 
 	RegSDKDBError(cb: NIMSDKDBErrorCallback): void;
+
+	UploadSDKLog(feedbackStr: string, cb: NIMUploadSDKLogCallback): void;
 }
