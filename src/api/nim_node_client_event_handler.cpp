@@ -247,4 +247,23 @@ void ClientEventHandler::Node_OnGetServerCurrentTimeCallback(
     bcb->callback_.Get(isolate)->Call(isolate->GetCurrentContext(),
                                       bcb->data_.Get(isolate), argc, argv);
 }
+void ClientEventHandler::OnReloginRequestTokenCb(const BaseCallbackPtr& bcb,
+                                                 std::string* res) {
+    std::string temp = *res;
+    node_async_call::async_call([=]() {
+        ClientEventHandler::GetInstance()->Node_OnReloginRequestTokenCb(bcb,
+                                                                        temp);
+    });
+}
+
+void ClientEventHandler::Node_OnReloginRequestTokenCb(
+    const BaseCallbackPtr& bcb,
+    std::string res) {
+    Isolate* isolate = Isolate::GetCurrent();
+    HandleScope scope(isolate);
+    const unsigned argc = 1;
+    Local<Value> argv[argc] = {nim_napi_new_utf8string(isolate, res.c_str())};
+    bcb->callback_.Get(isolate)->Call(isolate->GetCurrentContext(),
+                                      bcb->data_.Get(isolate), argc, argv);
+}
 }  // namespace nim_node

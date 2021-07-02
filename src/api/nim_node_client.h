@@ -16,19 +16,17 @@ public:
 
 public:
     NIM_SDK_NODE_API(Init);
-    // NIM_SDK_NODE_API(SetCallbackFunction);
     NIM_SDK_NODE_API(GetSDKConfig);
     NIM_SDK_NODE_API(CleanUp);
     NIM_SDK_NODE_API(CleanUp2);
     NIM_SDK_NODE_API(LoginCustomDataToJson);
-    // NIM_SDK_NODE_API(LoginCustomDataToParams);
     NIM_SDK_NODE_API(Login);
     NIM_SDK_NODE_API(GetLoginState);
     NIM_SDK_NODE_API(Relogin);
     NIM_SDK_NODE_API(Logout);
     NIM_SDK_NODE_API(KickOtherClient);
     NIM_SDK_NODE_API(RegReloginCb);
-    // NIM_SDK_NODE_API(RegReloginRequestTokenCb);
+    NIM_SDK_NODE_API(RegReloginRequestTokenCb);
     NIM_SDK_NODE_API(RegKickoutCb);
     NIM_SDK_NODE_API(RegDisconnectCb);
     NIM_SDK_NODE_API(RegMultispotLoginCb);
