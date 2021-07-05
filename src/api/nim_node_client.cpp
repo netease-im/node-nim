@@ -16,7 +16,6 @@ void Client::InitModule(Local<Object>& module) {
     BEGIN_OBJECT_INIT(Client, New, 5)
 
     SET_PROTOTYPE(Init)
-    // SET_PROTOTYPE(SetCallbackFunction)
     SET_PROTOTYPE(GetSDKConfig)
     SET_PROTOTYPE(CleanUp)
     SET_PROTOTYPE(CleanUp2)
@@ -31,6 +30,7 @@ void Client::InitModule(Local<Object>& module) {
     SET_PROTOTYPE(RegDisconnectCb)
     SET_PROTOTYPE(RegMultispotLoginCb)
     SET_PROTOTYPE(RegKickOtherClientCb)
+    SET_PROTOTYPE(RegReloginRequestTokenCb)
     SET_PROTOTYPE(RegSyncMultiportPushConfigCb)
     SET_PROTOTYPE(SetMultiportPushConfigAsync)
     SET_PROTOTYPE(GetMultiportPushConfigAsync)
@@ -59,19 +59,14 @@ NIM_SDK_NODE_API_DEF(Client, Init) {
     CHECK_API_FUNC(Client, 4)
     UTF8String appkey, appdata_path, app_install_path;
     auto status = napi_ok;
-    GET_ARGS_VALUE(isolate, 0, UTF8String, appkey)
-    GET_ARGS_VALUE(isolate, 1, UTF8String, appdata_path)
-    GET_ARGS_VALUE(isolate, 2, UTF8String, app_install_path)
+    GET_ARGS_VALUE(isolate, 0, utf8string, appkey)
+    GET_ARGS_VALUE(isolate, 1, utf8string, appdata_path)
+    GET_ARGS_VALUE(isolate, 2, utf8string, app_install_path)
     nim::SDKConfig config;
-    status = nim_client_config_obj_to_struct(
-        isolate,
-        args[3]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(),
-        config);
+    status = nim_client_config_obj_to_struct(isolate, args[3]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), config);
     if (status != napi_ok) {
     }
-    bool ret =
-        nim::Client::Init(appkey.toUtf8String(), appdata_path.toUtf8String(),
-                          app_install_path.toUtf8String(), config);
+    bool ret = nim::Client::Init(appkey.toUtf8String(), appdata_path.toUtf8String(), app_install_path.toUtf8String(), config);
     args.GetReturnValue().Set(Integer::New(args.GetIsolate(), ret ? 1 : 0));
 }
 
@@ -88,7 +83,7 @@ NIM_SDK_NODE_API_DEF(Client, CleanUp) {
 
     UTF8String ext;
     auto status = napi_ok;
-    GET_ARGS_VALUE(isolate, 0, UTF8String, ext)
+    GET_ARGS_VALUE(isolate, 0, utf8string, ext)
 
     nim::Client::Cleanup(ext.toUtf8String());
 }
@@ -97,7 +92,7 @@ NIM_SDK_NODE_API_DEF(Client, CleanUp2) {
 
     UTF8String ext;
     auto status = napi_ok;
-    GET_ARGS_VALUE(isolate, 0, UTF8String, ext)
+    GET_ARGS_VALUE(isolate, 0, utf8string, ext)
 
     nim::Client::Cleanup2(ext.toUtf8String());
 }
@@ -106,28 +101,24 @@ NIM_SDK_NODE_API_DEF(Client, LoginCustomDataToJson) {
 
     UTF8String custom_data;
     auto status = napi_ok;
-    GET_ARGS_VALUE(isolate, 0, UTF8String, custom_data)
+    GET_ARGS_VALUE(isolate, 0, utf8string, custom_data)
 
     utf8_string jsonValue;
     nim::Client::LoginCustomDataToJson(custom_data.toUtf8String(), jsonValue);
 
-    args.GetReturnValue().Set(String::NewFromUtf8(isolate, jsonValue.c_str(),
-                                                  NewStringType::kInternalized)
-                                  .ToLocalChecked());
+    args.GetReturnValue().Set(String::NewFromUtf8(isolate, jsonValue.c_str(), NewStringType::kInternalized).ToLocalChecked());
 }
 NIM_SDK_NODE_API_DEF(Client, Login) {
     CHECK_API_FUNC(Client, 5)
     UTF8String appkey, account, psw, exten;
     auto status = napi_ok;
-    GET_ARGS_VALUE(isolate, 0, UTF8String, appkey)
-    GET_ARGS_VALUE(isolate, 1, UTF8String, account)
-    GET_ARGS_VALUE(isolate, 2, UTF8String, psw)
-    GET_ARGS_VALUE(isolate, 4, UTF8String, exten)
+    GET_ARGS_VALUE(isolate, 0, utf8string, appkey)
+    GET_ARGS_VALUE(isolate, 1, utf8string, account)
+    GET_ARGS_VALUE(isolate, 2, utf8string, psw)
+    GET_ARGS_VALUE(isolate, 4, utf8string, exten)
     ASSEMBLE_BASE_CALLBACK(3);
-    auto callback = std::bind(&ClientEventHandler::OnLoginCallback, bcb, false,
-                              std::placeholders::_1);
-    bool ret = nim::Client::Login(appkey.toUtf8String(), account.toUtf8String(),
-                                  psw.toUtf8String(), callback);
+    auto callback = std::bind(&ClientEventHandler::OnLoginCallback, bcb, false, std::placeholders::_1);
+    bool ret = nim::Client::Login(appkey.toUtf8String(), account.toUtf8String(), psw.toUtf8String(), callback);
 
     args.GetReturnValue().Set(Boolean::New(args.GetIsolate(), ret ? 200 : 0));
 }
@@ -136,18 +127,17 @@ NIM_SDK_NODE_API_DEF(Client, GetLoginState) {
 
     UTF8String ext;
     auto status = napi_ok;
-    GET_ARGS_VALUE(isolate, 0, UTF8String, ext)
+    GET_ARGS_VALUE(isolate, 0, utf8string, ext)
 
     nim::NIMLoginState state = nim::Client::GetLoginState(ext.toUtf8String());
-    args.GetReturnValue().Set(
-        Integer::NewFromUnsigned(isolate, (uint32_t)state));
+    args.GetReturnValue().Set(Integer::NewFromUnsigned(isolate, (uint32_t)state));
 }
 NIM_SDK_NODE_API_DEF(Client, Relogin) {
     CHECK_API_FUNC(Client, 1)
 
     UTF8String ext;
     auto status = napi_ok;
-    GET_ARGS_VALUE(isolate, 0, UTF8String, ext)
+    GET_ARGS_VALUE(isolate, 0, utf8string, ext)
 
     nim::Client::Relogin(ext.toUtf8String());
 }
@@ -160,10 +150,8 @@ NIM_SDK_NODE_API_DEF(Client, Logout) {
     ASSEMBLE_BASE_CALLBACK(1)
     GET_ARGS_VALUE(isolate, 2, utf8string, exten)
 
-    auto callback = std::bind(&ClientEventHandler::OnLogoutCallback, bcb,
-                              std::placeholders::_1);
-    nim::Client::Logout((nim::NIMLogoutType)(type), callback,
-                        exten.toUtf8String());
+    auto callback = std::bind(&ClientEventHandler::OnLogoutCallback, bcb, std::placeholders::_1);
+    nim::Client::Logout((nim::NIMLogoutType)(type), callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Client, KickOtherClient) {
     CHECK_API_FUNC(Client, 1)
@@ -182,8 +170,7 @@ NIM_SDK_NODE_API_DEF(Client, RegReloginCb) {
     auto status = napi_ok;
     GET_ARGS_VALUE(isolate, 1, utf8string, exten)
 
-    auto callback = std::bind(&ClientEventHandler::OnLoginCallback, nullptr,
-                              true, std::placeholders::_1);
+    auto callback = std::bind(&ClientEventHandler::OnLoginCallback, nullptr, true, std::placeholders::_1);
     nim::Client::RegReloginCb(callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Client, RegReloginRequestTokenCb) {
@@ -193,8 +180,7 @@ NIM_SDK_NODE_API_DEF(Client, RegReloginRequestTokenCb) {
     ASSEMBLE_BASE_CALLBACK(0)
     GET_ARGS_VALUE(isolate, 1, utf8string, exten)
 
-    auto callback = std::bind(&ClientEventHandler::OnReloginRequestTokenCb, bcb,
-                              std::placeholders::_1);
+    auto callback = std::bind(&ClientEventHandler::OnReloginRequestTokenCb, bcb, std::placeholders::_1);
     nim::Client::RegReloginRequestToeknCb(callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Client, RegKickoutCb) {
@@ -205,8 +191,7 @@ NIM_SDK_NODE_API_DEF(Client, RegKickoutCb) {
     auto status = napi_ok;
     GET_ARGS_VALUE(isolate, 1, utf8string, exten)
 
-    auto callback = std::bind(&ClientEventHandler::OnKickoutCallback,
-                              std::placeholders::_1);
+    auto callback = std::bind(&ClientEventHandler::OnKickoutCallback, std::placeholders::_1);
     nim::Client::RegKickoutCb(callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Client, RegDisconnectCb) {
@@ -228,8 +213,7 @@ NIM_SDK_NODE_API_DEF(Client, RegMultispotLoginCb) {
     auto status = napi_ok;
     GET_ARGS_VALUE(isolate, 1, utf8string, exten)
 
-    auto callback = std::bind(&ClientEventHandler::OnMultispotLoginCallback,
-                              std::placeholders::_1);
+    auto callback = std::bind(&ClientEventHandler::OnMultispotLoginCallback, std::placeholders::_1);
     nim::Client::RegMultispotLoginCb(callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Client, RegKickOtherClientCb) {
@@ -240,22 +224,18 @@ NIM_SDK_NODE_API_DEF(Client, RegKickOtherClientCb) {
     auto status = napi_ok;
     GET_ARGS_VALUE(isolate, 1, utf8string, exten)
 
-    auto callback = std::bind(&ClientEventHandler::OnKickOtherClientCallback,
-                              std::placeholders::_1);
+    auto callback = std::bind(&ClientEventHandler::OnKickOtherClientCallback, std::placeholders::_1);
     nim::Client::RegKickOtherClientCb(callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Client, RegSyncMultiportPushConfigCb) {
     CHECK_API_FUNC(Client, 2)
 
     UTF8String exten;
-    ASSEMBLE_REG_CALLBACK(0, ClientEventHandler,
-                          "OnSyncMultiportPushConfigCallback")
+    ASSEMBLE_REG_CALLBACK(0, ClientEventHandler, "OnSyncMultiportPushConfigCallback")
     auto status = napi_ok;
     GET_ARGS_VALUE(isolate, 1, utf8string, exten)
 
-    auto callback =
-        std::bind(&ClientEventHandler::OnSyncMultiportPushConfigCallback,
-                  nullptr, std::placeholders::_1, std::placeholders::_2);
+    auto callback = std::bind(&ClientEventHandler::OnSyncMultiportPushConfigCallback, nullptr, std::placeholders::_1, std::placeholders::_2);
     nim::Client::RegSyncMultiportPushConfigCb(callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Client, SetMultiportPushConfigAsync) {
@@ -267,11 +247,8 @@ NIM_SDK_NODE_API_DEF(Client, SetMultiportPushConfigAsync) {
     ASSEMBLE_BASE_CALLBACK(1)
     GET_ARGS_VALUE(isolate, 2, utf8string, exten)
 
-    auto callback =
-        std::bind(&ClientEventHandler::OnSyncMultiportPushConfigCallback, bcb,
-                  std::placeholders::_1, std::placeholders::_2);
-    nim::Client::SetMultiportPushConfigAsync(switch_on, callback,
-                                             exten.toUtf8String());
+    auto callback = std::bind(&ClientEventHandler::OnSyncMultiportPushConfigCallback, bcb, std::placeholders::_1, std::placeholders::_2);
+    nim::Client::SetMultiportPushConfigAsync(switch_on, callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Client, GetMultiportPushConfigAsync) {
     CHECK_API_FUNC(Client, 2)
@@ -281,17 +258,14 @@ NIM_SDK_NODE_API_DEF(Client, GetMultiportPushConfigAsync) {
     GET_ARGS_VALUE(isolate, 1, utf8string, exten)
     ASSEMBLE_BASE_CALLBACK(0)
 
-    auto callback =
-        std::bind(&ClientEventHandler::OnSyncMultiportPushConfigCallback, bcb,
-                  std::placeholders::_1, std::placeholders::_2);
+    auto callback = std::bind(&ClientEventHandler::OnSyncMultiportPushConfigCallback, bcb, std::placeholders::_1, std::placeholders::_2);
     nim::Client::GetMultiportPushConfigAsync(callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Client, GetSDKVersion) {
     CHECK_API_FUNC(Client, 0)
 
     utf8_string version = nim::Client::GetSDKVersion();
-    args.GetReturnValue().Set(
-        nim_napi_new_utf8string(args.GetIsolate(), version.c_str()));
+    args.GetReturnValue().Set(nim_napi_new_utf8string(args.GetIsolate(), version.c_str()));
 }
 NIM_SDK_NODE_API_DEF(Client, GetServerCurrentTime) {
     CHECK_API_FUNC(Client, 2)
@@ -301,17 +275,15 @@ NIM_SDK_NODE_API_DEF(Client, GetServerCurrentTime) {
     GET_ARGS_VALUE(isolate, 1, bool, calc_local)
     ASSEMBLE_BASE_CALLBACK(0)
 
-    auto callback = std::bind(
-        &ClientEventHandler::OnGetServerCurrentTimeCallback, bcb,
-        std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+    auto callback =
+        std::bind(&ClientEventHandler::OnGetServerCurrentTimeCallback, bcb, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
     nim::Client::GetServerCurrentTime(callback, calc_local);
 }
 NIM_SDK_NODE_API_DEF(Client, GetCurrentUserAccount) {
     CHECK_API_FUNC(Client, 0)
 
     auto accid = nim::Client::GetCurrentUserAccount();
-    args.GetReturnValue().Set(
-        nim_napi_new_utf8string(args.GetIsolate(), accid.c_str()));
+    args.GetReturnValue().Set(nim_napi_new_utf8string(args.GetIsolate(), accid.c_str()));
 }
 NIM_SDK_NODE_API_DEF(Client, UnregClientCb) {
     CHECK_API_FUNC(Client, 0)

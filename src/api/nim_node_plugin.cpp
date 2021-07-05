@@ -18,20 +18,13 @@ namespace nim_node {
 
 DEFINE_CLASS(PlugIn);
 
-void PlugInEventHandler::OnChatRoomRequestEnterCallback(
-    const BaseCallbackPtr& bcb,
-    int error_code,
-    const std::string& result) {
+void PlugInEventHandler::OnChatRoomRequestEnterCallback(const BaseCallbackPtr& bcb, int error_code, const std::string& result) {
     node_async_call::async_call([=]() {
-        PlugInEventHandler::GetInstance()->Node_OnChatRoomRequestEnterCallback(
-            bcb, error_code, result);
+        PlugInEventHandler::GetInstance()->Node_OnChatRoomRequestEnterCallback(bcb, error_code, result);
     });
 }
 
-void PlugInEventHandler::Node_OnChatRoomRequestEnterCallback(
-    const BaseCallbackPtr& bcb,
-    int error_code,
-    const std::string& result) {
+void PlugInEventHandler::Node_OnChatRoomRequestEnterCallback(const BaseCallbackPtr& bcb, int error_code, const std::string& result) {
     Isolate* isolate = Isolate::GetCurrent();
     HandleScope scope(isolate);
     const unsigned argc = 2;
@@ -39,8 +32,7 @@ void PlugInEventHandler::Node_OnChatRoomRequestEnterCallback(
         nim_napi_new_int32(isolate, error_code),
         nim_napi_new_utf8string(isolate, result.c_str()),
     };
-    bcb->callback_.Get(isolate)->Call(isolate->GetCurrentContext(),
-                                      bcb->data_.Get(isolate), argc, argv);
+    bcb->callback_.Get(isolate)->Call(isolate->GetCurrentContext(), bcb->data_.Get(isolate), argc, argv);
 }
 
 PlugIn::PlugIn(Isolate* isolate) {
@@ -77,13 +69,10 @@ NIM_SDK_NODE_API_DEF(PlugIn, ChatRoomRequestEnterAsync) {
     int64_t room_id;
     UTF8String ext;
     GET_ARGS_VALUE(isolate, 0, int64, room_id);
-    GET_ARGS_VALUE(isolate, 2, UTF8String, ext);
+    GET_ARGS_VALUE(isolate, 2, utf8string, ext);
     ASSEMBLE_BASE_CALLBACK(1);
-    auto callback =
-        std::bind(&PlugInEventHandler::OnChatRoomRequestEnterCallback, bcb,
-                  std::placeholders::_1, std::placeholders::_2);
+    auto callback = std::bind(&PlugInEventHandler::OnChatRoomRequestEnterCallback, bcb, std::placeholders::_1, std::placeholders::_2);
 
-    nim::PluginIn::ChatRoomRequestEnterAsync(room_id, callback,
-                                             ext.toUtf8String());
+    nim::PluginIn::ChatRoomRequestEnterAsync(room_id, callback, ext.toUtf8String());
 }
 }  // namespace nim_node

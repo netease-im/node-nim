@@ -4,8 +4,8 @@
 #include "../helper/nim_node_team_helper.h"
 #include "nim_cpp_wrapper/api/nim_cpp_team.h"
 #include "nim_cpp_wrapper/helper/nim_talk_helper.h"
-#include "nim_node_team_event_handler.h"
 #include "nim_node_helper.h"
+#include "nim_node_team_event_handler.h"
 
 namespace nim_node {
 DEFINE_CLASS(Team);
@@ -86,16 +86,14 @@ NIM_SDK_NODE_API_DEF(Team, RegTeamEventCb) {
     Local<Object> obj = args.This();
     Persistent<Object> pdata;
     pdata.Reset(isolate, obj);
-    TeamEventHandler::GetInstance()->AddEventHandler("OnTeamEventCallback",
-                                                     pdata, pcb);
+    TeamEventHandler::GetInstance()->AddEventHandler("OnTeamEventCallback", pdata, pcb);
 
     auto status = nim_napi_get_value_utf8string(isolate, args[1], exten);
     if (status != napi_ok) {
         return;
     }
 
-    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, nullptr,
-                              std::placeholders::_1);
+    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, nullptr, std::placeholders::_1);
     nim::Team::RegTeamEventCb(callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Team, CreateTeamAsync) {
@@ -109,9 +107,7 @@ NIM_SDK_NODE_API_DEF(Team, CreateTeamAsync) {
     UTF8String exten, i_p;
     nim::TeamInfo info;
     std::list<utf8_string> ids;
-    auto status = nim_team_info_obj_to_struct(
-        isolate,
-        args[0]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), info);
+    auto status = nim_team_info_obj_to_struct(isolate, args[0]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), info);
     if (status != napi_ok) {
         return;
     }
@@ -133,10 +129,8 @@ NIM_SDK_NODE_API_DEF(Team, CreateTeamAsync) {
         return;
     }
 
-    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb,
-                              std::placeholders::_1);
-    nim::Team::CreateTeamAsync(info, ids, i_p.toUtf8String(), callback,
-                               exten.toUtf8String());
+    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb, std::placeholders::_1);
+    nim::Team::CreateTeamAsync(info, ids, i_p.toUtf8String(), callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Team, InviteAsync2) {
     Team* instance = node::ObjectWrap::Unwrap<Team>(args.Holder());
@@ -175,10 +169,8 @@ NIM_SDK_NODE_API_DEF(Team, InviteAsync2) {
         return;
     }
 
-    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb,
-                              std::placeholders::_1);
-    nim::Team::InviteAsync2(team_id.toUtf8String(), ids, i_p.toUtf8String(),
-                            i_a.toUtf8String(), callback, exten.toUtf8String());
+    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb, std::placeholders::_1);
+    nim::Team::InviteAsync2(team_id.toUtf8String(), ids, i_p.toUtf8String(), i_a.toUtf8String(), callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Team, KickAsync) {
     Team* instance = node::ObjectWrap::Unwrap<Team>(args.Holder());
@@ -207,10 +199,8 @@ NIM_SDK_NODE_API_DEF(Team, KickAsync) {
         return;
     }
 
-    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb,
-                              std::placeholders::_1);
-    nim::Team::KickAsync(team_id.toUtf8String(), ids, callback,
-                         exten.toUtf8String());
+    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb, std::placeholders::_1);
+    nim::Team::KickAsync(team_id.toUtf8String(), ids, callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Team, LeaveAsync) {
     Team* instance = node::ObjectWrap::Unwrap<Team>(args.Holder());
@@ -233,10 +223,8 @@ NIM_SDK_NODE_API_DEF(Team, LeaveAsync) {
         return;
     }
 
-    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb,
-                              std::placeholders::_1);
-    nim::Team::LeaveAsync(team_id.toUtf8String(), callback,
-                          exten.toUtf8String());
+    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb, std::placeholders::_1);
+    nim::Team::LeaveAsync(team_id.toUtf8String(), callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Team, DismissAsync) {
     Team* instance = node::ObjectWrap::Unwrap<Team>(args.Holder());
@@ -259,10 +247,8 @@ NIM_SDK_NODE_API_DEF(Team, DismissAsync) {
         return;
     }
 
-    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb,
-                              std::placeholders::_1);
-    nim::Team::DismissAsync(team_id.toUtf8String(), callback,
-                            exten.toUtf8String());
+    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb, std::placeholders::_1);
+    nim::Team::DismissAsync(team_id.toUtf8String(), callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Team, UpdateTeamInfoAsync) {
     Team* instance = node::ObjectWrap::Unwrap<Team>(args.Holder());
@@ -279,9 +265,7 @@ NIM_SDK_NODE_API_DEF(Team, UpdateTeamInfoAsync) {
         return;
     }
 
-    status = nim_team_info_obj_to_struct(
-        isolate,
-        args[1]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), info);
+    status = nim_team_info_obj_to_struct(isolate, args[1]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), info);
     if (status != napi_ok) {
         return;
     }
@@ -293,10 +277,8 @@ NIM_SDK_NODE_API_DEF(Team, UpdateTeamInfoAsync) {
         return;
     }
 
-    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb,
-                              std::placeholders::_1);
-    nim::Team::UpdateTeamInfoAsync(team_id.toUtf8String(), info, callback,
-                                   exten.toUtf8String());
+    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb, std::placeholders::_1);
+    nim::Team::UpdateTeamInfoAsync(team_id.toUtf8String(), info, callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Team, ApplyJoinAsync) {
     Team* instance = node::ObjectWrap::Unwrap<Team>(args.Holder());
@@ -324,10 +306,8 @@ NIM_SDK_NODE_API_DEF(Team, ApplyJoinAsync) {
         return;
     }
 
-    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb,
-                              std::placeholders::_1);
-    nim::Team::ApplyJoinAsync(team_id.toUtf8String(), reason.toUtf8String(),
-                              callback, exten.toUtf8String());
+    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb, std::placeholders::_1);
+    nim::Team::ApplyJoinAsync(team_id.toUtf8String(), reason.toUtf8String(), callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Team, PassJoinApplyAsync) {
     Team* instance = node::ObjectWrap::Unwrap<Team>(args.Holder());
@@ -355,10 +335,8 @@ NIM_SDK_NODE_API_DEF(Team, PassJoinApplyAsync) {
         return;
     }
 
-    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb,
-                              std::placeholders::_1);
-    nim::Team::PassJoinApplyAsync(team_id.toUtf8String(), a_id.toUtf8String(),
-                                  callback, exten.toUtf8String());
+    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb, std::placeholders::_1);
+    nim::Team::PassJoinApplyAsync(team_id.toUtf8String(), a_id.toUtf8String(), callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Team, RejectJoinApplyAsync) {
     Team* instance = node::ObjectWrap::Unwrap<Team>(args.Holder());
@@ -391,11 +369,8 @@ NIM_SDK_NODE_API_DEF(Team, RejectJoinApplyAsync) {
         return;
     }
 
-    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb,
-                              std::placeholders::_1);
-    nim::Team::RejectJoinApplyAsync(team_id.toUtf8String(), a_id.toUtf8String(),
-                                    reason.toUtf8String(), callback,
-                                    exten.toUtf8String());
+    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb, std::placeholders::_1);
+    nim::Team::RejectJoinApplyAsync(team_id.toUtf8String(), a_id.toUtf8String(), reason.toUtf8String(), callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Team, AddManagersAsync) {
     Team* instance = node::ObjectWrap::Unwrap<Team>(args.Holder());
@@ -423,10 +398,8 @@ NIM_SDK_NODE_API_DEF(Team, AddManagersAsync) {
     if (status != napi_ok) {
         return;
     }
-    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb,
-                              std::placeholders::_1);
-    nim::Team::AddManagersAsync(team_id.toUtf8String(), ids, callback,
-                                exten.toUtf8String());
+    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb, std::placeholders::_1);
+    nim::Team::AddManagersAsync(team_id.toUtf8String(), ids, callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Team, RemoveManagersAsync) {
     Team* instance = node::ObjectWrap::Unwrap<Team>(args.Holder());
@@ -455,10 +428,8 @@ NIM_SDK_NODE_API_DEF(Team, RemoveManagersAsync) {
         return;
     }
 
-    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb,
-                              std::placeholders::_1);
-    nim::Team::RemoveManagersAsync(team_id.toUtf8String(), ids, callback,
-                                   exten.toUtf8String());
+    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb, std::placeholders::_1);
+    nim::Team::RemoveManagersAsync(team_id.toUtf8String(), ids, callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Team, TransferTeamAsync) {
     Team* instance = node::ObjectWrap::Unwrap<Team>(args.Holder());
@@ -492,10 +463,8 @@ NIM_SDK_NODE_API_DEF(Team, TransferTeamAsync) {
         return;
     }
 
-    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb,
-                              std::placeholders::_1);
-    nim::Team::TransferTeamAsync(team_id.toUtf8String(), new_i.toUtf8String(),
-                                 is_leave, callback, exten.toUtf8String());
+    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb, std::placeholders::_1);
+    nim::Team::TransferTeamAsync(team_id.toUtf8String(), new_i.toUtf8String(), is_leave, callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Team, UpdateMyPropertyAsync) {
     Team* instance = node::ObjectWrap::Unwrap<Team>(args.Holder());
@@ -507,9 +476,7 @@ NIM_SDK_NODE_API_DEF(Team, UpdateMyPropertyAsync) {
 
     nim::TeamMemberProperty info;
     UTF8String exten;
-    auto status = nim_team_member_obj_to_struct(
-        isolate,
-        args[0]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), info);
+    auto status = nim_team_member_obj_to_struct(isolate, args[0]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), info);
     if (status != napi_ok) {
         return;
     }
@@ -521,8 +488,7 @@ NIM_SDK_NODE_API_DEF(Team, UpdateMyPropertyAsync) {
         return;
     }
 
-    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb,
-                              std::placeholders::_1);
+    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb, std::placeholders::_1);
     nim::Team::UpdateMyPropertyAsync(info, callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Team, UpdateOtherNickAsync) {
@@ -535,9 +501,7 @@ NIM_SDK_NODE_API_DEF(Team, UpdateOtherNickAsync) {
 
     nim::TeamMemberProperty info;
     UTF8String exten;
-    auto status = nim_team_member_obj_to_struct(
-        isolate,
-        args[0]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), info);
+    auto status = nim_team_member_obj_to_struct(isolate, args[0]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), info);
     if (status != napi_ok) {
         return;
     }
@@ -549,8 +513,7 @@ NIM_SDK_NODE_API_DEF(Team, UpdateOtherNickAsync) {
         return;
     }
 
-    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb,
-                              std::placeholders::_1);
+    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb, std::placeholders::_1);
     nim::Team::UpdateOtherNickAsync(info, callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Team, AcceptInvitationAsync) {
@@ -579,11 +542,8 @@ NIM_SDK_NODE_API_DEF(Team, AcceptInvitationAsync) {
         return;
     }
 
-    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb,
-                              std::placeholders::_1);
-    nim::Team::AcceptInvitationAsync(team_id.toUtf8String(),
-                                     i_id.toUtf8String(), callback,
-                                     exten.toUtf8String());
+    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb, std::placeholders::_1);
+    nim::Team::AcceptInvitationAsync(team_id.toUtf8String(), i_id.toUtf8String(), callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Team, RejectInvitationAsync) {
     Team* instance = node::ObjectWrap::Unwrap<Team>(args.Holder());
@@ -616,11 +576,8 @@ NIM_SDK_NODE_API_DEF(Team, RejectInvitationAsync) {
         return;
     }
 
-    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb,
-                              std::placeholders::_1);
-    nim::Team::RejectInvitationAsync(team_id.toUtf8String(),
-                                     i_id.toUtf8String(), reason.toUtf8String(),
-                                     callback, exten.toUtf8String());
+    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb, std::placeholders::_1);
+    nim::Team::RejectInvitationAsync(team_id.toUtf8String(), i_id.toUtf8String(), reason.toUtf8String(), callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Team, QueryAllMyTeamsAsync) {
     Team* instance = node::ObjectWrap::Unwrap<Team>(args.Holder());
@@ -638,8 +595,7 @@ NIM_SDK_NODE_API_DEF(Team, QueryAllMyTeamsAsync) {
         return;
     }
 
-    auto callback = std::bind(&TeamEventHandler::OnQueryMyTeamsCallback, bcb,
-                              std::placeholders::_1, std::placeholders::_2);
+    auto callback = std::bind(&TeamEventHandler::OnQueryMyTeamsCallback, bcb, std::placeholders::_1, std::placeholders::_2);
     nim::Team::QueryAllMyTeamsAsync(callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Team, QueryAllMyTeamsInfoAsync) {
@@ -658,9 +614,7 @@ NIM_SDK_NODE_API_DEF(Team, QueryAllMyTeamsInfoAsync) {
         return;
     }
 
-    auto callback =
-        std::bind(&TeamEventHandler::OnQueryAllMyTeamsInfoCallback, bcb,
-                  std::placeholders::_1, std::placeholders::_2);
+    auto callback = std::bind(&TeamEventHandler::OnQueryAllMyTeamsInfoCallback, bcb, std::placeholders::_1, std::placeholders::_2);
     nim::Team::QueryAllMyTeamsInfoAsync(callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Team, QueryMyAllMemberInfosAsync) {
@@ -679,9 +633,7 @@ NIM_SDK_NODE_API_DEF(Team, QueryMyAllMemberInfosAsync) {
         return;
     }
 
-    auto callback =
-        std::bind(&TeamEventHandler::OnQueryMyAllMemberInfosCallback, bcb,
-                  std::placeholders::_1, std::placeholders::_2);
+    auto callback = std::bind(&TeamEventHandler::OnQueryMyAllMemberInfosCallback, bcb, std::placeholders::_1, std::placeholders::_2);
     nim::Team::QueryMyAllMemberInfosAsync(callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Team, QueryTeamMembersAsync) {
@@ -705,11 +657,9 @@ NIM_SDK_NODE_API_DEF(Team, QueryTeamMembersAsync) {
         return;
     }
 
-    auto callback = std::bind(&TeamEventHandler::OnQueryTeamMembersCallback,
-                              bcb, std::placeholders::_1, std::placeholders::_2,
-                              std::placeholders::_3);
-    nim::Team::QueryTeamMembersAsync(team_id.toUtf8String(), callback,
-                                     exten.toUtf8String());
+    auto callback =
+        std::bind(&TeamEventHandler::OnQueryTeamMembersCallback, bcb, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+    nim::Team::QueryTeamMembersAsync(team_id.toUtf8String(), callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Team, QueryTeamMemberAsync) {
     Team* instance = node::ObjectWrap::Unwrap<Team>(args.Holder());
@@ -737,11 +687,8 @@ NIM_SDK_NODE_API_DEF(Team, QueryTeamMemberAsync) {
         return;
     }
 
-    auto callback = std::bind(&TeamEventHandler::OnQueryTeamMemberCallback, bcb,
-                              std::placeholders::_1);
-    nim::Team::QueryTeamMemberAsync(team_id.toUtf8String(),
-                                    accid.toUtf8String(), callback,
-                                    exten.toUtf8String());
+    auto callback = std::bind(&TeamEventHandler::OnQueryTeamMemberCallback, bcb, std::placeholders::_1);
+    nim::Team::QueryTeamMemberAsync(team_id.toUtf8String(), accid.toUtf8String(), callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Team, QueryTeamInfoAsync) {
     Team* instance = node::ObjectWrap::Unwrap<Team>(args.Holder());
@@ -764,10 +711,8 @@ NIM_SDK_NODE_API_DEF(Team, QueryTeamInfoAsync) {
         return;
     }
 
-    auto callback = std::bind(&TeamEventHandler::OnQueryTeamInfoCallback, bcb,
-                              std::placeholders::_1, std::placeholders::_2);
-    nim::Team::QueryTeamInfoAsync(team_id.toUtf8String(), callback,
-                                  exten.toUtf8String());
+    auto callback = std::bind(&TeamEventHandler::OnQueryTeamInfoCallback, bcb, std::placeholders::_1, std::placeholders::_2);
+    nim::Team::QueryTeamInfoAsync(team_id.toUtf8String(), callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Team, QueryTeamInfoOnlineAsync) {
     Team* instance = node::ObjectWrap::Unwrap<Team>(args.Holder());
@@ -790,10 +735,8 @@ NIM_SDK_NODE_API_DEF(Team, QueryTeamInfoOnlineAsync) {
         return;
     }
 
-    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb,
-                              std::placeholders::_1);
-    nim::Team::QueryTeamInfoOnlineAsync(team_id.toUtf8String(), callback,
-                                        exten.toUtf8String());
+    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb, std::placeholders::_1);
+    nim::Team::QueryTeamInfoOnlineAsync(team_id.toUtf8String(), callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Team, UnregTeamCb) {
     Team* instance = node::ObjectWrap::Unwrap<Team>(args.Holder());
@@ -835,10 +778,8 @@ NIM_SDK_NODE_API_DEF(Team, MuteMemberAsync) {
         return;
     }
 
-    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb,
-                              std::placeholders::_1);
-    nim::Team::MuteMemberAsync(team_id.toUtf8String(), m_i.toUtf8String(),
-                               set_mute, callback, exten.toUtf8String());
+    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb, std::placeholders::_1);
+    nim::Team::MuteMemberAsync(team_id.toUtf8String(), m_i.toUtf8String(), set_mute, callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Team, MuteAsync) {
     Team* instance = node::ObjectWrap::Unwrap<Team>(args.Holder());
@@ -867,10 +808,8 @@ NIM_SDK_NODE_API_DEF(Team, MuteAsync) {
         return;
     }
 
-    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb,
-                              std::placeholders::_1);
-    nim::Team::MuteAsync(team_id.toUtf8String(), set_mute, callback,
-                         exten.toUtf8String());
+    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb, std::placeholders::_1);
+    nim::Team::MuteAsync(team_id.toUtf8String(), set_mute, callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Team, QueryMuteListOnlineAsync) {
     Team* instance = node::ObjectWrap::Unwrap<Team>(args.Holder());
@@ -893,11 +832,9 @@ NIM_SDK_NODE_API_DEF(Team, QueryMuteListOnlineAsync) {
         return;
     }
 
-    auto callback = std::bind(&TeamEventHandler::OnQueryMembersOnlineCallback,
-                              bcb, std::placeholders::_1, std::placeholders::_2,
-                              std::placeholders::_3);
-    nim::Team::QueryMuteListOnlineAsync(team_id.toUtf8String(), callback,
-                                        exten.toUtf8String());
+    auto callback =
+        std::bind(&TeamEventHandler::OnQueryMembersOnlineCallback, bcb, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+    nim::Team::QueryMuteListOnlineAsync(team_id.toUtf8String(), callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Team, TeamMsgAckRead) {
     Team* instance = node::ObjectWrap::Unwrap<Team>(args.Holder());
@@ -923,10 +860,8 @@ NIM_SDK_NODE_API_DEF(Team, TeamMsgAckRead) {
         return;
     }
 
-    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb,
-                              std::placeholders::_1);
-    nim::Team::TeamMsgAckRead(team_id.toUtf8String(), msgs, callback,
-                              exten.toUtf8String());
+    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb, std::placeholders::_1);
+    nim::Team::TeamMsgAckRead(team_id.toUtf8String(), msgs, callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Team, TeamMsgQueryUnreadList) {
     Team* instance = node::ObjectWrap::Unwrap<Team>(args.Holder());
@@ -943,9 +878,7 @@ NIM_SDK_NODE_API_DEF(Team, TeamMsgQueryUnreadList) {
         return;
     }
 
-    nim_talk_im_msg_obj_to_struct(
-        isolate,
-        args[1]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), msg);
+    nim_talk_im_msg_obj_to_struct(isolate, args[1]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), msg);
 
     ASSEMBLE_BASE_CALLBACK(2)
 
@@ -954,10 +887,8 @@ NIM_SDK_NODE_API_DEF(Team, TeamMsgQueryUnreadList) {
         return;
     }
 
-    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb,
-                              std::placeholders::_1);
-    nim::Team::TeamMsgQueryUnreadList(team_id.toUtf8String(), msg, callback,
-                                      exten.toUtf8String());
+    auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb, std::placeholders::_1);
+    nim::Team::TeamMsgQueryUnreadList(team_id.toUtf8String(), msg, callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Team, QueryTeamMembersInvitor) {
     Team* instance = node::ObjectWrap::Unwrap<Team>(args.Holder());
@@ -978,9 +909,8 @@ NIM_SDK_NODE_API_DEF(Team, QueryTeamMembersInvitor) {
 
     ASSEMBLE_BASE_CALLBACK(2)
 
-    auto callback = std::bind(
-        &TeamEventHandler::OnQueryTeamMembersInvitorCallback, bcb,
-        std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+    auto callback =
+        std::bind(&TeamEventHandler::OnQueryTeamMembersInvitorCallback, bcb, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
     nim::Team::QueryTeamMembersInvitor(team_id.toUtf8String(), ids, callback);
 }
 
@@ -989,15 +919,12 @@ NIM_SDK_NODE_API_DEF(Team, QueryTeamInfoByKeywordAsync) {
 
     UTF8String keyword, exten;
     auto status = napi_ok;
-    GET_ARGS_VALUE(isolate, 0, UTF8String, keyword)
+    GET_ARGS_VALUE(isolate, 0, utf8string, keyword)
     ASSEMBLE_BASE_CALLBACK(1)
-    GET_ARGS_VALUE(isolate, 2, UTF8String, exten)
+    GET_ARGS_VALUE(isolate, 2, utf8string, exten)
 
-    auto callback =
-        std::bind(&TeamEventHandler::OnQueryAllMyTeamsInfoCallback, bcb,
-                  std::placeholders::_1, std::placeholders::_2);
-    auto ret = nim::Team::QueryTeamInfoByKeywordAsync(
-        keyword.toUtf8String(), callback, exten.toUtf8String());
+    auto callback = std::bind(&TeamEventHandler::OnQueryAllMyTeamsInfoCallback, bcb, std::placeholders::_1, std::placeholders::_2);
+    auto ret = nim::Team::QueryTeamInfoByKeywordAsync(keyword.toUtf8String(), callback, exten.toUtf8String());
     args.GetReturnValue().Set(nim_napi_new_bool(isolate, ret));
 }
 
@@ -1006,15 +933,10 @@ NIM_SDK_NODE_API_DEF(Team, UpdateTInfoLocal) {
     UTF8String keyword, exten;
     auto status = napi_ok;
     std::list<nim::TeamInfo> tinfo_list;
-    nim_team_info_array_to_list(
-        isolate,
-        args[0]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(),
-        tinfo_list);
+    nim_team_info_array_to_list(isolate, args[0]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), tinfo_list);
     ASSEMBLE_BASE_CALLBACK(1)
-    GET_ARGS_VALUE(isolate, 2, UTF8String, exten)
-    auto callback =
-        std::bind(&TeamEventHandler::OnUpdateTInfoLocalCallback, bcb,
-                  std::placeholders::_1, std::placeholders::_2);
+    GET_ARGS_VALUE(isolate, 2, utf8string, exten)
+    auto callback = std::bind(&TeamEventHandler::OnUpdateTInfoLocalCallback, bcb, std::placeholders::_1, std::placeholders::_2);
     nim::Team::UpdateTInfoLocal(tinfo_list, callback, exten.toUtf8String());
 }
 

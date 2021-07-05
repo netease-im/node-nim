@@ -191,8 +191,8 @@ napi_status nim_napi_get_value_enumerate_list(Isolate* isolate, const Local<Valu
 
 napi_status nim_napi_get_value_utf8string_list(Isolate* isolate, const Local<Value>& value, std::list<utf8_string>& out);
 napi_status nim_napi_get_value_utf8string(Isolate* isolate, const Local<Value>& value, UTF8String& out);
-napi_status nim_napi_get_value_UTF8String(Isolate* isolate, const Local<Value>& value, UTF8String& out);
 napi_status nim_napi_get_value_uint32(Isolate* isolate, const Local<Value>& value, uint32_t& out);
+napi_status nim_napi_get_value_uint32_list(Isolate* isolate, const Local<Value>& value, std::list<uint32_t>& out);
 napi_status nim_napi_get_value_int32(Isolate* isolate, const Local<Value>& value, int32_t& out);
 napi_status nim_napi_get_value_bool(Isolate* isolate, const Local<Value>& value, bool& out);
 napi_status nim_napi_get_value_int64(Isolate* isolate, const Local<Value>& value, int64_t& out);
@@ -200,13 +200,19 @@ napi_status nim_napi_get_value_uint64(Isolate* isolate, const Local<Value>& valu
 
 napi_status nim_napi_get_object_value(Isolate* isolate, const Local<Object>& obj, const utf8_string& keyName, Local<Value>& out);
 napi_status nim_napi_get_object_value_utf8string(Isolate* isolate, const Local<Object>& obj, const utf8_string& keyName, UTF8String& out);
+napi_status nim_napi_get_object_value_utf8string_list(Isolate* isolate,
+                                                      const Local<Object>& obj,
+                                                      const utf8_string& keyName,
+                                                      std::list<utf8_string>& out);
 napi_status nim_napi_get_object_value_uint32(Isolate* isolate, const Local<Object>& obj, const utf8_string& keyName, uint32_t& out);
+napi_status nim_napi_get_object_value_uint32_list(Isolate* isolate, const Local<Object>& obj, const utf8_string& keyName, std::list<uint32_t>& out);
 napi_status nim_napi_get_object_value_int32(Isolate* isolate, const Local<Object>& obj, const utf8_string& keyName, int32_t& out);
 napi_status nim_napi_get_object_value_bool(Isolate* isolate, const Local<Object>& obj, const utf8_string& keyName, bool& out);
 napi_status nim_napi_get_object_value_int64(Isolate* isolate, const Local<Object>& obj, const utf8_string& keyName, int64_t& out);
 napi_status nim_napi_get_object_value_uint64(Isolate* isolate, const Local<Object>& obj, const utf8_string& keyName, uint64_t& out);
 
 Local<Value> nim_napi_new_utf8string(Isolate* isolate, const utf8_char* keyValue);
+Local<Value> nim_napi_new_utf8string_list(Isolate* isolate, const std::list<utf8_string>& keyValue);
 Local<Value> nim_napi_new_uint32(Isolate* isolate, const uint32_t& keyValue);
 Local<Value> nim_napi_new_int32(Isolate* isolate, const int32_t& keyValue);
 Local<Value> nim_napi_new_bool(Isolate* isolate, const bool& keyValue);
@@ -214,6 +220,10 @@ Local<Value> nim_napi_new_int64(Isolate* isolate, const int64_t& keyValue);
 Local<Value> nim_napi_new_uint64(Isolate* isolate, const uint64_t& keyValue);
 
 napi_status nim_napi_set_object_value_utf8string(Isolate* isolate, Local<Object>& obj, const utf8_string& keyName, const utf8_string& keyValue);
+napi_status nim_napi_set_object_value_utf8string_list(Isolate* isolate,
+                                                      Local<Object>& obj,
+                                                      const utf8_string& keyName,
+                                                      const std::list<utf8_string>& keyValue);
 napi_status nim_napi_set_object_value_uint32(Isolate* isolate, Local<Object>& obj, const utf8_string& keyName, const uint32_t& keyValue);
 napi_status nim_napi_set_object_value_int32(Isolate* isolate, Local<Object>& obj, const utf8_string& keyName, const int32_t& keyValue);
 napi_status nim_napi_set_object_value_bool(Isolate* isolate, Local<Object>& obj, const utf8_string& keyName, const bool& keyValue);

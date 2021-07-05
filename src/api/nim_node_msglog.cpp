@@ -3,8 +3,8 @@
 #include "../helper/nim_node_msglog_helper.h"
 #include "../helper/nim_node_talk_helper.h"
 #include "nim_cpp_wrapper/api/nim_cpp_msglog.h"
-#include "nim_node_msglog_event_handler.h"
 #include "nim_node_helper.h"
+#include "nim_node_msglog_event_handler.h"
 
 namespace nim_node {
 DEFINE_CLASS(MsgLog);
@@ -48,6 +48,7 @@ void MsgLog::InitModule(Local<Object>& module) {
     SET_PROTOTYPE(QueryMessageIsThreadRoot);
     SET_PROTOTYPE(QueryMessageOnline);
     SET_PROTOTYPE(QueryThreadHistoryMsg);
+    SET_PROTOTYPE(FullTextSearchOnlineAsync);
 
     END_OBJECT_INIT(MsgLog)
 }
@@ -84,17 +85,14 @@ NIM_SDK_NODE_API_DEF(MsgLog, RegMessageStatusChangedCb) {
     Local<Object> obj = args.This();
     Persistent<Object> pdata;
     pdata.Reset(isolate, obj);
-    MsgLogEventHandler::GetInstance()->AddEventHandler(
-        "OnMessageStatusChangedCallback", pdata, pcb);
+    MsgLogEventHandler::GetInstance()->AddEventHandler("OnMessageStatusChangedCallback", pdata, pcb);
 
     auto status = nim_napi_get_value_utf8string(isolate, args[1], exten);
     if (status != napi_ok) {
         return;
     }
 
-    auto callback =
-        std::bind(&MsgLogEventHandler::OnMessageStatusChangedCallback, nullptr,
-                  std::placeholders::_1);
+    auto callback = std::bind(&MsgLogEventHandler::OnMessageStatusChangedCallback, nullptr, std::placeholders::_1);
     nim::MsgLog::RegMessageStatusChangedCb(callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(MsgLog, QueryMsgByIDAysnc) {
@@ -130,11 +128,9 @@ NIM_SDK_NODE_API_DEF(MsgLog, QueryMsgByIDAysnc) {
         return;
     }
 
-    auto callback = std::bind(&MsgLogEventHandler::OnQuerySingleMsgCallback,
-                              bcb, std::placeholders::_1, std::placeholders::_2,
-                              std::placeholders::_3);
-    auto ret = nim::MsgLog::QueryMsgByIDAysnc(id.toUtf8String(), callback,
-                                              exten.toUtf8String());
+    auto callback =
+        std::bind(&MsgLogEventHandler::OnQuerySingleMsgCallback, bcb, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+    auto ret = nim::MsgLog::QueryMsgByIDAysnc(id.toUtf8String(), callback, exten.toUtf8String());
     args.GetReturnValue().Set(Boolean::New(isolate, ret));
 }
 NIM_SDK_NODE_API_DEF(MsgLog, QueryMsgAsync) {
@@ -188,12 +184,9 @@ NIM_SDK_NODE_API_DEF(MsgLog, QueryMsgAsync) {
         return;
     }
 
-    auto callback = std::bind(&MsgLogEventHandler::OnQueryMsgCallback, bcb,
-                              std::placeholders::_1, std::placeholders::_2,
-                              std::placeholders::_3, std::placeholders::_4);
-    auto ret = nim::MsgLog::QueryMsgAsync(
-        id.toUtf8String(), (nim::NIMSessionType)(type), count, anchor, callback,
-        exten.toUtf8String());
+    auto callback = std::bind(&MsgLogEventHandler::OnQueryMsgCallback, bcb, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
+                              std::placeholders::_4);
+    auto ret = nim::MsgLog::QueryMsgAsync(id.toUtf8String(), (nim::NIMSessionType)(type), count, anchor, callback, exten.toUtf8String());
     args.GetReturnValue().Set(Boolean::New(isolate, ret));
 }
 NIM_SDK_NODE_API_DEF(MsgLog, QueryMsgOnlineAsync) {
@@ -205,10 +198,7 @@ NIM_SDK_NODE_API_DEF(MsgLog, QueryMsgOnlineAsync) {
     CHECK_ARGS_COUNT(2)
 
     nim::MsgLog::QueryMsgOnlineAsyncParam param;
-    nim_msglog_query_online_param_obj_to_struct(
-        isolate,
-        args[0]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(),
-        param);
+    nim_msglog_query_online_param_obj_to_struct(isolate, args[0]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), param);
 
     Local<Function> cb = args[1].As<Function>();
     if (cb.IsEmpty()) {
@@ -224,9 +214,8 @@ NIM_SDK_NODE_API_DEF(MsgLog, QueryMsgOnlineAsync) {
     bcb->callback_.Reset(isolate, pcb);
     bcb->data_.Reset(isolate, pdata);
 
-    auto callback = std::bind(&MsgLogEventHandler::OnQueryMsgCallback, bcb,
-                              std::placeholders::_1, std::placeholders::_2,
-                              std::placeholders::_3, std::placeholders::_4);
+    auto callback = std::bind(&MsgLogEventHandler::OnQueryMsgCallback, bcb, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
+                              std::placeholders::_4);
     auto ret = nim::MsgLog::QueryMsgOnlineAsync(param, callback);
     args.GetReturnValue().Set(Boolean::New(isolate, ret));
 }
@@ -239,35 +228,15 @@ NIM_SDK_NODE_API_DEF(MsgLog, QueryMsgByKeywordOnlineAsync) {
     CHECK_ARGS_COUNT(2)
 
     nim::MsgLog::QueryMsgByKeywordOnlineParam param;
-    nim_msglog_query_keyword_online_param_obj_to_struct(
-        isolate,
-        args[0]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(),
-        param);
+    nim_msglog_query_keyword_online_param_obj_to_struct(isolate, args[0]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), param);
     ASSEMBLE_BASE_CALLBACK(1)
 
-    auto callback = std::bind(&MsgLogEventHandler::OnQueryMsgCallback, bcb,
-                              std::placeholders::_1, std::placeholders::_2,
-                              std::placeholders::_3, std::placeholders::_4);
+    auto callback = std::bind(&MsgLogEventHandler::OnQueryMsgCallback, bcb, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
+                              std::placeholders::_4);
     auto ret = nim::MsgLog::QueryMsgByKeywordOnlineAsync(param, callback);
     args.GetReturnValue().Set(Boolean::New(isolate, ret));
 }
-static napi_status nim_msglog_msg_type_array_to_list(
-    Isolate* isolate,
-    const Local<Value>& values,
-    std::list<nim::NIMMessageType>& type) {
-    if (!values->IsArray())
-        return napi_invalid_arg;
-    Local<Array> arr = Local<Array>::Cast(values);
-    uint32_t len = arr->Length();
-    for (uint32_t i = 0; i < len; i++) {
-        uint32_t t;
-        nim_napi_get_value_uint32(
-            isolate, arr->Get(isolate->GetCurrentContext(), i).ToLocalChecked(),
-            t);
-        type.push_back((nim::NIMMessageType)(t));
-    }
-    return napi_ok;
-}
+
 NIM_SDK_NODE_API_DEF(MsgLog, QueryMsgOfSpecifiedTypeInASessionAsync) {
     MsgLog* instance = node::ObjectWrap::Unwrap<MsgLog>(args.Holder());
     if (!instance) {
@@ -342,13 +311,10 @@ NIM_SDK_NODE_API_DEF(MsgLog, QueryMsgOfSpecifiedTypeInASessionAsync) {
         return;
     }
 
-    auto callback = std::bind(&MsgLogEventHandler::OnQueryMsgCallback, bcb,
-                              std::placeholders::_1, std::placeholders::_2,
-                              std::placeholders::_3, std::placeholders::_4);
-    auto ret = nim::MsgLog::QueryMsgOfSpecifiedTypeInASessionAsync(
-        (nim::NIMSessionType)(type), id.toUtf8String(), count, from_time,
-        end_time, end_id.toUtf8String(), reverse, types, callback,
-        exten.toUtf8String());
+    auto callback = std::bind(&MsgLogEventHandler::OnQueryMsgCallback, bcb, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
+                              std::placeholders::_4);
+    auto ret = nim::MsgLog::QueryMsgOfSpecifiedTypeInASessionAsync((nim::NIMSessionType)(type), id.toUtf8String(), count, from_time, end_time,
+                                                                   end_id.toUtf8String(), reverse, types, callback, exten.toUtf8String());
     args.GetReturnValue().Set(Boolean::New(isolate, ret));
 }
 NIM_SDK_NODE_API_DEF(MsgLog, QueryMsgByOptionsAsync) {
@@ -418,13 +384,10 @@ NIM_SDK_NODE_API_DEF(MsgLog, QueryMsgByOptionsAsync) {
         return;
     }
 
-    auto callback = std::bind(&MsgLogEventHandler::OnQueryMsgCallback, bcb,
-                              std::placeholders::_1, std::placeholders::_2,
-                              std::placeholders::_3, std::placeholders::_4);
-    auto ret = nim::MsgLog::QueryMsgByOptionsAsync(
-        (nim::NIMMsgLogQueryRange)(range), ids, count, from_time, end_time,
-        end_id.toUtf8String(), reverse, (nim::NIMMessageType)(type),
-        content.toUtf8String(), callback, exten.toUtf8String());
+    auto callback = std::bind(&MsgLogEventHandler::OnQueryMsgCallback, bcb, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
+                              std::placeholders::_4);
+    auto ret = nim::MsgLog::QueryMsgByOptionsAsync((nim::NIMMsgLogQueryRange)(range), ids, count, from_time, end_time, end_id.toUtf8String(), reverse,
+                                                   (nim::NIMMessageType)(type), content.toUtf8String(), callback, exten.toUtf8String());
     args.GetReturnValue().Set(Boolean::New(isolate, ret));
 }
 NIM_SDK_NODE_API_DEF(MsgLog, BatchStatusReadAsync) {
@@ -467,12 +430,9 @@ NIM_SDK_NODE_API_DEF(MsgLog, BatchStatusReadAsync) {
         return;
     }
 
-    auto callback = std::bind(
-        &MsgLogEventHandler::OnModifyMultipleMsglogCallback, bcb,
-        std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-    auto ret = nim::MsgLog::BatchStatusReadAsync(
-        id.toUtf8String(), (nim::NIMSessionType)(type), callback,
-        exten.toUtf8String());
+    auto callback =
+        std::bind(&MsgLogEventHandler::OnModifyMultipleMsglogCallback, bcb, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+    auto ret = nim::MsgLog::BatchStatusReadAsync(id.toUtf8String(), (nim::NIMSessionType)(type), callback, exten.toUtf8String());
     args.GetReturnValue().Set(Boolean::New(isolate, ret));
 }
 NIM_SDK_NODE_API_DEF(MsgLog, BatchStatusDeleteAsync) {
@@ -481,10 +441,11 @@ NIM_SDK_NODE_API_DEF(MsgLog, BatchStatusDeleteAsync) {
         return;
     }
 
-    CHECK_ARGS_COUNT(4)
+    CHECK_ARGS_COUNT(5)
 
     UTF8String exten, id;
     uint32_t type;
+    bool revert_by_query_online;
 
     auto status = nim_napi_get_value_utf8string(isolate, args[0], id);
     if (status != napi_ok) {
@@ -496,7 +457,12 @@ NIM_SDK_NODE_API_DEF(MsgLog, BatchStatusDeleteAsync) {
         return;
     }
 
-    Local<Function> cb = args[2].As<Function>();
+    status = nim_napi_get_value_bool(isolate, args[2], revert_by_query_online);
+    if (status != napi_ok) {
+        return;
+    }
+
+    Local<Function> cb = args[3].As<Function>();
     if (cb.IsEmpty()) {
         return;
     }
@@ -510,17 +476,15 @@ NIM_SDK_NODE_API_DEF(MsgLog, BatchStatusDeleteAsync) {
     bcb->callback_.Reset(isolate, pcb);
     bcb->data_.Reset(isolate, pdata);
 
-    status = nim_napi_get_value_utf8string(isolate, args[3], exten);
+    status = nim_napi_get_value_utf8string(isolate, args[4], exten);
     if (status != napi_ok) {
         return;
     }
 
-    auto callback = std::bind(
-        &MsgLogEventHandler::OnModifyMultipleMsglogCallback, bcb,
-        std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-    auto ret = nim::MsgLog::BatchStatusDeleteAsync(
-        id.toUtf8String(), (nim::NIMSessionType)(type), callback,
-        exten.toUtf8String());
+    auto callback =
+        std::bind(&MsgLogEventHandler::OnModifyMultipleMsglogCallback, bcb, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+    auto ret =
+        nim::MsgLog::BatchStatusDeleteAsyncEx(id.toUtf8String(), (nim::NIMSessionType)(type), revert_by_query_online, callback, exten.toUtf8String());
     args.GetReturnValue().Set(Boolean::New(isolate, ret));
 }
 NIM_SDK_NODE_API_DEF(MsgLog, SetStatusAsync) {
@@ -563,12 +527,8 @@ NIM_SDK_NODE_API_DEF(MsgLog, SetStatusAsync) {
         return;
     }
 
-    auto callback =
-        std::bind(&MsgLogEventHandler::OnModifySingleMsglogCallback, bcb,
-                  std::placeholders::_1, std::placeholders::_2);
-    auto ret = nim::MsgLog::SetStatusAsync(id.toUtf8String(),
-                                           (nim::NIMMsgLogStatus)(msgStatus),
-                                           callback, exten.toUtf8String());
+    auto callback = std::bind(&MsgLogEventHandler::OnModifySingleMsglogCallback, bcb, std::placeholders::_1, std::placeholders::_2);
+    auto ret = nim::MsgLog::SetStatusAsync(id.toUtf8String(), (nim::NIMMsgLogStatus)(msgStatus), callback, exten.toUtf8String());
     args.GetReturnValue().Set(Boolean::New(isolate, ret));
 }
 NIM_SDK_NODE_API_DEF(MsgLog, SetSubStatusAsync) {
@@ -611,12 +571,8 @@ NIM_SDK_NODE_API_DEF(MsgLog, SetSubStatusAsync) {
         return;
     }
 
-    auto callback =
-        std::bind(&MsgLogEventHandler::OnModifySingleMsglogCallback, bcb,
-                  std::placeholders::_1, std::placeholders::_2);
-    auto ret = nim::MsgLog::SetSubStatusAsync(
-        id.toUtf8String(), (nim::NIMMsgLogSubStatus)(msgStatus), callback,
-        exten.toUtf8String());
+    auto callback = std::bind(&MsgLogEventHandler::OnModifySingleMsglogCallback, bcb, std::placeholders::_1, std::placeholders::_2);
+    auto ret = nim::MsgLog::SetSubStatusAsync(id.toUtf8String(), (nim::NIMMsgLogSubStatus)(msgStatus), callback, exten.toUtf8String());
     args.GetReturnValue().Set(Boolean::New(isolate, ret));
 }
 NIM_SDK_NODE_API_DEF(MsgLog, WriteMsglogToLocalAsync) {
@@ -625,24 +581,79 @@ NIM_SDK_NODE_API_DEF(MsgLog, WriteMsglogToLocalAsync) {
         return;
     }
 
-    CHECK_ARGS_COUNT(5)
-    UTF8String exten, id;
+    CHECK_ARGS_COUNT(6)
+    UTF8String id;
     nim::IMMessage msg;
     bool need_update_session;
+    bool compose_last_msg;
+    std::list<nim::NIMMessageType> exclude_msg_type;
 
     auto status = nim_napi_get_value_utf8string(isolate, args[0], id);
     if (status != napi_ok) {
         return;
     }
 
-    status = nim_talk_im_msg_obj_to_struct(
-        isolate,
-        args[1]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), msg);
+    status = nim_talk_im_msg_obj_to_struct(isolate, args[1]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), msg);
     if (status != napi_ok) {
         return;
     }
 
     status = nim_napi_get_value_bool(isolate, args[2], need_update_session);
+    if (status != napi_ok) {
+        return;
+    }
+
+    status = nim_napi_get_value_bool(isolate, args[3], compose_last_msg);
+    if (status != napi_ok) {
+        return;
+    }
+
+    status = nim_msglog_msg_type_array_to_list(isolate, args[4], exclude_msg_type);
+    if (status != napi_ok) {
+        return;
+    }
+
+    Local<Function> cb = args[5].As<Function>();
+    if (cb.IsEmpty()) {
+        return;
+    }
+
+    Persistent<Function> pcb;
+    pcb.Reset(isolate, cb);
+    Local<Object> obj = args.This();
+    Persistent<Object> pdata;
+    pdata.Reset(isolate, obj);
+    BaseCallbackPtr bcb = BaseCallbackPtr(new BaseCallback());
+    bcb->callback_.Reset(isolate, pcb);
+    bcb->data_.Reset(isolate, pdata);
+
+    auto callback = std::bind(&MsgLogEventHandler::OnModifySingleMsglogCallback, bcb, std::placeholders::_1, std::placeholders::_2);
+    auto ret = nim::MsgLog::WriteMsglogToLocalAsyncEx(id.toUtf8String(), msg, need_update_session, compose_last_msg, exclude_msg_type, callback);
+    args.GetReturnValue().Set(Boolean::New(isolate, ret));
+}
+NIM_SDK_NODE_API_DEF(MsgLog, DeleteBySessionTypeAsync) {
+    MsgLog* instance = node::ObjectWrap::Unwrap<MsgLog>(args.Holder());
+    if (!instance) {
+        return;
+    }
+
+    CHECK_ARGS_COUNT(5)
+    UTF8String exten;
+    uint32_t type;
+    bool delete_sessions;
+    bool revert_by_query_online;
+
+    auto status = nim_napi_get_value_bool(isolate, args[0], delete_sessions);
+    if (status != napi_ok) {
+        return;
+    }
+
+    status = nim_napi_get_value_uint32(isolate, args[1], type);
+    if (status != napi_ok) {
+        return;
+    }
+
+    status = nim_napi_get_value_bool(isolate, args[5], revert_by_query_online);
     if (status != napi_ok) {
         return;
     }
@@ -667,59 +678,9 @@ NIM_SDK_NODE_API_DEF(MsgLog, WriteMsglogToLocalAsync) {
     }
 
     auto callback =
-        std::bind(&MsgLogEventHandler::OnModifySingleMsglogCallback, bcb,
-                  std::placeholders::_1, std::placeholders::_2);
-    auto ret = nim::MsgLog::WriteMsglogToLocalAsync(
-        id.toUtf8String(), msg, need_update_session, callback,
-        exten.toUtf8String());
-    args.GetReturnValue().Set(Boolean::New(isolate, ret));
-}
-NIM_SDK_NODE_API_DEF(MsgLog, DeleteBySessionTypeAsync) {
-    MsgLog* instance = node::ObjectWrap::Unwrap<MsgLog>(args.Holder());
-    if (!instance) {
-        return;
-    }
-
-    CHECK_ARGS_COUNT(4)
-    UTF8String exten;
-    uint32_t type;
-    bool delete_sessions;
-
-    auto status = nim_napi_get_value_bool(isolate, args[0], delete_sessions);
-    if (status != napi_ok) {
-        return;
-    }
-
-    status = nim_napi_get_value_uint32(isolate, args[1], type);
-    if (status != napi_ok) {
-        return;
-    }
-
-    Local<Function> cb = args[2].As<Function>();
-    if (cb.IsEmpty()) {
-        return;
-    }
-
-    Persistent<Function> pcb;
-    pcb.Reset(isolate, cb);
-    Local<Object> obj = args.This();
-    Persistent<Object> pdata;
-    pdata.Reset(isolate, obj);
-    BaseCallbackPtr bcb = BaseCallbackPtr(new BaseCallback());
-    bcb->callback_.Reset(isolate, pcb);
-    bcb->data_.Reset(isolate, pdata);
-
-    status = nim_napi_get_value_utf8string(isolate, args[3], exten);
-    if (status != napi_ok) {
-        return;
-    }
-
-    auto callback = std::bind(
-        &MsgLogEventHandler::OnModifyMultipleMsglogCallback, bcb,
-        std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-    auto ret = nim::MsgLog::DeleteBySessionTypeAsync(
-        delete_sessions, (nim::NIMSessionType)(type), callback,
-        exten.toUtf8String());
+        std::bind(&MsgLogEventHandler::OnModifyMultipleMsglogCallback, bcb, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+    auto ret =
+        nim::MsgLog::DeleteBySessionTypeAsyncEx(delete_sessions, (nim::NIMSessionType)(type), revert_by_query_online, callback, exten.toUtf8String());
     args.GetReturnValue().Set(Boolean::New(isolate, ret));
 }
 NIM_SDK_NODE_API_DEF(MsgLog, DeleteAsync) {
@@ -766,12 +727,8 @@ NIM_SDK_NODE_API_DEF(MsgLog, DeleteAsync) {
         return;
     }
 
-    auto callback =
-        std::bind(&MsgLogEventHandler::OnModifySingleMsglogCallback, bcb,
-                  std::placeholders::_1, std::placeholders::_2);
-    auto ret = nim::MsgLog::DeleteAsync(
-        id.toUtf8String(), (nim::NIMSessionType)(type), msg_id.toUtf8String(),
-        callback, exten.toUtf8String());
+    auto callback = std::bind(&MsgLogEventHandler::OnModifySingleMsglogCallback, bcb, std::placeholders::_1, std::placeholders::_2);
+    auto ret = nim::MsgLog::DeleteAsync(id.toUtf8String(), (nim::NIMSessionType)(type), msg_id.toUtf8String(), callback, exten.toUtf8String());
     args.GetReturnValue().Set(Boolean::New(isolate, ret));
 }
 NIM_SDK_NODE_API_DEF(MsgLog, DeleteAllAsync) {
@@ -780,16 +737,22 @@ NIM_SDK_NODE_API_DEF(MsgLog, DeleteAllAsync) {
         return;
     }
 
-    CHECK_ARGS_COUNT(3)
+    CHECK_ARGS_COUNT(4)
     UTF8String exten;
     bool del_sessions;
+    bool revert_by_query_online;
 
     auto status = nim_napi_get_value_bool(isolate, args[0], del_sessions);
     if (status != napi_ok) {
         return;
     }
 
-    Local<Function> cb = args[1].As<Function>();
+    status = nim_napi_get_value_bool(isolate, args[1], revert_by_query_online);
+    if (status != napi_ok) {
+        return;
+    }
+
+    Local<Function> cb = args[2].As<Function>();
     if (cb.IsEmpty()) {
         return;
     }
@@ -803,36 +766,34 @@ NIM_SDK_NODE_API_DEF(MsgLog, DeleteAllAsync) {
     bcb->callback_.Reset(isolate, pcb);
     bcb->data_.Reset(isolate, pdata);
 
-    status = nim_napi_get_value_utf8string(isolate, args[2], exten);
+    status = nim_napi_get_value_utf8string(isolate, args[3], exten);
     if (status != napi_ok) {
         return;
     }
 
-    auto callback = std::bind(&MsgLogEventHandler::OnDBFunctionCallback, bcb,
-                              std::placeholders::_1);
-    auto ret = nim::MsgLog::DeleteAllAsync(del_sessions, callback,
-                                           exten.toUtf8String());
+    auto callback = std::bind(&MsgLogEventHandler::OnDBFunctionCallback, bcb, std::placeholders::_1);
+    auto ret = nim::MsgLog::DeleteAllAsyncEx(del_sessions, revert_by_query_online, callback, exten.toUtf8String());
     args.GetReturnValue().Set(Boolean::New(isolate, ret));
 }
 NIM_SDK_NODE_API_DEF(MsgLog, DeleteMsgByTimeAsync) {
-    CHECK_API_FUNC(MsgLog, 6)
+    CHECK_API_FUNC(MsgLog, 7)
 
     auto status = napi_ok;
     UTF8String sid, exten;
     uint32_t type;
     uint64_t t1, t2;
-    GET_ARGS_VALUE(isolate, 0, UTF8String, sid)
+    bool revert_by_query_online;
+    GET_ARGS_VALUE(isolate, 0, utf8string, sid)
     GET_ARGS_VALUE(isolate, 1, uint32, type)
-    GET_ARGS_VALUE(isolate, 2, uint64, t1)
-    GET_ARGS_VALUE(isolate, 3, uint64, t2)
-    ASSEMBLE_BASE_CALLBACK(4)
-    GET_ARGS_VALUE(isolate, 5, UTF8String, exten)
+    GET_ARGS_VALUE(isolate, 2, bool, revert_by_query_online)
+    GET_ARGS_VALUE(isolate, 3, uint64, t1)
+    GET_ARGS_VALUE(isolate, 4, uint64, t2)
+    ASSEMBLE_BASE_CALLBACK(5)
+    GET_ARGS_VALUE(isolate, 6, utf8string, exten)
 
-    auto callback = std::bind(&MsgLogEventHandler::OnDBFunctionCallback, bcb,
-                              std::placeholders::_1);
-    auto ret = nim::MsgLog::DeleteMsgByTimeAsync(
-        sid.toUtf8String(), (nim::NIMSessionType)type, t1, t2, callback,
-        exten.toUtf8String());
+    auto callback = std::bind(&MsgLogEventHandler::OnDBFunctionCallback, bcb, std::placeholders::_1);
+    auto ret = nim::MsgLog::DeleteMsgByTimeAsyncEx(sid.toUtf8String(), (nim::NIMSessionType)type, revert_by_query_online, t1, t2, callback,
+                                                   exten.toUtf8String());
     args.GetReturnValue().Set(Boolean::New(isolate, ret));
 }
 NIM_SDK_NODE_API_DEF(MsgLog, UnregMsglogCb) {
@@ -841,7 +802,7 @@ NIM_SDK_NODE_API_DEF(MsgLog, UnregMsglogCb) {
         return;
     }
 
-    nim::MsgLog::UnregMsgologCb();
+    nim::MsgLog::UnregMsglogCb();
 }
 NIM_SDK_NODE_API_DEF(MsgLog, ExportDbAsync) {
     MsgLog* instance = node::ObjectWrap::Unwrap<MsgLog>(args.Holder());
@@ -876,10 +837,8 @@ NIM_SDK_NODE_API_DEF(MsgLog, ExportDbAsync) {
         return;
     }
 
-    auto callback = std::bind(&MsgLogEventHandler::OnDBFunctionCallback, bcb,
-                              std::placeholders::_1);
-    auto ret = nim::MsgLog::ExportDbAsync(dst_path.toUtf8String(), callback,
-                                          exten.toUtf8String());
+    auto callback = std::bind(&MsgLogEventHandler::OnDBFunctionCallback, bcb, std::placeholders::_1);
+    auto ret = nim::MsgLog::ExportDbAsync(dst_path.toUtf8String(), callback, exten.toUtf8String());
     args.GetReturnValue().Set(Boolean::New(isolate, ret));
 }
 NIM_SDK_NODE_API_DEF(MsgLog, ImportDbAsync) {
@@ -929,12 +888,9 @@ NIM_SDK_NODE_API_DEF(MsgLog, ImportDbAsync) {
         return;
     }
 
-    auto callback = std::bind(&MsgLogEventHandler::OnDBFunctionCallback, bcb,
-                              std::placeholders::_1);
-    auto callback2 = std::bind(&MsgLogEventHandler::OnImportDbPrgCallback, bcb2,
-                               std::placeholders::_1, std::placeholders::_2);
-    auto ret = nim::MsgLog::ImportDbAsync(src_path.toUtf8String(), callback,
-                                          callback2, exten.toUtf8String());
+    auto callback = std::bind(&MsgLogEventHandler::OnDBFunctionCallback, bcb, std::placeholders::_1);
+    auto callback2 = std::bind(&MsgLogEventHandler::OnImportDbPrgCallback, bcb2, std::placeholders::_1, std::placeholders::_2);
+    auto ret = nim::MsgLog::ImportDbAsync(src_path.toUtf8String(), callback, callback2, exten.toUtf8String());
     args.GetReturnValue().Set(Boolean::New(isolate, ret));
 }
 NIM_SDK_NODE_API_DEF(MsgLog, SendReceiptAsync) {
@@ -946,9 +902,7 @@ NIM_SDK_NODE_API_DEF(MsgLog, SendReceiptAsync) {
     CHECK_ARGS_COUNT(2)
     nim::IMMessage msg;
 
-    auto status = nim_talk_im_msg_obj_to_struct(
-        isolate,
-        args[0]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), msg);
+    auto status = nim_talk_im_msg_obj_to_struct(isolate, args[0]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), msg);
     if (status != napi_ok) {
         return;
     }
@@ -967,9 +921,7 @@ NIM_SDK_NODE_API_DEF(MsgLog, SendReceiptAsync) {
     bcb->callback_.Reset(isolate, pcb);
     bcb->data_.Reset(isolate, pdata);
 
-    auto callback =
-        std::bind(&MsgLogEventHandler::OnMessageStatusChangedCallback, bcb,
-                  std::placeholders::_1);
+    auto callback = std::bind(&MsgLogEventHandler::OnMessageStatusChangedCallback, bcb, std::placeholders::_1);
     nim::MsgLog::SendReceiptAsync(msg.ToJsonString(false), callback);
 }
 NIM_SDK_NODE_API_DEF(MsgLog, QuerySentMessageBeReaded) {
@@ -981,9 +933,7 @@ NIM_SDK_NODE_API_DEF(MsgLog, QuerySentMessageBeReaded) {
     CHECK_ARGS_COUNT(1)
     nim::IMMessage msg;
 
-    auto status = nim_talk_im_msg_obj_to_struct(
-        isolate,
-        args[0]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), msg);
+    auto status = nim_talk_im_msg_obj_to_struct(isolate, args[0]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), msg);
     if (status != napi_ok) {
         return;
     }
@@ -1000,9 +950,7 @@ NIM_SDK_NODE_API_DEF(MsgLog, QueryReceivedMsgReceiptSent) {
     CHECK_ARGS_COUNT(1)
     nim::IMMessage msg;
 
-    auto status = nim_talk_im_msg_obj_to_struct(
-        isolate,
-        args[0]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), msg);
+    auto status = nim_talk_im_msg_obj_to_struct(isolate, args[0]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), msg);
     if (status != napi_ok) {
         return;
     }
@@ -1048,12 +996,8 @@ NIM_SDK_NODE_API_DEF(MsgLog, UpdateLocalExtAsync) {
         return;
     }
 
-    auto callback =
-        std::bind(&MsgLogEventHandler::OnModifySingleMsglogCallback, bcb,
-                  std::placeholders::_1, std::placeholders::_2);
-    auto ret = nim::MsgLog::UpdateLocalExtAsync(msg_id.toUtf8String(),
-                                                local_ext.toUtf8String(),
-                                                callback, exten.toUtf8String());
+    auto callback = std::bind(&MsgLogEventHandler::OnModifySingleMsglogCallback, bcb, std::placeholders::_1, std::placeholders::_2);
+    auto ret = nim::MsgLog::UpdateLocalExtAsync(msg_id.toUtf8String(), local_ext.toUtf8String(), callback, exten.toUtf8String());
     args.GetReturnValue().Set(Boolean::New(isolate, ret));
 }
 NIM_SDK_NODE_API_DEF(MsgLog, ReadAllAsync) {
@@ -1084,8 +1028,7 @@ NIM_SDK_NODE_API_DEF(MsgLog, ReadAllAsync) {
         return;
     }
 
-    auto callback = std::bind(&MsgLogEventHandler::OnDBFunctionCallback, bcb,
-                              std::placeholders::_1);
+    auto callback = std::bind(&MsgLogEventHandler::OnDBFunctionCallback, bcb, std::placeholders::_1);
     auto ret = nim::MsgLog::ReadAllAsync(callback, exten.toUtf8String());
     args.GetReturnValue().Set(Boolean::New(isolate, ret));
 }
@@ -1094,20 +1037,15 @@ NIM_SDK_NODE_API_DEF(MsgLog, RegDeleteMsglogSelfNotify) {
     CHECK_API_FUNC(MsgLog, 1)
     auto status = napi_ok;
     ASSEMBLE_REG_CALLBACK(0, MsgLogEventHandler, "OnDeleteMsglogSelfNotifyCb")
-    auto callback =
-        std::bind(&MsgLogEventHandler::OnDeleteMsglogSelfNotifyCallback,
-                  std::placeholders::_1);
+    auto callback = std::bind(&MsgLogEventHandler::OnDeleteMsglogSelfNotifyCallback, std::placeholders::_1);
     nim::MsgLog::RegDeleteMsglogSelfNotify(callback);
 }
 
 NIM_SDK_NODE_API_DEF(MsgLog, RegDeleteHistoryMessagesNotify) {
     CHECK_API_FUNC(MsgLog, 1)
     auto status = napi_ok;
-    ASSEMBLE_REG_CALLBACK(0, MsgLogEventHandler,
-                          "OnDeleteHistoryMessagesNotifyCb")
-    auto callback =
-        std::bind(&MsgLogEventHandler::OnDeleteHistoryMessagesNotifyCallback,
-                  std::placeholders::_1);
+    ASSEMBLE_REG_CALLBACK(0, MsgLogEventHandler, "OnDeleteHistoryMessagesNotifyCb")
+    auto callback = std::bind(&MsgLogEventHandler::OnDeleteHistoryMessagesNotifyCallback, std::placeholders::_1);
     nim::MsgLog::RegDeleteHistoryMessagesNotify(callback);
 }
 
@@ -1150,11 +1088,8 @@ NIM_SDK_NODE_API_DEF(MsgLog, DeleteHistoryOnlineAsync) {
     bcb->callback_.Reset(isolate, pcb);
     bcb->data_.Reset(isolate, pdata);
 
-    auto callback =
-        std::bind(&MsgLogEventHandler::OnDeleteHistoryOnLineAsyncCallback, bcb,
-                  std::placeholders::_1, std::placeholders::_2);
-    nim::MsgLog::DeleteHistoryOnlineAsync(id.toUtf8String(), delete_roaming,
-                                          exten.toUtf8String(), callback);
+    auto callback = std::bind(&MsgLogEventHandler::OnDeleteHistoryOnLineAsyncCallback, bcb, std::placeholders::_1, std::placeholders::_2);
+    nim::MsgLog::DeleteHistoryOnlineAsync(id.toUtf8String(), delete_roaming, exten.toUtf8String(), callback);
 }
 
 NIM_SDK_NODE_API_DEF(MsgLog, DeleteHistoryOnlineAsyncEx) {
@@ -1169,29 +1104,32 @@ NIM_SDK_NODE_API_DEF(MsgLog, DeleteHistoryOnlineAsyncEx) {
     GET_ARGS_VALUE(isolate, 2, bool, needs_notify_self);
     GET_ARGS_VALUE(isolate, 3, utf8string, ext);
     ASSEMBLE_BASE_CALLBACK(4);
-    auto callback = std::bind(
-        &MsgLogEventHandler::OnDeleteHistoryMessagesNotifyExCallback, bcb,
-        std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
-        std::placeholders::_4, std::placeholders::_5);
-    nim::MsgLog::DeleteHistoryOnlineAsync(
-        accid.toUtf8String(), static_cast<nim::NIMSessionType>(to_type),
-        needs_notify_self, ext.toUtf8String(), callback);
+    auto callback = std::bind(&MsgLogEventHandler::OnDeleteHistoryMessagesNotifyExCallback, bcb, std::placeholders::_1, std::placeholders::_2,
+                              std::placeholders::_3, std::placeholders::_4, std::placeholders::_5);
+    nim::MsgLog::DeleteHistoryOnlineAsync(accid.toUtf8String(), static_cast<nim::NIMSessionType>(to_type), needs_notify_self, ext.toUtf8String(),
+                                          callback);
 }
 
 NIM_SDK_NODE_API_DEF(MsgLog, DeleteMessageSelfAsync) {
     CHECK_API_FUNC(MsgLog, 3)
     auto status = napi_ok;
-    nim::IMMessage message;
-    nim_talk_im_msg_obj_to_struct(
-        isolate,
-        args[1]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(),
-        message);
-    UTF8String ext;
-    GET_ARGS_VALUE(isolate, 1, utf8string, ext);
+    std::list<nim::IMMessage> msgs;
+    std::list<utf8_string> exts;
+    if (nim_talk_im_msg_array_to_list(isolate, args[0]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), msgs) != napi_ok)
+        return;
+    if (nim_napi_get_value_utf8string_list(isolate, args[1]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), exts))
+        return;
+    if (msgs.size() != exts.size())
+        return;
     ASSEMBLE_BASE_CALLBACK(2);
-    auto callback = std::bind(&MsgLogEventHandler::OnMsgBaseCallback, bcb,
-                              std::placeholders::_1);
-    nim::MsgLog::DeleteMessageSelfAsync(message, ext.toUtf8String(), callback);
+    std::list<std::tuple<nim::IMMessage, std::string>> requests;
+    auto iter_msg = msgs.begin();
+    auto iter_ext = exts.begin();
+    for (; iter_msg != msgs.end(); iter_msg++) {
+        requests.emplace_back(std::make_tuple(*iter_msg, *iter_ext));
+    }
+    auto callback = std::bind(&MsgLogEventHandler::OnMsgBaseCallback, bcb, std::placeholders::_1);
+    nim::MsgLog::DeleteMessageSelfAsync(requests, callback);
 }
 
 NIM_SDK_NODE_API_DEF(MsgLog, QueryMessageIsThreadRoot) {
@@ -1200,26 +1138,19 @@ NIM_SDK_NODE_API_DEF(MsgLog, QueryMessageIsThreadRoot) {
     UTF8String client_msg_id;
     GET_ARGS_VALUE(isolate, 0, utf8string, client_msg_id);
     ASSEMBLE_BASE_CALLBACK(1);
-    auto callback =
-        std::bind(&MsgLogEventHandler::OnQueryMessageIsThreadRootCallback, bcb,
-                  std::placeholders::_1, std::placeholders::_2,
-                  std::placeholders::_3, std::placeholders::_4);
-    nim::MsgLog::QueryMessageIsThreadRoot(client_msg_id.toUtf8String(),
-                                          callback);
+    auto callback = std::bind(&MsgLogEventHandler::OnQueryMessageIsThreadRootCallback, bcb, std::placeholders::_1, std::placeholders::_2,
+                              std::placeholders::_3, std::placeholders::_4);
+    nim::MsgLog::QueryMessageIsThreadRoot(client_msg_id.toUtf8String(), callback);
 }
 
 NIM_SDK_NODE_API_DEF(MsgLog, QueryMessageOnline) {
     CHECK_API_FUNC(MsgLog, 2)
     auto status = napi_ok;
     nim::MsgLog::QueryMsgAsyncParam param;
-    nim_msglog_query_msglog_param_obj_to_struct(
-        isolate,
-        args[0]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(),
-        param);
+    nim_msglog_query_msglog_param_obj_to_struct(isolate, args[0]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), param);
     ASSEMBLE_BASE_CALLBACK(1);
-    auto callback = std::bind(&MsgLogEventHandler::OnQueryMessageOnlineCallback,
-                              bcb, std::placeholders::_1, std::placeholders::_2,
-                              std::placeholders::_3);
+    auto callback =
+        std::bind(&MsgLogEventHandler::OnQueryMessageOnlineCallback, bcb, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
     nim::MsgLog::QueryMessageOnline(param, callback);
 }
 
@@ -1227,20 +1158,22 @@ NIM_SDK_NODE_API_DEF(MsgLog, QueryThreadHistoryMsg) {
     CHECK_API_FUNC(MsgLog, 3)
     auto status = napi_ok;
     nim::IMMessage msg;
-    nim_talk_im_msg_obj_to_struct(
-        isolate,
-        args[0]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), msg);
+    nim_talk_im_msg_obj_to_struct(isolate, args[0]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), msg);
     nim::MsgLog::QueryThreadHistoryMsgAsyncParam param;
-    nim_msglog_query_thread_history_param_obj_to_struct(
-        isolate,
-        args[1]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(),
-        param);
+    nim_msglog_query_thread_history_param_obj_to_struct(isolate, args[1]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), param);
     ASSEMBLE_BASE_CALLBACK(1);
-    auto callback = std::bind(
-        &MsgLogEventHandler::OnQueryThreadHistoryMsgCallback, bcb,
-        std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
-        std::placeholders::_4, std::placeholders::_5);
+    auto callback = std::bind(&MsgLogEventHandler::OnQueryThreadHistoryMsgCallback, bcb, std::placeholders::_1, std::placeholders::_2,
+                              std::placeholders::_3, std::placeholders::_4, std::placeholders::_5);
     nim::MsgLog::QueryThreadHistoryMsg(msg, param, callback);
 }
 
+NIM_SDK_NODE_API_DEF(MsgLog, FullTextSearchOnlineAsync) {
+    CHECK_API_FUNC(MsgLog, 2)
+    auto status = napi_ok;
+    nim::MsgLog::FullTextSearchOnlineAsyncParam param;
+    nim_msglog_full_text_search_online_param_obj_to_struct(isolate, args[0]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), param);
+    ASSEMBLE_BASE_CALLBACK(1);
+    auto callback = std::bind(&MsgLogEventHandler::OnFullTextSearchOnlineAsyncCallback, bcb, std::placeholders::_1, std::placeholders::_2);
+    nim::MsgLog::FullTextSearchOnlineAsync(param, callback);
+}
 }  // namespace nim_node

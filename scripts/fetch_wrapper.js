@@ -16,6 +16,7 @@ module.exports = ({
       strip: 1,
       extract: true
     }).then(() => {
+      logger.info(`[fetch] Download file from ${fetchUrl}`)
       const files = fs.readdirSync(temporaryPath)
       const matchPlatform = platform === 'win32' ? 'windows' : 'macosx'
       const matchArch = arch === 'ia32' ? 'x86' : (platform === 'win32' ? 'x64' : 'x86_64')

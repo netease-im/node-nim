@@ -20,6 +20,7 @@ void Global::InitModule(Local<Object>& module) {
     SET_PROTOTYPE(DeleteSDKCachedFileAsync);
     SET_PROTOTYPE(SDKFeedbackAsync);
     SET_PROTOTYPE(RegSDKDBError);
+    SET_PROTOTYPE(UploadSDKLog);
 
     END_OBJECT_INIT(Global)
 }
@@ -44,7 +45,7 @@ NIM_SDK_NODE_API_DEF(Global, SetExceptionReportCallback) {
     UTF8String exten;
     auto status = napi_ok;
     ASSEMBLE_REG_CALLBACK(0, GlobalEventHandler, "OnExceptionReportCallback")
-    GET_ARGS_VALUE(isolate, 1, UTF8String, exten)
+    GET_ARGS_VALUE(isolate, 1, utf8string, exten)
 
     auto callback = std::bind(&GlobalEventHandler::OnExceptionReportCallback, nullptr, std::placeholders::_1, std::placeholders::_2);
     nim::Global::SetExceptionReportCallback(exten.toUtf8String(), callback);
@@ -57,10 +58,10 @@ NIM_SDK_NODE_API_DEF(Global, SetProxy) {
     uint32_t type;
     auto status = napi_ok;
     GET_ARGS_VALUE(isolate, 0, uint32, type)
-    GET_ARGS_VALUE(isolate, 1, UTF8String, host)
+    GET_ARGS_VALUE(isolate, 1, utf8string, host)
     GET_ARGS_VALUE(isolate, 2, int32, port)
-    GET_ARGS_VALUE(isolate, 3, UTF8String, user)
-    GET_ARGS_VALUE(isolate, 4, UTF8String, password)
+    GET_ARGS_VALUE(isolate, 3, utf8string, user)
+    GET_ARGS_VALUE(isolate, 4, utf8string, password)
 
     nim::Global::SetProxy((nim::NIMProxyType)type, host.toUtf8String(), port, user.toUtf8String(), password.toUtf8String());
 }
@@ -72,10 +73,10 @@ NIM_SDK_NODE_API_DEF(Global, DetectProxy) {
     uint32_t type;
     auto status = napi_ok;
     GET_ARGS_VALUE(isolate, 0, uint32, type)
-    GET_ARGS_VALUE(isolate, 1, UTF8String, host)
+    GET_ARGS_VALUE(isolate, 1, utf8string, host)
     GET_ARGS_VALUE(isolate, 2, int32, port)
-    GET_ARGS_VALUE(isolate, 3, UTF8String, user)
-    GET_ARGS_VALUE(isolate, 4, UTF8String, password)
+    GET_ARGS_VALUE(isolate, 3, utf8string, user)
+    GET_ARGS_VALUE(isolate, 4, utf8string, password)
     ASSEMBLE_BASE_CALLBACK(5)
 
     auto callback = std::bind(&GlobalEventHandler::OnDetectProxyCallback, bcb, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
@@ -87,11 +88,11 @@ NIM_SDK_NODE_API_DEF(Global, GetSDKCachedFileInfoAsync) {
     UTF8String login_id, file_type, exten;
     int64_t end_timestamp;
     auto status = napi_ok;
-    GET_ARGS_VALUE(isolate, 0, UTF8String, login_id)
-    GET_ARGS_VALUE(isolate, 1, UTF8String, file_type)
+    GET_ARGS_VALUE(isolate, 0, utf8string, login_id)
+    GET_ARGS_VALUE(isolate, 1, utf8string, file_type)
     GET_ARGS_VALUE(isolate, 2, int64, end_timestamp)
     ASSEMBLE_BASE_CALLBACK(3)
-    GET_ARGS_VALUE(isolate, 4, UTF8String, exten)
+    GET_ARGS_VALUE(isolate, 4, utf8string, exten)
 
     auto callback = std::bind(&GlobalEventHandler::OnGetCachedFileInfoCallback, bcb, std::placeholders::_1, std::placeholders::_2);
     nim::Global::GetSDKCachedFileInfoAsync(login_id.toUtf8String(), file_type.toUtf8String(), end_timestamp, exten.toUtf8String(), callback);
@@ -102,11 +103,11 @@ NIM_SDK_NODE_API_DEF(Global, DeleteSDKCachedFileAsync) {
     UTF8String login_id, file_type, exten;
     int64_t end_timestamp;
     auto status = napi_ok;
-    GET_ARGS_VALUE(isolate, 0, UTF8String, login_id)
-    GET_ARGS_VALUE(isolate, 1, UTF8String, file_type)
+    GET_ARGS_VALUE(isolate, 0, utf8string, login_id)
+    GET_ARGS_VALUE(isolate, 1, utf8string, file_type)
     GET_ARGS_VALUE(isolate, 2, int64, end_timestamp)
     ASSEMBLE_BASE_CALLBACK(3)
-    GET_ARGS_VALUE(isolate, 4, UTF8String, exten)
+    GET_ARGS_VALUE(isolate, 4, utf8string, exten)
 
     auto callback = std::bind(&GlobalEventHandler::OnDeleteCachedFileCallback, bcb, std::placeholders::_1);
     nim::Global::DeleteSDKCachedFileAsync(login_id.toUtf8String(), file_type.toUtf8String(), end_timestamp, exten.toUtf8String(), callback);
@@ -116,9 +117,9 @@ NIM_SDK_NODE_API_DEF(Global, SDKFeedbackAsync) {
 
     UTF8String url, exten;
     auto status = napi_ok;
-    GET_ARGS_VALUE(isolate, 0, UTF8String, url)
+    GET_ARGS_VALUE(isolate, 0, utf8string, url)
     ASSEMBLE_BASE_CALLBACK(1)
-    GET_ARGS_VALUE(isolate, 2, UTF8String, exten)
+    GET_ARGS_VALUE(isolate, 2, utf8string, exten)
 
     auto callback = std::bind(&GlobalEventHandler::OnDeleteCachedFileCallback, bcb, std::placeholders::_1);
     nim::Global::SDKFeedbackAsync(url.toUtf8String(), exten.toUtf8String(), callback);
@@ -135,7 +136,7 @@ NIM_SDK_NODE_API_DEF(Global, UploadSDKLog) {
     CHECK_API_FUNC(Global, 2)
     UTF8String feedback_str;
     auto status = napi_ok;
-    GET_ARGS_VALUE(isolate, 0, UTF8String, feedback_str)
+    GET_ARGS_VALUE(isolate, 0, utf8string, feedback_str)
     ASSEMBLE_BASE_CALLBACK(1);
     auto callback = std::bind(&GlobalEventHandler::OnUploadSDKLogCallback, bcb, std::placeholders::_1);
     nim::Global::UploadSDKLog(feedback_str.toUtf8String(), callback);

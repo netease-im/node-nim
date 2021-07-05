@@ -1,23 +1,18 @@
-#include <node_object_wrap.h>
 #include "nim_node_friend.h"
-#include "nim_node_friend_event_handler.h"
-#include "nim_node_helper.h"
+#include <node_object_wrap.h>
 #include "../helper/nim_node_friend_helper.h"
 #include "nim_cpp_wrapper/api/nim_cpp_friend.h"
+#include "nim_node_friend_event_handler.h"
+#include "nim_node_helper.h"
 
-namespace nim_node
-{
+namespace nim_node {
 DEFINE_CLASS(Friend);
 
-Friend::Friend(Isolate *isolate)
-{
+Friend::Friend(Isolate* isolate) {
     isolate_ = isolate;
 }
-Friend::~Friend()
-{
-}
-void Friend::InitModule(Local<Object> &module)
-{
+Friend::~Friend() {}
+void Friend::InitModule(Local<Object>& module) {
     BEGIN_OBJECT_INIT(Friend, New, 5)
 
     SET_PROTOTYPE(RegChangeCb);
@@ -32,17 +27,13 @@ void Friend::InitModule(Local<Object> &module)
     END_OBJECT_INIT(Friend)
 }
 
-void Friend::New(const FunctionCallbackInfo<Value> &args)
-{
-    Isolate *isolate = args.GetIsolate();
-    if (args.IsConstructCall())
-    {
-        Friend *instance = new Friend(isolate);
+void Friend::New(const FunctionCallbackInfo<Value>& args) {
+    Isolate* isolate = args.GetIsolate();
+    if (args.IsConstructCall()) {
+        Friend* instance = new Friend(isolate);
         instance->Wrap(args.This());
         args.GetReturnValue().Set(args.This());
-    }
-    else
-    {
+    } else {
         Local<Function> cons = Local<Function>::New(isolate, constructor);
         Local<Context> context = isolate->GetCurrentContext();
         Local<Object> instance = cons->NewInstance(context).ToLocalChecked();
@@ -50,20 +41,18 @@ void Friend::New(const FunctionCallbackInfo<Value> &args)
     }
 }
 
-NIM_SDK_NODE_API_DEF(Friend, RegChangeCb)
-{
+NIM_SDK_NODE_API_DEF(Friend, RegChangeCb) {
     CHECK_API_FUNC(Friend, 2)
 
     UTF8String exten;
     auto status = napi_ok;
     ASSEMBLE_REG_CALLBACK(0, FriendEventHandler, "OnFriendChangeCallback")
-    GET_ARGS_VALUE(isolate, 1, UTF8String, exten)
+    GET_ARGS_VALUE(isolate, 1, utf8string, exten)
 
     auto callback = std::bind(&FriendEventHandler::OnFriendChangeCallback, nullptr, std::placeholders::_1);
     nim::Friend::RegChangeCb(callback, exten.toUtf8String());
 }
-NIM_SDK_NODE_API_DEF(Friend, Request)
-{
+NIM_SDK_NODE_API_DEF(Friend, Request) {
     CHECK_API_FUNC(Friend, 5)
 
     auto status = napi_ok;
@@ -79,8 +68,7 @@ NIM_SDK_NODE_API_DEF(Friend, Request)
     auto ret = nim::Friend::Request(accid.toUtf8String(), (nim::NIMVerifyType)verify_type, msg.toUtf8String(), callback, exten.toUtf8String());
     args.GetReturnValue().Set(nim_napi_new_bool(isolate, ret));
 }
-NIM_SDK_NODE_API_DEF(Friend, DeleteEx)
-{
+NIM_SDK_NODE_API_DEF(Friend, DeleteEx) {
     CHECK_API_FUNC(Friend, 3)
 
     auto status = napi_ok;
@@ -94,8 +82,7 @@ NIM_SDK_NODE_API_DEF(Friend, DeleteEx)
     auto ret = nim::Friend::DeleteEx(accid.toUtf8String(), opt, callback);
     args.GetReturnValue().Set(nim_napi_new_bool(isolate, ret));
 }
-NIM_SDK_NODE_API_DEF(Friend, Update)
-{
+NIM_SDK_NODE_API_DEF(Friend, Update) {
     CHECK_API_FUNC(Friend, 3)
 
     auto status = napi_ok;
@@ -109,8 +96,7 @@ NIM_SDK_NODE_API_DEF(Friend, Update)
     auto ret = nim::Friend::Update(profile, callback, exten.toUtf8String());
     args.GetReturnValue().Set(nim_napi_new_bool(isolate, ret));
 }
-NIM_SDK_NODE_API_DEF(Friend, GetList)
-{
+NIM_SDK_NODE_API_DEF(Friend, GetList) {
     CHECK_API_FUNC(Friend, 2)
 
     UTF8String ext;
@@ -121,21 +107,19 @@ NIM_SDK_NODE_API_DEF(Friend, GetList)
     auto callback = std::bind(&FriendEventHandler::OnGetFriendsListCallback, bcb, std::placeholders::_1, std::placeholders::_2);
     nim::Friend::GetList(callback, ext.toUtf8String());
 }
-NIM_SDK_NODE_API_DEF(Friend, GetFriendProfile)
-{
+NIM_SDK_NODE_API_DEF(Friend, GetFriendProfile) {
     CHECK_API_FUNC(Friend, 3)
 
     UTF8String ext, accid;
     auto status = napi_ok;
-    GET_ARGS_VALUE(isolate, 0, UTF8String, accid)
+    GET_ARGS_VALUE(isolate, 0, utf8string, accid)
     ASSEMBLE_BASE_CALLBACK(1)
     GET_ARGS_VALUE(isolate, 2, utf8string, ext)
 
     auto callback = std::bind(&FriendEventHandler::OnGetFriendProfileCallback, bcb, std::placeholders::_1, std::placeholders::_2);
     nim::Friend::GetFriendProfile(accid.toUtf8String(), callback, ext.toUtf8String());
 }
-NIM_SDK_NODE_API_DEF(Friend, QueryFriendListByKeyword)
-{
+NIM_SDK_NODE_API_DEF(Friend, QueryFriendListByKeyword) {
     CHECK_API_FUNC(Friend, 3)
 
     UTF8String ext, keyword;
@@ -149,10 +133,9 @@ NIM_SDK_NODE_API_DEF(Friend, QueryFriendListByKeyword)
     auto ret = nim::Friend::QueryFriendListByKeyword(k, callback, ext.toUtf8String());
     args.GetReturnValue().Set(nim_napi_new_bool(isolate, ret));
 }
-NIM_SDK_NODE_API_DEF(Friend, UnregFriendCb)
-{
+NIM_SDK_NODE_API_DEF(Friend, UnregFriendCb) {
     CHECK_API_FUNC(Friend, 0)
     nim::Friend::UnregFriendCb();
 }
 
-} // namespace nim_node
+}  // namespace nim_node

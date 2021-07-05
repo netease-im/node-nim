@@ -1,23 +1,18 @@
-#include <node_object_wrap.h>
 #include "nim_node_pass_through_proxy.h"
-#include "nim_node_pass_service_event_handler.h"
-#include "nim_node_helper.h"
+#include <node_object_wrap.h>
 #include "nim_cpp_wrapper/api/nim_cpp_pass_through_proxy.h"
 #include "nim_define_include.h"
+#include "nim_node_helper.h"
+#include "nim_node_pass_service_event_handler.h"
 
-namespace nim_node
-{
+namespace nim_node {
 DEFINE_CLASS(PassThroughProxy);
 
-PassThroughProxy::PassThroughProxy(Isolate *isolate)
-{
+PassThroughProxy::PassThroughProxy(Isolate* isolate) {
     isolate_ = isolate;
 }
-PassThroughProxy::~PassThroughProxy()
-{
-}
-void PassThroughProxy::InitModule(Local<Object> &module)
-{
+PassThroughProxy::~PassThroughProxy() {}
+void PassThroughProxy::InitModule(Local<Object>& module) {
     BEGIN_OBJECT_INIT(PassThroughProxy, New, 5)
 
     SET_PROTOTYPE(RegReceivedHttpMsgCb);
@@ -26,17 +21,13 @@ void PassThroughProxy::InitModule(Local<Object> &module)
     END_OBJECT_INIT(PassThroughProxy)
 }
 
-void PassThroughProxy::New(const FunctionCallbackInfo<Value> &args)
-{
-    Isolate *isolate = args.GetIsolate();
-    if (args.IsConstructCall())
-    {
-        PassThroughProxy *instance = new PassThroughProxy(isolate);
+void PassThroughProxy::New(const FunctionCallbackInfo<Value>& args) {
+    Isolate* isolate = args.GetIsolate();
+    if (args.IsConstructCall()) {
+        PassThroughProxy* instance = new PassThroughProxy(isolate);
         instance->Wrap(args.This());
         args.GetReturnValue().Set(args.This());
-    }
-    else
-    {
+    } else {
         Local<Function> cons = Local<Function>::New(isolate, constructor);
         Local<Context> context = isolate->GetCurrentContext();
         Local<Object> instance = cons->NewInstance(context).ToLocalChecked();
@@ -44,8 +35,7 @@ void PassThroughProxy::New(const FunctionCallbackInfo<Value> &args)
     }
 }
 
-NIM_SDK_NODE_API_DEF(PassThroughProxy, RegReceivedHttpMsgCb)
-{
+NIM_SDK_NODE_API_DEF(PassThroughProxy, RegReceivedHttpMsgCb) {
     CHECK_API_FUNC(PassThroughProxy, 2)
 
     UTF8String exten;
@@ -53,26 +43,28 @@ NIM_SDK_NODE_API_DEF(PassThroughProxy, RegReceivedHttpMsgCb)
     auto status = napi_ok;
     GET_ARGS_VALUE(isolate, 1, utf8string, exten)
 
-    auto callback = std::bind(&PassThroughServiceEventHandler::OnReceivedHttpMsgCb, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+    auto callback =
+        std::bind(&PassThroughServiceEventHandler::OnReceivedHttpMsgCb, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
     nim::PassThroughProxy::RegReceivedHttpMsgCb(callback, exten.toUtf8String());
 }
 
-NIM_SDK_NODE_API_DEF(PassThroughProxy, SendHttpRequest)
-{
+NIM_SDK_NODE_API_DEF(PassThroughProxy, SendHttpRequest) {
     CHECK_API_FUNC(PassThroughProxy, 7)
 
     UTF8String exten, host, path, headers, body;
     uint32_t method;
     auto status = napi_ok;
-    GET_ARGS_VALUE(isolate, 0, UTF8String, host)
-    GET_ARGS_VALUE(isolate, 1, UTF8String, path)
+    GET_ARGS_VALUE(isolate, 0, utf8string, host)
+    GET_ARGS_VALUE(isolate, 1, utf8string, path)
     GET_ARGS_VALUE(isolate, 2, uint32, method)
-    GET_ARGS_VALUE(isolate, 3, UTF8String, headers)
-    GET_ARGS_VALUE(isolate, 4, UTF8String, body)
-    GET_ARGS_VALUE(isolate, 5, UTF8String, exten)
+    GET_ARGS_VALUE(isolate, 3, utf8string, headers)
+    GET_ARGS_VALUE(isolate, 4, utf8string, body)
+    GET_ARGS_VALUE(isolate, 5, utf8string, exten)
     ASSEMBLE_BASE_CALLBACK(6)
 
-    auto callback = std::bind(&PassThroughServiceEventHandler::OnSendHttpRequestCallback, bcb, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4);
-    nim::PassThroughProxy::SendHttpRequest(host.toUtf8String(), path.toUtf8String(), (nim::NIMSendHttpRequestMethods)method, headers.toUtf8String(), body.toUtf8String(), exten.toUtf8String(), callback);
+    auto callback = std::bind(&PassThroughServiceEventHandler::OnSendHttpRequestCallback, bcb, std::placeholders::_1, std::placeholders::_2,
+                              std::placeholders::_3, std::placeholders::_4);
+    nim::PassThroughProxy::SendHttpRequest(host.toUtf8String(), path.toUtf8String(), (nim::NIMSendHttpRequestMethods)method, headers.toUtf8String(),
+                                           body.toUtf8String(), exten.toUtf8String(), callback);
 }
-} // namespace nim_node
+}  // namespace nim_node

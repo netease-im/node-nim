@@ -2,45 +2,44 @@ import { NIMSessionType } from './session.def';
 import { NIMMessage } from './talk_def';
 
 /** @enum NIMNotificationId 通知类型 */
-export enum NIMNotificationId
-{
-	kNIMNotificationIdTeamInvite			= 0,			/**< 普通群拉人，{"ids":["a1", "a2"],"user_namecards":["namecard1", "namecard2"], "attach" : ""} attach为可选字段，作为应用自定义扩展字段,解析前需要判断有没有这个字段 */
-	kNIMNotificationIdTeamKick				= 1,			/**< 普通群踢人，{"ids":["a1", "a2"],"user_namecards":["namecard1", "namecard2"], "attach" : ""} attach为可选字段，作为应用自定义扩展字段,解析前需要判断有没有这个字段 */
-	kNIMNotificationIdTeamLeave				= 2,			/**< 退出群，{"id" : "a1","user_namecards":["namecard1", "namecard2"]}*/
-	kNIMNotificationIdTeamUpdate			= 3,			/**< 群信息更新，{"team_info":team_info,"user_namecards":["namecard1", "namecard2"]} //群组信息(Keys SEE MORE `nim_team_def.h` 『群组信息 Json Keys』)*/
-	kNIMNotificationIdTeamDismiss			= 4,			/**< 群解散，{"user_namecards":["namecard1", "namecard2"]}*/
-	kNIMNotificationIdTeamApplyPass			= 5,			/**< 高级群申请加入成功，{"id":"a1","user_namecards":["namecard1", "namecard2"]}*/
-	kNIMNotificationIdTeamOwnerTransfer		= 6,			/**< 高级群移交群主，{"id":"a1", "leave" : bool,"user_namecards":["namecard1", "namecard2"]}*/
-	kNIMNotificationIdTeamAddManager		= 7,			/**< 增加管理员，{"ids":["a1","a2"],"user_namecards":["namecard1", "namecard2"]}*/
-	kNIMNotificationIdTeamRemoveManager		= 8,			/**< 删除管理员，{"ids":["a1","a2"],"user_namecards":["namecard1", "namecard2"]}*/
-	kNIMNotificationIdTeamInviteAccept		= 9,			/**< 高级群接受邀请进群，{"id":"a1","user_namecards":["namecard1", "namecard2"]}*/
-	kNIMNotificationIdTeamMuteMember		= 10,			/**< 禁言/解禁群成员，{"user_namecards":["namecard1", "namecard2"],"team_info":team_info,"id":"a1","mute":1-禁言,0-解禁} */
+export enum NIMNotificationId {
+	kNIMNotificationIdTeamInvite = 0,			/**< 普通群拉人，{"ids":["a1", "a2"],"user_namecards":["namecard1", "namecard2"], "attach" : ""} attach为可选字段，作为应用自定义扩展字段,解析前需要判断有没有这个字段 */
+	kNIMNotificationIdTeamKick = 1,			/**< 普通群踢人，{"ids":["a1", "a2"],"user_namecards":["namecard1", "namecard2"], "attach" : ""} attach为可选字段，作为应用自定义扩展字段,解析前需要判断有没有这个字段 */
+	kNIMNotificationIdTeamLeave = 2,			/**< 退出群，{"id" : "a1","user_namecards":["namecard1", "namecard2"]}*/
+	kNIMNotificationIdTeamUpdate = 3,			/**< 群信息更新，{"team_info":team_info,"user_namecards":["namecard1", "namecard2"]} //群组信息(Keys SEE MORE `nim_team_def.h` 『群组信息 Json Keys』)*/
+	kNIMNotificationIdTeamDismiss = 4,			/**< 群解散，{"user_namecards":["namecard1", "namecard2"]}*/
+	kNIMNotificationIdTeamApplyPass = 5,			/**< 高级群申请加入成功，{"id":"a1","user_namecards":["namecard1", "namecard2"]}*/
+	kNIMNotificationIdTeamOwnerTransfer = 6,			/**< 高级群移交群主，{"id":"a1", "leave" : bool,"user_namecards":["namecard1", "namecard2"]}*/
+	kNIMNotificationIdTeamAddManager = 7,			/**< 增加管理员，{"ids":["a1","a2"],"user_namecards":["namecard1", "namecard2"]}*/
+	kNIMNotificationIdTeamRemoveManager = 8,			/**< 删除管理员，{"ids":["a1","a2"],"user_namecards":["namecard1", "namecard2"]}*/
+	kNIMNotificationIdTeamInviteAccept = 9,			/**< 高级群接受邀请进群，{"id":"a1","user_namecards":["namecard1", "namecard2"]}*/
+	kNIMNotificationIdTeamMuteMember = 10,			/**< 禁言/解禁群成员，{"user_namecards":["namecard1", "namecard2"],"team_info":team_info,"id":"a1","mute":1-禁言,0-解禁} */
 
-	kNIMNotificationIdNetcallMiss			= 101,			/**< 未接电话,{"calltype":1,"channel":6146078138783760761,"from":"id1","ids":["id1","id2"],"time":1430995380471}*/
-	kNIMNotificationIdNetcallBill			= 102,			/**< 话单,{"calltype":2,"channel":6146077129466446197,"duration":8,"ids":["id1","id2"],"time":1430995117398}*/
-	
+	kNIMNotificationIdNetcallMiss = 101,			/**< 未接电话,{"calltype":1,"channel":6146078138783760761,"from":"id1","ids":["id1","id2"],"time":1430995380471}*/
+	kNIMNotificationIdNetcallBill = 102,			/**< 话单,{"calltype":2,"channel":6146077129466446197,"duration":8,"ids":["id1","id2"],"time":1430995117398}*/
+
 	//服务器在线同步协议返回的结果
-	kNIMNotificationIdTeamSyncCreate		= 1000,			/**< 创建群 {"team_info" : team_info} //群组信息(Keys SEE MORE `nim_team_def.h` 『群组信息 Json Keys』)*/
-	kNIMNotificationIdTeamMemberChanged		= 1001,			/**< 群成员变更{"team_member" : team_member_info} //群组成员信息（不包括自己）(Keys SEE MORE `nim_team_def.h` 『群组成员信息 Json Keys』)*/
-	kNIMNotificationIdTeamSyncUpdateMemberProperty	= 1002,	/**< 同步通知：修改群成员属性（可能是自己的或别人的）{"team_member" : team_member_info} //目前只需kNIMTeamUserKeyNick和kNIMTeamUserKeyBits (Keys SEE MORE `nim_team_def.h` 『群组成员信息 Json Keys』)*/
+	kNIMNotificationIdTeamSyncCreate = 1000,			/**< 创建群 {"team_info" : team_info} //群组信息(Keys SEE MORE `nim_team_def.h` 『群组信息 Json Keys』)*/
+	kNIMNotificationIdTeamMemberChanged = 1001,			/**< 群成员变更{"team_member" : team_member_info} //群组成员信息（不包括自己）(Keys SEE MORE `nim_team_def.h` 『群组成员信息 Json Keys』)*/
+	kNIMNotificationIdTeamSyncUpdateMemberProperty = 1002,	/**< 同步通知：修改群成员属性（可能是自己的或别人的）{"team_member" : team_member_info} //目前只需kNIMTeamUserKeyNick和kNIMTeamUserKeyBits (Keys SEE MORE `nim_team_def.h` 『群组成员信息 Json Keys』)*/
 
 	//本地发起的操作通知APP上层
-	kNIMNotificationIdLocalCreateTeam		= 2000,			/**< 本地操作创建群 {"ids" : ["a1", "a2"]}*/
-	kNIMNotificationIdLocalApplyTeam		= 2001,			/**< 本地操作申请加入群 {}*/
-	kNIMNotificationIdLocalRejectApply		= 2002,			/**< 本地操作拒绝申请 {"id":"a1"}*/
-	kNIMNotificationIdLocalRejectInvite		= 2003,			/**< 本地操作拒绝邀请 {"id":"a1"}*/
-	kNIMNotificationIdLocalUpdateMemberProperty	= 2004,		/**< 本地操作更新群成员属性  {"team_member" : team_member_info} */  
-	kNIMNotificationIdLocalUpdateOtherNick	= 2005,			/**< 本地操作更新他人nickname {}*/
-	kNIMNotificationIdLocalGetTeamInfo		= 2006,			/**< 本地操作获取群信息 {"team_info":team_info} //群组信息(Keys SEE MORE `nim_team_def.h` 『群组信息 Json Keys』)*/
-	kNIMNotificationIdLocalGetTeamList		= 2007,			/**< 本地操作获取群成员信息结束*/
-	kNIMNotificationIdLocalMuteMember		= 2008,			/**< 本地操作对群成员禁言 {"id":"a1", "mute":1-禁言,0-解禁} */
-	kNIMNotificationIdLocalMute				= 2009,			/**< 本地操作对群禁言 {} */
+	kNIMNotificationIdLocalCreateTeam = 2000,			/**< 本地操作创建群 {"ids" : ["a1", "a2"]}*/
+	kNIMNotificationIdLocalApplyTeam = 2001,			/**< 本地操作申请加入群 {}*/
+	kNIMNotificationIdLocalRejectApply = 2002,			/**< 本地操作拒绝申请 {"id":"a1"}*/
+	kNIMNotificationIdLocalRejectInvite = 2003,			/**< 本地操作拒绝邀请 {"id":"a1"}*/
+	kNIMNotificationIdLocalUpdateMemberProperty = 2004,		/**< 本地操作更新群成员属性  {"team_member" : team_member_info} */
+	kNIMNotificationIdLocalUpdateOtherNick = 2005,			/**< 本地操作更新他人nickname {}*/
+	kNIMNotificationIdLocalGetTeamInfo = 2006,			/**< 本地操作获取群信息 {"team_info":team_info} //群组信息(Keys SEE MORE `nim_team_def.h` 『群组信息 Json Keys』)*/
+	kNIMNotificationIdLocalGetTeamList = 2007,			/**< 本地操作获取群成员信息结束*/
+	kNIMNotificationIdLocalMuteMember = 2008,			/**< 本地操作对群成员禁言 {"id":"a1", "mute":1-禁言,0-解禁} */
+	kNIMNotificationIdLocalMute = 2009,			/**< 本地操作对群禁言 {} */
 	kNIMNotificationIdLocalGetTeamMsgUnreadCount = 2010,	/**< 获取群消息未读数 {[{"client_msg_id":"", "count":int, "read_accid":"当前已读成员的accid"},...]}*/
 	kNIMNotificationIdLocalGetTeamMsgUnreadList = 2011,		/**< 获取群消息未读列表 {"client_msg_id":"", "read":["id1",...], "unread":["id2",...]}*/
 
 	//Netcall本地操作通知
-	kNIMNotificationIdLocalNetcallReject	= 3103,			/**< 拒绝电话,{"calltype":1,"channel":6146078138783760761,"from":"id1","ids":["id1","id2"],"time":1430995380471}*/
-	kNIMNotificationIdLocalNetcallNoResponse= 3104,			/**< 无应答，未接通电话,{"calltype":1,"channel":6146078138783760761,"from":"id1","ids":["id1","id2"],"time":1430995380471}*/
+	kNIMNotificationIdLocalNetcallReject = 3103,			/**< 拒绝电话,{"calltype":1,"channel":6146078138783760761,"from":"id1","ids":["id1","id2"],"time":1430995380471}*/
+	kNIMNotificationIdLocalNetcallNoResponse = 3104,			/**< 无应答，未接通电话,{"calltype":1,"channel":6146078138783760761,"from":"id1","ids":["id1","id2"],"time":1430995380471}*/
 	kNIMNotificationIdLocalNetcallCanceled = 3105,	/**< 未接通前主叫方挂断，{"calltype":1,"channel":6146078138783760761,"from":"id1","ids":["id1","id2"],"time":1430995380471}*/
 
 	kNIMNotificationIdSuperTeamInvite = 401,			/**< 超大群拉人，{"ids":["a1", "a2"],"user_namecards":["namecard1", "namecard2"], "attach" : ""} attach为可选字段，作为应用自定义扩展字段,解析前需要判断有没有这个字段 */
@@ -153,10 +152,9 @@ export interface NIMQuerySingleMsgCallback {
 }
 
 /** @enum NIMMsglogQuerySource 消息历史查询来源 */
-export enum NIMMsglogQuerySource
-{
-	kNIMMsglogQuerySourceLocal      = 0,			/**< 本地查询*/
-	kNIMMsglogQuerySourceServer     = 1,			/**< 云端查询*/ 
+export enum NIMMsglogQuerySource {
+	kNIMMsglogQuerySourceLocal = 0,			/**< 本地查询*/
+	kNIMMsglogQuerySourceServer = 1,			/**< 云端查询*/
 }
 
 export interface NIMQueryMsglogResult {
@@ -181,10 +179,35 @@ export interface NIMDBFunctionCallback {
 	(rescode: number): void;
 }
 
+export interface DeleteMsglogSelfNotifyItemInfo {
+	session_id_: string;
+	client_id_: string;
+	ext_: string;
+}
+
+export interface NIMDeleteMsglogSelfNotifyCallback {
+	(result: Array<DeleteMsglogSelfNotifyItemInfo>): void;
+}
+
+export interface DeleteHistoryMessagesNotifyItemInfo {
+	to_type: number;
+	id: string;
+	time: number;
+	ext: string;
+}
+
+export interface NIMDeleteHistoryMessagesNotifyCallback {
+	(result: Array<DeleteHistoryMessagesNotifyItemInfo>): void;
+}
+
+export interface NIMDeleteMessageSelfAsyncCallback {
+	(rescode: number): void;
+}
+
 export interface NIMMessageStatusChanged {
 	talk_id: string; 			/**< 会话ID */
 	msg_timetag: number; 		/**< 临界的消息的时间戳 */
-	status: NIMMsgLogStatus; 	/**< 变更后的状态 */	
+	status: NIMMsgLogStatus; 	/**< 变更后的状态 */
 }
 
 export interface NIMMessageStatusChangedResult {
@@ -202,6 +225,57 @@ export interface NIMImportDbPrgCallback {
 
 export interface NIMDeleteHistoryOnLineAsyncCallback {
 	(rescode: number, accid: string): void;
+}
+
+export interface NIMDeleteHistoryOnLineAsyncExCallback {
+	(rescode: number, accid: string, to_type: number, timestamp: number, json_extension: string): void;
+}
+
+export interface NIMQueryMessageIsThreadRootCallback {
+	(rescode: number, client_id: string, is_root: boolean): void;
+}
+
+export interface NIMQueryMsgAsyncParam {
+	to_type_: number;
+	from_account: string;
+	to_account: string;
+	server_id: number;
+	client_id: string;
+	msg_timetag: number;
+}
+
+export interface NIMQueryMessageOnlineCallback {
+	(rescode: number, client_id: string, msg: NIMMessage): void;
+}
+
+export interface NIMQueryThreadHistoryMsgAsyncParam {
+	from_time: number;
+	to_time: number;
+	exclude_msg_id: number;
+	limit: number;
+	reverse: number;
+}
+
+export interface NIMQueryThreadHistoryMsgCallback {
+	(rescode: number, root_msg: NIMMessage, total: number, last_msg_time: number, msg_array: Array<NIMMessage>): void;
+}
+
+export interface NIMFullTextSearchOnlineAsyncParam {
+	keyword_: string;
+	from_time_: number;
+	to_time_: number;
+	session_limit_: number;
+	msglog_limit_: number;
+	order_by_: number;
+	p2p_filter_list_: Array<string>;
+	team_filter_list_: Array<string>;
+	sender_filter_list_: Array<string>;
+	msg_type_filter_list_: Array<NIMMessage>;
+	msg_sub_type_filter_list_: Array<number>;
+}
+
+export interface NIMFullTextSearchOnlineAsyncCallback {
+	(rescode: number, result: NIMQueryMsglogResult): void;
 }
 
 export interface NIMMsgLogAPI {
@@ -252,6 +326,7 @@ export interface NIMMsgLogAPI {
 
 	BatchStatusDeleteAsync(accid: string,
 		toType: NIMSessionType,
+		revert_by_query_online: boolean,
 		cb: NIMModifyMultipleMsglogCallback,
 		jsonExtention: string): boolean;
 
@@ -268,11 +343,13 @@ export interface NIMMsgLogAPI {
 	WriteMsglogToLocalAsync(talkId: string,
 		msg: NIMMessage,
 		needUpdateSession: boolean,
-		cb: NIMModifySingleMsglogCallback,
-		jsonExtention: string): boolean;
+		compose_last_msg: boolean,
+		exclude_msg_type: Array<number>,
+		cb: NIMModifySingleMsglogCallback): boolean;
 
 	DeleteBySessionTypeAsync(delSessions: boolean,
 		toType: NIMSessionType,
+		revert_by_query_online: boolean,
 		cb: NIMModifyMultipleMsglogCallback,
 		jsonExtention: string): boolean;
 
@@ -283,11 +360,13 @@ export interface NIMMsgLogAPI {
 		jsonExtention: string): boolean;
 
 	DeleteAllAsync(delSession: boolean,
+		revert_by_query_online: boolean,
 		cb: NIMDBFunctionCallback,
 		jsonExtention: string): boolean;
 
 	DeleteMsgByTimeAsync(sessionId: string,
 		toType: NIMSessionType,
+		revert_by_query_online: boolean,
 		timestamp1: number,
 		timestamp2: number,
 		cb: NIMDBFunctionCallback,
@@ -316,7 +395,7 @@ export interface NIMMsgLogAPI {
 		cb: NIMModifySingleMsglogCallback,
 		jsonExtention: string): boolean;
 
-	UnregMsgologCb(): void;
+	UnregMsglogCb(): void;
 
 	ReadAllAsync(cb: NIMDBFunctionCallback, jsonExtention: string): boolean;
 
@@ -324,5 +403,25 @@ export interface NIMMsgLogAPI {
 		delRemote: boolean,
 		jsonExtention: string,
 		cb: NIMDeleteHistoryOnLineAsyncCallback): void;
+
+	DeleteHistoryOnlineAsyncEx(accid: string,
+		to_type: number,
+		needs_notify_self: boolean,
+		jsonExtention: string,
+		cb: NIMDeleteHistoryOnLineAsyncExCallback): void;
+
+	RegDeleteMsglogSelfNotify(cb: NIMDeleteMsglogSelfNotifyCallback): void;
+
+	RegDeleteHistoryMessagesNotify(cb: NIMDeleteHistoryMessagesNotifyCallback): void;
+
+	DeleteMessageSelfAsync(msgs: Array<NIMMessage>, exts: Array<string>, cb: NIMDeleteMessageSelfAsyncCallback): void;
+
+	QueryMessageIsThreadRoot(client_id: string, cb: NIMQueryMessageIsThreadRootCallback): void;
+
+	QueryMessageOnline(param: NIMQueryMsgAsyncParam, cb: NIMQueryMessageOnlineCallback): void;
+
+	QueryThreadHistoryMsg(msg: NIMMessage, param: NIMQueryThreadHistoryMsgAsyncParam, cb: NIMQueryThreadHistoryMsgCallback): void;
+
+	FullTextSearchOnlineAsync(param: NIMFullTextSearchOnlineAsyncParam, cb: NIMFullTextSearchOnlineAsyncCallback): void;
 }
 

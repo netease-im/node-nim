@@ -47,6 +47,7 @@ public:
     NIM_SDK_NODE_API(QueryMessageIsThreadRoot);
     NIM_SDK_NODE_API(QueryMessageOnline);
     NIM_SDK_NODE_API(QueryThreadHistoryMsg);
+    NIM_SDK_NODE_API(FullTextSearchOnlineAsync);
 
 protected:
     MsgLog(Isolate* isolate);
