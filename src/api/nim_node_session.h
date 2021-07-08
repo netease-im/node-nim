@@ -26,7 +26,6 @@ public:
     NIM_SDK_NODE_API(CancelToStickTopSession);
     NIM_SDK_NODE_API(QueryLastFewSessionAsync);
     NIM_SDK_NODE_API(QueryAllRecentSessionAsync);
-    NIM_SDK_NODE_API(QueryAllRecentSessionAsync2);
     NIM_SDK_NODE_API(DeleteRecentSession);
     NIM_SDK_NODE_API(DeleteSessionRoamingMessage);
     NIM_SDK_NODE_API(SetMultiUnreadCountZeroAsync);

@@ -1,6 +1,6 @@
 import nim from './nim';
 import ev from 'events';
-import { NIMSessionAPI, NIMSessionType, NIMSessionChangeCallback, NIMQuerySessionListCallback, NIMQuerySessionDataCallback } from './session.def';
+import { NIMSessionAPI, NIMSessionType, NIMSessionChangeCallback, NIMQuerySessionListCallback, NIMQuerySessionDataCallback, NIMBadgeCountCallback, NIMDeleteSessionRoamingMessageCallback, NIMUnreadCountZeroInfo, NIMCancelStickTopSessionNotifyCallback, NIMSetToStickTopSessionNotifyCallback, NIMUpdateStickTopSessionNotifyCallback, NIMQueryStickTopSessionListCallback, NIMSetToStickTopSessionCallback, NIMUpdateStickTopSessionCallback, NIMCancelToStickTopSessionCallback, NIMQueryHasmoreRoammsgCallback, NIMQueryAllHasmoreRoammsgCallback, NIMUpdateHasmoreRoammsgCallback, NIMDeleteHasmoreRoammsgCallback } from './session.def';
 import { NIMMessageType } from './msglog_def';
 
 class NIMSession extends ev.EventEmitter {
@@ -10,53 +10,105 @@ class NIMSession extends ev.EventEmitter {
         this.session = new nim.Session();
     }
 
-	regChangeCb(cb: NIMSessionChangeCallback, jsonExtension: string): void {
+    regChangeCb(cb: NIMSessionChangeCallback, jsonExtension: string): void {
         return this.session.RegChangeCb(cb, jsonExtension);
     }
 
-	queryLastFewSessionAsync(limit: number, cb: NIMQuerySessionListCallback, jsonExtension: string): void {
+    regBadgeCountCb(cb: NIMBadgeCountCallback, jsonExtension: string): void {
+        return this.session.RegBadgeCountCb(cb, jsonExtension);
+    }
+
+    regSetToStickTopSessionNotifyCB(cb: NIMSetToStickTopSessionNotifyCallback): void {
+        return this.session.RegSetToStickTopSessionNotifyCB(cb);
+    }
+
+    regCancelStickTopSessionNotifyCB(cb: NIMCancelStickTopSessionNotifyCallback): void {
+        return this.session.RegCancelStickTopSessionNotifyCB(cb);
+    }
+
+    regUpdateStickTopSessionNotifyCB(cb: NIMUpdateStickTopSessionNotifyCallback): void {
+        return this.session.RegUpdateStickTopSessionNotifyCB(cb);
+    }
+
+    queryStickTopSessionList(cb: NIMQueryStickTopSessionListCallback) {
+        return this.session.QueryStickTopSessionList(cb);
+    }
+
+    setToStickTopSession(cb: NIMSetToStickTopSessionCallback) {
+        return this.session.SetToStickTopSession(cb);
+    }
+
+    updateToStickTopSession(cb: NIMUpdateStickTopSessionCallback): void {
+        return this.session.UpdateToStickTopSession(cb);
+    }
+
+    cancelToStickTopSession(cb: NIMCancelToStickTopSessionCallback): void {
+        return this.session.CancelToStickTopSession(cb);
+    }
+
+    queryLastFewSessionAsync(limit: number, cb: NIMQuerySessionListCallback, jsonExtension: string): void {
         return this.session.QueryLastFewSessionAsync(limit, cb, jsonExtension);
     }
 
-	queryAllRecentSessionAsync(cb: NIMQuerySessionListCallback, jsonExtension: string): void {
-        return this.session.QueryAllRecentSessionAsync(cb, jsonExtension);
+    queryAllRecentSessionAsync(msgExcludedTypeList: Array<NIMMessageType>, cb: NIMQuerySessionListCallback, jsonExtension: string): void {
+        return this.session.QueryAllRecentSessionAsync(msgExcludedTypeList, cb, jsonExtension);
     }
 
-	queryAllRecentSessionAsync2(lastMsgExcludedType: NIMMessageType, cb: NIMQuerySessionListCallback, jsonExtension: string): void {
-        return this.session.QueryAllRecentSessionAsync2(lastMsgExcludedType, cb, jsonExtension);
+    deleteRecentSession(type: NIMSessionType, id: string, cb: NIMSessionChangeCallback, delete_roaming: boolean): void {
+        return this.session.DeleteRecentSession(type, id, cb, delete_roaming);
     }
 
-	deleteRecentSession(type: NIMSessionType, id: string, cb: NIMSessionChangeCallback, jsonExtension: string): boolean {
-        return this.session.DeleteRecentSession(type, id, cb, jsonExtension);
-    }
-
-	deleteAllRecentSession(cb: NIMSessionChangeCallback, jsonExtension: string): void {
+    deleteAllRecentSession(cb: NIMSessionChangeCallback, jsonExtension: string): void {
         return this.session.DeleteAllRecentSession(cb, jsonExtension);
     }
 
-	setUnreadCountZeroAsync(type: NIMSessionType, id: string, cb: NIMSessionChangeCallback, jsonExtension: string): boolean {
+    deleteSessionRoamingMessage(session_id: string, to_type: number, cb: NIMDeleteSessionRoamingMessageCallback): boolean {
+        return this.session.DeleteSessionRoamingMessage(session_id, to_type, cb);
+    }
+
+    setUnreadCountZeroAsync(type: NIMSessionType, id: string, cb: NIMSessionChangeCallback, jsonExtension: string): boolean {
         return this.session.SetUnreadCountZeroAsync(type, id, cb, jsonExtension);
     }
 
-	setSessionTop(type: NIMSessionType, id: string, top: boolean, cb: NIMSessionChangeCallback, jsonExtension: string): boolean {
+    setMultiUnreadCountZeroAsync(is_super_team: boolean, zero_list: Array<NIMUnreadCountZeroInfo>): boolean {
+        return this.session.SetMultiUnreadCountZeroAsync(is_super_team, zero_list);
+    }
+
+    setSessionTop(type: NIMSessionType, id: string, top: boolean, cb: NIMSessionChangeCallback, jsonExtension: string): boolean {
         return this.session.SetSessionTop(type, id, top, cb, jsonExtension);
     }
 
-	setSessionExtendData(type: NIMSessionType, id: string, data: string, cb: NIMSessionChangeCallback, jsonExtension: string): boolean {
+    setSessionExtendData(type: NIMSessionType, id: string, data: string, cb: NIMSessionChangeCallback, jsonExtension: string): boolean {
         return this.session.SetSessionExtendData(type, id, data, cb, jsonExtension);
     }
 
-	setAllUnreadCountZeroAsync(cb: NIMSessionChangeCallback, jsonExtension: string): boolean {
+    setAllUnreadCountZeroAsync(cb: NIMSessionChangeCallback, jsonExtension: string): boolean {
         return this.session.SetAllUnreadCountZeroAsync(cb, jsonExtension);
     }
 
-	querySessionDataById(type: NIMSessionType, id: string, cb: NIMQuerySessionDataCallback, jsonExtension: string): void {
+    querySessionDataById(type: NIMSessionType, id: string, cb: NIMQuerySessionDataCallback, jsonExtension: string): void {
         return this.session.QuerySessionDataById(type, id, cb, jsonExtension);
     }
 
-	unregSessionCb(): void {
+    queryHasmoreRoammsg(session_id: string, to_type: number, cb: NIMQueryHasmoreRoammsgCallback): void {
+        return this.session.QueryHasmoreRoammsg(session_id, to_type, cb);
+    }
+
+    queryAllHasmoreRoammsg(cb: NIMQueryAllHasmoreRoammsgCallback): void {
+        return this.session.QueryAllHasmoreRoammsg(cb);
+    }
+
+    updateHasmoreRoammsg(cb: NIMUpdateHasmoreRoammsgCallback): void {
+        return this.session.UpdateHasmoreRoammsg(cb);
+    }
+
+    deleteHasmoreRoammsg(session_id: string, to_type: NIMSessionType, cb: NIMDeleteHasmoreRoammsgCallback): void {
+        return this.session.DeleteHasmoreRoammsg(session_id, to_type, cb);
+    }
+
+    unregSessionCb(): void {
         return this.session.UnregSessionCb();
-    }  
+    }
 }
 
 export default NIMSession;
