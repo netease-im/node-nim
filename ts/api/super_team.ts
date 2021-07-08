@@ -28,105 +28,105 @@ class NIMSuperTeam extends ev.EventEmitter {
         invitationAttachment: string,
         cb: NIMTeamEventCallback,
         jsonExtension: string): boolean {
-            return this.team.InviteAsync2(tid, ids, invitationPostscript, invitationAttachment, cb, jsonExtension);
-        }
+        return this.team.InviteAsync2(tid, ids, invitationPostscript, invitationAttachment, cb, jsonExtension);
+    }
 
     kickAsync(tid: string,
         ids: Array<string>,
         cb: NIMTeamEventCallback,
         jsonExtension: string): boolean {
-            return this.team.KickAsync(tid, ids, cb, jsonExtension);
-        }
+        return this.team.KickAsync(tid, ids, cb, jsonExtension);
+    }
 
     leaveAsync(tid: string,
         cb: NIMTeamEventCallback,
         jsonExtension: string): boolean {
-            return this.team.LeaveAsync(tid, cb, jsonExtension);
-        }
+        return this.team.LeaveAsync(tid, cb, jsonExtension);
+    }
 
     dismissAsync(tid: string,
         cb: NIMTeamEventCallback,
         jsonExtension: string): boolean {
-            return this.team.DismissAsync(tid, cb, jsonExtension);
-        }
+        return this.team.DismissAsync(tid, cb, jsonExtension);
+    }
 
     updateTeamInfoAsync(tid: string,
         info: NIMSuperTeamInfo,
         cb: NIMTeamEventCallback,
         jsonExtension: string): boolean {
-            return this.team.UpdateTeamInfoAsync(tid, info, cb, jsonExtension);
-        }
+        return this.team.UpdateTeamInfoAsync(tid, info, cb, jsonExtension);
+    }
 
     applyJoinAsync(tid: string,
         reason: string,
         cb: NIMTeamEventCallback,
         jsonExtension: string): boolean {
-            return this.team.ApplyJoinAsync(tid, reason, cb, jsonExtension);
-        }
+        return this.team.ApplyJoinAsync(tid, reason, cb, jsonExtension);
+    }
 
     passJoinApplyAsync(tid: string,
         applicantId: string,
         cb: NIMTeamEventCallback,
         jsonExtension: string): boolean {
-            return this.team.PassJoinApplyAsync(tid, applicantId, cb, jsonExtension);
-        }
+        return this.team.PassJoinApplyAsync(tid, applicantId, cb, jsonExtension);
+    }
 
     rejectJoinApplyAsync(tid: string,
         applicantId: string,
         reason: string,
         cb: NIMTeamEventCallback,
         jsonExtension: string): boolean {
-            return this.team.RejectJoinApplyAsync(tid, applicantId, reason, cb, jsonExtension);
-        }
+        return this.team.RejectJoinApplyAsync(tid, applicantId, reason, cb, jsonExtension);
+    }
 
     addManagersAsync(tid: string,
         ids: Array<string>,
         cb: NIMTeamEventCallback,
         jsonExtension: string): boolean {
-            return this.team.AddManagersAsync(tid, ids, cb, jsonExtension);
-        }
+        return this.team.AddManagersAsync(tid, ids, cb, jsonExtension);
+    }
 
     removeManagersAsync(tid: string,
         ids: Array<string>,
         cb: NIMTeamEventCallback,
         jsonExtension: string): boolean {
-            return this.team.RemoveManagersAsync(tid, ids, cb, jsonExtension);
-        }
+        return this.team.RemoveManagersAsync(tid, ids, cb, jsonExtension);
+    }
 
     transferTeamAsync(tid: string,
         newOwnerId: string,
         isLeave: boolean,
         cb: NIMTeamEventCallback,
         jsonExtension: string): boolean {
-            return this.transferTeamAsync(tid, newOwnerId, isLeave, cb, jsonExtension);
-        }
+        return this.transferTeamAsync(tid, newOwnerId, isLeave, cb, jsonExtension);
+    }
 
     updateMyPropertyAsync(prop: NIMSuperTeamMemberProperty,
         cb: NIMTeamEventCallback,
         jsonExtension: string): boolean {
-            return this.team.UpdateMyPropertyAsync(prop, cb, jsonExtension);
-        }
+        return this.team.UpdateMyPropertyAsync(prop, cb, jsonExtension);
+    }
 
     updateOtherNickAsync(prop: NIMSuperTeamMemberProperty,
         cb: NIMTeamEventCallback,
         jsonExtension: string): boolean {
-            return this.team.UpdateOtherNickAsync(prop, cb, jsonExtension);
-        }
+        return this.team.UpdateOtherNickAsync(prop, cb, jsonExtension);
+    }
 
     acceptInvitationAsync(tid: string,
         inviterId: string,
         cb: NIMTeamEventCallback,
         jsonExtension: string): boolean {
-            return this.team.AcceptInvitationAsync(tid, inviterId, cb, jsonExtension);
-        }
+        return this.team.AcceptInvitationAsync(tid, inviterId, cb, jsonExtension);
+    }
 
     rejectInvitationAsync(tid: string,
         inviterId: string,
         reason: string,
         cb: NIMTeamEventCallback,
         jsonExtension: string): boolean {
-            return this.team.RejectInvitationAsync(tid, inviterId, reason, cb, jsonExtension);
-        }
+        return this.team.RejectInvitationAsync(tid, inviterId, reason, cb, jsonExtension);
+    }
 
     queryAllMyTeamsAsync(cb: NIMQueryAllMyTeamsCallback, jsonExtension: string): void {
         return this.team.QueryAllMyTeamsAsync(cb, jsonExtension);
@@ -146,10 +146,10 @@ class NIMSuperTeam extends ev.EventEmitter {
 
     queryTeamMemberAsync(tid: string,
         id: string,
-        cb: NIMQueryTeamMemberCallback, 
+        cb: NIMQueryTeamMemberCallback,
         jsonExtension: string): void {
-            return this.team.QueryTeamMemberAsync(tid, id, cb, jsonExtension);
-        }
+        return this.team.QueryTeamMemberAsync(tid, id, cb, jsonExtension);
+    }
 
     queryTeamInfoAsync(tid: string, cb: NIMQueryTeamInfoCallback, jsonExtension: string): boolean {
         return this.team.QueryTeamInfoAsync(tid, cb, jsonExtension);
@@ -168,19 +168,19 @@ class NIMSuperTeam extends ev.EventEmitter {
         setMute: boolean,
         cb: NIMTeamEventCallback,
         jsonExtension: string): boolean {
-            return this.team.MuteMemberAsync(tid, memberId, setMute, cb, jsonExtension);
-        }
+        return this.team.MuteMemberAsync(tid, memberId, setMute, cb, jsonExtension);
+    }
 
-    // queryMuteListOnlineAsync(tid: string, cb: Function, jsonExtension: string): boolean {
-    //     return this.team.QueryMuteListOnlineAsync(tid, cb, jsonExtension);
-    // }
+    queryMuteListOnlineAsync(tid: string, cb: NIMQueryTeamMembersCallback, jsonExtension: string): boolean {
+        return this.team.QueryMuteListOnlineAsync(tid, cb, jsonExtension);
+    }
 
     muteAsync(tid: string,
         setMute: boolean,
         cb: NIMTeamEventCallback,
         jsonExtension: string): boolean {
-            return this.team.MuteAsync(tid, setMute, cb, jsonExtension);
-        }
+        return this.team.MuteAsync(tid, setMute, cb, jsonExtension);
+    }
 
     // teamMsgAckRead(tid: string,
     //     msgs: Array<NIMMessage>,

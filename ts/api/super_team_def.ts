@@ -19,31 +19,27 @@ export enum NIMSuperTeamUserType {
 }
 
 /** @enum NIMSuperTeamBeInviteMode 被邀请人同意方式 */
-export enum NIMSuperTeamBeInviteMode
-{
-	kNIMSuperTeamBeInviteModeNeedAgree = 0,	/**< 需要同意 */
-	kNIMSuperTeamBeInviteModeNotNeedAgree = 1,	/**< 不需要同意 */
+export enum NIMSuperTeamBeInviteMode {
+    kNIMSuperTeamBeInviteModeNeedAgree = 0,	/**< 需要同意 */
+    kNIMSuperTeamBeInviteModeNotNeedAgree = 1,	/**< 不需要同意 */
 };
 
 /** @enum NIMSuperTeamInviteMode 谁可以邀请他人入群 */
-export enum NIMSuperTeamInviteMode
-{
-	kNIMSuperTeamInviteModeManager = 0,	/**< 管理员 */
-	kNIMSuperTeamInviteModeEveryone = 1,	/**< 所有人 */
+export enum NIMSuperTeamInviteMode {
+    kNIMSuperTeamInviteModeManager = 0,	/**< 管理员 */
+    kNIMSuperTeamInviteModeEveryone = 1,	/**< 所有人 */
 };
 
 /** @enum NIMSuperTeamUpdateInfoMode 谁可以修改群资料 */
-export enum NIMSuperTeamUpdateInfoMode
-{
-	kNIMSuperTeamUpdateInfoModeManager = 0,	/**< 管理员 */
-	kNIMSuperTeamUpdateInfoModeEveryone = 1,	/**< 所有人 */
+export enum NIMSuperTeamUpdateInfoMode {
+    kNIMSuperTeamUpdateInfoModeManager = 0,	/**< 管理员 */
+    kNIMSuperTeamUpdateInfoModeEveryone = 1,	/**< 所有人 */
 };
 
 /** @enum NIMSuperTeamUpdateCustomMode 谁可以更新群自定义属性 */
-export enum NIMSuperTeamUpdateCustomMode
-{
-	kNIMSuperTeamUpdateCustomModeManager = 0,	/**< 管理员 */
-	kNIMSuperTeamUpdateCustomModeEveryone = 1,	/**< 所有人 */
+export enum NIMSuperTeamUpdateCustomMode {
+    kNIMSuperTeamUpdateCustomModeManager = 0,	/**< 管理员 */
+    kNIMSuperTeamUpdateCustomModeEveryone = 1,	/**< 所有人 */
 };
 
 
@@ -111,7 +107,7 @@ export interface NIMTeamEventCallback {
     mute: number;			/**< int */
     team_info: NIMSuperTeamInfo;		/**< string, team_info 群组信息 Json Keys*/
     team_member: NIMSuperTeamMemberProperty;	/**< string, team_member_property 群组成员信息 Json Keys*/
-    name_cards: Array<NIMUserNameCard>;	/**< json string array, 操作者和被操作者双方的 用户名片 Json Keys*/ 
+    name_cards: Array<NIMUserNameCard>;	/**< json string array, 操作者和被操作者双方的 用户名片 Json Keys*/
     attach: string;         /**< 扩展字段,目前仅kick和invite事件可选*/
     src_data: string;       /**< 未解析过的原信息，目前仅支持群消息未读数相关事件*/
 }
@@ -272,7 +268,7 @@ export interface NIMSuperTeamAPI {
         cb: NIMTeamEventCallback,
         jsonExtension: string): boolean;
 
-    // QueryMuteListOnlineAsync(tid: string, cb: Function, jsonExtension: string): boolean; 
+    QueryMuteListOnlineAsync(tid: string, cb: NIMQueryTeamMembersCallback, jsonExtension: string): boolean;
 
     MuteAsync(tid: string,
         setMute: boolean,
