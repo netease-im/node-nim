@@ -48,6 +48,8 @@ public:
     NIM_SDK_NODE_API(QueryTeamMembersInvitor);
     NIM_SDK_NODE_API(QueryTeamInfoByKeywordAsync);
     NIM_SDK_NODE_API(UpdateTInfoLocal);
+    NIM_SDK_NODE_API(GetTeamInfoBatchSFTrans);
+    NIM_SDK_NODE_API(GetTeaminfoList);
 
 protected:
     explicit Team(Isolate* isolate);

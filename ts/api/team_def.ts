@@ -1,6 +1,8 @@
 import { NIMMessage } from "./talk_def";
 import { NIMNotificationId } from './msglog_def';
 import { NIMUserNameCard } from './user_def';
+import NIMTeam from "./team";
+import { NIMResCode } from "./rescode_def";
 
 
 /** @enum NIMTeamBeInviteMode 被邀请人同意方式 */
@@ -122,7 +124,7 @@ export interface NIMTeamEventData {
     mute: number;			/**< int */
     team_info: NIMTeamInfo;		/**< string, team_info 群组信息 Json Keys*/
     team_member: NIMTeamMemberProperty;	/**< string, team_member_property 群组成员信息 Json Keys*/
-    name_cards: Array<NIMUserNameCard>;	/**< json string array, 操作者和被操作者双方的 用户名片 Json Keys*/ 
+    name_cards: Array<NIMUserNameCard>;	/**< json string array, 操作者和被操作者双方的 用户名片 Json Keys*/
     attach: string;         /**< 扩展字段,目前仅kick和invite事件可选*/
     src_data: string;       /**< 未解析过的原信息，目前仅支持群消息未读数相关事件*/
 }
@@ -170,6 +172,22 @@ export interface NIMQueryTeamMembersInvitorCallback {
 
 export interface NIMQueryTeamsInfoCallback {
     (count: number, result: Array<NIMTeamInfo>): void;
+}
+
+export interface NIMTeamMsgAckReadCallback {
+    (tid: string, success_ids: Array<string>, failure_ids: Array<string>, ignored_ids: Array<string>): void;
+}
+
+export interface NIMUpdateTInfoLocalCallback {
+    (success_ids: Array<string>, failure_ids: Array<string>): void;
+}
+
+export interface NIMGetTeamInfoBatchSFTransCallback {
+    (count: number, infos: Array<NIMTeamInfo>): void;
+}
+
+export interface NIMGetTeamInfoListCallback {
+    (rescode: NIMResCode, infos: Array<NIMTeamInfo>, failure_ids: Array<string>): void;
 }
 
 export interface NIMTeamAPI {
@@ -292,11 +310,12 @@ export interface NIMTeamAPI {
 
     TeamMsgAckRead(tid: string,
         msgs: Array<NIMMessage>,
-        cb: NIMTeamEventCallback,
+        cb: NIMTeamMsgAckReadCallback,
         jsonExtension: string): void;
 
     TeamMsgQueryUnreadList(tid: string,
         msg: NIMMessage,
+        accids: Array<string>,
         cb: NIMTeamEventCallback,
         jsonExtension: string): void;
 
@@ -307,4 +326,10 @@ export interface NIMTeamAPI {
     QueryTeamInfoByKeywordAsync(keyword: string,
         cb: NIMQueryTeamsInfoCallback,
         jsonExtension: string): boolean;
+
+    UpdateTInfoLocal(infos: Array<NIMTeamInfo>, cb: NIMUpdateTInfoLocalCallback, jsonExtension: string): void;
+
+    GetTeamInfoBatchSFTrans(cb: NIMGetTeamInfoBatchSFTransCallback, time_tag: number, jsonExtension: string): void;
+
+    GetTeaminfoList(tids: Array<string>, cb: NIMGetTeamInfoListCallback): void;
 }

@@ -311,13 +311,36 @@ NIM_SDK_NODE_API_DEF(Talk, RecallMsg) {
     pdata.Reset(isolate, obj);
     TalkEventHandler::GetInstance()->AddEventHandler("OnActiveRecallMsgsCallback", pdata, pcb);
 
-    status = nim_napi_get_value_utf8string(isolate, args[3], ext);
-    if (status != napi_ok) {
+    UTF8String apnstext_str;
+    UTF8String pushpayload_str;
+    UTF8String json_extension_str;
+    UTF8String env_config_str;
+    UTF8String attach_str;
+    Local<Object> param_obj = args[3]->ToObject(isolate->GetCurrentContext()).ToLocalChecked();
+    if (nim_napi_get_object_value_utf8string(isolate, param_obj, "apnstext", apnstext_str) != napi_ok) {
         return;
     }
+    if (nim_napi_get_object_value_utf8string(isolate, param_obj, "pushpayload", pushpayload_str) != napi_ok) {
+        return;
+    }
+    if (nim_napi_get_object_value_utf8string(isolate, param_obj, "json_extension", json_extension_str) != napi_ok) {
+        return;
+    }
+    if (nim_napi_get_object_value_utf8string(isolate, param_obj, "env_config", env_config_str) != napi_ok) {
+        return;
+    }
+    if (nim_napi_get_object_value_utf8string(isolate, param_obj, "attach", attach_str) != napi_ok) {
+        return;
+    }
+    nim::nim_talk_recall_extra_params parameter;
+    parameter.apnstext = apnstext_str.toUtf8String().c_str();
+    parameter.pushpayload = pushpayload_str.toUtf8String().c_str();
+    parameter.json_extension = json_extension_str.toUtf8String().c_str();
+    parameter.env_config = env_config_str.toUtf8String().c_str();
+    parameter.attach = attach_str.toUtf8String().c_str();
 
     auto callback = std::bind(&TalkEventHandler::OnRecallMsgsCallback, true, std::placeholders::_1, std::placeholders::_2);
-    nim::Talk::RecallMsg(msg, notify.toUtf8String(), callback, ext.toUtf8String());
+    nim::Talk::RecallMsgEx(msg, notify.toUtf8String(), callback, parameter);
 }
 
 NIM_SDK_NODE_API_DEF(Talk, ReplyMessage) {

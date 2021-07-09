@@ -43,7 +43,7 @@ export interface NIMMessage {
 	anti_spam_using_yidun: number;	/**< int,  (可选) 单条消息是否使用易盾反垃圾 0:(在开通易盾的情况下)不过易盾反垃圾而是通用反垃圾 其他都是按照原来的规则*/
 	team_msg_ack: number;		/**< (可选)int, 群消息是否需要已读业务，0：不需要，1：需要*/
 	is_update_session: boolean;		/**< (可选)bool, 消息是否需要刷新到session服务，false:否，true:是；只有消息存离线的情况下，才会判断该参数，缺省：true*/
-	
+
 	//本地定义
 	readonly team_msg_ack_sent: boolean;	/**< bool 是否已经发送群消息已读回执 */
 	readonly team_msg_unread_count: number;	/**< int, 群消息未读数 */
@@ -66,7 +66,7 @@ export interface NIMRecallMsgNotify {
 	msg_exist: boolean;			/**< bool,撤回的消息本地是否存在,比如对方离线时发一条消息又撤回,对方上线收到离线撤回通知该tag为false */
 	msg_time: number;			/**< long,要撤回消息的创建时间戳(毫秒) */
 	from_nick: string;			/**< string,要撤回消息的发送者昵称 */
-	operator_id: string;			/**< string,操作者ID */	
+	operator_id: string;			/**< string,操作者ID */
 }
 
 export interface NIMBroadcastMessage {
@@ -74,6 +74,14 @@ export interface NIMBroadcastMessage {
 	from_accid: string;		/**< jstring，发送者accid，可能不存在 */
 	time: number;			/**< int64， 时间戳*/
 	body: string;			/**< string，内容 */
+}
+
+export interface NIMRecallMsgParam {
+	apnstext: string;
+	pushpayload: string;
+	json_extension: string;
+	env_config: string;
+	attach: string;
 }
 
 export interface NIMSendMessageArc {
@@ -112,26 +120,33 @@ export interface NIMReceiveBroadcastMsgsCallback {
 	(result: Array<NIMBroadcastMessage>): void;
 }
 
+export interface NIMTeamNotificationFilterCallback {
+	(result: NIMMessage): void;
+}
+
+export interface NIMMessageFilterCallback {
+	(result: NIMMessage): void;
+}
+
 export interface NIMTalkAPI {
-    RegSendMsgCb(cb: NIMSendMsgAckCallback,
-        jsonExtension: string): void;
+	RegSendMsgCb(cb: NIMSendMsgAckCallback,
+		jsonExtension: string): void;
 
 	SendMsg(msg: NIMMessage,
 		jsonExtension: string,
 		fileUploadProgressCb: NIMFileUpPrgCallback): void;
 
-    StopSendMsg(clientMsgId: string,
-        type: NIMMessageType,
-        jsonExtension: string): void;
+	StopSendMsg(clientMsgId: string,
+		type: NIMMessageType,
+		jsonExtension: string): void;
 
 	RegReceiveCb(cb: NIMReceiveMsgCallback, jsonExtension: string): void;
 
 	RegReceiveMessagesCb(cb: NIMReceiveMsgsCallback, jsonExtension: string): void;
 
-	// TODO
-	// RegTeamNotificationFilter(cb: Function, jsonExtension: string): void;
+	RegTeamNotificationFilter(cb: NIMTeamNotificationFilterCallback, jsonExtension: string): void;
 
-	// RegMessageFilter(cb: Function, jsonExtension: string): void;
+	RegMessageFilter(cb: NIMMessageFilterCallback, jsonExtension: string): void;
 
 	RegRecallMsgsCallback(cb: NIMRecallMsgsCallback, jsonExtension: string): void;
 
@@ -139,12 +154,14 @@ export interface NIMTalkAPI {
 
 	RegReceiveBroadcastMsgsCb(cb: NIMReceiveBroadcastMsgsCallback, jsonExtension: string): void;
 
-	RecallMsg(msg: NIMMessage, 
+	RecallMsg(msg: NIMMessage,
 		notify_msg: string,
 		cb: NIMRecallMsgsCallback,
-		jsonExtension: string): void;
+		param: NIMRecallMsgParam): void;
 
 	GetAttachmentPathFromMsg(msg: NIMMessage): string;
+
+	ReplyMessage(msg: NIMMessage, jason_obj: any): void;
 
 	UnregTalkCb(): void;
 }
