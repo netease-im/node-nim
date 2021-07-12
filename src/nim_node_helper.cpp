@@ -122,6 +122,15 @@ napi_status nim_napi_get_object_value_utf8string(Isolate* isolate, const Local<O
     return napi_invalid_arg;
 }
 
+napi_status nim_napi_get_object_value_utf8string(Isolate* isolate, const Local<Object>& obj, const utf8_string& keyName, utf8_string& out) {
+    Local<Value> value;
+    UTF8String temp;
+    if (get_object_value(isolate, obj, keyName, value) == napi_ok)
+        return nim_napi_get_value_utf8string(isolate, value, temp);
+    out = temp.toUtf8String();
+    return napi_invalid_arg;
+}
+
 napi_status nim_napi_get_object_value_utf8string_list(Isolate* isolate,
                                                       const Local<Object>& obj,
                                                       const utf8_string& keyName,

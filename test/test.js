@@ -17,11 +17,6 @@ const user = new NIM.User()
 const plugin = new NIM.PlugIn()
 const tools = new NIM.Tool()
 
-/**
- * ChatRoom instance
- */
-// const chatroom = new NIMChatRoom.ChatRoom()
-
 const current = process.cwd()
 process.chdir(`${current}/build/Release`)
 console.log(`Current run path: ${process.cwd()} for NIM SDK`)

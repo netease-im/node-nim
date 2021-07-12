@@ -200,6 +200,7 @@ napi_status nim_napi_get_value_uint64(Isolate* isolate, const Local<Value>& valu
 
 napi_status nim_napi_get_object_value(Isolate* isolate, const Local<Object>& obj, const utf8_string& keyName, Local<Value>& out);
 napi_status nim_napi_get_object_value_utf8string(Isolate* isolate, const Local<Object>& obj, const utf8_string& keyName, UTF8String& out);
+napi_status nim_napi_get_object_value_utf8string(Isolate* isolate, const Local<Object>& obj, const utf8_string& keyName, utf8_string& out);
 napi_status nim_napi_get_object_value_utf8string_list(Isolate* isolate,
                                                       const Local<Object>& obj,
                                                       const utf8_string& keyName,
