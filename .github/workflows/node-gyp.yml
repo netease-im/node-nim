@@ -23,7 +23,7 @@ jobs:
       with:
         xcode-version: latest-stable
     # Build x64
-    - run: npm install --verbose
+    - run: npm install --skip-install --verbose
     - run: npx just fetch-wrapper --target_platform=darwin --target_arch=x64
     - run: npx just build --runtime=electron --target=13.1.2 --target_platform=darwin --target_arch=x64
     - run: npx just build --runtime=electron --target=8.0.0 --target_platform=darwin --target_arch=x64
@@ -45,7 +45,7 @@ jobs:
       uses: microsoft/setup-msbuild@v1.0.2
 
     # Build ia32
-    - run: npm install --verbose
+    - run: npm install --skip-install --verbose
     - run: npx just fetch-wrapper --target_platform=win32 --target_arch=ia32
     - run: npx just build --runtime=electron --target=13.1.2 --target_platform=win32 --target_arch=ia32
     - run: npx just build --runtime=electron --target=8.0.0 --target_platform=win32 --target_arch=ia32
