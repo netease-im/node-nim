@@ -12,63 +12,63 @@ class NIMSignaling extends ev.EventEmitter {
         this.signaling.RegOnlineNotifyCb(cb);
     }
 
-    RegMutilClientSyncNotifyCb(cb: def.SignalingNotifyCallback): void {
+    regMutilClientSyncNotifyCb(cb: def.SignalingNotifyCallback): void {
         this.signaling.RegMutilClientSyncNotifyCb(cb);
     }
 
-    RegOfflineNotifyCb(cb: def.SignalingNotifyListCallback): void {
+    regOfflineNotifyCb(cb: def.SignalingNotifyListCallback): void {
         this.signaling.RegOfflineNotifyCb(cb);
     }
 
-    RegChannelsSyncCb(cb: def.SignalingChannelListCallback): void {
+    regChannelsSyncCb(cb: def.SignalingChannelListCallback): void {
         this.signaling.RegChannelsSyncCb(cb);
     }
 
-    RegMembersSyncCb(cb: def.SignalingChannelCallback): void {
+    regMembersSyncCb(cb: def.SignalingChannelCallback): void {
         this.signaling.RegMembersSyncCb(cb);
     }
 
-    SignalingCreate(param: def.SignalingCreateParam, cb: def.SignalingOptCallback): void {
+    signalingCreate(param: def.SignalingCreateParam, cb: def.SignalingOptCallback): void {
         this.signaling.SignalingCreate(param, cb);
     }
 
-    SignalingClose(param: def.SignalingCloseParam, cb: def.SignalingOptCallback): void {
+    signalingClose(param: def.SignalingCloseParam, cb: def.SignalingOptCallback): void {
         this.signaling.SignalingClose(param, cb);
     }
 
-    Join(param: def.SignalingJoinParam, cb: def.SignalingOptCallback): void {
+    join(param: def.SignalingJoinParam, cb: def.SignalingOptCallback): void {
         this.signaling.Join(param, cb);
     }
 
-    Leave(param: def.SignalingLeaveParam, cb: def.SignalingOptCallback): void {
+    leave(param: def.SignalingLeaveParam, cb: def.SignalingOptCallback): void {
         this.signaling.Leave(param, cb);
     }
 
-    QueryChannelInfo(param: def.SignalingQueryChannelInfoParam, cb: def.SignalingOptCallback): void {
+    queryChannelInfo(param: def.SignalingQueryChannelInfoParam, cb: def.SignalingOptCallback): void {
         this.signaling.QueryChannelInfo(param, cb);
     }
 
-    Call(param: def.SignalingCallParam, cb: def.SignalingOptCallback): void {
+    call(param: def.SignalingCallParam, cb: def.SignalingOptCallback): void {
         this.signaling.Call(param, cb);
     }
 
-    Invite(param: def.SignalingInviteParam, cb: def.SignalingOptCallback): void {
+    invite(param: def.SignalingInviteParam, cb: def.SignalingOptCallback): void {
         this.signaling.Invite(param, cb);
     }
 
-    CancelInvite(param: def.SignalingCancelInviteParam, cb: def.SignalingOptCallback): void {
+    cancelInvite(param: def.SignalingCancelInviteParam, cb: def.SignalingOptCallback): void {
         this.signaling.CancelInvite(param, cb);
     }
 
-    Reject(param: def.SignalingRejectParam, cb: def.SignalingOptCallback): void {
+    reject(param: def.SignalingRejectParam, cb: def.SignalingOptCallback): void {
         this.signaling.Reject(param, cb);
     }
 
-    Accept(param: def.SignalingAcceptParam, cb: def.SignalingOptCallback): void {
+    accept(param: def.SignalingAcceptParam, cb: def.SignalingOptCallback): void {
         this.signaling.Accept(param, cb);
     }
 
-    Control(param: def.SignalingControlParam, cb: def.SignalingOptCallback): void {
+    control(param: def.SignalingControlParam, cb: def.SignalingOptCallback): void {
         this.signaling.Control(param, cb);
     }
 
