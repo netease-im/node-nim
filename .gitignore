@@ -122,3 +122,9 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+js/
+nim_sdk/
+temporary/
+packages/
+types/
+.vscode/
