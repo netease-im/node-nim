@@ -83,3 +83,5 @@ class NIMTalkEx extends ev.EventEmitter {
         this.talkex.RegUpdatePinMessage(cb);
     }
 }
+
+export default NIMTalkEx;
