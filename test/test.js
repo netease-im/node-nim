@@ -1,5 +1,4 @@
 const assert = require('assert');
-// const NIMChatRoom = require('../build/Release/node-nim-chatroom')
 const NIM = require('../build/Release/nim')
 
 /**
@@ -390,16 +389,16 @@ describe('NIM Test Suite', () => {
           msg_type: 0,
           msg_body: 'Send from NIM node test.',
           client_msg_id: writeMsgId
-        }, true, (errorCode, messageId) => {
+        }, true, true, [], (errorCode, messageId) => {
           assert.strictEqual(errorCode, 200)
           assert.strictEqual(messageId, writeMsgId)
           done()
-        }, '')
+        })
       })
     })
     describe('#DeleteBySessionTypeAsync', () => {
       it('Delete msglog by session type should return 200', (done) => {
-        msglog.DeleteBySessionTypeAsync(true, 5, (errorCode, accountId, toType) => {
+        msglog.DeleteBySessionTypeAsync(true, 5, true, (errorCode, accountId, toType) => {
           assert.strictEqual(errorCode, 200)
           assert.strictEqual(toType, 5)
           done()
@@ -606,8 +605,8 @@ describe('NIM Test Suite', () => {
     })
     describe('#GetFileMD5', () => {
       it('Get file md5 should return a non-empty value', () => {
-        const md5 = tools.GetFileMD5(`${tools.GetCurModuleDir()}nim`)
-        assert.notStrictEqual(md5, '')
+        const md5 = tools.GetFileMD5(`${tools.GetCurModuleDir()}nim.node`)
+        assert.notStrictEqual(md5, '', `path: ${tools.GetCurModuleDir()}nim.node`)
       })
     })
     describe.skip('#GetUUID', () => {
@@ -812,16 +811,16 @@ describe('NIM Test Suite', () => {
       })
     })
     describe('#QueryUserListByKeyword', () => {
-      it(`Query user list by keywork should inlucde ${assistUser}`, (done) => {
-        user.QueryUserListByKeyword(assistUser, (users) => {
-          assert.notStrictEqual(users.length, 0)
+      it(`Query user list by keyword should inlucde ${mainUser}`, (done) => {
+        user.QueryUserListByKeyword('Node', (users) => {
+          assert.notStrictEqual(users.length, 0, 'User list is empty!')
           let foundMember = false
           users.map((user) => {
-            if (user.accid === assistUser) {
+            if (user.accid === mainUser) {
               foundMember = true
             }
           })
-          assert.strictEqual(foundMember, true)
+          assert.strictEqual(foundMember, true, `Did not find the given user: ${mainUser}`)
           done()
         }, '')
       });
