@@ -653,7 +653,7 @@ NIM_SDK_NODE_API_DEF(MsgLog, DeleteBySessionTypeAsync) {
         return;
     }
 
-    status = nim_napi_get_value_bool(isolate, args[5], revert_by_query_online);
+    status = nim_napi_get_value_bool(isolate, args[2], revert_by_query_online);
     if (status != napi_ok) {
         return;
     }
