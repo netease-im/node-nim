@@ -14,23 +14,30 @@ import NIMTalk from './api/talk';
 import NIMTeam from './api/team';
 import NIMTool from './api/tool';
 import NIMUser from './api/user';
+import NIMRts from './api/rts';
+import NIMSignaling from './api/signaling';
+import NIMTalkEx from './api/talkex';
 
-const NIMSDK = { NIMClient, 
-    NIMDataSync, 
-    NIMFriend, 
-    NIMGlobal, 
-    NIMMsgLog, 
-    NIMNOS, 
+const NIMSDK = {
+    NIMClient,
+    NIMDataSync,
+    NIMFriend,
+    NIMGlobal,
+    NIMMsgLog,
+    NIMNOS,
     NIMOnlineSession,
     NIMPassThroughProxy,
-    NIMSession, 
+    NIMSession,
     NIMSubscribeEvent,
     NIMSuperTeam,
     NIMSysMsg,
     NIMTalk,
     NIMTeam,
     NIMTool,
-    NIMUser
+    NIMUser,
+    NIMRts,
+    NIMSignaling,
+    NIMTalkEx
 };
 
 export default NIMSDK;
