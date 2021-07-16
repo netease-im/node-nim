@@ -161,9 +161,7 @@ NIM_SDK_NODE_API_DEF(Signaling, Call) {
     nim_napi_get_object_value_utf8string(isolate, param_obj, nim::kNIMSglAccountID, param.account_id_);
     nim_napi_get_object_value_utf8string(isolate, param_obj, nim::kNIMSglRequestID, param.request_id_);
     nim_napi_get_object_value_utf8string(isolate, param_obj, nim::kNIMSglCustomInfo, param.custom_info_);
-    nim_signaling_push_info_obj_to_struct(
-        isolate, param_obj->Get(isolate->GetCurrentContext(), nim_napi_new_utf8string(isolate, nim::kNIMSglPushInfo)).ToLocalChecked(),
-        param.push_info_);
+    nim_signaling_push_info_obj_to_struct(isolate, param_obj, param.push_info_);
 
     ASSEMBLE_BASE_CALLBACK(1);
 
@@ -179,9 +177,7 @@ NIM_SDK_NODE_API_DEF(Signaling, Invite) {
     nim_napi_get_object_value_utf8string(isolate, param_obj, nim::kNIMSglRequestID, param.request_id_);
     nim_napi_get_object_value_utf8string(isolate, param_obj, nim::kNIMSglCustomInfo, param.custom_info_);
     nim_napi_get_object_value_bool(isolate, param_obj, nim::kNIMSglOfflineEnabled, param.offline_enabled_);
-    nim_signaling_push_info_obj_to_struct(
-        isolate, param_obj->Get(isolate->GetCurrentContext(), nim_napi_new_utf8string(isolate, nim::kNIMSglPushInfo)).ToLocalChecked(),
-        param.push_info_);
+    nim_signaling_push_info_obj_to_struct(isolate, param_obj, param.push_info_);
     ASSEMBLE_BASE_CALLBACK(1);
 
     auto callback = std::bind(&SignalingEventHandler::OnSignalingInviteCallback, bcb, std::placeholders::_1, std::placeholders::_2);

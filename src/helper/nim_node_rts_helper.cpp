@@ -1,5 +1,4 @@
 #include "nim_node_rts_helper.h"
-#include "nim_cpp_wrapper/api/nim_cpp_rts.h"
 #include "nim_node_helper.h"
 #include "nim_wrapper_util/nim_json_util.h"
 namespace nim_node {

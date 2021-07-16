@@ -1,6 +1,5 @@
 #include "nim_node_rts.h"
 #include "..\helper\nim_node_rts_helper.h"
-#include "nim_cpp_wrapper/api/nim_cpp_rts.h"
 #include "nim_node_rts_event_handler.h"
 namespace nim_node {
 DEFINE_CLASS(Rts);
@@ -76,7 +75,7 @@ NIM_SDK_NODE_API_DEF(Rts, StartChannel) {
     auto status = napi_ok;
     GET_ARGS_VALUE(isolate, 0, int32, channel_type);
     GET_ARGS_VALUE(isolate, 1, utf8string, uid);
-    if (nim_rts_start_info_obj_to_struct(isolate, args[2], start_info) != napi_ok)
+    if (nim_rts_start_info_obj_to_struct(isolate, args[2]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), start_info) != napi_ok)
         return;
     ASSEMBLE_BASE_CALLBACK(3);
 

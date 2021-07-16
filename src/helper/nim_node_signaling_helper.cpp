@@ -75,6 +75,7 @@ napi_status nim_signaling_notify_info_struct_to_obj(Isolate* isolate, const nim:
     obj->Set(isolate->GetCurrentContext(), nim_napi_new_utf8string(isolate, nim::kNIMSglCustomInfo),
              nim_napi_new_utf8string(isolate, info.custom_info_.c_str()));
     obj->Set(isolate->GetCurrentContext(), nim_napi_new_utf8string(isolate, nim::kNIMSglTimeStamp), nim_napi_new_uint64(isolate, info.timestamp_));
+    return napi_ok;
 }
 
 napi_status nim_signaling_notify_info_list_to_obj(Isolate* isolate,
@@ -96,56 +97,68 @@ napi_status nim_signaling_push_info_obj_to_struct(Isolate* isolate, const Local<
     nim_napi_get_object_value_utf8string(isolate, obj, nim::kNIMSglPushContent, info.push_content_);
     nim_napi_get_object_value_utf8string(isolate, obj, nim::kNIMSglPushPlayload, info.push_payload_);
     nim_napi_get_object_value_bool(isolate, obj, nim::kNIMSglNeedBadge, info.need_badge_);
+    return napi_ok;
 }
 
 napi_status nim_signaling_create_res_struct_to_obj(Isolate* isolate, const std::shared_ptr<nim::SignalingCreateResParam> param, Local<Object>& obj) {
     nim_signaling_channel_info_struct_to_obj(isolate, param->channel_info_, obj);
+    return napi_ok;
 }
 
 napi_status nim_signaling_close_res_struct_to_obj(Isolate* isolate, const std::shared_ptr<nim::SignalingCloseResParam> param, Local<Object>& obj) {
     // Doing nothing at the moment
+    return napi_ok;
 }
 
 napi_status nim_signaling_join_res_struct_to_obj(Isolate* isolate, const std::shared_ptr<nim::SignalingJoinResParam> param, Local<Object>& obj) {
     nim_signaling_detailed_info_struct_to_obj(isolate, param->info_, obj);
+    return napi_ok;
 }
 
 napi_status nim_signaling_leave_res_struct_to_obj(Isolate* isolate, const std::shared_ptr<nim::SignalingLeaveResParam> param, Local<Object>& obj) {
     // Doing nothing at the moment
+    return napi_ok;
 }
 
 napi_status nim_signaling_query_res_struct_to_obj(Isolate* isolate,
                                                   const std::shared_ptr<nim::SignalingQueryChannelInfoResParam> param,
                                                   Local<Object>& obj) {
     // Doing nothing at the moment
+    return napi_ok;
 }
 
 napi_status nim_signaling_call_res_struct_to_obj(Isolate* isolate, const std::shared_ptr<nim::SignalingCallResParam> param, Local<Object>& obj) {
     // Doing nothing at the moment
+    return napi_ok;
 }
 
 napi_status nim_signaling_invite_res_struct_to_obj(Isolate* isolate, const std::shared_ptr<nim::SignalingInviteResParam> param, Local<Object>& obj) {
     // Doing nothing at the moment
+    return napi_ok;
 }
 
 napi_status nim_signaling_cancel_invite_res_struct_to_obj(Isolate* isolate,
                                                           const std::shared_ptr<nim::SignalingCancelInviteResParam> param,
                                                           Local<Object>& obj) {
     // Doing nothing at the moment
+    return napi_ok;
 }
 
 napi_status nim_signaling_reject_res_struct_to_obj(Isolate* isolate, const std::shared_ptr<nim::SignalingRejectResParam> param, Local<Object>& obj) {
     // Doing nothing at the moment
+    return napi_ok;
 }
 
 napi_status nim_signaling_accept_res_struct_to_obj(Isolate* isolate, const std::shared_ptr<nim::SignalingAcceptResParam> param, Local<Object>& obj) {
     // Doing nothing at the moment
+    return napi_ok;
 }
 
 napi_status nim_signaling_control_res_struct_to_obj(Isolate* isolate,
                                                     const std::shared_ptr<nim::SignalingControlResParam> param,
                                                     Local<Object>& obj) {
     // Doing nothing at the moment
+    return napi_ok;
 }
 
 }  // namespace nim_node

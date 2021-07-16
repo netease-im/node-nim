@@ -3,6 +3,7 @@
 #include <node.h>
 #include <node_api.h>
 #include <list>
+#include "nim_cpp_wrapper/api/nim_cpp_rts.h"
 #include "nim_define_include.h"
 using v8::Array;
 using v8::Context;
