@@ -37,7 +37,7 @@ class NIMGlobal extends ev.EventEmitter {
         return this.global.RegSDKDBError(cb);
     }
 
-    UploadSDKLog(feedbackStr: string, cb: NIMUploadSDKLogCallback): void {
+    uploadSDKLog(feedbackStr: string, cb: NIMUploadSDKLogCallback): void {
         return this.global.UploadSDKLog(feedbackStr, cb);
     }
 }
