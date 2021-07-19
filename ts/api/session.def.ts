@@ -140,11 +140,11 @@ export interface NIMSessionAPI {
 
 	QueryStickTopSessionList(cb: NIMQueryStickTopSessionListCallback): void;
 
-	SetToStickTopSession(cb: NIMSetToStickTopSessionCallback): void;
+	SetToStickTopSession(session_id: string, to_type: number, ext: string, cb: NIMSetToStickTopSessionCallback): void;
 
-	UpdateToStickTopSession(cb: NIMUpdateStickTopSessionCallback): void;
+	UpdateToStickTopSession(session_id: string, to_type: number, ext: string, cb: NIMUpdateStickTopSessionCallback): void;
 
-	CancelToStickTopSession(cb: NIMCancelToStickTopSessionCallback): void;
+	CancelToStickTopSession(session_id: string, to_type: number, cb: NIMCancelToStickTopSessionCallback): void;
 
 	QueryLastFewSessionAsync(limit: number, cb: NIMQuerySessionListCallback, jsonExtension: string): void;
 

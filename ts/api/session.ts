@@ -34,16 +34,16 @@ class NIMSession extends ev.EventEmitter {
         return this.session.QueryStickTopSessionList(cb);
     }
 
-    setToStickTopSession(cb: NIMSetToStickTopSessionCallback) {
-        return this.session.SetToStickTopSession(cb);
+    setToStickTopSession(session_id: string, to_type: number, ext: string, cb: NIMSetToStickTopSessionCallback) {
+        return this.session.SetToStickTopSession(session_id, to_type, ext, cb);
     }
 
-    updateToStickTopSession(cb: NIMUpdateStickTopSessionCallback): void {
-        return this.session.UpdateToStickTopSession(cb);
+    updateToStickTopSession(session_id: string, to_type: number, ext: string, cb: NIMUpdateStickTopSessionCallback): void {
+        return this.session.UpdateToStickTopSession(session_id, to_type, ext, cb);
     }
 
-    cancelToStickTopSession(cb: NIMCancelToStickTopSessionCallback): void {
-        return this.session.CancelToStickTopSession(cb);
+    cancelToStickTopSession(session_id: string, to_type: number, cb: NIMCancelToStickTopSessionCallback): void {
+        return this.session.CancelToStickTopSession(session_id, to_type, cb);
     }
 
     queryLastFewSessionAsync(limit: number, cb: NIMQuerySessionListCallback, jsonExtension: string): void {
