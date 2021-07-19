@@ -1,4 +1,4 @@
-const assert = require('assert');
+const assert = require('assert')
 const NIM = require('../build/Release/nim')
 
 /**
@@ -1189,3 +1189,4 @@ describe('#Cleanup', () => {
     })
   })
 })
+
