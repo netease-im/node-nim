@@ -23,7 +23,6 @@ public:
     NIM_SDK_NODE_API(UnregTalkCb);
     NIM_SDK_NODE_API(RegTeamNotificationFilter);
     NIM_SDK_NODE_API(RegMessageFilter);
-    NIM_SDK_NODE_API(RegRecallMsgsCallback);
     NIM_SDK_NODE_API(RecallMsg);
     NIM_SDK_NODE_API(GetAttachmentPathFromMsg);
     NIM_SDK_NODE_API(RegReceiveBroadcastMsgCb);

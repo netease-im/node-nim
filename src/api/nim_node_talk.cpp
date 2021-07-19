@@ -23,7 +23,6 @@ void Talk::InitModule(Local<Object>& module) {
     SET_PROTOTYPE(UnregTalkCb);
     SET_PROTOTYPE(RegTeamNotificationFilter);
     SET_PROTOTYPE(RegMessageFilter);
-    SET_PROTOTYPE(RegRecallMsgsCallback);
     SET_PROTOTYPE(RecallMsg);
     SET_PROTOTYPE(ReplyMessage);
     SET_PROTOTYPE(GetAttachmentPathFromMsg);
@@ -251,35 +250,6 @@ NIM_SDK_NODE_API_DEF(Talk, RegMessageFilter) {
     auto callback = std::bind(&TalkEventHandler::OnMessageFilter, std::placeholders::_1);
     nim::Talk::RegMessageFilter(callback, ext.toUtf8String());
 }
-NIM_SDK_NODE_API_DEF(Talk, RegRecallMsgsCallback) {
-    Talk* talk = node::ObjectWrap::Unwrap<Talk>(args.Holder());
-    if (!talk) {
-        return;
-    }
-
-    CHECK_ARGS_COUNT(2)
-    UTF8String ext;
-
-    Local<Function> cb = args[0].As<Function>();
-    if (cb.IsEmpty()) {
-        return;
-    }
-
-    Persistent<Function> pcb;
-    pcb.Reset(isolate, cb);
-    Local<Object> obj = args.This();
-    Persistent<Object> pdata;
-    pdata.Reset(isolate, obj);
-    TalkEventHandler::GetInstance()->AddEventHandler("OnRecallMsgsCallback", pdata, pcb);
-
-    auto status = nim_napi_get_value_utf8string(isolate, args[1], ext);
-    if (status != napi_ok) {
-        return;
-    }
-
-    auto callback = std::bind(&TalkEventHandler::OnRecallMsgsCallback, false, std::placeholders::_1, std::placeholders::_2);
-    nim::Talk::RegRecallMsgsCallback(callback, ext.toUtf8String());
-}
 NIM_SDK_NODE_API_DEF(Talk, RecallMsg) {
     Talk* talk = node::ObjectWrap::Unwrap<Talk>(args.Holder());
     if (!talk) {
@@ -299,17 +269,7 @@ NIM_SDK_NODE_API_DEF(Talk, RecallMsg) {
         return;
     }
 
-    Local<Function> cb = args[2].As<Function>();
-    if (cb.IsEmpty()) {
-        return;
-    }
-
-    Persistent<Function> pcb;
-    pcb.Reset(isolate, cb);
-    Local<Object> obj = args.This();
-    Persistent<Object> pdata;
-    pdata.Reset(isolate, obj);
-    TalkEventHandler::GetInstance()->AddEventHandler("OnActiveRecallMsgsCallback", pdata, pcb);
+    ASSEMBLE_BASE_CALLBACK(2)
 
     UTF8String apnstext_str;
     UTF8String pushpayload_str;
@@ -339,7 +299,7 @@ NIM_SDK_NODE_API_DEF(Talk, RecallMsg) {
     parameter.env_config = env_config_str.toUtf8String().c_str();
     parameter.attach = attach_str.toUtf8String().c_str();
 
-    auto callback = std::bind(&TalkEventHandler::OnRecallMsgsCallback, true, std::placeholders::_1, std::placeholders::_2);
+    auto callback = std::bind(&TalkEventHandler::OnRecallMsgsCallback, bcb, std::placeholders::_1, std::placeholders::_2);
     nim::Talk::RecallMsgEx(msg, notify.toUtf8String(), callback, parameter);
 }
 

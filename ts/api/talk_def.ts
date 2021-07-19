@@ -148,8 +148,6 @@ export interface NIMTalkAPI {
 
 	RegMessageFilter(cb: NIMMessageFilterCallback, jsonExtension: string): void;
 
-	RegRecallMsgsCallback(cb: NIMRecallMsgsCallback, jsonExtension: string): void;
-
 	RegReceiveBroadcastMsgCb(cb: NIMReceiveBroadcastMsgCallback, jsonExtension: string): void;
 
 	RegReceiveBroadcastMsgsCb(cb: NIMReceiveBroadcastMsgsCallback, jsonExtension: string): void;

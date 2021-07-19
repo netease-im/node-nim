@@ -42,10 +42,6 @@ class NIMTalk extends ev.EventEmitter {
         return this.talk.RegMessageFilter(cb, jsonExtension);
     }
 
-    regRecallMsgsCallback(cb: NIMRecallMsgsCallback, jsonExtension: string): void {
-        return this.talk.RegRecallMsgsCallback(cb, jsonExtension);
-    }
-
     regReceiveBroadcastMsgCb(cb: NIMReceiveBroadcastMsgCallback, jsonExtension: string): void {
         return this.talk.RegReceiveBroadcastMsgCb(cb, jsonExtension);
     }
