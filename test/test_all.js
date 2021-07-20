@@ -7,6 +7,7 @@ const testMsglog = require('./test_msglog.js').default
 const testTalk = require('./test_talk.js').default
 const testSession = require('./test_session.js').default
 const testUser = require('./test_user.js').default
+const testNos = require('./test_nos.js').default
 const testRts = require('./test_rts.js').default
 
 
@@ -32,6 +33,7 @@ describe('NIM Test Suite', function () {
     testTalk(test_info)
     testSession(test_info)
     testUser(test_info)
+    testNos(test_info)
     testRts(test_info)
 })
 describe('NIM Cleanup', function () {
