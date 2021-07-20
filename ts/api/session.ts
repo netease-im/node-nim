@@ -1,7 +1,8 @@
 import nim from './nim';
 import ev from 'events';
-import { NIMSessionAPI, NIMSessionType, NIMSessionChangeCallback, NIMQuerySessionListCallback, NIMQuerySessionDataCallback, NIMBadgeCountCallback, NIMDeleteSessionRoamingMessageCallback, NIMUnreadCountZeroInfo, NIMCancelStickTopSessionNotifyCallback, NIMSetToStickTopSessionNotifyCallback, NIMUpdateStickTopSessionNotifyCallback, NIMQueryStickTopSessionListCallback, NIMSetToStickTopSessionCallback, NIMUpdateStickTopSessionCallback, NIMCancelToStickTopSessionCallback, NIMQueryHasmoreRoammsgCallback, NIMQueryAllHasmoreRoammsgCallback, NIMUpdateHasmoreRoammsgCallback, NIMDeleteHasmoreRoammsgCallback } from './session.def';
+import { NIMSessionAPI, NIMSessionType, NIMSessionChangeCallback, NIMQuerySessionListCallback, NIMQuerySessionDataCallback, NIMBadgeCountCallback, NIMDeleteSessionRoamingMessageCallback, NIMUnreadCountZeroInfo, NIMCancelStickTopSessionNotifyCallback, NIMSetToStickTopSessionNotifyCallback, NIMUpdateStickTopSessionNotifyCallback, NIMQueryStickTopSessionListCallback, NIMSetToStickTopSessionCallback, NIMUpdateStickTopSessionCallback, NIMCancelToStickTopSessionCallback, NIMQueryHasmoreRoammsgCallback, NIMQueryAllHasmoreRoammsgCallback, NIMUpdateHasmoreRoammsgCallback, NIMDeleteHasmoreRoammsgCallback, NIMSetMultiUnreadCountZeroAsyncCallback } from './session.def';
 import { NIMMessageType } from './msglog_def';
+import { NIMMessage } from "./talk_def";
 
 class NIMSession extends ev.EventEmitter {
     session: NIMSessionAPI;
@@ -62,16 +63,16 @@ class NIMSession extends ev.EventEmitter {
         return this.session.DeleteAllRecentSession(cb, jsonExtension);
     }
 
-    deleteSessionRoamingMessage(session_id: string, to_type: number, cb: NIMDeleteSessionRoamingMessageCallback): boolean {
-        return this.session.DeleteSessionRoamingMessage(session_id, to_type, cb);
+    deleteSessionRoamingMessage(session_id: string, to_type: number, cb: NIMDeleteSessionRoamingMessageCallback, ext: string): boolean {
+        return this.session.DeleteSessionRoamingMessage(session_id, to_type, cb, ext);
     }
 
     setUnreadCountZeroAsync(type: NIMSessionType, id: string, cb: NIMSessionChangeCallback, jsonExtension: string): boolean {
         return this.session.SetUnreadCountZeroAsync(type, id, cb, jsonExtension);
     }
 
-    setMultiUnreadCountZeroAsync(is_super_team: boolean, zero_list: Array<NIMUnreadCountZeroInfo>): boolean {
-        return this.session.SetMultiUnreadCountZeroAsync(is_super_team, zero_list);
+    setMultiUnreadCountZeroAsync(is_super_team: boolean, zero_list: Array<NIMUnreadCountZeroInfo>, cb: NIMSetMultiUnreadCountZeroAsyncCallback): boolean {
+        return this.session.SetMultiUnreadCountZeroAsync(is_super_team, zero_list, cb);
     }
 
     setSessionTop(type: NIMSessionType, id: string, top: boolean, cb: NIMSessionChangeCallback, jsonExtension: string): boolean {
@@ -98,8 +99,8 @@ class NIMSession extends ev.EventEmitter {
         return this.session.QueryAllHasmoreRoammsg(cb);
     }
 
-    updateHasmoreRoammsg(cb: NIMUpdateHasmoreRoammsgCallback): void {
-        return this.session.UpdateHasmoreRoammsg(cb);
+    updateHasmoreRoammsg(msg: NIMMessage, cb: NIMUpdateHasmoreRoammsgCallback): void {
+        return this.session.UpdateHasmoreRoammsg(msg, cb);
     }
 
     deleteHasmoreRoammsg(session_id: string, to_type: NIMSessionType, cb: NIMDeleteHasmoreRoammsgCallback): void {

@@ -1,4 +1,5 @@
 import { NIMMsgLogStatus, NIMMsgLogSubStatus, NIMMessageType } from "./msglog_def";
+import { NIMMessage } from "./talk_def";
 
 /** @enum NIMSessionType 会话类型 */
 export enum NIMSessionType {
@@ -127,6 +128,10 @@ export interface NIMDeleteHasmoreRoammsgCallback {
 	(res_code: number): void;
 }
 
+export interface NIMSetMultiUnreadCountZeroAsyncCallback {
+	(res_code: number, data_list: Array<NIMSessionData>, unread_count: number): void;
+}
+
 export interface NIMSessionAPI {
 	RegChangeCb(cb: NIMSessionChangeCallback, jsonExtension: string): void;
 
@@ -154,11 +159,11 @@ export interface NIMSessionAPI {
 
 	DeleteAllRecentSession(cb: NIMSessionChangeCallback, jsonExtension: string): void;
 
-	DeleteSessionRoamingMessage(session_id: string, to_type: number, cb: NIMDeleteSessionRoamingMessageCallback): boolean;
+	DeleteSessionRoamingMessage(session_id: string, to_type: number, cb: NIMDeleteSessionRoamingMessageCallback, ext: string): boolean;
 
 	SetUnreadCountZeroAsync(type: NIMSessionType, id: string, cb: NIMSessionChangeCallback, jsonExtension: string): boolean;
 
-	SetMultiUnreadCountZeroAsync(is_super_team: boolean, zero_list: Array<NIMUnreadCountZeroInfo>): boolean;
+	SetMultiUnreadCountZeroAsync(is_super_team: boolean, zero_list: Array<NIMUnreadCountZeroInfo>, cb: NIMSetMultiUnreadCountZeroAsyncCallback): boolean;
 
 	SetSessionTop(type: NIMSessionType, id: string, top: boolean, cb: NIMSessionChangeCallback, jsonExtension: string): boolean;
 
@@ -172,7 +177,7 @@ export interface NIMSessionAPI {
 
 	QueryAllHasmoreRoammsg(cb: NIMQueryAllHasmoreRoammsgCallback): void;
 
-	UpdateHasmoreRoammsg(cb: NIMUpdateHasmoreRoammsgCallback): void;
+	UpdateHasmoreRoammsg(msg: NIMMessage, cb: NIMUpdateHasmoreRoammsgCallback): void;
 
 	DeleteHasmoreRoammsg(session_id: string, to_type: NIMSessionType, cb: NIMDeleteHasmoreRoammsgCallback): void;
 
