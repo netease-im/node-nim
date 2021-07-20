@@ -5,12 +5,12 @@ const assert = require('assert')
 const talk = new NIMTalk
 const msglog = new NIMMsglog
 function testTalk(test_info) {
-    describe('********************Talk********************', () => {
+    describe('********************Talk********************', function () {
         let immessage = {
             session_type: 0, receiver_accid: test_info.assistUser, sender_accid: test_info.mainUser
         }
-        describe('#SendMsg', () => {
-            it('Send message should return 200', (done) => {
+        describe('#SendMsg', function () {
+            it('Send message should return 200', function (done) {
                 talk.regSendMsgCb((ack) => {
                     assert.strictEqual(ack.rescode, 200)
                     immessage.client_msg_id = ack.msg_id
@@ -23,11 +23,11 @@ function testTalk(test_info) {
                     msg_type: 0,
                     msg_body: 'Send from NIM node test.',
                     client_msg_id: new Date().getTime().toString(),
-                }, '', () => { })
+                }, '', function () { })
             })
         })
-        describe.skip('#ReplyMessage', () => {
-            it('ReplyMessage', () => {
+        describe.skip('#ReplyMessage', function () {
+            it('ReplyMessage', function () {
                 talk.replyMessage(immessage, {
                     to_type: 0,
                     to_accid: test_info.assistUser,
@@ -38,8 +38,8 @@ function testTalk(test_info) {
                 })
             })
         })
-        describe('#RecallMsg', () => {
-            it('RecallMsg should return 200', (done) => {
+        describe('#RecallMsg', function () {
+            it('RecallMsg should return 200', function (done) {
                 talk.recallMsg(immessage, '', (errorCode, notify_list) => {
                     done()
                     assert.strictEqual(errorCode, 200)
@@ -49,7 +49,7 @@ function testTalk(test_info) {
         })
     })
 
-    describe('********************TalkEx********************', () => {
+    describe('********************TalkEx********************', function () {
 
     })
 }

@@ -6,6 +6,7 @@ const testGlobal = require('./test_global.js').default
 const testMsglog = require('./test_msglog.js').default
 const testTalk = require('./test_talk.js').default
 const testSession = require('./test_session.js').default
+const testUser = require('./test_user.js').default
 const testRts = require('./test_rts.js').default
 
 
@@ -19,23 +20,20 @@ const test_info = {
     mainUserPwd: 'e10adc3949ba59abbe56e057f20f883e',
     assistUser: 'jiajia02',
     assistUserPwd: '17ac6c7d1fe2e931e60751a8db164a4f',
-    gOperator: 'jiajia02',
-    gRoomId: 2008,
-    gQueuHead: 'jiajia01',
 }
-describe('NIM Init Client', () => {
+describe('NIM Init Client', function () {
     iniClient(test_info)
 })
-describe('NIM Test Suite', () => {
+describe('NIM Test Suite', function () {
     testClient(test_info)
     testFriend(test_info)
     testGlobal(test_info)
     testMsglog(test_info)
     testTalk(test_info)
     testSession(test_info)
+    testUser(test_info)
     testRts(test_info)
-
 })
-describe('NIM Cleanup', () => {
+describe('NIM Cleanup', function () {
     cleanupClient(test_info)
 })
