@@ -24,7 +24,6 @@ function iniClient(test_info) {
 }
 function cleanupClient(test_info) {
     describe('********************NIM cleanup SDK********************', function () {
-        this.timeout(5000)
         describe('#Logout', function () {
             it('Logout should return 200', function (done) {
                 client.logout(1, (errorCode) => {

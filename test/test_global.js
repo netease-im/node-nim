@@ -25,7 +25,6 @@ function testGlobal(test_info) {
         })
         describe('#UploadSDKLog', function () {
             it('UploadSDKLog should return 200', function (done) {
-                this.timeout(5000)
                 global.uploadSDKLog('feedback message', (errorCode) => {
                     assert.strictEqual(errorCode, 200)
                     done()
