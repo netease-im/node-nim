@@ -8,9 +8,9 @@
  * @copyright Copyright (c) 2021
  *
  */
-
 #include "nim_node_talk_ex.h"
 #include <node_object_wrap.h>
+#include <iostream>
 #include "../helper/nim_node_talk_ex_helper.h"
 #include "../helper/nim_node_talk_helper.h"
 #include "nim_cpp_wrapper/api/nim_cpp_talkex.h"
@@ -96,26 +96,20 @@ NIM_SDK_NODE_API_DEF(TalkEx, RemoveCollects) {
 }
 
 NIM_SDK_NODE_API_DEF(TalkEx, UpdateCollectExt) {
-    CHECK_API_FUNC(TalkEx, 4)
+    CHECK_API_FUNC(TalkEx, 3)
     auto status = napi_ok;
-    uint64_t created_at;
-    uint64_t collect_id;
     UTF8String exten;
-    // 外部传入裸参数，不是 object
-    GET_ARGS_VALUE(isolate, 0, uint64, created_at);
-    GET_ARGS_VALUE(isolate, 1, uint64, collect_id);
-    GET_ARGS_VALUE(isolate, 2, utf8string, exten);
-    nim::MatchCollectParm param(created_at, collect_id);
-    ASSEMBLE_BASE_CALLBACK(1);
+    nim::MatchCollectParm param(0, 0);
+    nim_talkex_match_param_obj_to_struct(isolate, args[0]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), param);
+    GET_ARGS_VALUE(isolate, 1, utf8string, exten);
+    ASSEMBLE_BASE_CALLBACK(2);
     auto callback = std::bind(&TalkExEventHandler::OnAddCollectCallback, bcb, std::placeholders::_1, std::placeholders::_2);
     nim::TalkEx::Collect::UpdateCollectExt(param, exten.toUtf8String(), callback);
 }
 
 NIM_SDK_NODE_API_DEF(TalkEx, QueryCollectList) {
-    CHECK_API_FUNC(TalkEx, 0)
-    UTF8String exten;
+    CHECK_API_FUNC(TalkEx, 2)
     auto status = napi_ok;
-    GET_ARGS_VALUE(isolate, 2, utf8string, exten);
     nim::QueryCollectsParm param;
     nim_talkex_collect_query_obj_to_struct(isolate, args[0]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), param);
     ASSEMBLE_BASE_CALLBACK(1);
@@ -146,9 +140,7 @@ NIM_SDK_NODE_API_DEF(TalkEx, RegRemoveQuickCommentNotify) {
 
 NIM_SDK_NODE_API_DEF(TalkEx, AddQuickComment) {
     CHECK_API_FUNC(TalkEx, 3);
-    UTF8String exten;
     auto status = napi_ok;
-    GET_ARGS_VALUE(isolate, 2, utf8string, exten);
     nim::IMMessage msg;
     nim_talk_im_msg_obj_to_struct(isolate, args[0]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), msg);
     nim::QuickCommentInfo info;
@@ -160,9 +152,7 @@ NIM_SDK_NODE_API_DEF(TalkEx, AddQuickComment) {
 
 NIM_SDK_NODE_API_DEF(TalkEx, RemoveQuickComment) {
     CHECK_API_FUNC(TalkEx, 3);
-    UTF8String exten;
     auto status = napi_ok;
-    GET_ARGS_VALUE(isolate, 2, utf8string, exten);
     nim::IMMessage msg;
     nim_talk_im_msg_obj_to_struct(isolate, args[0]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), msg);
     nim::RemoveQuickCommentParam param;
@@ -178,7 +168,6 @@ NIM_SDK_NODE_API_DEF(TalkEx, QueryQuickCommentList) {
 
     nim::QueryQuickCommentsParam param;
     nim_talkex_quick_comment_query_param_obj_to_struct(isolate, args[0]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), param);
-
     ASSEMBLE_BASE_CALLBACK(1);
     auto bind_cb = std::bind(&TalkExEventHandler::OnQueryQuickCommentCallback, bcb, std::placeholders::_1, std::placeholders::_2);
     nim::TalkEx::QuickComment::QueryQuickCommentList(param, bind_cb);
