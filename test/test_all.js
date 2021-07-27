@@ -1,6 +1,8 @@
 const iniClient = require('./test_client.js').iniClient
 const cleanupClient = require('./test_client.js').cleanupClient
 const testClient = require('./test_client.js').testClient
+const testDataSync = require('./test_datasync.js').default
+const testOnlineSession = require('./test_online_session.js').default
 const testFriend = require('./test_friend.js').default
 const testGlobal = require('./test_global.js').default
 const testMsglog = require('./test_msglog.js').default
@@ -9,6 +11,8 @@ const testSession = require('./test_session.js').default
 const testUser = require('./test_user.js').default
 const testNos = require('./test_nos.js').default
 const testRts = require('./test_rts.js').default
+const testSysmsg = require('./test_sysmsg.js').default
+const testTool = require('./test_tool.js').default
 
 
 const current = process.cwd()
@@ -27,7 +31,9 @@ describe('NIM Init Client', function () {
 })
 describe('NIM Test Suite', function () {
     testClient(test_info)
+    testDataSync(test_info)
     testFriend(test_info)
+    testOnlineSession(test_info)
     testGlobal(test_info)
     testMsglog(test_info)
     testTalk(test_info)
@@ -35,6 +41,8 @@ describe('NIM Test Suite', function () {
     testUser(test_info)
     testNos(test_info)
     testRts(test_info)
+    testSysmsg(test_info)
+    testTool(test_info)
 })
 describe('NIM Cleanup', function () {
     cleanupClient(test_info)
