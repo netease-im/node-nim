@@ -9,9 +9,8 @@
   "scripts": {
     "test": "mocha test -slow 200 -timeout 5000",
     "install": "just install",
-    "build:types": "rimraf ./types && tsc -p config_dts.json",
-    "prebuild:ts": "npm run build:types",
-    "build:ts": "rimraf ./js && tsc -p config_ts.json"
+    "build:ts": "rimraf ./js && rimraf ./types && tsc",
+    "prepare": "npm run build:ts"
   },
   "dependencies": {
     "bindings": "^1.5.0",
@@ -41,5 +40,20 @@
     "nim sdk",
     "nim node",
     "nim electron"
+  ],
+  "files": [
+    "scripts/",
+    "src/",
+    "test/",
+    "js/",
+    "ts/",
+    ".clang-format",
+    "binding.gyp",
+    "config_dts.json",
+    "config_ts.json",
+    "cpplint.cfg",
+    "just-task.js",
+    "package.json",
+    "README.md"
   ]
 }

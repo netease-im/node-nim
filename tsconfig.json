@@ -1,15 +1,18 @@
 {
   "compilerOptions": {
-    "emitDeclarationOnly": true,
-    "declaration": true,
-    "declarationDir": "types",
+    "outDir": "js",
     "baseUrl": ".",
     "target": "es6",
+    "strict": true,
     "module": "commonjs",
     "esModuleInterop": true,
+    "allowJs": true,
     "moduleResolution": "node",
+    "lib": ["es6", "dom"],
     "types": ["node"],
-    "typeRoots": ["node_modules/@types"]
+    "typeRoots": ["node_modules/@types"],
+    "declaration": true,
+    "declarationDir": "types"
   },
   "include": [
     "ts/**/*"
