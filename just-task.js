@@ -15,7 +15,7 @@ option('runtime', { default: 'electron', choices: ['electron', 'node'] })
 option('debug', { default: false, boolean: true })
 option('silent', { default: false, boolean: true })
 
-const nativeUrl = 'https://yx-web-nosdn.netease.im/package/1625111512/NIM_CrossPlatform_SDK_v8.5.1.zip?download=NIM_CrossPlatform_SDK_v8.5.1.zip'
+const nativeUrl = 'https://yx-web-nosdn.netease.im/package/1628219213/NIM_CrossPlatform_SDK_v8.6.2.zip?download=NIM_CrossPlatform_SDK_v8.6.2.zip'
 
 task('fetch-wrapper', () => {
   const platform = argv().target_platform
