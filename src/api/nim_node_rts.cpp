@@ -1,5 +1,5 @@
 #include "nim_node_rts.h"
-#include "..\helper\nim_node_rts_helper.h"
+#include "../helper/nim_node_rts_helper.h"
 #include "nim_node_rts_event_handler.h"
 namespace nim_node {
 DEFINE_CLASS(Rts);
