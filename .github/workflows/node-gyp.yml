@@ -57,10 +57,6 @@ jobs:
     - run: npx just fetch-wrapper --target_platform=win32 --target_arch=ia32
     - run: npx just build --runtime=electron --target=13.1.2 --target_platform=win32 --target_arch=ia32
     - run: npx just build --runtime=electron --target=8.0.0 --target_platform=win32 --target_arch=ia32
-    # Build x64
-    - run: npx just fetch-wrapper --target_platform=win32 --target_arch=x64
-    - run: npx just build --runtime=electron --target=13.1.2 --target_platform=win32 --target_arch=x64
-    - run: npx just build --runtime=electron --target=8.0.0 --target_platform=win32 --target_arch=x64
     # Unit test
     - run: npm run coverage
     - uses: codecov/codecov-action@v2
@@ -69,6 +65,10 @@ jobs:
         flags: unittests # optional
         name: codecov-node-nim # optional
         verbose: true # optional (default = false)
+    # Build x64
+    - run: npx just fetch-wrapper --target_platform=win32 --target_arch=x64
+    - run: npx just build --runtime=electron --target=13.1.2 --target_platform=win32 --target_arch=x64
+    - run: npx just build --runtime=electron --target=8.0.0 --target_platform=win32 --target_arch=x64
     # Upload artifacts
     - uses: actions/upload-artifact@v2
       with:
