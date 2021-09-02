@@ -16,7 +16,7 @@
     "bindings": "^1.5.0",
     "download": "^8.0.0",
     "extract-zip": "^2.0.1",
-    "just-scripts": "^1.5.6",
+    "just-task": "^1.4.1",
     "node-gyp": "^8.1.0",
     "shelljs": "^0.8.4",
     "tar": "^6.1.0"
@@ -42,18 +42,8 @@
     "nim electron"
   ],
   "files": [
-    "scripts/",
-    "src/",
-    "test/",
-    "js/",
-    "ts/",
-    ".clang-format",
-    "binding.gyp",
-    "config_dts.json",
-    "config_ts.json",
-    "cpplint.cfg",
-    "just-task.js",
-    "package.json",
-    "README.md"
+    "js",
+    "scripts",
+    "just-task.js"
   ]
 }
