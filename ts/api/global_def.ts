@@ -52,7 +52,7 @@ export interface NIMSDKFeedbackCallback {
 }
 
 export interface NIMDetectProxyCallback {
-	(connect: boolean, step: NIMProxyDetectStep, jsonExtension: string): void;
+	(connect: boolean, step: NIMProxyDetectStep, json_extension: string): void;
 }
 
 export interface NIMCachedFileInfo {
@@ -87,17 +87,17 @@ export interface NIMUploadSDKLogCallback {
 }
 
 export interface NIMGlobalAPI {
-	SetExceptionReportCallback(cb: NIMExceptionCallback, jsonExtension: string): void;
+	SetExceptionReportCallback(cb: NIMExceptionCallback, json_extension: string): void;
 
 	SetProxy(type: NIMProxyType, host: string, port: number, user: string, password: string): void;
 
 	DetectProxy(type: NIMProxyType, host: string, port: number, user: string, password: string, cb: NIMDetectProxyCallback): void;
 
-	GetSDKCachedFileInfoAsync(loginId: string, fileType: NIMCachedFileType, endTimestamp: number, cb: NIMGetCachedFileInfoCallback, jsonExtension: string): void;
+	GetSDKCachedFileInfoAsync(loginId: string, fileType: NIMCachedFileType, endTimestamp: number, cb: NIMGetCachedFileInfoCallback, json_extension: string): void;
 
-	DeleteSDKCachedFileAsync(loginId: string, fileType: NIMCachedFileType, endTimestamp: number, cb: NIMDeleteCachedFileCallback, jsonExtension: string): void;
+	DeleteSDKCachedFileAsync(loginId: string, fileType: NIMCachedFileType, endTimestamp: number, cb: NIMDeleteCachedFileCallback, json_extension: string): void;
 
-	SDKFeedbackAsync(url: string, cb: NIMSDKFeedbackCallback, jsonExtension: string): void;
+	SDKFeedbackAsync(url: string, cb: NIMSDKFeedbackCallback, json_extension: string): void;
 
 	RegSDKDBError(cb: NIMSDKDBErrorCallback): void;
 

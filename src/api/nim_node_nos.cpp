@@ -19,12 +19,12 @@ void NOS::InitModule(Local<Object>& module) {
     SET_PROTOTYPE(InitConfig);
     SET_PROTOTYPE(RegDownloadCb);
     SET_PROTOTYPE(RegUploadCb);
-    SET_PROTOTYPE(FetchMediaEx);
+    SET_PROTOTYPE(FetchMedia);
     SET_PROTOTYPE(StopFetchMedia);
-    SET_PROTOTYPE(UploadResourceEx2);
-    SET_PROTOTYPE(StopUploadResourceEx);
-    SET_PROTOTYPE(DownloadResourceEx);
-    SET_PROTOTYPE(StopDownloadResourceEx);
+    SET_PROTOTYPE(UploadResource);
+    SET_PROTOTYPE(StopUploadResource);
+    SET_PROTOTYPE(DownloadResource);
+    SET_PROTOTYPE(StopDownloadResource);
     SET_PROTOTYPE(SafeURLToOriginURL);
     SET_PROTOTYPE(SetSupportQuickTrans);
     SET_PROTOTYPE(UnregNosCb);
@@ -72,7 +72,7 @@ NIM_SDK_NODE_API_DEF(NOS, RegUploadCb) {
     auto callback = std::bind(&NOSEventHandler::OnUploadMediaExCallback, nullptr, std::placeholders::_1, std::placeholders::_2);
     nim::NOS::RegUploadCb(callback);
 }
-NIM_SDK_NODE_API_DEF(NOS, FetchMediaEx) {
+NIM_SDK_NODE_API_DEF(NOS, FetchMedia) {
     CHECK_API_FUNC(NOS, 6)
 
     UTF8String exten;
@@ -102,7 +102,7 @@ NIM_SDK_NODE_API_DEF(NOS, StopFetchMedia) {
     auto ret = nim::NOS::StopFetchMedia(msg);
     args.GetReturnValue().Set(nim_napi_new_bool(isolate, ret));
 }
-NIM_SDK_NODE_API_DEF(NOS, UploadResourceEx2) {
+NIM_SDK_NODE_API_DEF(NOS, UploadResource) {
     CHECK_API_FUNC(NOS, 7)
 
     UTF8String local_file, tag;
@@ -123,7 +123,7 @@ NIM_SDK_NODE_API_DEF(NOS, UploadResourceEx2) {
     auto ret = nim::NOS::UploadResourceEx2(local_file.toUtf8String(), tag.toUtf8String(), exten, callback_3, callback_4, callback_5, callback_6);
     args.GetReturnValue().Set(nim_napi_new_bool(isolate, ret));
 }
-NIM_SDK_NODE_API_DEF(NOS, StopUploadResourceEx) {
+NIM_SDK_NODE_API_DEF(NOS, StopUploadResource) {
     CHECK_API_FUNC(NOS, 2)
 
     UTF8String exten, task_id;
@@ -134,7 +134,7 @@ NIM_SDK_NODE_API_DEF(NOS, StopUploadResourceEx) {
     bool ret = nim::NOS::StopUploadResourceEx(task_id.toUtf8String(), exten.toUtf8String());
     args.GetReturnValue().Set(nim_napi_new_bool(isolate, ret));
 }
-NIM_SDK_NODE_API_DEF(NOS, DownloadResourceEx) {
+NIM_SDK_NODE_API_DEF(NOS, DownloadResource) {
     CHECK_API_FUNC(NOS, 6)
 
     UTF8String nos_url;
@@ -154,7 +154,7 @@ NIM_SDK_NODE_API_DEF(NOS, DownloadResourceEx) {
     auto ret = nim::NOS::DownloadResourceEx(nos_url.toUtf8String(), exten, callback_2, callback_3, callback_4, callback_5);
     args.GetReturnValue().Set(nim_napi_new_bool(isolate, ret));
 }
-NIM_SDK_NODE_API_DEF(NOS, StopDownloadResourceEx) {
+NIM_SDK_NODE_API_DEF(NOS, StopDownloadResource) {
     CHECK_API_FUNC(NOS, 2)
 
     UTF8String exten, task_id;

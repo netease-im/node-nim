@@ -18,7 +18,6 @@ public:
     NIM_SDK_NODE_API(Init);
     NIM_SDK_NODE_API(GetSDKConfig);
     NIM_SDK_NODE_API(CleanUp);
-    NIM_SDK_NODE_API(CleanUp2);
     NIM_SDK_NODE_API(LoginCustomDataToJson);
     NIM_SDK_NODE_API(Login);
     NIM_SDK_NODE_API(GetLoginState);

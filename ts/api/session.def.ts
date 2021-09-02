@@ -133,9 +133,9 @@ export interface NIMSetMultiUnreadCountZeroAsyncCallback {
 }
 
 export interface NIMSessionAPI {
-	RegChangeCb(cb: NIMSessionChangeCallback, jsonExtension: string): void;
+	RegChangeCb(cb: NIMSessionChangeCallback, json_extension: string): void;
 
-	RegBadgeCountCb(cb: NIMBadgeCountCallback, jsonExtension: string): void;
+	RegBadgeCountCb(cb: NIMBadgeCountCallback, json_extension: string): void;
 
 	RegSetToStickTopSessionNotifyCB(cb: NIMSetToStickTopSessionNotifyCallback): void;
 
@@ -151,27 +151,27 @@ export interface NIMSessionAPI {
 
 	CancelToStickTopSession(session_id: string, to_type: number, cb: NIMCancelToStickTopSessionCallback): void;
 
-	QueryLastFewSessionAsync(limit: number, cb: NIMQuerySessionListCallback, jsonExtension: string): void;
+	QueryLastFewSessionAsync(limit: number, cb: NIMQuerySessionListCallback, json_extension: string): void;
 
-	QueryAllRecentSessionAsync(msgExcludedTypeList: Array<NIMMessageType>, cb: NIMQuerySessionListCallback, jsonExtension: string): void;
+	QueryAllRecentSessionAsync(msg_excluded_type_list: Array<NIMMessageType>, cb: NIMQuerySessionListCallback, json_extension: string): void;
 
 	DeleteRecentSession(type: NIMSessionType, id: string, cb: NIMSessionChangeCallback, delete_roaming: boolean): void;
 
-	DeleteAllRecentSession(cb: NIMSessionChangeCallback, jsonExtension: string): void;
+	DeleteAllRecentSession(cb: NIMSessionChangeCallback, json_extension: string): void;
 
 	DeleteSessionRoamingMessage(session_id: string, to_type: number, cb: NIMDeleteSessionRoamingMessageCallback, ext: string): boolean;
 
-	SetUnreadCountZeroAsync(type: NIMSessionType, id: string, cb: NIMSessionChangeCallback, jsonExtension: string): boolean;
+	SetUnreadCountZeroAsync(type: NIMSessionType, id: string, cb: NIMSessionChangeCallback, json_extension: string): boolean;
 
 	SetMultiUnreadCountZeroAsync(is_super_team: boolean, zero_list: Array<NIMUnreadCountZeroInfo>, cb: NIMSetMultiUnreadCountZeroAsyncCallback): boolean;
 
-	SetSessionTop(type: NIMSessionType, id: string, top: boolean, cb: NIMSessionChangeCallback, jsonExtension: string): boolean;
+	SetSessionTop(type: NIMSessionType, id: string, top: boolean, cb: NIMSessionChangeCallback, json_extension: string): boolean;
 
-	SetSessionExtendData(type: NIMSessionType, id: string, data: string, cb: NIMSessionChangeCallback, jsonExtension: string): boolean;
+	SetSessionExtendData(type: NIMSessionType, id: string, data: string, cb: NIMSessionChangeCallback, json_extension: string): boolean;
 
-	SetAllUnreadCountZeroAsync(cb: NIMSessionChangeCallback, jsonExtension: string): boolean;
+	SetAllUnreadCountZeroAsync(cb: NIMSessionChangeCallback, json_extension: string): boolean;
 
-	QuerySessionDataById(type: NIMSessionType, id: string, cb: NIMQuerySessionDataCallback, jsonExtension: string): void;
+	QuerySessionDataById(type: NIMSessionType, id: string, cb: NIMQuerySessionDataCallback, json_extension: string): void;
 
 	QueryHasmoreRoammsg(session_id: string, to_type: number, cb: NIMQueryHasmoreRoammsgCallback): void;
 

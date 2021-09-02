@@ -75,25 +75,25 @@ export interface NIMUpdateMyUserNameCardCallback {
 }
 
 export interface NIMUserAPI {
-	RegSpecialRelationshipChangedCb(cb: NIMSpecialRelationshipChangedCallback, jsonExtension: string): void;
+	RegSpecialRelationshipChangedCb(cb: NIMSpecialRelationshipChangedCallback, json_extension: string): void;
 
-	RegUserNameCardChangedCb(cb: NIMUserNameCardChangedCallback, jsonExtension: string): void;
+	RegUserNameCardChangedCb(cb: NIMUserNameCardChangedCallback, json_extension: string): void;
 
-	SetBlack(accid: string, setBlack: boolean, cb: NIMSetRelationCallback, jsonExtension: string): boolean;
+	SetBlack(accid: string, setBlack: boolean, cb: NIMSetRelationCallback, json_extension: string): boolean;
 
-	SetMute(accid: string, setMute: boolean, cb: NIMSetRelationCallback, jsonExtension: string): boolean;
+	SetMute(accid: string, set_mute: boolean, cb: NIMSetRelationCallback, json_extension: string): boolean;
 
-	GetMutelist(cb: NIMGetSpecialListCallback, jsonExtension: string): void;
+	GetMutelist(cb: NIMGetSpecialListCallback, json_extension: string): void;
 
-	GetBlacklist(cb: NIMGetSpecialListCallback, jsonExtension: string): void;
+	GetBlacklist(cb: NIMGetSpecialListCallback, json_extension: string): void;
 
-	GetUserNameCard(accids: Array<string>, cb: NIMGetUserNameCardCallback, jsonExtension: string): boolean;
+	GetUserNameCard(accids: Array<string>, cb: NIMGetUserNameCardCallback, json_extension: string): boolean;
 
-	GetUserNameCardOnline(accids: Array<string>, cb: NIMGetUserNameCardCallback, jsonExtension: string): boolean;
+	GetUserNameCardOnline(accids: Array<string>, cb: NIMGetUserNameCardCallback, json_extension: string): boolean;
 
-	UpdateMyUserNameCard(nameCard: NIMUserNameCard, cb: NIMUpdateMyUserNameCardCallback, jsonExtension: string): boolean;
+	UpdateMyUserNameCard(nameCard: NIMUserNameCard, cb: NIMUpdateMyUserNameCardCallback, json_extension: string): boolean;
 
-	QueryUserListByKeyword(keyword: string, cb: NIMGetUserNameCardCallback, jsonExtension: string): boolean;
+	QueryUserListByKeyword(keyword: string, cb: NIMGetUserNameCardCallback, json_extension: string): boolean;
 
 	UpdatePushToken(cerName: string, token: string, type: NINPushType): void;
 

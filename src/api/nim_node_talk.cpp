@@ -24,6 +24,7 @@ void Talk::InitModule(Local<Object>& module) {
     SET_PROTOTYPE(RegTeamNotificationFilter);
     SET_PROTOTYPE(RegMessageFilter);
     SET_PROTOTYPE(RecallMsg);
+    SET_PROTOTYPE(RegRecallMsgsCb);
     SET_PROTOTYPE(ReplyMessage);
     SET_PROTOTYPE(GetAttachmentPathFromMsg);
     SET_PROTOTYPE(RegReceiveBroadcastMsgCb);
@@ -301,6 +302,26 @@ NIM_SDK_NODE_API_DEF(Talk, RecallMsg) {
 
     auto callback = std::bind(&TalkEventHandler::OnRecallMsgsCallback, bcb, std::placeholders::_1, std::placeholders::_2);
     nim::Talk::RecallMsgEx(msg, notify.toUtf8String(), callback, parameter);
+}
+
+NIM_SDK_NODE_API_DEF(Talk, RegRecallMsgsCb) {
+    Talk* talk = node::ObjectWrap::Unwrap<Talk>(args.Holder());
+    if (!talk) {
+        return;
+    }
+
+    CHECK_ARGS_COUNT(2)
+    UTF8String ext;
+
+    ASSEMBLE_BASE_CALLBACK(0)
+
+    auto status = nim_napi_get_value_utf8string(isolate, args[1], ext);
+    if (status != napi_ok) {
+        return;
+    }
+
+    auto callback = std::bind(&TalkEventHandler::OnRecallMsgsCallback, bcb, std::placeholders::_1, std::placeholders::_2);
+    nim::Talk::RegRecallMsgsCallback(callback, ext.toUtf8String());
 }
 
 NIM_SDK_NODE_API_DEF(Talk, ReplyMessage) {

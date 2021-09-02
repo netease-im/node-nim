@@ -27,6 +27,14 @@ jobs:
     - run: npx just fetch-wrapper --target_platform=darwin --target_arch=x64
     - run: npx just build --runtime=electron --target=13.1.2 --target_platform=darwin --target_arch=x64
     - run: npx just build --runtime=electron --target=8.0.0 --target_platform=darwin --target_arch=x64
+    # Unit test
+    - run: npm run coverage
+    - uses: codecov/codecov-action@v2
+      with:
+        files: ${{ github.workspace }}/coverage/clover.xml
+        flags: unittests # optional
+        name: codecov-node-nim # optional
+        verbose: true # optional (default = false)
     # Upload artifacts
     - uses: actions/upload-artifact@v2
       with:
@@ -53,7 +61,17 @@ jobs:
     - run: npx just fetch-wrapper --target_platform=win32 --target_arch=x64
     - run: npx just build --runtime=electron --target=13.1.2 --target_platform=win32 --target_arch=x64
     - run: npx just build --runtime=electron --target=8.0.0 --target_platform=win32 --target_arch=x64
+    # Unit test
+    - run: npm run coverage
+    - uses: codecov/codecov-action@v2
+      with:
+        files: ${{ github.workspace }}/coverage/clover.xml
+        flags: unittests # optional
+        name: codecov-node-nim # optional
+        verbose: true # optional (default = false)
     # Upload artifacts
     - uses: actions/upload-artifact@v2
       with:
         path: ${{ github.workspace }}/packages/*.tar.gz
+        steps:
+    

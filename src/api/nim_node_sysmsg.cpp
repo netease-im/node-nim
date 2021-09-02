@@ -138,7 +138,7 @@ NIM_SDK_NODE_API_DEF(SystemMsg, DeleteAsync) {
     auto status = napi_ok;
     GET_ARGS_VALUE(isolate, 0, int64, msg_id)
     ASSEMBLE_BASE_CALLBACK(1)
-    GET_ARGS_VALUE(isolate, 1, utf8string, ext)
+    GET_ARGS_VALUE(isolate, 2, utf8string, ext)
 
     auto callback =
         std::bind(&SysMsgEventHandler::OnNotifySingleSysmsgCallback, bcb, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
@@ -177,7 +177,7 @@ NIM_SDK_NODE_API_DEF(SystemMsg, DeleteByTypeAsync) {
     auto status = napi_ok;
     GET_ARGS_VALUE(isolate, 0, uint32, type)
     ASSEMBLE_BASE_CALLBACK(1)
-    GET_ARGS_VALUE(isolate, 1, utf8string, exten)
+    GET_ARGS_VALUE(isolate, 2, utf8string, exten)
 
     auto callback = std::bind(&SysMsgEventHandler::OnNotifySysmsgResCallback, bcb, std::placeholders::_1, std::placeholders::_2);
     nim::SystemMsg::DeleteByTypeAsync((nim::NIMSysMsgType)(type), callback, exten.toUtf8String());

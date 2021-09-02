@@ -1,25 +1,31 @@
-const NIMFriend = require('../js/api/friend').default
+const NIMFriend = require('../../js/nim').NIMFriend
 const assert = require('assert')
 
 const friend = new NIMFriend
+
 function testFriend(test_info) {
     describe('********************Friend********************', function () {
         describe('#Request', function () {
-            it('Friend request should return 200', function (done) {
-                const result = friend.request(test_info.assistUser, 1, 'Request msg', (errorCode) => {
-                    assert.strictEqual(errorCode, 200)
+            it('friend request should return 200', function (done) {
+                const result = friend.request(test_info.assistUser, 1, 'Request msg', (res_code) => {
+                    assert.strictEqual(res_code, 200)
                     done()
                 }, '')
                 assert.strictEqual(result, true)
             })
         })
+        describe('#RegChangeCb', function () {
+            it('regChangeCb', function () {
+                friend.regChangeCb(function (result) { }, '')
+            })
+        })
         describe('#Update', function () {
-            it('Update friend should return 200', function (done) {
+            it('update friend should return 200', function (done) {
                 const result = friend.update({
                     accid: test_info.assistUser,
                     alias: 'AliasTest'
-                }, (errorCode) => {
-                    assert.strictEqual(errorCode, 200)
+                }, (res_code) => {
+                    assert.strictEqual(res_code, 200)
                     done()
                 }, '')
                 assert.strictEqual(result, true)
@@ -27,8 +33,8 @@ function testFriend(test_info) {
         })
         describe('#GetList', function () {
             it(`Get list should return 200`, function (done) {
-                friend.getList((errorCode, friendList) => {
-                    assert.strictEqual(errorCode, 200)
+                friend.getList((res_code, friendList) => {
+                    assert.strictEqual(res_code, 200)
                     assert.notStrictEqual(friendList.length, 0)
                     let foundTarget = false
                     friendList.map((friend) => {
@@ -51,23 +57,27 @@ function testFriend(test_info) {
             })
         })
         describe('#QueryFriendListByKeyword', function () {
-            it('Query friend list by keywork should return 200', function (done) {
-                friend.queryFriendListByKeyword('jia  ', (errorCode, profile) => {
-                    assert.strictEqual(errorCode, 200)
-                    // TODO
+            it('query friend list by keywork should return 200', function (done) {
+                friend.queryFriendListByKeyword('jia  ', (res_code, profile) => {
+                    assert.strictEqual(res_code, 200)
                     done()
                 }, '')
             })
         })
-        describe('#DeleteEx', function () {
-            it('Delete friend should return 200', function (done) {
-                const result = friend.deleteEx(test_info.assistUser, {
+        describe('#Delete', function () {
+            it('delete friend should return 200', function (done) {
+                const result = friend.delete(test_info.assistUser, {
                     delete_alias: true
-                }, (errorCode) => {
-                    assert.strictEqual(errorCode, 200)
+                }, (res_code) => {
+                    assert.strictEqual(res_code, 200)
                     done()
                 })
                 assert.strictEqual(result, true)
+            })
+        })
+        describe('#UnregFriendCb', function () {
+            it('unregFriendCb', function () {
+                friend.unregFriendCb()
             })
         })
     })

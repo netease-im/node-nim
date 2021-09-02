@@ -18,7 +18,6 @@ void Client::InitModule(Local<Object>& module) {
     SET_PROTOTYPE(Init)
     SET_PROTOTYPE(GetSDKConfig)
     SET_PROTOTYPE(CleanUp)
-    SET_PROTOTYPE(CleanUp2)
     SET_PROTOTYPE(LoginCustomDataToJson)
     SET_PROTOTYPE(Login)
     SET_PROTOTYPE(GetLoginState)
@@ -79,15 +78,6 @@ NIM_SDK_NODE_API_DEF(Client, GetSDKConfig) {
     args.GetReturnValue().Set(config_obj);
 }
 NIM_SDK_NODE_API_DEF(Client, CleanUp) {
-    CHECK_API_FUNC(Client, 1)
-
-    UTF8String ext;
-    auto status = napi_ok;
-    GET_ARGS_VALUE(isolate, 0, utf8string, ext)
-
-    nim::Client::Cleanup(ext.toUtf8String());
-}
-NIM_SDK_NODE_API_DEF(Client, CleanUp2) {
     CHECK_API_FUNC(Client, 1)
 
     UTF8String ext;

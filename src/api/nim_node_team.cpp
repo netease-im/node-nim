@@ -19,7 +19,7 @@ void Team::InitModule(Local<Object>& module) {
 
     SET_PROTOTYPE(RegTeamEventCb);
     SET_PROTOTYPE(CreateTeamAsync);
-    SET_PROTOTYPE(InviteAsync2);
+    SET_PROTOTYPE(InviteAsync);
     SET_PROTOTYPE(KickAsync);
     SET_PROTOTYPE(LeaveAsync);
     SET_PROTOTYPE(DismissAsync);
@@ -134,7 +134,7 @@ NIM_SDK_NODE_API_DEF(Team, CreateTeamAsync) {
     auto callback = std::bind(&TeamEventHandler::OnTeamEventCallback, bcb, std::placeholders::_1);
     nim::Team::CreateTeamAsync(info, ids, i_p.toUtf8String(), callback, exten.toUtf8String());
 }
-NIM_SDK_NODE_API_DEF(Team, InviteAsync2) {
+NIM_SDK_NODE_API_DEF(Team, InviteAsync) {
     Team* instance = node::ObjectWrap::Unwrap<Team>(args.Holder());
     if (!instance) {
         return;

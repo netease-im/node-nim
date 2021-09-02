@@ -17,7 +17,7 @@ public:
 public:
     NIM_SDK_NODE_API(RegChangeCb);
     NIM_SDK_NODE_API(Request);
-    NIM_SDK_NODE_API(DeleteEx);
+    NIM_SDK_NODE_API(Delete);
     NIM_SDK_NODE_API(Update);
     NIM_SDK_NODE_API(GetList);
     NIM_SDK_NODE_API(GetFriendProfile);

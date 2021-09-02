@@ -50,7 +50,6 @@ task('build', () => {
   const version = packageMeta.version
   const packageName = packageMeta.name
   const sourcePath = path.join(__dirname, 'nim_sdk')
-
   logger.info(JSON.stringify(argv()))
 
   return new Promise((resolve, reject) => {

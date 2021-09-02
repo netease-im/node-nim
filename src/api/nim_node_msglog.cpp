@@ -883,7 +883,7 @@ NIM_SDK_NODE_API_DEF(MsgLog, ImportDbAsync) {
     bcb2->callback_.Reset(isolate, pcb2);
     bcb2->data_.Reset(isolate, pdata2);
 
-    status = nim_napi_get_value_utf8string(isolate, args[2], exten);
+    status = nim_napi_get_value_utf8string(isolate, args[3], exten);
     if (status != napi_ok) {
         return;
     }
@@ -1161,7 +1161,7 @@ NIM_SDK_NODE_API_DEF(MsgLog, QueryThreadHistoryMsg) {
     nim_talk_im_msg_obj_to_struct(isolate, args[0]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), msg);
     nim::MsgLog::QueryThreadHistoryMsgAsyncParam param;
     nim_msglog_query_thread_history_param_obj_to_struct(isolate, args[1]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), param);
-    ASSEMBLE_BASE_CALLBACK(1);
+    ASSEMBLE_BASE_CALLBACK(2);
     auto callback = std::bind(&MsgLogEventHandler::OnQueryThreadHistoryMsgCallback, bcb, std::placeholders::_1, std::placeholders::_2,
                               std::placeholders::_3, std::placeholders::_4, std::placeholders::_5);
     nim::MsgLog::QueryThreadHistoryMsg(msg, param, callback);

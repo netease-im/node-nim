@@ -1,14 +1,47 @@
-const NIMUser = require('../js/api/user').default
+const NIMUser = require('../../js/nim').NIMUser
 const assert = require('assert')
 
 const user = new NIMUser
+
 function testUser(test_info) {
     describe('********************User********************', function () {
         let myNameCard
+        describe('#regSpecialRelationshipChangedCb', function () {
+            it('regSpecialRelationshipChangedCb', function () {
+                user.regSpecialRelationshipChangedCb(function (result) {
+
+                }, '')
+            })
+        })
+        describe('#regUserNameCardChangedCb', function () {
+            it('regUserNameCardChangedCb', function () {
+                user.regUserNameCardChangedCb(function (result) {
+
+                }, '')
+            })
+        })
+        describe('#UpdateMyUserNameCard', function () {
+            it('update my user name card should return 200', function (done) {
+                user.updateMyUserNameCard({
+                    accid: test_info.mainUser,
+                    name: 'test',
+                    icon: 'test',
+                    sign: 'test',
+                    gender: 0,
+                    email: 'test',
+                    birth: 'test',
+                    mobile: 'test',
+                    ex: 'test'
+                }, (res_code) => {
+                    assert.strictEqual(res_code, 200)
+                    done()
+                }, '')
+            })
+        })
         describe('$Black list test', function () {
             before(function (done) {
-                user.setBlack(test_info.assistUser, true, (errorCode, accountId, option) => {
-                    assert.strictEqual(errorCode, 200)
+                user.setBlack(test_info.assistUser, true, (res_code, accountId, option) => {
+                    assert.strictEqual(res_code, 200)
                     assert.strictEqual(accountId, test_info.assistUser)
                     assert.strictEqual(option, true)
                     done()
@@ -16,22 +49,22 @@ function testUser(test_info) {
             })
             describe('#GetBlacklist', function () {
                 it(`Get black list should include ${test_info.assistUser}`, function (done) {
-                    user.getBlacklist((errorCode, blackList) => {
+                    user.getBlacklist((res_code, blackList) => {
                         let foundMember = false
                         blackList.map((member) => {
                             if (member.accid === test_info.assistUser) {
                                 foundMember = true
                             }
                         })
-                        assert.strictEqual(errorCode, 200)
+                        assert.strictEqual(res_code, 200)
                         assert.strictEqual(foundMember, true)
                         done()
                     }, '')
                 })
             });
             after(function (done) {
-                user.setBlack(test_info.assistUser, false, (errorCode, accountId, option) => {
-                    assert.strictEqual(errorCode, 200)
+                user.setBlack(test_info.assistUser, false, (res_code, accountId, option) => {
+                    assert.strictEqual(res_code, 200)
                     assert.strictEqual(accountId, test_info.assistUser)
                     assert.strictEqual(option, false)
                     done()
@@ -40,8 +73,8 @@ function testUser(test_info) {
         })
         describe('$Mute list test', function () {
             before(function (done) {
-                user.setMute(test_info.assistUser, true, (errorCode, accountId, option) => {
-                    assert.strictEqual(errorCode, 200)
+                user.setMute(test_info.assistUser, true, (res_code, accountId, option) => {
+                    assert.strictEqual(res_code, 200)
                     assert.strictEqual(accountId, test_info.assistUser)
                     assert.strictEqual(option, true)
                     done()
@@ -49,22 +82,22 @@ function testUser(test_info) {
             })
             describe('#GetMuteList', function () {
                 it(`Get mute list should include ${test_info.assistUser}`, function (done) {
-                    user.getMutelist((errorCode, muteList) => {
+                    user.getMutelist((res_code, muteList) => {
                         let foundMember = false
                         muteList.map((member) => {
                             if (member.accid === test_info.assistUser) {
                                 foundMember = true
                             }
                         })
-                        assert.strictEqual(errorCode, 200)
+                        assert.strictEqual(res_code, 200)
                         assert.strictEqual(foundMember, true)
                         done()
                     }, '')
                 });
             });
             after(function (done) {
-                user.setMute(test_info.assistUser, false, (errorCode, accountId, option) => {
-                    assert.strictEqual(errorCode, 200)
+                user.setMute(test_info.assistUser, false, (res_code, accountId, option) => {
+                    assert.strictEqual(res_code, 200)
                     assert.strictEqual(accountId, test_info.assistUser)
                     assert.strictEqual(option, false)
                     done()
@@ -72,7 +105,7 @@ function testUser(test_info) {
             })
         })
         describe('#GetUserNameCardOnline', function () {
-            it('Get user name card should return 200', function (done) {
+            it('get user name card should return 200', function (done) {
                 user.getUserNameCardOnline([
                     test_info.mainUser
                 ], (users) => {
@@ -88,7 +121,7 @@ function testUser(test_info) {
             })
         })
         describe('#GetUserNameCard', function () {
-            it('Get user name card should return 200', function (done) {
+            it('get user name card should return 200', function (done) {
                 user.getUserNameCard([
                     test_info.mainUser
                 ], (users) => {
@@ -105,11 +138,11 @@ function testUser(test_info) {
             })
         })
         describe('#UpdateMyUserNameCard', function () {
-            it('Update my user name card should return 200', function (done) {
+            it('update my user name card should return 200', function (done) {
                 myNameCard.name = `${new Date().getTime()}_Node`
                 myNameCard.ex = `${new Date().getTime()}_Node_Ex`
-                user.updateMyUserNameCard(myNameCard, (errorCode) => {
-                    assert.strictEqual(errorCode, 200)
+                user.updateMyUserNameCard(myNameCard, (res_code) => {
+                    assert.strictEqual(res_code, 200)
                     done()
                 }, '')
             })
@@ -127,6 +160,16 @@ function testUser(test_info) {
                     assert.strictEqual(foundMember, true, `Did not find the given user: ${test_info.mainUser}`)
                     done()
                 }, '')
+            })
+        })
+        describe('#updatePushToken', function () {
+            it('updatePushToken', function () {
+                user.updatePushToken('Node_test', 'Node_test', 0)
+            })
+        })
+        describe('#unregUserCb', function () {
+            it('unregUserCb', function () {
+                user.unregUserCb()
             })
         })
     })

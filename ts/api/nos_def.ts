@@ -1,8 +1,7 @@
 import { NIMDocTranscodingFileType, NIMDocTranscodingImageType } from './doc_trans_def';
 import { NIMMessage } from './talk_def'
 
-export enum NIMNosInitConfigResultType
-{
+export enum NIMNosInitConfigResultType {
 	kNIMNosInitConfResTypeTagCountOF = 0,	/**< 自定义tag数量超过最大数量 */
 	kNIMNosInitConfResTypeSuccess,			/**< 所有tag初始成功 */
 	kNIMNosInitConfResTypePartSuccessful,	/**< 部分tag初始化成功，失败的tag及错误码可以解析json_result来取得 */
@@ -10,10 +9,9 @@ export enum NIMNosInitConfigResultType
 }
 
 /** @enum NIMNosUploadType NOS扩展类型  */
-export enum NIMNosUploadType
-{
-	kNIMNosUploadTypeNormal		= 0,			/**< 普通文件上传 */
-	kNIMNosUploadTypeDocTrans	= 1,			/**< 文档转换上传 */
+export enum NIMNosUploadType {
+	kNIMNosUploadTypeNormal = 0,			/**< 普通文件上传 */
+	kNIMNosUploadTypeDocTrans = 1,			/**< 文档转换上传 */
 }
 
 export interface NIMNOSParams {
@@ -29,7 +27,7 @@ export interface NIMNOSParams {
 	source_type: NIMDocTranscodingFileType; 	/**< NIMDocTranscodingFileType (HTTP上传转码文档使用)转码源文档的文件类型, nim_doc_trans_def.h */
 	pic_type: NIMDocTranscodingImageType; 		/**< NIMDocTranscodingImageType (HTTP上传转码文档使用)转码目标图片的文件类型, nim_doc_trans_def.h */
 	doc_trans_ext: string;	/**< string (HTTP上传转码文档使用)文档转换时的扩展参数，在成功后能查询到 */
-	upload_tag: string;	/**< string, 上传文件时使用的场景标签(可参见nos删除策略)*/	
+	upload_tag: string;	/**< string, 上传文件时使用的场景标签(可参见nos删除策略)*/
 }
 
 export interface NIMInitConfigParam {
@@ -91,7 +89,7 @@ export interface NIMDownloadMediaExCallback {
 	(rescode: number, result: NIMDownloadMediaResult): void;
 }
 
-export interface NIMSafeURLToOriginURLCallback {
+export interface NIMsafe_urlToOriginURLCallback {
 	(rescode: number, originalUrl: string): void;
 }
 
@@ -102,37 +100,37 @@ export interface NIMNOSAPI {
 
 	RegUploadCb(cb: NIMUploadMediaExCallback): void;
 
-	FetchMediaEx(msg: NIMMessage, 
-			jsonExtension: string, 
-			resCb: NIMDownloadMediaCallback,
-			prgCb: NIMProgressCallback,
-			speedCb: NIMSpeedCallback,
-			transferCb: NIMTransferInfoCallback): boolean;
+	FetchMedia(msg: NIMMessage,
+		json_extension: string,
+		res_cb: NIMDownloadMediaCallback,
+		prg_cb: NIMProgressCallback,
+		speed_cb: NIMSpeedCallback,
+		transfer_cb: NIMTransferInfoCallback): boolean;
 
 	StopFetchMedia(msg: NIMMessage): boolean;
 
-	UploadResourceEx2(localFile: string, 
-			tag: string, 
-			param: NIMNOSParams, 
-			resCb: NIMUploadMediaExCallback,
-			prgCb: NIMProgressExCallback,
-			speedCb: NIMSpeedCallback,
-			transferCb: NIMTransferInfoCallback): boolean;
+	UploadResource(local_file: string,
+		tag: string,
+		param: NIMNOSParams,
+		res_cb: NIMUploadMediaExCallback,
+		prg_cb: NIMProgressExCallback,
+		speed_cb: NIMSpeedCallback,
+		transfer_cb: NIMTransferInfoCallback): boolean;
 
-	StopUploadResourceEx(taskId: string, jsonExtension: string): boolean;
+	StopUploadResource(task_id: string, json_extension: string): boolean;
 
-	DownloadResourceEx(nosUrl: string, 
-		param: NIMNOSParams, 
-		resCb: NIMDownloadMediaExCallback,
-		prgCb: NIMProgressExCallback ,
-		speedCb: NIMSpeedCallback,
-		transferCb: NIMTransferInfoCallback): boolean;
+	DownloadResource(nosUrl: string,
+		param: NIMNOSParams,
+		res_cb: NIMDownloadMediaExCallback,
+		prg_cb: NIMProgressExCallback,
+		speed_cb: NIMSpeedCallback,
+		transfer_cb: NIMTransferInfoCallback): boolean;
 
-	StopDownloadResourceEx(taskId: string, jsonExtension: string): boolean;
+	StopDownloadResource(task_id: string, json_extension: string): boolean;
 
-	SafeURLToOriginURL(safeUrl: string,
-		cb: NIMSafeURLToOriginURLCallback, 
-		jsonExtension: string): void;
+	SafeURLToOriginURL(safe_url: string,
+		cb: NIMsafe_urlToOriginURLCallback,
+		json_extension: string): void;
 
 	SetSupportQuickTrans(quick: boolean): void;
 

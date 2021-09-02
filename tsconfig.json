@@ -9,10 +9,13 @@
     "allowJs": true,
     "moduleResolution": "node",
     "lib": ["es6", "dom"],
-    "types": ["node"],
-    "typeRoots": ["node_modules/@types"],
     "declaration": true,
     "declarationDir": "types"
+  },
+  "typedocOptions": {
+    "entryPoints": "ts/nim.ts",
+    "out": "doc",
+    "hideGenerator": "true"
   },
   "include": [
     "ts/**/*"

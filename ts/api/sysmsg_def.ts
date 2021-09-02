@@ -1,27 +1,25 @@
 /** @enum NIMSysMsgStatus 系统消息状态 */
-export enum NIMSysMsgStatus
-{
-	kNIMSysMsgStatusNone        = 0,		/**< 默认,未读 */
-	kNIMSysMsgStatusPass		= 1,		/**< 收到消息,通过 */
-	kNIMSysMsgStatusDecline		= 2,		/**< 收到消息,拒绝 */
-	kNIMSysMsgStatusRead		= 3,		/**< 收到消息,已读 */
-	kNIMSysMsgStatusDeleted		= 4,		/**< 已删 */
-	kNIMSysMsgStatusInvalid		= 5,		/**< 已失效 */
+export enum NIMSysMsgStatus {
+	kNIMSysMsgStatusNone = 0,		/**< 默认,未读 */
+	kNIMSysMsgStatusPass = 1,		/**< 收到消息,通过 */
+	kNIMSysMsgStatusDecline = 2,		/**< 收到消息,拒绝 */
+	kNIMSysMsgStatusRead = 3,		/**< 收到消息,已读 */
+	kNIMSysMsgStatusDeleted = 4,		/**< 已删 */
+	kNIMSysMsgStatusInvalid = 5,		/**< 已失效 */
 }
 
 /** @enum NIMSysMsgType 系统消息内容类型 */
-export enum NIMSysMsgType
-{
-	kNIMSysMsgTypeTeamApply				= 0,		/**< 申请入群  */
-	kNIMSysMsgTypeTeamReject			= 1,		/**< 拒绝入群申请 */
-	kNIMSysMsgTypeTeamInvite			= 2,		/**< 邀请进群 kNIMSysMsgKeyAttach : {"team_info":team_info, "attach" : ""} attach为可选字段，作为应用自定义扩展字段,解析前需要判断有没有这个字段, 群组信息(Keys SEE MORE `nim_team_def.h` 『群组信息 Json Keys』) */
-	kNIMSysMsgTypeTeamInviteReject		= 3,		/**< 拒绝邀请 */
-	kNIMSysMsgTypeFriendAdd				= 5,		/**< 加好友, kNIMSysMsgKeyAttach: {"vt":verifyType} */
-	kNIMSysMsgTypeFriendDel				= 6,		/**< 删除好友 */
-	kNIMSysMsgTypeCustomP2PMsg			= 100,		/**< 点对点透传消息（透传消息的内容放到kNIMSysMsgKeyAttach）,SDK对该类消息不计入未读数, 即使kNIMSysMsgKeyPushNeedBadge为1 */
-	kNIMSysMsgTypeCustomTeamMsg			= 101,		/**< 群透传消息（透传消息的内容放到kNIMSysMsgKeyAttach）,SDK对该类消息不计入未读数, 即使kNIMSysMsgKeyPushNeedBadge为1 */
-	kNIMSysMsgTypeCustomSuperTeamMsg	= 103,		/**< 超大群透传消息（透传消息的内容放到kNIMSysMsgKeyAttach）,SDK对该类消息不计入未读数, 即使kNIMSysMsgKeyPushNeedBadge为1 */
-	kNIMSysMsgTypeUnknown				= 1000,		/**< 未知类型，本地使用，发送时勿使用，作为默认 */
+export enum NIMSysMsgType {
+	kNIMSysMsgTypeTeamApply = 0,		/**< 申请入群  */
+	kNIMSysMsgTypeTeamReject = 1,		/**< 拒绝入群申请 */
+	kNIMSysMsgTypeTeamInvite = 2,		/**< 邀请进群 kNIMSysMsgKeyAttach : {"team_info":team_info, "attach" : ""} attach为可选字段，作为应用自定义扩展字段,解析前需要判断有没有这个字段, 群组信息(Keys SEE MORE `nim_team_def.h` 『群组信息 Json Keys』) */
+	kNIMSysMsgTypeTeamInviteReject = 3,		/**< 拒绝邀请 */
+	kNIMSysMsgTypeFriendAdd = 5,		/**< 加好友, kNIMSysMsgKeyAttach: {"vt":verify_type} */
+	kNIMSysMsgTypeFriendDel = 6,		/**< 删除好友 */
+	kNIMSysMsgTypeCustomP2PMsg = 100,		/**< 点对点透传消息（透传消息的内容放到kNIMSysMsgKeyAttach）,SDK对该类消息不计入未读数, 即使kNIMSysMsgKeyPushNeedBadge为1 */
+	kNIMSysMsgTypeCustomTeamMsg = 101,		/**< 群透传消息（透传消息的内容放到kNIMSysMsgKeyAttach）,SDK对该类消息不计入未读数, 即使kNIMSysMsgKeyPushNeedBadge为1 */
+	kNIMSysMsgTypeCustomSuperTeamMsg = 103,		/**< 超大群透传消息（透传消息的内容放到kNIMSysMsgKeyAttach）,SDK对该类消息不计入未读数, 即使kNIMSysMsgKeyPushNeedBadge为1 */
+	kNIMSysMsgTypeUnknown = 1000,		/**< 未知类型，本地使用，发送时勿使用，作为默认 */
 }
 
 export interface NIMSystemMsg {
@@ -44,39 +42,67 @@ export interface NIMSystemMsg {
 	anti_spam_content: string;	/**< string, (功能暂时不开放)(可选)开发者自定义的反垃圾字段 */
 }
 
-export interface NIMSysMsgAPI {
-	RegSysmsgCb(cb: Function, jsonExtension: string): void;
+export interface NIMSendMessageArc {
+	talk_id: string;                  /**< 会话ID */
+	msg_id: string;                   /**< 消息ID */
+	rescode_: number;                   /**< 错误码 */
+	msg_timetag: number;                  /**< 消息时间戳 */
+	third_party_callback_ext: string
+};
 
-	RegSendCustomSysmsgCb(cb: Function, jsonExtension: string): void;
+export interface NIMSysmsgCallback {
+	(result: NIMSystemMsg): void;
+}
+
+export interface NIMSendCustomSysmsgCallback {
+	(result: NIMSendMessageArc): void;
+}
+
+export interface NIMNotifySingleSysmsgCallback {
+	(res_code: number, msg_id: number, unread_count: number): void;
+}
+
+export interface NIMNotifySysmsgResCallback {
+	(res_code: number, unread_count: number): void;
+}
+
+export interface NIMQuerySysmsgCallback {
+	(count: number, unread_count: number, result: Array<NIMSystemMsg>): void;
+}
+
+export interface NIMSysMsgAPI {
+	RegSysmsgCb(cb: NIMSysmsgCallback, json_extension: string): void;
+
+	RegSendCustomSysmsgCb(cb: NIMSendCustomSysmsgCallback, json_extension: string): void;
 
 	SendCustomNotificationMsg(msg: NIMSystemMsg): void;
 
-	QueryMsgAsync(limitCount: number,
-		lastTime: number,
-		cb: Function, 
-		jsonExtension: string): boolean;
+	QueryMsgAsync(limit_count: number,
+		last_time: number,
+		cb: NIMQuerySysmsgCallback,
+		json_extension: string): boolean;
 
-	QueryUnreadCount(cb:Function, jsonExtension: string): void;
+	QueryUnreadCount(cb: NIMNotifySysmsgResCallback, json_extension: string): void;
 
-	SetStatusAsync(msgId: number,
+	SetStatusAsync(msg_id: number,
 		status: NIMSysMsgStatus,
-		cb: Function, 
-		jsonExtension: string): boolean;
+		cb: NIMNotifySingleSysmsgCallback,
+		json_extension: string): boolean;
 
-	ReadAllAsync(cb: Function, jsonExtension: string): void;
+	ReadAllAsync(cb: NIMNotifySysmsgResCallback, json_extension: string): void;
 
-	DeleteAsync(msgId: number,
-		cb: Function, 
-		jsonExtension: string): boolean;
+	DeleteAsync(msg_id: number,
+		cb: NIMNotifySingleSysmsgCallback,
+		json_extension: string): boolean;
 
-	DeleteAllAsync(cb: Function, jsonExtension: string): boolean;
+	DeleteAllAsync(cb: NIMNotifySysmsgResCallback, json_extension: string): boolean;
 
-	SetStatusByTypeAsync(type: NIMSysMsgType, 
-		status: NIMSysMsgStatus, 
-		cb: Function, 
-		jsonExtension: string): boolean;
+	SetStatusByTypeAsync(type: NIMSysMsgType,
+		status: NIMSysMsgStatus,
+		cb: NIMNotifySysmsgResCallback,
+		json_extension: string): boolean;
 
-	DeleteByTypeAsync(type: NIMSysMsgType, cb: Function, jsonExtension: string): boolean;
+	DeleteByTypeAsync(type: NIMSysMsgType, cb: NIMNotifySysmsgResCallback, json_extension: string): boolean;
 
 	UnregSysmsgCb(): void;
 }

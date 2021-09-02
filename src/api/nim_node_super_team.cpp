@@ -18,11 +18,9 @@ void SuperTeam::InitModule(Local<Object>& module) {
     BEGIN_OBJECT_INIT(SuperTeam, New, 5)
 
     SET_PROTOTYPE(RegTeamEventCb);
-    // SET_PROTOTYPE(CreateTeamAsync);
-    SET_PROTOTYPE(InviteAsync2);
+    SET_PROTOTYPE(InviteAsync);
     SET_PROTOTYPE(KickAsync);
     SET_PROTOTYPE(LeaveAsync);
-    // SET_PROTOTYPE(DismissAsync);
     SET_PROTOTYPE(UpdateTeamInfoAsync);
     SET_PROTOTYPE(ApplyJoinAsync);
     SET_PROTOTYPE(PassJoinApplyAsync);
@@ -94,7 +92,7 @@ NIM_SDK_NODE_API_DEF(SuperTeam, RegTeamEventCb) {
     nim::SuperTeam::RegSuperTeamEventCb(callback, exten.toUtf8String());
 }
 
-NIM_SDK_NODE_API_DEF(SuperTeam, InviteAsync2) {
+NIM_SDK_NODE_API_DEF(SuperTeam, InviteAsync) {
     SuperTeam* instance = node::ObjectWrap::Unwrap<SuperTeam>(args.Holder());
     if (!instance) {
         return;

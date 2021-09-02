@@ -241,7 +241,7 @@ NIM_SDK_NODE_API_DEF(Rts, SetHangupNotifyCb) {
 }
 
 NIM_SDK_NODE_API_DEF(Rts, Relogin) {
-    CHECK_API_FUNC(Rts, 2)
+    CHECK_API_FUNC(Rts, 3)
 
     UTF8String session_id;
     int channel_type;

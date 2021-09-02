@@ -16,7 +16,7 @@ public:
 
 public:
     NIM_SDK_NODE_API(RegTeamEventCb);
-    NIM_SDK_NODE_API(InviteAsync2);
+    NIM_SDK_NODE_API(InviteAsync);
     NIM_SDK_NODE_API(KickAsync);
     NIM_SDK_NODE_API(LeaveAsync);
     NIM_SDK_NODE_API(UpdateTeamInfoAsync);

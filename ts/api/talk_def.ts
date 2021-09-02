@@ -130,27 +130,29 @@ export interface NIMMessageFilterCallback {
 
 export interface NIMTalkAPI {
 	RegSendMsgCb(cb: NIMSendMsgAckCallback,
-		jsonExtension: string): void;
+		json_extension: string): void;
 
 	SendMsg(msg: NIMMessage,
-		jsonExtension: string,
+		json_extension: string,
 		fileUploadProgressCb: NIMFileUpPrgCallback): void;
 
 	StopSendMsg(clientMsgId: string,
 		type: NIMMessageType,
-		jsonExtension: string): void;
+		json_extension: string): void;
 
-	RegReceiveCb(cb: NIMReceiveMsgCallback, jsonExtension: string): void;
+	RegReceiveCb(cb: NIMReceiveMsgCallback, json_extension: string): void;
 
-	RegReceiveMessagesCb(cb: NIMReceiveMsgsCallback, jsonExtension: string): void;
+	RegReceiveMessagesCb(cb: NIMReceiveMsgsCallback, json_extension: string): void;
 
-	RegTeamNotificationFilter(cb: NIMTeamNotificationFilterCallback, jsonExtension: string): void;
+	RegTeamNotificationFilter(cb: NIMTeamNotificationFilterCallback, json_extension: string): void;
 
-	RegMessageFilter(cb: NIMMessageFilterCallback, jsonExtension: string): void;
+	RegMessageFilter(cb: NIMMessageFilterCallback, json_extension: string): void;
 
-	RegReceiveBroadcastMsgCb(cb: NIMReceiveBroadcastMsgCallback, jsonExtension: string): void;
+	RegReceiveBroadcastMsgCb(cb: NIMReceiveBroadcastMsgCallback, json_extension: string): void;
 
-	RegReceiveBroadcastMsgsCb(cb: NIMReceiveBroadcastMsgsCallback, jsonExtension: string): void;
+	RegReceiveBroadcastMsgsCb(cb: NIMReceiveBroadcastMsgsCallback, json_extension: string): void;
+
+	RegRecallMsgsCb(cb: NIMRecallMsgsCallback, json_extension: string): void;
 
 	RecallMsg(msg: NIMMessage,
 		notify_msg: string,

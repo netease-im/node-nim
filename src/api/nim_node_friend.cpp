@@ -17,7 +17,7 @@ void Friend::InitModule(Local<Object>& module) {
 
     SET_PROTOTYPE(RegChangeCb);
     SET_PROTOTYPE(Request);
-    SET_PROTOTYPE(DeleteEx);
+    SET_PROTOTYPE(Delete);
     SET_PROTOTYPE(Update);
     SET_PROTOTYPE(GetList);
     SET_PROTOTYPE(GetFriendProfile);
@@ -68,7 +68,7 @@ NIM_SDK_NODE_API_DEF(Friend, Request) {
     auto ret = nim::Friend::Request(accid.toUtf8String(), (nim::NIMVerifyType)verify_type, msg.toUtf8String(), callback, exten.toUtf8String());
     args.GetReturnValue().Set(nim_napi_new_bool(isolate, ret));
 }
-NIM_SDK_NODE_API_DEF(Friend, DeleteEx) {
+NIM_SDK_NODE_API_DEF(Friend, Delete) {
     CHECK_API_FUNC(Friend, 3)
 
     auto status = napi_ok;

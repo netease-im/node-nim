@@ -9,12 +9,12 @@ export enum NIMFriendSource {
 	kNIMFriendSourceDefault = 0, /**< 默认 */
 }
 
-/** @enum NIMVerifyType 好友验证方式 */
-export enum NIMVerifyType {
-	kNIMVerifyTypeAdd = 1, /**< 直接加好友 */
-	kNIMVerifyTypeAsk = 2, /**< 请求加好友 */
-	kNIMVerifyTypeAgree = 3, /**< 同意 */
-	kNIMVerifyTypeReject = 4, /**< 拒绝 */
+/** @enum NIMverify_type 好友验证方式 */
+export enum NIMverify_type {
+	kNIMverify_typeAdd = 1, /**< 直接加好友 */
+	kNIMverify_typeAsk = 2, /**< 请求加好友 */
+	kNIMverify_typeAgree = 3, /**< 同意 */
+	kNIMverify_typeReject = 4, /**< 拒绝 */
 }
 
 /** @enum NIMFriendQueryType 查询好友信息的依据条件 */
@@ -29,12 +29,11 @@ export interface NIMDeleteFriendOption {
 }
 
 /** @enum NIMFriendChangeType 好友数据变化类型 */
-export enum NIMFriendChangeType
-{
-	kNIMFriendChangeTypeRequest		= 1, /**< 加好友/处理好友请求 */
-	kNIMFriendChangeTypeDel			= 2, /**< 删除好友 */
-	kNIMFriendChangeTypeUpdate		= 3, /**< 更新好友 */
-	kNIMFriendChangeTypeSyncList	= 5, /**< 好友列表同步与更新 */
+export enum NIMFriendChangeType {
+	kNIMFriendChangeTypeRequest = 1, /**< 加好友/处理好友请求 */
+	kNIMFriendChangeTypeDel = 2, /**< 删除好友 */
+	kNIMFriendChangeTypeUpdate = 3, /**< 更新好友 */
+	kNIMFriendChangeTypeSyncList = 5, /**< 好友列表同步与更新 */
 };
 
 export interface NIMFriendProfile {
@@ -52,7 +51,7 @@ export interface NIMFriendProfile {
 
 export interface NIMFriendChangeEventContent {
 	accid: string;				/**< 用户ID */
-	type: NIMVerifyType;		/**< NIMFriendChangeType==kNIMFriendChangeTypeRequest 验证类型 */
+	type: NIMverify_type;		/**< NIMFriendChangeType==kNIMFriendChangeTypeRequest 验证类型 */
 	msg: string;			/**< NIMFriendChangeType==kNIMFriendChangeTypeRequest 附言 */
 	update: NIMFriendProfile; /**< NIMFriendChangeType==kNIMFriendChangeTypeUpdate 用户信息 */
 	sync: Array<NIMFriendProfile>; /**< NIMFriendChangeType==kNIMFriendChangeTypeSyncList 用户信息列表 */
@@ -80,19 +79,19 @@ export interface NIMGetFriendProfileCallback {
 }
 
 export interface NIMFriendAPI {
-	RegChangeCb(cb: NIMFriendChangeCallback, jsonExtension: string): void;
+	RegChangeCb(cb: NIMFriendChangeCallback, json_extension: string): void;
 
-	Request(accid: string, verifyType: NIMVerifyType, msg: string, cb: NIMFriendOptCallback, jsonExtension: string): boolean;
+	Request(accid: string, verify_type: NIMverify_type, msg: string, cb: NIMFriendOptCallback, json_extension: string): boolean;
 
-	DeleteEx(accid: string, option: NIMDeleteFriendOption, cb: NIMFriendOptCallback): boolean;
+	Delete(accid: string, option: NIMDeleteFriendOption, cb: NIMFriendOptCallback): boolean;
 
-	Update(profile: NIMFriendProfile, cb: NIMFriendOptCallback, jsonExtension: string): boolean;
+	Update(profile: NIMFriendProfile, cb: NIMFriendOptCallback, json_extension: string): boolean;
 
-	GetList(cb: NIMGetFriendsListCallback, jsonExtension: string): void;
+	GetList(cb: NIMGetFriendsListCallback, json_extension: string): void;
 
-	GetFriendProfile(accid: string, cb: NIMGetFriendProfileCallback, jsonExtension: string): void;
+	GetFriendProfile(accid: string, cb: NIMGetFriendProfileCallback, json_extension: string): void;
 
-	QueryFriendListByKeyword(keyword: string, cb: NIMGetFriendsListCallback, jsonExtension: string): boolean;
+	QueryFriendListByKeyword(keyword: string, cb: NIMGetFriendsListCallback, json_extension: string): boolean;
 
 	UnregFriendCb(): void;
 }

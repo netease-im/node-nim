@@ -173,47 +173,45 @@ export interface NIMClientAPI {
 		account: string,
 		password: string,
 		cb: NIMLoginCallback,
-		jsonExtension: string): boolean;
+		json_extension: string): boolean;
 
 	Logout(logoutType: NIMLogoutType,
 		cb: NIMLogoutCallback,
-		jsonExtension: string): void;
+		json_extension: string): void;
 
-	CleanUp(jsonExtension: string): void;
+	CleanUp(json_extension: string): void;
 
 	// SetCallbackFunction(cb: Function): void;
 
 	GetSDKConfig(): NIMSDKConfig;
 
-	CleanUp2(jsonExtension: string): void;
-
 	LoginCustomDataToJson(customData: string): string;
 
-	GetLoginState(jsonExtension: string): NIMLoginState;
+	GetLoginState(json_extension: string): NIMLoginState;
 
-	Relogin(jsonExtension: string): void;
+	Relogin(json_extension: string): void;
 
 	KickOtherClient(clients: Array<string>): void;
 
-	RegReloginCb(cb: NIMLoginCallback, jsonExtension: string): void;
+	RegReloginCb(cb: NIMLoginCallback, json_extension: string): void;
 
-	RegKickoutCb(cb: NIMKickoutCallback, jsonExtension: string): void;
+	RegKickoutCb(cb: NIMKickoutCallback, json_extension: string): void;
 
-	RegDisconnectCb(cb: Function, jsonExtension: string): void;
+	RegDisconnectCb(cb: Function, json_extension: string): void;
 
-	RegMultispotLoginCb(cb: NIMMultispotCallback, jsonExtension: string): void;
+	RegMultispotLoginCb(cb: NIMMultispotCallback, json_extension: string): void;
 
-	RegKickOtherClientCb(cb: NIMKickotherCallback, jsonExtension: string): void;
+	RegKickOtherClientCb(cb: NIMKickotherCallback, json_extension: string): void;
 
-	RegSyncMultiportPushConfigCb(cb: NIMSyncMultiportPushConfigCallback, jsonExtension: string): void;
+	RegSyncMultiportPushConfigCb(cb: NIMSyncMultiportPushConfigCallback, json_extension: string): void;
 
-	RegReloginRequestTokenCb(cb: NIMReloginRequestTokenCallback, jsonExtension: string): void;
+	RegReloginRequestTokenCb(cb: NIMReloginRequestTokenCallback, json_extension: string): void;
 
-	SetMultiportPushConfigAsync(switchOn: boolean,
+	SetMultiportPushConfigAsync(switch_on: boolean,
 		cb: NIMSyncMultiportPushConfigCallback,
-		jsonExtension: string): void;
+		json_extension: string): void;
 
-	GetMultiportPushConfigAsync(cb: NIMSyncMultiportPushConfigCallback, jsonExtension: string): void;
+	GetMultiportPushConfigAsync(cb: NIMSyncMultiportPushConfigCallback, json_extension: string): void;
 
 	GetSDKVersion(): string;
 

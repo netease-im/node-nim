@@ -3,10 +3,6 @@
 
 namespace nim_node {
 napi_status nim_nos_init_config_obj_to_struct(Isolate* isolate, const Local<Object>& obj, nim::InitNosConfigParam& param) {
-    if (!obj->IsMap())
-        return napi_invalid_arg;
-
-    // TODO
     Local<Array> arr = obj->Get(isolate->GetCurrentContext(), nim_napi_new_utf8string(isolate, "param")).ToLocalChecked().As<Map>()->AsArray();
     for (size_t i = 0; i < arr->Length();) {
         UTF8String key;

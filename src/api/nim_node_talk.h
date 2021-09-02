@@ -24,6 +24,7 @@ public:
     NIM_SDK_NODE_API(RegTeamNotificationFilter);
     NIM_SDK_NODE_API(RegMessageFilter);
     NIM_SDK_NODE_API(RecallMsg);
+    NIM_SDK_NODE_API(RegRecallMsgsCb);
     NIM_SDK_NODE_API(GetAttachmentPathFromMsg);
     NIM_SDK_NODE_API(RegReceiveBroadcastMsgCb);
     NIM_SDK_NODE_API(RegReceiveBroadcastMsgsCb);

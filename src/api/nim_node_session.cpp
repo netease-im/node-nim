@@ -516,27 +516,14 @@ NIM_SDK_NODE_API_DEF(Session, SetAllUnreadCountZeroAsync) {
     CHECK_ARGS_COUNT(2)
     UTF8String exten;
 
-    Local<Function> cb = args[0].As<Function>();
-    if (cb.IsEmpty()) {
-        return;
-    }
-
-    Persistent<Function> pcb;
-    pcb.Reset(isolate, cb);
-    Local<Object> obj = args.This();
-    Persistent<Object> pdata;
-    pdata.Reset(isolate, obj);
-    BaseCallbackPtr bcb = BaseCallbackPtr(new BaseCallback());
-    bcb->callback_.Reset(isolate, pcb);
-    bcb->data_.Reset(isolate, pdata);
-
+    ASSEMBLE_BASE_CALLBACK(0);
     auto status = nim_napi_get_value_utf8string(isolate, args[1], exten);
     if (status != napi_ok) {
         return;
     }
 
     auto callback = std::bind(&SessionEventHandler::OnChangeCallback, bcb, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-    nim::Session::SetAllUnreadCountZeroAsync(callback, exten.toUtf8String());
+    nim::Session::SetAllUnreadCountZeroAsync(callback);
 }
 NIM_SDK_NODE_API_DEF(Session, QuerySessionDataById) {
     Session* instance = node::ObjectWrap::Unwrap<Session>(args.Holder());

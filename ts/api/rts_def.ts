@@ -8,6 +8,12 @@ export enum NIMProxyType {
     kNIMProxyNrtc = 10,   /**< 云信音视频私有代理，只在nim_vchat_set_proxy中有效 */
 };
 
+/** @enum NIMRtsVideoChatMode 音视频通话类型 */
+export enum NIMRtsVideoChatMode {
+    kNIMRtsVideoChatModeAudio = 1, /**< 语音通话模式 */
+    kNIMRtsVideoChatModeVideo = 2  /**< 视频通话模式 */
+};
+
 /** @brief 点对点白板发起的参数信息 */
 export interface RtsStartInfo {
     custom_video: boolean;       /**< 是否用自主的视频数据 */
