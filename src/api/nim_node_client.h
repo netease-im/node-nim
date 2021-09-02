@@ -26,7 +26,6 @@ public:
     NIM_SDK_NODE_API(Logout);
     NIM_SDK_NODE_API(KickOtherClient);
     NIM_SDK_NODE_API(RegReloginCb);
-    NIM_SDK_NODE_API(RegReloginRequestTokenCb);
     NIM_SDK_NODE_API(RegKickoutCb);
     NIM_SDK_NODE_API(RegDisconnectCb);
     NIM_SDK_NODE_API(RegMultispotLoginCb);

@@ -74,10 +74,6 @@ class NIMClient extends ev.EventEmitter {
         return this.client.RegReloginCb(cb, jsonExtension);
     }
 
-    RegReloginRequestTokenCb(cb: NIMReloginRequestTokenCallback, jsonExtension: string): void {
-        return this.client.RegReloginRequestTokenCb(cb, jsonExtension);
-    }
-
     regKickoutCb(cb: NIMKickoutCallback, jsonExtension: string): void {
         return this.client.RegKickoutCb(cb, jsonExtension);
     }

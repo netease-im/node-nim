@@ -186,10 +186,6 @@ export interface NIMGetTeamInfoBatchSFTransCallback {
     (count: number, infos: Array<NIMTeamInfo>): void;
 }
 
-export interface NIMGetTeamInfoListCallback {
-    (rescode: NIMResCode, infos: Array<NIMTeamInfo>, failure_ids: Array<string>): void;
-}
-
 export interface NIMTeamAPI {
     RegTeamEventCb(cb: NIMTeamEventCallback, jsonExtension: string): void;
 
@@ -310,12 +306,11 @@ export interface NIMTeamAPI {
 
     TeamMsgAckRead(tid: string,
         msgs: Array<NIMMessage>,
-        cb: NIMTeamMsgAckReadCallback,
+        cb: NIMTeamEventCallback,
         jsonExtension: string): void;
 
     TeamMsgQueryUnreadList(tid: string,
         msg: NIMMessage,
-        accids: Array<string>,
         cb: NIMTeamEventCallback,
         jsonExtension: string): void;
 
@@ -330,6 +325,4 @@ export interface NIMTeamAPI {
     UpdateTInfoLocal(infos: Array<NIMTeamInfo>, cb: NIMUpdateTInfoLocalCallback, jsonExtension: string): void;
 
     GetTeamInfoBatchSFTrans(cb: NIMGetTeamInfoBatchSFTransCallback, time_tag: number, jsonExtension: string): void;
-
-    GetTeaminfoList(tids: Array<string>, cb: NIMGetTeamInfoListCallback): void;
 }

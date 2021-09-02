@@ -69,52 +69,6 @@ napi_status nim_msglog_query_thread_history_param_obj_to_struct(Isolate* isolate
     return napi_ok;
 }
 
-napi_status nim_msglog_full_text_search_online_param_obj_to_struct(Isolate* isolate,
-                                                                   const Local<Object>& obj,
-                                                                   nim::MsgLog::FullTextSearchOnlineAsyncParam& res) {
-    uint32_t out_ui32;
-    uint64_t out_ui64;
-    bool out_b;
-    UTF8String out_string;
-    std::list<utf8_string> str_list;
-    std::list<uint32_t> ui32_list;
-    if (nim_napi_get_object_value_utf8string(isolate, obj, "keyword_", out_string) == napi_ok) {
-        res.keyword_ = out_string.toUtf8String();
-    }
-    if (nim_napi_get_object_value_uint64(isolate, obj, "from_time_", out_ui64) == napi_ok) {
-        res.from_time_ = out_ui64;
-    }
-    if (nim_napi_get_object_value_uint64(isolate, obj, "to_time_", out_ui64) == napi_ok) {
-        res.to_time_ = out_ui64;
-    }
-    if (nim_napi_get_object_value_uint32(isolate, obj, "session_limit_", out_ui32) == napi_ok) {
-        res.session_limit_ = out_ui32;
-    }
-    if (nim_napi_get_object_value_uint32(isolate, obj, "msglog_limit_", out_ui32) == napi_ok) {
-        res.msglog_limit_ = out_ui32;
-    }
-    if (nim_napi_get_object_value_uint32(isolate, obj, "order_by_", out_ui32) == napi_ok) {
-        res.order_by_ = static_cast<nim::NIMFullTextSearchOnlineOrderType>(out_ui32);
-    }
-    if (nim_napi_get_object_value_utf8string_list(isolate, obj, "p2p_filter_list_", str_list) == napi_ok) {
-        res.p2p_filter_list_ = str_list;
-    }
-    if (nim_napi_get_object_value_utf8string_list(isolate, obj, "team_filter_list_", str_list) == napi_ok) {
-        res.team_filter_list_ = str_list;
-    }
-    if (nim_napi_get_object_value_utf8string_list(isolate, obj, "sender_filter_list_", str_list) == napi_ok) {
-        res.sender_filter_list_ = str_list;
-    }
-    Local<Value> value;
-    if (nim_napi_get_object_value(isolate, obj, "msg_type_filter_list_", value) == napi_ok) {
-        nim_msglog_msg_type_array_to_list(isolate, value, res.msg_type_filter_list_);
-    }
-    if (nim_napi_get_object_value_uint32_list(isolate, obj, "msg_sub_type_filter_list_", ui32_list) == napi_ok) {
-        res.msg_sub_type_filter_list_ = ui32_list;
-    }
-    return napi_ok;
-}
-
 napi_status nim_msglog_query_online_param_obj_to_struct(Isolate* isolate, const Local<Object>& obj, nim::MsgLog::QueryMsgOnlineAsyncParam& res) {
     // TODO
     UTF8String out;
@@ -224,23 +178,6 @@ napi_status nim_msglog_delete_self_notify_list_to_array(Isolate* isolate,
                     nim_napi_new_utf8string(isolate, item.client_id_.c_str()));
         object->Set(isolate->GetCurrentContext(), nim_napi_new_utf8string(isolate, nim::kNIMDELMSGSelfNotifyKeyEXT),
                     nim_napi_new_utf8string(isolate, item.ext_.c_str()));
-        out->Set(isolate->GetCurrentContext(), index++, object);
-    }
-    return napi_ok;
-}
-
-napi_status nim_msglog_delete_history_messages_notify_list_to_array(Isolate* isolate,
-                                                                    const std::list<nim::NIMDeleteSessionHistoryMessagesNotifyInfo>& notify_list,
-                                                                    Local<Array>& out) {
-    uint32_t index = 0;
-    for (auto& item : notify_list) {
-        Local<Object> object = Object::New(isolate);
-        object->Set(isolate->GetCurrentContext(), nim_napi_new_utf8string(isolate, nim::kNIMMsgKeyToType), nim_napi_new_int32(isolate, item.to_type));
-        object->Set(isolate->GetCurrentContext(), nim_napi_new_utf8string(isolate, nim::kNIMDELMSGSelfNotifyKeySessionID),
-                    nim_napi_new_utf8string(isolate, item.id));
-        object->Set(isolate->GetCurrentContext(), nim_napi_new_utf8string(isolate, "timestamp"), nim_napi_new_int64(isolate, item.time));
-        object->Set(isolate->GetCurrentContext(), nim_napi_new_utf8string(isolate, nim::kNIMDELMSGSelfNotifyKeyEXT),
-                    nim_napi_new_utf8string(isolate, item.ext));
         out->Set(isolate->GetCurrentContext(), index++, object);
     }
     return napi_ok;

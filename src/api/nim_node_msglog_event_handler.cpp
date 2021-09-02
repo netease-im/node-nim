@@ -69,12 +69,6 @@ void MsgLogEventHandler::OnDeleteMsglogSelfNotifyCallback(const nim::DeleteMsglo
     });
 }
 
-void MsgLogEventHandler::OnDeleteHistoryMessagesNotifyCallback(const std::list<nim::NIMDeleteSessionHistoryMessagesNotifyInfo>& info_list) {
-    node_async_call::async_call([=]() {
-        MsgLogEventHandler::GetInstance()->Node_OnDeleteHistoryMessagesNotify(info_list);
-    });
-}
-
 void MsgLogEventHandler::OnQueryMessageIsThreadRootCallback(const BaseCallbackPtr& bcb,
                                                             const nim::NIMResCode res_code,
                                                             const std::string& client_id,
@@ -102,14 +96,6 @@ void MsgLogEventHandler::OnQueryThreadHistoryMsgCallback(const BaseCallbackPtr& 
                                                          const std::list<nim::IMMessage>& msg_list) {
     node_async_call::async_call([=]() {
         MsgLogEventHandler::GetInstance()->Node_OnQueryThreadHistoryMsgCallback(bcb, res_code, root_msg, total, last_msg_time, msg_list);
-    });
-}
-
-void MsgLogEventHandler::OnFullTextSearchOnlineAsyncCallback(const BaseCallbackPtr& bcb,
-                                                             const nim::NIMResCode res_code,
-                                                             const nim::QueryMsglogResult& result) {
-    node_async_call::async_call([=]() {
-        MsgLogEventHandler::GetInstance()->Node_OnFullTextSearchOnlineAsyncCallback(bcb, res_code, result);
     });
 }
 
@@ -229,19 +215,6 @@ void MsgLogEventHandler::Node_OnDeleteMsglogSelfNotify(const nim::DeleteMsglogSe
     }
 }
 
-void MsgLogEventHandler::Node_OnDeleteHistoryMessagesNotify(const std::list<nim::NIMDeleteSessionHistoryMessagesNotifyInfo>& info_list) {
-    Isolate* isolate = Isolate::GetCurrent();
-    HandleScope scope(isolate);
-    const unsigned argc = 1;
-    Local<Array> messages = Array::New(isolate, info_list.size());
-    nim_msglog_delete_history_messages_notify_list_to_array(isolate, info_list, messages);
-    Local<Value> argv[argc] = {messages};
-    auto it = callbacks_.find("OnDeleteHistoryMessagesNotifyCb");
-    if (it != callbacks_.end()) {
-        it->second->callback_.Get(isolate)->Call(isolate->GetCurrentContext(), it->second->data_.Get(isolate), 0, nullptr);
-    }
-}
-
 void MsgLogEventHandler::Node_OnDeleteHistoryMessagesNotifyExCallback(const BaseCallbackPtr& bcb,
                                                                       const nim::NIMResCode error_code,
                                                                       const std::string& accid,
@@ -298,18 +271,6 @@ void MsgLogEventHandler::Node_OnQueryThreadHistoryMsgCallback(const BaseCallback
     nim_talk_im_msgs_to_array(isolate, msg_list, msg_list_array);
     Local<Value> argv[argc] = {nim_napi_new_uint32(isolate, (uint32_t)(res_code)), root_msg_obj, nim_napi_new_int32(isolate, total),
                                nim_napi_new_int64(isolate, last_msg_time), msg_list_array};
-    bcb->callback_.Get(isolate)->Call(isolate->GetCurrentContext(), bcb->data_.Get(isolate), argc, argv);
-}
-
-void MsgLogEventHandler::Node_OnFullTextSearchOnlineAsyncCallback(const BaseCallbackPtr& bcb,
-                                                                  const nim::NIMResCode res_code,
-                                                                  const nim::QueryMsglogResult& result) {
-    Isolate* isolate = Isolate::GetCurrent();
-    HandleScope scope(isolate);
-    const unsigned argc = 2;
-    Local<Object> res = Object::New(isolate);
-    nim_msglog_query_res_to_obj(isolate, result, res);
-    Local<Value> argv[argc] = {nim_napi_new_uint32(isolate, (uint32_t)(res_code)), res};
     bcb->callback_.Get(isolate)->Call(isolate->GetCurrentContext(), bcb->data_.Get(isolate), argc, argv);
 }
 

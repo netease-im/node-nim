@@ -39,7 +39,6 @@ public:
     NIM_SDK_NODE_API(QueryTeamInfoOnlineAsync);
     NIM_SDK_NODE_API(UnregTeamCb);
     NIM_SDK_NODE_API(MuteMemberAsync);
-    NIM_SDK_NODE_API(QueryMuteListAsync);
     NIM_SDK_NODE_API(MuteAsync);
     NIM_SDK_NODE_API(QuerySuperTeamsInfoByKeywordAsync);
 

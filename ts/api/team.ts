@@ -1,5 +1,5 @@
 import { NIMMessage } from "./talk_def";
-import { NIMTeamAPI, NIMTeamInfo, NIMTeamMemberProperty, NIMQueryAllMyTeamsCallback, NIMQueryAllMyTeamsInfoCallback, NIMQueryMyAllMemberInfosCallback, NIMQueryTeamMembersCallback, NIMQueryTeamMemberCallback, NIMQueryTeamInfoCallback, NIMTeamEventCallback, NIMQueryTeamMembersOnlineCallback, NIMQueryTeamMembersInvitorCallback, NIMQueryTeamsInfoCallback, NIMTeamMsgAckReadCallback, NIMGetTeamInfoBatchSFTransCallback, NIMGetTeamInfoListCallback, NIMUpdateTInfoLocalCallback } from './team_def';
+import { NIMTeamAPI, NIMTeamInfo, NIMTeamMemberProperty, NIMQueryAllMyTeamsCallback, NIMQueryAllMyTeamsInfoCallback, NIMQueryMyAllMemberInfosCallback, NIMQueryTeamMembersCallback, NIMQueryTeamMemberCallback, NIMQueryTeamInfoCallback, NIMTeamEventCallback, NIMQueryTeamMembersOnlineCallback, NIMQueryTeamMembersInvitorCallback, NIMQueryTeamsInfoCallback, NIMGetTeamInfoBatchSFTransCallback, NIMUpdateTInfoLocalCallback } from './team_def';
 import nim from './nim';
 import ev from 'events';
 
@@ -184,17 +184,16 @@ class NIMTeam extends ev.EventEmitter {
 
     teamMsgAckRead(tid: string,
         msgs: Array<NIMMessage>,
-        cb: NIMTeamMsgAckReadCallback,
+        cb: NIMTeamEventCallback,
         jsonExtension: string): void {
         return this.team.TeamMsgAckRead(tid, msgs, cb, jsonExtension);
     }
 
     teamMsgQueryUnreadList(tid: string,
         msg: NIMMessage,
-        accids: Array<string>,
         cb: NIMTeamEventCallback,
         jsonExtension: string): void {
-        return this.team.TeamMsgQueryUnreadList(tid, msg, accids, cb, jsonExtension);
+        return this.team.TeamMsgQueryUnreadList(tid, msg, cb, jsonExtension);
     }
 
     queryTeamMembersInvitor(tid: string,
@@ -215,10 +214,6 @@ class NIMTeam extends ev.EventEmitter {
 
     getTeamInfoBatchSFTrans(cb: NIMGetTeamInfoBatchSFTransCallback, time_tag: number, jsonExtension: string): void {
         return this.team.GetTeamInfoBatchSFTrans(cb, time_tag, jsonExtension);
-    }
-
-    getTeaminfoList(tids: Array<string>, cb: NIMGetTeamInfoListCallback): void {
-        return this.team.GetTeaminfoList(tids, cb);
     }
 }
 

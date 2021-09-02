@@ -68,10 +68,6 @@ export interface NIMSessionChangeCallback {
 	(rescode: number, result: NIMSessionData, count: number): void;
 }
 
-export interface NIMDeleteSessionRoamingMessageCallback {
-	(rescode: number, to_type: number, session_id: string): void;
-}
-
 export interface NIMBadgeCountCallback {
 	(result: string): void;
 }
@@ -128,10 +124,6 @@ export interface NIMDeleteHasmoreRoammsgCallback {
 	(res_code: number): void;
 }
 
-export interface NIMSetMultiUnreadCountZeroAsyncCallback {
-	(res_code: number, data_list: Array<NIMSessionData>, unread_count: number): void;
-}
-
 export interface NIMSessionAPI {
 	RegChangeCb(cb: NIMSessionChangeCallback, jsonExtension: string): void;
 
@@ -153,17 +145,13 @@ export interface NIMSessionAPI {
 
 	QueryLastFewSessionAsync(limit: number, cb: NIMQuerySessionListCallback, jsonExtension: string): void;
 
-	QueryAllRecentSessionAsync(msgExcludedTypeList: Array<NIMMessageType>, cb: NIMQuerySessionListCallback, jsonExtension: string): void;
+	QueryAllRecentSessionAsync(cb: NIMQuerySessionListCallback, jsonExtension: string): void;
 
 	DeleteRecentSession(type: NIMSessionType, id: string, cb: NIMSessionChangeCallback, delete_roaming: boolean): void;
 
 	DeleteAllRecentSession(cb: NIMSessionChangeCallback, jsonExtension: string): void;
 
-	DeleteSessionRoamingMessage(session_id: string, to_type: number, cb: NIMDeleteSessionRoamingMessageCallback, ext: string): boolean;
-
 	SetUnreadCountZeroAsync(type: NIMSessionType, id: string, cb: NIMSessionChangeCallback, jsonExtension: string): boolean;
-
-	SetMultiUnreadCountZeroAsync(is_super_team: boolean, zero_list: Array<NIMUnreadCountZeroInfo>, cb: NIMSetMultiUnreadCountZeroAsyncCallback): boolean;
 
 	SetSessionTop(type: NIMSessionType, id: string, top: boolean, cb: NIMSessionChangeCallback, jsonExtension: string): boolean;
 

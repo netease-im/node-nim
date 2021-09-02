@@ -55,33 +55,11 @@ export interface NIMMessage {
 	local_ext: string;			/**< string,只维护在本地的扩展字段,必须为可以解析为json的非格式化的字符串 */
 }
 
-export interface NIMRecallMsgNotify {
-	to_type: NIMSessionType;			/**< int,会话类型(NIMSessionType) */
-	from_id: string;			/**< string,消息发送方ID */
-	to_id: string;				/**< string,消息接收方ID */
-	msg_id: string;				/**< string,客户端消息ID */
-	notify: string;				/**< string,自定义通知文案,按需填 */
-	time: number;				/**< long,撤回操作的消息时间戳(毫秒) */
-	feature: number;			/**< int,撤回通知种类（NIMMessageFeature） */
-	msg_exist: boolean;			/**< bool,撤回的消息本地是否存在,比如对方离线时发一条消息又撤回,对方上线收到离线撤回通知该tag为false */
-	msg_time: number;			/**< long,要撤回消息的创建时间戳(毫秒) */
-	from_nick: string;			/**< string,要撤回消息的发送者昵称 */
-	operator_id: string;			/**< string,操作者ID */
-}
-
 export interface NIMBroadcastMessage {
 	id: number;				/**< int64，消息ID */
 	from_accid: string;		/**< jstring，发送者accid，可能不存在 */
 	time: number;			/**< int64， 时间戳*/
 	body: string;			/**< string，内容 */
-}
-
-export interface NIMRecallMsgParam {
-	apnstext: string;
-	pushpayload: string;
-	json_extension: string;
-	env_config: string;
-	attach: string;
 }
 
 export interface NIMSendMessageArc {
@@ -106,10 +84,6 @@ export interface NIMReceiveMsgCallback {
 
 export interface NIMReceiveMsgsCallback {
 	(result: Array<NIMMessage>): void;
-}
-
-export interface NIMRecallMsgsCallback {
-	(rescode: number, result: Array<NIMRecallMsgNotify>): void;
 }
 
 export interface NIMReceiveBroadcastMsgCallback {
@@ -151,11 +125,6 @@ export interface NIMTalkAPI {
 	RegReceiveBroadcastMsgCb(cb: NIMReceiveBroadcastMsgCallback, jsonExtension: string): void;
 
 	RegReceiveBroadcastMsgsCb(cb: NIMReceiveBroadcastMsgsCallback, jsonExtension: string): void;
-
-	RecallMsg(msg: NIMMessage,
-		notify_msg: string,
-		cb: NIMRecallMsgsCallback,
-		param: NIMRecallMsgParam): void;
 
 	GetAttachmentPathFromMsg(msg: NIMMessage): string;
 

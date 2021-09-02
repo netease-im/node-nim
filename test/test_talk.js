@@ -41,15 +41,6 @@ function testTalk(test_info) {
                 })
             })
         })
-        describe('#RecallMsg', function () {
-            it('RecallMsg should return 200', function (done) {
-                talk.recallMsg(immessage, '', (errorCode, notify_list) => {
-                    done()
-                    assert.strictEqual(errorCode, 200)
-                }, { apnstext: '', pushpayload: '', json_extension: '', env_config: '', attach: '' })
-
-            })
-        })
     })
 
     describe('********************TalkEx********************', function () {

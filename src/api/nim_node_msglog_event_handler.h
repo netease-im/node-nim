@@ -42,7 +42,6 @@ public:
                                                         uint64_t timestamp,
                                                         const std::string& json_extension);
     static void OnDeleteMsglogSelfNotifyCallback(const nim::DeleteMsglogSelfNotifyParam& param);
-    static void OnDeleteHistoryMessagesNotifyCallback(const std::list<nim::NIMDeleteSessionHistoryMessagesNotifyInfo>& info_list);
     static void OnQueryMessageIsThreadRootCallback(const BaseCallbackPtr& bcb,
                                                    const nim::NIMResCode res_code,
                                                    const std::string& client_id,
@@ -58,7 +57,6 @@ public:
                                                 int total,
                                                 uint64_t last_msg_time,
                                                 const std::list<nim::IMMessage>& msg_list);
-    static void OnFullTextSearchOnlineAsyncCallback(const BaseCallbackPtr& bcb, const nim::NIMResCode res_code, const nim::QueryMsglogResult& result);
 
 private:
     void Node_OnMsgBaseCallback(const BaseCallbackPtr& bcb, nim::NIMResCode res_code);
@@ -84,7 +82,6 @@ private:
                                                       uint64_t timestamp,
                                                       const std::string& json_extension);
     void Node_OnDeleteMsglogSelfNotify(const nim::DeleteMsglogSelfNotifyParam& param);
-    void Node_OnDeleteHistoryMessagesNotify(const std::list<nim::NIMDeleteSessionHistoryMessagesNotifyInfo>& info_list);
     void Node_OnQueryMessageIsThreadRoot(const BaseCallbackPtr& bcb,
                                          const nim::NIMResCode res_code,
                                          const std::string& client_id,
@@ -100,7 +97,6 @@ private:
                                               int total,
                                               uint64_t last_msg_time,
                                               const std::list<nim::IMMessage>& msg_list);
-    void Node_OnFullTextSearchOnlineAsyncCallback(const BaseCallbackPtr& bcb, const nim::NIMResCode res_code, const nim::QueryMsglogResult& result);
 };
 
 }  // namespace nim_node

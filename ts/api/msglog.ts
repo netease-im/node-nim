@@ -1,4 +1,4 @@
-import { NIMMsgLogAPI, NIMQueryMsgOnlineAsyncParam, NIMMessageType, NIMMsgLogQueryRange, NIMMsgLogStatus, NIMMsgLogSubStatus, NIMQueryMsgByKeywordOnlineParam, NIMDBFunctionCallback, NIMQuerySingleMsgCallback, NIMQueryMsgCallback, NIMModifyMultipleMsglogCallback, NIMModifySingleMsglogCallback, NIMImportDbPrgCallback, NIMMessageStatusChangedCallback, NIMDeleteHistoryOnLineAsyncCallback, NIMDeleteMsglogSelfNotifyCallback, NIMDeleteHistoryMessagesNotifyCallback, NIMDeleteMessageSelfAsyncCallback, NIMQueryMessageIsThreadRootCallback, NIMQueryMsgAsyncParam, NIMQueryMessageOnlineCallback, NIMFullTextSearchOnlineAsyncCallback, NIMFullTextSearchOnlineAsyncParam, NIMQueryThreadHistoryMsgAsyncParam, NIMQueryThreadHistoryMsgCallback } from "./msglog_def";
+import { NIMMsgLogAPI, NIMQueryMsgOnlineAsyncParam, NIMMessageType, NIMMsgLogQueryRange, NIMMsgLogStatus, NIMMsgLogSubStatus, NIMQueryMsgByKeywordOnlineParam, NIMDBFunctionCallback, NIMQuerySingleMsgCallback, NIMQueryMsgCallback, NIMModifyMultipleMsglogCallback, NIMModifySingleMsglogCallback, NIMImportDbPrgCallback, NIMMessageStatusChangedCallback, NIMDeleteHistoryOnLineAsyncCallback, NIMDeleteMsglogSelfNotifyCallback, NIMDeleteHistoryMessagesNotifyCallback, NIMDeleteMessageSelfAsyncCallback, NIMQueryMessageIsThreadRootCallback, NIMQueryMsgAsyncParam, NIMQueryMessageOnlineCallback, NIMQueryThreadHistoryMsgAsyncParam, NIMQueryThreadHistoryMsgCallback } from "./msglog_def";
 import nim from './nim';
 import ev from 'events';
 import { NIMSessionType } from "./session.def";
@@ -95,10 +95,8 @@ class NIMMsgLog extends ev.EventEmitter {
 	writeMsglogToLocalAsync(talkId: string,
 		msg: NIMMessage,
 		needUpdateSession: boolean,
-		compose_last_msg: boolean,
-		exclude_msg_type: Array<number>,
 		cb: NIMModifySingleMsglogCallback): boolean {
-		return this.msglog.WriteMsglogToLocalAsync(talkId, msg, needUpdateSession, compose_last_msg, exclude_msg_type, cb);
+		return this.msglog.WriteMsglogToLocalAsync(talkId, msg, needUpdateSession, cb);
 	}
 
 	deleteBySessionTypeAsync(delSessions: boolean,
@@ -190,12 +188,8 @@ class NIMMsgLog extends ev.EventEmitter {
 		return this.msglog.RegDeleteMsglogSelfNotify(cb);
 	}
 
-	regDeleteHistoryMessagesNotify(cb: NIMDeleteHistoryMessagesNotifyCallback): void {
-		return this.msglog.RegDeleteHistoryMessagesNotify(cb);
-	}
-
-	deleteMessageSelfAsync(msgs: Array<NIMMessage>, exts: Array<string>, cb: NIMDeleteMessageSelfAsyncCallback): void {
-		return this.msglog.DeleteMessageSelfAsync(msgs, exts, cb);
+	deleteMessageSelfAsync(msg: NIMMessage, jsonExtention: string, cb: NIMDeleteMessageSelfAsyncCallback): void {
+		return this.msglog.DeleteMessageSelfAsync(msg, jsonExtention, cb);
 	}
 
 	queryMessageIsThreadRoot(client_id: string, cb: NIMQueryMessageIsThreadRootCallback): void {
@@ -208,10 +202,6 @@ class NIMMsgLog extends ev.EventEmitter {
 
 	queryThreadHistoryMsg(msg: NIMMessage, param: NIMQueryThreadHistoryMsgAsyncParam, cb: NIMQueryThreadHistoryMsgCallback): void {
 		return this.msglog.QueryThreadHistoryMsg(msg, param, cb);
-	}
-
-	FullTextSearchOnlineAsync(param: NIMFullTextSearchOnlineAsyncParam, cb: NIMFullTextSearchOnlineAsyncCallback): void {
-		return this.msglog.FullTextSearchOnlineAsync(param, cb);
 	}
 }
 

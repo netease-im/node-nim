@@ -41,29 +41,6 @@ function testSession(test_info) {
                 })
             })
         })
-        describe('#DeleteSessionRoamingMessage', function () {
-            it('Delete roaming should return 200', function (done) {
-                const result = session.deleteSessionRoamingMessage(test_info.assistUser, 0, (errorCode, sessionType, sessionId) => {
-                    assert.strictEqual(errorCode, 200)
-                    assert.strictEqual(sessionId, test_info.assistUser)
-                    assert.strictEqual(sessionType, 0)
-                    done()
-                }, '')
-                assert.strictEqual(result, true)
-            })
-        })
-        describe('#SetMultiUnreadCountZeroAsync', function () {
-            it('Set multi unread coung zero should return 200', function (done) {
-                const result = session.setMultiUnreadCountZeroAsync(false, [{
-                    id: test_info.assistUser,
-                    type: 0
-                }], (errorCode, sessionList, unreadCount) => {
-                    assert.strictEqual(errorCode, 200)
-                    done()
-                })
-                assert.strictEqual(result, true)
-            })
-        })
         describe('#QueryHasmoreRoammsg', function () {
             it('Query session has more roaming msg should return 200', function (done) {
                 session.queryHasmoreRoammsg(test_info.assistUser, 0, (errorCode, info) => {

@@ -227,10 +227,6 @@ export interface NIMDeleteHistoryOnLineAsyncCallback {
 	(rescode: number, accid: string): void;
 }
 
-export interface NIMDeleteHistoryOnLineAsyncExCallback {
-	(rescode: number, accid: string, to_type: number, timestamp: number, json_extension: string): void;
-}
-
 export interface NIMQueryMessageIsThreadRootCallback {
 	(rescode: number, client_id: string, is_root: boolean): void;
 }
@@ -258,24 +254,6 @@ export interface NIMQueryThreadHistoryMsgAsyncParam {
 
 export interface NIMQueryThreadHistoryMsgCallback {
 	(rescode: number, root_msg: NIMMessage, total: number, last_msg_time: number, msg_array: Array<NIMMessage>): void;
-}
-
-export interface NIMFullTextSearchOnlineAsyncParam {
-	keyword_: string;
-	from_time_: number;
-	to_time_: number;
-	session_limit_: number;
-	msglog_limit_: number;
-	order_by_: number;
-	p2p_filter_list_: Array<string>;
-	team_filter_list_: Array<string>;
-	sender_filter_list_: Array<string>;
-	msg_type_filter_list_: Array<NIMMessage>;
-	msg_sub_type_filter_list_: Array<number>;
-}
-
-export interface NIMFullTextSearchOnlineAsyncCallback {
-	(rescode: number, result: NIMQueryMsglogResult): void;
 }
 
 export interface NIMMsgLogAPI {
@@ -343,8 +321,6 @@ export interface NIMMsgLogAPI {
 	WriteMsglogToLocalAsync(talkId: string,
 		msg: NIMMessage,
 		needUpdateSession: boolean,
-		compose_last_msg: boolean,
-		exclude_msg_type: Array<number>,
 		cb: NIMModifySingleMsglogCallback): boolean;
 
 	DeleteBySessionTypeAsync(delSessions: boolean,
@@ -404,24 +380,14 @@ export interface NIMMsgLogAPI {
 		jsonExtention: string,
 		cb: NIMDeleteHistoryOnLineAsyncCallback): void;
 
-	DeleteHistoryOnlineAsyncEx(accid: string,
-		to_type: number,
-		needs_notify_self: boolean,
-		jsonExtention: string,
-		cb: NIMDeleteHistoryOnLineAsyncExCallback): void;
-
 	RegDeleteMsglogSelfNotify(cb: NIMDeleteMsglogSelfNotifyCallback): void;
 
-	RegDeleteHistoryMessagesNotify(cb: NIMDeleteHistoryMessagesNotifyCallback): void;
-
-	DeleteMessageSelfAsync(msgs: Array<NIMMessage>, exts: Array<string>, cb: NIMDeleteMessageSelfAsyncCallback): void;
+	DeleteMessageSelfAsync(msg: NIMMessage, jsonExtention: string, cb: NIMDeleteMessageSelfAsyncCallback): void;
 
 	QueryMessageIsThreadRoot(client_id: string, cb: NIMQueryMessageIsThreadRootCallback): void;
 
 	QueryMessageOnline(param: NIMQueryMsgAsyncParam, cb: NIMQueryMessageOnlineCallback): void;
 
 	QueryThreadHistoryMsg(msg: NIMMessage, param: NIMQueryThreadHistoryMsgAsyncParam, cb: NIMQueryThreadHistoryMsgCallback): void;
-
-	FullTextSearchOnlineAsync(param: NIMFullTextSearchOnlineAsyncParam, cb: NIMFullTextSearchOnlineAsyncCallback): void;
 }
 

@@ -44,12 +44,6 @@ bool TalkEventHandler::OnMessageFilter(const nim::IMMessage& msg) {
     return true;
 }
 
-void TalkEventHandler::OnRecallMsgsCallback(const BaseCallbackPtr& bcb, const nim::NIMResCode res, const std::list<nim::RecallMsgNotify>& msgs) {
-    node_async_call::async_call([=]() {
-        TalkEventHandler::GetInstance()->Node_OnRecallMsgsCallback(bcb, res, msgs);
-    });
-}
-
 void TalkEventHandler::OnReceiveBroadcastMsgCallback(const nim::BroadcastMessage& msg) {
     node_async_call::async_call([=]() {
         TalkEventHandler::GetInstance()->Node_OnReceiveBroadcastMsgCallback(msg);
@@ -136,16 +130,6 @@ void TalkEventHandler::Node_OnMessageFilter(const nim::IMMessage& msg) {
     if (it != callbacks_.end()) {
         it->second->callback_.Get(isolate)->Call(isolate->GetCurrentContext(), it->second->data_.Get(isolate), argc, argv);
     }
-}
-
-void TalkEventHandler::Node_OnRecallMsgsCallback(const BaseCallbackPtr& bcb, const nim::NIMResCode res, const std::list<nim::RecallMsgNotify>& msgs) {
-    Isolate* isolate = Isolate::GetCurrent();
-    HandleScope scope(isolate);
-    const unsigned argc = 2;
-    Local<Array> obj = Array::New(isolate, msgs.size());
-    nim_talk_recall_notifys_to_array(isolate, msgs, obj);
-    Local<Value> argv[argc] = {nim_napi_new_uint32(isolate, (uint32_t)res), obj};
-    bcb->callback_.Get(isolate)->Call(isolate->GetCurrentContext(), bcb->data_.Get(isolate), argc, argv);
 }
 
 void TalkEventHandler::Node_OnReceiveBroadcastMsgCallback(const nim::BroadcastMessage& msg) {

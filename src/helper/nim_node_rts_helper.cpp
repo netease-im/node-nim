@@ -27,8 +27,6 @@ napi_status nim_rts_start_info_obj_to_struct(Isolate* isolate, const Local<Objec
         return napi_invalid_arg;
     if (nim_napi_get_object_value_bool(isolate, obj, nim::kNIMRtsKeepCalling, info.keepcalling_) != napi_ok)
         return napi_invalid_arg;
-    if (nim_napi_get_object_value_bool(isolate, obj, nim::kNIMRtsWebRtc, info.webrtc_) != napi_ok)
-        return napi_invalid_arg;
     if (nim_napi_get_object_value_utf8string(isolate, obj, nim::kNIMRtsSessionId, info.session_id_) != napi_ok)
         return napi_invalid_arg;
     return napi_ok;

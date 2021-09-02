@@ -23,7 +23,6 @@ void Talk::InitModule(Local<Object>& module) {
     SET_PROTOTYPE(UnregTalkCb);
     SET_PROTOTYPE(RegTeamNotificationFilter);
     SET_PROTOTYPE(RegMessageFilter);
-    SET_PROTOTYPE(RecallMsg);
     SET_PROTOTYPE(ReplyMessage);
     SET_PROTOTYPE(GetAttachmentPathFromMsg);
     SET_PROTOTYPE(RegReceiveBroadcastMsgCb);
@@ -249,58 +248,6 @@ NIM_SDK_NODE_API_DEF(Talk, RegMessageFilter) {
 
     auto callback = std::bind(&TalkEventHandler::OnMessageFilter, std::placeholders::_1);
     nim::Talk::RegMessageFilter(callback, ext.toUtf8String());
-}
-NIM_SDK_NODE_API_DEF(Talk, RecallMsg) {
-    Talk* talk = node::ObjectWrap::Unwrap<Talk>(args.Holder());
-    if (!talk) {
-        return;
-    }
-
-    CHECK_ARGS_COUNT(4)
-    UTF8String notify, ext;
-    nim::IMMessage msg;
-    auto status = nim_talk_im_msg_obj_to_struct(isolate, args[0]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), msg);
-    if (status != napi_ok) {
-        return;
-    }
-
-    status = nim_napi_get_value_utf8string(isolate, args[1], notify);
-    if (status != napi_ok) {
-        return;
-    }
-
-    ASSEMBLE_BASE_CALLBACK(2)
-
-    UTF8String apnstext_str;
-    UTF8String pushpayload_str;
-    UTF8String json_extension_str;
-    UTF8String env_config_str;
-    UTF8String attach_str;
-    Local<Object> param_obj = args[3]->ToObject(isolate->GetCurrentContext()).ToLocalChecked();
-    if (nim_napi_get_object_value_utf8string(isolate, param_obj, "apnstext", apnstext_str) != napi_ok) {
-        return;
-    }
-    if (nim_napi_get_object_value_utf8string(isolate, param_obj, "pushpayload", pushpayload_str) != napi_ok) {
-        return;
-    }
-    if (nim_napi_get_object_value_utf8string(isolate, param_obj, "json_extension", json_extension_str) != napi_ok) {
-        return;
-    }
-    if (nim_napi_get_object_value_utf8string(isolate, param_obj, "env_config", env_config_str) != napi_ok) {
-        return;
-    }
-    if (nim_napi_get_object_value_utf8string(isolate, param_obj, "attach", attach_str) != napi_ok) {
-        return;
-    }
-    nim::nim_talk_recall_extra_params parameter;
-    parameter.apnstext = apnstext_str.toUtf8String().c_str();
-    parameter.pushpayload = pushpayload_str.toUtf8String().c_str();
-    parameter.json_extension = json_extension_str.toUtf8String().c_str();
-    parameter.env_config = env_config_str.toUtf8String().c_str();
-    parameter.attach = attach_str.toUtf8String().c_str();
-
-    auto callback = std::bind(&TalkEventHandler::OnRecallMsgsCallback, bcb, std::placeholders::_1, std::placeholders::_2);
-    nim::Talk::RecallMsgEx(msg, notify.toUtf8String(), callback, parameter);
 }
 
 NIM_SDK_NODE_API_DEF(Talk, ReplyMessage) {

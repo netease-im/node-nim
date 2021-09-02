@@ -207,8 +207,6 @@ export interface NIMClientAPI {
 
 	RegSyncMultiportPushConfigCb(cb: NIMSyncMultiportPushConfigCallback, jsonExtension: string): void;
 
-	RegReloginRequestTokenCb(cb: NIMReloginRequestTokenCallback, jsonExtension: string): void;
-
 	SetMultiportPushConfigAsync(switchOn: boolean,
 		cb: NIMSyncMultiportPushConfigCallback,
 		jsonExtension: string): void;

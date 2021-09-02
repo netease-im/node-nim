@@ -82,31 +82,6 @@ napi_status nim_session_datas_to_obj(Isolate* isolate,
     return napi_ok;
 }
 
-napi_status nim_session_multi_unread_info_obj_to_struct(
-    Isolate* isolate,
-    const Local<Object>& obj,
-    std::list<nim::MultiUnreadCountZeroInfo>& multi_unread_info) {
-    if (!obj->IsArray())
-        return napi_invalid_arg;
-    Local<Array> arr = Local<Array>::Cast(obj);
-    uint32_t len = arr->Length();
-    for (uint32_t i = 0; i < len; i++) {
-        int32_t session_type;
-        UTF8String session_id;
-        auto object = arr->Get(isolate->GetCurrentContext(), i)
-                          .ToLocalChecked()
-                          .As<Object>();
-        nim_napi_get_object_value_int32(isolate, object, nim::kNIMSessionType,
-                                        session_type);
-        nim_napi_get_object_value_utf8string(isolate, object,
-                                             nim::kNIMSessionId, session_id);
-        multi_unread_info.push_back(
-            {session_id.toUtf8String(),
-             static_cast<nim::NIMSessionType>(session_type)});
-    }
-    return napi_ok;
-}
-
 napi_status nim_session_roammsg_has_more_tag_info_to_obj(
     Isolate* isolate,
     const nim::SessionRoamMsgHasMoreTagInfo& session_roammsg_tag_info,

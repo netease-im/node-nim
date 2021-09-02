@@ -30,7 +30,6 @@ void Client::InitModule(Local<Object>& module) {
     SET_PROTOTYPE(RegDisconnectCb)
     SET_PROTOTYPE(RegMultispotLoginCb)
     SET_PROTOTYPE(RegKickOtherClientCb)
-    SET_PROTOTYPE(RegReloginRequestTokenCb)
     SET_PROTOTYPE(RegSyncMultiportPushConfigCb)
     SET_PROTOTYPE(SetMultiportPushConfigAsync)
     SET_PROTOTYPE(GetMultiportPushConfigAsync)
@@ -172,16 +171,6 @@ NIM_SDK_NODE_API_DEF(Client, RegReloginCb) {
 
     auto callback = std::bind(&ClientEventHandler::OnLoginCallback, nullptr, true, std::placeholders::_1);
     nim::Client::RegReloginCb(callback, exten.toUtf8String());
-}
-NIM_SDK_NODE_API_DEF(Client, RegReloginRequestTokenCb) {
-    CHECK_API_FUNC(Client, 2)
-    UTF8String exten;
-    auto status = napi_ok;
-    ASSEMBLE_BASE_CALLBACK(0)
-    GET_ARGS_VALUE(isolate, 1, utf8string, exten)
-
-    auto callback = std::bind(&ClientEventHandler::OnReloginRequestTokenCb, bcb, std::placeholders::_1);
-    nim::Client::RegReloginRequestToeknCb(callback, exten.toUtf8String());
 }
 NIM_SDK_NODE_API_DEF(Client, RegKickoutCb) {
     CHECK_API_FUNC(Client, 2)

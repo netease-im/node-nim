@@ -23,9 +23,6 @@ napi_status nim_msglog_query_msglog_param_obj_to_struct(Isolate* isolate, const 
 napi_status nim_msglog_query_thread_history_param_obj_to_struct(Isolate* isolate,
                                                                 const Local<Object>& obj,
                                                                 nim::MsgLog::QueryThreadHistoryMsgAsyncParam& res);
-napi_status nim_msglog_full_text_search_online_param_obj_to_struct(Isolate* isolate,
-                                                                   const Local<Object>& obj,
-                                                                   nim::MsgLog::FullTextSearchOnlineAsyncParam& res);
 napi_status nim_msglog_query_online_param_obj_to_struct(Isolate* isolate, const Local<Object>& obj, nim::MsgLog::QueryMsgOnlineAsyncParam& res);
 napi_status nim_msglog_query_keyword_online_param_obj_to_struct(Isolate* isolate,
                                                                 const Local<Object>& obj,
@@ -35,9 +32,6 @@ napi_status nim_msglog_status_changed_res_to_obj(Isolate* isolate, const nim::Me
 napi_status nim_msglog_delete_self_notify_list_to_array(Isolate* isolate,
                                                         const std::list<nim::DeleteMsglogSelfNotifyItemInfo>& self_notify_list,
                                                         Local<Array>& out);
-napi_status nim_msglog_delete_history_messages_notify_list_to_array(Isolate* isolate,
-                                                                    const std::list<nim::NIMDeleteSessionHistoryMessagesNotifyInfo>& notify_list,
-                                                                    Local<Array>& out);
 napi_status nim_msglog_msg_type_array_to_list(Isolate* isolate, const Local<Value>& in, std::list<nim::NIMMessageType>& msg_type_list);
 }  // namespace nim_node
 

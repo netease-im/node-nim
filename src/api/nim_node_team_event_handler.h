@@ -49,10 +49,6 @@ public:
                                          const std::list<std::string>& failure_ids,
                                          const std::list<std::string>& ignored_ids);
     static void OnGetTeamInfoBatchSFTransCallback(const BaseCallbackPtr& bcb, int team_count, const std::list<nim::TeamInfo>& team_info_list);
-    static void OnGetTeamInfoListCallback(const BaseCallbackPtr& bcb,
-                                          nim::NIMResCode error_code,
-                                          const std::list<nim::TeamInfo>& team_info_list,
-                                          const std::list<std::string>& fail_list);
 
 private:
     void Node_OnTeamEventCallback(const BaseCallbackPtr& bcb, const nim::TeamEvent& team_event);
@@ -84,10 +80,6 @@ private:
                                        const std::list<std::string>& failure_ids,
                                        const std::list<std::string>& ignored_ids);
     void Node_OnGetTeamInfoBatchSFTransCallback(const BaseCallbackPtr& bcb, int team_count, const std::list<nim::TeamInfo>& team_info_list);
-    void Node_OnGetTeamInfoListCallback(const BaseCallbackPtr& bcb,
-                                        nim::NIMResCode error_code,
-                                        const std::list<nim::TeamInfo>& team_info_list,
-                                        const std::list<std::string>& fail_list);
 };
 
 }  // namespace nim_node

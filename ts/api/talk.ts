@@ -1,4 +1,4 @@
-import { NIMTalkAPI, NIMMessage, NIMSendMsgAckCallback, NIMFileUpPrgCallback, NIMReceiveMsgCallback, NIMReceiveMsgsCallback, NIMRecallMsgsCallback, NIMReceiveBroadcastMsgCallback, NIMReceiveBroadcastMsgsCallback, NIMRecallMsgParam, NIMTeamNotificationFilterCallback, NIMMessageFilterCallback } from "./talk_def";
+import { NIMTalkAPI, NIMMessage, NIMSendMsgAckCallback, NIMFileUpPrgCallback, NIMReceiveMsgCallback, NIMReceiveMsgsCallback, NIMReceiveBroadcastMsgCallback, NIMReceiveBroadcastMsgsCallback, NIMTeamNotificationFilterCallback, NIMMessageFilterCallback } from "./talk_def";
 import { NIMMessageType } from './msglog_def';
 import nim from './nim';
 import ev from 'events';
@@ -48,13 +48,6 @@ class NIMTalk extends ev.EventEmitter {
 
     regReceiveBroadcastMsgsCb(cb: NIMReceiveBroadcastMsgsCallback, jsonExtension: string): void {
         return this.talk.RegReceiveBroadcastMsgsCb(cb, jsonExtension);
-    }
-
-    recallMsg(msg: NIMMessage,
-        notify_msg: string,
-        cb: NIMRecallMsgsCallback,
-        param: NIMRecallMsgParam): void {
-        return this.talk.RecallMsg(msg, notify_msg, cb, param);
     }
 
     getAttachmentPathFromMsg(msg: NIMMessage): string {

@@ -29,8 +29,6 @@ void Session::InitModule(Local<Object>& module) {
     SET_PROTOTYPE(QueryLastFewSessionAsync);
     SET_PROTOTYPE(QueryAllRecentSessionAsync);
     SET_PROTOTYPE(DeleteRecentSession);
-    SET_PROTOTYPE(DeleteSessionRoamingMessage);
-    SET_PROTOTYPE(SetMultiUnreadCountZeroAsync);
     SET_PROTOTYPE(DeleteAllRecentSession);
     SET_PROTOTYPE(SetUnreadCountZeroAsync);
     SET_PROTOTYPE(SetSessionTop);
@@ -229,16 +227,12 @@ NIM_SDK_NODE_API_DEF(Session, QueryAllRecentSessionAsync) {
         return;
     }
 
-    CHECK_ARGS_COUNT(3)
+    CHECK_ARGS_COUNT(2)
 
+		auto status = napi_ok;
     UTF8String exten;
-    std::list<nim::NIMMessageType> msg_excluded_type_list;
-    auto status = nim_msglog_msg_type_array_to_list(isolate, args[0], msg_excluded_type_list);
-    if (status != napi_ok) {
-        return;
-    }
 
-    Local<Function> cb = args[1].As<Function>();
+    Local<Function> cb = args[0].As<Function>();
     if (cb.IsEmpty()) {
         return;
     }
@@ -252,13 +246,13 @@ NIM_SDK_NODE_API_DEF(Session, QueryAllRecentSessionAsync) {
     bcb->callback_.Reset(isolate, pcb);
     bcb->data_.Reset(isolate, pdata);
 
-    status = nim_napi_get_value_utf8string(isolate, args[2], exten);
+    status = nim_napi_get_value_utf8string(isolate, args[1], exten);
     if (status != napi_ok) {
         return;
     }
 
     auto callback = std::bind(&SessionEventHandler::OnQuerySessionListCallabck, bcb, std::placeholders::_1, std::placeholders::_2);
-    nim::Session::QueryAllRecentSessionAsyncEx(msg_excluded_type_list, callback, exten.toUtf8String());
+    nim::Session::QueryAllRecentSessionAsync(callback, exten.toUtf8String());
 }
 
 NIM_SDK_NODE_API_DEF(Session, DeleteRecentSession) {
@@ -303,39 +297,6 @@ NIM_SDK_NODE_API_DEF(Session, DeleteRecentSession) {
 
     auto callback = std::bind(&SessionEventHandler::OnChangeCallback, bcb, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
     nim::Session::DeleteRecentSessionEx((nim::NIMSessionType)(type), id.toUtf8String(), callback, delete_roaming);
-}
-
-NIM_SDK_NODE_API_DEF(Session, DeleteSessionRoamingMessage) {
-    CHECK_API_FUNC(Session, 4);
-    auto status = napi_ok;
-    UTF8String session_id;
-    UTF8String ext;
-    int32_t to_type;
-    GET_ARGS_VALUE(isolate, 0, utf8string, session_id);
-    GET_ARGS_VALUE(isolate, 1, int32, to_type);
-    ASSEMBLE_BASE_CALLBACK(2);
-    auto callback = std::bind(&SessionEventHandler::OnDeleteSessionRoamingMessageCallback, bcb, std::placeholders::_1, std::placeholders::_2,
-                              std::placeholders::_3);
-    GET_ARGS_VALUE(isolate, 3, utf8string, ext);
-    auto result =
-        nim::Session::DeleteSessionRoamingMessage(static_cast<nim::NIMSessionType>(to_type), session_id.toUtf8String(), callback, ext.toUtf8String());
-    args.GetReturnValue().Set(Boolean::New(args.GetIsolate(), result));
-}
-
-NIM_SDK_NODE_API_DEF(Session, SetMultiUnreadCountZeroAsync) {
-    CHECK_API_FUNC(Session, 3);
-    auto status = napi_ok;
-    bool is_super_team = false;
-    UTF8String session_id;
-    UTF8String ext;
-    GET_ARGS_VALUE(isolate, 0, bool, is_super_team);
-    std::list<nim::MultiUnreadCountZeroInfo> zero_list;
-    nim_session_multi_unread_info_obj_to_struct(isolate, args[1]->ToObject(isolate->GetCurrentContext()).ToLocalChecked(), zero_list);
-    ASSEMBLE_BASE_CALLBACK(2);
-    auto callback =
-        std::bind(&SessionEventHandler::OnSetMultiUnreadCountZeroCallback, bcb, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-    auto result = nim::Session::SetMultiUnreadCountZeroAsync(is_super_team, zero_list, callback);
-    args.GetReturnValue().Set(Boolean::New(args.GetIsolate(), result));
 }
 
 NIM_SDK_NODE_API_DEF(Session, DeleteAllRecentSession) {

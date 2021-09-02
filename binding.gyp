@@ -141,7 +141,6 @@
                             'destination': '<(PRODUCT_DIR)',
                             'files': [
                                 '<(NIM_SDK_DIR)/bin/nim.dll',
-                                '<(NIM_SDK_DIR)/bin/h_available.dll',
                                 '<(NIM_SDK_DIR)/bin/nim_cpp_wrapper.dll',
                             ]
                         }],
@@ -207,8 +206,7 @@
                         'copies': [{
                             'destination': '<(PRODUCT_DIR)',
                             'files': [
-                                'nim_sdk/framework/nim.framework',
-                                'nim_sdk/lib/libh_available.dylib'
+                                'nim_sdk/framework/nim.framework'
                             ]
                         }],
                         'defines': [

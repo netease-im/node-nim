@@ -18,7 +18,6 @@ public:
     NIM_SDK_NODE_API(UnregMsglogCb);
     NIM_SDK_NODE_API(RegMessageStatusChangedCb);
     NIM_SDK_NODE_API(ReadAllAsync);
-    NIM_SDK_NODE_API(RegDeleteHistoryMessagesNotify);
     NIM_SDK_NODE_API(QueryMsgByIDAysnc);
     NIM_SDK_NODE_API(QueryMsgAsync);
     NIM_SDK_NODE_API(QueryMsgOnlineAsync);
@@ -41,13 +40,11 @@ public:
     NIM_SDK_NODE_API(QueryReceivedMsgReceiptSent);
     NIM_SDK_NODE_API(UpdateLocalExtAsync);
     NIM_SDK_NODE_API(DeleteHistoryOnlineAsync);
-    NIM_SDK_NODE_API(DeleteHistoryOnlineAsyncEx);
     NIM_SDK_NODE_API(RegDeleteMsglogSelfNotify);
     NIM_SDK_NODE_API(DeleteMessageSelfAsync);
     NIM_SDK_NODE_API(QueryMessageIsThreadRoot);
     NIM_SDK_NODE_API(QueryMessageOnline);
     NIM_SDK_NODE_API(QueryThreadHistoryMsg);
-    NIM_SDK_NODE_API(FullTextSearchOnlineAsync);
 
 protected:
     MsgLog(Isolate* isolate);

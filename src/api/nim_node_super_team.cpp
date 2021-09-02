@@ -43,7 +43,6 @@ void SuperTeam::InitModule(Local<Object>& module) {
     SET_PROTOTYPE(QueryTeamInfoOnlineAsync);
     SET_PROTOTYPE(UnregTeamCb);
     SET_PROTOTYPE(MuteMemberAsync);
-    SET_PROTOTYPE(QueryMuteListAsync);
     SET_PROTOTYPE(MuteAsync);
     SET_PROTOTYPE(QuerySuperTeamsInfoByKeywordAsync);
 
@@ -711,18 +710,6 @@ NIM_SDK_NODE_API_DEF(SuperTeam, MuteMemberAsync) {
 
     auto callback = std::bind(&SuperTeamEventHandler::OnTeamEventCallback, bcb, std::placeholders::_1);
     nim::SuperTeam::MuteMemberAsync(team_id.toUtf8String(), m_i.toUtf8String(), set_mute, callback, exten.toUtf8String());
-}
-
-NIM_SDK_NODE_API_DEF(SuperTeam, QueryMuteListAsync) {
-    CHECK_API_FUNC(SuperTeam, 3)
-    UTF8String tid, exten;
-    auto status = napi_ok;
-    GET_ARGS_VALUE(isolate, 0, utf8string, tid);
-    ASSEMBLE_BASE_CALLBACK(1)
-    GET_ARGS_VALUE(isolate, 2, utf8string, exten)
-    auto callback = std::bind(&SuperTeamEventHandler::OnQueryTeamMembersCallback, bcb, std::placeholders::_1, std::placeholders::_2,
-                              std::placeholders::_3, std::placeholders::_4);
-    nim::SuperTeam::QueryMuteListAsync(tid.toUtf8String(), callback, exten.toUtf8String());
 }
 
 NIM_SDK_NODE_API_DEF(SuperTeam, MuteAsync) {

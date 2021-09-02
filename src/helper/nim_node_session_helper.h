@@ -25,16 +25,10 @@ napi_status nim_session_data_to_obj(Isolate* isolate,
 napi_status nim_session_datas_to_obj(Isolate* isolate,
                                      const nim::SessionDataList& res,
                                      Local<Object>& obj);
-napi_status nim_session_multi_unread_info_obj_to_struct(
-    Isolate* isolate,
-    const Local<Object>& obj,
-    std::list<nim::MultiUnreadCountZeroInfo>& multi_unread_info);
-
 napi_status nim_session_roammsg_has_more_tag_info_to_obj(
     Isolate* isolate,
     const nim::SessionRoamMsgHasMoreTagInfo& session_roammsg_has_more_tag_info,
     Local<Object>& obj);
-
 napi_status nim_session_roammsg_has_more_tag_info_list_to_array(
     Isolate* isolate,
     const std::list<nim::SessionRoamMsgHasMoreTagInfo>&

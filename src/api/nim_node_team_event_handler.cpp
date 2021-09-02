@@ -93,15 +93,6 @@ void TeamEventHandler::OnGetTeamInfoBatchSFTransCallback(const BaseCallbackPtr& 
     });
 }
 
-void TeamEventHandler::OnGetTeamInfoListCallback(const BaseCallbackPtr& bcb,
-                                                 nim::NIMResCode error_code,
-                                                 const std::list<nim::TeamInfo>& team_info_list,
-                                                 const std::list<std::string>& fail_list) {
-    node_async_call::async_call([=]() {
-        TeamEventHandler::GetInstance()->Node_OnGetTeamInfoListCallback(bcb, error_code, team_info_list, fail_list);
-    });
-}
-
 void TeamEventHandler::Node_OnTeamEventCallback(const BaseCallbackPtr& bcb, const nim::TeamEvent& team_event) {
     Isolate* isolate = Isolate::GetCurrent();
     HandleScope scope(isolate);
@@ -254,17 +245,4 @@ void TeamEventHandler::Node_OnGetTeamInfoBatchSFTransCallback(const BaseCallback
     bcb->callback_.Get(isolate)->Call(isolate->GetCurrentContext(), bcb->data_.Get(isolate), argc, argv);
 }
 
-void TeamEventHandler::Node_OnGetTeamInfoListCallback(const BaseCallbackPtr& bcb,
-                                                      nim::NIMResCode error_code,
-                                                      const std::list<nim::TeamInfo>& team_info_list,
-                                                      const std::list<std::string>& fail_list) {
-    Isolate* isolate = Isolate::GetCurrent();
-    HandleScope scope(isolate);
-    const unsigned argc = 3;
-    Local<Array> team_info_array = Array::New(isolate, team_info_list.size());
-    nim_team_infos_to_array(isolate, team_info_list, team_info_array);
-
-    Local<Value> argv[argc] = {nim_napi_new_int32(isolate, (uint32_t)error_code), team_info_array, nim_napi_new_utf8string_list(isolate, fail_list)};
-    bcb->callback_.Get(isolate)->Call(isolate->GetCurrentContext(), bcb->data_.Get(isolate), argc, argv);
-}
 }  // namespace nim_node
