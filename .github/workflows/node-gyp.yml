@@ -50,12 +50,7 @@ jobs:
     - run: npm install --verbose
     # Unit test
     - run: npm run coverage
-    - uses: codecov/codecov-action@v2
-      with:
-        files: ${{ github.workspace }}/coverage/clover.xml
-        flags: unittests # optional
-        name: codecov-node-nim # optional
-        verbose: true # optional (default = false)
+    - run: npx codecov --token=cf597828-566e-4a44-a4ab-b2f18f0dbf4c
     # Build ia32
     - run: npx just fetch-wrapper --target_platform=win32 --target_arch=ia32
     - run: npx just build --runtime=electron --target=9.4.4 --target_platform=win32 --target_arch=ia32
@@ -70,5 +65,4 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         path: ${{ github.workspace }}/packages/*.tar.gz
-        steps:
     
