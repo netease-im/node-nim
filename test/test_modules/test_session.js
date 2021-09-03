@@ -160,6 +160,20 @@ function testSession(test_info) {
         })
         describe('#updateHasmoreRoammsg', function () {
             it('update session has more roaming msg should return 200', function (done) {
+                talk.regSendMsgCb((ack) => {
+                    msglog.queryMsgAsync(test_info.assistUser, 0, 1, 0, (res_code, sessionId, sessionType, result) => {
+                        assert.strictEqual(res_code, 200)
+                        const message = result.content[0]
+                        if (message === undefined) {
+                            done()
+                            return
+                        }
+                        session.updateHasmoreRoammsg(message, (res_code) => {
+                            assert.strictEqual(res_code, 200)
+                            done()
+                        })
+                    }, '')
+                }, '')
                 talk.sendMsg({
                     to_type: 0,
                     to_accid: test_info.assistUser,
@@ -168,18 +182,6 @@ function testSession(test_info) {
                     msg_body: 'Send from NIM node test.',
                     client_msg_id: new Date().getTime().toString(),
                 }, '', function () { })
-                msglog.queryMsgAsync(test_info.assistUser, 0, 1, 0, (res_code, sessionId, sessionType, result) => {
-                    assert.strictEqual(res_code, 200)
-                    const message = result.content[0]
-                    if (message === undefined) {
-                        done()
-                        return
-                    }
-                    session.updateHasmoreRoammsg(message, (res_code) => {
-                        assert.strictEqual(res_code, 200)
-                        done()
-                    })
-                }, '')
             })
         })
         describe('#queryAllHasmoreRoammsg', function () {
