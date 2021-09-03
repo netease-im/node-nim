@@ -58,14 +58,14 @@ jobs:
         verbose: true # optional (default = false)
     # Build ia32
     - run: npx just fetch-wrapper --target_platform=win32 --target_arch=ia32
-    - run: npx just build --runtime=electron --target=9.4 --target_platform=win32 --target_arch=ia32
-    - run: npx just build --runtime=electron --target=11.4 --target_platform=win32 --target_arch=ia32
-    - run: npx just build --runtime=electron --target=12.0 --target_platform=win32 --target_arch=ia32
+    - run: npx just build --runtime=electron --target=9.4.4 --target_platform=win32 --target_arch=ia32
+    - run: npx just build --runtime=electron --target=11.4.12 --target_platform=win32 --target_arch=ia32
+    - run: npx just build --runtime=electron --target=12.0.18 --target_platform=win32 --target_arch=ia32
     # Build x64
     - run: npx just fetch-wrapper --target_platform=win32 --target_arch=x64
-    - run: npx just build --runtime=electron --target=9.4 --target_platform=win32 --target_arch=x64
-    - run: npx just build --runtime=electron --target=11.4 --target_platform=win32 --target_arch=x64
-    - run: npx just build --runtime=electron --target=12.0 --target_platform=win32 --target_arch=x64
+    - run: npx just build --runtime=electron --target=9.4.4 --target_platform=win32 --target_arch=x64
+    - run: npx just build --runtime=electron --target=11.4.12 --target_platform=win32 --target_arch=x64
+    - run: npx just build --runtime=electron --target=12.0.18 --target_platform=win32 --target_arch=x64
     # Upload artifacts
     - uses: actions/upload-artifact@v2
       with:

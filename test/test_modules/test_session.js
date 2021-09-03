@@ -57,12 +57,8 @@ function testSession(test_info) {
         })
         describe('#setAllUnreadCountZeroAsync', function () {
             it('setAllUnreadCountZeroAsync', function (done) {
-                var once_flag = true
                 session.setAllUnreadCountZeroAsync(function (rescode, result, count) {
-                    if (once_flag) {
-                        done()
-                        once_flag = false
-                    }
+                    done()
                 }, '')
             })
         })

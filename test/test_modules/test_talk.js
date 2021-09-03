@@ -17,6 +17,7 @@ function testTalk(test_info) {
                         assert.strictEqual(ack.rescode, 200)
                         immessage = msg
                         done()
+                        talk.unregTalkCb()
                     }, '')
                 }, '')
                 talk.sendMsg({
