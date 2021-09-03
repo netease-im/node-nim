@@ -56,9 +56,8 @@ function testSession(test_info) {
             })
         })
         describe('#setAllUnreadCountZeroAsync', function () {
-            it('setAllUnreadCountZeroAsync', function (done) {
+            it('setAllUnreadCountZeroAsync', function () {
                 session.setAllUnreadCountZeroAsync(function (rescode, result, count) {
-                    done()
                 }, '')
             })
         })
