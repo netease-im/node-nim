@@ -14,7 +14,6 @@ export { default as NIMTalk } from './api/talk';
 export { default as NIMTeam } from './api/team';
 export { default as NIMTool } from './api/tool';
 export { default as NIMUser } from './api/user';
-export { default as NIMRts } from './api/rts';
 export { default as NIMPlugin } from './api/plugin';
 export { default as NIMSignaling } from './api/signaling';
 export { default as NIMTalkEx } from './api/talkex';
