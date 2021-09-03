@@ -10,7 +10,6 @@ const testTalk = require('./test_modules/test_talk.js').default
 const testSession = require('./test_modules/test_session.js').default
 const testUser = require('./test_modules/test_user.js').default
 const testNos = require('./test_modules/test_nos.js').default
-const testRts = require('./test_modules/test_rts.js').default
 const testSysmsg = require('./test_modules/test_sysmsg.js').default
 const testTool = require('./test_modules/test_tool.js').default
 const testPlugin = require('./test_modules/test_plugin.js').default
@@ -46,7 +45,6 @@ describe('NIM Test Suite', function () {
     testSession(test_info)
     testUser(test_info)
     testNos(test_info)
-    testRts(test_info)
     testSysmsg(test_info)
     testMsglog(test_info)
     testTool(test_info)
