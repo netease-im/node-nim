@@ -23,15 +23,7 @@ jobs:
       with:
         xcode-version: latest-stable
     # Npm install
-    - run: npm install --verbose
-    # Unit test
-    - run: npm run coverage
-    - uses: codecov/codecov-action@v2
-      with:
-        files: ${{ github.workspace }}/coverage/clover.xml
-        flags: unittests # optional
-        name: codecov-node-nim # optional
-        verbose: true # optional (default = false)
+    - run: npm install --skip-install --verbose
     # Build x64
     - run: npx just fetch-wrapper --target_platform=darwin --target_arch=x64
     - run: npx just build --runtime=electron --target=9.4 --target_platform=darwin --target_arch=x64
