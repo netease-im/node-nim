@@ -16,6 +16,7 @@ function iniClient(test_info) {
         describe('NIM client Login', function () {
             it('login step should be 3', function (done) {
                 client.login(test_info.appKey, test_info.mainUser, test_info.mainUserPwd, (loginResult) => {
+                    assert.strictEqual(loginResult.err_code, 200)
                     if (loginResult.login_step === 3)
                         done()
                 }, '')
