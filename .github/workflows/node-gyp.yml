@@ -50,7 +50,7 @@ jobs:
     - run: npm install --verbose
     # Unit test
     - run: npm run coverage
-    - run: npx codecov --token=cf597828-566e-4a44-a4ab-b2f18f0dbf4c
+    - run: npx codecov --token=7380c261-361e-4517-8a69-57ff848a45dd --disable=gcov
     # Build ia32
     - run: npx just fetch-wrapper --target_platform=win32 --target_arch=ia32
     - run: npx just build --runtime=electron --target=9.4.4 --target_platform=win32 --target_arch=ia32
