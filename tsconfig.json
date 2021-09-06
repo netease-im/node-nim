@@ -8,9 +8,13 @@
     "esModuleInterop": true,
     "allowJs": true,
     "moduleResolution": "node",
-    "lib": ["es6", "dom"],
+    "lib": [
+      "es6",
+      "dom"
+    ],
     "declaration": true,
-    "declarationDir": "types"
+    "declarationDir": "types",
+    "sourceMap": true
   },
   "typedocOptions": {
     "entryPoints": "ts/nim.ts",

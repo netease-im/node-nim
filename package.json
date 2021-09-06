@@ -8,7 +8,7 @@
   "license": "ISC",
   "scripts": {
     "test": "mocha test/test_all.js -slow 200 -timeout 10000",
-    "coverage": "nyc --reporter=lcov npm run test",
+    "coverage": "nyc --reporter=lcovonly npm run test",
     "install": "just install && typedoc",
     "build:ts": "rimraf ./js && rimraf ./types && tsc",
     "build:doc": "typedoc",
