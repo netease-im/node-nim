@@ -1,15 +1,15 @@
 {
   "name": "node-nim",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
   "main": "js/nim.js",
   "types": "types/nim.d.ts",
-  "author": "Dylan",
+  "author": "Netease",
   "license": "ISC",
   "scripts": {
     "test": "mocha test/test_all.js -slow 200 -timeout 10000",
     "coverage": "nyc --reporter=lcovonly npm run test",
-    "install": "just install && typedoc",
+    "install": "just install",
     "build:ts": "rimraf ./js && rimraf ./types && tsc",
     "build:doc": "typedoc",
     "prepare": "npm run build:ts"
@@ -48,16 +48,10 @@
   "files": [
     "scripts/",
     "src/",
-    "test/",
     "js/",
     "types/",
-    ".clang-format",
     "binding.gyp",
-    "config_dts.json",
-    "config_ts.json",
-    "cpplint.cfg",
     "just-task.js",
-    "package.json",
-    "README.md"
+    "package.json"
   ]
 }
