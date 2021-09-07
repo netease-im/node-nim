@@ -1,7 +1,7 @@
-const NIMSysMsg = require('../../js/nim').NIMSysMsg
+const NIM = require('../../js/nim')
 const assert = require('assert')
 
-const sysmsg = new NIMSysMsg()
+const sysmsg = new NIM.SysMsg
 function testSysmsg(test_info) {
     describe('********************Sysmsg********************', function () {
         const client_msg_id = new Date().getTime()

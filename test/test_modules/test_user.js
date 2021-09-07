@@ -1,7 +1,7 @@
-const NIMUser = require('../../js/nim').NIMUser
+const NIM = require('../../js/nim')
 const assert = require('assert')
 
-const user = new NIMUser
+const user = new NIM.User
 
 function testUser(test_info) {
     describe('********************User********************', function () {

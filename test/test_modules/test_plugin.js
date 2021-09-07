@@ -1,7 +1,7 @@
-const NIMPlugin = require('../../js/nim').NIMPlugin
+const NIM = require('../../js/nim')
 const assert = require('assert')
 
-const plugin = new NIMPlugin
+const plugin = new NIM.Plugin
 
 function testPlugin(test_info) {
     describe('********************Plugin********************', function () {

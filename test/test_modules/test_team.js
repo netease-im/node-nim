@@ -1,11 +1,9 @@
-const NIMTeam = require('../../js/nim').NIMTeam
-const NIMTalk = require('../../js/nim').NIMTalk
-const NIMMsgLog = require('../../js/nim').NIMMsgLog
+const NIM = require('../../js/nim')
 const assert = require('assert')
 
-const team = new NIMTeam
-const msglog = new NIMMsgLog
-const talk = new NIMTalk
+const team = new NIM.Team
+const msglog = new NIM.MsgLog
+const talk = new NIM.Talk
 
 function testTeam(test_info) {
     describe('********************Team********************', function () {

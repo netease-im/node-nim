@@ -1,7 +1,7 @@
-const NIMSignaling = require('../../js/nim').NIMSignaling
+const NIM = require('../../js/nim')
 const assert = require('assert')
 
-const signaling = new NIMSignaling
+const signaling = new NIM.Signaling
 function testSignaling(test_info) {
     describe('********************Signaling********************', function () {
         let channel_info

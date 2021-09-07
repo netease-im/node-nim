@@ -1,7 +1,7 @@
-const NIMMsglog = require('../../js/nim').NIMMsgLog
+const NIM = require('../../js/nim')
 const assert = require('assert')
 
-const msglog = new NIMMsglog
+const msglog = new NIM.MsgLog
 
 function testMsglog(test_info) {
     describe('********************Msglog********************', function () {

@@ -1,7 +1,7 @@
-const NIMSuperTeam = require('../../js/nim').NIMSuperTeam
+const NIM = require('../../js/nim')
 const assert = require('assert')
 
-const super_team = new NIMSuperTeam
+const super_team = new NIM.SuperTeam
 
 function testSuperTeam(test_info) {
     describe('********************SuperTeam********************', function () {

@@ -1,7 +1,7 @@
-const NIMNOS = require('../../js/nim').NIMNOS
+const NIM = require('../../js/nim')
 const assert = require('assert')
 
-const nos = new NIMNOS
+const nos = new NIM.NOS
 
 function testNos(test_info) {
     describe('********************Nos********************', function () {

@@ -1,7 +1,7 @@
-const NIMDataSync = require('../../js/nim').NIMDataSync
+const NIM = require('../../js/nim')
 const assert = require('assert')
 
-const datasync = new NIMDataSync
+const datasync = new NIM.DataSync
 
 function testDataSync(test_info) {
     describe('********************DataSync********************', function () {

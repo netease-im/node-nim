@@ -1,11 +1,9 @@
-const NIMTalk = require('../../js/nim').NIMTalk
-const NIMTalkEx = require('../../js/nim').NIMTalkEx
-const NIMMsglog = require('../../js/nim').NIMMsgLog
+const NIM = require('../../js/nim')
 const assert = require('assert')
 
-const talk = new NIMTalk
-const talkex = new NIMTalkEx
-const msglog = new NIMMsglog
+const talk = new NIM.Talk
+const talkex = new NIM.TalkEx
+const msglog = new NIM.MsgLog
 function testTalk(test_info) {
     let immessage
     describe('********************Talk********************', function () {

@@ -1,7 +1,7 @@
-const NIMSubscribeEvent = require('../../js/nim').NIMSubscribeEvent
+const NIM = require('../../js/nim')
 const assert = require('assert')
 
-const subscribe_event = new NIMSubscribeEvent
+const subscribe_event = new NIM.SubscribeEvent
 
 function testSubscribeEvent(test_info) {
     describe('********************SubscribeEvent********************', function () {

@@ -1,11 +1,9 @@
-const NIMSession = require('../../js/nim').NIMSession
-const NIMMsglog = require('../../js/nim').NIMMsgLog
-const NIMTalk = require('../../js/nim').NIMTalk
+const NIM = require('../../js/nim')
 const assert = require('assert')
 
-const session = new NIMSession()
-const msglog = new NIMMsglog()
-const talk = new NIMTalk()
+const session = new NIM.Session
+const msglog = new NIM.MsgLog
+const talk = new NIM.Talk
 function testSession(test_info) {
     describe('********************Session********************', function () {
         describe('#regChangeCb', function () {

@@ -1,7 +1,7 @@
-const NIMPassThroughProxy = require('../../js/nim').NIMPassThroughProxy
+const NIM = require('../../js/nim')
 const assert = require('assert')
 
-const pass_through_proxy = new NIMPassThroughProxy
+const pass_through_proxy = new NIM.PassThroughProxy
 
 function testPassThroughProxy(test_info) {
     describe('********************PassThroughProxy********************', function () {

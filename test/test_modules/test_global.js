@@ -1,7 +1,7 @@
-const NIMGlobal = require('../../js/nim').NIMGlobal
+const NIM = require('../../js/nim')
 const assert = require('assert')
 
-const global = new NIMGlobal
+const global = new NIM.Global
 
 function testGlobal(test_info) {
     describe('********************Global********************', function () {

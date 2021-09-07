@@ -1,7 +1,7 @@
-const NIMOnlineSession = require('../../js/nim').NIMOnlineSession
+const NIM = require('../../js/nim')
 const assert = require('assert')
 
-const online_session = new NIMOnlineSession
+const online_session = new NIM.OnlineSession
 
 function testOnlineSession(test_info) {
     describe('********************OnlineSession********************', function () {

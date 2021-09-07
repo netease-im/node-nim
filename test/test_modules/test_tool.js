@@ -1,7 +1,7 @@
-const NIMTool = require('../../js/nim').NIMTool
+const NIM = require('../../js/nim')
 const assert = require('assert')
 
-const tool = new NIMTool
+const tool = new NIM.Tool
 function testTool(test_info) {
     describe('********************Tool********************', function () {
         describe('#getUserAppdataDir', function () {

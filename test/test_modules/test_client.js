@@ -1,7 +1,7 @@
-const NIMClient = require('../../js/nim').NIMClient
+const NIM = require('../../js/nim')
 const assert = require('assert')
 
-const client = new NIMClient
+const client = new NIM.Client
 
 function iniClient(test_info) {
     describe('********************NIM init SDK********************', function () {

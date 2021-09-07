@@ -1,7 +1,7 @@
-const NIMFriend = require('../../js/nim').NIMFriend
+const NIM = require('../../js/nim')
 const assert = require('assert')
 
-const friend = new NIMFriend
+const friend = new NIM.Friend
 
 function testFriend(test_info) {
     describe('********************Friend********************', function () {
