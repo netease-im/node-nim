@@ -17,7 +17,7 @@ npm install node-nim --save-dev
 ## Quick Start
 
 ```text
-const NIM = require('node-im')
+const NIM = require('node-nim')
 const assert = require('assert')
 
 var client = new NIM.NIMClient
