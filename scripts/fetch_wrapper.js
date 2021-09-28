@@ -12,6 +12,7 @@ module.exports = ({
   extractPath
 }) => {
   return new Promise((resolve, reject) => {
+    logger.info(fetchUrl)
     download(fetchUrl, temporaryPath, {
       strip: 1,
       extract: true
