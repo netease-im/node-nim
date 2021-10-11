@@ -1,6 +1,6 @@
 import nim from './nim';
 import ev from 'events';
-import { NIMUserAPI, NIMUserNameCard, NINPushType, NIMSpecialRelationshipChangedCallback, NIMUserNameCardChangedCallback, NIMSetRelationCallback, NIMGetSpecialListCallback, NIMGetUserNameCardCallback, NIMUpdateMyUserNameCardCallback } from './user_def';
+import { NIMUserAPI, NIMUserNameCard, NINPushType, NIMSpecialRelationshipChangeEvent, NIMSpecialRelationshipChangedCallback, NIMUserNameCardChangedCallback, NIMSetRelationCallback, NIMGetSpecialListCallback, NIMGetUserNameCardCallback, NIMUpdateMyUserNameCardCallback } from './user_def';
 
 class NIMUser extends ev.EventEmitter {
     user: NIMUserAPI;
@@ -9,22 +9,25 @@ class NIMUser extends ev.EventEmitter {
         this.user = new nim.User();
     }
 
-    /** (全局回调)统一注册用户属性变更通知回调函数（多端同步黑名单、静音名单变更）
-     * @param json_extension json扩展参数（备用，目前不需要）
-     * @param cb
-     * @return void 无返回值
-     */
-    regSpecialRelationshipChangedCb(cb: NIMSpecialRelationshipChangedCallback, json_extension: string): void {
-        return this.user.RegSpecialRelationshipChangedCb(cb, json_extension);
-    }
+    /* istanbul ignore next */
+    initEventHandler(): void {
+        /** (全局回调)统一注册用户属性变更通知回调函数（多端同步黑名单、静音名单变更）
+         * @param json_extension json扩展参数（备用，目前不需要）
+         * @param cb
+         * @return void 无返回值
+         */
+        this.user.RegSpecialRelationshipChangedCb((result: NIMSpecialRelationshipChangeEvent) => {
+            this.emit('onSpecialRelationshipChanged', result);
+        }, "");
 
-    /** (全局回调)统一注册用户名片变更通知回调函数
-     * @param cb 操作结果回调
-     * @param json_extension json扩展参数（备用，目前不需要）
-     * @return void 无返回值
-     */
-    regUserNameCardChangedCb(cb: NIMUserNameCardChangedCallback, json_extension: string): void {
-        return this.user.RegUserNameCardChangedCb(cb, json_extension);
+        /** (全局回调)统一注册用户名片变更通知回调函数
+         * @param cb 操作结果回调
+         * @param json_extension json扩展参数（备用，目前不需要）
+         * @return void 无返回值
+         */
+        this.user.RegUserNameCardChangedCb((result: Array<NIMUserNameCard>) => {
+            this.emit('onUserNameCardChanged', result);
+        }, "");
     }
 
     /** 设置、取消设置黑名单
@@ -148,13 +151,6 @@ class NIMUser extends ev.EventEmitter {
      */
     updatePushToken(cerName: string, token: string, type: NINPushType): void {
         return this.user.UpdatePushToken(cerName, token, type);
-    }
-
-    /** 反注册User提供的所有回调
-     * @return void 无返回值
-     */
-    unregUserCb(): void {
-        return this.user.UnregUserCb();
     }
 }
 

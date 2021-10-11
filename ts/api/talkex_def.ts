@@ -139,8 +139,6 @@ export interface NIMTalkExAPI {
     QueryCollectList(query_collect_list_param: QueryCollectsParm, cb: QueryCollectsCallback): void;
 
     //QuickComment
-    UnregAllQuickCommentCb(): void;
-
     RegAddQuickCommentNotify(cb: AddQuickCommentNotifyCallback): void;
 
     RegRemoveQuickCommentNotify(cb: RemoveQuickCommentNotifyCallback): void;
@@ -158,8 +156,6 @@ export interface NIMTalkExAPI {
     UpdatePinMessage(modify_param: ModifyPinMessageParam, cb: UpdatePinMessageCallback): void;
 
     QueryAllPinMessage(session: string, to_type: number, cb: QueryPinMessageCallback): void;
-
-    UnregAllPinCb(): void;
 
     RegAddPinMessage(cb: AddPinMessageNotifyCallback): void;
 

@@ -7,17 +7,23 @@ const msglog = new NIM.MsgLog
 function testTalk(test_info) {
     let immessage
     describe('********************Talk********************', function () {
+        describe('#initEventHandler', function () {
+            it('initEventHandler', function () {
+                talk.initEventHandler()
+                talkex.initEventHandler()
+                msglog.initEventHandler()
+            })
+        })
         describe('#sendMsg', function () {
             it('send message should return 200', function (done) {
-                talk.regSendMsgCb((ack) => {
+                talk.once('onSendMsg', function (ack) {
                     assert.strictEqual(ack.rescode, 200)
                     msglog.queryMsgByIDAysnc(ack.msg_id, function (res_code, msg_id, msg) {
                         assert.strictEqual(ack.rescode, 200)
                         immessage = msg
                         done()
-                        talk.unregTalkCb()
                     }, '')
-                }, '')
+                })
                 talk.sendMsg({
                     to_type: 0,
                     to_accid: test_info.mainUser,
@@ -31,48 +37,6 @@ function testTalk(test_info) {
         describe('#stopSendMsg', function () {
             it('stopSendMsg', function () {
                 talk.stopSendMsg(immessage.msg_id, 0, '')
-            })
-        })
-        describe('#regReceiveCb', function () {
-            it('regReceiveCb', function () {
-                talk.regReceiveCb(function (result) {
-
-                }, '')
-            })
-        })
-        describe('#regReceiveMessagesCb', function () {
-            it('regReceiveMessagesCb', function () {
-                talk.regReceiveMessagesCb(function (result) {
-
-                }, '')
-            })
-        })
-        describe('#regTeamNotificationFilter', function () {
-            it('regTeamNotificationFilter', function () {
-                talk.regTeamNotificationFilter(function (result) {
-
-                }, '')
-            })
-        })
-        describe('#regMessageFilter', function () {
-            it('regMessageFilter', function () {
-                talk.regMessageFilter(function (result) {
-
-                }, '')
-            })
-        })
-        describe('#regReceiveBroadcastMsgCb', function () {
-            it('regReceiveBroadcastMsgCb', function () {
-                talk.regReceiveBroadcastMsgCb(function (result) {
-
-                }, '')
-            })
-        })
-        describe('#regRecallMsgsCb', function () {
-            it('regRecallMsgsCb', function () {
-                talk.regRecallMsgsCb(function (rescode, result) {
-
-                }, '')
             })
         })
         describe('#ReplyMessage', function () {
@@ -100,14 +64,14 @@ function testTalk(test_info) {
                 }, { apnstext: '', pushpayload: '', json_extension: '', env_config: '', attach: '' })
             })
         })
-        describe('#unregTalkCb', function () {
-            it('unregTalkCb', function () {
-                talk.unregTalkCb()
-            })
-        })
     })
 
     describe('********************TalkEx********************', function () {
+        describe('#initEventHandler', function () {
+            it('initEventHandler', function () {
+                talkex.initEventHandler()
+            })
+        })
         //Collect
         let collect_info
         describe('#queryCollectList', function () {
@@ -186,25 +150,6 @@ function testTalk(test_info) {
 
             })
         })
-        describe('#regAddQuickCommentNotify', function () {
-            it('regAddQuickCommentNotify', function () {
-                talkex.regAddQuickCommentNotify(function (session, to_type, msg_client_id, qc_info) {
-
-                })
-            })
-        })
-        describe('#regRemoveQuickCommentNotify', function () {
-            it('regRemoveQuickCommentNotify', function () {
-                talkex.regRemoveQuickCommentNotify(function (session, to_type, msg_client_id, quick_comment_id, ext) {
-
-                })
-            })
-        })
-        describe('#unregAllQuickCommentCb', function () {
-            it('unregAllQuickCommentCb should return 200', function () {
-                talkex.unregAllQuickCommentCb()
-            })
-        })
         //PinMessage
         let pin_id
         describe('#addPinMessage', function () {
@@ -241,32 +186,6 @@ function testTalk(test_info) {
                     done()
                     assert.strictEqual(res_code, 200)
                 })
-            })
-        })
-        describe('#regAddPinMessage', function () {
-            it('regAddPinMessage', function () {
-                talkex.regAddPinMessage(function (session, to_type, info) {
-
-                })
-            })
-        })
-        describe('#regUnPinMessage', function () {
-            it('regUnPinMessage', function () {
-                talkex.regUnPinMessage(function (session, to_type, id) {
-
-                })
-            })
-        })
-        describe('#regUpdatePinMessage', function () {
-            it('regUpdatePinMessage', function () {
-                talkex.regUpdatePinMessage(function (session, to_type, info) {
-
-                })
-            })
-        })
-        describe('#unregAllPinCb', function () {
-            it('unregAllPinCb', function () {
-                talkex.unregAllPinCb()
             })
         })
     })

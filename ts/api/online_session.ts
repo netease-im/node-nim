@@ -1,4 +1,4 @@
-import { NIMOnlineSessionAPI, NIMQueryOnlineSessionInfoCallback, NIMUpdateOnlineSessionInfoCallback, NIMDeleteOnlineSessionInfoCallback, NIMQueryOnlineSessionListCallback, NIMOnlineSessionChangedCallback, NIMDeleteOnlineSession } from "./online_session_def";
+import { NIMOnlineSessionAPI, NIMQueryOnlineSessionInfoCallback, NIMUpdateOnlineSessionInfoCallback, NIMDeleteOnlineSessionInfoCallback, NIMQueryOnlineSessionListCallback, NIMOnlineSessionChangedCallback, NIMDeleteOnlineSession, NIMOnlineSessionInfo } from "./online_session_def";
 import nim from './nim';
 import ev from 'events';
 import { NIMSessionType } from "./session.def";
@@ -8,6 +8,17 @@ class NIMOnlineSession extends ev.EventEmitter {
     constructor() {
         super();
         this.session = new nim.SessionOnlineService();
+    }
+
+    /* istanbul ignore next */
+    initEventHandler(): void {
+        /** 会话服务 注册会话变更回调
+         * @param cb 结果回调  可查看SessionChangedCallback定义
+         * @return void 无返回值
+         */
+        this.session.RegSessionChanged((result: NIMOnlineSessionInfo) => {
+            this.emit('onSessionChanged', result);
+        });
     }
 
     /** 会话服务 查询会话列表
@@ -59,21 +70,6 @@ class NIMOnlineSession extends ev.EventEmitter {
      */
     deleteSession(param: Array<NIMDeleteOnlineSession>, cb: NIMDeleteOnlineSessionInfoCallback): void {
         return this.session.DeleteSession(param, cb);
-    }
-
-    /** 会话服务 注册会话变更回调
-     * @param cb 结果回调  可查看SessionChangedCallback定义
-     * @return void 无返回值
-     */
-    regSessionChanged(cb: NIMOnlineSessionChangedCallback): void {
-        return this.session.RegSessionChanged(cb);
-    }
-
-    /** 反注册 SessionOnLineService 所有回调
-     * @return void 无返回值
-     */
-    unregSessionOnlineServiceCb(): void {
-        return this.session.UnregSessionOnLineServiceCb();
     }
 }
 

@@ -9,11 +9,11 @@ function testTeam(test_info) {
     describe('********************Team********************', function () {
         let team_data
         let immessage
-        describe('#regTeamEventCb', function () {
-            it('regTeamEventCb', function () {
-                team.regTeamEventCb(function (result) {
-
-                }, '')
+        describe('#initEventHandler', function () {
+            it('initEventHandler', function () {
+                team.initEventHandler()
+                msglog.initEventHandler()
+                talk.initEventHandler()
             })
         })
         describe('#createTeamAsync', function () {
@@ -32,14 +32,14 @@ function testTeam(test_info) {
         })
         describe('#send message to team', function () {
             it('send message', function (done) {
-                talk.regSendMsgCb((ack) => {
+                talk.once('onSendMsg', function (ack) {
                     assert.strictEqual(ack.rescode, 200)
                     msglog.queryMsgByIDAysnc(ack.msg_id, function (res_code, msg_id, msg) {
                         assert.strictEqual(ack.rescode, 200)
                         immessage = msg
                         done()
                     }, '')
-                }, '')
+                })
                 talk.sendMsg({
                     to_type: 1,
                     to_accid: team_data.id,
@@ -306,11 +306,6 @@ function testTeam(test_info) {
                     team_data.id, function (result) {
                         done()
                     }, '')
-            })
-        })
-        describe('#unregTeamCb', function () {
-            it('unregTeamCb', function () {
-                team.unregTeamCb()
             })
         })
     })

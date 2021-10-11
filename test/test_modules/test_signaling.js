@@ -5,39 +5,9 @@ const signaling = new NIM.Signaling
 function testSignaling(test_info) {
     describe('********************Signaling********************', function () {
         let channel_info
-        describe('#regOnlineNotifyCb', function () {
-            it('regOnlineNotifyCb', function () {
-                signaling.regOnlineNotifyCb(function (info) {
-
-                })
-            })
-        })
-        describe('#regMutilClientSyncNotifyCb', function () {
-            it('regMutilClientSyncNotifyCb', function () {
-                signaling.regMutilClientSyncNotifyCb(function (info) {
-
-                })
-            })
-        })
-        describe('#regOfflineNotifyCb', function () {
-            it('regOfflineNotifyCb', function () {
-                signaling.regOfflineNotifyCb(function (info_list) {
-
-                })
-            })
-        })
-        describe('#regChannelsSyncCb', function () {
-            it('regChannelsSyncCb', function () {
-                signaling.regChannelsSyncCb(function (info_list) {
-
-                })
-            })
-        })
-        describe('#regMembersSyncCb', function () {
-            it('regMembersSyncCb', function () {
-                signaling.regMembersSyncCb(function (info) {
-
-                })
+        describe('#initEventHandler', function () {
+            it('initEventHandler', function () {
+                signaling.initEventHandler()
             })
         })
         describe('#signalingCreate', function () {

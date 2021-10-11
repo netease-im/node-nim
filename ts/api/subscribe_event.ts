@@ -9,30 +9,33 @@ class NIMSubscribeEvent extends ev.EventEmitter {
         this.subscribeEvent = new nim.SubscribeEvent();
     }
 
-    /** (全局回调)统一注册接收订阅的事件的回调函数
-     * @param cb	接收订阅事件回调函数
-     * @param json_extension json扩展参数（备用，目前不需要）
-     * @return void 无返回值
-     * @note 
-     * <pre>
-     * 200:成功
-     * </pre>
-     */
-    regPushEventCb(cb: NIMPushEventCallback, json_extension: string): void {
-        return this.subscribeEvent.RegPushEventCb(cb, json_extension);
-    }
+    /* istanbul ignore next */
+    initEventHandler(): void {
+        /** (全局回调)统一注册接收订阅的事件的回调函数
+         * @param cb	接收订阅事件回调函数
+         * @param json_extension json扩展参数（备用，目前不需要）
+         * @return void 无返回值
+         * @note 
+         * <pre>
+         * 200:成功
+         * </pre>
+         */
+        this.subscribeEvent.RegPushEventCb((rescode: number, result: NIMEventData) => {
+            this.emit('onPushEvent', rescode, result);
+        }, "");
 
-    /** (全局回调)统一注册批量接收订阅的事件的回调函数
-     * @param cb	批量接收订阅事件回调函数
-     * @param json_extension json扩展参数（备用，目前不需要）
-     * @return void 无返回值
-     * @note 
-     * <pre>
-     * 200:成功
-     * </pre>
-     */
-    regBatchPushEventCb(cb: NIMBatchPushEventCallback, json_extension: string): void {
-        return this.subscribeEvent.RegBatchPushEventCb(cb, json_extension);
+        /** (全局回调)统一注册批量接收订阅的事件的回调函数
+         * @param cb	批量接收订阅事件回调函数
+         * @param json_extension json扩展参数（备用，目前不需要）
+         * @return void 无返回值
+         * @note 
+         * <pre>
+         * 200:成功
+         * </pre>
+         */
+        this.subscribeEvent.RegBatchPushEventCb((rescode: number, result: Array<NIMEventData>) => {
+            this.emit('onBatchPushEvent', rescode, result);
+        }, "");
     }
 
     /** 发布事件

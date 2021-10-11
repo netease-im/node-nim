@@ -39,13 +39,13 @@ export interface NIMUserNameCard {
 	readonly update_timetag: number;	/**< long 更新时间戳 毫秒*/
 }
 
-interface NIMSpecialRelationshipChangeEventContent {
+export interface NIMSpecialRelationshipChangeEventContent {
 	accid: string;
 	black: boolean;
 	mute: boolean;
 }
 
-interface NIMSpecialRelationshipChangeEvent {
+export interface NIMSpecialRelationshipChangeEvent {
 	type: NIMUserSpecialRelationshipChangeType;		/**< 黑名单/静音名单更新事件类型 */
 	content: NIMSpecialRelationshipChangeEventContent;	/**< 黑名单/静音名单更新事件内容，根据事件类型调用ParseXXXChange接口（nim_cpp_user.h）解析该内容 */
 }
@@ -96,6 +96,4 @@ export interface NIMUserAPI {
 	QueryUserListByKeyword(keyword: string, cb: NIMGetUserNameCardCallback, json_extension: string): boolean;
 
 	UpdatePushToken(cerName: string, token: string, type: NINPushType): void;
-
-	UnregUserCb(): void;
 }

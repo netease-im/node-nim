@@ -37,11 +37,21 @@ bool TalkEventHandler::OnTeamNotificationFilter(const nim::IMMessage& msg) {
 }
 
 bool TalkEventHandler::OnMessageFilter(const nim::IMMessage& msg) {
-    // TODO
-    node_async_call::async_call([=]() {
-        TalkEventHandler::GetInstance()->Node_OnMessageFilter(msg);
-    });
-    return true;
+    Isolate* isolate = Isolate::GetCurrent();
+    HandleScope scope(isolate);
+    const unsigned argc = 1;
+    Local<Object> obj = Object::New(isolate);
+    nim_talk_im_msg_to_obj(isolate, msg, obj);
+    Local<Value> argv[argc] = {obj};
+    auto it = TalkEventHandler::GetInstance()->callbacks_.find("OnMessageFilter");
+    if (it != TalkEventHandler::GetInstance()->callbacks_.end()) {
+        Local<Value> ret_value =
+            it->second->callback_.Get(isolate)->Call(isolate->GetCurrentContext(), it->second->data_.Get(isolate), argc, argv).ToLocalChecked();
+        bool ret = false;
+        if (nim_napi_get_value_bool(isolate, ret_value, ret) == napi_ok)
+            return ret;
+    }
+    return false;
 }
 
 void TalkEventHandler::OnRecallMsgsCallback(const BaseCallbackPtr& bcb, const nim::NIMResCode res, const std::list<nim::RecallMsgNotify>& msgs) {
@@ -120,19 +130,6 @@ void TalkEventHandler::Node_OnTeamNotificationFilter(const nim::IMMessage& msg) 
     nim_talk_im_msg_to_obj(isolate, msg, obj);
     Local<Value> argv[argc] = {obj};
     auto it = callbacks_.find("OnTeamNotificationFilter");
-    if (it != callbacks_.end()) {
-        it->second->callback_.Get(isolate)->Call(isolate->GetCurrentContext(), it->second->data_.Get(isolate), argc, argv);
-    }
-}
-
-void TalkEventHandler::Node_OnMessageFilter(const nim::IMMessage& msg) {
-    Isolate* isolate = Isolate::GetCurrent();
-    HandleScope scope(isolate);
-    const unsigned argc = 1;
-    Local<Object> obj = Object::New(isolate);
-    nim_talk_im_msg_to_obj(isolate, msg, obj);
-    Local<Value> argv[argc] = {obj};
-    auto it = callbacks_.find("OnMessageFilter");
     if (it != callbacks_.end()) {
         it->second->callback_.Get(isolate)->Call(isolate->GetCurrentContext(), it->second->data_.Get(isolate), argc, argv);
     }

@@ -1,6 +1,6 @@
 import nim from './nim';
 import ev from 'events';
-import { NIMNOSAPI, NIMInitConfigParam, NIMNOSParams, NIMInitNosResultCallback, NIMDownloadMediaCallback, NIMUploadMediaExCallback, NIMProgressCallback, NIMSpeedCallback, NIMTransferInfoCallback, NIMProgressExCallback, NIMDownloadMediaExCallback, NIMsafe_urlToOriginURLCallback } from './nos_def';
+import { NIMNOSAPI, NIMInitConfigParam, NIMNOSParams, NIMInitNosResultCallback, NIMDownloadMediaCallback, NIMUploadMediaExCallback, NIMProgressCallback, NIMSpeedCallback, NIMTransferInfoCallback, NIMProgressExCallback, NIMDownloadMediaExCallback, NIMsafe_urlToOriginURLCallback, NIMUploadMediaResult } from './nos_def';
 import { NIMMessage } from './talk_def';
 
 class NIMNOS extends ev.EventEmitter {
@@ -10,6 +10,25 @@ class NIMNOS extends ev.EventEmitter {
 		this.nos = new nim.NOS();
 	}
 
+	/* istanbul ignore next */
+	initEventHandler(): void {
+		/** (全局回调)注册下载回调，通过注册回调获得HTTP下载结果通知（所有触发HTTP下载任务的接口的参数列表里无法设置通知回调处理函数的通知都走这个通知，比如收到图片语音会触发SDK自动下载等，开发者可以通过监听这个广播通知结果刷新UI资源）
+		* @param cb 下载的回调函数
+		* @return void 无返回值
+		*/
+		this.nos.RegDownloadCb((rescode: number, filePath: string, callId: string, resId: string) => {
+			this.emit('onDownload', rescode, filePath, callId, resId);
+		});
+
+		/** (全局回调)注册上传回调，通过注册回调获得HTTP上传结果通知（所有触发HTTP上传任务的接口的参数列表里无法设置通知回调处理函数的通知都走这个通知，比如发送文件图片语音消息等）
+		 * @param cb 回调函数
+		 * @return void 无返回值
+		 */
+		this.nos.RegUploadCb((rescode: number, result: NIMUploadMediaResult) => {
+			this.emit('onUpload', rescode, result);
+		});
+	}
+
 	/** Nos模块初始化接口，对上传资源时使用的各场景资源生命周期进行初始化，开发者最多可自定义10个场景，并指定场景资源的生命周期，并可以对缺省场景（kNIMNosDefaultTagResource、kNIMNosDefaultTagIM）进行覆盖（重新指定生命周期）
 	 * @param param 初始化参数
 	 * @param cb 结果回调函数
@@ -17,22 +36,6 @@ class NIMNOS extends ev.EventEmitter {
 	 */
 	initConfig(param: NIMInitConfigParam, cb: NIMInitNosResultCallback): void {
 		return this.nos.InitConfig(param, cb);
-	}
-
-	/** (全局回调)注册下载回调，通过注册回调获得HTTP下载结果通知（所有触发HTTP下载任务的接口的参数列表里无法设置通知回调处理函数的通知都走这个通知，比如收到图片语音会触发SDK自动下载等，开发者可以通过监听这个广播通知结果刷新UI资源）
-	 * @param cb 下载的回调函数
-	 * @return void 无返回值
-	 */
-	regDownloadCb(cb: NIMDownloadMediaCallback): void {
-		return this.nos.RegDownloadCb(cb);
-	}
-
-	/** (全局回调)注册上传回调，通过注册回调获得HTTP上传结果通知（所有触发HTTP上传任务的接口的参数列表里无法设置通知回调处理函数的通知都走这个通知，比如发送文件图片语音消息等）
-	 * @param cb 回调函数
-	 * @return void 无返回值
-	 */
-	regUploadCb(cb: NIMUploadMediaExCallback): void {
-		return this.nos.RegUploadCb(cb);
 	}
 
 	/** 获取资源
@@ -159,7 +162,7 @@ class NIMNOS extends ev.EventEmitter {
 	 * 414 不存在该短链或 safe_url 不是一个有效的短链
 	 * </pre>
 	 */
-	 safeURLToOriginURL(safe_url: string,
+	safeURLToOriginURL(safe_url: string,
 		cb: NIMsafe_urlToOriginURLCallback,
 		json_extension: string): void {
 		return this.nos.SafeURLToOriginURL(safe_url, cb, json_extension);
@@ -171,13 +174,6 @@ class NIMNOS extends ev.EventEmitter {
 	 */
 	setSupportQuickTrans(quick: boolean): void {
 		return this.nos.SetSupportQuickTrans(quick);
-	}
-
-	/** 反注册Nos提供的所有回调
-	 * @return void 无返回值
-	 */
-	unregNosCb(): void {
-		return this.nos.UnregNosCb();
 	}
 }
 

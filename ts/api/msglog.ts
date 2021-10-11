@@ -1,4 +1,4 @@
-import { NIMMsgLogAPI, NIMQueryMsgOnlineAsyncParam, NIMMessageType, NIMMsgLogQueryRange, NIMMsgLogStatus, NIMMsgLogSubStatus, NIMQueryMsgByKeywordOnlineParam, NIMDBFunctionCallback, NIMQuerySingleMsgCallback, NIMQueryMsgCallback, NIMModifyMultipleMsglogCallback, NIMModifySingleMsglogCallback, NIMImportDbPrgCallback, NIMMessageStatusChangedCallback, NIMDeleteHistoryOnLineAsyncCallback, NIMDeleteMsglogSelfNotifyCallback, NIMDeleteHistoryMessagesNotifyCallback, NIMDeleteMessageSelfAsyncCallback, NIMQueryMessageIsThreadRootCallback, NIMQueryMsgAsyncParam, NIMQueryMessageOnlineCallback, NIMFullTextSearchOnlineAsyncCallback, NIMFullTextSearchOnlineAsyncParam, NIMQueryThreadHistoryMsgAsyncParam, NIMQueryThreadHistoryMsgCallback, NIMDeleteHistoryOnLineAsyncExCallback } from "./msglog_def";
+import { NIMMsgLogAPI, NIMQueryMsgOnlineAsyncParam, NIMMessageType, NIMMsgLogQueryRange, NIMMsgLogStatus, NIMMsgLogSubStatus, NIMQueryMsgByKeywordOnlineParam, NIMDBFunctionCallback, NIMQuerySingleMsgCallback, NIMQueryMsgCallback, NIMModifyMultipleMsglogCallback, NIMModifySingleMsglogCallback, NIMImportDbPrgCallback, NIMMessageStatusChangedCallback, NIMDeleteHistoryOnLineAsyncCallback, NIMDeleteMsglogSelfNotifyCallback, NIMDeleteHistoryMessagesNotifyCallback, NIMDeleteMessageSelfAsyncCallback, NIMQueryMessageIsThreadRootCallback, NIMQueryMsgAsyncParam, NIMQueryMessageOnlineCallback, NIMFullTextSearchOnlineAsyncCallback, NIMFullTextSearchOnlineAsyncParam, NIMQueryThreadHistoryMsgAsyncParam, NIMQueryThreadHistoryMsgCallback, NIMDeleteHistoryOnLineAsyncExCallback, DeleteHistoryMessagesNotifyItemInfo, DeleteMsglogSelfNotifyItemInfo, NIMMessageStatusChangedResult } from "./msglog_def";
 import nim from './nim';
 import ev from 'events';
 import { NIMSessionType } from "./session.def";
@@ -9,6 +9,38 @@ class NIMMsgLog extends ev.EventEmitter {
 	constructor() {
 		super();
 		this.msglog = new nim.MsgLog();
+	}
+
+	/* istanbul ignore next */
+	initEventHandler(): void {
+		/** (全局回调)注册全局的消息状态变更通知（目前只支持已读状态的通知）
+		 * @param cb				回调函数
+		 * @param json_extension	json扩展参数（备用，目前不需要）
+		 * @return void 无返回值
+		 * @note 
+		 * <pre>
+		 * 200:成功 
+		 * </pre>
+		 */
+		this.msglog.RegMessageStatusChangedCb((result: NIMMessageStatusChangedResult) => {
+			this.emit('onMessageStatusChanged', result);
+		}, "");
+
+		/** 注册单向删除消息记录通知回调
+		 * @param cb				单向删除消息记录通知回调
+		 * @return void 无返回值
+		 */
+		this.msglog.RegDeleteMsglogSelfNotify((result: Array<DeleteMsglogSelfNotifyItemInfo>) => {
+			this.emit('onDeleteMsglogSelf', result);
+		});
+
+		/** 注册删除某一会话的云端的历史记录通知回调[v8.0.0]
+		 * @param cb				删除某一会话的云端的历史记录通知回调
+		 * @return void 无返回值
+		 */
+		this.msglog.RegDeleteHistoryMessagesNotify((result: Array<DeleteHistoryMessagesNotifyItemInfo>) => {
+			this.emit('onDeleteHistoryMessages', result);
+		});
 	}
 
 	/** 根据消息ID查询本地（单条）消息
@@ -395,19 +427,6 @@ class NIMMsgLog extends ev.EventEmitter {
 		return this.msglog.QueryReceivedMsgReceiptSent(msg);
 	}
 
-	/** (全局回调)注册全局的消息状态变更通知（目前只支持已读状态的通知）
-	 * @param cb				回调函数
-	 * @param json_extension	json扩展参数（备用，目前不需要）
-	 * @return void 无返回值
-	 * @note 
-	 * <pre>
-	 * 200:成功 
-	 * </pre>
-	 */
-	regMessageStatusChangedCb(cb: NIMMessageStatusChangedCallback, json_extension: string): void {
-		return this.msglog.RegMessageStatusChangedCb(cb, json_extension);
-	}
-
 	/** 更新本地消息扩展字段内容
 	 * @param msg_id		消息id
 	 * @param local_ext  本地扩展字段内容
@@ -424,13 +443,6 @@ class NIMMsgLog extends ev.EventEmitter {
 		cb: NIMModifySingleMsglogCallback,
 		json_extension: string): boolean {
 		return this.msglog.UpdateLocalExtAsync(msg_id, local_ext, cb, json_extension);
-	}
-
-	/** 反注册Msglog提供的所有回调
-	 * @return void 无返回值
-	 */
-	unregMsglogCb(): void {
-		return this.msglog.UnregMsglogCb();
 	}
 
 	/** 全部未读消息历史标记为已读
@@ -479,22 +491,6 @@ class NIMMsgLog extends ev.EventEmitter {
 		json_extension: string,
 		cb: NIMDeleteHistoryOnLineAsyncExCallback): void {
 		return this.msglog.DeleteHistoryOnlineAsyncEx(accid, to_type, needs_notify_self, json_extension, cb);
-	}
-
-	/** 注册单向删除消息记录通知回调
-	 * @param cb				单向删除消息记录通知回调
-	 * @return void 无返回值
-	 */
-	regDeleteMsglogSelfNotify(cb: NIMDeleteMsglogSelfNotifyCallback): void {
-		return this.msglog.RegDeleteMsglogSelfNotify(cb);
-	}
-
-	/** 注册删除某一会话的云端的历史记录通知回调[v8.0.0]
-	 * @param cb				删除某一会话的云端的历史记录通知回调
-	 * @return void 无返回值
-	 */
-	regDeleteHistoryMessagesNotify(cb: NIMDeleteHistoryMessagesNotifyCallback): void {
-		return this.msglog.RegDeleteHistoryMessagesNotify(cb);
 	}
 
 	/** 单向删除某条消息记录(同时删除本地与云端)

@@ -9,13 +9,17 @@ class NIMPassThroughProxy extends ev.EventEmitter {
         this.proxy = new nim.PassThroughProxy();
     }
 
-    /** 注册接受到 HTTP 透传消息的回调函数
-     * @param cb				要注册的回调函数
-     * @param json_extension	    拓展字段，暂时无用
-     */
-    regReceivedHttpMsgCb(cb: NIMReceivedHttpMsgCallback, json_extension: string): void {
-        return this.proxy.RegReceivedHttpMsgCb(cb, json_extension);
+    /* istanbul ignore next */
+    initEventHandler(): void {
+        /** 注册接受到 HTTP 透传消息的回调函数
+         * @param cb				要注册的回调函数
+         * @param json_extension	    拓展字段，暂时无用
+         */
+        this.proxy.RegReceivedHttpMsgCb((from_accid: string, body: string, timestamp: number) => {
+            this.emit('onReceivedHttpMsg', from_accid, body, timestamp);
+        }, "");
     }
+
 
     /** 发送一个透传 HTTP 请求
      * @param host		要发送的 HTTP 请求 Host 地址

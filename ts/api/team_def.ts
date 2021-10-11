@@ -293,8 +293,6 @@ export interface NIMTeamAPI {
 
     QueryTeamInfoOnlineAsync(tid: string, cb: NIMTeamEventCallback, json_extension: string): boolean;
 
-    UnregTeamCb(): void;
-
     MuteMemberAsync(tid: string,
         member_id: string,
         set_mute: boolean,

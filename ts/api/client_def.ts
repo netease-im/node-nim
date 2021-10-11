@@ -181,8 +181,6 @@ export interface NIMClientAPI {
 
 	CleanUp(json_extension: string): void;
 
-	// SetCallbackFunction(cb: Function): void;
-
 	GetSDKConfig(): NIMSDKConfig;
 
 	LoginCustomDataToJson(customData: string): string;
@@ -216,8 +214,6 @@ export interface NIMClientAPI {
 	GetSDKVersion(): string;
 
 	GetServerCurrentTime(cb: NIMGetServerCurrentTimeCallback, calcLocal: boolean): void;
-
-	UnregClientCb(): void;
 
 	GetCurrentUserAccount(): string;
 }

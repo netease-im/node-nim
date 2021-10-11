@@ -5,9 +5,7 @@ export enum NIMSendHttpRequestMethods {
 	kNIMHttpDelete
 };
 export interface NIMReceivedHttpMsgCallback {
-	from_accid: string,
-	body: string,
-	timestamp: number
+	(from_accid: string, body: string, timestamp: number): void
 }
 export interface NIMSendHttpRequestCallback {
 	res_code: number,

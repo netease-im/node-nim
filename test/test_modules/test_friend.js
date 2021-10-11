@@ -5,6 +5,11 @@ const friend = new NIM.Friend
 
 function testFriend(test_info) {
     describe('********************Friend********************', function () {
+        describe('#initEventHandler', function () {
+            it('initEventHandler', function () {
+                friend.initEventHandler()
+            })
+        })
         describe('#Request', function () {
             it('friend request should return 200', function (done) {
                 const result = friend.request(test_info.assistUser, 1, 'Request msg', (res_code) => {
@@ -12,11 +17,6 @@ function testFriend(test_info) {
                     done()
                 }, '')
                 assert.strictEqual(result, true)
-            })
-        })
-        describe('#RegChangeCb', function () {
-            it('regChangeCb', function () {
-                friend.regChangeCb(function (result) { }, '')
             })
         })
         describe('#Update', function () {
@@ -73,11 +73,6 @@ function testFriend(test_info) {
                     done()
                 })
                 assert.strictEqual(result, true)
-            })
-        })
-        describe('#UnregFriendCb', function () {
-            it('unregFriendCb', function () {
-                friend.unregFriendCb()
             })
         })
     })

@@ -1,4 +1,4 @@
-import { NIMTalkAPI, NIMMessage, NIMSendMsgAckCallback, NIMFileUpPrgCallback, NIMReceiveMsgCallback, NIMReceiveMsgsCallback, NIMRecallMsgsCallback, NIMReceiveBroadcastMsgCallback, NIMReceiveBroadcastMsgsCallback, NIMRecallMsgParam, NIMTeamNotificationFilterCallback, NIMMessageFilterCallback } from "./talk_def";
+import { NIMTalkAPI, NIMMessage, NIMSendMsgAckCallback, NIMFileUpPrgCallback, NIMReceiveMsgCallback, NIMReceiveMsgsCallback, NIMRecallMsgsCallback, NIMReceiveBroadcastMsgCallback, NIMReceiveBroadcastMsgsCallback, NIMRecallMsgParam, NIMTeamNotificationFilterCallback, NIMMessageFilterCallback, NIMBroadcastMessage, NIMRecallMsgNotify, NIMSendMessageArc } from "./talk_def";
 import { NIMMessageType } from './msglog_def';
 import nim from './nim';
 import ev from 'events';
@@ -10,27 +10,119 @@ class NIMTalk extends ev.EventEmitter {
         this.talk = new nim.Talk();
     }
 
-    /** (全局回调)注册发送消息回调函数 （必须全局注册,统一接受回调后分发消息到具体的会话。注意：客户端发包之后,服务器不一定会返回！！！）
+    /* istanbul ignore next */
+    initEventHandler(): void {
+        /** (全局回调)注册发送消息回调函数 （必须全局注册,统一接受回调后分发消息到具体的会话。注意：客户端发包之后,服务器不一定会返回！！！）
+         * @param json_extension json扩展参数（备用,目前不需要）
+         * @param cb		发送消息的回调函数
+         * @return void 无返回值
+         * @note 
+         * <pre>
+         * 200:成功
+         * 408:请求过程超时
+         * 414:参数错误
+         * 802:没有权限(群错误码)
+         * 811:强推列表中帐号数量超限(群错误码)
+         * 812:群禁言(群错误码)
+         * 10200:发送文件消息，NOS上传暂停
+         * 10404:本地资源不存在
+         * 10414:本地错误码，参数错误
+         * 10502:发送消息，上传NOS失败
+         * </pre>
+         */
+        this.talk.RegSendMsgCb((result: NIMSendMessageArc) => {
+            this.emit('onSendMsg', result);
+        }, "");
+
+        /** (全局回调)注册接收消息回调 （建议全局注册,统一接受回调后分发消息到具体的会话）
+         * @param json_extension json扩展参数（备用,目前不需要）
+         * @param cb		接收消息的回调函数
+         * @return void 无返回值
+         * @note 
+         * <pre>
+         * 200:成功
+         * 10414:本地错误码，参数错误
+         * 10417:本地错误码，对象已经存在/重复操作
+         * </pre>
+         */
+        this.talk.RegReceiveCb((result: NIMMessage) => {
+            this.emit('onReceiveMsg', result);
+        }, "");
+
+        /** (全局回调)注册批量接收消息回调 （建议全局注册,统一接受回调后分发消息到具体的会话）
+         * @param json_extension json扩展参数（备用,目前不需要）
+         * @param cb		接收消息的回调函数
+         * @return void 无返回值
+         * @note 
+         * <pre>
+         * 200:成功
+         * </pre>
+         */
+        this.talk.RegReceiveMessagesCb((result: Array<NIMMessage>) => {
+            this.emit('onReceiveMessages', result);
+        }, "");
+
+        /** (全局回调)注册群通知过滤接口 （堵塞线程，谨慎使用，避免耗时行为）
+         * @param json_extension json扩展参数（备用,目前不需要）
+         * @param filter	过滤接口
+         * @return void 无返回值
+         */
+        this.talk.RegTeamNotificationFilter((result: NIMMessage) => {
+            this.emit('onTeamNotification', result);
+        }, "");
+
+
+        /** (全局回调)注册接收广播消息回调 （全局注册）
+         * @param json_extension json扩展参数（备用,目前不需要）
+         * @param cb		接收消息的回调函数
+         * @return void 无返回值
+         * @note 
+         * <pre>
+         * 200:成功
+         * 10414:本地错误码，参数错误
+         * 10417:本地错误码，对象已经存在/重复操作
+         * </pre>
+         */
+        this.talk.RegReceiveBroadcastMsgCb((result: NIMBroadcastMessage) => {
+            this.emit('onReceiveBroadcastMsg', result);
+        }, "");
+
+        /** (全局回调)注册批量接收广播消息回调 （全局注册）
+         * @param json_extension json扩展参数（备用,目前不需要）
+         * @param cb		接收消息的回调函数
+         * @return void 无返回值
+         * @note 
+         * <pre>
+         * 200:成功
+         * 10414:本地错误码，参数错误
+         * 10417:本地错误码，对象已经存在/重复操作
+         * </pre>
+         */
+        this.talk.RegReceiveBroadcastMsgsCb((result: Array<NIMBroadcastMessage>) => {
+            this.emit('onReceiveBroadcastMsgs', result);
+        }, "");
+
+        /** (全局回调)注册消息回调通知接口
+         * @param[in] json_extension json扩展参数（备用,目前不需要）
+         * @param[in] cb	回调
+         * @return void 无返回值
+         * @note 
+         * <pre>
+         * 200:成功
+         * </pre>
+         */
+        this.talk.RegRecallMsgsCb((rescode: number, result: Array<NIMRecallMsgNotify>) => {
+            this.emit('onRecallMsgs', rescode, result);
+        }, "");
+    }
+
+    /** (全局回调)注册消息过滤接口 （堵塞线程，谨慎使用，避免耗时行为）
      * @param json_extension json扩展参数（备用,目前不需要）
-     * @param cb		发送消息的回调函数
+     * @param filter    过滤接口
      * @return void 无返回值
-     * @note 
-     * <pre>
-     * 200:成功
-     * 408:请求过程超时
-     * 414:参数错误
-     * 802:没有权限(群错误码)
-     * 811:强推列表中帐号数量超限(群错误码)
-     * 812:群禁言(群错误码)
-     * 10200:发送文件消息，NOS上传暂停
-     * 10404:本地资源不存在
-     * 10414:本地错误码，参数错误
-     * 10502:发送消息，上传NOS失败
-     * </pre>
      */
-    regSendMsgCb(cb: NIMSendMsgAckCallback,
-        json_extension: string): void {
-        return this.talk.RegSendMsgCb(cb, json_extension);
+    regMessageFilter(cb: NIMMessageFilterCallback, json_extension: string): void {
+        return this.talk.RegMessageFilter(cb, json_extension);
     }
 
     /** 发送消息
@@ -55,95 +147,6 @@ class NIMTalk extends ev.EventEmitter {
         type: NIMMessageType,
         json_extension: string): void {
         return this.talk.StopSendMsg(clientMsgId, type, json_extension);
-    }
-
-    /** (全局回调)注册接收消息回调 （建议全局注册,统一接受回调后分发消息到具体的会话）
-     * @param json_extension json扩展参数（备用,目前不需要）
-     * @param cb		接收消息的回调函数
-     * @return void 无返回值
-     * @note 
-     * <pre>
-     * 200:成功
-     * 10414:本地错误码，参数错误
-     * 10417:本地错误码，对象已经存在/重复操作
-     * </pre>
-     */
-    regReceiveCb(cb: NIMReceiveMsgCallback, json_extension: string): void {
-        return this.talk.RegReceiveCb(cb, json_extension);
-    }
-
-    /** (全局回调)注册批量接收消息回调 （建议全局注册,统一接受回调后分发消息到具体的会话）
-     * @param json_extension json扩展参数（备用,目前不需要）
-     * @param cb		接收消息的回调函数
-     * @return void 无返回值
-     * @note 
-     * <pre>
-     * 200:成功
-     * </pre>
-     */
-    regReceiveMessagesCb(cb: NIMReceiveMsgsCallback, json_extension: string): void {
-        return this.talk.RegReceiveMessagesCb(cb, json_extension);
-    }
-
-    /** (全局回调)注册群通知过滤接口 （堵塞线程，谨慎使用，避免耗时行为）
-     * @param json_extension json扩展参数（备用,目前不需要）
-     * @param filter	过滤接口
-     * @return void 无返回值
-     */
-    regTeamNotificationFilter(cb: NIMTeamNotificationFilterCallback, json_extension: string): void {
-        return this.talk.RegTeamNotificationFilter(cb, json_extension);
-    }
-
-    /** (全局回调)注册消息过滤接口 （堵塞线程，谨慎使用，避免耗时行为）
-     * @param json_extension json扩展参数（备用,目前不需要）
-     * @param filter	过滤接口
-     * @return void 无返回值
-     */
-    regMessageFilter(cb: NIMMessageFilterCallback, json_extension: string): void {
-        return this.talk.RegMessageFilter(cb, json_extension);
-    }
-
-    /** (全局回调)注册接收广播消息回调 （全局注册）
-     * @param json_extension json扩展参数（备用,目前不需要）
-     * @param cb		接收消息的回调函数
-     * @return void 无返回值
-     * @note 
-     * <pre>
-     * 200:成功
-     * 10414:本地错误码，参数错误
-     * 10417:本地错误码，对象已经存在/重复操作
-     * </pre>
-     */
-    regReceiveBroadcastMsgCb(cb: NIMReceiveBroadcastMsgCallback, json_extension: string): void {
-        return this.talk.RegReceiveBroadcastMsgCb(cb, json_extension);
-    }
-
-    /** (全局回调)注册批量接收广播消息回调 （全局注册）
-     * @param json_extension json扩展参数（备用,目前不需要）
-     * @param cb		接收消息的回调函数
-     * @return void 无返回值
-     * @note 
-     * <pre>
-     * 200:成功
-     * 10414:本地错误码，参数错误
-     * 10417:本地错误码，对象已经存在/重复操作
-     * </pre>
-     */
-    regReceiveBroadcastMsgsCb(cb: NIMReceiveBroadcastMsgsCallback, json_extension: string): void {
-        return this.talk.RegReceiveBroadcastMsgsCb(cb, json_extension);
-    }
-
-    /** (全局回调)注册消息回调通知接口
-     * @param[in] json_extension json扩展参数（备用,目前不需要）
-     * @param[in] cb	回调
-     * @return void 无返回值
-     * @note 
-     * <pre>
-     * 200:成功
-     * </pre>
-     */
-    regRecallMsgsCb(cb: NIMRecallMsgsCallback, json_extension: string): void {
-        return this.talk.RegRecallMsgsCb(cb, json_extension);
     }
 
     /** 撤回消息
@@ -183,13 +186,6 @@ class NIMTalk extends ev.EventEmitter {
      */
     replyMessage(msg: NIMMessage, jason_obj: any): void {
         return this.talk.ReplyMessage(msg, jason_obj);
-    }
-
-    /** 反注册Talk提供的所有回调
-     * @return void 无返回值
-     */
-    unregTalkCb(): void {
-        return this.talk.UnregTalkCb();
     }
 }
 

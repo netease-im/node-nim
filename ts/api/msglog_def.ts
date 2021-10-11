@@ -395,8 +395,6 @@ export interface NIMMsgLogAPI {
 		cb: NIMModifySingleMsglogCallback,
 		json_extension: string): boolean;
 
-	UnregMsglogCb(): void;
-
 	ReadAllAsync(cb: NIMDBFunctionCallback, json_extension: string): boolean;
 
 	DeleteHistoryOnlineAsync(accid: string,

@@ -6,18 +6,9 @@ const user = new NIM.User
 function testUser(test_info) {
     describe('********************User********************', function () {
         let myNameCard
-        describe('#regSpecialRelationshipChangedCb', function () {
-            it('regSpecialRelationshipChangedCb', function () {
-                user.regSpecialRelationshipChangedCb(function (result) {
-
-                }, '')
-            })
-        })
-        describe('#regUserNameCardChangedCb', function () {
-            it('regUserNameCardChangedCb', function () {
-                user.regUserNameCardChangedCb(function (result) {
-
-                }, '')
+        describe('#initEventHandler', function () {
+            it('initEventHandler', function () {
+                user.initEventHandler()
             })
         })
         describe('#UpdateMyUserNameCard', function () {
@@ -165,11 +156,6 @@ function testUser(test_info) {
         describe('#updatePushToken', function () {
             it('updatePushToken', function () {
                 user.updatePushToken('Node_test', 'Node_test', 0)
-            })
-        })
-        describe('#unregUserCb', function () {
-            it('unregUserCb', function () {
-                user.unregUserCb()
             })
         })
     })

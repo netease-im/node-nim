@@ -1,6 +1,6 @@
 import nim from './nim';
 import ev from 'events';
-import { NIMSessionAPI, NIMSessionType, NIMSessionChangeCallback, NIMQuerySessionListCallback, NIMQuerySessionDataCallback, NIMBadgeCountCallback, NIMDeleteSessionRoamingMessageCallback, NIMUnreadCountZeroInfo, NIMCancelStickTopSessionNotifyCallback, NIMSetToStickTopSessionNotifyCallback, NIMUpdateStickTopSessionNotifyCallback, NIMQueryStickTopSessionListCallback, NIMSetToStickTopSessionCallback, NIMUpdateStickTopSessionCallback, NIMCancelToStickTopSessionCallback, NIMQueryHasmoreRoammsgCallback, NIMQueryAllHasmoreRoammsgCallback, NIMUpdateHasmoreRoammsgCallback, NIMDeleteHasmoreRoammsgCallback, NIMSetMultiUnreadCountZeroAsyncCallback } from './session.def';
+import { NIMSessionAPI, NIMSessionType, NIMSessionChangeCallback, NIMQuerySessionListCallback, NIMQuerySessionDataCallback, NIMBadgeCountCallback, NIMDeleteSessionRoamingMessageCallback, NIMUnreadCountZeroInfo, NIMCancelStickTopSessionNotifyCallback, NIMSetToStickTopSessionNotifyCallback, NIMUpdateStickTopSessionNotifyCallback, NIMQueryStickTopSessionListCallback, NIMSetToStickTopSessionCallback, NIMUpdateStickTopSessionCallback, NIMCancelToStickTopSessionCallback, NIMQueryHasmoreRoammsgCallback, NIMQueryAllHasmoreRoammsgCallback, NIMUpdateHasmoreRoammsgCallback, NIMDeleteHasmoreRoammsgCallback, NIMSetMultiUnreadCountZeroAsyncCallback, NIMSessionData } from './session.def';
 import { NIMMessageType } from './msglog_def';
 import { NIMMessage } from "./talk_def";
 
@@ -11,54 +11,57 @@ class NIMSession extends ev.EventEmitter {
         this.session = new nim.Session();
     }
 
-    /** (全局回调)注册最近会话列表项变更通知
-     * @param json_extension json扩展参数（备用，目前不需要）
-     * @param cb			最近会话列表项变更的回调函数
-     * @return void 无返回值
-     * @note 
-     * <pre>
-     * 200:成功
-     * </pre>
-     */
-    regChangeCb(cb: NIMSessionChangeCallback, json_extension: string): void {
-        return this.session.RegChangeCb(cb, json_extension);
-    }
+    /* istanbul ignore next */
+    initEventHandler(): void {
+        /** (全局回调)注册最近会话列表项变更通知
+         * @param json_extension json扩展参数（备用，目前不需要）
+         * @param cb			最近会话列表项变更的回调函数
+         * @return void 无返回值
+         * @note 
+         * <pre>
+         * 200:成功
+         * </pre>
+         */
+        this.session.RegChangeCb((rescode: number, result: NIMSessionData, count: number) => {
+            this.emit('onChange', rescode, result, count);
+        }, "");
 
-    /** (全局回调)注册app角标计数回调（仅iOS有效）
-     * @param json_extension json扩展参数（备用，目前不需要）
-     * @param cb    app角标未读计数回调函数
-     * @return void 无返回值
-     * @note 
-     * <pre>
-     * 200:成功
-     * </pre>
-     */
-    regBadgeCountCb(cb: NIMBadgeCountCallback, json_extension: string): void {
-        return this.session.RegBadgeCountCb(cb, json_extension);
-    }
+        /** (全局回调)注册app角标计数回调（仅iOS有效）
+         * @param json_extension json扩展参数（备用，目前不需要）
+         * @param cb    app角标未读计数回调函数
+         * @return void 无返回值
+         * @note 
+         * <pre>
+         * 200:成功
+         * </pre>
+         */
+        this.session.RegBadgeCountCb((result: string) => {
+            this.emit('onBadgeCount', result);
+        }, "");
 
-    /** (全局回调)注册置顶会话通知回调
-     * @param cb			置顶会话通知回调模板
-     * @return void 无返回值
-     */
-    regSetToStickTopSessionNotifyCB(cb: NIMSetToStickTopSessionNotifyCallback): void {
-        return this.session.RegSetToStickTopSessionNotifyCB(cb);
-    }
+        /** (全局回调)注册置顶会话通知回调
+         * @param cb			置顶会话通知回调模板
+         * @return void 无返回值
+         */
+        this.session.RegSetToStickTopSessionNotifyCB((result: string) => {
+            this.emit('onSetSessionStickTopNotify', result);
+        });
 
-    /** (全局回调)注册取消置顶会话通知回调
-     * @param cb			取消置顶会话通知回调模板
-     * @return void 无返回值
-     */
-    regCancelStickTopSessionNotifyCB(cb: NIMCancelStickTopSessionNotifyCallback): void {
-        return this.session.RegCancelStickTopSessionNotifyCB(cb);
-    }
+        /** (全局回调)注册取消置顶会话通知回调
+         * @param cb			取消置顶会话通知回调模板
+         * @return void 无返回值
+         */
+        this.session.RegCancelStickTopSessionNotifyCB((session_id: string, session_type: NIMSessionType) => {
+            this.emit('onCancelStickTopSessionNotify', session_id, session_type);
+        });
 
-    /** (全局回调)注册更新置顶会话通知回调
-     * @param cb			更新置顶会话通知回调模板
-     * @return void 无返回值
-     */
-    regUpdateStickTopSessionNotifyCB(cb: NIMUpdateStickTopSessionNotifyCallback): void {
-        return this.session.RegUpdateStickTopSessionNotifyCB(cb);
+        /** (全局回调)注册更新置顶会话通知回调
+         * @param cb			更新置顶会话通知回调模板
+         * @return void 无返回值
+         */
+        this.session.RegUpdateStickTopSessionNotifyCB((result: string) => {
+            this.emit('onUpdateStickTopSessionNotify', result);
+        });
     }
 
     /** 查询置顶会话列表
@@ -308,13 +311,6 @@ class NIMSession extends ev.EventEmitter {
      */
     deleteHasmoreRoammsg(session_id: string, to_type: NIMSessionType, cb: NIMDeleteHasmoreRoammsgCallback): void {
         return this.session.DeleteHasmoreRoammsg(session_id, to_type, cb);
-    }
-
-    /** 反注册Session提供的所有回调
-     * @return void 无返回值
-     */
-    unregSessionCb(): void {
-        return this.session.UnregSessionCb();
     }
 }
 

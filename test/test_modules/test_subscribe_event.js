@@ -5,16 +5,9 @@ const subscribe_event = new NIM.SubscribeEvent
 
 function testSubscribeEvent(test_info) {
     describe('********************SubscribeEvent********************', function () {
-        describe('#regPushEventCb', function () {
-            it('regPushEventCb', function () {
-                subscribe_event.regPushEventCb(function (rescode, result) {
-                }, '')
-            })
-        })
-        describe('#regBatchPushEventCb', function () {
-            it('regBatchPushEventCb', function () {
-                subscribe_event.regBatchPushEventCb(function (rescode, result) {
-                }, '')
+        describe('#initEventHandler', function () {
+            it('initEventHandler', function () {
+                subscribe_event.initEventHandler()
             })
         })
         describe('#publish', function () {

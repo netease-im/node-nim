@@ -5,11 +5,9 @@ const pass_through_proxy = new NIM.PassThroughProxy
 
 function testPassThroughProxy(test_info) {
     describe('********************PassThroughProxy********************', function () {
-        describe('#regReceivedHttpMsgCb', function () {
-            it('regReceivedHttpMsgCb', function () {
-                pass_through_proxy.regReceivedHttpMsgCb(function (from_accid, body, timestamp) {
-
-                })
+        describe('#initEventHandler', function () {
+            it('initEventHandler', function () {
+                pass_through_proxy.initEventHandler()
             })
         })
         describe('#sendHttpRequest', function () {

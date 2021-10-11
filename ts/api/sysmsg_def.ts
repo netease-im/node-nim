@@ -103,6 +103,4 @@ export interface NIMSysMsgAPI {
 		json_extension: string): boolean;
 
 	DeleteByTypeAsync(type: NIMSysMsgType, cb: NIMNotifySysmsgResCallback, json_extension: string): boolean;
-
-	UnregSysmsgCb(): void;
 }

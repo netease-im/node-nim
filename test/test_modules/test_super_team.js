@@ -5,11 +5,9 @@ const super_team = new NIM.SuperTeam
 
 function testSuperTeam(test_info) {
     describe('********************SuperTeam********************', function () {
-        describe('#regTeamEventCb', function () {
-            it('regTeamEventCb', function () {
-                super_team.regTeamEventCb(function (result) {
-
-                }, '')
+        describe('#initEventHandler', function () {
+            it('initEventHandler', function () {
+                super_team.initEventHandler()
             })
         })
         describe('#inviteAsync', function () {
@@ -189,11 +187,6 @@ function testSuperTeam(test_info) {
                 super_team.leaveAsync(test_info.superTeamID, function (result) {
                     done()
                 }, '')
-            })
-        })
-        describe('#unregTeamCb', function () {
-            it('unregTeamCb', function () {
-                super_team.unregTeamCb()
             })
         })
     })

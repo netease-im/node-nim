@@ -1,12 +1,23 @@
 import nim from './nim';
 import ev from 'events';
-import { NIMGlobalAPI, NIMProxyType, NIMCachedFileType, NIMExceptionCallback, NIMDetectProxyCallback, NIMGetCachedFileInfoCallback, NIMDeleteCachedFileCallback, NIMSDKFeedbackCallback, NIMSDKDBErrorCallback, NIMUploadSDKLogCallback } from './global_def';
+import { NIMGlobalAPI, NIMProxyType, NIMCachedFileType, NIMExceptionCallback, NIMDetectProxyCallback, NIMGetCachedFileInfoCallback, NIMDeleteCachedFileCallback, NIMSDKFeedbackCallback, NIMSDKDBErrorCallback, NIMUploadSDKLogCallback, NINSDKDBErrorInfo } from './global_def';
 
 class NIMGlobal extends ev.EventEmitter {
     global: NIMGlobalAPI;
     constructor() {
         super();
         this.global = new nim.Global();
+    }
+
+    /* istanbul ignore next */
+    initEventHandler(): void {
+        /** 注册 SDK DB操作出错时的回调
+         * @param cb SDKDBErrorCallback 出错时的回调
+         * @return void 无返回值
+         */
+        this.global.RegSDKDBError((result: NINSDKDBErrorInfo) => {
+            this.emit('onSDKDBError', result);
+        });
     }
 
     /** 注册输出系统环境异常的回调
@@ -75,14 +86,6 @@ class NIMGlobal extends ev.EventEmitter {
      */
     sdkFeedbackAsync(url: string, cb: NIMSDKFeedbackCallback, json_extension: string): void {
         return this.global.SDKFeedbackAsync(url, cb, json_extension);
-    }
-
-    /** 注册 SDK DB操作出错时的回调
-     * @param cb SDKDBErrorCallback 出错时的回调
-     * @return void 无返回值
-     */
-    regSDKDBError(cb: NIMSDKDBErrorCallback): void {
-        return this.global.RegSDKDBError(cb);
     }
 
     /** 上传SDK日志到服务器

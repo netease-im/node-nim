@@ -5,18 +5,9 @@ const sysmsg = new NIM.SysMsg
 function testSysmsg(test_info) {
     describe('********************Sysmsg********************', function () {
         const client_msg_id = new Date().getTime()
-        describe('#regSysmsgCb', function () {
-            it('regSysmsgCb', function () {
-                sysmsg.regSysmsgCb(function (result) {
-
-                }, '')
-            })
-        })
-        describe('#regSendCustomSysmsgCb', function () {
-            it('regSendCustomSysmsgCb', function () {
-                sysmsg.regSendCustomSysmsgCb(function (result) {
-
-                }, '')
+        describe('#initEventHandler', function () {
+            it('initEventHandler', function () {
+                sysmsg.initEventHandler()
             })
         })
         describe('#sendCustomNotificationMsg', function () {
@@ -87,11 +78,6 @@ function testSysmsg(test_info) {
                 sysmsg.deleteAllAsync(function (res_code, unread_count) {
                     done()
                 }, '')
-            })
-        })
-        describe('#unregSysmsgCb', function () {
-            it('unregSysmsgCb', function () {
-                sysmsg.unregSysmsgCb()
             })
         })
     })

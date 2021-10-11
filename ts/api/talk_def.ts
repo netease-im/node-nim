@@ -125,7 +125,7 @@ export interface NIMTeamNotificationFilterCallback {
 }
 
 export interface NIMMessageFilterCallback {
-	(result: NIMMessage): void;
+	(result: NIMMessage): boolean;
 }
 
 export interface NIMTalkAPI {
@@ -162,6 +162,4 @@ export interface NIMTalkAPI {
 	GetAttachmentPathFromMsg(msg: NIMMessage): string;
 
 	ReplyMessage(msg: NIMMessage, jason_obj: any): void;
-
-	UnregTalkCb(): void;
 }

@@ -6,6 +6,11 @@ const nos = new NIM.NOS
 function testNos(test_info) {
     describe('********************Nos********************', function () {
         let file_url
+        describe('#initEventHandler', function () {
+            it('initEventHandler', function () {
+                nos.initEventHandler()
+            })
+        })
         describe('#initConfig', function () {
             it('initConfig', function (done) {
                 var param = new Map()
@@ -14,27 +19,6 @@ function testNos(test_info) {
                     param
                 }, function (result) {
                     done()
-                })
-            })
-        })
-        describe('#regDownloadCb', function () {
-            it('regDownloadCb', function () {
-                const result = nos.regDownloadCb(function (res_code, file_path, call_id, res_id) {
-
-                })
-            })
-        })
-        describe('#regUploadCb', function () {
-            it('regUploadCb', function () {
-                const result = nos.regUploadCb(function (res_code, result) {
-
-                })
-            })
-        })
-        describe('#regDownloadCb', function () {
-            it('regDownloadCb', function () {
-                const result = nos.regDownloadCb(function (res_code, file_path, call_id, res_id) {
-
                 })
             })
         })
@@ -85,11 +69,6 @@ function testNos(test_info) {
         describe('#setSupportQuickTrans', function () {
             it('setSupportQuickTrans', function () {
                 nos.setSupportQuickTrans(true)
-            })
-        })
-        describe('#unregNosCb', function () {
-            it('unregNosCb', function () {
-                nos.unregNosCb()
             })
         })
     })

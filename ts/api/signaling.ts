@@ -9,48 +9,51 @@ class NIMSignaling extends ev.EventEmitter {
         this.signaling = new nim.Signaling();
     }
 
-    /** 注册独立信令的在线通知回调接口
-     * @param cb 通知回调，返回SignalingNotifyInfo的子类
-     * @return void 无返回值
-     */
-    regOnlineNotifyCb(cb: def.SignalingNotifyCallback): void {
-        this.signaling.RegOnlineNotifyCb(cb);
-    }
+    /* istanbul ignore next */
+    initEventHandler(): void {
+        /** 注册独立信令的在线通知回调接口
+         * @param cb 通知回调，返回SignalingNotifyInfo的子类
+         * @return void 无返回值
+         */
+        this.signaling.RegOnlineNotifyCb((info: def.SignalingNotifyInfo) => {
+            this.emit('onOnlineNotify', info);
+        });
 
-    /** 注册独立信令的多端同步通知回调接口，用于通知信令相关的多端同步通知。比如自己在手机端接受邀请，PC端会同步收到这个通知
-     * @param cb 通知回调，返回SignalingNotifyInfo的子类
-     * @return void 无返回值
-     */
-    regMutilClientSyncNotifyCb(cb: def.SignalingNotifyCallback): void {
-        this.signaling.RegMutilClientSyncNotifyCb(cb);
-    }
+        /** 注册独立信令的多端同步通知回调接口，用于通知信令相关的多端同步通知。比如自己在手机端接受邀请，PC端会同步收到这个通知
+         * @param cb 通知回调，返回SignalingNotifyInfo的子类
+         * @return void 无返回值
+         */
+        this.signaling.RegMutilClientSyncNotifyCb((info: def.SignalingNotifyInfo) => {
+            this.emit('onMutilClientSyncNotify', info);
+        });
 
-    /** 注册独立信令的离线通知回调接口
-     * @note 需要用户在调用相关接口时，打开存离线的开关。如果用户已经接收消息，该通知会在服务器标记已读，之后不会再收到该消息。
-     * @param cb 通知回调，返回SignalingNotifyInfo子类的list
-     * @return void 无返回值
-     */
-    regOfflineNotifyCb(cb: def.SignalingNotifyListCallback): void {
-        this.signaling.RegOfflineNotifyCb(cb);
-    }
+        /** 注册独立信令的离线通知回调接口
+         * @note 需要用户在调用相关接口时，打开存离线的开关。如果用户已经接收消息，该通知会在服务器标记已读，之后不会再收到该消息。
+         * @param cb 通知回调，返回SignalingNotifyInfo子类的list
+         * @return void 无返回值
+         */
+        this.signaling.RegOfflineNotifyCb((info_list: Array<def.SignalingNotifyInfo>) => {
+            this.emit('onOfflineNotify', info_list);
+        });
 
-    /** 注册独立信令的频道列表同步回调接口
-     * @note 在login或者relogin后，会通知该设备账号还未退出的频道列表，用于同步；如果没有在任何频道中，也会返回该同步通知，list为空
-     * @param cb 通知回调
-     * @return void 无返回值
-     */
-    regChannelsSyncCb(cb: def.SignalingChannelListCallback): void {
-        this.signaling.RegChannelsSyncCb(cb);
-    }
+        /** 注册独立信令的频道列表同步回调接口
+         * @note 在login或者relogin后，会通知该设备账号还未退出的频道列表，用于同步；如果没有在任何频道中，也会返回该同步通知，list为空
+         * @param cb 通知回调
+         * @return void 无返回值
+         */
+        this.signaling.RegChannelsSyncCb((info_list: Array<def.SignalingChannelDetailedinfo>) => {
+            this.emit('onChannelsSync', info_list);
+        });
 
-    /** 注册独立信令的频道成员变更同步回调接口
-     * @note 用于同步频道内的成员列表变更，当前该接口为定时接口，2分钟同步一次，成员有变化时才上报。
-     * 由于一些特殊情况，导致成员在离开或掉线前没有主动调用离开频道接口，使得该成员的离开没有对应的离开通知事件，由该回调接口【频道成员变更同步通知】告知用户。
-     * @param cb 通知回调
-     * @return void 无返回值
-     */
-    regMembersSyncCb(cb: def.SignalingChannelCallback): void {
-        this.signaling.RegMembersSyncCb(cb);
+        /** 注册独立信令的频道成员变更同步回调接口
+         * @note 用于同步频道内的成员列表变更，当前该接口为定时接口，2分钟同步一次，成员有变化时才上报。
+         * 由于一些特殊情况，导致成员在离开或掉线前没有主动调用离开频道接口，使得该成员的离开没有对应的离开通知事件，由该回调接口【频道成员变更同步通知】告知用户。
+         * @param cb 通知回调
+         * @return void 无返回值
+         */
+        this.signaling.RegMembersSyncCb((info: def.SignalingChannelDetailedinfo) => {
+            this.emit('onMembersSync', info);
+        });
     }
 
     /** 独立信令 创建频道

@@ -180,6 +180,4 @@ export interface NIMSessionAPI {
 	UpdateHasmoreRoammsg(msg: NIMMessage, cb: NIMUpdateHasmoreRoammsgCallback): void;
 
 	DeleteHasmoreRoammsg(session_id: string, to_type: NIMSessionType, cb: NIMDeleteHasmoreRoammsgCallback): void;
-
-	UnregSessionCb(): void;
 }

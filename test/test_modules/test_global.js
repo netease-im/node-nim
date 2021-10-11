@@ -5,6 +5,11 @@ const global = new NIM.Global
 
 function testGlobal(test_info) {
     describe('********************Global********************', function () {
+        describe('#initEventHandler', function () {
+            it('initEventHandler', function () {
+                global.initEventHandler()
+            })
+        })
         describe('#setProxy', function () {
             it('setProxy', function () {
                 global.setProxy(0, '', 0, '', '')
@@ -29,13 +34,6 @@ function testGlobal(test_info) {
                 global.sdkFeedbackAsync('', function (exception, log) {
 
                 }, '')
-            })
-        })
-        describe('#regSDKDBError', function () {
-            it('regSDKDBError', function () {
-                global.regSDKDBError(function (result) {
-
-                })
             })
         })
         describe('#getSDKCachedFileInfoAsync', function () {

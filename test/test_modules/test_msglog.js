@@ -7,6 +7,11 @@ function testMsglog(test_info) {
     describe('********************Msglog********************', function () {
         let signalMsgId = ''
         let signalMessage
+        describe('#initEventHandler', function () {
+            it('initEventHandler', function () {
+                msglog.initEventHandler()
+            })
+        })
         describe('#queryMsgOnlineAsync', function () {
             it('query messages online should return 200', function (done) {
                 const limit = 1
@@ -138,13 +143,6 @@ function testMsglog(test_info) {
                 }, '')
             })
         })
-        describe('#regMessageStatusChangedCb', function () {
-            it('regMessageStatusChangedCb', function () {
-                msglog.regMessageStatusChangedCb(function (result) {
-
-                }, '')
-            })
-        })
         describe('#setStatusAsync', function () {
             it('set signal msglog status should return 200', function (done) {
                 msglog.setStatusAsync(signalMsgId, 6, (res_code, messageId) => {
@@ -263,20 +261,6 @@ function testMsglog(test_info) {
                 }, function (importedCount, totalCount) { }, '')
             })
         })
-        describe('#regDeleteMsglogSelfNotify', function () {
-            it('regDeleteMsglogSelfNotify', function () {
-                msglog.regDeleteMsglogSelfNotify(function (result) {
-
-                })
-            })
-        })
-        describe('#regDeleteHistoryMessagesNotify', function () {
-            it('regDeleteHistoryMessagesNotify', function () {
-                msglog.regDeleteHistoryMessagesNotify(function (result) {
-
-                })
-            })
-        })
         describe('#queryMessageIsThreadRoot', function () {
             it('queryMessageIsThreadRoot', function (done) {
                 msglog.queryMessageIsThreadRoot(signalMsgId, function (res_code, client_id, is_root) {
@@ -355,11 +339,6 @@ function testMsglog(test_info) {
                 msglog.deleteMessageSelfAsync([signalMessage], [''], function (res_code) {
                     done()
                 })
-            })
-        })
-        describe('#unregMsglogCb', function () {
-            it('unregMsglogCb', function () {
-                msglog.unregMsglogCb()
             })
         })
     })

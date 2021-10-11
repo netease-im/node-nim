@@ -244,8 +244,6 @@ export interface NIMSuperTeamAPI {
 
     QueryTeamInfoOnlineAsync(tid: string, cb: NIMSuperTeamEventCallback, json_extension: string): boolean;
 
-    UnregTeamCb(): void;
-
     MuteMemberAsync(tid: string,
         member_id: string,
         set_mute: boolean,

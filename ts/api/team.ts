@@ -1,5 +1,5 @@
 import { NIMMessage } from "./talk_def";
-import { NIMTeamAPI, NIMTeamInfo, NIMTeamMemberProperty, NIMQueryAllMyTeamsCallback, NIMQueryAllMyTeamsInfoCallback, NIMQueryMyAllMemberInfosCallback, NIMQueryTeamMembersCallback, NIMQueryTeamMemberCallback, NIMQueryTeamInfoCallback, NIMTeamEventCallback, NIMQueryTeamMembersOnlineCallback, NIMQueryTeamMembersInvitorCallback, NIMQueryTeamsInfoCallback, NIMTeamMsgAckReadCallback, NIMGetTeamInfoBatchSFTransCallback, NIMGetTeamInfoListCallback, NIMUpdateTInfoLocalCallback } from './team_def';
+import { NIMTeamAPI, NIMTeamInfo, NIMTeamMemberProperty, NIMQueryAllMyTeamsCallback, NIMQueryAllMyTeamsInfoCallback, NIMQueryMyAllMemberInfosCallback, NIMQueryTeamMembersCallback, NIMQueryTeamMemberCallback, NIMQueryTeamInfoCallback, NIMTeamEventCallback, NIMQueryTeamMembersOnlineCallback, NIMQueryTeamMembersInvitorCallback, NIMQueryTeamsInfoCallback, NIMTeamMsgAckReadCallback, NIMGetTeamInfoBatchSFTransCallback, NIMGetTeamInfoListCallback, NIMUpdateTInfoLocalCallback, NIMTeamEvent } from './team_def';
 import nim from './nim';
 import ev from 'events';
 
@@ -10,13 +10,16 @@ class NIMTeam extends ev.EventEmitter {
         this.team = new nim.Team();
     }
 
-    /** (全局回调)统一注册接收群通知回调函数（创建群,收到邀请等群通知通过此接口广播，注意：服务器推送过来的群通知和APP发起请求的回调统一处理！）
-     * @param json_extension json扩展参数（备用，目前不需要）
-     * @param cb		群通知的回调函数
-     * @return void 无返回值
-     */
-    regTeamEventCb(cb: NIMTeamEventCallback, json_extension: string): void {
-        return this.team.RegTeamEventCb(cb, json_extension);
+    /* istanbul ignore next */
+    initEventHandler(): void {
+        /** (全局回调)统一注册接收群通知回调函数（创建群,收到邀请等群通知通过此接口广播，注意：服务器推送过来的群通知和APP发起请求的回调统一处理！）
+         * @param json_extension json扩展参数（备用，目前不需要）
+         * @param cb		群通知的回调函数
+         * @return void 无返回值
+         */
+        this.team.RegTeamEventCb((result: NIMTeamEvent) => {
+            this.emit('onTeamEvent', result);
+        }, "");
     }
 
     /** 创建群组
@@ -451,13 +454,6 @@ class NIMTeam extends ev.EventEmitter {
      */
     queryTeamInfoOnlineAsync(tid: string, cb: NIMTeamEventCallback, json_extension: string): boolean {
         return this.team.QueryTeamInfoOnlineAsync(tid, cb, json_extension);
-    }
-
-    /** 反注册Team提供的所有回调
-     * @return void 无返回值
-     */
-    unregTeamCb(): void {
-        return this.team.UnregTeamCb();
     }
 
     /** 禁言/解除禁言

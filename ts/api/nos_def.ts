@@ -133,6 +133,4 @@ export interface NIMNOSAPI {
 		json_extension: string): void;
 
 	SetSupportQuickTrans(quick: boolean): void;
-
-	UnregNosCb(): void;
 }

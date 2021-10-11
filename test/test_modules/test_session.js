@@ -6,18 +6,11 @@ const msglog = new NIM.MsgLog
 const talk = new NIM.Talk
 function testSession(test_info) {
     describe('********************Session********************', function () {
-        describe('#regChangeCb', function () {
-            it('regChangeCb', function () {
-                session.regChangeCb(function (rescode, result, count) {
-
-                }, '')
-            })
-        })
-        describe('#regBadgeCountCb', function () {
-            it('regBadgeCountCb', function () {
-                session.regBadgeCountCb(function (result) {
-
-                }, '')
+        describe('#initEventHandler', function () {
+            it('initEventHandler', function () {
+                session.initEventHandler()
+                talk.initEventHandler()
+                msglog.initEventHandler()
             })
         })
         describe('#queryLastFewSessionAsync', function () {
@@ -80,24 +73,6 @@ function testSession(test_info) {
                 }, '')
             })
         })
-        describe('#regSetToStickTopSessionNotifyCB', function () {
-            it('regSetToStickTopSessionNotifyCB', function () {
-                session.regSetToStickTopSessionNotifyCB(function (result) {
-                }, '')
-            })
-        })
-        describe('#regCancelStickTopSessionNotifyCB', function () {
-            it('regCancelStickTopSessionNotifyCB', function () {
-                session.regCancelStickTopSessionNotifyCB(function (session_id, session_type) {
-                }, '')
-            })
-        })
-        describe('#regUpdateStickTopSessionNotifyCB', function () {
-            it('regUpdateStickTopSessionNotifyCB', function () {
-                session.regUpdateStickTopSessionNotifyCB(function (result) {
-                }, '')
-            })
-        })
         describe('#setToStickTopSession', function () {
             it('set stick top session should return 200', function (done) {
                 session.setToStickTopSession(test_info.assistUser, 0, '', (res_code, stickSessionInfo) => {
@@ -153,7 +128,7 @@ function testSession(test_info) {
         })
         describe('#updateHasmoreRoammsg', function () {
             it('update session has more roaming msg should return 200', function (done) {
-                talk.regSendMsgCb((ack) => {
+                talk.once('onSendMsg', function (ack) {
                     msglog.queryMsgAsync(test_info.assistUser, 0, 1, 0, (res_code, sessionId, sessionType, result) => {
                         assert.strictEqual(res_code, 200)
                         const message = result.content[0]
@@ -165,8 +140,8 @@ function testSession(test_info) {
                             assert.strictEqual(res_code, 200)
                             done()
                         })
-                    }, '')
-                }, '')
+                    }, "")
+                })
                 talk.sendMsg({
                     to_type: 0,
                     to_accid: test_info.assistUser,
@@ -205,11 +180,6 @@ function testSession(test_info) {
                 session.deleteAllRecentSession(function (rescode, result, count) {
                     done()
                 }, '')
-            })
-        })
-        describe('#unregSessionCb', function () {
-            it('unregSessionCb', function () {
-                session.unregSessionCb()
             })
         })
     })

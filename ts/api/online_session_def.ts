@@ -58,6 +58,4 @@ export interface NIMOnlineSessionAPI {
     DeleteSession(param: Array<NIMDeleteOnlineSession>, cb: NIMDeleteOnlineSessionInfoCallback): void;
 
     RegSessionChanged(cb: NIMOnlineSessionChangedCallback): void;
-
-    UnregSessionOnLineServiceCb(): void;
 }

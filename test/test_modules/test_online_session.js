@@ -7,6 +7,11 @@ function testOnlineSession(test_info) {
     describe('********************OnlineSession********************', function () {
         let session_id
         let session_type
+        describe('#initEventHandler', function () {
+            it('initEventHandler', function () {
+                online_session.initEventHandler()
+            })
+        })
         describe('#querySessionList', function () {
             it('querySessionList', function (done) {
                 online_session.querySessionList(0, new Date().getTime(), false, 1, function (result) {
@@ -42,18 +47,6 @@ function testOnlineSession(test_info) {
                     assert.strictEqual(res_code, 200)
                     done()
                 })
-            })
-        })
-        describe('#regSessionChanged', function () {
-            it('regSessionChanged', function () {
-                online_session.regSessionChanged(function (result) {
-
-                })
-            })
-        })
-        describe('#unregSessionOnLineServiceCb', function () {
-            it('unregSessionOnLineServiceCb', function () {
-                online_session.unregSessionOnlineServiceCb()
             })
         })
     })

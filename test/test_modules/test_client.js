@@ -27,21 +27,11 @@ function iniClient(test_info) {
 
 function cleanupClient(test_info) {
     describe('********************NIM cleanup SDK********************', function () {
-        describe('#regDisconnectCb', function () {
-            it('regDisconnectCb', function () {
-                const sdkConfig = client.regDisconnectCb(function () { }, '')
-            })
-        })
         describe('#logout', function () {
             it('logout should return 200', function (done) {
                 client.logout(1, (errorCode) => {
                     done()
                 }, '')
-            })
-        })
-        describe('#unregClientCb', function () {
-            it('unregClientCb', function () {
-                client.unregClientCb()
             })
         })
         describe('#cleanUp', function () {
@@ -58,6 +48,11 @@ function cleanupClient(test_info) {
 
 function testClient(test_info) {
     describe('********************Client********************', function () {
+        describe('#initEventHandler', function () {
+            it('initEventHandler', function () {
+                client.initEventHandler()
+            })
+        })
         describe('#getSDKConfig', function () {
             it('get SDK config should return encrypt key: abcdefghijklmnopqrstuvwxyz012345', function () {
                 const sdkConfig = client.getSDKConfig()
@@ -65,20 +60,14 @@ function testClient(test_info) {
             })
         })
         describe('#relogin', function () {
-            it('regReloginCb', function () {
-                client.regReloginCb(function (result) { }, '')
-            })
-            it('regReloginRequestToeknCb', function () {
-                client.regReloginCb(function (result) { }, '')
-            })
             it('relogin', function () {
+                // client.on('onRelogin', function (result) {
+                //     done()
+                // })
                 client.relogin('')
             })
         })
         describe('#kickOtherClient', function () {
-            it('regKickoutCb', function () {
-                client.regKickoutCb(function (result) { }, '')
-            })
             it('kickOtherClient', function () {
                 client.kickOtherClient([''])
             })
@@ -95,18 +84,7 @@ function testClient(test_info) {
                 assert.strictEqual(json, "{\"custom_tag\":\"test\"}")
             })
         })
-        describe('#regMultispotLoginCb', function () {
-            it('regMultispotLoginCb', function () {
-                client.regMultispotLoginCb(function (result) { }, '')
-            })
-        })
         describe('#setMultiportPushConfigAsync', function () {
-            it('regSyncMultiportPushConfigCb', function () {
-                client.regSyncMultiportPushConfigCb(true, (rescode, open) => {
-                    assert.strictEqual(errorCode, 200)
-                    assert.strictEqual(result, true)
-                }, '')
-            })
             it('set multiport push config should return 200', function (done) {
                 client.setMultiportPushConfigAsync(true, (errorCode, result) => {
                     assert.strictEqual(errorCode, 200)

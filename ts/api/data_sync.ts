@@ -1,4 +1,4 @@
-import { NIMDataSyncAPI, NIMDataSyncCallback } from "./data_sync_def";
+import { NIMDataSyncAPI, NIMDataSyncStatus, NIMDataSyncType } from "./data_sync_def";
 import nim from './nim';
 import ev from 'events';
 
@@ -9,19 +9,15 @@ class NIMDataSync extends ev.EventEmitter {
         this.dataSync = new nim.DataSync();
     }
 
-    /** (全局回调)注册数据同步完成的回调函数
-     * @param cb 数据同步完成的回调函数
-     * @return void 无返回值
-     */
-    regCompleteCb(cb: NIMDataSyncCallback): void {
-        return this.dataSync.RegCompleteCb(cb);
-    }
-
-    /** 反注册DataSync提供的所有回调
-     * @return void 无返回值
-     */
-    unregDataSyncCb(): void {
-        return this.dataSync.UnregDataSyncCb();
+    /* istanbul ignore next */
+    initEventHandler(): void {
+        /** (全局回调)注册数据同步完成的回调函数
+         * @param cb 数据同步完成的回调函数
+         * @return void 无返回值
+         */
+        this.dataSync.RegCompleteCb((syncType: NIMDataSyncType, status: NIMDataSyncStatus, dataSyncInfo: string) => {
+            this.emit('onComplete', syncType, status, dataSyncInfo);
+        });
     }
 }
 

@@ -5,12 +5,12 @@ import {
     NIMLoginState,
     NIMLoginCallback,
     NIMLogoutCallback,
-    NIMKickoutCallback,
-    NIMMultispotCallback,
-    NIMKickotherCallback,
     NIMSyncMultiportPushConfigCallback,
     NIMGetServerCurrentTimeCallback,
-    NIMReloginRequestTokenCallback
+    NIMKickotherResult,
+    NIMLoginResult,
+    NIMMultispotResult,
+    NIMKickoutResult
 } from "./client_def";
 import nim from './nim';
 import ev from 'events';
@@ -20,6 +20,87 @@ class NIMClient extends ev.EventEmitter {
     constructor() {
         super();
         this.client = new nim.Client();
+    }
+
+    /* istanbul ignore next */
+    initEventHandler(): void {
+        /** (全局回调)注册NIM客户端自动重连回调。重连失败时，如果不是网络错误引起的（网络相关的错误号为kNIMResTimeoutError和kNIMResConnectionError），而是服务器返回了非kNIMResSuccess的错误号，
+         * 则说明重连的机制已经失效，需要APP层调用nim_client_logout执行注销操作并退回到登录界面后进行重新登录。
+         * @param cb 自动重连的回调函数
+         * @param json_extension json扩展参数（备用，目前不需要）
+         * @return void 无返回值
+         * @note 
+         * <pre>
+         * 200:成功
+         * 403:禁止操作
+         * 408:请求超时
+         * 414:参数错误
+         * 415:网络连接出现错误
+         * 416:频率超限
+         * 422:账号被禁用
+         * </pre>
+         */
+        this.client.RegReloginCb((result: NIMLoginResult) => {
+            this.emit('onRelogin', result)
+        }, "");
+
+        /** 如果登录类型模式默认类型，则注册该回调用于在重登陆时获取新的登录鉴权 token
+         * @param cb 上层用于生产 token 的回调函数
+         * @param json_extension json扩展参数（备用，目前不需要）
+         * @return void 无返回值
+         */
+        this.client.RegReloginRequestTokenCb((rescode: string) => {
+            this.emit('onReloginRequestToken', rescode)
+        }, "");
+
+        /** (全局回调)注册NIM客户端被踢回调
+         * @param cb 被踢的回调函数
+         * @param json_extension json扩展参数（备用，目前不需要）
+         * @return void 无返回值
+         */
+        this.client.RegKickoutCb((result: NIMKickoutResult) => {
+            this.emit('onKickout', result)
+        }, "");
+
+        /** (全局回调)注册NIM客户端掉线回调
+         * @param cb 掉线的回调函数
+         * @param json_extension json扩展参数（备用，目前不需要）
+         * @return void 无返回值
+         */
+        this.client.RegDisconnectCb(() => {
+            this.emit('onDisconnect')
+        }, "");
+
+        /** (全局回调)注册NIM客户端多点登录通知回调
+         * @param cb 多点登录通知的回调函数
+         * @param json_extension json扩展参数（备用，目前不需要）
+         * @return void 无返回值
+         */
+        this.client.RegMultispotLoginCb((result: NIMMultispotResult) => {
+            this.emit('onMultispotLogin', result)
+        }, "");
+
+        /** (全局回调)注册NIM客户端将本帐号的其他端踢下线结果回调
+         * @param cb 踢下线结果回调函数
+         * @param json_extension json扩展参数（备用，目前不需要）
+         * @return void 无返回值
+         * @note 
+         * <pre>
+         * 200:成功
+         * </pre>
+         */
+        this.client.RegKickOtherClientCb((result: NIMKickotherResult) => {
+            this.emit('onKickOtherClient', result)
+        }, "");
+
+        /** (全局回调)注册多端推送开关同步回调
+         * @param cb 回调函数
+         * @param json_extension json扩展参数（备用，目前不需要）
+         * @return void 无返回值
+         */
+        this.client.RegSyncMultiportPushConfigCb((rescode: number, open: boolean) => {
+            this.emit('onSyncMultiportPushConfig', rescode, open)
+        }, "");
     }
 
     /** NIM SDK初始化
@@ -128,84 +209,6 @@ class NIMClient extends ev.EventEmitter {
         return this.client.KickOtherClient(clients);
     }
 
-    /** (全局回调)注册NIM客户端自动重连回调。重连失败时，如果不是网络错误引起的（网络相关的错误号为kNIMResTimeoutError和kNIMResConnectionError），而是服务器返回了非kNIMResSuccess的错误号，
-     * 则说明重连的机制已经失效，需要APP层调用nim_client_logout执行注销操作并退回到登录界面后进行重新登录。
-     * @param cb 自动重连的回调函数
-     * @param json_extension json扩展参数（备用，目前不需要）
-     * @return void 无返回值
-     * @note 
-     * <pre>
-     * 200:成功
-     * 403:禁止操作
-     * 408:请求超时
-     * 414:参数错误
-     * 415:网络连接出现错误
-     * 416:频率超限
-     * 422:账号被禁用
-     * </pre>
-     */
-    regReloginCb(cb: NIMLoginCallback, json_extension: string): void {
-        return this.client.RegReloginCb(cb, json_extension);
-    }
-
-    /** 如果登录类型模式默认类型，则注册该回调用于在重登陆时获取新的登录鉴权 token
-     * @param cb 上层用于生产 token 的回调函数
-     * @param json_extension json扩展参数（备用，目前不需要）
-     * @return void 无返回值
-     */
-    regReloginRequestTokenCb(cb: NIMReloginRequestTokenCallback, json_extension: string): void {
-        return this.client.RegReloginRequestTokenCb(cb, json_extension);
-    }
-
-    /** (全局回调)注册NIM客户端被踢回调
-     * @param cb 被踢的回调函数
-     * @param json_extension json扩展参数（备用，目前不需要）
-     * @return void 无返回值
-     */
-    regKickoutCb(cb: NIMKickoutCallback, json_extension: string): void {
-        return this.client.RegKickoutCb(cb, json_extension);
-    }
-
-    /** (全局回调)注册NIM客户端掉线回调
-     * @param cb 掉线的回调函数
-     * @param json_extension json扩展参数（备用，目前不需要）
-     * @return void 无返回值
-     */
-    regDisconnectCb(cb: Function, json_extension: string): void {
-        return this.client.RegDisconnectCb(cb, json_extension);
-    }
-
-    /** (全局回调)注册NIM客户端多点登录通知回调
-     * @param cb 多点登录通知的回调函数
-     * @param json_extension json扩展参数（备用，目前不需要）
-     * @return void 无返回值
-     */
-    regMultispotLoginCb(cb: NIMMultispotCallback, json_extension: string): void {
-        return this.client.RegMultispotLoginCb(cb, json_extension);
-    }
-
-    /** (全局回调)注册NIM客户端将本帐号的其他端踢下线结果回调
-     * @param cb 踢下线结果回调函数
-     * @param json_extension json扩展参数（备用，目前不需要）
-     * @return void 无返回值
-     * @note 
-     * <pre>
-     * 200:成功
-     * </pre>
-     */
-    regKickOtherClientCb(cb: NIMKickotherCallback, json_extension: string): void {
-        return this.client.RegKickOtherClientCb(cb, json_extension);
-    }
-
-    /** (全局回调)注册多端推送开关同步回调
-     * @param cb 回调函数
-     * @param json_extension json扩展参数（备用，目前不需要）
-     * @return void 无返回值
-     */
-    regSyncMultiportPushConfigCb(cb: NIMSyncMultiportPushConfigCallback, json_extension: string): void {
-        return this.client.RegSyncMultiportPushConfigCb(cb, json_extension);
-    }
-
     /** (全局回调)设置多端推送
      * @param switch_on 开关
      * @param cb 回调函数
@@ -251,13 +254,6 @@ class NIMClient extends ev.EventEmitter {
      */
     getServerCurrentTime(cb: NIMGetServerCurrentTimeCallback, calcLocal: boolean): void {
         return this.client.GetServerCurrentTime(cb, calcLocal);
-    }
-
-    /** 反注册Client提供的所有回调
-     * @return void 无返回值
-     */
-    unregClientCb(): void {
-        return this.client.UnregClientCb();
     }
 
     /** 获取当前登录的用户账号(accid)

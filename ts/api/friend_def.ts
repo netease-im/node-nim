@@ -92,6 +92,4 @@ export interface NIMFriendAPI {
 	GetFriendProfile(accid: string, cb: NIMGetFriendProfileCallback, json_extension: string): void;
 
 	QueryFriendListByKeyword(keyword: string, cb: NIMGetFriendsListCallback, json_extension: string): boolean;
-
-	UnregFriendCb(): void;
 }

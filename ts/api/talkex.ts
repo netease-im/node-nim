@@ -2,6 +2,7 @@ import * as def from './talkex_def'
 import nim from './nim';
 import ev from 'events';
 import { NIMMessage, NIMTalkAPI } from './talk_def';
+import { NIMSessionType } from './session.def';
 
 class NIMTalkEx extends ev.EventEmitter {
     talkex: def.NIMTalkExAPI;
@@ -9,6 +10,50 @@ class NIMTalkEx extends ev.EventEmitter {
         super();
         this.talkex = new nim.TalkEx();
     }
+
+    /* istanbul ignore next */
+    initEventHandler(): void {
+        /** 注册添加快捷回复能知
+        * @param cb		收到通知时的回调函数
+        * @return void 无返回值
+        */
+        this.talkex.RegAddQuickCommentNotify((session: string, to_type: NIMSessionType, msg_client_id: string, qc_info: def.QuickCommentInfo) => {
+            this.emit('onAddQuickComment', session, to_type, msg_client_id, qc_info);
+        });
+
+        /** 注册删除快捷回复能知
+         * @param cb		收到通知时的回调函数
+         * @return void 无返回值
+         */
+        this.talkex.RegRemoveQuickCommentNotify((session: string, to_type: NIMSessionType, msg_client_id: string, quick_comment_id: string, ext: string) => {
+            this.emit('onRemoveQuickComment', session, to_type, msg_client_id, quick_comment_id, ext);
+        });
+
+        /** 注册添加 Pin Message 通知回调
+         * @param cb	 收到通知时的回调函数
+         * @return void 无返回值
+         */
+        this.talkex.RegAddPinMessage((session: string, to_type: number, info: def.PinMessageInfo) => {
+            this.emit('onPinMessage', session, to_type, info);
+        });
+
+        /** 注册 UnPin Message 通知回调
+         * @param cb	 收到通知时的回调函数
+         * @return void 无返回值
+         */
+        this.talkex.RegUnPinMessage((session: string, to_type: number, id: string) => {
+            this.emit('onUnpinMessage', session, to_type, id);
+        });
+
+        /** 注册 更新Pin Message 通知回调
+         * @param cb	 收到通知时的回调函数
+         * @return void 无返回值
+         */
+        this.talkex.RegUpdatePinMessage((session: string, to_type: number, info: def.PinMessageInfo) => {
+            this.emit('onUpdatePinMessage', session, to_type, info);
+        });
+    }
+
     //Collect
     /** 添加收藏
      * @param collect_info	收藏内容
@@ -45,30 +90,6 @@ class NIMTalkEx extends ev.EventEmitter {
      */
     queryCollectList(query_collect_list_param: def.QueryCollectsParm, cb: def.QueryCollectsCallback): void {
         this.talkex.QueryCollectList(query_collect_list_param, cb);
-    }
-
-    //QuickComment
-    /** 反注册QuickComment提供的所有回调
-     * @return void 无返回值
-     */
-    unregAllQuickCommentCb(): void {
-        this.talkex.UnregAllQuickCommentCb();
-    }
-
-    /** 注册添加快捷回复能知
-     * @param cb		收到通知时的回调函数
-     * @return void 无返回值
-     */
-    regAddQuickCommentNotify(cb: def.AddQuickCommentNotifyCallback): void {
-        this.talkex.RegAddQuickCommentNotify(cb);
-    }
-
-    /** 注册删除快捷回复能知
-     * @param cb		收到通知时的回调函数
-     * @return void 无返回值
-     */
-    regRemoveQuickCommentNotify(cb: def.RemoveQuickCommentNotifyCallback): void {
-        this.talkex.RegRemoveQuickCommentNotify(cb);
     }
 
     /** 添加快捷回复
@@ -137,37 +158,6 @@ class NIMTalkEx extends ev.EventEmitter {
      */
     queryAllPinMessage(session: string, to_type: number, cb: def.QueryPinMessageCallback): void {
         this.talkex.QueryAllPinMessage(session, to_type, cb);
-    }
-
-    /** 反注册Pin提供的所有回调
-     * @return void 无返回值
-     */
-    unregAllPinCb(): void {
-        this.talkex.UnregAllPinCb();
-    }
-
-    /** 注册添加 Pin Message 通知回调
-     * @param cb	 收到通知时的回调函数
-     * @return void 无返回值
-     */
-    regAddPinMessage(cb: def.AddPinMessageNotifyCallback): void {
-        this.talkex.RegAddPinMessage(cb);
-    }
-
-    /** 注册 UnPin Message 通知回调
-     * @param cb	 收到通知时的回调函数
-     * @return void 无返回值
-     */
-    regUnPinMessage(cb: def.UnPinMessageNotifyCallback): void {
-        this.talkex.RegUnPinMessage(cb);
-    }
-
-    /** 注册 更新Pin Message 通知回调
-     * @param cb	 收到通知时的回调函数
-     * @return void 无返回值
-     */
-    regUpdatePinMessage(cb: def.UpdatePinMessageNotifyCallback): void {
-        this.talkex.RegUpdatePinMessage(cb);
     }
 }
 
