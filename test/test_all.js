@@ -19,9 +19,6 @@ const testTeam = require('./test_modules/test_team.js').default
 const testSuperTeam = require('./test_modules/test_super_team.js').default
 const testPassThroughProxy = require('./test_modules/test_pass_through_proxy.js').default
 
-
-const current = process.cwd()
-process.chdir(`${current}/build/Release`)
 console.log(`Current run path: ${process.cwd()} for NIM SDK`)
 
 const test_info = {

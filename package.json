@@ -1,18 +1,18 @@
 {
   "name": "node-nim",
-  "version": "0.1.2",
+  "version": "8.7.2",
   "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
   "main": "js/nim.js",
   "types": "types/nim.d.ts",
   "author": "Netease",
   "license": "ISC",
   "scripts": {
-    "test": "mocha test/test_all.js -slow 200 -timeout 10000",
-    "coverage": "nyc npm run test",
-    "install": "just install",
+    "coverage": "nyc mocha test/test_all.js -slow 200 -timeout 10000",
+    "install": "node-pre-build install --fall-back-to-build",
+    "build": "node-pre-build build",
     "build:ts": "rimraf ./js && rimraf ./types && tsc",
     "build:doc": "typedoc",
-    "prepare": "npm run build:ts"
+    "prepublish": "npm run build:ts"
   },
   "nyc": {
     "cache": false,
@@ -20,16 +20,24 @@
       "lcov"
     ]
   },
+  "node_pre_build": {
+    "name-sdk": "NIM_CrossPlatform_SDK",
+    "build-tool": "cmake-js",
+    "binary-dir": "build/Release",
+    "package-dir": "packages"
+  },
   "dependencies": {
+    "@yxfe/nos-uploader": "^1.0.7",
     "bindings": "^1.5.0",
+    "cmake-js": "^6.2.1",
+    "commander": "^8.2.0",
     "download": "^8.0.0",
-    "extract-zip": "^2.0.1",
-    "just-scripts": "^1.5.6",
-    "node-gyp": "^8.1.0",
-    "shelljs": "^0.8.4",
-    "tar": "^6.1.0"
+    "node-fetch": "^2.6.5",
+    "node-pre-build": "^0.0.14",
+    "shelljs": "^0.8.4"
   },
   "devDependencies": {
+    "@types/node": "^16.10.5",
     "eslint": "^7.31.0",
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.23.4",
@@ -53,12 +61,10 @@
     "nim electron"
   ],
   "files": [
-    "scripts/",
     "src/",
     "js/",
     "types/",
-    "binding.gyp",
-    "just-task.js",
+    "CMakeLists.txt",
     "package.json"
   ]
 }

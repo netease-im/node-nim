@@ -22,7 +22,7 @@ function testOnlineSession(test_info) {
                 })
             })
         })
-        describe('#querySession', function () {
+        describe.skip('#querySession', function () {
             it('querySession', function (done) {
                 online_session.querySession(session_type, session_id, function (res_code, info) {
                     assert.strictEqual(res_code, 200)
