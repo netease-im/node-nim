@@ -22,18 +22,20 @@
   },
   "node_pre_build": {
     "name-sdk": "NIM_CrossPlatform_SDK",
+    "name-addon": "nim_electron",
     "build-tool": "cmake-js",
     "binary-dir": "build/Release",
-    "package-dir": "packages"
+    "package-dir": "packages",
+    "sdk-group": "message",
+    "addon-group": "electron"
   },
   "dependencies": {
-    "@yxfe/nos-uploader": "^1.0.7",
     "bindings": "^1.5.0",
     "cmake-js": "^6.2.1",
     "commander": "^8.2.0",
     "download": "^8.0.0",
     "node-fetch": "^2.6.5",
-    "node-pre-build": "^0.0.14",
+    "node-pre-build": "^0.0.18",
     "shelljs": "^0.8.4"
   },
   "devDependencies": {
