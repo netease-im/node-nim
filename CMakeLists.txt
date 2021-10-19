@@ -1,9 +1,12 @@
 message(STATUS "================== node-nim ==================")
 cmake_minimum_required(VERSION 3.12.0)
-set(TARGET_NAME nim)
+set(TARGET_NAME node-nim)
 project(${TARGET_NAME})
 set(CMAKE_CXX_STANDARD 17)
-                      
+if (NODE_V8_COMPRESS_POINTERS)
+    add_definitions(-DV8_COMPRESS_POINTERS)    
+endif()
+add_definitions(-DNIM_SDK_DLL_IMPORT)             
 if (MSVC)
      add_definitions(
      -DUNICODE
@@ -11,7 +14,6 @@ if (MSVC)
      -DNOMINMAX
      -DWIN32_LEAN_AND_MEAN
      -DPSAPI_VERSION=1
-     -DNIM_SDK_DLL_IMPORT
      -DWIN32)
      add_compile_options(/wd4573 /wd4251 /wd4273 /wd4819 /wd4996 /wd4275)
      add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
@@ -39,11 +41,12 @@ target_link_libraries(${TARGET_NAME}
 
 set_target_properties(${TARGET_NAME} PROPERTIES PREFIX "" SUFFIX ".node")
 if (APPLE)
-    target_link_libraries(${TARGET_NAME} nim)
+    target_include_directories(${TARGET_NAME} PRIVATE
+                           ${CMAKE_CURRENT_LIST_DIR}/sdk/framework/nim.framework/Headers)
     set_target_properties( ${TARGET_NAME}
         PROPERTIES
         BUILD_WITH_INSTALL_RPATH 1
-        INSTALL_RPATH "@executable_path;@executable_path/framework"
+        INSTALL_RPATH "@loader_path;@loader_path/framework"
     )
 elseif (UNIX)
     set_target_properties( ${TARGET_NAME}

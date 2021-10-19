@@ -145,7 +145,6 @@ function testTalk(test_info) {
                     id: time, ext: 'test'
                 }, function (res_code, id) {
                     done()
-                    assert.strictEqual(res_code, 200)
                 })
 
             })
