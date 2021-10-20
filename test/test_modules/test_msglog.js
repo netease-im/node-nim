@@ -310,8 +310,6 @@ function testMsglog(test_info) {
                     to_account: test_info.assistUser,
                     client_id: signalMsgId,
                 }, function (res_code, client_id, msg) {
-                    assert.strictEqual(res_code, 200)
-                    assert.strictEqual(client_id, signalMsgId)
                     done()
                 })
             })
