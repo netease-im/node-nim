@@ -22,7 +22,7 @@
   },
   "node_pre_build": {
     "name-sdk": "NIM_CrossPlatform_SDK",
-    "name-addon": "nim_electron",
+    "name-addon": "node-nim",
     "build-tool": "cmake-js",
     "binary-dir": "build/Release",
     "package-dir": "packages",
