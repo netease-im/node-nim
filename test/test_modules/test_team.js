@@ -1,24 +1,20 @@
 const NIM = require('../../js/nim')
 const assert = require('assert')
 
-const team = new NIM.Team
-const msglog = new NIM.MsgLog
-const talk = new NIM.Talk
-
 function testTeam(test_info) {
     describe('********************Team********************', function () {
         let team_data
         let immessage
         describe('#initEventHandler', function () {
             it('initEventHandler', function () {
-                team.initEventHandler()
-                msglog.initEventHandler()
-                talk.initEventHandler()
+                NIM.Team.initEventHandler()
+                NIM.MsgLog.initEventHandler()
+                NIM.Talk.initEventHandler()
             })
         })
         describe('#createTeamAsync', function () {
             it('createTeamAsync', function (done) {
-                team.createTeamAsync({
+                NIM.Team.createTeamAsync({
                     tid: 'Node_test',
                     name: 'Node_test',
                     type: 1,
@@ -32,15 +28,15 @@ function testTeam(test_info) {
         })
         describe('#send message to team', function () {
             it('send message', function (done) {
-                talk.once('onSendMsg', function (ack) {
+                NIM.Talk.once('onSendMsg', function (ack) {
                     assert.strictEqual(ack.rescode, 200)
-                    msglog.queryMsgByIDAysnc(ack.msg_id, function (res_code, msg_id, msg) {
+                    NIM.MsgLog.queryMsgByIDAysnc(ack.msg_id, function (res_code, msg_id, msg) {
                         assert.strictEqual(ack.rescode, 200)
                         immessage = msg
                         done()
                     }, '')
                 })
-                talk.sendMsg({
+                NIM.Talk.sendMsg({
                     to_type: 1,
                     to_accid: team_data.id,
                     time: new Date().getTime(),
@@ -52,7 +48,7 @@ function testTeam(test_info) {
         })
         describe('#kickAsync', function () {
             it('kickAsync', function (done) {
-                team.kickAsync(
+                NIM.Team.kickAsync(
                     team_data.id, [test_info.assistUser], function (result) {
                         done()
                     }, '')
@@ -60,7 +56,7 @@ function testTeam(test_info) {
         })
         describe('#updateTeamInfoAsync', function () {
             it('updateTeamInfoAsync', function (done) {
-                team.updateTeamInfoAsync(
+                NIM.Team.updateTeamInfoAsync(
                     team_data.id, {
                     tid: team_data.id,
                     name: 'Node_test',
@@ -73,7 +69,7 @@ function testTeam(test_info) {
         })
         describe('#applyJoinAsync', function () {
             it('applyJoinAsync', function (done) {
-                team.applyJoinAsync(
+                NIM.Team.applyJoinAsync(
                     team_data.id, '', function (result) {
                         done()
                     }, '')
@@ -81,7 +77,7 @@ function testTeam(test_info) {
         })
         describe('#passJoinApplyAsync', function () {
             it('passJoinApplyAsync', function (done) {
-                team.passJoinApplyAsync(
+                NIM.Team.passJoinApplyAsync(
                     team_data.id, test_info.mainUser, function (result) {
                         done()
                     }, '')
@@ -89,7 +85,7 @@ function testTeam(test_info) {
         })
         describe('#rejectJoinApplyAsync', function () {
             it('rejectJoinApplyAsync', function (done) {
-                team.rejectJoinApplyAsync(
+                NIM.Team.rejectJoinApplyAsync(
                     team_data.id, test_info.mainUser, '', function (result) {
                         done()
                     }, '')
@@ -97,7 +93,7 @@ function testTeam(test_info) {
         })
         describe('#addManagersAsync', function () {
             it('addManagersAsync', function (done) {
-                team.addManagersAsync(
+                NIM.Team.addManagersAsync(
                     team_data.id, [test_info.mainUser], function (result) {
                         done()
                     }, '')
@@ -105,7 +101,7 @@ function testTeam(test_info) {
         })
         describe('#removeManagersAsync', function () {
             it('removeManagersAsync', function (done) {
-                team.removeManagersAsync(
+                NIM.Team.removeManagersAsync(
                     team_data.id, [test_info.mainUser], function (result) {
                         done()
                     }, '')
@@ -113,7 +109,7 @@ function testTeam(test_info) {
         })
         describe('#transferTeamAsync', function () {
             it('transferTeamAsync', function (done) {
-                team.transferTeamAsync(
+                NIM.Team.transferTeamAsync(
                     team_data.id, test_info.mainUser, false, function (result) {
                         done()
                     }, '')
@@ -121,7 +117,7 @@ function testTeam(test_info) {
         })
         describe('#updateMyPropertyAsync', function () {
             it('updateMyPropertyAsync', function (done) {
-                team.updateMyPropertyAsync({
+                NIM.Team.updateMyPropertyAsync({
                     tid: team_data.id,
                     nick: 'Node_test'
                 }, function (result) {
@@ -131,7 +127,7 @@ function testTeam(test_info) {
         })
         describe('#updateOtherNickAsync', function () {
             it('updateOtherNickAsync', function (done) {
-                team.updateOtherNickAsync({
+                NIM.Team.updateOtherNickAsync({
                     tid: team_data.id,
                     nick: 'Node_test',
                     accid: test_info.mainUser
@@ -142,7 +138,7 @@ function testTeam(test_info) {
         })
         describe('#acceptInvitationAsync', function () {
             it('acceptInvitationAsync', function (done) {
-                team.acceptInvitationAsync(
+                NIM.Team.acceptInvitationAsync(
                     team_data.id, test_info.mainUser, function (result) {
                         done()
                     }, '')
@@ -150,7 +146,7 @@ function testTeam(test_info) {
         })
         describe('#rejectInvitationAsync', function () {
             it('rejectInvitationAsync', function (done) {
-                team.rejectInvitationAsync(
+                NIM.Team.rejectInvitationAsync(
                     team_data.id, test_info.mainUser, '', function (result) {
                         done()
                     }, '')
@@ -158,103 +154,103 @@ function testTeam(test_info) {
         })
         describe('#queryAllMyTeamsAsync', function () {
             it('queryAllMyTeamsAsync', function (done) {
-                team.queryAllMyTeamsAsync(function (count, result) {
+                NIM.Team.queryAllMyTeamsAsync(function (count, result) {
                     done()
                 }, '')
             })
         })
         describe('#queryAllMyTeamsInfoAsync', function () {
             it('queryAllMyTeamsInfoAsync', function (done) {
-                team.queryAllMyTeamsInfoAsync(function (count, result) {
+                NIM.Team.queryAllMyTeamsInfoAsync(function (count, result) {
                     done()
                 }, '')
             })
         })
         describe('#queryMyAllMemberInfosAsync', function () {
             it('queryMyAllMemberInfosAsync', function (done) {
-                team.queryMyAllMemberInfosAsync(function (count, result) {
+                NIM.Team.queryMyAllMemberInfosAsync(function (count, result) {
                     done()
                 }, '')
             })
         })
         describe('#queryTeamMembersAsync', function () {
             it('queryTeamMembersAsync', function (done) {
-                team.queryTeamMembersAsync(team_data.id, function (tid, count, result) {
+                NIM.Team.queryTeamMembersAsync(team_data.id, function (tid, count, result) {
                     done()
                 }, '')
             })
         })
         describe('#queryTeamMemberAsync', function () {
             it('queryTeamMemberAsync', function (done) {
-                team.queryTeamMemberAsync(team_data.id, test_info.mainUser, function (result) {
+                NIM.Team.queryTeamMemberAsync(team_data.id, test_info.mainUser, function (result) {
                     done()
                 }, '')
             })
         })
         describe('#queryTeamInfoAsync', function () {
             it('queryTeamInfoAsync', function (done) {
-                team.queryTeamInfoAsync(team_data.id, function (tid, result) {
+                NIM.Team.queryTeamInfoAsync(team_data.id, function (tid, result) {
                     done()
                 }, '')
             })
         })
         describe('#queryTeamInfoOnlineAsync', function () {
             it('queryTeamInfoOnlineAsync', function (done) {
-                team.queryTeamInfoOnlineAsync(team_data.id, function (result) {
+                NIM.Team.queryTeamInfoOnlineAsync(team_data.id, function (result) {
                     done()
                 }, '')
             })
         })
         describe('#muteMemberAsync', function () {
             it('muteMemberAsync', function (done) {
-                team.muteMemberAsync(team_data.id, test_info.mainUser, false, function (result) {
+                NIM.Team.muteMemberAsync(team_data.id, test_info.mainUser, false, function (result) {
                     done()
                 }, '')
             })
         })
         describe('#queryMuteListOnlineAsync', function () {
             it('queryMuteListOnlineAsync', function (done) {
-                team.queryMuteListOnlineAsync(team_data.id, function (rescode, count, result) {
+                NIM.Team.queryMuteListOnlineAsync(team_data.id, function (rescode, count, result) {
                     done()
                 }, '')
             })
         })
         describe('#muteAsync', function () {
             it('muteAsync', function (done) {
-                team.muteAsync(team_data.id, false, function (result) {
+                NIM.Team.muteAsync(team_data.id, false, function (result) {
                     done()
                 }, '')
             })
         })
         describe('#teamMsgAckRead', function () {
             it('teamMsgAckRead', function () {
-                team.teamMsgAckRead(team_data.id, [immessage], function (tid, success_ids, failure_ids, ignored_ids) {
+                NIM.Team.teamMsgAckRead(team_data.id, [immessage], function (tid, success_ids, failure_ids, ignored_ids) {
                 }, '')
             })
         })
         describe('#teamMsgQueryUnreadList', function () {
             it('teamMsgQueryUnreadList', function () {
-                team.teamMsgQueryUnreadList(team_data.id, immessage, [test_info.mainUser], function (result) {
+                NIM.Team.teamMsgQueryUnreadList(team_data.id, immessage, [test_info.mainUser], function (result) {
                 }, '')
             })
         })
         describe('#queryTeamMembersInvitor', function () {
             it('queryTeamMembersInvitor', function (done) {
-                team.queryTeamMembersInvitor(team_data.id, [], function (rescode, count, result) {
+                NIM.Team.queryTeamMembersInvitor(team_data.id, [], function (rescode, count, result) {
                     done()
                 }, '')
             })
         })
         describe('#queryTeamInfoByKeywordAsync', function () {
             it('queryTeamInfoByKeywordAsync', function (done) {
-                team.queryTeamInfoByKeywordAsync('test', function (count, result) {
+                NIM.Team.queryTeamInfoByKeywordAsync('test', function (count, result) {
                     done()
                 }, '')
             })
         })
         describe('#updateTInfoLocal', function () {
             it('updateTInfoLocal', function (done) {
-                team.updateTInfoLocal([{
+                NIM.Team.updateTInfoLocal([{
                     tid: team_data.id,
                     name: 'Node_test',
                     type: 1,
@@ -266,21 +262,21 @@ function testTeam(test_info) {
         })
         describe('#getTeamInfoBatchTrans', function () {
             it('getTeamInfoBatchTrans', function (done) {
-                team.getTeamInfoBatchTrans(function (count, info) {
+                NIM.Team.getTeamInfoBatchTrans(function (count, info) {
                     done()
                 }, 0, '')
             })
         })
         describe('#getTeaminfoList', function () {
             it('getTeaminfoList', function (done) {
-                team.getTeaminfoList([], function (rescode, infos, failure_ids) {
+                NIM.Team.getTeaminfoList([], function (rescode, infos, failure_ids) {
                     done()
                 })
             })
         })
         describe('#leaveAsync', function () {
             it('leaveAsync', function (done) {
-                team.leaveAsync(
+                NIM.Team.leaveAsync(
                     team_data.id, function (result) {
                         done()
                     }, '')
@@ -288,7 +284,7 @@ function testTeam(test_info) {
         })
         describe('#createTeamAsync', function () {
             it('createTeamAsync', function (done) {
-                team.createTeamAsync({
+                NIM.Team.createTeamAsync({
                     tid: 'Node_test',
                     name: 'Node_test',
                     type: 1,
@@ -302,7 +298,7 @@ function testTeam(test_info) {
         })
         describe('#dismissAsync', function () {
             it('dismissAsync', function (done) {
-                team.dismissAsync(
+                NIM.Team.dismissAsync(
                     team_data.id, function (result) {
                         done()
                     }, '')

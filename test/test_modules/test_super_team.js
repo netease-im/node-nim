@@ -1,32 +1,30 @@
 const NIM = require('../../js/nim')
 const assert = require('assert')
 
-const super_team = new NIM.SuperTeam
-
 function testSuperTeam(test_info) {
     describe('********************SuperTeam********************', function () {
         describe('#initEventHandler', function () {
             it('initEventHandler', function () {
-                super_team.initEventHandler()
+                NIM.SuperTeam.initEventHandler()
             })
         })
         describe('#inviteAsync', function () {
             it('inviteAsync', function (done) {
-                super_team.inviteAsync(test_info.superTeamID, [test_info.assistUser], '', '', function (result) {
+                NIM.SuperTeam.inviteAsync(test_info.superTeamID, [test_info.assistUser], '', '', function (result) {
                     done()
                 }, '')
             })
         })
         describe('#kickAsync', function () {
             it('kickAsync', function (done) {
-                super_team.kickAsync(test_info.superTeamID, [test_info.assistUser], function (result) {
+                NIM.SuperTeam.kickAsync(test_info.superTeamID, [test_info.assistUser], function (result) {
                     done()
                 }, '')
             })
         })
         describe('#updateTeamInfoAsync', function () {
             it('updateTeamInfoAsync', function (done) {
-                super_team.updateTeamInfoAsync(test_info.superTeamID, {
+                NIM.SuperTeam.updateTeamInfoAsync(test_info.superTeamID, {
                     tid: test_info.superTeamID,
                     custom: ''
                 }, function (result) {
@@ -36,49 +34,49 @@ function testSuperTeam(test_info) {
         })
         describe('#applyJoinAsync', function () {
             it('applyJoinAsync', function (done) {
-                super_team.applyJoinAsync(test_info.superTeamID, 'Node_test', function (result) {
+                NIM.SuperTeam.applyJoinAsync(test_info.superTeamID, 'Node_test', function (result) {
                     done()
                 }, '')
             })
         })
         describe('#passJoinApplyAsync', function () {
             it('passJoinApplyAsync', function (done) {
-                super_team.passJoinApplyAsync(test_info.superTeamID, test_info.mainUser, function (result) {
+                NIM.SuperTeam.passJoinApplyAsync(test_info.superTeamID, test_info.mainUser, function (result) {
                     done()
                 }, '')
             })
         })
         describe('#rejectJoinApplyAsync', function () {
             it('rejectJoinApplyAsync', function (done) {
-                super_team.rejectJoinApplyAsync(test_info.superTeamID, test_info.mainUser, 'Node_test', function (result) {
+                NIM.SuperTeam.rejectJoinApplyAsync(test_info.superTeamID, test_info.mainUser, 'Node_test', function (result) {
                     done()
                 }, '')
             })
         })
         describe('#addManagersAsync', function () {
             it('addManagersAsync', function (done) {
-                super_team.addManagersAsync(test_info.superTeamID, [test_info.mainUser], function (result) {
+                NIM.SuperTeam.addManagersAsync(test_info.superTeamID, [test_info.mainUser], function (result) {
                     done()
                 }, '')
             })
         })
         describe('#removeManagersAsync', function () {
             it('removeManagersAsync', function (done) {
-                super_team.removeManagersAsync(test_info.superTeamID, [test_info.mainUser], function (result) {
+                NIM.SuperTeam.removeManagersAsync(test_info.superTeamID, [test_info.mainUser], function (result) {
                     done()
                 }, '')
             })
         })
         describe('#transferTeamAsync', function () {
             it('transferTeamAsync', function (done) {
-                super_team.transferTeamAsync(test_info.superTeamID, test_info.mainUser, false, function (result) {
+                NIM.SuperTeam.transferTeamAsync(test_info.superTeamID, test_info.mainUser, false, function (result) {
                     done()
                 }, '')
             })
         })
         describe('#updateMyPropertyAsync', function () {
             it('updateMyPropertyAsync', function (done) {
-                super_team.updateMyPropertyAsync({
+                NIM.SuperTeam.updateMyPropertyAsync({
                     tid: test_info.superTeamID,
                     accid: test_info.mainUser,
                     nick: 'Node_test'
@@ -89,7 +87,7 @@ function testSuperTeam(test_info) {
         })
         describe('#updateOtherNickAsync', function () {
             it('updateOtherNickAsync', function (done) {
-                super_team.updateOtherNickAsync({
+                NIM.SuperTeam.updateOtherNickAsync({
                     tid: test_info.superTeamID,
                     accid: test_info.assistUser,
                     nick: 'Node_test'
@@ -100,91 +98,91 @@ function testSuperTeam(test_info) {
         })
         describe('#acceptInvitationAsync', function () {
             it('acceptInvitationAsync', function (done) {
-                super_team.acceptInvitationAsync(test_info.superTeamID, test_info.mainUser, function (result) {
+                NIM.SuperTeam.acceptInvitationAsync(test_info.superTeamID, test_info.mainUser, function (result) {
                     done()
                 }, '')
             })
         })
         describe('#rejectInvitationAsync', function () {
             it('rejectInvitationAsync', function (done) {
-                super_team.rejectInvitationAsync(test_info.superTeamID, test_info.mainUser, 'Node_test', function (result) {
+                NIM.SuperTeam.rejectInvitationAsync(test_info.superTeamID, test_info.mainUser, 'Node_test', function (result) {
                     done()
                 }, '')
             })
         })
         describe('#queryAllMyTeamsAsync', function () {
             it('queryAllMyTeamsAsync', function (done) {
-                super_team.queryAllMyTeamsAsync(function (count, result) {
+                NIM.SuperTeam.queryAllMyTeamsAsync(function (count, result) {
                     done()
                 }, '')
             })
         })
         describe('#queryAllMyTeamsInfoAsync', function () {
             it('queryAllMyTeamsInfoAsync', function (done) {
-                super_team.queryAllMyTeamsInfoAsync(function (count, result) {
+                NIM.SuperTeam.queryAllMyTeamsInfoAsync(function (count, result) {
                     done()
                 }, '')
             })
         })
         describe('#queryMyAllMemberInfosAsync', function () {
             it('queryMyAllMemberInfosAsync', function (done) {
-                super_team.queryMyAllMemberInfosAsync(function (count, result) {
+                NIM.SuperTeam.queryMyAllMemberInfosAsync(function (count, result) {
                     done()
                 }, '')
             })
         })
         describe('#queryTeamMembersAsync', function () {
             it('queryTeamMembersAsync', function (done) {
-                super_team.queryTeamMembersAsync(test_info.superTeamID, function (tid, count, result) {
+                NIM.SuperTeam.queryTeamMembersAsync(test_info.superTeamID, function (tid, count, result) {
                     done()
                 }, '')
             })
         })
         describe('#queryTeamMemberAsync', function () {
             it('queryTeamMemberAsync', function (done) {
-                super_team.queryTeamMemberAsync(test_info.superTeamID, test_info.mainUser, function (result) {
+                NIM.SuperTeam.queryTeamMemberAsync(test_info.superTeamID, test_info.mainUser, function (result) {
                     done()
                 }, '')
             })
         })
         describe('#queryTeamInfoAsync', function () {
             it('queryTeamInfoAsync', function (done) {
-                super_team.queryTeamInfoAsync(test_info.superTeamID, function (tid, result) {
+                NIM.SuperTeam.queryTeamInfoAsync(test_info.superTeamID, function (tid, result) {
                     done()
                 }, '')
             })
         })
         describe('#queryTeamInfoOnlineAsync', function () {
             it('queryTeamInfoOnlineAsync', function (done) {
-                super_team.queryTeamInfoOnlineAsync(test_info.superTeamID, function (result) {
+                NIM.SuperTeam.queryTeamInfoOnlineAsync(test_info.superTeamID, function (result) {
                     done()
                 }, '')
             })
         })
         describe('#muteMemberAsync', function () {
             it('muteMemberAsync', function (done) {
-                super_team.muteMemberAsync(test_info.superTeamID, test_info.assistUser, false, function (result) {
+                NIM.SuperTeam.muteMemberAsync(test_info.superTeamID, test_info.assistUser, false, function (result) {
                     done()
                 }, '')
             })
         })
         describe('#muteAsync', function () {
             it('muteAsync', function (done) {
-                super_team.muteAsync(test_info.superTeamID, false, function (result) {
+                NIM.SuperTeam.muteAsync(test_info.superTeamID, false, function (result) {
                     done()
                 }, '')
             })
         })
         describe('#querySuperTeamsInfoByKeywordAsync', function () {
             it('querySuperTeamsInfoByKeywordAsync', function (done) {
-                super_team.querySuperTeamsInfoByKeywordAsync('Node', function (count, result) {
+                NIM.SuperTeam.querySuperTeamsInfoByKeywordAsync('Node', function (count, result) {
                     done()
                 }, '')
             })
         })
         describe.skip('#leaveAsync', function () {
             it('leaveAsync', function (done) {
-                super_team.leaveAsync(test_info.superTeamID, function (result) {
+                NIM.SuperTeam.leaveAsync(test_info.superTeamID, function (result) {
                     done()
                 }, '')
             })

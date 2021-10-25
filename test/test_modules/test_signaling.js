@@ -1,18 +1,17 @@
 const NIM = require('../../js/nim')
 const assert = require('assert')
 
-const signaling = new NIM.Signaling
 function testSignaling(test_info) {
     describe('********************Signaling********************', function () {
         let channel_info
         describe('#initEventHandler', function () {
             it('initEventHandler', function () {
-                signaling.initEventHandler()
+                NIM.Signaling.initEventHandler()
             })
         })
         describe('#signalingCreate', function () {
             it('signalingCreate should return 200', function (done) {
-                signaling.signalingCreate({ channel_type: 1, channel_name: 'Node_test', channel_ext: '' }, function (res_code, info) {
+                NIM.Signaling.signalingCreate({ channel_type: 1, channel_name: 'Node_test', channel_ext: '' }, function (res_code, info) {
                     channel_info = info
                     done()
                 })
@@ -20,21 +19,21 @@ function testSignaling(test_info) {
         })
         describe('#queryChannelInfo', function () {
             it('queryChannelInfo should return 200', function (done) {
-                signaling.queryChannelInfo({ channel_name: channel_info.channel_name }, function (res_code, info) {
+                NIM.Signaling.queryChannelInfo({ channel_name: channel_info.channel_name }, function (res_code, info) {
                     done()
                 })
             })
         })
         describe('#join', function () {
             it('join should return 200', function (done) {
-                signaling.join({ channel_id: channel_info.channel_id, custom_info: '', uid: test_info.mainUser, offline_enabled: true }, function (res_code, info) {
+                NIM.Signaling.join({ channel_id: channel_info.channel_id, custom_info: '', uid: test_info.mainUser, offline_enabled: true }, function (res_code, info) {
                     done()
                 })
             })
         })
         describe('#call', function () {
             it('call', function (done) {
-                signaling.call({
+                NIM.Signaling.call({
                     channel_type: 1,
                     channel_name: 'Node_test',
                     channel_ext: 'Node_test',
@@ -57,7 +56,7 @@ function testSignaling(test_info) {
         })
         describe('#invite', function () {
             it('invite', function (done) {
-                signaling.invite({
+                NIM.Signaling.invite({
                     channel_id: channel_info.channel_id,
                     account_id: test_info.mainUser,
                     request_id: test_info.mainUser,
@@ -77,7 +76,7 @@ function testSignaling(test_info) {
         })
         describe('#cancelInvite', function () {
             it('cancelInvite', function (done) {
-                signaling.cancelInvite({
+                NIM.Signaling.cancelInvite({
                     channel_id: channel_info.channel_id,
                     account_id: test_info.mainUser,
                     request_id: test_info.mainUser,
@@ -90,7 +89,7 @@ function testSignaling(test_info) {
         })
         describe('#reject', function () {
             it('reject', function (done) {
-                signaling.reject({
+                NIM.Signaling.reject({
                     channel_id: channel_info.channel_id,
                     account_id: test_info.mainUser,
                     request_id: test_info.mainUser,
@@ -103,7 +102,7 @@ function testSignaling(test_info) {
         })
         describe('#accept', function () {
             it('accept', function (done) {
-                signaling.accept({
+                NIM.Signaling.accept({
                     channel_id: channel_info.channel_id,
                     account_id: test_info.mainUser,
                     request_id: test_info.mainUser,
@@ -119,7 +118,7 @@ function testSignaling(test_info) {
         })
         describe('#control', function () {
             it('control', function (done) {
-                signaling.control({
+                NIM.Signaling.control({
                     channel_id: channel_info.channel_id,
                     account_id: test_info.mainUser,
                     custom_info: 'Node_test'
@@ -130,14 +129,14 @@ function testSignaling(test_info) {
         })
         describe('#signalingClose', function () {
             it('signalingClose should return 200', function (done) {
-                signaling.signalingClose({ channel_id: channel_info.channel_id, custom_info: '', offline_enabled: false }, function (res_code, info) {
+                NIM.Signaling.signalingClose({ channel_id: channel_info.channel_id, custom_info: '', offline_enabled: false }, function (res_code, info) {
                     done()
                 })
             })
         })
         describe('#leave', function () {
             it('leave', function (done) {
-                signaling.leave({
+                NIM.Signaling.leave({
                     channel_id: channel_info.channel_id,
                     custom_info: '',
                     offline_enabled: false

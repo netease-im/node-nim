@@ -1,21 +1,19 @@
 const NIM = require('../../js/nim')
 const assert = require('assert')
 
-const nos = new NIM.NOS
-
 function testNos(test_info) {
     describe('********************Nos********************', function () {
         let file_url
         describe('#initEventHandler', function () {
             it('initEventHandler', function () {
-                nos.initEventHandler()
+                NIM.NOS.initEventHandler()
             })
         })
         describe('#initConfig', function () {
             it('initConfig', function (done) {
                 var param = new Map()
                 param.set('test_tag', 5)
-                const result = nos.initConfig({
+                const result = NIM.NOS.initConfig({
                     param
                 }, function (result) {
                     done()
@@ -24,7 +22,7 @@ function testNos(test_info) {
         })
         describe('#uploadResource', function () {
             it('uploadResource should return 200', function (done) {
-                const result = nos.uploadResource(__filename, '', {
+                const result = NIM.NOS.uploadResource(__filename, '', {
                     task_id: '123456'
                 }, function (res_code, result) {
                     console.log(`file url: ${result.url}`)
@@ -37,13 +35,13 @@ function testNos(test_info) {
         })
         describe('#stopUploadResource', function () {
             it('stopUploadResource', function () {
-                const result = nos.stopUploadResource('123456', '')
+                const result = NIM.NOS.stopUploadResource('123456', '')
                 assert.strictEqual(result, true)
             })
         })
         describe('#downloadResource', function () {
             it('downloadResource should return 200', function (done) {
-                const result = nos.downloadResource(file_url, {
+                const result = NIM.NOS.downloadResource(file_url, {
                     task_id: '456789'
                 }, function (res_code, result) {
                     console.log(`file download to: ${result.file_path}`)
@@ -55,20 +53,20 @@ function testNos(test_info) {
         })
         describe('#stopDownloadResource', function () {
             it('stopDownloadResource', function () {
-                const result = nos.stopDownloadResource('456789', '')
+                const result = NIM.NOS.stopDownloadResource('456789', '')
                 assert.strictEqual(result, true)
             })
         })
         describe('#safeURLToOriginURL', function () {
             it('safeURLToOriginURL', function (done) {
-                nos.safeURLToOriginURL('', function (res_code, originalUrl) {
+                NIM.NOS.safeURLToOriginURL('', function (res_code, originalUrl) {
                     done()
                 }, '')
             })
         })
         describe('#setSupportQuickTrans', function () {
             it('setSupportQuickTrans', function () {
-                nos.setSupportQuickTrans(true)
+                NIM.NOS.setSupportQuickTrans(true)
             })
         })
     })

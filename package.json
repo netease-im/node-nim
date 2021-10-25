@@ -12,7 +12,8 @@
     "build": "node-pre-build build",
     "build:ts": "rimraf ./js && rimraf ./types && tsc",
     "build:doc": "typedoc ts/api",
-    "prepublish": "npm run build:ts"
+    "prepublish": "npm run build:ts",
+    "pub": "node-pre-build publish --dry-run"
   },
   "nyc": {
     "cache": false,
@@ -35,13 +36,15 @@
     "commander": "^8.2.0",
     "download": "^8.0.0",
     "fs-extra": "^10.0.0",
+    "git-last-commit": "^1.0.1",
     "git-rev-sync": "^3.0.1",
     "is-electron": "^2.2.0",
     "json": "^11.0.0",
     "node_modules-path": "^2.0.5",
     "node-fetch": "^2.6.5",
     "node-pre-build": "latest",
-    "shelljs": "^0.8.4"
+    "shelljs": "^0.8.4",
+    "simple-git": "^2.47.0"
   },
   "devDependencies": {
     "@types/node": "^16.10.5",

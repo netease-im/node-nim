@@ -1,54 +1,53 @@
 const NIM = require('../../js/nim')
 const assert = require('assert')
 
-const tool = new NIM.Tool
 function testTool(test_info) {
     describe('********************Tool********************', function () {
         describe('#getUserAppdataDir', function () {
             it('getUserAppdataDir', function () {
-                const dir = tool.getUserAppdataDir('NIM_SDK_NODE_TEST')
+                const dir = NIM.Tool.getUserAppdataDir('NIM_SDK_NODE_TEST')
                 assert.notStrictEqual(dir, '')
             })
         })
         describe('#getSpecificAppdataDir', function () {
             it('getSpecificAppdataDir', function () {
-                const dir = tool.getSpecificAppdataDir('NIM_SDK_NODE_TEST', 0)
+                const dir = NIM.Tool.getSpecificAppdataDir('NIM_SDK_NODE_TEST', 0)
                 assert.notStrictEqual(dir, '')
             })
         })
         describe('#getLocalAppdataDir', function () {
             it('getLocalAppdataDir', function () {
-                const dir = tool.getLocalAppdataDir()
+                const dir = NIM.Tool.getLocalAppdataDir()
                 assert.notStrictEqual(dir, '')
             })
         })
         describe('#getCurModuleDir', function () {
             it('getCurModuleDir', function () {
-                const dir = tool.getCurModuleDir()
+                const dir = NIM.Tool.getCurModuleDir()
                 assert.notStrictEqual(dir, '')
             })
         })
         describe('#getMd5', function () {
             it('getMd5', function () {
-                const md5 = tool.getMD5('test node')
+                const md5 = NIM.Tool.getMD5('test node')
                 assert.strictEqual(md5, 'c40b600a180a462b72b770d9b9fdf9f6')
             })
         })
         describe('#getFileMd5', function () {
             it('getFileMd5', function () {
-                const md5 = tool.getFileMD5(__filename)
+                const md5 = NIM.Tool.getFileMD5(__filename)
                 assert.notStrictEqual(md5, '')
             })
         })
         describe('#getUuid', function () {
             it('getUuid', function () {
-                const uuid = tool.getUUID()
+                const uuid = NIM.Tool.getUUID()
                 assert.notStrictEqual(uuid, '')
             })
         })
         describe('#getAudioTextAsync', function () {
             it('getAudioTextAsync', function (done) {
-                tool.getAudioTextAsync({
+                NIM.Tool.getAudioTextAsync({
                     mime: 'Node_test',
                     samp: 'Node_test',
                     url: 'Node_test',
@@ -60,7 +59,7 @@ function testTool(test_info) {
         })
         describe('#filterClientAntispam', function () {
             it('filterClientAntispam', function (done) {
-                tool.filterClientAntispam('Node_test', 'replace', 'UTF-8', function (succeed, res_code, text) {
+                NIM.Tool.filterClientAntispam('Node_test', 'replace', 'UTF-8', function (succeed, res_code, text) {
                     done()
                 })
             })

@@ -1,21 +1,19 @@
 const NIM = require('../../js/nim')
 const assert = require('assert')
 
-const msglog = new NIM.MsgLog
-
 function testMsglog(test_info) {
     describe('********************Msglog********************', function () {
         let signalMsgId = ''
         let signalMessage
         describe('#initEventHandler', function () {
             it('initEventHandler', function () {
-                msglog.initEventHandler()
+                NIM.MsgLog.initEventHandler()
             })
         })
         describe('#queryMsgOnlineAsync', function () {
             it('query messages online should return 200', function (done) {
                 const limit = 1
-                msglog.queryMsgOnlineAsync({
+                NIM.MsgLog.queryMsgOnlineAsync({
                     id: test_info.mainUser,
                     to_type: 0,
                     limit_count: limit,
@@ -42,7 +40,7 @@ function testMsglog(test_info) {
         })
         describe('#queryMsgAsync', function () {
             it('query msg log should return 200 with 10 number of msglogs', function (done) {
-                msglog.queryMsgAsync(test_info.mainUser, 0, 10, 0, (res_code, accId, toType, msglogs) => {
+                NIM.MsgLog.queryMsgAsync(test_info.mainUser, 0, 10, 0, (res_code, accId, toType, msglogs) => {
                     assert.notStrictEqual(msglogs.count, 0)
                     assert.strictEqual(msglogs.content[0].to_accid, test_info.mainUser)
                     signalMsgId = msglogs.content[0].client_msg_id
@@ -53,7 +51,7 @@ function testMsglog(test_info) {
         })
         describe('#queryMsgByIDAysnc', function () {
             it(`Query msg by ID should return ID ${signalMsgId}`, function (done) {
-                msglog.queryMsgByIDAysnc(signalMsgId, (res_code, messageId, message) => {
+                NIM.MsgLog.queryMsgByIDAysnc(signalMsgId, (res_code, messageId, message) => {
                     assert.strictEqual(signalMsgId, messageId)
                     assert.strictEqual(signalMsgId, message.client_msg_id)
                     done()
@@ -62,7 +60,7 @@ function testMsglog(test_info) {
         })
         describe('#queryMsgByKeywordOnlineAsync', function () {
             it('query message by keywork should return 200 with 10 number of messages', function (done) {
-                const result = msglog.queryMsgByKeywordOnlineAsync({
+                const result = NIM.MsgLog.queryMsgByKeywordOnlineAsync({
                     id: test_info.mainUser,
                     to_type: 0,
                     keyword: 'Goodbye!',
@@ -86,7 +84,7 @@ function testMsglog(test_info) {
         })
         describe('#queryMsgOfSpecifiedTypeInASessionAsync', function () {
             it('query message by specified type should return message with 0 type', function (done) {
-                msglog.queryMsgOfSpecifiedTypeInASessionAsync(
+                NIM.MsgLog.queryMsgOfSpecifiedTypeInASessionAsync(
                     0, test_info.mainUser, 10, 0,
                     new Date().getTime(), '', false, [0], (res_code, accountId, toType, messages) => {
                         assert.strictEqual(res_code, 200)
@@ -103,7 +101,7 @@ function testMsglog(test_info) {
         })
         describe('#queryMsgByOptionsAsync', function () {
             it('query message by option should return 200', function (done) {
-                const result = msglog.queryMsgByOptionsAsync(
+                const result = NIM.MsgLog.queryMsgByOptionsAsync(
                     0, // range
                     [test_info.mainUser], // id
                     10, // limit
@@ -125,7 +123,7 @@ function testMsglog(test_info) {
         })
         describe('#batchStatusReadAsync', function () {
             it('batch status read should return 200', function (done) {
-                msglog.batchStatusReadAsync(test_info.mainUser, 0, (res_code, accountId, toType) => {
+                NIM.MsgLog.batchStatusReadAsync(test_info.mainUser, 0, (res_code, accountId, toType) => {
                     assert.strictEqual(res_code, 200)
                     assert.strictEqual(accountId, test_info.mainUser)
                     assert.strictEqual(toType, 0)
@@ -135,7 +133,7 @@ function testMsglog(test_info) {
         })
         describe('#batchStatusDeleteAsync', function () {
             it('batch status delete should return 200', function (done) {
-                msglog.batchStatusDeleteAsync(test_info.mainUser, 0, false, (res_code, accountId, toType) => {
+                NIM.MsgLog.batchStatusDeleteAsync(test_info.mainUser, 0, false, (res_code, accountId, toType) => {
                     assert.strictEqual(res_code, 200)
                     assert.strictEqual(accountId, test_info.mainUser)
                     assert.strictEqual(toType, 0)
@@ -145,7 +143,7 @@ function testMsglog(test_info) {
         })
         describe('#setStatusAsync', function () {
             it('set signal msglog status should return 200', function (done) {
-                msglog.setStatusAsync(signalMsgId, 6, (res_code, messageId) => {
+                NIM.MsgLog.setStatusAsync(signalMsgId, 6, (res_code, messageId) => {
                     assert.strictEqual(res_code, 200)
                     assert.strictEqual(messageId, signalMsgId)
                     done()
@@ -154,13 +152,13 @@ function testMsglog(test_info) {
         })
         describe('#queryReceivedMsgReceiptSent', function () {
             it('queryReceivedMsgReceiptSent should return false', function () {
-                const ret = msglog.queryReceivedMsgReceiptSent(signalMessage)
+                const ret = NIM.MsgLog.queryReceivedMsgReceiptSent(signalMessage)
                 assert.notStrictEqual(ret, undefined)
             })
         })
         describe('#setSubStatusAsync', function () {
             it('set sub status of message should return 200', function (done) {
-                msglog.setSubStatusAsync(signalMsgId, 6, (res_code, messageId) => {
+                NIM.MsgLog.setSubStatusAsync(signalMsgId, 6, (res_code, messageId) => {
                     assert.strictEqual(res_code, 200)
                     assert.strictEqual(messageId, signalMsgId)
                     done()
@@ -170,7 +168,7 @@ function testMsglog(test_info) {
         describe('#writeMsglogToLocalAsync', function () {
             it('write msglog to local should return 200', function (done) {
                 const writeMsgId = new Date().getTime().toString()
-                msglog.writeMsglogToLocalAsync(test_info.mainUser, {
+                NIM.MsgLog.writeMsglogToLocalAsync(test_info.mainUser, {
                     to_type: 0,
                     to_accid: test_info.assistUser,
                     time: new Date().getTime(),
@@ -186,7 +184,7 @@ function testMsglog(test_info) {
         })
         describe('#deleteBySessionTypeAsync', function () {
             it('delete msglog by session type should return 200', function (done) {
-                msglog.deleteBySessionTypeAsync(true, 5, true, (res_code, accountId, toType) => {
+                NIM.MsgLog.deleteBySessionTypeAsync(true, 5, true, (res_code, accountId, toType) => {
                     assert.strictEqual(res_code, 200)
                     assert.strictEqual(toType, 5)
                     done()
@@ -195,7 +193,7 @@ function testMsglog(test_info) {
         })
         describe('#deleteAsync', function () {
             it('delete msglog should return 200', function (done) {
-                msglog.deleteAsync(test_info.mainUser, 0, signalMsgId, (res_code, messageId) => {
+                NIM.MsgLog.deleteAsync(test_info.mainUser, 0, signalMsgId, (res_code, messageId) => {
                     assert.strictEqual(res_code, 200)
                     assert.strictEqual(messageId, signalMsgId)
                     done()
@@ -204,7 +202,7 @@ function testMsglog(test_info) {
         })
         describe('#deleteAllAsync', function () {
             it('deleteAllAsync msglog should return 200', function (done) {
-                msglog.deleteAllAsync(false, false, (res_code) => {
+                NIM.MsgLog.deleteAllAsync(false, false, (res_code) => {
                     assert.strictEqual(res_code, 200)
                     done()
                 }, '')
@@ -212,25 +210,25 @@ function testMsglog(test_info) {
         })
         describe('#deleteMsgByTimeAsync', function () {
             it('deleteMsgByTimeAsync msglog should return 200', function () {
-                msglog.deleteMsgByTimeAsync(test_info.assistUser, 0, 0, 0, (res_code) => {
+                NIM.MsgLog.deleteMsgByTimeAsync(test_info.assistUser, 0, 0, 0, (res_code) => {
                     assert.strictEqual(res_code, 200)
                 }, '')
             })
         })
         describe('#sendReceiptAsync', function () {
             it('send receipt should return 200', function () {
-                msglog.sendReceiptAsync(signalMessage, function (result) {
+                NIM.MsgLog.sendReceiptAsync(signalMessage, function (result) {
                 })
             })
         })
         describe('#querySentMessageBeReaded', function () {
             it('query sent message be read should return 200', function () {
-                msglog.querySentMessageBeReaded(signalMessage)
+                NIM.MsgLog.querySentMessageBeReaded(signalMessage)
             })
         })
         describe('#updateLocalExtAsync', function () {
             it('update ext of local message should return 200', function (done) {
-                msglog.updateLocalExtAsync(signalMsgId, 'Custom ext content for local message', (res_code, messageId) => {
+                NIM.MsgLog.updateLocalExtAsync(signalMsgId, 'Custom ext content for local message', (res_code, messageId) => {
                     assert.strictEqual(res_code, 200)
                     assert.strictEqual(messageId, signalMsgId)
                     done()
@@ -239,7 +237,7 @@ function testMsglog(test_info) {
         })
         describe('#readAllAsync', function () {
             it('set status as read for all messages', function (done) {
-                msglog.readAllAsync((res_code) => {
+                NIM.MsgLog.readAllAsync((res_code) => {
                     assert.strictEqual(res_code, 200)
                     done()
                 }, '')
@@ -247,7 +245,7 @@ function testMsglog(test_info) {
         })
         describe('#exportDbAsync', function () {
             it('exportDbAsync should return 200', function (done) {
-                msglog.exportDbAsync('./test.db', function (res_code) {
+                NIM.MsgLog.exportDbAsync('./test.db', function (res_code) {
                     assert.strictEqual(res_code, 200)
                     done()
                 }, '')
@@ -255,7 +253,7 @@ function testMsglog(test_info) {
         })
         describe('#importDbAsync', function () {
             it('importDbAsync should return 200', function (done) {
-                msglog.importDbAsync('./test.db', function (res_code) {
+                NIM.MsgLog.importDbAsync('./test.db', function (res_code) {
                     assert.strictEqual(res_code, 200)
                     done()
                 }, function (importedCount, totalCount) { }, '')
@@ -263,7 +261,7 @@ function testMsglog(test_info) {
         })
         describe('#queryMessageIsThreadRoot', function () {
             it('queryMessageIsThreadRoot', function (done) {
-                msglog.queryMessageIsThreadRoot(signalMsgId, function (res_code, client_id, is_root) {
+                NIM.MsgLog.queryMessageIsThreadRoot(signalMsgId, function (res_code, client_id, is_root) {
                     assert.strictEqual(res_code, 200)
                     done()
                 })
@@ -271,7 +269,7 @@ function testMsglog(test_info) {
         })
         describe('#queryThreadHistoryMsg', function () {
             it('queryThreadHistoryMsg', function (done) {
-                msglog.queryThreadHistoryMsg(signalMessage, {
+                NIM.MsgLog.queryThreadHistoryMsg(signalMessage, {
                     from_time: 0,
                     to_time: 0,
                     exclude_msg_id: 0,
@@ -284,7 +282,7 @@ function testMsglog(test_info) {
         })
         describe('#fullTextSearchOnlineAsync', function () {
             it('fullTextSearchOnlineAsync', function (done) {
-                msglog.fullTextSearchOnlineAsync({
+                NIM.MsgLog.fullTextSearchOnlineAsync({
                     keyword_: test_info.assistUser,
                     from_time_: 0,
                     to_time_: new Date().getTime(),
@@ -304,7 +302,7 @@ function testMsglog(test_info) {
         })
         describe('#queryMessageOnline', function () {
             it('queryMessageOnline', function (done) {
-                msglog.queryMessageOnline({
+                NIM.MsgLog.queryMessageOnline({
                     to_type_: 0,
                     from_account: test_info.mainUser,
                     to_account: test_info.assistUser,
@@ -316,7 +314,7 @@ function testMsglog(test_info) {
         })
         describe('#deleteHistoryOnlineAsync', function () {
             it('deleteHistoryOnlineAsync', function (done) {
-                msglog.deleteHistoryOnlineAsync(test_info.assistUser, false, '', function (res_code, accid) {
+                NIM.MsgLog.deleteHistoryOnlineAsync(test_info.assistUser, false, '', function (res_code, accid) {
                     assert.strictEqual(res_code, 200)
                     assert.strictEqual(accid, test_info.assistUser)
                     done()
@@ -325,7 +323,7 @@ function testMsglog(test_info) {
         })
         describe('#deleteHistoryOnlineAsyncEx', function () {
             it('deleteHistoryOnlineAsyncEx', function (done) {
-                msglog.deleteHistoryOnlineAsyncEx(test_info.assistUser, 0, false, '', function (res_code, accid, to_type, timestamp, json_extension) {
+                NIM.MsgLog.deleteHistoryOnlineAsyncEx(test_info.assistUser, 0, false, '', function (res_code, accid, to_type, timestamp, json_extension) {
                     assert.strictEqual(res_code, 200)
                     assert.strictEqual(accid, test_info.assistUser)
                     done()
@@ -334,7 +332,7 @@ function testMsglog(test_info) {
         })
         describe('#deleteMessageSelfAsync', function () {
             it('deleteMessageSelfAsync', function (done) {
-                msglog.deleteMessageSelfAsync([signalMessage], [''], function (res_code) {
+                NIM.MsgLog.deleteMessageSelfAsync([signalMessage], [''], function (res_code) {
                     done()
                 })
             })

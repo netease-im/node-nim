@@ -1,44 +1,42 @@
 const NIM = require('../../js/nim')
 const assert = require('assert')
 
-const global = new NIM.Global
-
 function testGlobal(test_info) {
     describe('********************Global********************', function () {
         describe('#initEventHandler', function () {
             it('initEventHandler', function () {
-                global.initEventHandler()
+                NIM.Global.initEventHandler()
             })
         })
         describe('#setProxy', function () {
             it('setProxy', function () {
-                global.setProxy(0, '', 0, '', '')
+                NIM.Global.setProxy(0, '', 0, '', '')
             })
         })
         describe('#detectProxy', function () {
             it('detectProxy', function (done) {
-                global.detectProxy(6, '127.0.0.1', 22, '', '', function (connect, step, json_extension) {
+                NIM.Global.detectProxy(6, '127.0.0.1', 22, '', '', function (connect, step, json_extension) {
                     done()
                 })
             })
         })
         describe('#setExceptionReportCallback', function () {
             it('setExceptionReportCallback', function () {
-                global.setExceptionReportCallback(function (exception, log) {
+                NIM.Global.setExceptionReportCallback(function (exception, log) {
 
                 }, '')
             })
         })
         describe('#sDKFeedbackAsync', function () {
             it('sDKFeedbackAsync', function () {
-                global.sdkFeedbackAsync('', function (exception, log) {
+                NIM.Global.sdkFeedbackAsync('', function (exception, log) {
 
                 }, '')
             })
         })
         describe('#getSDKCachedFileInfoAsync', function () {
             it('get SDK cache file info should return 200', function (done) {
-                global.getSDKCachedFileInfoAsync(test_info.mainUser,
+                NIM.Global.getSDKCachedFileInfoAsync(test_info.mainUser,
                     'image', new Date().getTime(), (res_code, info) => {
                         assert.strictEqual(res_code, 200)
                         assert.strictEqual(info.file_type, 'image')
@@ -48,7 +46,7 @@ function testGlobal(test_info) {
         })
         describe('#deleteSDKCachedFileAsync', function () {
             it('delete SDK cached file should return 200', function (done) {
-                global.deleteSDKCachedFileAsync(test_info.mainUser,
+                NIM.Global.deleteSDKCachedFileAsync(test_info.mainUser,
                     'image', new Date().getTime(), (res_code) => {
                         assert.strictEqual(res_code, 200)
                         done()
@@ -57,7 +55,7 @@ function testGlobal(test_info) {
         })
         describe.skip('#uploadSDKLog', function () {
             it('uploadSDKLog should return 200', function (done) {
-                global.uploadSDKLog('feedback message', (res_code) => {
+                NIM.Global.uploadSDKLog('feedback message', (res_code) => {
                     assert.strictEqual(res_code, 200)
                     done()
                 })
