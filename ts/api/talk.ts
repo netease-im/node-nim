@@ -3,7 +3,7 @@ import { NIMMessageType } from './msglog_def';
 import nim from './nim';
 import ev from 'events';
 
-class NIMTalk extends ev.EventEmitter {
+export class NIMTalk extends ev.EventEmitter {
     talk: NIMTalkAPI;
     constructor() {
         super();
@@ -188,5 +188,3 @@ class NIMTalk extends ev.EventEmitter {
         return this.talk.ReplyMessage(msg, jason_obj);
     }
 }
-
-export default NIMTalk;

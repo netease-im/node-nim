@@ -2,7 +2,7 @@ import ev from 'events';
 import nim from './nim';
 import { NIMAppDataType, NIMAudioInfo, NIMFilterClientAntispamCallback, NIMGetAudioTextCallback, NIMToolAPI } from './tool_def';
 
-class NIMTool extends ev.EventEmitter {
+export class NIMTool extends ev.EventEmitter {
     tool: NIMToolAPI;
     constructor() {
         super();
@@ -102,5 +102,3 @@ class NIMTool extends ev.EventEmitter {
         return this.tool.FilterClientAntispam(text, replaceString, libName, cb);
     }
 }
-
-export default NIMTool;

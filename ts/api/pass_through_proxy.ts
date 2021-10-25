@@ -2,7 +2,7 @@ import { NIMPassThroughProxyAPI, NIMReceivedHttpMsgCallback, NIMSendHttpRequestC
 import nim from './nim';
 import ev from 'events';
 
-class NIMPassThroughProxy extends ev.EventEmitter {
+export class NIMPassThroughProxy extends ev.EventEmitter {
     proxy: NIMPassThroughProxyAPI;
     constructor() {
         super();
@@ -41,5 +41,3 @@ class NIMPassThroughProxy extends ev.EventEmitter {
         return this.proxy.SendHttpRequest(host, path, method, headers, body, json_extension, cb);
     }
 }
-
-export default NIMPassThroughProxy;

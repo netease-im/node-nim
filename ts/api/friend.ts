@@ -2,7 +2,7 @@ import nim from './nim';
 import ev from 'events';
 import { NIMFriendAPI, NIMverify_type, NIMDeleteFriendOption, NIMFriendProfile, NIMFriendOptCallback, NIMGetFriendsListCallback, NIMGetFriendProfileCallback, NIMFriendChangeCallback, NIMFriendChangeEvent } from './friend_def';
 
-class NIMFriend extends ev.EventEmitter {
+export class NIMFriend extends ev.EventEmitter {
     friend: NIMFriendAPI;
     constructor() {
         super();
@@ -114,5 +114,3 @@ class NIMFriend extends ev.EventEmitter {
         return this.friend.QueryFriendListByKeyword(keyword, cb, json_extension);
     }
 }
-
-export default NIMFriend;

@@ -3,7 +3,7 @@ import ev from 'events';
 import { NIMNOSAPI, NIMInitConfigParam, NIMNOSParams, NIMInitNosResultCallback, NIMDownloadMediaCallback, NIMUploadMediaExCallback, NIMProgressCallback, NIMSpeedCallback, NIMTransferInfoCallback, NIMProgressExCallback, NIMDownloadMediaExCallback, NIMsafe_urlToOriginURLCallback, NIMUploadMediaResult } from './nos_def';
 import { NIMMessage } from './talk_def';
 
-class NIMNOS extends ev.EventEmitter {
+export class NIMNOS extends ev.EventEmitter {
 	nos: NIMNOSAPI;
 	constructor() {
 		super();
@@ -176,5 +176,3 @@ class NIMNOS extends ev.EventEmitter {
 		return this.nos.SetSupportQuickTrans(quick);
 	}
 }
-
-export default NIMNOS;

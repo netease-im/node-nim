@@ -3,7 +3,7 @@ import { NIMTeamAPI, NIMTeamInfo, NIMTeamMemberProperty, NIMQueryAllMyTeamsCallb
 import nim from './nim';
 import ev from 'events';
 
-class NIMTeam extends ev.EventEmitter {
+export class NIMTeam extends ev.EventEmitter {
     team: NIMTeamAPI;
     constructor() {
         super();
@@ -620,5 +620,3 @@ class NIMTeam extends ev.EventEmitter {
         return this.team.GetTeaminfoList(tids, cb);
     }
 }
-
-export default NIMTeam;

@@ -4,7 +4,7 @@ import { NIMSessionAPI, NIMSessionType, NIMSessionChangeCallback, NIMQuerySessio
 import { NIMMessageType } from './msglog_def';
 import { NIMMessage } from "./talk_def";
 
-class NIMSession extends ev.EventEmitter {
+export class NIMSession extends ev.EventEmitter {
     session: NIMSessionAPI;
     constructor() {
         super();
@@ -313,5 +313,3 @@ class NIMSession extends ev.EventEmitter {
         return this.session.DeleteHasmoreRoammsg(session_id, to_type, cb);
     }
 }
-
-export default NIMSession;

@@ -2,7 +2,7 @@ import nim from './nim';
 import ev from 'events';
 import { NIMGlobalAPI, NIMProxyType, NIMCachedFileType, NIMExceptionCallback, NIMDetectProxyCallback, NIMGetCachedFileInfoCallback, NIMDeleteCachedFileCallback, NIMSDKFeedbackCallback, NIMSDKDBErrorCallback, NIMUploadSDKLogCallback, NINSDKDBErrorInfo } from './global_def';
 
-class NIMGlobal extends ev.EventEmitter {
+export class NIMGlobal extends ev.EventEmitter {
     global: NIMGlobalAPI;
     constructor() {
         super();
@@ -97,5 +97,3 @@ class NIMGlobal extends ev.EventEmitter {
         return this.global.UploadSDKLog(feedbackStr, cb);
     }
 }
-
-export default NIMGlobal;

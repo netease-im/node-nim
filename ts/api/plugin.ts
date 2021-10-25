@@ -2,7 +2,7 @@ import { NIMPlugInAPI, NIMChatRoomRequestEnterCallback } from './plugin_def';
 import ev from 'events';
 import nim from './nim';
 
-class NIMPlugin extends ev.EventEmitter {
+export class NIMPlugin extends ev.EventEmitter {
     plugin: NIMPlugInAPI;
     constructor() {
         super();
@@ -28,4 +28,3 @@ class NIMPlugin extends ev.EventEmitter {
         return this.plugin.ChatRoomRequestEnterAsync(roomId, cb, ext);
     }
 }
-export default NIMPlugin;

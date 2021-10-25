@@ -4,7 +4,7 @@ import ev from 'events';
 import { NIMMessage, NIMTalkAPI } from './talk_def';
 import { NIMSessionType } from './session.def';
 
-class NIMTalkEx extends ev.EventEmitter {
+export class NIMTalkEx extends ev.EventEmitter {
     talkex: def.NIMTalkExAPI;
     constructor() {
         super();
@@ -160,5 +160,3 @@ class NIMTalkEx extends ev.EventEmitter {
         this.talkex.QueryAllPinMessage(session, to_type, cb);
     }
 }
-
-export default NIMTalkEx;

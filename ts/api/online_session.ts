@@ -3,7 +3,7 @@ import nim from './nim';
 import ev from 'events';
 import { NIMSessionType } from "./session.def";
 
-class NIMOnlineSession extends ev.EventEmitter {
+export class NIMOnlineSession extends ev.EventEmitter {
     session: NIMOnlineSessionAPI;
     constructor() {
         super();
@@ -72,5 +72,3 @@ class NIMOnlineSession extends ev.EventEmitter {
         return this.session.DeleteSession(param, cb);
     }
 }
-
-export default NIMOnlineSession;

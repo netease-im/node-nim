@@ -3,7 +3,7 @@ import nim from './nim';
 import ev from 'events';
 import { NIMMessage } from './talk_def';
 
-class NIMSuperTeam extends ev.EventEmitter {
+export class NIMSuperTeam extends ev.EventEmitter {
     team: NIMSuperTeamAPI;
     constructor() {
         super();
@@ -467,5 +467,3 @@ class NIMSuperTeam extends ev.EventEmitter {
         return this.team.QuerySuperTeamsInfoByKeywordAsync(keyword, cb, json_extension);
     }
 }
-
-export default NIMSuperTeam;

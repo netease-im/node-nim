@@ -2,7 +2,7 @@ import * as def from "./signaling_def";
 import nim from './nim';
 import ev from 'events';
 
-class NIMSignaling extends ev.EventEmitter {
+export class NIMSignaling extends ev.EventEmitter {
     signaling: def.NIMSignalingAPI;
     constructor() {
         super();
@@ -273,5 +273,3 @@ class NIMSignaling extends ev.EventEmitter {
     }
 
 }
-
-export default NIMSignaling;

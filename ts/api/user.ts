@@ -2,7 +2,7 @@ import nim from './nim';
 import ev from 'events';
 import { NIMUserAPI, NIMUserNameCard, NINPushType, NIMSpecialRelationshipChangeEvent, NIMSpecialRelationshipChangedCallback, NIMUserNameCardChangedCallback, NIMSetRelationCallback, NIMGetSpecialListCallback, NIMGetUserNameCardCallback, NIMUpdateMyUserNameCardCallback } from './user_def';
 
-class NIMUser extends ev.EventEmitter {
+export class NIMUser extends ev.EventEmitter {
     user: NIMUserAPI;
     constructor() {
         super();
@@ -153,5 +153,3 @@ class NIMUser extends ev.EventEmitter {
         return this.user.UpdatePushToken(cerName, token, type);
     }
 }
-
-export default NIMUser;

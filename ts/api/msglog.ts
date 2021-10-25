@@ -4,7 +4,7 @@ import ev from 'events';
 import { NIMSessionType } from "./session.def";
 import { NIMMessage } from "./talk_def";
 
-class NIMMsgLog extends ev.EventEmitter {
+export class NIMMsgLog extends ev.EventEmitter {
 	msglog: NIMMsgLogAPI;
 	constructor() {
 		super();
@@ -560,5 +560,3 @@ class NIMMsgLog extends ev.EventEmitter {
 		return this.msglog.FullTextSearchOnlineAsync(param, cb);
 	}
 }
-
-export default NIMMsgLog;

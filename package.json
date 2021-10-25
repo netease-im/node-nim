@@ -11,7 +11,7 @@
     "install": "node-pre-build install --fall-back-to-build",
     "build": "node-pre-build build",
     "build:ts": "rimraf ./js && rimraf ./types && tsc",
-    "build:doc": "typedoc",
+    "build:doc": "typedoc ts/api",
     "prepublish": "npm run build:ts"
   },
   "nyc": {

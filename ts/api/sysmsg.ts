@@ -2,7 +2,7 @@ import nim from './nim';
 import ev from 'events';
 import { NIMSysMsgType, NIMSysMsgAPI, NIMSystemMsg, NIMSysMsgStatus, NIMSendCustomSysmsgCallback, NIMSysmsgCallback, NIMNotifySingleSysmsgCallback, NIMNotifySysmsgResCallback, NIMQuerySysmsgCallback, NIMSendMessageArc } from './sysmsg_def';
 
-class NIMSysMsg extends ev.EventEmitter {
+export class NIMSysMsg extends ev.EventEmitter {
     sysmsg: NIMSysMsgAPI;
     constructor() {
         super();
@@ -165,5 +165,3 @@ class NIMSysMsg extends ev.EventEmitter {
         return this.sysmsg.DeleteByTypeAsync(type, cb, json_extension);
     }
 }
-
-export default NIMSysMsg;

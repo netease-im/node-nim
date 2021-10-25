@@ -2,7 +2,7 @@ import { NIMDataSyncAPI, NIMDataSyncStatus, NIMDataSyncType } from "./data_sync_
 import nim from './nim';
 import ev from 'events';
 
-class NIMDataSync extends ev.EventEmitter {
+export class NIMDataSync extends ev.EventEmitter {
     dataSync: NIMDataSyncAPI;
     constructor() {
         super();
@@ -20,5 +20,3 @@ class NIMDataSync extends ev.EventEmitter {
         });
     }
 }
-
-export default NIMDataSync;

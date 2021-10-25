@@ -15,7 +15,7 @@ import {
 import nim from './nim';
 import ev from 'events';
 
-class NIMClient extends ev.EventEmitter {
+export class NIMClient extends ev.EventEmitter {
     client: NIMClientAPI;
     constructor() {
         super();
@@ -263,5 +263,3 @@ class NIMClient extends ev.EventEmitter {
         return this.client.GetCurrentUserAccount();
     }
 }
-
-export default NIMClient;

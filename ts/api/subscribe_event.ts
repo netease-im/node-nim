@@ -2,7 +2,7 @@ import nim from './nim';
 import ev from 'events';
 import { NIMSubscribeEventAPI, NIMEventData, NIMEventType, NIMEventSubscribeSyncEventType, NIMEventConfig, NIMPushEventCallback, NIMBatchPushEventCallback, NIMPublishEventCallback, NIMSubscribeEventCallback, NIMUnSubscribeEventCallback, NIMBatchUnSubscribeEventCallback, NIMQuerySubscribeEventCallback } from './subscribe_event_def';
 
-class NIMSubscribeEvent extends ev.EventEmitter {
+export class NIMSubscribeEvent extends ev.EventEmitter {
     subscribeEvent: NIMSubscribeEventAPI;
     constructor() {
         super();
@@ -146,5 +146,3 @@ class NIMSubscribeEvent extends ev.EventEmitter {
         return this.subscribeEvent.CreateOnlineEventConfig(config);
     }
 }
-
-export default NIMSubscribeEvent;
