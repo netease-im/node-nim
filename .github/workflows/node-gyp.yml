@@ -52,6 +52,8 @@ jobs:
     # Doc
     - run: npx typedoc
     - run: npx tar -zcvf ${{ github.workspace }}/packages/node-im-document.tar.gz ./doc --force-local
+    # publish
+    - run: npx node-pre-build publish
     # Upload artifacts
     - uses: actions/upload-artifact@v2
       with:
