@@ -48,7 +48,7 @@ jobs:
     - run: npm run coverage
     - run: npx codecov --token=7380c261-361e-4517-8a69-57ff848a45dd --disable=gcov
     # Build pre-built binaries
-    - run: npx node-pre-build build --pack -r electron -rv 15.2.0 14.1.1 12.2.2 -a ia32 x64
+    - run: npx node-pre-build build --pack -r electron -rv 15.2.0 14.1.1 13.6.0 12.2.2 -a ia32 x64
     # Doc
     - run: npx typedoc
     - run: npx tar -zcvf ${{ github.workspace }}/packages/node-im-document.tar.gz ./doc --force-local
