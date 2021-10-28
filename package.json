@@ -42,7 +42,7 @@
     "json": "^11.0.0",
     "node_modules-path": "^2.0.5",
     "node-fetch": "^2.6.5",
-    "node-pre-build": "^0.0.40",
+    "node-pre-build": "latest",
     "shelljs": "^0.8.4",
     "simple-git": "^2.47.0"
   },
