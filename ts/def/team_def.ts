@@ -1,7 +1,6 @@
 import { NIMMessage } from "./talk_def";
 import { NIMNotificationId } from './msglog_def';
 import { NIMUserNameCard } from './user_def';
-import { NIMTeam } from "./team";
 import { NIMResCode } from "./rescode_def";
 
 

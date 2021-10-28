@@ -1,4 +1,4 @@
-import { NIMSessionType, NIMSessionData } from './session.def';
+import { NIMSessionType, NIMSessionData } from './session_def';
 
 export interface NIMOnlineSessionInfo {
     info_session_type: number;     /**< int 会话类型 */

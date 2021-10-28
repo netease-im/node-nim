@@ -1,6 +1,4 @@
-import { NIMMessage } from "./talk_def";
 import { NIMUserNameCard } from "./user_def";
-import { NIMNotificationId } from "./msglog_def";
 
 /** @enum NIMSuperTeamBitsConfigMask 群组成员信息Bits属性kNIMSuperTeamUserKeyBits的配置定义 */
 export enum NIMSuperTeamBitsConfigMask {

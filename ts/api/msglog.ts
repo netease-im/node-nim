@@ -1,8 +1,8 @@
-import { NIMMsgLogAPI, NIMQueryMsgOnlineAsyncParam, NIMMessageType, NIMMsgLogQueryRange, NIMMsgLogStatus, NIMMsgLogSubStatus, NIMQueryMsgByKeywordOnlineParam, NIMDBFunctionCallback, NIMQuerySingleMsgCallback, NIMQueryMsgCallback, NIMModifyMultipleMsglogCallback, NIMModifySingleMsglogCallback, NIMImportDbPrgCallback, NIMMessageStatusChangedCallback, NIMDeleteHistoryOnLineAsyncCallback, NIMDeleteMsglogSelfNotifyCallback, NIMDeleteHistoryMessagesNotifyCallback, NIMDeleteMessageSelfAsyncCallback, NIMQueryMessageIsThreadRootCallback, NIMQueryMsgAsyncParam, NIMQueryMessageOnlineCallback, NIMFullTextSearchOnlineAsyncCallback, NIMFullTextSearchOnlineAsyncParam, NIMQueryThreadHistoryMsgAsyncParam, NIMQueryThreadHistoryMsgCallback, NIMDeleteHistoryOnLineAsyncExCallback, DeleteHistoryMessagesNotifyItemInfo, DeleteMsglogSelfNotifyItemInfo, NIMMessageStatusChangedResult } from "./msglog_def";
+import { NIMMsgLogAPI, NIMQueryMsgOnlineAsyncParam, NIMMessageType, NIMMsgLogQueryRange, NIMMsgLogStatus, NIMMsgLogSubStatus, NIMQueryMsgByKeywordOnlineParam, NIMDBFunctionCallback, NIMQuerySingleMsgCallback, NIMQueryMsgCallback, NIMModifyMultipleMsglogCallback, NIMModifySingleMsglogCallback, NIMImportDbPrgCallback, NIMMessageStatusChangedCallback, NIMDeleteHistoryOnLineAsyncCallback, NIMDeleteMsglogSelfNotifyCallback, NIMDeleteHistoryMessagesNotifyCallback, NIMDeleteMessageSelfAsyncCallback, NIMQueryMessageIsThreadRootCallback, NIMQueryMsgAsyncParam, NIMQueryMessageOnlineCallback, NIMFullTextSearchOnlineAsyncCallback, NIMFullTextSearchOnlineAsyncParam, NIMQueryThreadHistoryMsgAsyncParam, NIMQueryThreadHistoryMsgCallback, NIMDeleteHistoryOnLineAsyncExCallback, DeleteHistoryMessagesNotifyItemInfo, DeleteMsglogSelfNotifyItemInfo, NIMMessageStatusChangedResult } from "../def/msglog_def";
 import nim from './nim';
 import ev from 'events';
-import { NIMSessionType } from "./session.def";
-import { NIMMessage } from "./talk_def";
+import { NIMSessionType } from "../def/session_def";
+import { NIMMessage } from "../def/talk_def";
 
 export class NIMMsgLog extends ev.EventEmitter {
 	msglog: NIMMsgLogAPI;

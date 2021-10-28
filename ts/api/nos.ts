@@ -1,7 +1,7 @@
 import nim from './nim';
 import ev from 'events';
-import { NIMNOSAPI, NIMInitConfigParam, NIMNOSParams, NIMInitNosResultCallback, NIMDownloadMediaCallback, NIMUploadMediaExCallback, NIMProgressCallback, NIMSpeedCallback, NIMTransferInfoCallback, NIMProgressExCallback, NIMDownloadMediaExCallback, NIMsafe_urlToOriginURLCallback, NIMUploadMediaResult } from './nos_def';
-import { NIMMessage } from './talk_def';
+import { NIMNOSAPI, NIMInitConfigParam, NIMNOSParams, NIMInitNosResultCallback, NIMDownloadMediaCallback, NIMUploadMediaExCallback, NIMProgressCallback, NIMSpeedCallback, NIMTransferInfoCallback, NIMProgressExCallback, NIMDownloadMediaExCallback, NIMsafe_urlToOriginURLCallback, NIMUploadMediaResult } from '../def/nos_def';
+import { NIMMessage } from '../def/talk_def';
 
 export class NIMNOS extends ev.EventEmitter {
 	nos: NIMNOSAPI;

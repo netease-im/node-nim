@@ -1,4 +1,4 @@
-import { NIMPlugInAPI, NIMChatRoomRequestEnterCallback } from './plugin_def';
+import { NIMPlugInAPI, NIMChatRoomRequestEnterCallback } from '../def/plugin_def';
 import ev from 'events';
 import nim from './nim';
 

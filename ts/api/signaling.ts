@@ -1,4 +1,4 @@
-import * as def from "./signaling_def";
+import * as def from "../def/signaling_def";
 import nim from './nim';
 import ev from 'events';
 

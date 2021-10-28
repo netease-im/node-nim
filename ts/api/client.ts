@@ -11,7 +11,7 @@ import {
     NIMLoginResult,
     NIMMultispotResult,
     NIMKickoutResult
-} from "./client_def";
+} from "../def/client_def";
 import nim from './nim';
 import ev from 'events';
 

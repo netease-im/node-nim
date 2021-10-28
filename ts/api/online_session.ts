@@ -1,7 +1,7 @@
-import { NIMOnlineSessionAPI, NIMQueryOnlineSessionInfoCallback, NIMUpdateOnlineSessionInfoCallback, NIMDeleteOnlineSessionInfoCallback, NIMQueryOnlineSessionListCallback, NIMOnlineSessionChangedCallback, NIMDeleteOnlineSession, NIMOnlineSessionInfo } from "./online_session_def";
+import { NIMOnlineSessionAPI, NIMQueryOnlineSessionInfoCallback, NIMUpdateOnlineSessionInfoCallback, NIMDeleteOnlineSessionInfoCallback, NIMQueryOnlineSessionListCallback, NIMOnlineSessionChangedCallback, NIMDeleteOnlineSession, NIMOnlineSessionInfo } from "../def/online_session_def";
 import nim from './nim';
 import ev from 'events';
-import { NIMSessionType } from "./session.def";
+import { NIMSessionType } from "../def/session_def";
 
 export class NIMOnlineSession extends ev.EventEmitter {
     session: NIMOnlineSessionAPI;

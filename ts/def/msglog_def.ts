@@ -1,4 +1,4 @@
-import { NIMSessionType } from './session.def';
+import { NIMSessionType } from './session_def';
 import { NIMMessage } from './talk_def';
 
 /** @enum NIMNotificationId 通知类型 */

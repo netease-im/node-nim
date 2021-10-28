@@ -1,5 +1,5 @@
-import { NIMMessage } from "./talk_def";
-import { NIMTeamAPI, NIMTeamInfo, NIMTeamMemberProperty, NIMQueryAllMyTeamsCallback, NIMQueryAllMyTeamsInfoCallback, NIMQueryMyAllMemberInfosCallback, NIMQueryTeamMembersCallback, NIMQueryTeamMemberCallback, NIMQueryTeamInfoCallback, NIMTeamEventCallback, NIMQueryTeamMembersOnlineCallback, NIMQueryTeamMembersInvitorCallback, NIMQueryTeamsInfoCallback, NIMTeamMsgAckReadCallback, NIMGetTeamInfoBatchSFTransCallback, NIMGetTeamInfoListCallback, NIMUpdateTInfoLocalCallback, NIMTeamEvent } from './team_def';
+import { NIMMessage } from "../def/talk_def";
+import { NIMTeamAPI, NIMTeamInfo, NIMTeamMemberProperty, NIMQueryAllMyTeamsCallback, NIMQueryAllMyTeamsInfoCallback, NIMQueryMyAllMemberInfosCallback, NIMQueryTeamMembersCallback, NIMQueryTeamMemberCallback, NIMQueryTeamInfoCallback, NIMTeamEventCallback, NIMQueryTeamMembersOnlineCallback, NIMQueryTeamMembersInvitorCallback, NIMQueryTeamsInfoCallback, NIMTeamMsgAckReadCallback, NIMGetTeamInfoBatchSFTransCallback, NIMGetTeamInfoListCallback, NIMUpdateTInfoLocalCallback, NIMTeamEvent } from '../def/team_def';
 import nim from './nim';
 import ev from 'events';
 

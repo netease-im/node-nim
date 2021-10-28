@@ -1,8 +1,8 @@
 import nim from './nim';
 import ev from 'events';
-import { NIMSessionAPI, NIMSessionType, NIMSessionChangeCallback, NIMQuerySessionListCallback, NIMQuerySessionDataCallback, NIMBadgeCountCallback, NIMDeleteSessionRoamingMessageCallback, NIMUnreadCountZeroInfo, NIMCancelStickTopSessionNotifyCallback, NIMSetToStickTopSessionNotifyCallback, NIMUpdateStickTopSessionNotifyCallback, NIMQueryStickTopSessionListCallback, NIMSetToStickTopSessionCallback, NIMUpdateStickTopSessionCallback, NIMCancelToStickTopSessionCallback, NIMQueryHasmoreRoammsgCallback, NIMQueryAllHasmoreRoammsgCallback, NIMUpdateHasmoreRoammsgCallback, NIMDeleteHasmoreRoammsgCallback, NIMSetMultiUnreadCountZeroAsyncCallback, NIMSessionData } from './session.def';
-import { NIMMessageType } from './msglog_def';
-import { NIMMessage } from "./talk_def";
+import { NIMSessionAPI, NIMSessionType, NIMSessionChangeCallback, NIMQuerySessionListCallback, NIMQuerySessionDataCallback, NIMBadgeCountCallback, NIMDeleteSessionRoamingMessageCallback, NIMUnreadCountZeroInfo, NIMCancelStickTopSessionNotifyCallback, NIMSetToStickTopSessionNotifyCallback, NIMUpdateStickTopSessionNotifyCallback, NIMQueryStickTopSessionListCallback, NIMSetToStickTopSessionCallback, NIMUpdateStickTopSessionCallback, NIMCancelToStickTopSessionCallback, NIMQueryHasmoreRoammsgCallback, NIMQueryAllHasmoreRoammsgCallback, NIMUpdateHasmoreRoammsgCallback, NIMDeleteHasmoreRoammsgCallback, NIMSetMultiUnreadCountZeroAsyncCallback, NIMSessionData } from '../def/session_def';
+import { NIMMessageType } from '../def/msglog_def';
+import { NIMMessage } from "../def/talk_def";
 
 export class NIMSession extends ev.EventEmitter {
     session: NIMSessionAPI;

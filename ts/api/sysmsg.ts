@@ -1,6 +1,6 @@
 import nim from './nim';
 import ev from 'events';
-import { NIMSysMsgType, NIMSysMsgAPI, NIMSystemMsg, NIMSysMsgStatus, NIMSendCustomSysmsgCallback, NIMSysmsgCallback, NIMNotifySingleSysmsgCallback, NIMNotifySysmsgResCallback, NIMQuerySysmsgCallback, NIMSendMessageArc } from './sysmsg_def';
+import { NIMSysMsgType, NIMSysMsgAPI, NIMSystemMsg, NIMSysMsgStatus, NIMSendCustomSysmsgCallback, NIMSysmsgCallback, NIMNotifySingleSysmsgCallback, NIMNotifySysmsgResCallback, NIMQuerySysmsgCallback, NIMSendMessageArc } from '../def/sysmsg_def';
 
 export class NIMSysMsg extends ev.EventEmitter {
     sysmsg: NIMSysMsgAPI;

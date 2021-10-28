@@ -1,5 +1,5 @@
 import { NIMMessage } from './talk_def';
-import { NIMSessionType } from './session.def';
+import { NIMSessionType } from './session_def';
 export interface CollectInfo {
     id: number;
     type: number;

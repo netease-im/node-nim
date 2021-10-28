@@ -1,7 +1,7 @@
-import { NIMSuperTeamAPI, NIMSuperTeamInfo, NIMSuperTeamMemberProperty, NIMSuperTeamEventCallback, NIMQueryAllMyTeamsCallback, NIMQueryAllMyTeamsInfoCallback, NIMQueryMyAllMemberInfosCallback, NIMQueryTeamMembersCallback, NIMQueryTeamMemberCallback, NIMQueryTeamInfoCallback, NIMQueryTeamsInfoCallback, NIMSuperTeamEvent } from './super_team_def';
+import { NIMSuperTeamAPI, NIMSuperTeamInfo, NIMSuperTeamMemberProperty, NIMSuperTeamEventCallback, NIMQueryAllMyTeamsCallback, NIMQueryAllMyTeamsInfoCallback, NIMQueryMyAllMemberInfosCallback, NIMQueryTeamMembersCallback, NIMQueryTeamMemberCallback, NIMQueryTeamInfoCallback, NIMQueryTeamsInfoCallback, NIMSuperTeamEvent } from '../def/super_team_def';
 import nim from './nim';
 import ev from 'events';
-import { NIMMessage } from './talk_def';
+import { NIMMessage } from '../def/talk_def';
 
 export class NIMSuperTeam extends ev.EventEmitter {
     team: NIMSuperTeamAPI;

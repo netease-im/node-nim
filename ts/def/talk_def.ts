@@ -1,5 +1,5 @@
 import { NIMMessageType, NIMMessageFeature, NIMMsgLogStatus, NIMMsgLogSubStatus } from "./msglog_def";
-import { NIMSessionType } from './session.def';
+import { NIMSessionType } from './session_def';
 import { NIMClientType } from './client_def';
 import { NIMResCode } from './rescode_def';
 

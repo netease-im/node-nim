@@ -1,4 +1,4 @@
-import { NIMDataSyncAPI, NIMDataSyncStatus, NIMDataSyncType } from "./data_sync_def";
+import { NIMDataSyncAPI, NIMDataSyncStatus, NIMDataSyncType } from "../def/data_sync_def";
 import nim from './nim';
 import ev from 'events';
 

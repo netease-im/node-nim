@@ -1,5 +1,5 @@
-import { NIMTalkAPI, NIMMessage, NIMSendMsgAckCallback, NIMFileUpPrgCallback, NIMReceiveMsgCallback, NIMReceiveMsgsCallback, NIMRecallMsgsCallback, NIMReceiveBroadcastMsgCallback, NIMReceiveBroadcastMsgsCallback, NIMRecallMsgParam, NIMTeamNotificationFilterCallback, NIMMessageFilterCallback, NIMBroadcastMessage, NIMRecallMsgNotify, NIMSendMessageArc } from "./talk_def";
-import { NIMMessageType } from './msglog_def';
+import { NIMTalkAPI, NIMMessage, NIMSendMsgAckCallback, NIMFileUpPrgCallback, NIMReceiveMsgCallback, NIMReceiveMsgsCallback, NIMRecallMsgsCallback, NIMReceiveBroadcastMsgCallback, NIMReceiveBroadcastMsgsCallback, NIMRecallMsgParam, NIMTeamNotificationFilterCallback, NIMMessageFilterCallback, NIMBroadcastMessage, NIMRecallMsgNotify, NIMSendMessageArc } from "../def/talk_def";
+import { NIMMessageType } from '../def/msglog_def';
 import nim from './nim';
 import ev from 'events';
 

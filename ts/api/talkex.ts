@@ -1,8 +1,8 @@
-import * as def from './talkex_def'
+import * as def from '../def/talkex_def'
 import nim from './nim';
 import ev from 'events';
-import { NIMMessage, NIMTalkAPI } from './talk_def';
-import { NIMSessionType } from './session.def';
+import { NIMMessage, NIMTalkAPI } from '../def/talk_def';
+import { NIMSessionType } from '../def/session_def';
 
 export class NIMTalkEx extends ev.EventEmitter {
     talkex: def.NIMTalkExAPI;

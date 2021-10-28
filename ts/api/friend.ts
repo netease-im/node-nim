@@ -1,6 +1,6 @@
 import nim from './nim';
 import ev from 'events';
-import { NIMFriendAPI, NIMverify_type, NIMDeleteFriendOption, NIMFriendProfile, NIMFriendOptCallback, NIMGetFriendsListCallback, NIMGetFriendProfileCallback, NIMFriendChangeCallback, NIMFriendChangeEvent } from './friend_def';
+import { NIMFriendAPI, NIMverify_type, NIMDeleteFriendOption, NIMFriendProfile, NIMFriendOptCallback, NIMGetFriendsListCallback, NIMGetFriendProfileCallback, NIMFriendChangeCallback, NIMFriendChangeEvent } from '../def/friend_def';
 
 export class NIMFriend extends ev.EventEmitter {
     friend: NIMFriendAPI;

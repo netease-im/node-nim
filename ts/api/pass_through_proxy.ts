@@ -1,4 +1,4 @@
-import { NIMPassThroughProxyAPI, NIMReceivedHttpMsgCallback, NIMSendHttpRequestCallback, NIMSendHttpRequestMethods } from "./pass_through_proxy_def";
+import { NIMPassThroughProxyAPI, NIMReceivedHttpMsgCallback, NIMSendHttpRequestCallback, NIMSendHttpRequestMethods } from "../def/pass_through_proxy_def";
 import nim from './nim';
 import ev from 'events';
 

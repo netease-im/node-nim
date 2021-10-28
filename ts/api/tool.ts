@@ -1,6 +1,6 @@
 import ev from 'events';
 import nim from './nim';
-import { NIMAppDataType, NIMAudioInfo, NIMFilterClientAntispamCallback, NIMGetAudioTextCallback, NIMToolAPI } from './tool_def';
+import { NIMAppDataType, NIMAudioInfo, NIMFilterClientAntispamCallback, NIMGetAudioTextCallback, NIMToolAPI } from '../def/tool_def';
 
 export class NIMTool extends ev.EventEmitter {
     tool: NIMToolAPI;

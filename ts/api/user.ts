@@ -1,6 +1,6 @@
 import nim from './nim';
 import ev from 'events';
-import { NIMUserAPI, NIMUserNameCard, NINPushType, NIMSpecialRelationshipChangeEvent, NIMSpecialRelationshipChangedCallback, NIMUserNameCardChangedCallback, NIMSetRelationCallback, NIMGetSpecialListCallback, NIMGetUserNameCardCallback, NIMUpdateMyUserNameCardCallback } from './user_def';
+import { NIMUserAPI, NIMUserNameCard, NINPushType, NIMSpecialRelationshipChangeEvent, NIMSpecialRelationshipChangedCallback, NIMUserNameCardChangedCallback, NIMSetRelationCallback, NIMGetSpecialListCallback, NIMGetUserNameCardCallback, NIMUpdateMyUserNameCardCallback } from '../def/user_def';
 
 export class NIMUser extends ev.EventEmitter {
     user: NIMUserAPI;
