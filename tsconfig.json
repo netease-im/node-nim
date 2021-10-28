@@ -17,8 +17,19 @@
     "sourceMap": true
   },
   "typedocOptions": {
-    "entryPoints": "ts/nim.ts",
+    "entryPoints": [
+      "ts/api",
+      "ts/def"
+    ],
+    "entryPointStrategy": "expand",
+    "plugin": [
+      "typedoc-plugin-markdown"
+    ],
+    "theme": "./node_modules/typedoc-github-wiki-theme/dist",
+    "readme": "none",
+    "excludeProtected": "true",
     "out": "doc",
+    "sort": "source-order",
     "hideGenerator": "true"
   },
   "include": [
