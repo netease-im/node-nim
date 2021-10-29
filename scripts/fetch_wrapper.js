@@ -32,7 +32,13 @@ module.exports = ({
           tar.extract({
             file: sourceFile,
             cwd: extractPath,
-            sync: true
+            sync: true,
+            filter: (path, entry) => {
+              if (path.includes('._')) {
+                return false
+              }
+              return true
+            }
           })
           resolve()
           break
