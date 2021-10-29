@@ -8,7 +8,6 @@
 #include "api/nim_node_online_session.h"
 #include "api/nim_node_pass_through_proxy.h"
 #include "api/nim_node_plugin.h"
-#include "api/nim_node_rts.h"
 #include "api/nim_node_session.h"
 #include "api/nim_node_signaling.h"
 #include "api/nim_node_subscribe_event.h"
@@ -28,7 +27,6 @@ using nim_node::MsgLog;
 using nim_node::NOS;
 using nim_node::PassThroughProxy;
 using nim_node::PlugIn;
-using nim_node::Rts;
 using nim_node::Session;
 using nim_node::SessionOnlineService;
 using nim_node::Signaling;
@@ -62,7 +60,6 @@ void InitNIM(Local<Object> module) {
     nim_node::Tool::InitModule(module);
     nim_node::User::InitModule(module);
     nim_node::PlugIn::InitModule(module);
-    nim_node::Rts::InitModule(module);
     nim_node::Signaling::InitModule(module);
     printf("init end.\n");
 }
