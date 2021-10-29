@@ -13,7 +13,7 @@
 ## Build Environment
 If you are using node-nim under node enviroment or electron lower than 12.x.y, you will need the following tools to build addon locally, see [here](#build-from-source).
  - [CMake 3.10 or higher](https://cmake.org/)
- - [Visual Studio 2017 or MSBuild 2017](https://visualstudio.microsoft.com/zh-hans/vs/older-downloads/)
+ - [Visual Studio IDE or MSBuild (2017 or higher recommended)](https://visualstudio.microsoft.com/zh-hans/vs/older-downloads/)
 
 ## Installation
 

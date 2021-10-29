@@ -1,4 +1,4 @@
-name: node-gyp
+name: build
 
 on: [push]
 
