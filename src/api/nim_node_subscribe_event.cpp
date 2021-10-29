@@ -13,7 +13,7 @@ SubscribeEvent::SubscribeEvent(Isolate* isolate) {
     isolate_ = isolate;
 }
 SubscribeEvent::~SubscribeEvent() {}
-void SubscribeEvent::InitModule(Local<Object>& module) {
+void SubscribeEvent::InitModule(Local<Object>& exports, Local<Value>& module, Local<Context>& context) {
     BEGIN_OBJECT_INIT(SubscribeEvent, New, 5)
 
     SET_PROTOTYPE(RegPushEventCb);

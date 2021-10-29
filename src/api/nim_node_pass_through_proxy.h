@@ -5,29 +5,27 @@
 #include <node_object_wrap.h>
 #include "nim_node_helper.h"
 
-namespace nim_node
-{
-class PassThroughProxy : public node::ObjectWrap
-{
+namespace nim_node {
+class PassThroughProxy : public node::ObjectWrap {
 private:
     /* data */
 public:
-    static void New(const FunctionCallbackInfo<Value> &args);
-    static void InitModule(Local<Object> &module);
+    static void New(const FunctionCallbackInfo<Value>& args);
+    static void InitModule(Local<Object>& exports, Local<Value>& module, Local<Context>& context);
 
 public:
     NIM_SDK_NODE_API(RegReceivedHttpMsgCb);
     NIM_SDK_NODE_API(SendHttpRequest);
 
 protected:
-    PassThroughProxy(Isolate *isolate);
+    PassThroughProxy(Isolate* isolate);
     ~PassThroughProxy();
 
 private:
     DECLARE_CLASS;
 
-    Isolate *isolate_;
+    Isolate* isolate_;
 };
-} // namespace nim_node
+}  // namespace nim_node
 
-#endif //NIM_NODE_SDK_PASS_THROUGH_SERVICE_H
+#endif  // NIM_NODE_SDK_PASS_THROUGH_SERVICE_H

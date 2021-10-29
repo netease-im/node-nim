@@ -14,7 +14,7 @@ SuperTeam::SuperTeam(Isolate* isolate) {
     isolate_ = isolate;
 }
 SuperTeam::~SuperTeam() {}
-void SuperTeam::InitModule(Local<Object>& module) {
+void SuperTeam::InitModule(Local<Object>& exports, Local<Value>& module, Local<Context>& context) {
     BEGIN_OBJECT_INIT(SuperTeam, New, 5)
 
     SET_PROTOTYPE(RegTeamEventCb);

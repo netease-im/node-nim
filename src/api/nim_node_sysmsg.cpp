@@ -12,7 +12,7 @@ SystemMsg::SystemMsg(Isolate* isolate) {
     isolate_ = isolate;
 }
 SystemMsg::~SystemMsg() {}
-void SystemMsg::InitModule(Local<Object>& module) {
+void SystemMsg::InitModule(Local<Object>& exports, Local<Value>& module, Local<Context>& context) {
     BEGIN_OBJECT_INIT(SystemMsg, New, 5)
 
     SET_PROTOTYPE(RegSysmsgCb);

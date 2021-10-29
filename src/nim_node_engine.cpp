@@ -40,28 +40,28 @@ using nim_node::Tool;
 using nim_node::User;
 using v8::Object;
 
-void InitNIM(Local<Object> module) {
+void InitNIM(Local<Object> exports, Local<Value> module, Local<Context> context) {
     printf("init begin.\n");
-    nim_node::Client::InitModule(module);
-    nim_node::DataSync::InitModule(module);
-    nim_node::Friend::InitModule(module);
-    nim_node::Global::InitModule(module);
-    nim_node::MsgLog::InitModule(module);
-    nim_node::NOS::InitModule(module);
-    nim_node::SessionOnlineService::InitModule(module);
-    nim_node::PassThroughProxy::InitModule(module);
-    nim_node::Session::InitModule(module);
-    nim_node::SubscribeEvent::InitModule(module);
-    nim_node::SuperTeam::InitModule(module);
-    nim_node::SystemMsg::InitModule(module);
-    nim_node::Talk::InitModule(module);
-    nim_node::TalkEx::InitModule(module);
-    nim_node::Team::InitModule(module);
-    nim_node::Tool::InitModule(module);
-    nim_node::User::InitModule(module);
-    nim_node::PlugIn::InitModule(module);
-    nim_node::Signaling::InitModule(module);
+    nim_node::Client::InitModule(exports, module, context);
+    nim_node::DataSync::InitModule(exports, module, context);
+    nim_node::Friend::InitModule(exports, module, context);
+    nim_node::Global::InitModule(exports, module, context);
+    nim_node::MsgLog::InitModule(exports, module, context);
+    nim_node::NOS::InitModule(exports, module, context);
+    nim_node::SessionOnlineService::InitModule(exports, module, context);
+    nim_node::PassThroughProxy::InitModule(exports, module, context);
+    nim_node::Session::InitModule(exports, module, context);
+    nim_node::SubscribeEvent::InitModule(exports, module, context);
+    nim_node::SuperTeam::InitModule(exports, module, context);
+    nim_node::SystemMsg::InitModule(exports, module, context);
+    nim_node::Talk::InitModule(exports, module, context);
+    nim_node::TalkEx::InitModule(exports, module, context);
+    nim_node::Team::InitModule(exports, module, context);
+    nim_node::Tool::InitModule(exports, module, context);
+    nim_node::User::InitModule(exports, module, context);
+    nim_node::PlugIn::InitModule(exports, module, context);
+    nim_node::Signaling::InitModule(exports, module, context);
     printf("init end.\n");
 }
 
-NODE_MODULE(nim, InitNIM)
+NODE_MODULE_CONTEXT_AWARE(nim, InitNIM)

@@ -14,7 +14,7 @@ Session::Session(Isolate* isolate) {
     isolate_ = isolate;
 }
 Session::~Session() {}
-void Session::InitModule(Local<Object>& module) {
+void Session::InitModule(Local<Object>& exports, Local<Value>& module, Local<Context>& context) {
     BEGIN_OBJECT_INIT(Session, New, 5)
 
     SET_PROTOTYPE(RegChangeCb);

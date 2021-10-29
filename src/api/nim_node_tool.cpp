@@ -12,7 +12,7 @@ Tool::Tool(Isolate* isolate) {
     isolate_ = isolate;
 }
 Tool::~Tool() {}
-void Tool::InitModule(Local<Object>& module) {
+void Tool::InitModule(Local<Object>& exports, Local<Value>& module, Local<Context>& context) {
     BEGIN_OBJECT_INIT(Tool, New, 5)
 
     SET_PROTOTYPE(GetUserAppdataDir);

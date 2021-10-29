@@ -13,7 +13,7 @@ SessionOnlineService::SessionOnlineService(Isolate* isolate) {
     isolate_ = isolate;
 }
 SessionOnlineService::~SessionOnlineService() {}
-void SessionOnlineService::InitModule(Local<Object>& module) {
+void SessionOnlineService::InitModule(Local<Object>& exports, Local<Value>& module, Local<Context>& context) {
     BEGIN_OBJECT_INIT(SessionOnlineService, New, 5)
 
     SET_PROTOTYPE(RegSessionChanged);

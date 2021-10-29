@@ -3,18 +3,16 @@
 
 #include <node.h>
 #include <node_object_wrap.h>
-#include "nim_node_helper.h"
 #include "nim_cpp_wrapper/helper/nim_user_helper.h"
+#include "nim_node_helper.h"
 
-namespace nim_node
-{
-class User : public node::ObjectWrap
-{
+namespace nim_node {
+class User : public node::ObjectWrap {
 private:
     /* data */
 public:
-    static void New(const FunctionCallbackInfo<Value> &args);
-    static void InitModule(Local<Object> &module);
+    static void New(const FunctionCallbackInfo<Value>& args);
+    static void InitModule(Local<Object>& exports, Local<Value>& module, Local<Context>& context);
 
 public:
     NIM_SDK_NODE_API(RegSpecialRelationshipChangedCb);
@@ -31,14 +29,14 @@ public:
     NIM_SDK_NODE_API(UnregUserCb);
 
 protected:
-    User(Isolate *isolate);
+    User(Isolate* isolate);
     ~User();
 
 private:
     DECLARE_CLASS;
 
-    Isolate *isolate_;
+    Isolate* isolate_;
 };
-} // namespace nim_node
+}  // namespace nim_node
 
-#endif //NIM_NODE_SDK_USER_H
+#endif  // NIM_NODE_SDK_USER_H

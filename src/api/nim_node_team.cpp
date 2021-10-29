@@ -14,7 +14,7 @@ Team::Team(Isolate* isolate) {
     isolate_ = isolate;
 }
 Team::~Team() {}
-void Team::InitModule(Local<Object>& module) {
+void Team::InitModule(Local<Object>& exports, Local<Value>& module, Local<Context>& context) {
     BEGIN_OBJECT_INIT(Team, New, 5)
 
     SET_PROTOTYPE(RegTeamEventCb);

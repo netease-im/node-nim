@@ -13,7 +13,7 @@ MsgLog::MsgLog(Isolate* isolate) {
     isolate_ = isolate;
 }
 MsgLog::~MsgLog() {}
-void MsgLog::InitModule(Local<Object>& module) {
+void MsgLog::InitModule(Local<Object>& exports, Local<Value>& module, Local<Context>& context) {
     BEGIN_OBJECT_INIT(MsgLog, New, 5)
 
     SET_PROTOTYPE(QueryMsgByIDAysnc);

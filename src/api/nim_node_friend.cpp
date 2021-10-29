@@ -12,7 +12,7 @@ Friend::Friend(Isolate* isolate) {
     isolate_ = isolate;
 }
 Friend::~Friend() {}
-void Friend::InitModule(Local<Object>& module) {
+void Friend::InitModule(Local<Object>& exports, Local<Value>& module, Local<Context>& context) {
     BEGIN_OBJECT_INIT(Friend, New, 5)
 
     SET_PROTOTYPE(RegChangeCb);

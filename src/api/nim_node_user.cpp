@@ -12,7 +12,7 @@ User::User(Isolate* isolate) {
     isolate_ = isolate;
 }
 User::~User() {}
-void User::InitModule(Local<Object>& module) {
+void User::InitModule(Local<Object>& exports, Local<Value>& module, Local<Context>& context) {
     BEGIN_OBJECT_INIT(User, New, 5)
 
     SET_PROTOTYPE(RegSpecialRelationshipChangedCb);

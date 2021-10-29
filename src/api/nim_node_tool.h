@@ -5,15 +5,13 @@
 #include <node_object_wrap.h>
 #include "nim_node_helper.h"
 
-namespace nim_node
-{
-class Tool : public node::ObjectWrap
-{
+namespace nim_node {
+class Tool : public node::ObjectWrap {
 private:
     /* data */
 public:
-    static void New(const FunctionCallbackInfo<Value> &args);
-    static void InitModule(Local<Object> &module);
+    static void New(const FunctionCallbackInfo<Value>& args);
+    static void InitModule(Local<Object>& exports, Local<Value>& module, Local<Context>& context);
 
 public:
     NIM_SDK_NODE_API(GetUserAppdataDir);
@@ -27,14 +25,14 @@ public:
     NIM_SDK_NODE_API(FilterClientAntispam);
 
 protected:
-    Tool(Isolate *isolate);
+    Tool(Isolate* isolate);
     ~Tool();
 
 private:
     DECLARE_CLASS;
 
-    Isolate *isolate_;
+    Isolate* isolate_;
 };
-} // namespace nim_node
+}  // namespace nim_node
 
-#endif //NIM_NODE_SDK_TOOL_H
+#endif  // NIM_NODE_SDK_TOOL_H

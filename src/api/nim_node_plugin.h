@@ -27,20 +27,16 @@ public:
     SINGLETON_DEFINE(PlugInEventHandler);
 
 public:
-    static void OnChatRoomRequestEnterCallback(const BaseCallbackPtr& bcb,
-                                               int error_code,
-                                               const std::string& result);
+    static void OnChatRoomRequestEnterCallback(const BaseCallbackPtr& bcb, int error_code, const std::string& result);
 
 private:
-    void Node_OnChatRoomRequestEnterCallback(const BaseCallbackPtr& bcb,
-                                             int error_code,
-                                             const std::string& result);
+    void Node_OnChatRoomRequestEnterCallback(const BaseCallbackPtr& bcb, int error_code, const std::string& result);
 };
 
 class PlugIn : public node::ObjectWrap {
 public:
     static void New(const FunctionCallbackInfo<Value>& args);
-    static void InitModule(Local<Object>& module);
+    static void InitModule(Local<Object>& exports, Local<Value>& module, Local<Context>& context);
 
 public:
     NIM_SDK_NODE_API(ChatRoomRequestEnterAsync);

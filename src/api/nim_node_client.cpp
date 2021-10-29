@@ -12,7 +12,7 @@ Client::Client(Isolate* isolate) {
     isolate_ = isolate;
 }
 Client::~Client() {}
-void Client::InitModule(Local<Object>& module) {
+void Client::InitModule(Local<Object>& exports, Local<Value>& module, Local<Context>& context) {
     BEGIN_OBJECT_INIT(Client, New, 5)
 
     SET_PROTOTYPE(Init)

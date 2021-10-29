@@ -27,7 +27,7 @@ TalkEx::TalkEx(Isolate* isolate) {
 
 TalkEx::~TalkEx() {}
 
-void TalkEx::InitModule(Local<Object>& module) {
+void TalkEx::InitModule(Local<Object>& exports, Local<Value>& module, Local<Context>& context) {
     BEGIN_OBJECT_INIT(TalkEx, New, 5)
 
     /// Collect

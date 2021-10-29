@@ -26,7 +26,7 @@ private:
     /* data */
 public:
     static void New(const FunctionCallbackInfo<Value>& args);
-    static void InitModule(Local<Object>& module);
+    static void InitModule(Local<Object>& exports, Local<Value>& module, Local<Context>& context);
 
 public:
     // Collect

@@ -41,7 +41,7 @@ PlugIn::PlugIn(Isolate* isolate) {
 
 PlugIn::~PlugIn() {}
 
-void PlugIn::InitModule(Local<Object>& module) {
+void PlugIn::InitModule(Local<Object>& exports, Local<Value>& module, Local<Context>& context) {
     BEGIN_OBJECT_INIT(PlugIn, New, 5)
 
     SET_PROTOTYPE(ChatRoomRequestEnterAsync);

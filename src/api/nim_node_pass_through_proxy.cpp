@@ -12,7 +12,7 @@ PassThroughProxy::PassThroughProxy(Isolate* isolate) {
     isolate_ = isolate;
 }
 PassThroughProxy::~PassThroughProxy() {}
-void PassThroughProxy::InitModule(Local<Object>& module) {
+void PassThroughProxy::InitModule(Local<Object>& exports, Local<Value>& module, Local<Context>& context) {
     BEGIN_OBJECT_INIT(PassThroughProxy, New, 5)
 
     SET_PROTOTYPE(RegReceivedHttpMsgCb);

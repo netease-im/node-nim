@@ -13,7 +13,7 @@ NOS::NOS(Isolate* isolate) {
     isolate_ = isolate;
 }
 NOS::~NOS() {}
-void NOS::InitModule(Local<Object>& module) {
+void NOS::InitModule(Local<Object>& exports, Local<Value>& module, Local<Context>& context) {
     BEGIN_OBJECT_INIT(NOS, New, 5)
 
     SET_PROTOTYPE(InitConfig);

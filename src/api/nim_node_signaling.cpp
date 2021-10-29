@@ -11,7 +11,7 @@ Signaling::Signaling(Isolate* isolate) {
     isolate_ = isolate;
 }
 Signaling::~Signaling() {}
-void Signaling::InitModule(Local<Object>& module) {
+void Signaling::InitModule(Local<Object>& exports, Local<Value>& module, Local<Context>& context) {
     BEGIN_OBJECT_INIT(Signaling, New, 5)
 
     SET_PROTOTYPE(RegOnlineNotifyCb);

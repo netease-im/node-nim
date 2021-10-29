@@ -50,17 +50,17 @@ typedef std::shared_ptr<BaseCallback> BaseCallbackPtr;
     TypeName& operator=(const TypeName&) = delete
 
 #define BEGIN_OBJECT_INIT(className, constructor, fieldCount)                                                 \
-    Isolate* isolate = module->GetIsolate();                                                                  \
+    Isolate* isolate = context->GetIsolate();                                                                 \
     Local<FunctionTemplate> tpl = FunctionTemplate::New(isolate, constructor);                                \
     tpl->SetClassName(String::NewFromUtf8(isolate, #className, v8::NewStringType::kNormal).ToLocalChecked()); \
     tpl->InstanceTemplate()->SetInternalFieldCount(fieldCount);
 
 #define SET_PROTOTYPE(name) NODE_SET_PROTOTYPE_METHOD(tpl, #name, name);
 
-#define END_OBJECT_INIT(className)                                                                                                   \
-    constructor.Reset(isolate, tpl->GetFunction(isolate->GetCurrentContext()).ToLocalChecked());                                     \
-    module->Set(isolate->GetCurrentContext(), String::NewFromUtf8(isolate, #className, v8::NewStringType::kNormal).ToLocalChecked(), \
-                tpl->GetFunction(isolate->GetCurrentContext()).ToLocalChecked());
+#define END_OBJECT_INIT(className)                                                                                                    \
+    constructor.Reset(isolate, tpl->GetFunction(isolate->GetCurrentContext()).ToLocalChecked());                                      \
+    exports->Set(isolate->GetCurrentContext(), String::NewFromUtf8(isolate, #className, v8::NewStringType::kNormal).ToLocalChecked(), \
+                 tpl->GetFunction(isolate->GetCurrentContext()).ToLocalChecked());
 
 #define NIM_SDK_NODE_API(m) static void(m)(const FunctionCallbackInfo<Value>& args)
 

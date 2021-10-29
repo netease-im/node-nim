@@ -12,7 +12,7 @@ Talk::Talk(Isolate* isolate) {
     isolate_ = isolate;
 }
 Talk::~Talk() {}
-void Talk::InitModule(Local<Object>& module) {
+void Talk::InitModule(Local<Object>& exports, Local<Value>& module, Local<Context>& context) {
     BEGIN_OBJECT_INIT(Talk, New, 5)
 
     SET_PROTOTYPE(RegSendMsgCb);

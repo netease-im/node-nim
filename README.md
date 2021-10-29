@@ -39,28 +39,29 @@ const result = NIM.Client.init('app_key', 'app_data_dir', 'app_install_dir', {
 
 NIM.Client.login('app_key', 'username', 'password_in_md5', (result) => {
     assert.strictEqual(result.err_code, 200)
+    if (loginResult.login_step === 3) { // login has 3 steps, step 3 succeeded
+        NIM.Talk.initEventHandler() // init callbacks
+
+        NIM.Talk.on('onReceiveMsg', function (result) {
+            console.log(result)
+        })
+
+        NIM.Talk.sendMsg({
+            to_type: 0, // p2p
+            to_accid: 'receiver_accid',
+            time: new Date().getTime(),
+            msg_type: 0, // text message
+            msg_body: 'Send from NIM node quick start.',
+            client_msg_id: new Date().getTime().toString(), // use an uuid
+        }, '', function () { })
+
+        NIM.Client.logout(1, (err_code) => {
+            assert.strictEqual(err_code, 200)
+        }, '')
+
+        NIM.Client.cleanUp('')
+    }
 }, '')
-
-NIM.Talk.initEventHandler() // init callbacks
-
-NIM.Talk.on('onReceiveMsg', function (result) {
-    console.log(result)
-})
-
-NIM.Talk.sendMsg({
-    to_type: 0, // p2p
-    to_accid: 'receiver_accid',
-    time: new Date().getTime(),
-    msg_type: 0, // text message
-    msg_body: 'Send from NIM node quick start.',
-    client_msg_id: new Date().getTime().toString(), // use an uuid
-}, '', function () { })
-
-NIM.Client.logout(1, (err_code) => {
-    assert.strictEqual(err_code, 200)
-}, '')
-
-NIM.Client.cleanUp('')
 ```
 ## Quick Start
 Check out this [quick start project](https://github.com/netease-im/node-nim-quick-start), try out NIM's outstanding features!
