@@ -78,38 +78,38 @@ napi_status nim_msglog_full_text_search_online_param_obj_to_struct(Isolate* isol
     UTF8String out_string;
     std::list<utf8_string> str_list;
     std::list<uint32_t> ui32_list;
-    if (nim_napi_get_object_value_utf8string(isolate, obj, "keyword_", out_string) == napi_ok) {
+    if (nim_napi_get_object_value_utf8string(isolate, obj, "keyword", out_string) == napi_ok) {
         res.keyword_ = out_string.toUtf8String();
     }
-    if (nim_napi_get_object_value_uint64(isolate, obj, "from_time_", out_ui64) == napi_ok) {
+    if (nim_napi_get_object_value_uint64(isolate, obj, "from_time", out_ui64) == napi_ok) {
         res.from_time_ = out_ui64;
     }
-    if (nim_napi_get_object_value_uint64(isolate, obj, "to_time_", out_ui64) == napi_ok) {
+    if (nim_napi_get_object_value_uint64(isolate, obj, "to_time", out_ui64) == napi_ok) {
         res.to_time_ = out_ui64;
     }
-    if (nim_napi_get_object_value_uint32(isolate, obj, "session_limit_", out_ui32) == napi_ok) {
+    if (nim_napi_get_object_value_uint32(isolate, obj, "session_limit", out_ui32) == napi_ok) {
         res.session_limit_ = out_ui32;
     }
-    if (nim_napi_get_object_value_uint32(isolate, obj, "msglog_limit_", out_ui32) == napi_ok) {
+    if (nim_napi_get_object_value_uint32(isolate, obj, "msglog_limit", out_ui32) == napi_ok) {
         res.msglog_limit_ = out_ui32;
     }
-    if (nim_napi_get_object_value_uint32(isolate, obj, "order_by_", out_ui32) == napi_ok) {
-        res.order_by_ = static_cast<nim::NIMFullTextSearchOnlineOrderType>(out_ui32);
+    if (nim_napi_get_object_value_uint32(isolate, obj, "search_rule", out_ui32) == napi_ok) {
+        res.search_rule_ = static_cast<nim::NIMFullTextSearchRule>(out_ui32);
     }
-    if (nim_napi_get_object_value_utf8string_list(isolate, obj, "p2p_filter_list_", str_list) == napi_ok) {
+    if (nim_napi_get_object_value_utf8string_list(isolate, obj, "p2p_filter_list", str_list) == napi_ok) {
         res.p2p_filter_list_ = str_list;
     }
-    if (nim_napi_get_object_value_utf8string_list(isolate, obj, "team_filter_list_", str_list) == napi_ok) {
+    if (nim_napi_get_object_value_utf8string_list(isolate, obj, "team_filter_list", str_list) == napi_ok) {
         res.team_filter_list_ = str_list;
     }
-    if (nim_napi_get_object_value_utf8string_list(isolate, obj, "sender_filter_list_", str_list) == napi_ok) {
+    if (nim_napi_get_object_value_utf8string_list(isolate, obj, "sender_filter_list", str_list) == napi_ok) {
         res.sender_filter_list_ = str_list;
     }
     Local<Value> value;
-    if (nim_napi_get_object_value(isolate, obj, "msg_type_filter_list_", value) == napi_ok) {
+    if (nim_napi_get_object_value(isolate, obj, "msg_type_filter_list", value) == napi_ok) {
         nim_msglog_msg_type_array_to_list(isolate, value, res.msg_type_filter_list_);
     }
-    if (nim_napi_get_object_value_uint32_list(isolate, obj, "msg_sub_type_filter_list_", ui32_list) == napi_ok) {
+    if (nim_napi_get_object_value_uint32_list(isolate, obj, "msg_sub_type_filter_list", ui32_list) == napi_ok) {
         res.msg_sub_type_filter_list_ = ui32_list;
     }
     return napi_ok;

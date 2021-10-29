@@ -288,7 +288,7 @@ function testMsglog(test_info) {
                     to_time_: new Date().getTime(),
                     session_limit_: 10,
                     msglog_limit_: 10,
-                    order_by_: 1,
+                    search_rule_: 1,
                     p2p_filter_list_: [],
                     team_filter_list_: [],
                     sender_filter_list_: [],

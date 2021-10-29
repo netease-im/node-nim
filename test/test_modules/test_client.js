@@ -79,7 +79,7 @@ function testClient(test_info) {
         describe('#loginCustomDataToJson', function () {
             it('loginCustomDataToJson should return "{\"custom_tag\":\"test\"}"', function () {
                 const json = NIM.Client.loginCustomDataToJson('test')
-                assert.strictEqual(json, "{\"custom_tag\":\"test\"}")
+                assert.strictEqual(json, `{"custom_tag":"test"}\n`)
             })
         })
         describe('#setMultiportPushConfigAsync', function () {

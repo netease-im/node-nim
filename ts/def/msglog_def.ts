@@ -266,7 +266,7 @@ export interface NIMFullTextSearchOnlineAsyncParam {
 	to_time_: number;
 	session_limit_: number;
 	msglog_limit_: number;
-	order_by_: number;
+	search_rule_: number;
 	p2p_filter_list_: Array<string>;
 	team_filter_list_: Array<string>;
 	sender_filter_list_: Array<string>;
