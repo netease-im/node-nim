@@ -1,20 +1,20 @@
-import { NIMPlugInAPI, NIMChatRoomRequestEnterCallback } from '../def/plugin_def';
+import {NIMPlugInAPI, NIMChatRoomRequestEnterCallback} from '../def/plugin_def';
 import ev from 'events';
 import nim from './nim';
 
 export class NIMPlugin extends ev.EventEmitter {
-    plugin: NIMPlugInAPI;
-    constructor() {
-        super();
-        this.plugin = new nim.PlugIn();
-    }
+  plugin: NIMPlugInAPI;
+  constructor() {
+    super();
+    this.plugin = new nim.PlugIn();
+  }
 
-    /** 异步获取聊天室登录信息
+  /** 异步获取聊天室登录信息
      * @param roomId				聊天室ID
      * @param cb				回调函数
      * @param ext		json扩展参数（备用，目前不需要）
      * @return void 无返回值
-     * @note 
+     * @note
      * <pre>
      * 200:成功
      * 414:参数错误
@@ -24,7 +24,7 @@ export class NIMPlugin extends ev.EventEmitter {
      * 13003:在黑名单中
      * </pre>
      */
-    chatRoomRequestEnterAsync(roomId: number, cb: NIMChatRoomRequestEnterCallback, ext: string) {
-        return this.plugin.ChatRoomRequestEnterAsync(roomId, cb, ext);
-    }
+  chatRoomRequestEnterAsync(roomId: number, cb: NIMChatRoomRequestEnterCallback, ext: string) {
+    return this.plugin.ChatRoomRequestEnterAsync(roomId, cb, ext);
+  }
 }

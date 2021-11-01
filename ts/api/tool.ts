@@ -1,74 +1,74 @@
 import ev from 'events';
 import nim from './nim';
-import { NIMAppDataType, NIMAudioInfo, NIMFilterClientAntispamCallback, NIMGetAudioTextCallback, NIMToolAPI } from '../def/tool_def';
+import {NIMAppDataType, NIMAudioInfo, NIMFilterClientAntispamCallback, NIMGetAudioTextCallback, NIMToolAPI} from '../def/tool_def';
 
 export class NIMTool extends ev.EventEmitter {
-    tool: NIMToolAPI;
-    constructor() {
-        super();
-        this.tool = new nim.Tool();
-    }
+  tool: NIMToolAPI;
+  constructor() {
+    super();
+    this.tool = new nim.Tool();
+  }
 
-    /** 获取SDK里app account对应的app data目录（各个帐号拥有独立的目录，其父目录相同）
+  /** 获取SDK里app account对应的app data目录（各个帐号拥有独立的目录，其父目录相同）
      * @param app_account APP account。如果传入空字符串，则将获取到各个帐号目录的父目录（谨慎删除！）
      * @return std::string 返回的目录路径(UTF8)
      */
-    getUserAppdataDir(appAccount: string): string {
-        return this.tool.GetUserAppdataDir(appAccount);
-    }
+  getUserAppdataDir(appAccount: string): string {
+    return this.tool.GetUserAppdataDir(appAccount);
+  }
 
-    /** 获取SDK里app account对应的具体类型的app data目录（如图片消息文件存放目录，语音消息文件存放目录等），需要调用nim_free_buf(void *data)释放内存
+  /** 获取SDK里app account对应的具体类型的app data目录（如图片消息文件存放目录，语音消息文件存放目录等），需要调用nim_free_buf(void *data)释放内存
      * @param app_account APP account。如果传入空字符串，则返回结果为空
      * @param appdata_type 具体类型的app data。见NIMAppDataType定义
      * @return std::string返回的目录路径（目录可能未生成，需要app自行判断是否已生成）
      */
-    getSpecificAppdataDir(appAccount: string, appdataType: NIMAppDataType): string {
-        return this.tool.GetSpecificAppdataDir(appAccount, appdataType);
-    }
+  getSpecificAppdataDir(appAccount: string, appdataType: NIMAppDataType): string {
+    return this.tool.GetSpecificAppdataDir(appAccount, appdataType);
+  }
 
-    /** 获取本地存储路径
+  /** 获取本地存储路径
      * @return std::string 返回的目录路径(UTF8)
      */
-    getLocalAppdataDir(): string {
-        return this.tool.GetLocalAppdataDir();
-    }
+  getLocalAppdataDir(): string {
+    return this.tool.GetLocalAppdataDir();
+  }
 
-    /** 获取安装目录（SDK DLL所在的当前目录）
+  /** 获取安装目录（SDK DLL所在的当前目录）
      * @return std::string 返回的目录路径(UTF8)
      */
-    getCurModuleDir(): string {
-        return this.tool.GetCurModuleDir();
-    }
+  getCurModuleDir(): string {
+    return this.tool.GetCurModuleDir();
+  }
 
-    /** 计算md5
+  /** 计算md5
      * @param input 需要计算md5的内容
      * @return std::string 返回的md5
      */
-    getMD5(input: string): string {
-        return this.tool.GetMD5(input);
-    }
+  getMD5(input: string): string {
+    return this.tool.GetMD5(input);
+  }
 
-    /** 计算文件的md5
+  /** 计算文件的md5
      * @param file_path 文件完整路径，UTF-8
      * @return std::string 返回的md5
      */
-    getFileMD5(filePath: string): string {
-        return this.tool.GetFileMD5(filePath);
-    }
+  getFileMD5(filePath: string): string {
+    return this.tool.GetFileMD5(filePath);
+  }
 
-    /** 生成UUID
+  /** 生成UUID
      * @return std::string 返回的UUID
      */
-    getUUID(): string {
-        return this.tool.GetUUID();
-    }
+  getUUID(): string {
+    return this.tool.GetUUID();
+  }
 
-    /** 语音转文字
+  /** 语音转文字
      * @param audio_info 语音信息
      * @param cb 语音转文字回调
      * @param json_extension json扩展参数（备用，目前不需要）
      * @return bool 检查参数如果不符合要求则返回失败
-     * @note 
+     * @note
      * <pre>
      * 200:成功
      * 403:没有权限
@@ -80,25 +80,25 @@ export class NIMTool extends ev.EventEmitter {
      * 6104:audioUrl不合法
      * </pre>
      */
-    getAudioTextAsync(audioInfo: NIMAudioInfo, cb: NIMGetAudioTextCallback, json_extension: string): boolean {
-        return this.tool.GetAudioTextAsync(audioInfo, cb, json_extension);
-    }
+  getAudioTextAsync(audioInfo: NIMAudioInfo, cb: NIMGetAudioTextCallback, json_extension: string): boolean {
+    return this.tool.GetAudioTextAsync(audioInfo, cb, json_extension);
+  }
 
-    /** 客户端本地反垃圾
+  /** 客户端本地反垃圾
      * @param text 文本内容，UTF-8
      * @param replace_str 进行替换的字符串，UTF-8
      * @param lib_name 词库名称，UTF-8
      * @param callback 回调函数
      * @return
-     * @note 
+     * @note
      * <pre>
-     * 回调函数ret 
+     * 回调函数ret
      * 1：敏感词已被替换；
      * 2：含有敏感词不允许发送；
      * 3：需要将内容设置在消息结构的反垃圾字段里，由服务器过滤
      * </pre>
      */
-    filterClientAntispam(text: string, replaceString: string, libName: string, cb: NIMFilterClientAntispamCallback): void {
-        return this.tool.FilterClientAntispam(text, replaceString, libName, cb);
-    }
+  filterClientAntispam(text: string, replaceString: string, libName: string, cb: NIMFilterClientAntispamCallback): void {
+    return this.tool.FilterClientAntispam(text, replaceString, libName, cb);
+  }
 }
