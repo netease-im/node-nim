@@ -41,7 +41,7 @@ jobs:
         node-version: 'lts/*'
 
     - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v1.1.1
+      uses: microsoft/setup-msbuild@v1.0.2
 
     # Npm install
     - run: npm install --verbose
