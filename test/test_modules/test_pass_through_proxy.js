@@ -1,16 +1,18 @@
 const NIM = require('../../js/nim');
 const assert = require('assert');
 
+const pass_through_proxy = new NIM.NIMPassThroughProxy();
+
 function testPassThroughProxy(test_info) {
   describe('********************PassThroughProxy********************', function() {
-    describe('#initEventHandler', function() {
-      it('initEventHandler', function() {
-        NIM.PassThroughProxy.initEventHandler();
+    describe('#initEventHandlers', function() {
+      it('initEventHandlers', function() {
+        pass_through_proxy.initEventHandlers();
       });
     });
     describe('#sendHttpRequest', function() {
       it('sendHttpRequest', function(done) {
-        NIM.PassThroughProxy.sendHttpRequest('127.0.0.1', '', 1, '', '', '', function(res_code, header, body, json_extension) {
+        pass_through_proxy.sendHttpRequest('127.0.0.1', '', 1, '', '', '', function(res_code, header, body, json_extension) {
           done();
         });
       });

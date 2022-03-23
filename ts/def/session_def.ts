@@ -1,184 +1,144 @@
-import {NIMMsgLogStatus, NIMMsgLogSubStatus, NIMMessageType} from './msglog_def';
-import {NIMMessage} from './talk_def';
-
+import { NIMMsgLogStatus, NIMMsgLogSubStatus, NIMMessageType, IMMessage } from './msglog_def';
 /** @enum NIMSessionType 会话类型 */
 export enum NIMSessionType {
-  kNIMSessionTypeP2P = 0,			/** < 个人，即点对点 */
-  kNIMSessionTypeTeam = 1,			/** < 群组 */
-  kNIMSessionTypeSuperTeam = 5,			/** < 超大群组 */
+    kNIMSessionTypeP2P = 0,			/** < 个人，即点对点 */
+    kNIMSessionTypeTeam = 1,			/** < 群组 */
+    kNIMSessionTypeSuperTeam = 5,			/** < 超大群组 */
 }
 
 /** @enum NIMSessionCommand 会话操作命令 */
 export enum NIMSessionCommand {
-  kNIMSessionCommandAdd = 0,	/** < 添加会话项 */
-  kNIMSessionCommandRemove = 1,	/** < 删除单个会话项 */
-  kNIMSessionCommandRemoveAll = 2,	/** < 删除所有会话项 */
-  kNIMSessionCommandRemoveAllP2P = 3,	/** < 删除所有点对点的会话项 */
-  kNIMSessionCommandRemoveAllTeam = 4,	/** < 删除所有群的会话项 */
-  kNIMSessionCommandMsgDeleted = 5,	/** < 单个会话项的消息已删除 */
-  kNIMSessionCommandAllMsgDeleted = 6,	/** < 所有会话项的消息已删除 */
-  kNIMSessionCommandAllP2PMsgDeleted = 7,	/** < 所有点对点会话项的消息已删除 */
-  kNIMSessionCommandAllTeamMsgDeleted = 8,	/** < 所有群会话项的消息已删除 */
-  kNIMSessionCommandUpdate = 9,	/** < 更新会话项 */
-  kNIMSessionCommandRemoveAllSuperTeam = 10,	/** < 删除所有超大群的会话项 */
-  kNIMSessionCommandAllSuperTeamMsgDeleted = 11,	/** < 所有超大群会话项的消息已删除 */
+    kNIMSessionCommandAdd = 0,	/** < 添加会话项 */
+    kNIMSessionCommandRemove = 1,	/** < 删除单个会话项 */
+    kNIMSessionCommandRemoveAll = 2,	/** < 删除所有会话项 */
+    kNIMSessionCommandRemoveAllP2P = 3,	/** < 删除所有点对点的会话项 */
+    kNIMSessionCommandRemoveAllTeam = 4,	/** < 删除所有群的会话项 */
+    kNIMSessionCommandMsgDeleted = 5,	/** < 单个会话项的消息已删除 */
+    kNIMSessionCommandAllMsgDeleted = 6,	/** < 所有会话项的消息已删除 */
+    kNIMSessionCommandAllP2PMsgDeleted = 7,	/** < 所有点对点会话项的消息已删除 */
+    kNIMSessionCommandAllTeamMsgDeleted = 8,	/** < 所有群会话项的消息已删除 */
+    kNIMSessionCommandUpdate = 9,	/** < 更新会话项 */
+    kNIMSessionCommandRemoveAllSuperTeam = 10,	/** < 删除所有超大群的会话项 */
+    kNIMSessionCommandAllSuperTeamMsgDeleted = 11,	/** < 所有超大群会话项的消息已删除 */
 }
 
-export interface NIMSessionData {
-  id: string;					/** < string, 会话id */
-  type: NIMSessionType;			/** < int, 会话类型(见NIMSessionType 个人0 群组1 超大群5 etc) */
-  unread_count: number;		/** < int, 本地消息历史中该会话未读消息数量 */
-  command: number;			/** < int, 会话项操作命令NIMSessionCommand */
-  msg_client_id: string;		/** < string, 本地消息历史中该会话最后一条消息的客户端ID唯一标识，即消息uuid */
-  msg_from_account: string;	/** < string, 本地消息历史中该会话最后一条消息的发送方帐号 */
-  msg_time: number;			/** < long, 本地消息历史中该会话最后一条消息的时间 */
-  msg_type: number;			/** < int, 本地消息历史中该会话最后一条消息的类型 见NIMMessageType*/
-  msg_body: string;			/** < string, 本地消息历史中该会话最后一条消息的内容 */
-  msg_attach: string;			/** < string, 本地消息历史中该会话最后一条消息的attach */
-  msg_status: NIMMsgLogStatus;			/** < int, 本地消息历史中该会话最后一条消息的状态，见NIMMsgLogStatus */
-  msg_sub_status: NIMMsgLogSubStatus;		/** < int, 本地消息历史中该会话最后一条消息的子状态，见NIMMsgLogSubStatus */
-  last_updated_msg: boolean; 	/** < bool, (批量)消息变更或增加时是否是最后一条变更的信息 */
-  top: boolean;				/** < bool, 是否置顶 */
-  extend_data: string;		/** < string, 本地扩展字段, 限4096 */
+export interface SessionData {
+    id_: string;                     /**< 会话ID */
+    type_: NIMSessionType;                /**< 会话类型 */
+    unread_count_: number;                   /**< 当前会话消息未读数 */
+    command_: NIMSessionCommand;          /**< 会话修改命令 */
+    msg_id_: string;                 /**< 当前会话最新一条消息ID */
+    msg_sender_accid_: string;       /**< 当前会话最新一条消息发送方ID */
+    msg_timetag_: number;                /**< 当前会话最新一条消息时间戳（毫秒） */
+    msg_type_: NIMMessageType;            /**< 当前会话最新一条消息类型 */
+    msg_content_: string;            /**< 当前会话最新一条消息内容 */
+    msg_attach_: string;             /**< 当前会话最新一条消息附件 */
+    msg_status_: NIMMsgLogStatus;         /**< 当前会话最新一条消息状态 */
+    msg_sub_status_: NIMMsgLogSubStatus;  /**< 当前会话最新一条消息子状态 */
+    last_updated_msg_: boolean;              /**< (批量)消息变更或增加时是否是最后一条变更的信息 */
+    placed_on_top_: boolean;                 /**< 置顶标识 */
+    extend_data_: string;            /**< 本地扩展字段,限制4096 */
+    is_robot_session_: boolean;              /**< 是否为机器人会话, 默认为false */
+    stick_top_info_: StickTopSessionInfo; /**< 置顶信息 v7.6添加,推荐使用此字段代替 "placed_on_top_" 字段 */
 }
 
-export interface NIMSessionList {
-  count: number;					/** < int, 会话列表项数量 */
-  unread_counts: number;			/** < int, 总未读数 */
-  content: Array<NIMSessionData>;	/** < 会话列表项内容 */
+export interface StickTopSessionInfo {
+    top_: boolean;            /**< 是否置顶 */
+    id_: string;      /**< 会话ID */
+    type_: NIMSessionType; /**< 会话类型 */
+    ext_: string;     /**< 扩展信息 */
+    create_time_: number; /**< 创建时间 */
+    update_time_: number; /**< 更新时间 */
 }
 
-export interface NIMUnreadCountZeroInfo {
-  session_id: string;					/** < string, 会话id */
-  session_type: NIMSessionType;		/** < NIMSessionType, 会话类型 */
+export interface SessionDataList {
+    count_: number;                       /**< 会话列表项数量 */
+    unread_count_: number;                /**< 会话列表总的未读消息数 */
+    sessions_: Array<SessionData>; /**< 会话列表项数据 */
 }
 
-export interface NIMSessionMainTagInfo {
-  id: string;
-  type: NIMSessionType;
+export interface StickTopSession {
+    stick_top_info_: StickTopSessionInfo; /**< 置顶信息 */
+    session_data_: SessionData;           /**< 会话信息 */
 }
 
-export interface NIMSessionRoamMsgHasMoreTagInfo {
-  msg_time: number;
-  msg_server_id: string;
-  content: NIMSessionMainTagInfo;
+export interface MultiUnreadCountZeroInfo {
+    id_: string;      /**< 会话ID */
+    type_: NIMSessionType; /**< 会话类型 */
 }
 
-export interface NIMSessionChangeCallback {
-  (rescode: number, result: NIMSessionData, count: number): void;
+export interface StickTopSessionList {
+    sessions_: Array<StickTopSession>; /**< 置顶会话列表项数据 */
 }
 
-export interface NIMDeleteSessionRoamingMessageCallback {
-  (rescode: number, to_type: number, session_id: string): void;
+export interface SessionMainTagInfo {
+    session_id: string;
+    to_type: NIMSessionType;
 }
 
-export interface NIMBadgeCountCallback {
-  (result: string): void;
+export interface SessionRoamMsgHasMoreTagInfo {
+    session_tag_info: SessionMainTagInfo;
+    message_time_tag: number;
+    message_server_id: number;
 }
 
-export interface NIMQuerySessionListCallback {
-  (count: number, result: NIMSessionList): void;
-}
-
-export interface NIMQuerySessionDataCallback {
-  (rescode: number, result: NIMSessionData): void;
-}
-
-export interface NIMSetToStickTopSessionNotifyCallback {
-  (result: string): void;
-}
-
-export interface NIMCancelStickTopSessionNotifyCallback {
-  (session_id: string, session_type: NIMSessionType): void;
-}
-
-export interface NIMUpdateStickTopSessionNotifyCallback {
-  (result: string): void;
-}
-
-export interface NIMQueryStickTopSessionListCallback {
-  (res_code: number, result: string): void;
-}
-
-export interface NIMSetToStickTopSessionCallback {
-  (res_code: number, result: string): void;
-}
-
-export interface NIMUpdateStickTopSessionCallback {
-  (res_code: number, result: string): void;
-}
-
-export interface NIMCancelToStickTopSessionCallback {
-  (res_code: number, session_id: string, session_type: NIMSessionType): void;
-}
-
-export interface NIMQueryHasmoreRoammsgCallback {
-  (res_code: number, info: NIMSessionRoamMsgHasMoreTagInfo): void;
-}
-
-export interface NIMQueryAllHasmoreRoammsgCallback {
-  (res_code: number, info_list: Array<NIMSessionRoamMsgHasMoreTagInfo>): void;
-}
-
-export interface NIMUpdateHasmoreRoammsgCallback {
-  (res_code: number): void;
-}
-
-export interface NIMDeleteHasmoreRoammsgCallback {
-  (res_code: number): void;
-}
-
-export interface NIMSetMultiUnreadCountZeroAsyncCallback {
-  (res_code: number, data_list: Array<NIMSessionData>, unread_count: number): void;
-}
+export type SessionChangeCallback = (rescode: number, result: SessionData, count: number) => void;
+export type DeleteSessionRoamingMessageCallback = (rescode: number, to_type: number, session_id: string) => void;
+export type BadgeCountCallback = (result: string) => void;
+export type QuerySessionListCallback = (count: number, result: SessionDataList) => void;
+export type QuerySessionDataCallback = (rescode: number, result: SessionData) => void;
+export type SetToStickTopSessionNotifyCallback = (result: string) => void;
+export type CancelStickTopSessionNotifyCallback = (session_id: string, session_type: NIMSessionType) => void;
+export type UpdateStickTopSessionNotifyCallback = (result: string) => void;
+export type QueryStickTopSessionListCallback = (res_code: number, result: string) => void;
+export type SetToStickTopSessionCallback = (res_code: number, result: string) => void;
+export type UpdateStickTopSessionCallback = (res_code: number, result: string) => void;
+export type CancelToStickTopSessionCallback = (res_code: number, session_id: string, session_type: NIMSessionType) => void;
+export type QueryHasmoreRoammsgCallback = (res_code: number, info: SessionRoamMsgHasMoreTagInfo) => void;
+export type QueryAllHasmoreRoammsgCallback = (res_code: number, info_list: Array<SessionRoamMsgHasMoreTagInfo>) => void;
+export type UpdateHasmoreRoammsgCallback = (res_code: number) => void;
+export type DeleteHasmoreRoammsgCallback = (res_code: number) => void;
+export type SetMultiUnreadCountZeroAsyncCallback = (res_code: number, data_list: Array<SessionData>, unread_count: number) => void;
 
 export interface NIMSessionAPI {
-  RegChangeCb(cb: NIMSessionChangeCallback, json_extension: string): void;
+    InitEventHandlers(): void;
 
-  RegBadgeCountCb(cb: NIMBadgeCountCallback, json_extension: string): void;
+    QueryStickTopSessionList(cb: QueryStickTopSessionListCallback): void;
 
-  RegSetToStickTopSessionNotifyCB(cb: NIMSetToStickTopSessionNotifyCallback): void;
+    SetToStickTopSession(session_id: string, to_type: number, ext: string, cb: SetToStickTopSessionCallback): void;
 
-  RegCancelStickTopSessionNotifyCB(cb: NIMCancelStickTopSessionNotifyCallback): void;
+    UpdateToStickTopSession(session_id: string, to_type: number, ext: string, cb: UpdateStickTopSessionCallback): void;
 
-  RegUpdateStickTopSessionNotifyCB(cb: NIMUpdateStickTopSessionNotifyCallback): void;
+    CancelToStickTopSession(session_id: string, to_type: number, cb: CancelToStickTopSessionCallback): void;
 
-  QueryStickTopSessionList(cb: NIMQueryStickTopSessionListCallback): void;
+    QueryLastFewSessionAsync(limit: number, cb: QuerySessionListCallback, json_extension: string): void;
 
-  SetToStickTopSession(session_id: string, to_type: number, ext: string, cb: NIMSetToStickTopSessionCallback): void;
+    QueryAllRecentSessionAsync(msg_excluded_type_list: Array<NIMMessageType>, cb: QuerySessionListCallback, json_extension: string): void;
 
-  UpdateToStickTopSession(session_id: string, to_type: number, ext: string, cb: NIMUpdateStickTopSessionCallback): void;
+    DeleteRecentSession(type: NIMSessionType, id: string, cb: SessionChangeCallback, delete_roaming: boolean): void;
 
-  CancelToStickTopSession(session_id: string, to_type: number, cb: NIMCancelToStickTopSessionCallback): void;
+    DeleteAllRecentSession(cb: SessionChangeCallback, json_extension: string): void;
 
-  QueryLastFewSessionAsync(limit: number, cb: NIMQuerySessionListCallback, json_extension: string): void;
+    DeleteSessionRoamingMessage(to_type: number, session_id: string, cb: DeleteSessionRoamingMessageCallback, ext: string): boolean;
 
-  QueryAllRecentSessionAsync(msg_excluded_type_list: Array<NIMMessageType>, cb: NIMQuerySessionListCallback, json_extension: string): void;
+    SetUnreadCountZeroAsync(type: NIMSessionType, id: string, cb: SessionChangeCallback, json_extension: string): boolean;
 
-  DeleteRecentSession(type: NIMSessionType, id: string, cb: NIMSessionChangeCallback, delete_roaming: boolean): void;
+    SetMultiUnreadCountZeroAsync(is_super_team: boolean, zero_list: Array<MultiUnreadCountZeroInfo>,
+        cb: SetMultiUnreadCountZeroAsyncCallback): boolean;
 
-  DeleteAllRecentSession(cb: NIMSessionChangeCallback, json_extension: string): void;
+    SetSessionTop(type: NIMSessionType, id: string, top: boolean, cb: SessionChangeCallback, json_extension: string): boolean;
 
-  DeleteSessionRoamingMessage(session_id: string, to_type: number, cb: NIMDeleteSessionRoamingMessageCallback, ext: string): boolean;
+    SetSessionExtendData(type: NIMSessionType, id: string, data: string, cb: SessionChangeCallback, json_extension: string): boolean;
 
-  SetUnreadCountZeroAsync(type: NIMSessionType, id: string, cb: NIMSessionChangeCallback, json_extension: string): boolean;
+    SetAllUnreadCountZeroAsync(cb: SessionChangeCallback, json_extension: string): boolean;
 
-  SetMultiUnreadCountZeroAsync(is_super_team: boolean, zero_list: Array<NIMUnreadCountZeroInfo>,
-                cb: NIMSetMultiUnreadCountZeroAsyncCallback): boolean;
+    QuerySessionDataById(type: NIMSessionType, id: string, cb: QuerySessionDataCallback, json_extension: string): void;
 
-  SetSessionTop(type: NIMSessionType, id: string, top: boolean, cb: NIMSessionChangeCallback, json_extension: string): boolean;
+    QueryHasmoreRoammsg(session_id: string, to_type: number, cb: QueryHasmoreRoammsgCallback): void;
 
-  SetSessionExtendData(type: NIMSessionType, id: string, data: string, cb: NIMSessionChangeCallback, json_extension: string): boolean;
+    QueryAllHasmoreRoammsg(cb: QueryAllHasmoreRoammsgCallback): void;
 
-  SetAllUnreadCountZeroAsync(cb: NIMSessionChangeCallback, json_extension: string): boolean;
+    UpdateHasmoreRoammsg(msg: IMMessage, cb: UpdateHasmoreRoammsgCallback): void;
 
-  QuerySessionDataById(type: NIMSessionType, id: string, cb: NIMQuerySessionDataCallback, json_extension: string): void;
-
-  QueryHasmoreRoammsg(session_id: string, to_type: number, cb: NIMQueryHasmoreRoammsgCallback): void;
-
-  QueryAllHasmoreRoammsg(cb: NIMQueryAllHasmoreRoammsgCallback): void;
-
-  UpdateHasmoreRoammsg(msg: NIMMessage, cb: NIMUpdateHasmoreRoammsgCallback): void;
-
-  DeleteHasmoreRoammsg(session_id: string, to_type: NIMSessionType, cb: NIMDeleteHasmoreRoammsgCallback): void;
+    DeleteHasmoreRoammsg(session_id: string, to_type: NIMSessionType, cb: DeleteHasmoreRoammsgCallback): void;
 }

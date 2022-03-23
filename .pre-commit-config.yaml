@@ -1,0 +1,15 @@
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
+    -   id: trailing-whitespace
+    -   id: check-added-large-files
+    -   id: check-merge-conflict
+    -   id: end-of-file-fixer
+
+-   repo: https://github.com/pocc/pre-commit-hooks
+    rev: v1.3.4
+    hooks:
+    -   id: clang-format
+        args: [--style=File]
+        args: [-i]

@@ -1,23 +1,24 @@
 const NIM = require('../../js/nim');
 const assert = require('assert');
 
+const subscribe_event = new NIM.NIMSubscribeEvent();
+
 function testSubscribeEvent(test_info) {
   describe('********************SubscribeEvent********************', function() {
-    describe('#initEventHandler', function() {
-      it('initEventHandler', function() {
-        NIM.SubscribeEvent.initEventHandler();
+    describe('#initEventHandlers', function() {
+      it('initEventHandlers', function() {
+        subscribe_event.initEventHandlers();
       });
     });
     describe('#publish', function() {
       it('publish', function(done) {
-        NIM.SubscribeEvent.publish({
-          event_type: 1,
-          event_value: 10001,
-          msgid_client: test_info.mainUser,
-          ttl: 30,
-          broadcast_type: 1,
-          sync_self: 1,
-          config: '',
+        subscribe_event.publish({
+          event_type_: 1,
+          event_value_: 10001,
+          client_msg_id_: test_info.mainUser,
+          ttl_: 30,
+          broadcast_type_: 1,
+          sync_self_: 1,
         }, function(rescode, event_type, result) {
           done();
         }, '');
@@ -25,28 +26,28 @@ function testSubscribeEvent(test_info) {
     });
     describe('#subscribe', function() {
       it('subscribe', function(done) {
-        NIM.SubscribeEvent.subscribe(1, 30, 1, [test_info.mainUser], function(rescode, event_type, result) {
+        subscribe_event.subscribe(1, 30, 1, [test_info.mainUser], function(rescode, event_type, result) {
           done();
         }, '');
       });
     });
     describe('#unSubscribe', function() {
       it('unSubscribe', function(done) {
-        NIM.SubscribeEvent.unSubscribe(1, [test_info.mainUser], function(rescode, event_type, result) {
+        subscribe_event.unSubscribe(1, [test_info.mainUser], function(rescode, event_type, result) {
           done();
         }, '');
       });
     });
     describe('#batchUnSubscribe', function() {
       it('batchUnSubscribe', function(done) {
-        NIM.SubscribeEvent.batchUnSubscribe(1, function(rescode, event_type) {
+        subscribe_event.batchUnSubscribe(1, function(rescode, event_type) {
           done();
         }, '');
       });
     });
     describe('#querySubscribe', function() {
       it('querySubscribe', function(done) {
-        NIM.SubscribeEvent.querySubscribe(1, [test_info.mainUser], function(rescode, event_type, result) {
+        subscribe_event.querySubscribe(1, [test_info.mainUser], function(rescode, event_type, result) {
           done();
         }, '');
       });

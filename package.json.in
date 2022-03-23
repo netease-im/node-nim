@@ -1,0 +1,66 @@
+{
+  "name": "node-nim",
+  "version": "${GIT_TAG}",
+  "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
+  "main": "js/nim.js",
+  "types": "types/nim.d.ts",
+  "author": "Netease",
+  "license": "ISC",
+  "scripts": {
+    "coverage": "nyc mocha test/test_all.js -slow 200 -timeout 10000",
+    "build:ts": "rimraf ./js && rimraf ./types && tsc",
+    "build:doc": "typedoc ts/api",
+    "prepublish": "npm run build:ts"
+  },
+  "nyc": {
+    "cache": false,
+    "reporter": [
+      "lcov"
+    ]
+  },
+  "dependencies": {
+    "bindings": "^1.5.0",
+    "cmake-js": "^6.2.1",
+    "commander": "^8.2.0",
+    "download": "^8.0.0",
+    "fs-extra": "^10.0.0",
+    "git-last-commit": "^1.0.1",
+    "git-rev-sync": "^3.0.1",
+    "is-electron": "^2.2.0",
+    "json": "^11.0.0",
+    "node_modules-path": "^2.0.5",
+    "node-fetch": "^2.6.5",
+    "shelljs": "^0.8.4",
+    "simple-git": "^2.47.0"
+  },
+  "devDependencies": {
+    "@types/node": "^16.10.5",
+    "@typescript-eslint/eslint-plugin": "^5.13.0",
+    "@typescript-eslint/parser": "^5.13.0",
+    "bluebird": "^3.7.2",
+    "eslint": "^7.32.0",
+    "mocha": "^9.1.1",
+    "node-addon-api": "^4.3.0",
+    "nyc": "^15.1.0",
+    "rimraf": "^3.0.2",
+    "typedoc": "^0.22.7",
+    "typedoc-github-wiki-theme": "^0.6.0",
+    "typedoc-plugin-markdown": "^3.11.3",
+    "typescript": "^4.3.5",
+    "typescript-eslint": "0.0.1-alpha.0"
+  },
+  "keywords": [
+    "netease",
+    "nim",
+    "im sdk",
+    "nim sdk",
+    "nim node",
+    "nim electron"
+  ],
+  "files": [
+    "js/",
+    "types/",
+    "CMakeLists.txt",
+    "package.json"
+  ]
+}

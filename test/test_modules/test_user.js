@@ -1,26 +1,28 @@
 const NIM = require('../../js/nim');
 const assert = require('assert');
 
+const user = new NIM.NIMUser();
+
 function testUser(test_info) {
   describe('********************User********************', function() {
     let myNameCard;
-    describe('#initEventHandler', function() {
-      it('initEventHandler', function() {
-        NIM.User.initEventHandler();
+    describe('#initEventHandlers', function() {
+      it('initEventHandlers', function() {
+        user.initEventHandlers();
       });
     });
     describe('#UpdateMyUserNameCard', function() {
       it('update my user name card should return 200', function(done) {
-        NIM.User.updateMyUserNameCard({
-          accid: test_info.mainUser,
-          name: 'test',
-          icon: 'test',
-          sign: 'test',
-          gender: 0,
-          email: 'test',
-          birth: 'test',
-          mobile: 'test',
-          ex: 'test',
+        user.updateMyUserNameCard({
+          accid_: test_info.mainUser,
+          nickname_: 'test',
+          icon_url_: 'test',
+          signature_: 'test',
+          gender_: 0,
+          email_: 'test',
+          birth_: 'test',
+          mobile_: 'test',
+          expand_: 'test',
         }, (res_code) => {
           assert.strictEqual(res_code, 200);
           done();
@@ -29,7 +31,7 @@ function testUser(test_info) {
     });
     describe('$Black list test', function() {
       before(function(done) {
-        NIM.User.setBlack(test_info.assistUser, true, (res_code, accountId, option) => {
+        user.setBlack(test_info.assistUser, true, (res_code, accountId, option) => {
           assert.strictEqual(res_code, 200);
           assert.strictEqual(accountId, test_info.assistUser);
           assert.strictEqual(option, true);
@@ -38,10 +40,10 @@ function testUser(test_info) {
       });
       describe('#GetBlacklist', function() {
         it(`Get black list should include ${test_info.assistUser}`, function(done) {
-          NIM.User.getBlacklist((res_code, blackList) => {
+          user.getBlacklist((res_code, blackList) => {
             let foundMember = false;
             blackList.map((member) => {
-              if (member.accid === test_info.assistUser) {
+              if (member.accid_ === test_info.assistUser) {
                 foundMember = true;
               }
             });
@@ -52,7 +54,7 @@ function testUser(test_info) {
         });
       });
       after(function(done) {
-        NIM.User.setBlack(test_info.assistUser, false, (res_code, accountId, option) => {
+        user.setBlack(test_info.assistUser, false, (res_code, accountId, option) => {
           assert.strictEqual(res_code, 200);
           assert.strictEqual(accountId, test_info.assistUser);
           assert.strictEqual(option, false);
@@ -62,7 +64,7 @@ function testUser(test_info) {
     });
     describe('$Mute list test', function() {
       before(function(done) {
-        NIM.User.setMute(test_info.assistUser, true, (res_code, accountId, option) => {
+        user.setMute(test_info.assistUser, true, (res_code, accountId, option) => {
           assert.strictEqual(res_code, 200);
           assert.strictEqual(accountId, test_info.assistUser);
           assert.strictEqual(option, true);
@@ -71,10 +73,10 @@ function testUser(test_info) {
       });
       describe('#GetMuteList', function() {
         it(`Get mute list should include ${test_info.assistUser}`, function(done) {
-          NIM.User.getMutelist((res_code, muteList) => {
+          user.getMutelist((res_code, muteList) => {
             let foundMember = false;
             muteList.map((member) => {
-              if (member.accid === test_info.assistUser) {
+              if (member.accid_ === test_info.assistUser) {
                 foundMember = true;
               }
             });
@@ -85,7 +87,7 @@ function testUser(test_info) {
         });
       });
       after(function(done) {
-        NIM.User.setMute(test_info.assistUser, false, (res_code, accountId, option) => {
+        user.setMute(test_info.assistUser, false, (res_code, accountId, option) => {
           assert.strictEqual(res_code, 200);
           assert.strictEqual(accountId, test_info.assistUser);
           assert.strictEqual(option, false);
@@ -95,12 +97,12 @@ function testUser(test_info) {
     });
     describe('#GetUserNameCardOnline', function() {
       it('get user name card should return 200', function(done) {
-        NIM.User.getUserNameCardOnline([
+        user.getUserNameCardOnline([
           test_info.mainUser,
         ], (users) => {
           let foundMember = false;
           users.map((user) => {
-            if (user.accid === test_info.mainUser) {
+            if (user.accid_ === test_info.mainUser) {
               foundMember = true;
             }
           });
@@ -111,12 +113,12 @@ function testUser(test_info) {
     });
     describe('#GetUserNameCard', function() {
       it('get user name card should return 200', function(done) {
-        NIM.User.getUserNameCard([
+        user.getUserNameCard([
           test_info.mainUser,
         ], (users) => {
           let foundMember = false;
           users.map((user) => {
-            if (user.accid === test_info.mainUser) {
+            if (user.accid_ === test_info.mainUser) {
               foundMember = true;
               myNameCard = user;
             }
@@ -128,9 +130,9 @@ function testUser(test_info) {
     });
     describe('#UpdateMyUserNameCard', function() {
       it('update my user name card should return 200', function(done) {
-        myNameCard.name = `${new Date().getTime()}_Node`;
-        myNameCard.ex = `${new Date().getTime()}_Node_Ex`;
-        NIM.User.updateMyUserNameCard(myNameCard, (res_code) => {
+        myNameCard.nickname_ = `${new Date().getTime()}_Node`;
+        myNameCard.expand_ = `${new Date().getTime()}_Node_Ex`;
+        user.updateMyUserNameCard(myNameCard, (res_code) => {
           assert.strictEqual(res_code, 200);
           done();
         }, '');
@@ -138,11 +140,11 @@ function testUser(test_info) {
     });
     describe('#QueryUserListByKeyword', function() {
       it(`Query user list by keyword should inlucde ${test_info.mainUser}`, function(done) {
-        NIM.User.queryUserListByKeyword('Node', (users) => {
+        user.queryUserListByKeyword('Node', (users) => {
           assert.notStrictEqual(users.length, 0, 'User list is empty!');
           let foundMember = false;
           users.map((user) => {
-            if (user.accid === test_info.mainUser) {
+            if (user.accid_ === test_info.mainUser) {
               foundMember = true;
             }
           });
@@ -153,7 +155,7 @@ function testUser(test_info) {
     });
     describe('#updatePushToken', function() {
       it('updatePushToken', function() {
-        NIM.User.updatePushToken('Node_test', 'Node_test', 0);
+        user.updatePushToken('Node_test', 'Node_test', 0);
       });
     });
   });

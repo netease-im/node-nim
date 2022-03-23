@@ -1,61 +1,53 @@
-import {NIMSessionType, NIMSessionData} from './session_def';
+import { NIMResCode } from './client_def';
+import { NIMSessionType } from './session_def';
 
-export interface NIMOnlineSessionInfo {
-  info_session_type: number; /** < int 会话类型 */
-  info_session_id: string;				/** < string 会话ID*/
-  info_update_time: number; /** < uint64_t 会话最后更新时间*/
-  info_ext: string;						/** < string 扩展字段，可自定义*/
-  info_last_msg: string;		/** < string 最后一条消息的相关数据 json格式,*/
+export interface SessionInfo {
+    id_: string;           /**< 会话ID */
+    type_: NIMSessionType;      /**< 会话类型 */
+    ext_: string;          /**< 自定的扩展字段 */
+    last_message_: string; /**< 最后一条会话 json string */
+    update_time_: number;     /**< 最后更新时间戳 */
+    last_message_type_: number;    /**< 最后一条消息的类型 0表示普通消息，1表示消息撤回通知 */
 }
 
-export interface NIMQueryOnlineSessionInfoCallback {
-  (rescode: number, result: NIMOnlineSessionInfo): void;
+export interface QuerySessionListResult {
+    res_code: NIMResCode;  /**< 返回的错误码 成功:200 */
+    session_list_: Array<SessionInfo>; /**< 会话列表 */
+    has_more_: boolean;            /**<是否还有会话数据 */
 }
 
-export interface NIMQuerySessionListResult {
-  query_list_res_code: number;		/** < int 查询结果错误码 200成功 */
-  query_list_has_more: boolean;		/** <bool 结果集是否完整 如果为"false" 可以根据上一请求的 MaxTimestamp 再次发起增时请求*/
-  query_list_sessions: Array<NIMOnlineSessionInfo>;		/** < array 查询到的会话列表*/
+export interface DeleteSessionItem {
+    delete_session_type: number;
+    delete_session_id: string;
 }
 
-export interface NIMQueryOnlineSessionListCallback {
-  (result: NIMQuerySessionListResult): void;
+export interface DeleteSessionParam {
+    delete_list_: Array<DeleteSessionItem>;
 }
 
-export interface NIMUpdateOnlineSessionInfoCallback {
-  (rescode: number): void;
-}
-
-export interface NIMDeleteOnlineSessionInfoCallback {
-  (rescode: number): void;
-}
-
-export interface NIMOnlineSessionChangedCallback {
-  (result: NIMOnlineSessionInfo): void;
-}
-
-export interface NIMDeleteOnlineSession {
-  delete_session_type: NIMSessionType; 		/** < int 会话类型 */
-  delete_session_id: string;				/** < string 会话ID*/
-}
+export type QueryOnlineSessionInfoCallback = (rescode: number, result: SessionInfo) => void;
+export type QueryOnlineSessionListCallback = (result: QuerySessionListResult) => void;
+export type UpdateOnlineSessionInfoCallback = (rescode: number) => void;
+export type DeleteOnlineSessionInfoCallback = (rescode: number) => void;
+export type OnlineSessionChangedCallback = (result: SessionInfo) => void;
 
 export interface NIMOnlineSessionAPI {
-  QuerySessionList(minTime: number,
-    maxTime: number,
-    needLastMsg: boolean,
-    limit: number,
-    cb: NIMQueryOnlineSessionListCallback): void;
+    InitEventHandlers(): void;
 
-  QuerySession(to_type: NIMSessionType,
-    session_id: string,
-    cb: NIMQueryOnlineSessionInfoCallback): void;
+    QuerySessionList(minTime: number,
+        maxTime: number,
+        needLastMsg: boolean,
+        limit: number,
+        cb: QueryOnlineSessionListCallback): void;
 
-  UpdateSession(to_type: NIMSessionType,
-    session_id: string,
-    ext: string,
-    cb: NIMUpdateOnlineSessionInfoCallback): void;
+    QuerySession(to_type: NIMSessionType,
+        session_id: string,
+        cb: QueryOnlineSessionInfoCallback): void;
 
-  DeleteSession(param: Array<NIMDeleteOnlineSession>, cb: NIMDeleteOnlineSessionInfoCallback): void;
+    UpdateSession(to_type: NIMSessionType,
+        session_id: string,
+        ext: string,
+        cb: UpdateOnlineSessionInfoCallback): void;
 
-  RegSessionChanged(cb: NIMOnlineSessionChangedCallback): void;
+    DeleteSession(param: DeleteSessionParam, cb: DeleteOnlineSessionInfoCallback): void;
 }
