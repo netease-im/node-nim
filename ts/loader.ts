@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 const sdk_path = path.join(__dirname, '../sdk/bin');
-const test_sdk_path = path.join(__dirname, '../../build/bin');
+const test_sdk_path = path.join(__dirname, '../../../bin');
 // Add the compiled product path to the environment variable,
 // so that the third party does not need to copy the
 // dynamic library separately to the program directory when importing.

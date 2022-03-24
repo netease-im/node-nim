@@ -88,15 +88,15 @@ target_include_directories(${TARGET_NAME} PRIVATE
                            ${CMAKE_BINARY_DIR}/include
                            ${CMAKE_CURRENT_LIST_DIR}
                            ${CMAKE_CURRENT_LIST_DIR}/src
-                           ${CMAKE_CURRENT_LIST_DIR}/..
-                           ${CMAKE_CURRENT_LIST_DIR}/../nim/api/
-                           ${CMAKE_CURRENT_LIST_DIR}/../nim/nim_defines/
-                           ${CMAKE_CURRENT_LIST_DIR}/../nim_chatroom/api/
-                           ${CMAKE_CURRENT_LIST_DIR}/../nim_chatroom/nim_chatroom_defines/
-                           ${CMAKE_CURRENT_LIST_DIR}/../nim_qchat/api/
-                           ${CMAKE_CURRENT_LIST_DIR}/../nim_qchat/nim_qchat_defines/
-                           ${CMAKE_CURRENT_LIST_DIR}/../public_defines/
-                           ${CMAKE_CURRENT_LIST_DIR}/../wrapper)
+                           ${CMAKE_SOURCE_DIR}
+                           ${CMAKE_SOURCE_DIR}/nim/api/
+                           ${CMAKE_SOURCE_DIR}/nim/nim_defines/
+                           ${CMAKE_SOURCE_DIR}/nim_chatroom/api/
+                           ${CMAKE_SOURCE_DIR}/nim_chatroom/nim_chatroom_defines/
+                           ${CMAKE_SOURCE_DIR}/nim_qchat/api/
+                           ${CMAKE_SOURCE_DIR}/nim_qchat/nim_qchat_defines/
+                           ${CMAKE_SOURCE_DIR}/public_defines/
+                           ${CMAKE_SOURCE_DIR}/wrapper)
 target_link_libraries(${TARGET_NAME}
                       ${CMAKE_JS_LIB}
                       ${CONAN_LIBS}

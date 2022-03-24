@@ -21,17 +21,8 @@
   "dependencies": {
     "bindings": "^1.5.0",
     "cmake-js": "^6.2.1",
-    "commander": "^8.2.0",
     "download": "^8.0.0",
-    "fs-extra": "^10.0.0",
-    "git-last-commit": "^1.0.1",
-    "git-rev-sync": "^3.0.1",
-    "is-electron": "^2.2.0",
-    "json": "^11.0.0",
-    "node_modules-path": "^2.0.5",
-    "node-fetch": "^2.6.5",
-    "shelljs": "^0.8.4",
-    "simple-git": "^2.47.0"
+    "json": "^11.0.0"
   },
   "devDependencies": {
     "@types/node": "^16.10.5",
