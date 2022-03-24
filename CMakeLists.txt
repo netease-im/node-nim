@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.12.0)
 set(TARGET_NAME node-nim)
 project(${TARGET_NAME})
 # platform specific settings
+CONFIGURE_FILE(${CMAKE_CURRENT_LIST_DIR}/package.json.in ${CMAKE_CURRENT_LIST_DIR}/package.json)
 if (MSVC)
      add_definitions(
      -DUNICODE
