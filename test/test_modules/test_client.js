@@ -1,23 +1,25 @@
 const NIM = require('../../js/nim');
 const assert = require('assert');
 
+const client = new NIM.NIMClient();
+
 function iniClient(test_info) {
   describe('********************NIM init SDK********************', function() {
     describe('NIM client Init', function() {
       it('init NIM SDK should return 1', function() {
-        const result = NIM.Client.init('', 'NIM_SDK_NODE_TEST', '', {
-          db_encrypt_key: 'abcdefghijklmnopqrstuvwxyz012345',
+        const result = client.init('', 'NIM_SDK_NODE_TEST', '', {
+          database_encrypt_key_: 'abcdefghijklmnopqrstuvwxyz012345',
         });
-        assert.strictEqual(result, 1);
+        assert.strictEqual(result, true);
       });
     });
     describe('NIM client Login', function() {
       it('login step should be 3', function(done) {
-        NIM.Client.login(test_info.appKey, test_info.mainUser, test_info.mainUserPwd, (loginResult) => {
-          assert.strictEqual(loginResult.err_code, 200);
-          if (loginResult.login_step === 3) {
+        client.login(test_info.appKey, test_info.mainUser, test_info.mainUserPwd, (loginResult) => {
+          assert.strictEqual(loginResult.res_code_, 200);
+          if (loginResult.login_step_ === 3) {
             done();
-          };
+          }
         }, '');
       });
     });
@@ -28,14 +30,14 @@ function cleanupClient(test_info) {
   describe('********************NIM cleanup SDK********************', function() {
     describe('#logout', function() {
       it('logout should return 200', function(done) {
-        NIM.Client.logout(1, (errorCode) => {
+        client.logout(1, (errorCode) => {
           done();
         }, '');
       });
     });
-    describe('#cleanUp', function() {
+    describe('#cleanup', function() {
       it('cleanup SDK has no return value', function(done) {
-        NIM.Client.cleanUp('');
+        client.cleanup('');
         done();
         setTimeout(function() {
           process.exit(0);
@@ -47,45 +49,39 @@ function cleanupClient(test_info) {
 
 function testClient(test_info) {
   describe('********************Client********************', function() {
-    describe('#initEventHandler', function() {
-      it('initEventHandler', function() {
-        NIM.Client.initEventHandler();
+    describe('#initEventHandlers', function() {
+      it('initEventHandlers', function() {
+        client.initEventHandlers();
       });
     });
     describe('#getSDKConfig', function() {
       it('get SDK config should return encrypt key: abcdefghijklmnopqrstuvwxyz012345', function() {
-        const sdkConfig = NIM.Client.getSDKConfig();
-        assert.strictEqual(sdkConfig.db_encrypt_key, 'abcdefghijklmnopqrstuvwxyz012345');
+        const sdkConfig = client.getSDKConfig();
+        assert.strictEqual(sdkConfig.database_encrypt_key_, 'abcdefghijklmnopqrstuvwxyz012345');
       });
     });
     describe('#relogin', function() {
       it('relogin', function() {
-        // NIM.Client.on('onRelogin', function (result) {
+        // client.on('onRelogin', function (result) {
         //     done()
         // })
-        NIM.Client.relogin('');
+        client.relogin('');
       });
     });
     describe('#kickOtherClient', function() {
       it('kickOtherClient', function() {
-        NIM.Client.kickOtherClient(['']);
+        client.kickOtherClient(['']);
       });
     });
     describe('#getLoginState', function() {
       it('getLoginState should return kNIMLoginStateLogin', function() {
-        const login_state = NIM.Client.getLoginState('');
+        const login_state = client.getLoginState('');
         assert.strictEqual(login_state, 1);
-      });
-    });
-    describe('#loginCustomDataToJson', function() {
-      it('loginCustomDataToJson should return "{\"custom_tag\":\"test\"}"', function() {
-        const json = NIM.Client.loginCustomDataToJson('test');
-        assert.strictEqual(json, `{"custom_tag":"test"}\n`);
       });
     });
     describe('#setMultiportPushConfigAsync', function() {
       it('set multiport push config should return 200', function(done) {
-        NIM.Client.setMultiportPushConfigAsync(true, (errorCode, result) => {
+        client.setMultiportPushConfigAsync(true, (errorCode, result) => {
           assert.strictEqual(errorCode, 200);
           assert.strictEqual(result, true);
           done();
@@ -94,7 +90,7 @@ function testClient(test_info) {
     });
     describe('#getMultiportPushConfigAsync', function() {
       it('get multiport push config should return true', function(done) {
-        NIM.Client.getMultiportPushConfigAsync((errorCode, result) => {
+        client.getMultiportPushConfigAsync((errorCode, result) => {
           assert.strictEqual(errorCode, 200);
           assert.strictEqual(result, true);
           done();
@@ -103,13 +99,13 @@ function testClient(test_info) {
     });
     describe('#getSDKVersion', function() {
       it('get SDK version should return no empty', function() {
-        const sdkVeresion = NIM.Client.getSDKVersion();
+        const sdkVeresion = client.getSDKVersion();
         assert.notStrictEqual(sdkVeresion, '');
       });
     });
     describe('#getServerCurrentTime', function() {
       it('get server current time should return > 0', function(done) {
-        NIM.Client.getServerCurrentTime((errorCode, calcLocal, timestamp) => {
+        client.getServerCurrentTime((errorCode, calcLocal, timestamp) => {
           assert.notStrictEqual(timestamp, 0);
           done();
         }, true);
@@ -117,7 +113,7 @@ function testClient(test_info) {
     });
     describe('#getCurrentUserAccount', function() {
       it('get current user account should return ljm2', function() {
-        const account = NIM.Client.getCurrentUserAccount();
+        const account = client.getCurrentUserAccount();
         assert.notStrictEqual(account, '');
       });
     });

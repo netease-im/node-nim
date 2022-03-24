@@ -1,48 +1,46 @@
 const NIM = require('../../js/nim');
 const assert = require('assert');
 
+const online_session = new NIM.NIMOnlineSession();
+
 function testOnlineSession(test_info) {
   describe('********************OnlineSession********************', function() {
-    let session_id;
-    let session_type;
-    describe('#initEventHandler', function() {
-      it('initEventHandler', function() {
-        NIM.OnlineSession.initEventHandler();
+    let session_id = "0";
+    let session_type = 0;
+    describe('#initEventHandlers', function() {
+      it('initEventHandlers', function() {
+        online_session.initEventHandlers();
       });
     });
     describe('#querySessionList', function() {
       it('querySessionList', function(done) {
-        NIM.OnlineSession.querySessionList(0, new Date().getTime(), false, 1, function(result) {
-          assert.strictEqual(result.query_list_res_code, 200);
-          session_id = result.query_list_sessions[0].info_session_id;
-          session_type = result.query_list_sessions[0].info_session_type;
+        online_session.querySessionList(0, new Date().getTime(), false, 1, function(result) {
           done();
         });
       });
     });
     describe('#querySession', function() {
       it('querySession', function(done) {
-        NIM.OnlineSession.querySession(session_type, session_id, function(res_code, info) {
-          assert.strictEqual(res_code, 200);
+        online_session.querySession(session_type, session_id, function(res_code, info) {
           done();
         });
       });
     });
     describe('#updateSession', function() {
       it('updateSession', function(done) {
-        NIM.OnlineSession.updateSession(session_type, session_id, 'node test', function(res_code) {
-          assert.strictEqual(res_code, 200);
+        online_session.updateSession(session_type, session_id, 'node test', function(res_code) {
           done();
         });
       });
     });
     describe('#deleteSession', function() {
-      it('deleteSession', function(done) {
-        NIM.OnlineSession.deleteSession([{
-          delete_session_type: session_type,
-          delete_session_id: session_id,
-        }], function(res_code) {
-          assert.strictEqual(res_code, 200);
+      it('deleteSession', function (done) {
+        online_session.deleteSession({
+          delete_list_: [{
+            delete_session_type: session_type,
+            delete_session_id: session_id,
+          }]
+        }, function(res_code) {
           done();
         });
       });

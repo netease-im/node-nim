@@ -1,11 +1,13 @@
 const NIM = require('../../js/nim');
 const assert = require('assert');
 
+const data_sync = new NIM.NIMDataSync();
+
 function testDataSync(test_info) {
   describe('********************DataSync********************', function() {
-    describe('#initEventHandler', function() {
-      it('initEventHandler', function() {
-        NIM.DataSync.initEventHandler();
+    describe('#initEventHandlers', function() {
+      it('initEventHandlers', function() {
+        data_sync.initEventHandlers();
       });
     });
   });

@@ -2,13 +2,10 @@ message(STATUS "================== node-nim ==================")
 cmake_minimum_required(VERSION 3.12.0)
 set(TARGET_NAME node-nim)
 project(${TARGET_NAME})
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/Release)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/Release)
-if (NODE_V8_COMPRESS_POINTERS)
-    add_definitions(-DV8_COMPRESS_POINTERS)    
-endif()
-add_definitions(-DNIM_SDK_DLL_IMPORT)             
+# configure package.json, get GIT_TAG from nim project
+CONFIGURE_FILE(${CMAKE_CURRENT_LIST_DIR}/package.json.in ${CMAKE_CURRENT_LIST_DIR}/package.json)
+
+# platform specific settings
 if (MSVC)
      add_definitions(
      -DUNICODE
@@ -22,38 +19,111 @@ if (MSVC)
      add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
      set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /Zi")
 	 set(CMAKE_SHARED_LINKER_FLAGS_RELEASE "${CMAKE_SHARED_LINKER_FLAGS_RELEASE} /DEBUG /OPT:REF /OPT:ICF")
+     set(NPX_EXUTABLE "npx.cmd")
+     set(NPM_EXUTABLE "npm.cmd")
+else ()
+    set(NPX_EXUTABLE "npx")
+    set(NPM_EXUTABLE "npm")
 endif ()
 
-add_subdirectory(sdk/wrapper)
+# get CMAKE_JS variables
+if(CONAN_SETTINGS_ARCH STREQUAL "x86")
+    set(CMAKE_JS_ARCH "ia32")
+elseif(CONAN_SETTINGS_ARCH STREQUAL "x86_64")
+    set(CMAKE_JS_ARCH "x64")
+elseif(CONAN_SETTINGS_ARCH STREQUAL "armv8")
+    set(CMAKE_JS_ARCH "arm64")
+endif()
+execute_process(COMMAND ${NPM_EXUTABLE} install
+        WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+        OUTPUT_QUIET)
+execute_process(COMMAND ${NPX_EXUTABLE} cmake-js print-configure -l error -a ${CMAKE_JS_ARCH}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+        OUTPUT_VARIABLE CMAKE_JS_CONFIGURE_OUTPUT
+        RESULT_VARIABLE AA)
+string(REPLACE "[" "" CMAKE_JS_CONFIGURE_OUTPUT "${CMAKE_JS_CONFIGURE_OUTPUT}")
+string(REPLACE "]" "" CMAKE_JS_CONFIGURE_OUTPUT "${CMAKE_JS_CONFIGURE_OUTPUT}")
+string(REPLACE "\n" ";" CMAKE_JS_CONFIGURE_OUTPUT_LIST "${CMAKE_JS_CONFIGURE_OUTPUT}")
+foreach(item ${CMAKE_JS_CONFIGURE_OUTPUT_LIST})
+    string(FIND ${item} "CMAKE_JS_INC" CMAKE_JS_INC_INDEX)
+    string(FIND ${item} "CMAKE_JS_SRC" CMAKE_JS_SRC_INDEX)
+    string(FIND ${item} "CMAKE_JS_LIB" CMAKE_JS_LIB_INDEX)
+    string(FIND ${item} "CMAKE_CXX_FLAGS" CMAKE_CXX_FLAGS_INDEX)
+    string(FIND ${item} "CMAKE_SHARED_LINKER_FLAGS" CMAKE_SHARED_LINKER_FLAGS_INDEX)
+    if(NOT CMAKE_JS_INC_INDEX EQUAL -1)
+        string(REGEX REPLACE "^.*CMAKE_JS_INC=(.*)\'.*" "\\1" CMAKE_JS_INC ${item})
+    elseif(NOT CMAKE_JS_SRC_INDEX EQUAL -1)
+        string(REGEX REPLACE "^.*CMAKE_JS_SRC=(.*)\'.*" "\\1" CMAKE_JS_SRC ${item})
+    elseif(NOT CMAKE_JS_LIB_INDEX EQUAL -1)
+        string(REGEX REPLACE "^.*CMAKE_JS_LIB=(.*)\'.*" "\\1" CMAKE_JS_LIB ${item})
+    elseif(NOT CMAKE_CXX_FLAGS_INDEX EQUAL -1)
+        string(REGEX REPLACE "^.*CMAKE_CXX_FLAGS=(.*)\'.*" "\\1" CMAKE_CXX_FLAGS ${item})
+    elseif(NOT CMAKE_SHARED_LINKER_FLAGS_INDEX EQUAL -1)
+        string(REGEX REPLACE "^.*CMAKE_SHARED_LINKER_FLAGS=(.*)\'.*" "\\1" CMAKE_SHARED_LINKER_FLAGS ${item})
+    endif()
+endforeach()
+message(STATUS "CMAKE_JS_INC ${CMAKE_JS_INC}")
+message(STATUS "CMAKE_JS_SRC ${CMAKE_JS_SRC}")
+message(STATUS "CMAKE_JS_LIB ${CMAKE_JS_LIB}")
+message(STATUS "CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS}")
+message(STATUS "CMAKE_SHARED_LINKER_FLAGS ${CMAKE_SHARED_LINKER_FLAGS}")
+
+# get NODE_ADDON_API_DIR
+add_definitions(-DNAPI_VERSION=4)
+execute_process(COMMAND node -p "require('node-addon-api').include"
+        WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+        OUTPUT_VARIABLE NODE_ADDON_API_DIR)
+string(REPLACE "\n" "" NODE_ADDON_API_DIR ${NODE_ADDON_API_DIR})
+string(REPLACE "\"" "" NODE_ADDON_API_DIR ${NODE_ADDON_API_DIR})
+message(STATUS "NODE_ADDON_API_DIR ${NODE_ADDON_API_DIR}")
+
+# configure project
+ADD_DEFINITIONS(-DNIM_SDK_DLL_IMPORT)
 file(GLOB_RECURSE NIM_NODE_SOURCE
      ${CMAKE_CURRENT_LIST_DIR}/src/*.cpp
+     ${CMAKE_CURRENT_LIST_DIR}/src/*.cc
      ${CMAKE_CURRENT_LIST_DIR}/src/*.c)
 add_library(${TARGET_NAME} SHARED ${NIM_NODE_SOURCE} ${CMAKE_JS_SRC})
-
 target_include_directories(${TARGET_NAME} PRIVATE
+                           ${NODE_ADDON_API_DIR}
                            ${CMAKE_JS_INC}
+                           ${CMAKE_BINARY_DIR}/include
+                           ${CMAKE_CURRENT_LIST_DIR}
                            ${CMAKE_CURRENT_LIST_DIR}/src
-                           ${CMAKE_CURRENT_LIST_DIR}/sdk/include
-                           ${CMAKE_CURRENT_LIST_DIR}/sdk/wrapper)
+                           ${CMAKE_SOURCE_DIR}
+                           ${CMAKE_SOURCE_DIR}/nim/api/
+                           ${CMAKE_SOURCE_DIR}/nim/nim_defines/
+                           ${CMAKE_SOURCE_DIR}/nim_chatroom/api/
+                           ${CMAKE_SOURCE_DIR}/nim_chatroom/nim_chatroom_defines/
+                           ${CMAKE_SOURCE_DIR}/nim_qchat/api/
+                           ${CMAKE_SOURCE_DIR}/nim_qchat/nim_qchat_defines/
+                           ${CMAKE_SOURCE_DIR}/public_defines/
+                           ${CMAKE_SOURCE_DIR}/wrapper)
 target_link_libraries(${TARGET_NAME}
                       ${CMAKE_JS_LIB}
+                      ${CONAN_LIBS}
                       nim_cpp_wrapper
                       nim_chatroom_cpp_wrapper
                       nim_wrapper_util)
 
 set_target_properties(${TARGET_NAME} PROPERTIES PREFIX "" SUFFIX ".node")
-if (APPLE)
-    target_include_directories(${TARGET_NAME} PRIVATE
-                           ${CMAKE_CURRENT_LIST_DIR}/sdk/framework/nim.framework/Headers)
+if(APPLE)
     set_target_properties( ${TARGET_NAME}
         PROPERTIES
         BUILD_WITH_INSTALL_RPATH 1
-        INSTALL_RPATH "@loader_path;@loader_path/framework"
-    )
-elseif (UNIX)
-    set_target_properties( ${TARGET_NAME}
-        PROPERTIES
-        BUILD_WITH_INSTALL_RPATH 1
-        INSTALL_RPATH "$\{ORIGIN\}"
-    )
+        INSTALL_RPATH "@rpath")
+endif ()
+
+# installation
+install(
+    TARGETS ${TARGET_NAME}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
+if(GIT_EXACT_TAG)
+    install(CODE "execute_process(COMMAND ${NPM_EXUTABLE} publish WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR})")
+endif()
+if (MSVC)
+    install(FILES $<TARGET_PDB_FILE:${TARGET_NAME}> DESTINATION pdb OPTIONAL)
 endif ()

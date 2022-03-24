@@ -1,61 +1,63 @@
 const NIM = require('../../js/nim');
 const assert = require('assert');
 
+const global = new NIM.NIMGlobal();
+
 function testGlobal(test_info) {
   describe('********************Global********************', function() {
-    describe('#initEventHandler', function() {
-      it('initEventHandler', function() {
-        NIM.Global.initEventHandler();
+    describe('#initEventHandlers', function() {
+      it('initEventHandlers', function() {
+        global.initEventHandlers();
       });
     });
     describe('#setProxy', function() {
       it('setProxy', function() {
-        NIM.Global.setProxy(0, '', 0, '', '');
+        global.setProxy(0, '', 0, '', '');
       });
     });
     describe('#detectProxy', function() {
       it('detectProxy', function(done) {
-        NIM.Global.detectProxy(6, '127.0.0.1', 22, '', '', function(connect, step, json_extension) {
+        global.detectProxy(6, '127.0.0.1', 22, '', '', function(connect, step, json_extension) {
           done();
         });
       });
     });
     describe('#setExceptionReportCallback', function() {
       it('setExceptionReportCallback', function() {
-        NIM.Global.setExceptionReportCallback(function(exception, log) {
+        global.setExceptionReportCallback('', function(exception, log) {
 
-        }, '');
+        });
       });
     });
-    describe('#sDKFeedbackAsync', function() {
-      it('sDKFeedbackAsync', function() {
-        NIM.Global.sdkFeedbackAsync('', function(exception, log) {
+    describe('#sdkFeedbackAsync', function() {
+      it('sdkFeedbackAsync', function() {
+        global.sdkFeedbackAsync('', '', function(exception, log) {
 
-        }, '');
+        });
       });
     });
     describe('#getSDKCachedFileInfoAsync', function() {
       it('get SDK cache file info should return 200', function(done) {
-        NIM.Global.getSDKCachedFileInfoAsync(test_info.mainUser,
-            'image', new Date().getTime(), (res_code, info) => {
+        global.getSDKCachedFileInfoAsync(test_info.mainUser,
+            'image', new Date().getTime(), '', (res_code, info) => {
               assert.strictEqual(res_code, 200);
-              assert.strictEqual(info.file_type, 'image');
+              assert.strictEqual(info.file_type_, 'image');
               done();
-            }, '');
+            });
       });
     });
     describe('#deleteSDKCachedFileAsync', function() {
       it('delete SDK cached file should return 200', function(done) {
-        NIM.Global.deleteSDKCachedFileAsync(test_info.mainUser,
-            'image', new Date().getTime(), (res_code) => {
+        global.deleteSDKCachedFileAsync(test_info.mainUser,
+            'image', new Date().getTime(), '', (res_code) => {
               assert.strictEqual(res_code, 200);
               done();
-            }, '');
+            });
       });
     });
     describe.skip('#uploadSDKLog', function() {
       it('uploadSDKLog should return 200', function(done) {
-        NIM.Global.uploadSDKLog('feedback message', (res_code) => {
+        global.uploadSDKLog('feedback message', (res_code) => {
           assert.strictEqual(res_code, 200);
           done();
         });

@@ -1,20 +1,20 @@
 const NIM = require('../../js/nim');
 const assert = require('assert');
 
+const nos = new NIM.NIMNOS();
+
 function testNos(test_info) {
   describe('********************Nos********************', function() {
     let file_url;
-    describe('#initEventHandler', function() {
-      it('initEventHandler', function() {
-        NIM.NOS.initEventHandler();
+    describe('#initEventHandlers', function() {
+      it('initEventHandlers', function() {
+        nos.initEventHandlers();
       });
     });
     describe('#initConfig', function() {
       it('initConfig', function(done) {
-        const param = new Map();
-        param.set('test_tag', 5);
-        const result = NIM.NOS.initConfig({
-          param,
+        const result = nos.initConfig({
+          tag_list_: {test : 123},
         }, function(result) {
           done();
         });
@@ -22,11 +22,11 @@ function testNos(test_info) {
     });
     describe('#uploadResource', function() {
       it('uploadResource should return 200', function(done) {
-        const result = NIM.NOS.uploadResource(__filename, '', {
+        const result = nos.uploadResource(__filename, '', {
           task_id: '123456',
         }, function(res_code, result) {
-          console.log(`file url: ${result.url}`);
-          file_url = result.url;
+          console.log(`file url: ${result.url_}`);
+          file_url = result.url_;
           assert.strictEqual(res_code, 200);
           done();
         }, function(completed_size, file_size, result) { }, function(speed) { }, function(actual_size, speed) { });
@@ -35,13 +35,13 @@ function testNos(test_info) {
     });
     describe('#stopUploadResource', function() {
       it('stopUploadResource', function() {
-        const result = NIM.NOS.stopUploadResource('123456', '');
+        const result = nos.stopUploadResource('123456', '');
         assert.strictEqual(result, true);
       });
     });
     describe('#downloadResource', function() {
       it('downloadResource should return 200', function(done) {
-        const result = NIM.NOS.downloadResource(file_url, {
+        const result = nos.downloadResource(file_url, {
           task_id: '456789',
         }, function(res_code, result) {
           console.log(`file download to: ${result.file_path}`);
@@ -53,20 +53,20 @@ function testNos(test_info) {
     });
     describe('#stopDownloadResource', function() {
       it('stopDownloadResource', function() {
-        const result = NIM.NOS.stopDownloadResource('456789', '');
+        const result = nos.stopDownloadResource('456789', '');
         assert.strictEqual(result, true);
       });
     });
     describe('#safeURLToOriginURL', function() {
       it('safeURLToOriginURL', function(done) {
-        NIM.NOS.safeURLToOriginURL('', function(res_code, originalUrl) {
+        nos.safeURLToOriginURL('', function(res_code, originalUrl) {
           done();
         }, '');
       });
     });
     describe('#setSupportQuickTrans', function() {
       it('setSupportQuickTrans', function() {
-        NIM.NOS.setSupportQuickTrans(true);
+        nos.setSupportQuickTrans(true);
       });
     });
   });

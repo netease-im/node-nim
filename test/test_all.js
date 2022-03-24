@@ -13,7 +13,6 @@ const testNos = require('./test_modules/test_nos.js').default;
 const testSysmsg = require('./test_modules/test_sysmsg.js').default;
 const testTool = require('./test_modules/test_tool.js').default;
 const testPlugin = require('./test_modules/test_plugin.js').default;
-const testSignaling = require('./test_modules/test_signaling.js').default;
 const testSubscribeEvent = require('./test_modules/test_subscribe_event.js').default;
 const testTeam = require('./test_modules/test_team.js').default;
 const testSuperTeam = require('./test_modules/test_super_team.js').default;
@@ -46,7 +45,6 @@ describe('NIM Test Suite', function() {
   testMsglog(test_info);
   testTool(test_info);
   testPlugin(test_info);
-  testSignaling(test_info);
   testSubscribeEvent(test_info);
   testTeam(test_info);
   testSuperTeam(test_info);
