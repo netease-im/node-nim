@@ -15,7 +15,7 @@ bool xpack_xtype_decode(OBJ& obj, const char* key, nim_cpp_wrapper_util::Json::V
     xpack::JsonData data;
     data.xpack_decode(obj, key, ext);
     std::string str = data.String();
-    ParseJsonValue(str, val);
+    nim::ParseJsonValue(str, val);
     return true;
 }
 
