@@ -2,8 +2,10 @@ message(STATUS "================== node-nim ==================")
 cmake_minimum_required(VERSION 3.12.0)
 set(TARGET_NAME node-nim)
 project(${TARGET_NAME})
-# platform specific settings
+# configure package.json, get GIT_TAG from nim project
 CONFIGURE_FILE(${CMAKE_CURRENT_LIST_DIR}/package.json.in ${CMAKE_CURRENT_LIST_DIR}/package.json)
+
+# platform specific settings
 if (MSVC)
      add_definitions(
      -DUNICODE
@@ -119,6 +121,9 @@ install(
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
+if(GIT_EXACT_TAG)
+    install(CODE "execute_process(COMMAND ${NPM_EXUTABLE} publish WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR})")
+endif()
 if (MSVC)
     install(FILES $<TARGET_PDB_FILE:${TARGET_NAME}> DESTINATION pdb OPTIONAL)
 endif ()
