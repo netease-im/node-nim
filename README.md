@@ -2,10 +2,11 @@
 [![GitHub Test Badge](https://github.com/netease-im/node-nim/workflows/build/badge.svg)](https://github.com/netease-im/node-nim/actions) [![codecov](https://codecov.io/gh/netease-im/node-nim/branch/master/graph/badge.svg?token=YUP8T7ZG6U)](https://codecov.io/gh/netease-im/node-nim) [![GitHub all releases](https://img.shields.io/github/downloads/netease-im/node-nim/total)](https://github.com/netease-im/node-nim/releases)
 
 ## Table of Contents
-- [Installation](#installation)
-- [Unit Test](#unit-test)
-- [Sample Code ](#sample-code )
-- [Documentation](#documentation)
+  - [Introduction](#introduction)
+  - [Installation](#installation)
+  - [Unit Test](#unit-test)
+  - [Sample Code](#sample-code)
+  - [Quick Start](#quick-start)
 
 ## Introduction
 node-nim is a wrapper of [NetEase IM](https://netease.im/).
