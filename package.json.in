@@ -9,7 +9,7 @@
   "scripts": {
     "coverage": "nyc mocha test/test_all.js -slow 200 -timeout 10000",
     "build:ts": "rimraf ./js && rimraf ./types && tsc",
-    "build:doc": "typedoc ts/api",
+    "build:doc": "typedoc",
     "prepublish": "npm run build:ts",
     "install": "npm run download:sdk",
     "download:sdk": "node download-sdk.js"
@@ -29,16 +29,16 @@
     "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@typescript-eslint/parser": "^5.13.0",
     "bluebird": "^3.7.2",
+    "cmake-js": "^6.2.1",
     "eslint": "^7.32.0",
     "mocha": "^9.1.1",
     "node-addon-api": "^4.3.0",
     "nyc": "^15.1.0",
-    "typedoc": "^0.22.7",
-    "typedoc-github-wiki-theme": "^0.6.0",
-    "typedoc-plugin-markdown": "^3.11.3",
+    "typedoc": "^0.22.13",
+    "typedoc-github-wiki-theme": "^1.0.0",
+    "typedoc-plugin-markdown": "^3.11.14",
     "typescript": "^4.3.5",
-    "typescript-eslint": "0.0.1-alpha.0",
-    "cmake-js": "^6.2.1"
+    "typescript-eslint": "0.0.1-alpha.0"
   },
   "keywords": [
     "netease",
