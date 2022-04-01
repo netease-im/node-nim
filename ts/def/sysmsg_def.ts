@@ -26,7 +26,7 @@ export enum NIMSysMsgType {
 }
 
 /** @enum NIMMessageFeature 消息种类 */
-enum NIMMessageFeature {
+export enum NIMMessageFeature {
     kNIMMessageFeatureDefault = 0,       /**< 默认 */
     kNIMMessageFeatureLeaveMsg = 1,      /**< 离线消息 */
     kNIMMessageFeatureRoamMsg = 2,       /**< 漫游消息 */
