@@ -41,7 +41,7 @@ client.login('app_key', 'username', 'password_in_md5', (result) => {
     if (loginResult.login_step === 3) { // login has 3 steps, step 3 succeeded
         talk.initEventHandler() // init callbacks
 
-        talk.on('onReceiveMsg', function (result) {
+        talk.on('receiveMsg', function (result) {
             console.log(result)
         })
 
