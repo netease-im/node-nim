@@ -12,8 +12,12 @@ export class NIMFriend extends ev.EventEmitter {
         this.friend = new sdk.NIMFriend({ "emit": this.emit.bind(this) });
     }
 
-    /* 注册全局回调 */
+    /** 注册全局回调 
+      * 使用方式 
+      * this.on('${eventName}', (params...) => {}) 
+      */
     initEventHandlers(): void {
+        // change: 好友变更通知
         return this.friend.InitEventHandlers();
     }
 

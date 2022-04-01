@@ -12,8 +12,13 @@ export class NIMSubscribeEvent extends ev.EventEmitter {
         this.subscribeEvent = new sdk.NIMSubscribeEvent({ "emit": this.emit.bind(this) });
     }
 
-    /* 注册全局回调 */
+    /** 注册全局回调 
+      * 使用方式 
+      * this.on('${eventName}', (params...) => {}) 
+      */
     initEventHandlers(): void {
+        // push: 订阅的事件
+        // batchPush: 批量接收订阅的事件
         return this.subscribeEvent.InitEventHandlers();
     }
 

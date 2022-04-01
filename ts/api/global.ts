@@ -9,8 +9,12 @@ export class NIMGlobal extends ev.EventEmitter {
         this.global = new sdk.NIMGlobal({ "emit": this.emit.bind(this) });
     }
 
-    /* 注册全局回调 */
+    /** 注册全局回调 
+      * 使用方式 
+      * this.on('${eventName}', (params...) => {}) 
+      */
     initEventHandlers(): void {
+        // dbError: SDK DB操作出错
         return this.global.InitEventHandlers();
     }
 

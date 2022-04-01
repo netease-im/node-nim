@@ -21,8 +21,8 @@ Napi::Object NIMUser::Init(Napi::Env env, Napi::Object exports) {
 }
 
 void NIMUser::InitEventHandlers() {
-    RegisterSDKNotifyCallback("special_relation_change", &nim::User::RegSpecialRelationshipChangedCb);
-    RegisterSDKNotifyCallback("user_name_card_change", &nim::User::RegUserNameCardChangedCb);
+    RegisterSDKNotifyCallback("specialRelationChange", &nim::User::RegSpecialRelationshipChangedCb);
+    RegisterSDKNotifyCallback("userNameCardChange", &nim::User::RegUserNameCardChangedCb);
 }
 
 NIMUser::NIMUser(const Napi::CallbackInfo& info)

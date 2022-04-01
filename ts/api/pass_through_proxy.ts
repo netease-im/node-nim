@@ -9,8 +9,12 @@ export class NIMPassThroughProxy extends ev.EventEmitter {
         this.proxy = new sdk.NIMPassThroughProxy({ "emit": this.emit.bind(this) });
     }
 
-    /* 注册全局回调 */
+    /** 注册全局回调 
+      * 使用方式 
+      * this.on('${eventName}', (params...) => {}) 
+      */
     initEventHandlers(): void {
+        // receiveHttpMsg: 接受到 HTTP 透传消息
         return this.proxy.InitEventHandlers();
     }
 

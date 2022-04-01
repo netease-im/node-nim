@@ -26,8 +26,17 @@ export class NIMClient extends ev.EventEmitter {
         return this.client.Init(appKey, appDataDir, appInstallDir, config);
     }
 
-    /* 注册全局回调 */
+    /** 注册全局回调 
+      * 使用方式 
+      * this.on('${eventName}', (params...) => {}) 
+      */
     initEventHandlers(): void {
+        // disconnect: NIM客户端掉线
+        // multispotLogin: NIM客户端多点登录通知
+        // syncMultiportPushConfig: 多端推送开关同步
+        // kickout: NIM客户端被踢
+        // kickOtherClient: NIM客户端将本帐号的其他端踢下线结果
+        // relogin: NIM客户端自动重连
         return this.client.InitEventHandlers();
     }
 

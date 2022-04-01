@@ -18,7 +18,7 @@ Napi::Object NIMPassThroughProxy::Init(Napi::Env env, Napi::Object exports) {
 }
 
 void NIMPassThroughProxy::InitEventHandlers() {
-    RegisterSDKNotifyCallback("receive_http_msg", &nim::PassThroughProxy::RegReceivedHttpMsgCb);
+    RegisterSDKNotifyCallback("receiveHttpMsg", &nim::PassThroughProxy::RegReceivedHttpMsgCb);
 }
 
 NIMPassThroughProxy::NIMPassThroughProxy(const Napi::CallbackInfo& info)

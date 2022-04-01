@@ -13,8 +13,13 @@ export class NIMNOS extends ev.EventEmitter {
         this.nos = new sdk.NIMNOS({ "emit": this.emit.bind(this) });
     }
 
-    /* 注册全局回调 */
+    /** 注册全局回调 
+      * 使用方式 
+      * this.on('${eventName}', (params...) => {}) 
+      */
     initEventHandlers(): void {
+        // downloadComplete: 下载回调
+        // uploadComplete: 上传回调
         return this.nos.InitEventHandlers();
     }
 

@@ -15,8 +15,12 @@ export class NIMTeam extends ev.EventEmitter {
         this.team = new sdk.NIMTeam({ "emit": this.emit.bind(this) });
     }
 
-    /* 注册全局回调 */
+    /** 注册全局回调 
+      * 使用方式 
+      * this.on('${eventName}', (params...) => {}) 
+      */
     initEventHandlers(): void {
+        // teamEvent: 群事件
         return this.team.InitEventHandlers();
     }
 

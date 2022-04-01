@@ -12,8 +12,13 @@ export class NIMSysMsg extends ev.EventEmitter {
         this.sysmsg = new sdk.NIMSystemMsg({ "emit": this.emit.bind(this) });
     }
 
-    /* 注册全局回调 */
+    /** 注册全局回调 
+      * 使用方式 
+      * this.on('${eventName}', (params...) => {}) 
+      */
     initEventHandlers(): void {
+        // receiveSystemMsg: 系统通知
+        // sendCustomSystemMsg: 发送透传消息回调
         return this.sysmsg.InitEventHandlers();
     }
 

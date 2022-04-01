@@ -12,8 +12,13 @@ export class NIMUser extends ev.EventEmitter {
         this.user = new sdk.NIMUser({ "emit": this.emit.bind(this) });
     }
 
-    /* 注册全局回调 */
+    /** 注册全局回调 
+      * 使用方式 
+      * this.on('${eventName}', (params...) => {}) 
+      */
     initEventHandlers(): void {
+        // specialRelationChange: 用户属性变更
+        // userNameCardChange: 用户名片变更
         return this.user.InitEventHandlers();
     }
 

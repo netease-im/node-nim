@@ -21,7 +21,7 @@ Napi::Object NIMSubscribeEvent::Init(Napi::Env env, Napi::Object exports) {
 
 void NIMSubscribeEvent::InitEventHandlers() {
     RegisterSDKNotifyCallback("push", &nim::SubscribeEvent::RegPushEventCb);
-    RegisterSDKNotifyCallback("batch_push", &nim::SubscribeEvent::RegBatchPushEventCb);
+    RegisterSDKNotifyCallback("batchPush", &nim::SubscribeEvent::RegBatchPushEventCb);
 }
 
 NIMSubscribeEvent::NIMSubscribeEvent(const Napi::CallbackInfo& info)

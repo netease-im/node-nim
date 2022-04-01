@@ -16,8 +16,16 @@ export class NIMTalkEx extends ev.EventEmitter {
         this.talkex = new sdk.NIMTalkEx({ "emit": this.emit.bind(this) });
     }
 
-    /* 注册全局回调 */
+    /** 注册全局回调 
+      * 使用方式 
+      * this.on('${eventName}', (params...) => {}) 
+      */
     initEventHandlers(): void {
+        // addQuickComment: 添加快捷回复
+        // removeQuickComment: 删除快捷回复
+        // pin: Pin消息
+        // unpin: Unpin消息
+        // updatePin: 更新Pin消息
         return this.talkex.InitEventHandlers();
     }
 

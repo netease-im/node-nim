@@ -13,8 +13,12 @@ export class NIMOnlineSession extends ev.EventEmitter {
         this.session = new sdk.NIMOnlineSession({ "emit": this.emit.bind(this) });
     }
 
-    /* 注册全局回调 */
+    /** 注册全局回调 
+      * 使用方式 
+      * this.on('${eventName}', (params...) => {}) 
+      */
     initEventHandlers(): void {
+        // change: 会话变更
         return this.session.InitEventHandlers();
     }
 

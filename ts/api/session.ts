@@ -15,8 +15,15 @@ export class NIMSession extends ev.EventEmitter {
         this.session = new sdk.NIMSession({ "emit": this.emit.bind(this) });
     }
 
-    /* 注册全局回调 */
+    /** 注册全局回调 
+      * 使用方式 
+      * this.on('${eventName}', (params...) => {}) 
+      */
     initEventHandlers(): void {
+        // change: 会话变更
+        // stickTop: 置顶会话通知
+        // cancelStickTop: 取消置顶会话通知
+        // updateTtickTop: 更新置顶会话通知
         return this.session.InitEventHandlers();
     }
 

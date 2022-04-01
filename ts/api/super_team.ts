@@ -13,8 +13,12 @@ export class NIMSuperTeam extends ev.EventEmitter {
         this.team = new sdk.NIMSuperTeam({ "emit": this.emit.bind(this) });
     }
 
-    /* 注册全局回调 */
+    /** 注册全局回调 
+      * 使用方式 
+      * this.on('${eventName}', (params...) => {}) 
+      */
     initEventHandlers(): void {
+        // superTeamEvent: 超大群事件
         return this.team.InitEventHandlers();
     }
 

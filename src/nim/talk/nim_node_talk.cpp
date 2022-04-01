@@ -20,14 +20,14 @@ Napi::Object NIMTalk::Init(Napi::Env env, Napi::Object exports) {
 }
 
 void NIMTalk::InitEventHandlers() {
-    RegisterSDKNotifyCallback("send_msg", &nim::Talk::RegSendMsgCb);
-    RegisterSDKNotifyCallback("receive_msg", &nim::Talk::RegReceiveCb);
-    RegisterSDKNotifyCallback("receive_msgs", &nim::Talk::RegReceiveMessagesCb);
-    RegisterSDKNotifyCallback("filter_notification", &nim::Talk::RegTeamNotificationFilter);
-    RegisterSDKNotifyCallback("filter_msg", &nim::Talk::RegMessageFilter);
-    RegisterSDKNotifyCallback("recal_msgs", &nim::Talk::RegRecallMsgsCallback);
-    RegisterSDKNotifyCallback("receive_broadcast_msg", &nim::Talk::RegReceiveBroadcastMsgCb);
-    RegisterSDKNotifyCallback("receive_broadcast_msgs", &nim::Talk::RegReceiveBroadcastMsgsCb);
+    RegisterSDKNotifyCallback("sendMsg", &nim::Talk::RegSendMsgCb);
+    RegisterSDKNotifyCallback("receiveMsg", &nim::Talk::RegReceiveCb);
+    RegisterSDKNotifyCallback("receiveMsgs", &nim::Talk::RegReceiveMessagesCb);
+    RegisterSDKNotifyCallback("filterNotification", &nim::Talk::RegTeamNotificationFilter);
+    RegisterSDKNotifyCallback("filterMsg", &nim::Talk::RegMessageFilter);
+    RegisterSDKNotifyCallback("recallMsgs", &nim::Talk::RegRecallMsgsCallback);
+    RegisterSDKNotifyCallback("receiveBroadcastMsg", &nim::Talk::RegReceiveBroadcastMsgCb);
+    RegisterSDKNotifyCallback("receiveBroadcastMsgs", &nim::Talk::RegReceiveBroadcastMsgsCb);
 }
 
 NIMTalk::NIMTalk(const Napi::CallbackInfo& info)

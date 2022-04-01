@@ -10,8 +10,19 @@ export class NIMTalk extends ev.EventEmitter {
         this.talk = new sdk.NIMTalk({ "emit": this.emit.bind(this) });
     }
 
-    /* 注册全局回调 */
+    /** 注册全局回调 
+      * 使用方式 
+      * this.on('${eventName}', (params...) => {}) 
+      */
     initEventHandlers(): void {
+        // sendMsg: 发送消息回调
+        // receiveMsg: 接收消息
+        // receiveMsgs: 批量接收消息，如离线/漫游消息
+        // filterNotification: 过滤通知
+        // filterMsg: 过滤消息
+        // recallMsgs: 消息撤回通知
+        // receiveBroadcastMsg: 接收广播消息
+        // receiveBroadcastMsgs: 批量接收广播消息
         return this.talk.InitEventHandlers();
     }
 

@@ -26,6 +26,10 @@ Napi::Object NIMClient::Init(Napi::Env env, Napi::Object exports) {
 void NIMClient::InitEventHandlers() {
     RegisterSDKNotifyCallback("disconnect", &nim::Client::RegDisconnectCb);
     RegisterSDKNotifyCallback("multispotLogin", &nim::Client::RegMultispotLoginCb);
+    RegisterSDKNotifyCallback("syncMultiportPushConfig", &nim::Client::RegSyncMultiportPushConfigCb);
+    RegisterSDKNotifyCallback("kickout", &nim::Client::RegKickoutCb);
+    RegisterSDKNotifyCallback("kickOtherClient", &nim::Client::RegKickOtherClientCb);
+    RegisterSDKNotifyCallback("relogin", &nim::Client::RegReloginCb);
 }
 
 NIMClient::NIMClient(const Napi::CallbackInfo& info)

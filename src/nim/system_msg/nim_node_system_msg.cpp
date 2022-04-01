@@ -22,8 +22,8 @@ Napi::Object NIMSystemMsg::Init(Napi::Env env, Napi::Object exports) {
 }
 
 void NIMSystemMsg::InitEventHandlers() {
-    RegisterSDKNotifyCallback("system_msg", &nim::SystemMsg::RegSysmsgCb);
-    RegisterSDKNotifyCallback("send_custom_system_msg", &nim::SystemMsg::RegSendCustomSysmsgCb);
+    RegisterSDKNotifyCallback("receiveSystemMsg", &nim::SystemMsg::RegSysmsgCb);
+    RegisterSDKNotifyCallback("sendCustomSystemMsg", &nim::SystemMsg::RegSendCustomSysmsgCb);
 }
 
 NIMSystemMsg::NIMSystemMsg(const Napi::CallbackInfo& info)

@@ -31,10 +31,9 @@ Napi::Object NIMSession::Init(Napi::Env env, Napi::Object exports) {
 
 void NIMSession::InitEventHandlers() {
     RegisterSDKNotifyCallback("change", &nim::Session::RegChangeCb);
-    RegisterSDKNotifyCallback("badge_count", &nim::Session::RegBadgeCountCb);
-    RegisterSDKNotifyCallback("stick_top", &nim::Session::RegSetToStickTopSessionNotifyCB);
-    RegisterSDKNotifyCallback("cancel_stick_top", &nim::Session::RegCancelStickTopSessionNotifyCB);
-    RegisterSDKNotifyCallback("update_stick_top", &nim::Session::RegUpdateStickTopSessionNotifyCB);
+    RegisterSDKNotifyCallback("stickTop", &nim::Session::RegSetToStickTopSessionNotifyCB);
+    RegisterSDKNotifyCallback("cancelStickTop", &nim::Session::RegCancelStickTopSessionNotifyCB);
+    RegisterSDKNotifyCallback("updateTtickTop", &nim::Session::RegUpdateStickTopSessionNotifyCB);
 }
 
 NIMSession::NIMSession(const Napi::CallbackInfo& info)

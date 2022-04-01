@@ -17,8 +17,14 @@ export class NIMMsgLog extends ev.EventEmitter {
         this.msglog = new sdk.NIMMsgLog({ "emit": this.emit.bind(this) });
     }
 
-    /* 注册全局回调 */
+    /** 注册全局回调 
+      * 使用方式 
+      * this.on('${eventName}', (params...) => {}) 
+      */
     initEventHandlers(): void {
+        // localMsgDeleted: 单向删除消息记录通知
+        // onlineMsgDeleted: 删除某一会话的云端的历史记录通知
+        // msgStatusChanged: 消息状态变更
         return this.msglog.InitEventHandlers();
     }
 
