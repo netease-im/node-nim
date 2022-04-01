@@ -5,6 +5,15 @@ import {
     NotifySysmsgResCallback, QuerySysmsgCallback
 } from '../def/sysmsg_def';
 
+export declare interface NIMSysMsg {
+    // receiveSystemMsg: 系统通知
+    // sendCustomSystemMsg: 发送透传消息回调
+    on(event: 'receiveSystemMsg', listener: () => void): this;
+    on(event: 'sendCustomSystemMsg', listener: () => void): this;
+    once(event: 'receiveSystemMsg', listener: () => void): this;
+    once(event: 'sendCustomSystemMsg', listener: () => void): this;
+}
+
 export class NIMSysMsg extends ev.EventEmitter {
     sysmsg: NIMSysMsgAPI;
     constructor() {
@@ -12,7 +21,7 @@ export class NIMSysMsg extends ev.EventEmitter {
         this.sysmsg = new sdk.NIMSystemMsg({ "emit": this.emit.bind(this) });
     }
 
-    /* 注册全局回调 */
+    /** 注册全局回调 */
     initEventHandlers(): void {
         return this.sysmsg.InitEventHandlers();
     }

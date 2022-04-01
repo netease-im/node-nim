@@ -24,11 +24,11 @@ Napi::Object NIMTalkEx::Init(Napi::Env env, Napi::Object exports) {
 }
 
 void NIMTalkEx::InitEventHandlers() {
-    RegisterSDKNotifyCallback("add_quick_comment", &nim::TalkEx::QuickComment::RegAddQuickCommentNotify);
-    RegisterSDKNotifyCallback("remove_quick_comment", &nim::TalkEx::QuickComment::RegRemoveQuickCommentNotify);
+    RegisterSDKNotifyCallback("addQuickComment", &nim::TalkEx::QuickComment::RegAddQuickCommentNotify);
+    RegisterSDKNotifyCallback("removeQuickComment", &nim::TalkEx::QuickComment::RegRemoveQuickCommentNotify);
     RegisterSDKNotifyCallback("pin", &nim::TalkEx::PinMsg::RegAddPinMessage);
     RegisterSDKNotifyCallback("unpin", &nim::TalkEx::PinMsg::RegUnPinMessage);
-    RegisterSDKNotifyCallback("update_pin", &nim::TalkEx::PinMsg::RegUpdatePinMessage);
+    RegisterSDKNotifyCallback("updatePin", &nim::TalkEx::PinMsg::RegUpdatePinMessage);
 }
 
 NIMTalkEx::NIMTalkEx(const Napi::CallbackInfo& info)

@@ -22,7 +22,7 @@ Napi::Object NIMGlobal::Init(Napi::Env env, Napi::Object exports) {
 }
 
 void NIMGlobal::InitEventHandlers() {
-    RegisterSDKNotifyCallback("db_error", &nim::Global::RegSDKDBError);
+    RegisterSDKNotifyCallback("dbError", &nim::Global::RegSDKDBError);
 }
 
 NIMGlobal::NIMGlobal(const Napi::CallbackInfo& info)

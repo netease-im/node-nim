@@ -38,7 +38,7 @@ Napi::Object NIMTeam::Init(Napi::Env env, Napi::Object exports) {
 }
 
 void NIMTeam::InitEventHandlers() {
-    RegisterSDKNotifyCallback("event", &nim::Team::RegTeamEventCb);
+    RegisterSDKNotifyCallback("teamEvent", &nim::Team::RegTeamEventCb);
 }
 
 NIMTeam::NIMTeam(const Napi::CallbackInfo& info)

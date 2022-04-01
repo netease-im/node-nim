@@ -9,6 +9,24 @@ import {
 } from '../def/talkex_def';
 import { IMMessage } from '../def/msglog_def';
 
+export declare interface NIMTalkEx {
+    // addQuickComment: 添加快捷回复
+    // removeQuickComment: 删除快捷回复
+    // pin: Pin消息
+    // unpin: Unpin消息
+    // updatePin: 更新Pin消息
+    on(event: 'addQuickComment', listener: () => void): this;
+    on(event: 'removeQuickComment', listener: () => void): this;
+    on(event: 'pin', listener: () => void): this;
+    on(event: 'unpin', listener: () => void): this;
+    on(event: 'updatePin', listener: () => void): this;
+    once(event: 'addQuickComment', listener: () => void): this;
+    once(event: 'removeQuickComment', listener: () => void): this;
+    once(event: 'pin', listener: () => void): this;
+    once(event: 'unpin', listener: () => void): this;
+    once(event: 'updatePin', listener: () => void): this;
+}
+
 export class NIMTalkEx extends ev.EventEmitter {
     talkex: NIMTalkExAPI;
     constructor() {
@@ -16,7 +34,7 @@ export class NIMTalkEx extends ev.EventEmitter {
         this.talkex = new sdk.NIMTalkEx({ "emit": this.emit.bind(this) });
     }
 
-    /* 注册全局回调 */
+    /** 注册全局回调 */
     initEventHandlers(): void {
         return this.talkex.InitEventHandlers();
     }

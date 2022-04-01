@@ -6,6 +6,15 @@ import {
 } from '../def/nos_def';
 import { IMMessage } from '../def/msglog_def';
 
+export declare interface NIMNOS {
+    // downloadComplete: 下载回调
+    // uploadComplete: 上传回调
+    on(event: 'downloadComplete', listener: () => void): this;
+    on(event: 'uploadComplete', listener: () => void): this;
+    once(event: 'downloadComplete', listener: () => void): this;
+    once(event: 'uploadComplete', listener: () => void): this;
+}
+
 export class NIMNOS extends ev.EventEmitter {
     nos: NIMNOSAPI;
     constructor() {
@@ -13,7 +22,7 @@ export class NIMNOS extends ev.EventEmitter {
         this.nos = new sdk.NIMNOS({ "emit": this.emit.bind(this) });
     }
 
-    /* 注册全局回调 */
+    /** 注册全局回调 */
     initEventHandlers(): void {
         return this.nos.InitEventHandlers();
     }

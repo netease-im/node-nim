@@ -9,7 +9,7 @@ export class NIMTool extends ev.EventEmitter {
         this.tool = new sdk.NIMTool({ "emit": this.emit.bind(this) });
     }
 
-    /* 注册全局回调 */
+    /** 注册全局回调 */
     initEventHandlers(): void {
         return this.tool.InitEventHandlers();
     }

@@ -2,6 +2,12 @@ import { NIMPassThroughProxyAPI, NIMSendHttpRequestMethods, SendHttpRequestCallb
 import sdk from '../loader';
 import ev from 'events';
 
+export declare interface NIMPassThroughProxy {
+    // receiveHttpMsg: 接受到 HTTP 透传消息
+    on(event: 'receiveHttpMsg', listener: () => void): this;
+    once(event: 'receiveHttpMsg', listener: () => void): this;
+}
+
 export class NIMPassThroughProxy extends ev.EventEmitter {
     proxy: NIMPassThroughProxyAPI;
     constructor() {
@@ -9,7 +15,7 @@ export class NIMPassThroughProxy extends ev.EventEmitter {
         this.proxy = new sdk.NIMPassThroughProxy({ "emit": this.emit.bind(this) });
     }
 
-    /* 注册全局回调 */
+    /** 注册全局回调 */
     initEventHandlers(): void {
         return this.proxy.InitEventHandlers();
     }

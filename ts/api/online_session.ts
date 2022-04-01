@@ -6,6 +6,12 @@ import {
     QueryOnlineSessionListCallback, UpdateOnlineSessionInfoCallback
 } from '../def/online_session_def';
 
+export declare interface NIMOnlineSession {
+    // change: 会话变更
+    on(event: 'change', listener: () => void): this;
+    once(event: 'change', listener: () => void): this;
+}
+
 export class NIMOnlineSession extends ev.EventEmitter {
     session: NIMOnlineSessionAPI;
     constructor() {
@@ -13,7 +19,7 @@ export class NIMOnlineSession extends ev.EventEmitter {
         this.session = new sdk.NIMOnlineSession({ "emit": this.emit.bind(this) });
     }
 
-    /* 注册全局回调 */
+    /** 注册全局回调 */
     initEventHandlers(): void {
         return this.session.InitEventHandlers();
     }

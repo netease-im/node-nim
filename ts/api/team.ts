@@ -8,6 +8,12 @@ import {
     UpdateTInfoLocalCallback, GetTeamInfoBatchSFTransCallback, GetTeamInfoListCallback, TeamMemberProperty
 } from '../def/team_def';
 
+export declare interface NIMTeam {
+    // teamEvent: 群事件
+    on(event: 'teamEvent', listener: () => void): this;
+    once(event: 'teamEvent', listener: () => void): this;
+}
+
 export class NIMTeam extends ev.EventEmitter {
     team: NIMTeamAPI;
     constructor() {
@@ -15,7 +21,7 @@ export class NIMTeam extends ev.EventEmitter {
         this.team = new sdk.NIMTeam({ "emit": this.emit.bind(this) });
     }
 
-    /* 注册全局回调 */
+    /** 注册全局回调 */
     initEventHandlers(): void {
         return this.team.InitEventHandlers();
     }

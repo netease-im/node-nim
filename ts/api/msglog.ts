@@ -10,6 +10,18 @@ import {
     FullTextSearchOnlineAsyncParam, FullTextSearchOnlineAsyncCallback
 } from '../def/msglog_def';
 
+export declare interface NIMMsgLog {
+    // localMsgDeleted: 单向删除消息记录通知
+    // onlineMsgDeleted: 删除某一会话的云端的历史记录通知
+    // msgStatusChanged: 消息状态变更
+    on(event: 'localMsgDeleted', listener: () => void): this;
+    on(event: 'onlineMsgDeleted', listener: () => void): this;
+    on(event: 'msgStatusChanged', listener: () => void): this;
+    once(event: 'localMsgDeleted', listener: () => void): this;
+    once(event: 'onlineMsgDeleted', listener: () => void): this;
+    once(event: 'msgStatusChanged', listener: () => void): this;
+}
+
 export class NIMMsgLog extends ev.EventEmitter {
     msglog: NIMMsgLogAPI;
     constructor() {
@@ -17,7 +29,7 @@ export class NIMMsgLog extends ev.EventEmitter {
         this.msglog = new sdk.NIMMsgLog({ "emit": this.emit.bind(this) });
     }
 
-    /* 注册全局回调 */
+    /** 注册全局回调 */
     initEventHandlers(): void {
         return this.msglog.InitEventHandlers();
     }

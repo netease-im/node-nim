@@ -22,8 +22,8 @@ Napi::Object NIMNOS::Init(Napi::Env env, Napi::Object exports) {
 }
 
 void NIMNOS::InitEventHandlers() {
-    RegisterSDKNotifyCallback("download_complete", &nim::NOS::RegDownloadCb);
-    RegisterSDKNotifyCallback("upload_complete", &nim::NOS::RegUploadCb);
+    RegisterSDKNotifyCallback("downloadComplete", &nim::NOS::RegDownloadCb);
+    RegisterSDKNotifyCallback("uploadComplete", &nim::NOS::RegUploadCb);
 }
 
 NIMNOS::NIMNOS(const Napi::CallbackInfo& info)

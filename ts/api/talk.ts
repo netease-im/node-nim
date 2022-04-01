@@ -3,6 +3,33 @@ import ev from 'events';
 import { IMMessage, NIMMessageType } from '../def/msglog_def';
 import { NIMTalkAPI, RecallMsgsCallback } from '../def/talk_def';
 
+export declare interface NIMTalk {
+    // sendMsg: 发送消息回调
+    // receiveMsg: 接收消息
+    // receiveMsgs: 批量接收消息，如离线/漫游消息
+    // filterNotification: 过滤通知
+    // filterMsg: 过滤消息
+    // recallMsgs: 消息撤回通知
+    // receiveBroadcastMsg: 接收广播消息
+    // receiveBroadcastMsgs: 批量接收广播消息
+    on(event: 'sendMsg', listener: () => void): this;
+    on(event: 'receiveMsg', listener: () => void): this;
+    on(event: 'receiveMsgs', listener: () => void): this;
+    on(event: 'filterNotification', listener: () => void): this;
+    on(event: 'filterMsg', listener: () => void): this;
+    on(event: 'recallMsgs', listener: () => void): this;
+    on(event: 'receiveBroadcastMsg', listener: () => void): this;
+    on(event: 'receiveBroadcastMsgs', listener: () => void): this;
+    once(event: 'sendMsg', listener: () => void): this;
+    once(event: 'receiveMsg', listener: () => void): this;
+    once(event: 'receiveMsgs', listener: () => void): this;
+    once(event: 'filterNotification', listener: () => void): this;
+    once(event: 'filterMsg', listener: () => void): this;
+    once(event: 'recallMsgs', listener: () => void): this;
+    once(event: 'receiveBroadcastMsg', listener: () => void): this;
+    once(event: 'receiveBroadcastMsgs', listener: () => void): this;
+}
+
 export class NIMTalk extends ev.EventEmitter {
     talk: NIMTalkAPI;
     constructor() {
@@ -10,7 +37,7 @@ export class NIMTalk extends ev.EventEmitter {
         this.talk = new sdk.NIMTalk({ "emit": this.emit.bind(this) });
     }
 
-    /* 注册全局回调 */
+    /** 注册全局回调 */
     initEventHandlers(): void {
         return this.talk.InitEventHandlers();
     }

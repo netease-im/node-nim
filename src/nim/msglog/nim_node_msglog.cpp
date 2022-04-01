@@ -44,9 +44,9 @@ Napi::Object NIMMsgLog::Init(Napi::Env env, Napi::Object exports) {
 }
 
 void NIMMsgLog::InitEventHandlers() {
-    RegisterSDKNotifyCallback("local_msg_deleted", &nim::MsgLog::RegDeleteMsglogSelfNotify);
-    RegisterSDKNotifyCallback("online_msg_deleted", &nim::MsgLog::RegDeleteMsglogSelfNotify);
-    RegisterSDKNotifyCallback("msg_stats_changed", &nim::MsgLog::RegMessageStatusChangedCb);
+    RegisterSDKNotifyCallback("localMsgDeleted", &nim::MsgLog::RegDeleteMsglogSelfNotify);
+    RegisterSDKNotifyCallback("onlineMsgDeleted", &nim::MsgLog::RegDeleteMsglogSelfNotify);
+    RegisterSDKNotifyCallback("msgStatusChanged", &nim::MsgLog::RegMessageStatusChangedCb);
 }
 
 NIMMsgLog::NIMMsgLog(const Napi::CallbackInfo& info)
