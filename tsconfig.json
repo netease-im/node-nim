@@ -18,14 +18,15 @@
   },
   "typedocOptions": {
     "entryPoints": [
-      "ts/api",
+      "ts/nim.ts",
       "ts/def"
     ],
     "entryPointStrategy": "expand",
     "plugin": [
-      "typedoc-plugin-markdown"
+      "typedoc-plugin-markdown",
+      "typedoc-github-wiki-theme"
     ],
-    "theme": "./node_modules/typedoc-github-wiki-theme/dist",
+    "theme": "github-wiki",
     "readme": "none",
     "excludeProtected": "true",
     "out": "doc",
