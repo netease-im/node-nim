@@ -2,6 +2,12 @@ import sdk from '../loader';
 import ev from 'events';
 import { NIMDataSyncAPI } from '../def/data_sync_def';
 
+export declare interface NIMDataSync {
+    // complete: 数据同步完成
+    on(event: 'complete', listener: () => void): this;
+    once(event: 'complete', listener: () => void): this;
+}
+
 export class NIMDataSync extends ev.EventEmitter {
     dataSync: NIMDataSyncAPI;
     constructor() {
@@ -9,12 +15,8 @@ export class NIMDataSync extends ev.EventEmitter {
         this.dataSync = new sdk.NIMDataSync({ "emit": this.emit.bind(this) });
     }
 
-    /** 注册全局回调 
-      * 使用方式 
-      * this.on('${eventName}', (params...) => {}) 
-      */
+    /** 注册全局回调 */
     initEventHandlers(): void {
-        // complete: 数据同步完成
         return this.dataSync.InitEventHandlers();
     }
 }

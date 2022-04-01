@@ -5,6 +5,12 @@ import {
     GetFriendsListCallback, NIMVerifyType
 } from '../def/friend_def';
 
+export declare interface NIMFriend {
+    // change: 好友变更通知
+    on(event: 'change', listener: () => void): this;
+    once(event: 'change', listener: () => void): this;
+}
+
 export class NIMFriend extends ev.EventEmitter {
     friend: NIMFriendAPI;
     constructor() {
@@ -12,12 +18,8 @@ export class NIMFriend extends ev.EventEmitter {
         this.friend = new sdk.NIMFriend({ "emit": this.emit.bind(this) });
     }
 
-    /** 注册全局回调 
-      * 使用方式 
-      * this.on('${eventName}', (params...) => {}) 
-      */
+    /** 注册全局回调 */
     initEventHandlers(): void {
-        // change: 好友变更通知
         return this.friend.InitEventHandlers();
     }
 

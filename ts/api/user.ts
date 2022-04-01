@@ -5,6 +5,15 @@ import {
     UpdateMyUserNameCardCallback, NINPushType, UserNameCard
 } from '../def/user_def';
 
+export declare interface NIMUser {
+    // specialRelationChange: 用户属性变更
+    // userNameCardChange: 用户名片变更
+    on(event: 'specialRelationChange', listener: () => void): this;
+    on(event: 'userNameCardChange', listener: () => void): this;
+    once(event: 'specialRelationChange', listener: () => void): this;
+    once(event: 'userNameCardChange', listener: () => void): this;
+}
+
 export class NIMUser extends ev.EventEmitter {
     user: NIMUserAPI;
     constructor() {
@@ -12,13 +21,8 @@ export class NIMUser extends ev.EventEmitter {
         this.user = new sdk.NIMUser({ "emit": this.emit.bind(this) });
     }
 
-    /** 注册全局回调 
-      * 使用方式 
-      * this.on('${eventName}', (params...) => {}) 
-      */
+    /** 注册全局回调 */
     initEventHandlers(): void {
-        // specialRelationChange: 用户属性变更
-        // userNameCardChange: 用户名片变更
         return this.user.InitEventHandlers();
     }
 

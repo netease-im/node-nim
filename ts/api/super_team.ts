@@ -6,6 +6,12 @@ import {
     QuerySuperTeamInfoCallback
 } from 'ts/def/super_team_def';
 
+export declare interface NIMSuperTeam {
+    // superTeamEvent: 超大群事件
+    on(event: 'superTeamEvent', listener: () => void): this;
+    once(event: 'superTeamEvent', listener: () => void): this;
+}
+
 export class NIMSuperTeam extends ev.EventEmitter {
     team: NIMSuperTeamAPI;
     constructor() {
@@ -13,12 +19,8 @@ export class NIMSuperTeam extends ev.EventEmitter {
         this.team = new sdk.NIMSuperTeam({ "emit": this.emit.bind(this) });
     }
 
-    /** 注册全局回调 
-      * 使用方式 
-      * this.on('${eventName}', (params...) => {}) 
-      */
+    /** 注册全局回调 */
     initEventHandlers(): void {
-        // superTeamEvent: 超大群事件
         return this.team.InitEventHandlers();
     }
 

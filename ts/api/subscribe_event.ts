@@ -5,6 +5,15 @@ import {
     SubscribeEventCallback, UnSubscribeEventCallback, BatchUnSubscribeEventCallback, QuerySubscribeEventCallback
 } from '../def/subscribe_event_def';
 
+export declare interface NIMSubscribeEvent {
+    // push: 订阅的事件
+    // batchPush: 批量接收订阅的事件
+    on(event: 'push', listener: () => void): this;
+    on(event: 'batchPush', listener: () => void): this;
+    once(event: 'push', listener: () => void): this;
+    once(event: 'batchPush', listener: () => void): this;
+}
+
 export class NIMSubscribeEvent extends ev.EventEmitter {
     subscribeEvent: NIMSubscribeEventAPI;
     constructor() {
@@ -12,13 +21,8 @@ export class NIMSubscribeEvent extends ev.EventEmitter {
         this.subscribeEvent = new sdk.NIMSubscribeEvent({ "emit": this.emit.bind(this) });
     }
 
-    /** 注册全局回调 
-      * 使用方式 
-      * this.on('${eventName}', (params...) => {}) 
-      */
+    /** 注册全局回调 */
     initEventHandlers(): void {
-        // push: 订阅的事件
-        // batchPush: 批量接收订阅的事件
         return this.subscribeEvent.InitEventHandlers();
     }
 
