@@ -18,7 +18,7 @@
   },
   "typedocOptions": {
     "entryPoints": [
-      "ts/api",
+      "ts/nim.ts",
       "ts/def"
     ],
     "entryPointStrategy": "expand",
