@@ -1,5 +1,6 @@
 const package_json = require('./package.json');
 const fetch = require('node-fetch');
+const compareVersions = require('compare-versions');
 const download = require('download');
 
 const arch = process.arch;
@@ -17,11 +18,21 @@ fetch('http://publish.netease.im/api/list').then((res) => res.json()).then((publ
     // get sdk list
     if (!sdk_url) {
         let sdk_list = [];
+        let latest_version = "0.0.0";
+        let latest_sdk_list = [];
         Object.keys(publish_json[sdk_group]).forEach((temp) => {
-            if (sdk_version.split('-')[0] === temp) {
+            if (compareVersions.compare(latest_version, temp, '<')) {
+                latest_version = temp;
+                latest_sdk_list = publish_json[sdk_group][temp];
+            }
+            if (sdk_version === temp) {
                 sdk_list = publish_json[sdk_group][temp];
             }
         });
+        if (sdk_list.length === 0) {
+            console.log(`${sdk_name} sdk version ${sdk_version} not found, use latest version ${latest_version}`);
+            sdk_list = latest_sdk_list;
+        }
         console.log(`[node_pre_build] downloadSDK sdk_name:${sdk_name}, platform:${platform}, arch:${arch}`)
         // use platform and arch to find the sdk
         sdk_list.forEach((member) => {
