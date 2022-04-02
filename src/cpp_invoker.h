@@ -203,5 +203,4 @@ public:
         return cb.get();                                                                                                     \
     }
 
-//#include "src/services/nim_public_define.inl"
 #endif  // SRC_CPP_INVOKER_H_

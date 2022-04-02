@@ -1,6 +1,6 @@
 {
   "name": "node-nim",
-  "version": "${GIT_TAG}",
+  "version": "${NODE_NIM_VERSION}",
   "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
   "main": "js/nim.js",
   "types": "types/nim.d.ts",

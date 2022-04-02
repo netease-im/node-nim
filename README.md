@@ -4,6 +4,7 @@
 ## Table of Contents
   - [Introduction](#introduction)
   - [Installation](#installation)
+  - [Build From Source](#build-from-source)
   - [Unit Test](#unit-test)
   - [Sample Code](#sample-code)
   - [Quick Start](#quick-start)
@@ -19,6 +20,22 @@ node-nim runs on Node.js and is available as a NPM package.
 npm install node-nim --save-dev
 ```
 
+## Build From Source
+Technically, nim sdk is shipped with a prebuilt node-nim.node binary file, so you don't need to build it yourself.  
+But if you want to add some personal features or you just want to do so, feel free to build it!  
+Build Requirements:
+  - Node.js
+  - npm
+  - CMake
+  - CMake supported generator(Unix Makefiles, Ninja, Visual Studio, Xcode...)  
+
+Now you are all set to build, run following command in the root directory of the project:
+```cmake
+cmake -S . -B build
+cmake --build build --config Release
+```
+And voilà, you now have your own node-nim binary file in the `build` directory.
+
 ## Unit Test
 Execute following script to run unit test, [check this](./test/test_all.js), and you can also get an coverage report under 'coverage'.
 ```
@@ -26,7 +43,6 @@ npm run coverage
 ```
 
 ## Sample Code
-
 ```
 const NIM = require('node-nim')
 const assert = require('assert')
@@ -64,4 +80,4 @@ client.login('app_key', 'username', 'password_in_md5', (result) => {
 ```
 
 ## Quick Start
-Check out this [quick start project](https://github.com/netease-im/node-nim-quick-start), try out NIM's outstanding features!
+Check out this [quick start project](https://github.com/netease-im/node-nim-quick-start) and try out NIM's outstanding features!

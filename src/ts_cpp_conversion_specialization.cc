@@ -1,6 +1,6 @@
 #include <array>
 #include <string>
-#include "src/ts_cpp_conversion.h"
+#include "ts_cpp_conversion.h"
 
 namespace file_helper {
 enum utf8_states_t { S_STRT = 0, S_RJCT = 8 };
