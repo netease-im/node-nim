@@ -2,25 +2,17 @@ message(STATUS "================== node-nim ==================")
 cmake_minimum_required(VERSION 3.12.0)
 set(TARGET_NAME node-nim)
 project(${TARGET_NAME})
-# configure package.json, get GIT_TAG from nim project
+# configure package.json, get NODE_NIM_VERSION from nim project
+if(NOT NODE_NIM_VERSION)
+    message(STATUS "NODE_NIM_VERSION is not set, use default version")
+    set(NODE_NIM_VERSION "0.0.0")
+endif()
 CONFIGURE_FILE(${CMAKE_CURRENT_LIST_DIR}/package.json.in ${CMAKE_CURRENT_LIST_DIR}/package.json)
 
 # platform specific settings
-if (MSVC)
-     add_definitions(
-     -DUNICODE
-     -D_UNICODE
-     -DNOMINMAX
-     -DWIN32_LEAN_AND_MEAN
-     -DPSAPI_VERSION=1
-     -DWIN32)
-     add_compile_options(/wd4573 /wd4251 /wd4273 /wd4819 /wd4996 /wd4275)
-     add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
-     add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
-     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /Zi")
-	 set(CMAKE_SHARED_LINKER_FLAGS_RELEASE "${CMAKE_SHARED_LINKER_FLAGS_RELEASE} /DEBUG /OPT:REF /OPT:ICF")
-     set(NPX_EXUTABLE "npx.cmd")
-     set(NPM_EXUTABLE "npm.cmd")
+if (WIN32)
+    set(NPX_EXUTABLE "npx.cmd")
+    set(NPM_EXUTABLE "npm.cmd")
 else ()
     set(NPX_EXUTABLE "npx")
     set(NPM_EXUTABLE "npm")
@@ -77,19 +69,30 @@ string(REPLACE "\n" "" NODE_ADDON_API_DIR ${NODE_ADDON_API_DIR})
 string(REPLACE "\"" "" NODE_ADDON_API_DIR ${NODE_ADDON_API_DIR})
 message(STATUS "NODE_ADDON_API_DIR ${NODE_ADDON_API_DIR}")
 
+# get xpack
+include(FetchContent)
+FetchContent_Declare(
+    xpack
+    GIT_REPOSITORY https://github.com/xyz347/xpack.git
+    GIT_TAG master
+    SOURCE_DIR ${CMAKE_BINARY_DIR}/src/xpack
+)
+FetchContent_MakeAvailable(xpack)
+
 # configure project
-ADD_DEFINITIONS(-DNIM_SDK_DLL_IMPORT)
-file(GLOB_RECURSE NIM_NODE_SOURCE
-     ${CMAKE_CURRENT_LIST_DIR}/src/*.cpp
-     ${CMAKE_CURRENT_LIST_DIR}/src/*.cc
-     ${CMAKE_CURRENT_LIST_DIR}/src/*.c)
+add_definitions(-DNIM_SDK_DLL_IMPORT)
+file(GLOB_RECURSE NIM_NODE_SOURCE ${CMAKE_CURRENT_LIST_DIR}/src/*.cpp
+                                  ${CMAKE_CURRENT_LIST_DIR}/src/*.cc
+                                  ${CMAKE_CURRENT_LIST_DIR}/src/*.c)
 add_library(${TARGET_NAME} SHARED ${NIM_NODE_SOURCE} ${CMAKE_JS_SRC})
-target_include_directories(${TARGET_NAME} PRIVATE
+target_include_directories(${TARGET_NAME} PRIVATE 
                            ${NODE_ADDON_API_DIR}
                            ${CMAKE_JS_INC}
-                           ${CMAKE_BINARY_DIR}/include
-                           ${CMAKE_CURRENT_LIST_DIR}
-                           ${CMAKE_CURRENT_LIST_DIR}/src
+                           ${CMAKE_BINARY_DIR}/src
+                           ${CMAKE_CURRENT_LIST_DIR}/src)
+if(nim_cpp_wrapper)
+# build as subproject of nim
+target_include_directories(${TARGET_NAME} PRIVATE 
                            ${CMAKE_SOURCE_DIR}
                            ${CMAKE_SOURCE_DIR}/nim/api/
                            ${CMAKE_SOURCE_DIR}/nim/nim_defines/
@@ -99,11 +102,19 @@ target_include_directories(${TARGET_NAME} PRIVATE
                            ${CMAKE_SOURCE_DIR}/nim_qchat/nim_qchat_defines/
                            ${CMAKE_SOURCE_DIR}/public_defines/
                            ${CMAKE_SOURCE_DIR}/wrapper)
+else()
+# build with sdk package
+target_include_directories(${TARGET_NAME} PRIVATE 
+                           ${CMAKE_CURRENT_LIST_DIR}/sdk/wrapper
+                           ${CMAKE_CURRENT_LIST_DIR}/sdk/include)
+add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/sdk/wrapper)
+endif()
 target_link_libraries(${TARGET_NAME}
                       ${CMAKE_JS_LIB}
-                      ${CONAN_LIBS}
                       nim_cpp_wrapper
                       nim_chatroom_cpp_wrapper
+                      nim_qchat_cpp_wrapper
+                      nim_tools_cpp_wrapper
                       nim_wrapper_util)
 
 set_target_properties(${TARGET_NAME} PROPERTIES PREFIX "" SUFFIX ".node")
@@ -121,7 +132,7 @@ install(
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
-if(GIT_EXACT_TAG)
+if(NODE_NIM_PUBLISH)
     install(CODE "execute_process(COMMAND ${NPM_EXUTABLE} publish WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR})")
 endif()
 if (MSVC)
