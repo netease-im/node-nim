@@ -1,7 +1,6 @@
-const package_json = require('./package.json');
-const fetch = require('node-fetch');
-const compareVersions = require('compare-versions');
-const download = require('download');
+import fetch from 'node-fetch';
+import compareVersions from 'compare-versions';
+import download from 'download';
 
 const arch = process.arch;
 const platform = process.platform;
@@ -9,7 +8,7 @@ const sdk_group = "message";
 const sdk_name = "nim";
 const sdk_path = "sdk";
 let sdk_url = process.env.NIM_SDK_URL;
-let sdk_version = package_json.version;
+let sdk_version = process.env.npm_package_version;
 if (process.env.NIM_SDK_VERSION) {
     sdk_version = process.env.NIM_SDK_VERSION;
 }
