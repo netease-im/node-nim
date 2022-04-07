@@ -344,7 +344,7 @@ export type DeleteMessageSelfAsyncCallback = (rescode: number) => void;
 export type MessageStatusChangedCallback = (result: MessageStatusChangedResult) => void;
 export type ImportDbPrgCallback = (importedCount: number, totalCount: number) => void;
 export type DeleteHistoryOnLineAsyncCallback = (rescode: number, accid: string) => void;
-export type DeleteHistoryOnLineAsyncExCallback = (rescode: number, accid: string, to_type: number, timestamp: number, json_extension: string) => void;
+export type DeleteHistoryOnLineAsyncExCallback = (rescode: number, accid: string, to_type: number, timestamp: number, jsonExtension: string) => void;
 export type QueryMessageIsThreadRootCallback = (rescode: number, client_id: string, is_root: boolean) => void;
 export type QueryMessageOnlineCallback = (rescode: number, client_id: string, msg: IMMessage) => void;
 export type QueryThreadHistoryMsgCallback = (rescode: number, root_msg: IMMessage, total: number, last_msg_time: number, msg_array: Array<IMMessage>) => void;
@@ -355,14 +355,14 @@ export interface NIMMsgLogAPI {
 
     QueryMsgByIDAysnc(clientMsgId: string,
         cb: QuerySingleMsgCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     QueryMsgAsync(accid: string,
         to_type: NIMSessionType,
         limit_count: number,
         anchor_msg_time: number,
         cb: QueryMsgCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     QueryMsgOnlineAsync(param: QueryMsgOnlineAsyncParam,
         cb: QueryMsgCallback): boolean;
@@ -379,7 +379,7 @@ export interface NIMMsgLogAPI {
         reverse: boolean,
         msgType: Array<NIMMessageType>,
         cb: QueryMsgCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     QueryMsgByOptionsAsync(queryRange: NIMMsgLogQueryRange,
         ids: Array<string>,
@@ -391,28 +391,28 @@ export interface NIMMsgLogAPI {
         msgType: NIMMessageType,
         searchContent: string,
         cb: QueryMsgCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     BatchStatusReadAsync(accid: string,
         to_type: NIMSessionType,
         cb: ModifyMultipleMsglogCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     BatchStatusDeleteAsync(accid: string,
         to_type: NIMSessionType,
         revert_by_query_online: boolean,
         cb: ModifyMultipleMsglogCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     SetStatusAsync(msg_id: string,
         status: NIMMsgLogStatus,
         cb: ModifySingleMsglogCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     SetSubStatusAsync(msg_id: string,
         status: NIMMsgLogSubStatus,
         cb: ModifySingleMsglogCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     WriteMsglogToLocalAsync(talkId: string,
         msg: IMMessage,
@@ -425,18 +425,18 @@ export interface NIMMsgLogAPI {
         to_type: NIMSessionType,
         revert_by_query_online: boolean,
         cb: ModifyMultipleMsglogCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     DeleteAsync(session_id: string,
         to_type: NIMSessionType,
         msg_id: string,
         cb: ModifySingleMsglogCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     DeleteAllAsync(del_session: boolean,
         revert_by_query_online: boolean,
         cb: DBFunctionCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     DeleteMsgByTimeAsync(session_id: string,
         to_type: NIMSessionType,
@@ -444,16 +444,16 @@ export interface NIMMsgLogAPI {
         timestamp1: number,
         timestamp2: number,
         cb: DBFunctionCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     ExportDbAsync(dst_path: string,
         cb: DBFunctionCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     ImportDbAsync(src_path: string,
         db_cb: DBFunctionCallback,
         prg_cb: ImportDbPrgCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     SendReceiptAsync(msg: IMMessage,
         cb: MessageStatusChangedCallback): void;
@@ -465,9 +465,9 @@ export interface NIMMsgLogAPI {
     UpdateLocalExtAsync(msg_id: string,
         local_ext: string,
         cb: ModifySingleMsglogCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
-    ReadAllAsync(cb: DBFunctionCallback, json_extension: string): boolean;
+    ReadAllAsync(cb: DBFunctionCallback, jsonExtension: string): boolean;
 
     ExportBackupToRemote(export_info: LogsBackupExportInfo): boolean;
 
@@ -479,13 +479,13 @@ export interface NIMMsgLogAPI {
 
     DeleteHistoryOnlineAsync(accid: string,
         delete_roaming: boolean,
-        json_extension: string,
+        jsonExtension: string,
         cb: DeleteHistoryOnLineAsyncExCallback): void;
 
     DeleteHistoryOnlineAsyncEx(accid: string,
         to_type: number,
         needs_notify_self: boolean,
-        json_extension: string,
+        jsonExtension: string,
         cb: DeleteHistoryOnLineAsyncExCallback): void;
 
     DeleteMessageSelfAsync(msg: IMMessage, ext: string, cb: DeleteMessageSelfAsyncCallback): void;

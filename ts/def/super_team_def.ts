@@ -130,100 +130,100 @@ export interface NIMSuperTeamAPI {
         invitationPostscript: string,
         invitationAttachment: string,
         cb: SuperTeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     KickAsync(tid: string,
         ids: Array<string>,
         cb: SuperTeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     LeaveAsync(tid: string,
         cb: SuperTeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     UpdateSuperTeamInfoAsync(tid: string,
         info: SuperTeamInfo,
         cb: SuperTeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     ApplyJoinAsync(tid: string,
         reason: string,
         cb: SuperTeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     PassJoinApplyAsync(tid: string,
         applicantId: string,
         cb: SuperTeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     RejectJoinApplyAsync(tid: string,
         applicantId: string,
         reason: string,
         cb: SuperTeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     AddManagersAsync(tid: string,
         ids: Array<string>,
         cb: SuperTeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     RemoveManagersAsync(tid: string,
         ids: Array<string>,
         cb: SuperTeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     TransferTeamAsync(tid: string,
         newOwnerId: string,
         isLeave: boolean,
         cb: SuperTeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     UpdateMyPropertyAsync(prop: SuperTeamMemberProperty,
         cb: SuperTeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     UpdateOtherNickAsync(prop: SuperTeamMemberProperty,
         cb: SuperTeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     AcceptInvitationAsync(tid: string,
         inviterId: string,
         cb: SuperTeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     RejectInvitationAsync(tid: string,
         inviterId: string,
         reason: string,
         cb: SuperTeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
-    QueryAllMySuperTeamsAsync(cb: QueryAllMySuperTeamsCallback, json_extension: string): void;
+    QueryAllMySuperTeamsAsync(cb: QueryAllMySuperTeamsCallback, jsonExtension: string): void;
 
-    QueryAllMySuperTeamsInfoAsync(cb: QueryAllMySuperTeamsInfoCallback, json_extension: string): void;
+    QueryAllMySuperTeamsInfoAsync(cb: QueryAllMySuperTeamsInfoCallback, jsonExtension: string): void;
 
-    QueryMyAllMemberInfosAsync(cb: QueryMyAllMemberInfosCallback, json_extension: string): void;
+    QueryMyAllMemberInfosAsync(cb: QueryMyAllMemberInfosCallback, jsonExtension: string): void;
 
-    QuerySuperTeamMembersAsync(tid: string, cb: QuerySuperTeamMembersCallback, json_extension: string): boolean;
+    QuerySuperTeamMembersAsync(tid: string, cb: QuerySuperTeamMembersCallback, jsonExtension: string): boolean;
 
     QuerySuperTeamMemberAsync(tid: string,
         id: string,
         cb: QuerySuperTeamMemberCallback,
-        json_extension: string): void;
+        jsonExtension: string): void;
 
-    QuerySuperTeamInfoAsync(tid: string, cb: QuerySuperTeamInfoCallback, json_extension: string): boolean;
+    QuerySuperTeamInfoAsync(tid: string, cb: QuerySuperTeamInfoCallback, jsonExtension: string): boolean;
 
-    QuerySuperTeamInfoOnlineAsync(tid: string, cb: SuperTeamEventCallback, json_extension: string): boolean;
+    QuerySuperTeamInfoOnlineAsync(tid: string, cb: SuperTeamEventCallback, jsonExtension: string): boolean;
 
     MuteMemberAsync(tid: string,
         member_id: string,
         set_mute: boolean,
         cb: SuperTeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     MuteAsync(tid: string,
         set_mute: boolean,
         cb: SuperTeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
-    QuerySuperTeamsInfoByKeywordAsync(keyword: string, cb: QueryAllMySuperTeamsInfoCallback, json_extension: string): void;
+    QuerySuperTeamsInfoByKeywordAsync(keyword: string, cb: QueryAllMySuperTeamsInfoCallback, jsonExtension: string): void;
 }

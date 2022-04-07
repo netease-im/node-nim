@@ -71,7 +71,7 @@ export class NIMTool extends ev.EventEmitter {
     /** 语音转文字
        * @param audio_info 语音信息
        * @param cb 语音转文字回调
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
        * <pre>
@@ -85,8 +85,8 @@ export class NIMTool extends ev.EventEmitter {
        * 6104:audioUrl不合法
        * </pre>
        */
-    getAudioTextAsync(audioInfo: AudioInfo, cb: GetAudioTextCallback, json_extension: string): boolean {
-        return this.tool.GetAudioTextAsync(audioInfo, cb, json_extension);
+    getAudioTextAsync(audioInfo: AudioInfo, cb: GetAudioTextCallback, jsonExtension: string): boolean {
+        return this.tool.GetAudioTextAsync(audioInfo, cb, jsonExtension);
     }
 
     /** 客户端本地反垃圾

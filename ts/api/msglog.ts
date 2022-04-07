@@ -36,7 +36,7 @@ export class NIMMsgLog extends ev.EventEmitter {
 
     /** 根据消息ID查询本地（单条）消息
        * @param clientMsgId		客户端消息ID
-       * @param json_extension	json扩展参数（备用，目前不需要）
+       * @param jsonExtension	json扩展参数（备用，目前不需要）
        * @param cb				查询本地消息的回调函数
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
@@ -46,8 +46,8 @@ export class NIMMsgLog extends ev.EventEmitter {
        */
     queryMsgByIDAysnc(clientMsgId: string,
         cb: QuerySingleMsgCallback,
-        json_extension: string): boolean {
-        return this.msglog.QueryMsgByIDAysnc(clientMsgId, cb, json_extension);
+        jsonExtension: string): boolean {
+        return this.msglog.QueryMsgByIDAysnc(clientMsgId, cb, jsonExtension);
     }
 
     /** 查询本地消息
@@ -56,7 +56,7 @@ export class NIMMsgLog extends ev.EventEmitter {
        * @param limit_count	一次查询数量，建议20
        * @param anchor_msg_time
        * 作为此次查询的定位点的消息历史的消息时间戳（上次查询最后一条消息的时间戳，按指定的时间的顺序起查，默认为逆序，2.4.0之前命名为last_name）
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @param cb			查询本地消息的回调函数
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
@@ -69,8 +69,8 @@ export class NIMMsgLog extends ev.EventEmitter {
         limit_count: number,
         anchor_msg_time: number,
         cb: QueryMsgCallback,
-        json_extension: string): boolean {
-        return this.msglog.QueryMsgAsync(accid, to_type, limit_count, anchor_msg_time, cb, json_extension);
+        jsonExtension: string): boolean {
+        return this.msglog.QueryMsgAsync(accid, to_type, limit_count, anchor_msg_time, cb, jsonExtension);
     }
 
     /** 在线查询消息（不包括系统消息）
@@ -114,7 +114,7 @@ export class NIMMsgLog extends ev.EventEmitter {
        * @param endClientMsgId		结束查询的最后一条消息的end_client_msg_id(不包含在查询结果中)
        * @param reverse		true：反向查询(按时间正序起查，正序排列)，false：按时间逆序起查，逆序排列（建议默认为false）
        * @param msgType		检索的消息类型
-       * @param json_extension	json扩展参数（备用，目前不需要）
+       * @param jsonExtension	json扩展参数（备用，目前不需要）
        * @param cb				在线查询消息的回调函数
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
@@ -131,9 +131,9 @@ export class NIMMsgLog extends ev.EventEmitter {
         reverse: boolean,
         msgType: Array<NIMMessageType>,
         cb: QueryMsgCallback,
-        json_extension: string): boolean {
+        jsonExtension: string): boolean {
         return this.msglog.QueryMsgOfSpecifiedTypeInASessionAsync(to_type, id, limit_count, fromTime, endTime, endClientMsgId, reverse,
-            msgType, cb, json_extension);
+            msgType, cb, jsonExtension);
     }
 
     /** 根据指定条件查询本地消息,使用此接口可以完成全局搜索等功能,具体请参阅开发手册
@@ -148,7 +148,7 @@ export class NIMMsgLog extends ev.EventEmitter {
        * @param searchContent
        * 检索文本（目前只支持kNIMMessageTypeText和kNIMMessageTypeFile这两种类型消息的文本关键字检索，即支持文字消息和文件名的检索。如果合并检索，需使用未知类型消息kNIMMessageTypeUnknown）
        * @param cb				在线查询消息的回调函数
-       * @param json_extension	json扩展参数（备用，目前不需要）
+       * @param jsonExtension	json扩展参数（备用，目前不需要）
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
        * <pre>
@@ -165,15 +165,15 @@ export class NIMMsgLog extends ev.EventEmitter {
         msgType: NIMMessageType,
         searchContent: string,
         cb: QueryMsgCallback,
-        json_extension: string): boolean {
+        jsonExtension: string): boolean {
         return this.msglog.QueryMsgByOptionsAsync(queryRange, ids, limit_count, fromTime, endTime, endClientMsgId, reverse,
-            msgType, searchContent, cb, json_extension);
+            msgType, searchContent, cb, jsonExtension);
     }
 
     /** 批量设置已读状态
        * @param accid	查询id，account_id/uid或者tid
        * @param to_type	    会话类型，双人0，群组1 (见nim_msglog_def.h)
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @param cb			操作结果的回调函数
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
@@ -184,8 +184,8 @@ export class NIMMsgLog extends ev.EventEmitter {
     batchStatusReadAsync(accid: string,
         to_type: NIMSessionType,
         cb: ModifyMultipleMsglogCallback,
-        json_extension: string): boolean {
-        return this.msglog.BatchStatusReadAsync(accid, to_type, cb, json_extension);
+        jsonExtension: string): boolean {
+        return this.msglog.BatchStatusReadAsync(accid, to_type, cb, jsonExtension);
     }
 
     /** 删除某个会话的全部聊天记录
@@ -193,7 +193,7 @@ export class NIMMsgLog extends ev.EventEmitter {
        * @param to_type	    会话类型，双人0，群组1 (见nim_msglog_def.h)
        * @param revert_by_query_online	是否可以通过服务端查询消息记录(含入库选项)进行恢复,true:是,false:否
        * @param cb			操作结果的回调函数
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
        * <pre>
@@ -204,14 +204,14 @@ export class NIMMsgLog extends ev.EventEmitter {
         to_type: NIMSessionType,
         revert_by_query_online: boolean,
         cb: ModifyMultipleMsglogCallback,
-        json_extension: string): boolean {
-        return this.msglog.BatchStatusDeleteAsync(accid, to_type, revert_by_query_online, cb, json_extension);
+        jsonExtension: string): boolean {
+        return this.msglog.BatchStatusDeleteAsync(accid, to_type, revert_by_query_online, cb, jsonExtension);
     }
 
     /** 设置消息状态
        * @param msg_id		消息id
        * @param status 消息状态枚举值
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @param cb			操作结果的回调函数
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
@@ -222,14 +222,14 @@ export class NIMMsgLog extends ev.EventEmitter {
     setStatusAsync(msg_id: string,
         status: NIMMsgLogStatus,
         cb: ModifySingleMsglogCallback,
-        json_extension: string): boolean {
-        return this.msglog.SetStatusAsync(msg_id, status, cb, json_extension);
+        jsonExtension: string): boolean {
+        return this.msglog.SetStatusAsync(msg_id, status, cb, jsonExtension);
     }
 
     /** 设置消息子状态
        * @param msg_id		消息id
        * @param status 消息子状态枚举值
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @param cb			操作结果的回调函数
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
@@ -240,8 +240,8 @@ export class NIMMsgLog extends ev.EventEmitter {
     setSubStatusAsync(msg_id: string,
         status: NIMMsgLogSubStatus,
         cb: ModifySingleMsglogCallback,
-        json_extension: string): boolean {
-        return this.msglog.SetSubStatusAsync(msg_id, status, cb, json_extension);
+        jsonExtension: string): boolean {
+        return this.msglog.SetSubStatusAsync(msg_id, status, cb, jsonExtension);
     }
 
     /** 只往本地消息历史数据库里写入一条消息（如果已存在这条消息，则更新。通常是APP的本地自定义消息，并不会发给服务器）
@@ -270,7 +270,7 @@ export class NIMMsgLog extends ev.EventEmitter {
        * @param delSessions	    是否删除会话
        * @param to_type	    会话类型
        * @param revert_by_query_online	是否可以通过服务端查询消息记录(含入库选项)进行恢复,true:是,false:否
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @param cb			操作结果的回调函数
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
@@ -282,15 +282,15 @@ export class NIMMsgLog extends ev.EventEmitter {
         to_type: NIMSessionType,
         revert_by_query_online: boolean,
         cb: ModifyMultipleMsglogCallback,
-        json_extension: string): boolean {
-        return this.msglog.DeleteBySessionTypeAsync(delSessions, to_type, revert_by_query_online, cb, json_extension);
+        jsonExtension: string): boolean {
+        return this.msglog.DeleteBySessionTypeAsync(delSessions, to_type, revert_by_query_online, cb, jsonExtension);
     }
 
     /** 删除指定一条消息
        * @param session_id	会话id，对方的account id或者群组tid
        * @param to_type	    会话类型
        * @param msg_id		消息id
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @param cb			操作结果的回调函数
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
@@ -302,8 +302,8 @@ export class NIMMsgLog extends ev.EventEmitter {
         to_type: NIMSessionType,
         msg_id: string,
         cb: ModifySingleMsglogCallback,
-        json_extension: string): boolean {
-        return this.msglog.DeleteAsync(session_id, to_type, msg_id, cb, json_extension);
+        jsonExtension: string): boolean {
+        return this.msglog.DeleteAsync(session_id, to_type, msg_id, cb, jsonExtension);
     }
 
     /** 删除全部消息历史
@@ -312,7 +312,7 @@ export class NIMMsgLog extends ev.EventEmitter {
          false则不删除，并将所有会话项的最后一条消息的状态kNIMSessionMsgStatus设置为已删除状态，并通过nim_session_reg_change_cb注册的回调通知上层kNIMSession
            CommandAllMsgDeleted事件（不会触发每个会话项的kNIMSessionCommandUpdate事件，避免频繁通知上层）。
        * @param revert_by_query_online	是否可以通过服务端查询消息记录(含入库选项)进行恢复,true:是,false:否
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @param cb			操作结果的回调函数
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
@@ -323,8 +323,8 @@ export class NIMMsgLog extends ev.EventEmitter {
     deleteAllAsync(del_session: boolean,
         revert_by_query_online: boolean,
         cb: DBFunctionCallback,
-        json_extension: string): boolean {
-        return this.msglog.DeleteAllAsync(del_session, revert_by_query_online, cb, json_extension);
+        jsonExtension: string): boolean {
+        return this.msglog.DeleteAllAsync(del_session, revert_by_query_online, cb, jsonExtension);
     }
 
     /** 根据时间段删除部分会话的历史消息
@@ -333,7 +333,7 @@ export class NIMMsgLog extends ev.EventEmitter {
        * @param revert_by_query_online	是否可以通过服务端查询消息记录(含入库选项)进行恢复,true:是,false:否
        * @param timestamp1 单位ms timestamp1	与 timestamp2 组成一个时间段，SDK 内部会判断大小调整入参顺序
        * @param timestamp2 单位ms timestamp2	与 timestamp1 组成一个时间段，SDK 内部会判断大小调整入参顺序
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @param cb			操作结果的回调函数
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
@@ -347,13 +347,13 @@ export class NIMMsgLog extends ev.EventEmitter {
         timestamp1: number,
         timestamp2: number,
         cb: DBFunctionCallback,
-        json_extension: string): boolean {
-        return this.msglog.DeleteMsgByTimeAsync(session_id, to_type, revert_by_query_online, timestamp1, timestamp2, cb, json_extension);
+        jsonExtension: string): boolean {
+        return this.msglog.DeleteMsgByTimeAsync(session_id, to_type, revert_by_query_online, timestamp1, timestamp2, cb, jsonExtension);
     }
 
     /** 导出整个消息历史DB文件（不包括系统消息历史）
        * @param dst_path		导出时保存的目标全路径（UTF-8编码）。
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @param cb			操作结果的回调函数
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
@@ -363,13 +363,13 @@ export class NIMMsgLog extends ev.EventEmitter {
        */
     exportDbAsync(dst_path: string,
         cb: DBFunctionCallback,
-        json_extension: string): boolean {
-        return this.msglog.ExportDbAsync(dst_path, cb, json_extension);
+        jsonExtension: string): boolean {
+        return this.msglog.ExportDbAsync(dst_path, cb, jsonExtension);
     }
 
     /** 导入消息历史DB文件（不包括系统消息历史）。先验证是否自己的消息历史文件和DB加密密钥(见nim_client_def.h里的kNIMDataBaseEncryptKey），如果验证不通过，则不导入。
        * @param src_path			导入源文件的全路径（UTF-8编码）。
-       * @param json_extension	json扩展参数（备用，目前不需要）
+       * @param jsonExtension	json扩展参数（备用，目前不需要）
        * @param cb			操作结果的回调函数
        * @param prg_cb			导入进度的回调函数
        * @return bool 检查参数如果不符合要求则返回失败
@@ -383,8 +383,8 @@ export class NIMMsgLog extends ev.EventEmitter {
     importDbAsync(src_path: string,
         cb: DBFunctionCallback,
         prg_cb: ImportDbPrgCallback,
-        json_extension: string): boolean {
-        return this.msglog.ImportDbAsync(src_path, cb, prg_cb, json_extension);
+        jsonExtension: string): boolean {
+        return this.msglog.ImportDbAsync(src_path, cb, prg_cb, jsonExtension);
     }
 
     /** 发送消息已读回执
@@ -423,7 +423,7 @@ export class NIMMsgLog extends ev.EventEmitter {
     /** 更新本地消息扩展字段内容
        * @param msg_id		消息id
        * @param local_ext  本地扩展字段内容
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @param cb			操作结果的回调函数
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
@@ -434,12 +434,12 @@ export class NIMMsgLog extends ev.EventEmitter {
     updateLocalExtAsync(msg_id: string,
         local_ext: string,
         cb: ModifySingleMsglogCallback,
-        json_extension: string): boolean {
-        return this.msglog.UpdateLocalExtAsync(msg_id, local_ext, cb, json_extension);
+        jsonExtension: string): boolean {
+        return this.msglog.UpdateLocalExtAsync(msg_id, local_ext, cb, jsonExtension);
     }
 
     /** 全部未读消息历史标记为已读
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @param cb			操作结果的回调函数
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
@@ -447,8 +447,8 @@ export class NIMMsgLog extends ev.EventEmitter {
        * 200:成功
        * </pre>
        */
-    readAllAsync(cb: DBFunctionCallback, json_extension: string): boolean {
-        return this.msglog.ReadAllAsync(cb, json_extension);
+    readAllAsync(cb: DBFunctionCallback, jsonExtension: string): boolean {
+        return this.msglog.ReadAllAsync(cb, jsonExtension);
     }
 
     /** 导出本地消息记录到云端
@@ -484,7 +484,7 @@ export class NIMMsgLog extends ev.EventEmitter {
     /** 删除与某账号的所有云端历史记录与漫游消息(p2p)
        * @param accid 对方的accid
        * @param del_remote 是否同时删除所有的漫游消息 true : 是 false : 否
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @param cb	 操作结果的回调函数
        * @return void
        * @note
@@ -494,16 +494,16 @@ export class NIMMsgLog extends ev.EventEmitter {
        */
     deleteHistoryOnlineAsync(accid: string,
         del_remote: boolean,
-        json_extension: string,
+        jsonExtension: string,
         cb: DeleteHistoryOnLineAsyncCallback): void {
-        return this.msglog.DeleteHistoryOnlineAsync(accid, del_remote, json_extension, cb);
+        return this.msglog.DeleteHistoryOnlineAsync(accid, del_remote, jsonExtension, cb);
     }
 
     /** 删除某一会话的云端的历史记录[v8.0.0]
        * @param accid 对方的accid(p2p:accid team:tid)
        * @param to_type 会话类型，双人0，群组1 (见nim_msglog_def.h)
        * @param needs_notify_self 是否通知其它终端
-       * @param json_extension 扩展字段
+       * @param jsonExtension 扩展字段
        * @param cb	 操作结果的回调函数
        * @return void
        * @note 错误码	200:成功
@@ -511,9 +511,9 @@ export class NIMMsgLog extends ev.EventEmitter {
     deleteHistoryOnlineAsyncEx(accid: string,
         to_type: number,
         needs_notify_self: boolean,
-        json_extension: string,
+        jsonExtension: string,
         cb: DeleteHistoryOnLineAsyncExCallback): void {
-        return this.msglog.DeleteHistoryOnlineAsyncEx(accid, to_type, needs_notify_self, json_extension, cb);
+        return this.msglog.DeleteHistoryOnlineAsyncEx(accid, to_type, needs_notify_self, jsonExtension, cb);
     }
 
     /** 单向删除某条消息记录(同时删除本地与云端)

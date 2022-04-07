@@ -29,7 +29,7 @@ export class NIMSubscribeEvent extends ev.EventEmitter {
     /** 发布事件
        * @param event_data	事件
        * @param cb			发布事件回调函数
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
        * <pre>
@@ -40,8 +40,8 @@ export class NIMSubscribeEvent extends ev.EventEmitter {
        * 500:未知错误
        * </pre>
        */
-    publish(data: EventData, cb: PublishEventCallback, json_extension: string): boolean {
-        return this.subscribeEvent.Publish(data, cb, json_extension);
+    publish(data: EventData, cb: PublishEventCallback, jsonExtension: string): boolean {
+        return this.subscribeEvent.Publish(data, cb, jsonExtension);
     }
 
     /** 订阅事件
@@ -50,7 +50,7 @@ export class NIMSubscribeEvent extends ev.EventEmitter {
        * @param sync_type		订阅后是否立即同步最新事件
        * @param accid_list		要订阅的用户列表
        * @param cb				订阅事件回调函数
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
        * <pre>
@@ -64,15 +64,15 @@ export class NIMSubscribeEvent extends ev.EventEmitter {
         syncType: NIMEventSubscribeSyncEventType,
         accids: Array<string>,
         cb: SubscribeEventCallback,
-        json_extension: string): boolean {
-        return this.subscribeEvent.Subscribe(eventType, ttl, syncType, accids, cb, json_extension);
+        jsonExtension: string): boolean {
+        return this.subscribeEvent.Subscribe(eventType, ttl, syncType, accids, cb, jsonExtension);
     }
 
     /** 按账号取消指定事件的订阅关系
        * @param event_type		事件类型
        * @param accid_list		要取消订阅的用户列表
        * @param cb				取消订阅事件回调函数
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
        * <pre>
@@ -84,14 +84,14 @@ export class NIMSubscribeEvent extends ev.EventEmitter {
     unSubscribe(eventType: NIMEventType,
         accids: Array<string>,
         cb: UnSubscribeEventCallback,
-        json_extension: string): boolean {
-        return this.subscribeEvent.UnSubscribe(eventType, accids, cb, json_extension);
+        jsonExtension: string): boolean {
+        return this.subscribeEvent.UnSubscribe(eventType, accids, cb, jsonExtension);
     }
 
     /** 取消指定事件的全部订阅关系
        * @param event_type		事件类型
        * @param cb				取消订阅事件回调函数
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
        * <pre>
@@ -102,15 +102,15 @@ export class NIMSubscribeEvent extends ev.EventEmitter {
        */
     batchUnSubscribe(eventType: NIMEventType,
         cb: BatchUnSubscribeEventCallback,
-        json_extension: string): boolean {
-        return this.subscribeEvent.BatchUnSubscribe(eventType, cb, json_extension);
+        jsonExtension: string): boolean {
+        return this.subscribeEvent.BatchUnSubscribe(eventType, cb, jsonExtension);
     }
 
     /** 按账号查询指定事件订阅关系
        * @param event_type		事件类型
        * @param accid_list		要查询订阅关系的用户列表
        * @param cb				查询订阅关系回调函数
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
        * <pre>
@@ -122,7 +122,7 @@ export class NIMSubscribeEvent extends ev.EventEmitter {
     querySubscribe(eventType: NIMEventType,
         accids: Array<string>,
         cb: QuerySubscribeEventCallback,
-        json_extension: string): void {
-        return this.subscribeEvent.QuerySubscribe(eventType, accids, cb, json_extension);
+        jsonExtension: string): void {
+        return this.subscribeEvent.QuerySubscribe(eventType, accids, cb, jsonExtension);
     }
 }

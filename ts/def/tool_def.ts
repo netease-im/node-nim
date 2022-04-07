@@ -33,7 +33,7 @@ export interface NIMToolAPI {
 
     GetUuid(): string;
 
-    GetAudioTextAsync(audioInfo: AudioInfo, cb: GetAudioTextCallback, json_extension: string): boolean;
+    GetAudioTextAsync(audioInfo: AudioInfo, cb: GetAudioTextCallback, jsonExtension: string): boolean;
 
     FilterClientAntispam(text: string, replaceString: string, libName: string, cb: FilterClientAntispamCallback): void;
 }

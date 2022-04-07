@@ -28,7 +28,7 @@ export class NIMFriend extends ev.EventEmitter {
        * @param verify_type 好友验证类型
        * @param msg 接口扩展字段
        * @param cb	好友请求回调函数
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
        * <pre>
@@ -37,8 +37,8 @@ export class NIMFriend extends ev.EventEmitter {
        * 500:未知错误
        * </pre>
        */
-    request(accid: string, verify_type: NIMVerifyType, msg: string, cb: FriendOptCallback, json_extension: string): boolean {
-        return this.friend.Request(accid, verify_type, msg, cb, json_extension);
+    request(accid: string, verify_type: NIMVerifyType, msg: string, cb: FriendOptCallback, jsonExtension: string): boolean {
+        return this.friend.Request(accid, verify_type, msg, cb, jsonExtension);
     }
 
     /** 删除好友
@@ -60,7 +60,7 @@ export class NIMFriend extends ev.EventEmitter {
     /** 更新好友资料
        * @param profile 好友资料
        * @param cb	更新好友资料回调函数
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
        * <pre>
@@ -69,44 +69,44 @@ export class NIMFriend extends ev.EventEmitter {
        * 500:未知错误
        * </pre>
        */
-    update(profile: FriendProfile, cb: FriendOptCallback, json_extension: string): boolean {
-        return this.friend.Update(profile, cb, json_extension);
+    update(profile: FriendProfile, cb: FriendOptCallback, jsonExtension: string): boolean {
+        return this.friend.Update(profile, cb, jsonExtension);
     }
 
     /** 增量获取好友列表
        * @param cb	获取好友列表回调函数
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @return void 无返回值
        * @note
        * <pre>
        * 200:成功
        * </pre>
        */
-    getList(cb: GetFriendsListCallback, json_extension: string): void {
-        return this.friend.GetList(cb, json_extension);
+    getList(cb: GetFriendsListCallback, jsonExtension: string): void {
+        return this.friend.GetList(cb, jsonExtension);
     }
 
     /** 获取好友信息
        * @param accid	对方帐号
        * @param cb	获取好友信息回调函数
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @return void 无返回值
        */
-    getFriendProfile(accid: string, cb: GetFriendProfileCallback, json_extension: string): void {
-        return this.friend.GetFriendProfile(accid, cb, json_extension);
+    getFriendProfile(accid: string, cb: GetFriendProfileCallback, jsonExtension: string): void {
+        return this.friend.GetFriendProfile(accid, cb, jsonExtension);
     }
 
     /** 增量获取好友列表
        * @param keyword 要查询的关键字
        * @param cb	获取好友列表回调函数
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @return bool 返回 true 表示发送查询请求成功，返回 false 表示关键字为空
        * @note
        * <pre>
        * 200:成功
        * </pre>
        */
-    queryFriendListByKeyword(keyword: string, cb: GetFriendsListCallback, json_extension: string): boolean {
-        return this.friend.QueryFriendListByKeyword(keyword, cb, json_extension);
+    queryFriendListByKeyword(keyword: string, cb: GetFriendsListCallback, jsonExtension: string): boolean {
+        return this.friend.QueryFriendListByKeyword(keyword, cb, jsonExtension);
     }
 }

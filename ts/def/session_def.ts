@@ -111,28 +111,28 @@ export interface NIMSessionAPI {
 
     CancelToStickTopSession(session_id: string, to_type: number, cb: CancelToStickTopSessionCallback): void;
 
-    QueryLastFewSessionAsync(limit: number, cb: QuerySessionListCallback, json_extension: string): void;
+    QueryLastFewSessionAsync(limit: number, cb: QuerySessionListCallback, jsonExtension: string): void;
 
-    QueryAllRecentSessionAsync(msg_excluded_type_list: Array<NIMMessageType>, cb: QuerySessionListCallback, json_extension: string): void;
+    QueryAllRecentSessionAsync(msg_excluded_type_list: Array<NIMMessageType>, cb: QuerySessionListCallback, jsonExtension: string): void;
 
     DeleteRecentSession(type: NIMSessionType, id: string, cb: SessionChangeCallback, delete_roaming: boolean): void;
 
-    DeleteAllRecentSession(cb: SessionChangeCallback, json_extension: string): void;
+    DeleteAllRecentSession(cb: SessionChangeCallback, jsonExtension: string): void;
 
     DeleteSessionRoamingMessage(to_type: number, session_id: string, cb: DeleteSessionRoamingMessageCallback, ext: string): boolean;
 
-    SetUnreadCountZeroAsync(type: NIMSessionType, id: string, cb: SessionChangeCallback, json_extension: string): boolean;
+    SetUnreadCountZeroAsync(type: NIMSessionType, id: string, cb: SessionChangeCallback, jsonExtension: string): boolean;
 
     SetMultiUnreadCountZeroAsync(is_super_team: boolean, zero_list: Array<MultiUnreadCountZeroInfo>,
         cb: SetMultiUnreadCountZeroAsyncCallback): boolean;
 
-    SetSessionTop(type: NIMSessionType, id: string, top: boolean, cb: SessionChangeCallback, json_extension: string): boolean;
+    SetSessionTop(type: NIMSessionType, id: string, top: boolean, cb: SessionChangeCallback, jsonExtension: string): boolean;
 
-    SetSessionExtendData(type: NIMSessionType, id: string, data: string, cb: SessionChangeCallback, json_extension: string): boolean;
+    SetSessionExtendData(type: NIMSessionType, id: string, data: string, cb: SessionChangeCallback, jsonExtension: string): boolean;
 
-    SetAllUnreadCountZeroAsync(cb: SessionChangeCallback, json_extension: string): boolean;
+    SetAllUnreadCountZeroAsync(cb: SessionChangeCallback, jsonExtension: string): boolean;
 
-    QuerySessionDataById(type: NIMSessionType, id: string, cb: QuerySessionDataCallback, json_extension: string): void;
+    QuerySessionDataById(type: NIMSessionType, id: string, cb: QuerySessionDataCallback, jsonExtension: string): void;
 
     QueryHasmoreRoammsg(session_id: string, to_type: number, cb: QueryHasmoreRoammsgCallback): void;
 

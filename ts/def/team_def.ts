@@ -138,7 +138,7 @@ export interface NIMTeamAPI {
         ids: Array<string>,
         invitationPostscript: string,
         cb: TeamEventCallback,
-        json_extension: string
+        jsonExtension: string
     ): boolean;
 
     InviteAsync(tid: string,
@@ -146,117 +146,117 @@ export interface NIMTeamAPI {
         invitationPostscript: string,
         invitationAttachment: string,
         cb: TeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     KickAsync(tid: string,
         ids: Array<string>,
         cb: TeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     LeaveAsync(tid: string,
         cb: TeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     DismissAsync(tid: string,
         cb: TeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     UpdateTeamInfoAsync(tid: string,
         info: TeamInfo,
         cb: TeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     ApplyJoinAsync(tid: string,
         reason: string,
         cb: TeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     PassJoinApplyAsync(tid: string,
         applicantId: string,
         cb: TeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     RejectJoinApplyAsync(tid: string,
         applicantId: string,
         reason: string,
         cb: TeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     AddManagersAsync(tid: string,
         ids: Array<string>,
         cb: TeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     RemoveManagersAsync(tid: string,
         ids: Array<string>,
         cb: TeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     TransferTeamAsync(tid: string,
         newOwnerId: string,
         isLeave: boolean,
         cb: TeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     UpdateMyPropertyAsync(prop: TeamMemberProperty,
         cb: TeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     UpdateOtherNickAsync(prop: TeamMemberProperty,
         cb: TeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     AcceptInvitationAsync(tid: string,
         inviterId: string,
         cb: TeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     RejectInvitationAsync(tid: string,
         inviterId: string,
         reason: string,
         cb: TeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
-    QueryAllMyTeamsAsync(cb: QueryAllMyTeamsCallback, json_extension: string): void;
+    QueryAllMyTeamsAsync(cb: QueryAllMyTeamsCallback, jsonExtension: string): void;
 
-    QueryAllMyTeamsInfoAsync(cb: QueryAllMyTeamsInfoCallback, json_extension: string): void;
+    QueryAllMyTeamsInfoAsync(cb: QueryAllMyTeamsInfoCallback, jsonExtension: string): void;
 
-    QueryMyAllMemberInfosAsync(cb: QueryMyAllMemberInfosCallback, json_extension: string): void;
+    QueryMyAllMemberInfosAsync(cb: QueryMyAllMemberInfosCallback, jsonExtension: string): void;
 
-    QueryTeamMembersAsync(tid: string, cb: QueryTeamMembersCallback, json_extension: string): boolean;
+    QueryTeamMembersAsync(tid: string, cb: QueryTeamMembersCallback, jsonExtension: string): boolean;
 
     QueryTeamMemberAsync(tid: string,
         id: string,
         cb: QueryTeamMemberCallback,
-        json_extension: string): void;
+        jsonExtension: string): void;
 
-    QueryTeamInfoAsync(tid: string, cb: QueryTeamInfoCallback, json_extension: string): boolean;
+    QueryTeamInfoAsync(tid: string, cb: QueryTeamInfoCallback, jsonExtension: string): boolean;
 
-    QueryTeamInfoOnlineAsync(tid: string, cb: TeamEventCallback, json_extension: string): boolean;
+    QueryTeamInfoOnlineAsync(tid: string, cb: TeamEventCallback, jsonExtension: string): boolean;
 
     MuteMemberAsync(tid: string,
         member_id: string,
         set_mute: boolean,
         cb: TeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
-    QueryMuteListOnlineAsync(tid: string, cb: QueryTeamMembersOnlineCallback, json_extension: string): boolean;
+    QueryMuteListOnlineAsync(tid: string, cb: QueryTeamMembersOnlineCallback, jsonExtension: string): boolean;
 
     MuteAsync(tid: string,
         set_mute: boolean,
         cb: TeamEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     TeamMsgAckRead(tid: string,
         msgs: Array<IMMessage>,
         cb: TeamMsgAckReadCallback,
-        json_extension: string): void;
+        jsonExtension: string): void;
 
     TeamMsgQueryUnreadList(tid: string,
         msg: IMMessage,
         accids: Array<string>,
         cb: TeamEventCallback,
-        json_extension: string): void;
+        jsonExtension: string): void;
 
     QueryTeamMembersInvitor(tid: string,
         members: Array<string>,
@@ -264,11 +264,11 @@ export interface NIMTeamAPI {
 
     QueryTeamInfoByKeywordAsync(keyword: string,
         cb: QueryTeamsInfoCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
-    UpdateTInfoLocal(infos: Array<TeamInfo>, cb: UpdateTInfoLocalCallback, json_extension: string): void;
+    UpdateTInfoLocal(infos: Array<TeamInfo>, cb: UpdateTInfoLocalCallback, jsonExtension: string): void;
 
-    GetTeamInfoBatchSFTrans(cb: GetTeamInfoBatchSFTransCallback, time_tag: number, json_extension: string): void;
+    GetTeamInfoBatchSFTrans(cb: GetTeamInfoBatchSFTransCallback, time_tag: number, jsonExtension: string): void;
 
     GetTeaminfoList(tids: Array<string>, cb: GetTeamInfoListCallback): void;
 }

@@ -38,7 +38,7 @@ export class NIMNOS extends ev.EventEmitter {
 
     /** 获取资源
        * @param msg 消息内容
-       * @param json_extension json扩展参数
+       * @param jsonExtension json扩展参数
        * @param res_cb 下载的回调函数
        * @param prg_cb 下载进度的回调函数
        * @param speed_cb 下载速度的回调函数
@@ -53,12 +53,12 @@ export class NIMNOS extends ev.EventEmitter {
        * </pre>
        */
     fetchMedia(msg: IMMessage,
-        json_extension: string,
+        jsonExtension: string,
         res_cb: DownloadMediaCallback,
         prg_cb: ProgressCallback,
         speed_cb: SpeedCallback,
         transfer_cb: TransferInfoCallback): boolean {
-        return this.nos.FetchMedia(msg, json_extension, res_cb, prg_cb, speed_cb, transfer_cb);
+        return this.nos.FetchMedia(msg, jsonExtension, res_cb, prg_cb, speed_cb, transfer_cb);
     }
 
     /** 停止获取资源（目前仅对文件消息类型有效）
@@ -100,15 +100,15 @@ export class NIMNOS extends ev.EventEmitter {
 
     /** 停止上传资源(只能用于调用了UploadResource接口的上传任务)
        * @param task_id 停止上传任务的ID
-       * @param json_extension json扩展参数
+       * @param jsonExtension json扩展参数
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
        * <pre>
        * 10200:成功
        * </pre>
        */
-    stopUploadResource(task_id: string, json_extension: string): boolean {
-        return this.nos.StopUploadResource(task_id, json_extension);
+    stopUploadResource(task_id: string, jsonExtension: string): boolean {
+        return this.nos.StopUploadResource(task_id, jsonExtension);
     }
 
     /** 下载资源
@@ -138,21 +138,21 @@ export class NIMNOS extends ev.EventEmitter {
 
     /** 停止下载资源(只能用于调用了DownloadResourceEx接口的下载任务)
        * @param task_id 停止下载任务的ID
-       * @param json_extension json扩展参数
+       * @param jsonExtension json扩展参数
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
        * <pre>
        * 10206:成功
        * </pre>
        */
-    stopDownloadResource(task_id: string, json_extension: string): boolean {
-        return this.nos.StopUploadResource(task_id, json_extension);
+    stopDownloadResource(task_id: string, jsonExtension: string): boolean {
+        return this.nos.StopUploadResource(task_id, jsonExtension);
     }
 
     /** 根据安全链接(短链)换取源链接
        * @param safe_url 安全链接(短链)
        * @param cb 结果回调
-       * @param json_extension json扩展参数
+       * @param jsonExtension json扩展参数
        * @return void
        * @note
        * <pre>
@@ -162,8 +162,8 @@ export class NIMNOS extends ev.EventEmitter {
        */
     safeURLToOriginURL(safe_url: string,
         cb: SafeURLToOriginURLCallback,
-        json_extension: string): void {
-        return this.nos.SafeURLToOriginURL(safe_url, cb, json_extension);
+        jsonExtension: string): void {
+        return this.nos.SafeURLToOriginURL(safe_url, cb, jsonExtension);
     }
 
     /** 打开或关闭文件快传开关

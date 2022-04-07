@@ -87,27 +87,27 @@ export interface NIMSysMsgAPI {
     QueryMsgAsync(limit_count: number,
         last_time: number,
         cb: QuerySysmsgCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
-    QueryUnreadCount(cb: NotifySysmsgResCallback, json_extension: string): void;
+    QueryUnreadCount(cb: NotifySysmsgResCallback, jsonExtension: string): void;
 
     SetStatusAsync(msg_id: number,
         status: NIMSysMsgStatus,
         cb: NotifySingleSysmsgCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
-    ReadAllAsync(cb: NotifySysmsgResCallback, json_extension: string): void;
+    ReadAllAsync(cb: NotifySysmsgResCallback, jsonExtension: string): void;
 
     DeleteAsync(msg_id: number,
         cb: NotifySingleSysmsgCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
-    DeleteAllAsync(cb: NotifySysmsgResCallback, json_extension: string): boolean;
+    DeleteAllAsync(cb: NotifySysmsgResCallback, jsonExtension: string): boolean;
 
     SetStatusByTypeAsync(type: NIMSysMsgType,
         status: NIMSysMsgStatus,
         cb: NotifySysmsgResCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
-    DeleteByTypeAsync(type: NIMSysMsgType, cb: NotifySysmsgResCallback, json_extension: string): boolean;
+    DeleteByTypeAsync(type: NIMSysMsgType, cb: NotifySysmsgResCallback, jsonExtension: string): boolean;
 }
