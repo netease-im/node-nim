@@ -2,6 +2,7 @@ message(STATUS "================== node-nim ==================")
 cmake_minimum_required(VERSION 3.12.0)
 set(TARGET_NAME node-nim)
 project(${TARGET_NAME})
+set(CMAKE_CXX_STANDARD 14)
 # configure package.json, get NODE_NIM_VERSION from nim project
 if(NOT NODE_NIM_VERSION)
     message(STATUS "NODE_NIM_VERSION is not set, use default version")
