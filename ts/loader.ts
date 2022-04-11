@@ -1,12 +1,18 @@
 import fs from 'fs';
 import path from 'path';
-const sdk_path = path.join(__dirname, '../sdk/bin');
-const test_sdk_path = path.join(__dirname, '../../../bin');
+var sdk_path:string = "";
+var test_sdk_path:string = "";
+ 
 // Add the compiled product path to the environment variable,
 // so that the third party does not need to copy the
 // dynamic library separately to the program directory when importing.
 if (process.platform === 'win32') {
+    sdk_path = path.join(__dirname, '../sdk/bin');
+    test_sdk_path = path.join(__dirname, '../../../bin');
     process.env.PATH = `${sdk_path};${test_sdk_path};${process.env.PATH}`;
+} else if (process.platform === 'darwin') {
+    sdk_path = path.join(__dirname, '../sdk/lib');
+    test_sdk_path = path.join(__dirname, '../../../lib');
 }
 let node_nim_path;
 if (fs.existsSync(sdk_path)) {
