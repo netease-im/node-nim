@@ -6,6 +6,11 @@
   "types": "types/nim.d.ts",
   "author": "Netease",
   "license": "ISC",
+  "homepage": "https://github.com/netease-im/node-nim",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/netease-im/node-nim.git"
+  },
   "scripts": {
     "coverage": "nyc mocha test/test_all.js -slow 200 -timeout 10000",
     "build:ts": "rimraf ./js && rimraf ./types && tsc",
