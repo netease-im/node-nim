@@ -11,24 +11,6 @@ function testUser(test_info) {
         user.initEventHandlers();
       });
     });
-    describe('#UpdateMyUserNameCard', function() {
-      it('update my user name card should return 200', function(done) {
-        user.updateMyUserNameCard({
-          accid_: test_info.mainUser,
-          nickname_: 'test',
-          icon_url_: 'test',
-          signature_: 'test',
-          gender_: 0,
-          email_: 'test',
-          birth_: 'test',
-          mobile_: 'test',
-          expand_: 'test',
-        }, (res_code) => {
-          assert.strictEqual(res_code, 200);
-          done();
-        }, '');
-      });
-    });
     describe('$Black list test', function() {
       before(function(done) {
         user.setBlack(test_info.assistUser, true, (res_code, accountId, option) => {
@@ -131,7 +113,7 @@ function testUser(test_info) {
     describe('#UpdateMyUserNameCard', function() {
       it('update my user name card should return 200', function(done) {
         myNameCard.nickname_ = `${new Date().getTime()}_Node`;
-        myNameCard.expand_ = `${new Date().getTime()}_Node_Ex`;
+        myNameCard.expand_ = `{}`;
         user.updateMyUserNameCard(myNameCard, (res_code) => {
           assert.strictEqual(res_code, 200);
           done();

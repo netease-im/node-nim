@@ -31,7 +31,7 @@ function testTeam(test_info) {
     });
     describe('#send message to team', function() {
       it('send message', function(done) {
-        talk.once('send_msg', function(ack) {
+        talk.once('sendMsg', function(ack) {
           assert.strictEqual(ack.rescode_, 200);
           msglog.queryMsgByIDAysnc(ack.msg_id_, function(res_code, msg_id, msg) {
             assert.strictEqual(res_code, 200);

@@ -129,7 +129,7 @@ function testSession(test_info) {
     });
     describe('#updateHasmoreRoammsg', function() {
       it('update session has more roaming msg should return 200', function(done) {
-        talk.once('send_msg', function(ack) {
+        talk.once('sendMsg', function(ack) {
           msglog.queryMsgAsync(test_info.assistUser, 0, 1, 0, (res_code, sessionId, sessionType, result) => {
             assert.strictEqual(res_code, 200);
             const message = result.msglogs_[0];

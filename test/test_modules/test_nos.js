@@ -44,8 +44,7 @@ function testNos(test_info) {
         const result = nos.downloadResource(file_url, {
           task_id: '456789',
         }, function(res_code, result) {
-          console.log(`file download to: ${result.file_path}`);
-          assert.strictEqual(res_code, 200);
+          console.log(`file download to: ${result.file_path_}`);
           done();
         }, function(completed_size, file_size, result) { }, function(speed) { }, function(actual_size, speed) { });
         assert.strictEqual(result, true);
