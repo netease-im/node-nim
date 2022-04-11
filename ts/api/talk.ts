@@ -44,32 +44,32 @@ export class NIMTalk extends ev.EventEmitter {
 
     /** 发送消息
        * @param json_msg		消息体Json字符串,可以通过CreateXXXMessage方法自动创建
-       * @param json_extension json扩展参数（备用,目前不需要）
+       * @param jsonExtension json扩展参数（备用,目前不需要）
        * @param pcb		上传进度的回调函数, 如果发送的消息里包含了文件资源,则通过此回调函数通知上传进度
        * @return void 无返回值
        */
     sendMsg(msg: IMMessage,
-        json_extension: string): void {
-        return this.talk.SendMsg(msg, json_extension);
+        jsonExtension: string): void {
+        return this.talk.SendMsg(msg, jsonExtension);
     }
 
     /** 停止正在发送中的消息（目前只支持发送文件消息时的终止）
        * @param client_msg_id	停止发送的消息客户端id
        * @param type			停止发送的消息类型
-       * @param json_extension json扩展参数（备用,目前不需要）
+       * @param jsonExtension json扩展参数（备用,目前不需要）
        * @return void 无返回值
        */
     stopSendMsg(clientMsgId: string,
         type: NIMMessageType,
-        json_extension: string): void {
-        return this.talk.StopSendMsg(clientMsgId, type, json_extension);
+        jsonExtension: string): void {
+        return this.talk.StopSendMsg(clientMsgId, type, jsonExtension);
     }
 
     /** 撤回消息
        * @param msg 消息
        * @param notify_msg 自定义通知消息
        * @param cb	回调
-       * @param param 额外的参数，包含apnstext、pushpayload、json_extension、env_config、user_data
+       * @param param 额外的参数，包含apnstext、pushpayload、jsonExtension、env_config、user_data
        * @note
        * <pre>
        * 200:成功
@@ -84,8 +84,8 @@ export class NIMTalk extends ev.EventEmitter {
         cb: RecallMsgsCallback,
         apnstext: string,
         pushpayloadconst: string,
-        json_extension: string): void {
-        return this.talk.RecallMsg(msg, notify_msg, cb, apnstext, pushpayloadconst, json_extension);
+        jsonExtension: string): void {
+        return this.talk.RecallMsg(msg, notify_msg, cb, apnstext, pushpayloadconst, jsonExtension);
     }
 
     /** 从消息体中获取附件（图片、语音、视频等）的本地路径

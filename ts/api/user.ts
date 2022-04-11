@@ -29,7 +29,7 @@ export class NIMUser extends ev.EventEmitter {
     /** 设置、取消设置黑名单
        * @param accid 好友id
        * @param set_black 取消或设置
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @param cb
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
@@ -38,14 +38,14 @@ export class NIMUser extends ev.EventEmitter {
        * 419:黑名单数量超过上限
        * </pre>
        */
-    setBlack(accid: string, setBlack: boolean, cb: SetRelationCallback, json_extension: string): boolean {
-        return this.user.SetBlack(accid, setBlack, cb, json_extension);
+    setBlack(accid: string, setBlack: boolean, cb: SetRelationCallback, jsonExtension: string): boolean {
+        return this.user.SetBlack(accid, setBlack, cb, jsonExtension);
     }
 
     /** 设置、取消设置静音名单
        * @param accid 好友id
        * @param set_mute 取消或设置
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @param cb
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
@@ -54,12 +54,12 @@ export class NIMUser extends ev.EventEmitter {
        * 419:静音列表数量超过上限
        * </pre>
        */
-    setMute(accid: string, set_mute: boolean, cb: SetRelationCallback, json_extension: string): boolean {
-        return this.user.SetMute(accid, set_mute, cb, json_extension);
+    setMute(accid: string, set_mute: boolean, cb: SetRelationCallback, jsonExtension: string): boolean {
+        return this.user.SetMute(accid, set_mute, cb, jsonExtension);
     }
 
     /** 获得静音名单列表
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @param cb
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
@@ -67,23 +67,23 @@ export class NIMUser extends ev.EventEmitter {
        * 200:成功
        * </pre>
        */
-    getMutelist(cb: GetSpecialListCallback, json_extension: string): void {
-        return this.user.GetMutelist(cb, json_extension);
+    getMutelist(cb: GetSpecialListCallback, jsonExtension: string): void {
+        return this.user.GetMutelist(cb, jsonExtension);
     }
 
     /** 获得黑名单名单
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @param cb
        * @return void 无返回值
        */
-    getBlacklist(cb: GetSpecialListCallback, json_extension: string): void {
-        return this.user.GetBlacklist(cb, json_extension);
+    getBlacklist(cb: GetSpecialListCallback, jsonExtension: string): void {
+        return this.user.GetBlacklist(cb, jsonExtension);
     }
 
     /** 获取本地的指定帐号的用户名片
        * @param accids
        * @param cb 操作结果回调
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @return void 无返回值
        * @note
        * <pre>
@@ -93,14 +93,14 @@ export class NIMUser extends ev.EventEmitter {
        * 20001:还未登陆或登录未完成
        * </pre>
        */
-    getUserNameCard(accids: Array<string>, cb: GetUserNameCardCallback, json_extension: string): boolean {
-        return this.user.GetUserNameCard(accids, cb, json_extension);
+    getUserNameCard(accids: Array<string>, cb: GetUserNameCardCallback, jsonExtension: string): boolean {
+        return this.user.GetUserNameCard(accids, cb, jsonExtension);
     }
 
     /** 在线查询指定帐号的用户名片
        * @param accids
        * @param cb 操作结果回调
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
        * <pre>
@@ -110,14 +110,14 @@ export class NIMUser extends ev.EventEmitter {
        * 20001:还未登陆或登录未完成
        * </pre>
        */
-    getUserNameCardOnline(accids: Array<string>, cb: GetUserNameCardCallback, json_extension: string): boolean {
-        return this.user.GetUserNameCardOnline(accids, cb, json_extension);
+    getUserNameCardOnline(accids: Array<string>, cb: GetUserNameCardCallback, jsonExtension: string): boolean {
+        return this.user.GetUserNameCardOnline(accids, cb, jsonExtension);
     }
 
     /** 更新自己的用户名片
        * @param namecard 用户名片内容
        * @param cb 操作结果回调
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
        * <pre>
@@ -125,18 +125,18 @@ export class NIMUser extends ev.EventEmitter {
        * 400:非法参数
        * </pre>
        */
-    updateMyUserNameCard(nameCard: UserNameCard, cb: UpdateMyUserNameCardCallback, json_extension: string): boolean {
-        return this.user.UpdateMyUserNameCard(nameCard, cb, json_extension);
+    updateMyUserNameCard(nameCard: UserNameCard, cb: UpdateMyUserNameCardCallback, jsonExtension: string): boolean {
+        return this.user.UpdateMyUserNameCard(nameCard, cb, jsonExtension);
     }
 
     /** 获取本地的指定帐号的用户名片
        * @param keyword	要查询的关键字
        * @param cb			操作结果回调
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @return bool 检查参数如果不符合要求则返回失败
        */
-    queryUserListByKeyword(keyword: string, cb: GetUserNameCardCallback, json_extension: string): boolean {
-        return this.user.QueryUserListByKeyword(keyword, cb, json_extension);
+    queryUserListByKeyword(keyword: string, cb: GetUserNameCardCallback, jsonExtension: string): boolean {
+        return this.user.QueryUserListByKeyword(keyword, cb, jsonExtension);
     }
 
     /** 更新推送证书

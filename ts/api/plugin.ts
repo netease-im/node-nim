@@ -36,7 +36,7 @@ export class NIMPlugin extends ev.EventEmitter {
     /** 异步获取圈组link地址
      * @param[in] ip_version              ip协议, 0:ipv4, 1:ipv6, 2:all
      * @param[in] callback                回调函数
-     * @param[in] json_extension        json扩展参数（备用，目前不需要）
+     * @param[in] jsonExtension        json扩展参数（备用，目前不需要）
      * @return void 无返回值
      * @note
      * <pre>

@@ -6,7 +6,7 @@ export enum NIMSendHttpRequestMethods {
 }
 
 export type ReceivedHttpMsgCallback = (from_accid: string, body: string, timestamp: number) => void
-export type SendHttpRequestCallback = (res_code: number, header: string, body: string, json_extension: string) => void
+export type SendHttpRequestCallback = (res_code: number, header: string, body: string, jsonExtension: string) => void
 
 export interface NIMPassThroughProxyAPI {
     InitEventHandlers(): void;
@@ -16,6 +16,6 @@ export interface NIMPassThroughProxyAPI {
         method: NIMSendHttpRequestMethods,
         headers: string,
         body: string,
-        json_extension: string,
+        jsonExtension: string,
         cb: SendHttpRequestCallback): void;
 }

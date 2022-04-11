@@ -27,7 +27,7 @@ export class NIMPassThroughProxy extends ev.EventEmitter {
        * @param method	要发送的 HTTP 请求方式
        * @param header	要发送的 HTTP 请求 Header 内容
        * @param body		要发送的 HTTP 请求 Body 内容
-       * @param json_extension	拓展字段，暂时无用
+       * @param jsonExtension	拓展字段，暂时无用
        * @param cb	    发送请求后的数据回调函数
        * @return void 无返回值
        */
@@ -36,8 +36,8 @@ export class NIMPassThroughProxy extends ev.EventEmitter {
         method: NIMSendHttpRequestMethods,
         headers: string,
         body: string,
-        json_extension: string,
+        jsonExtension: string,
         cb: SendHttpRequestCallback): void {
-        return this.proxy.SendHttpRequest(host, path, method, headers, body, json_extension, cb);
+        return this.proxy.SendHttpRequest(host, path, method, headers, body, jsonExtension, cb);
     }
 }

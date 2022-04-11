@@ -94,21 +94,21 @@ export class NIMSession extends ev.EventEmitter {
     /** 查询指定数量的最后会话数据
        * @param limit		要返回的最大数量
        * @param cb			查询会话列表的回调函数
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @return void 无返回值
        */
-    queryLastFewSessionAsync(limit: number, cb: QuerySessionListCallback, json_extension: string): void {
-        return this.session.QueryLastFewSessionAsync(limit, cb, json_extension);
+    queryLastFewSessionAsync(limit: number, cb: QuerySessionListCallback, jsonExtension: string): void {
+        return this.session.QueryLastFewSessionAsync(limit, cb, jsonExtension);
     }
 
     /** 查询会话列表,可指定最后一条会话消息要排除掉的类型(列表)
        * @param msg_excluded_type_list 最后一条会话消息要排除掉的类型(列表),如果不排除任何消息,传入空列表
        * @param cb			查询会话列表的回调函数
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @return void 无返回值
        */
-    queryAllRecentSessionAsync(msg_excluded_type_list: Array<NIMMessageType>, cb: QuerySessionListCallback, json_extension: string): void {
-        return this.session.QueryAllRecentSessionAsync(msg_excluded_type_list, cb, json_extension);
+    queryAllRecentSessionAsync(msg_excluded_type_list: Array<NIMMessageType>, cb: QuerySessionListCallback, jsonExtension: string): void {
+        return this.session.QueryAllRecentSessionAsync(msg_excluded_type_list, cb, jsonExtension);
     }
 
     /** 删除最近联系人
@@ -127,7 +127,7 @@ export class NIMSession extends ev.EventEmitter {
     }
 
     /** 删除全部最近联系人
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @param cb			最近会话列表项变更的回调函数
        * @return void 无返回值
        * @note
@@ -135,14 +135,14 @@ export class NIMSession extends ev.EventEmitter {
        * 200:成功
        * </pre>
        */
-    deleteAllRecentSession(cb: SessionChangeCallback, json_extension: string): void {
-        return this.session.DeleteAllRecentSession(cb, json_extension);
+    deleteAllRecentSession(cb: SessionChangeCallback, jsonExtension: string): void {
+        return this.session.DeleteAllRecentSession(cb, jsonExtension);
     }
 
     /** 删除某会话的漫游消息
        * @param to_type		会话类型，双人0，群组1 (nim_msglog_def.h)
        * @param id			对方的account id或者群组tid。
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @param cb			删除结果 回调回调函数
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
@@ -157,7 +157,7 @@ export class NIMSession extends ev.EventEmitter {
     /** 最近联系人项未读数清零
        * @param to_type		会话类型，双人0，群组1 (nim_msglog_def.h)
        * @param id			对方的account id或者群组tid。
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @param cb			最近会话列表项变更的回调函数
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
@@ -165,8 +165,8 @@ export class NIMSession extends ev.EventEmitter {
        * 200:成功
        * </pre>
        */
-    setUnreadCountZeroAsync(type: NIMSessionType, id: string, cb: SessionChangeCallback, json_extension: string): boolean {
-        return this.session.SetUnreadCountZeroAsync(type, id, cb, json_extension);
+    setUnreadCountZeroAsync(type: NIMSessionType, id: string, cb: SessionChangeCallback, jsonExtension: string): boolean {
+        return this.session.SetUnreadCountZeroAsync(type, id, cb, jsonExtension);
     }
 
     /** 最近联系人项未读数清零
@@ -189,15 +189,15 @@ export class NIMSession extends ev.EventEmitter {
        * @param id			对方的account id或者群组tid。
        * @param top			true - 置顶 false - 取消置顶
        * @param cb			回调函数
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
        * <pre>
        * 200:成功
        * </pre>
        */
-    setSessionTop(type: NIMSessionType, id: string, top: boolean, cb: SessionChangeCallback, json_extension: string): boolean {
-        return this.session.SetSessionTop(type, id, top, cb, json_extension);
+    setSessionTop(type: NIMSessionType, id: string, top: boolean, cb: SessionChangeCallback, jsonExtension: string): boolean {
+        return this.session.SetSessionTop(type, id, top, cb, jsonExtension);
     }
 
     /** 设置会话项扩展数据(扩展数据只保存在本地)
@@ -205,19 +205,19 @@ export class NIMSession extends ev.EventEmitter {
        * @param id			对方的account id或者群组tid。
        * @param data			扩展数据,建议使用灵活可扩展的数据结构,例如Json
        * @param cb			回调函数
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
        * <pre>
        * 200:成功
        * </pre>
        */
-    setSessionExtendData(type: NIMSessionType, id: string, data: string, cb: SessionChangeCallback, json_extension: string): boolean {
-        return this.session.SetSessionExtendData(type, id, data, cb, json_extension);
+    setSessionExtendData(type: NIMSessionType, id: string, data: string, cb: SessionChangeCallback, jsonExtension: string): boolean {
+        return this.session.SetSessionExtendData(type, id, data, cb, jsonExtension);
     }
 
     /** 最近联系人项全部未读数清零
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @param cb			最近会话列表项变更的回调函数
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
@@ -225,23 +225,23 @@ export class NIMSession extends ev.EventEmitter {
        * 200:成功
        * </pre>
        */
-    setAllUnreadCountZeroAsync(cb: SessionChangeCallback, json_extension: string): boolean {
-        return this.session.SetAllUnreadCountZeroAsync(cb, json_extension);
+    setAllUnreadCountZeroAsync(cb: SessionChangeCallback, jsonExtension: string): boolean {
+        return this.session.SetAllUnreadCountZeroAsync(cb, jsonExtension);
     }
 
     /** 根据给定的id查询相应会话的信息
        * @param to_type		会话类型
        * @param id			对方的account id或者群组tid。
        * @param cb			会话信息查询结果的回调函数
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @return void 无返回值
        * @note
        * <pre>
        * 200:成功
        * </pre>
        */
-    querySessionDataById(type: NIMSessionType, id: string, cb: QuerySessionDataCallback, json_extension: string): void {
-        return this.session.QuerySessionDataById(type, id, cb, json_extension);
+    querySessionDataById(type: NIMSessionType, id: string, cb: QuerySessionDataCallback, jsonExtension: string): void {
+        return this.session.QuerySessionDataById(type, id, cb, jsonExtension);
     }
 
     /** 查询会话是漫游消息未拉取信息

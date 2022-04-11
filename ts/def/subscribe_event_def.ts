@@ -87,26 +87,26 @@ export type QuerySubscribeEventCallback = (rescode: number, eventType: number, r
 export interface NIMSubscribeEventAPI {
     InitEventHandlers(): void;
 
-    Publish(data: EventData, cb: PublishEventCallback, json_extension: string): boolean;
+    Publish(data: EventData, cb: PublishEventCallback, jsonExtension: string): boolean;
 
     Subscribe(eventType: NIMEventType,
         ttl: number,
         syncType: NIMEventSubscribeSyncEventType,
         accids: Array<string>,
         cb: SubscribeEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     UnSubscribe(eventType: NIMEventType,
         accids: Array<string>,
         cb: UnSubscribeEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     BatchUnSubscribe(eventType: NIMEventType,
         cb: BatchUnSubscribeEventCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     QuerySubscribe(eventType: NIMEventType,
         accids: Array<string>,
         cb: QuerySubscribeEventCallback,
-        json_extension: string): void;
+        jsonExtension: string): void;
 }

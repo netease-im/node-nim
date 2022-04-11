@@ -21,12 +21,12 @@ export class NIMGlobal extends ev.EventEmitter {
     }
 
     /** 注册输出系统环境异常的回调
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @param cb
        * @return void 无返回值
        */
-    setExceptionReportCallback(json_extension: string, cb: ExceptionCallback): void {
-        return this.global.SetExceptionReportCallback(json_extension, cb);
+    setExceptionReportCallback(jsonExtension: string, cb: ExceptionCallback): void {
+        return this.global.SetExceptionReportCallback(jsonExtension, cb);
     }
 
     /** 设置SDK统一的网络代理。不需要代理时，type设置为kNIMProxyNone，其余参数都传空字符串（端口设为0）。有些代理不需要用户名和密码，相应参数也传空字符串。
@@ -58,36 +58,36 @@ export class NIMGlobal extends ev.EventEmitter {
        * @param loginId 查询的账号ID
        * @param fileType 文件类型，常量定义见NIMCachedFileType
        * @param endTimestamp  查询时间截止点（查询全部填0）
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @param cb
        * @return void 无返回值
        */
     getSDKCachedFileInfoAsync(loginId: string, fileType: NIMCachedFileType, endTimestamp: number,
-        json_extension: string, cb: GetCachedFileInfoCallback): void {
-        return this.global.GetSDKCachedFileInfoAsync(loginId, fileType, endTimestamp, json_extension, cb);
+        jsonExtension: string, cb: GetCachedFileInfoCallback): void {
+        return this.global.GetSDKCachedFileInfoAsync(loginId, fileType, endTimestamp, jsonExtension, cb);
     }
 
     /** 删除sdk缓存文件
        * @param loginId 查询的账号ID
        * @param fileType 文件类型，常量定义见NIMCachedFileType
        * @param endTimestamp  删除时间截止点（查询全部填0）
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @param cb
        * @return void 无返回值
        */
     deleteSDKCachedFileAsync(loginId: string, fileType: NIMCachedFileType, endTimestamp: number,
-        json_extension: string, cb: DeleteCachedFileCallback): void {
-        return this.global.DeleteSDKCachedFileAsync(loginId, fileType, endTimestamp, json_extension, cb);
+        jsonExtension: string, cb: DeleteCachedFileCallback): void {
+        return this.global.DeleteSDKCachedFileAsync(loginId, fileType, endTimestamp, jsonExtension, cb);
     }
 
     /** SDK 反馈
        * @param url 开发者需将所需要反馈的文件（dump，应用日志等）上传至nos。
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @param cb
        * @return void 无返回值
        */
-    sdkFeedbackAsync(url: string, json_extension: string, cb: SDKFeedbackCallback): void {
-        return this.global.SDKFeedbackAsync(url, json_extension, cb);
+    sdkFeedbackAsync(url: string, jsonExtension: string, cb: SDKFeedbackCallback): void {
+        return this.global.SDKFeedbackAsync(url, jsonExtension, cb);
     }
 
     /** 上传SDK日志到服务器

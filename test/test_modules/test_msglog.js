@@ -325,7 +325,7 @@ function testMsglog(test_info) {
     });
     describe('#deleteHistoryOnlineAsyncEx', function() {
       it('deleteHistoryOnlineAsyncEx', function(done) {
-        msglog.deleteHistoryOnlineAsyncEx(test_info.assistUser, 0, false, '', function(res_code, accid, to_type, timestamp, json_extension) {
+        msglog.deleteHistoryOnlineAsyncEx(test_info.assistUser, 0, false, '', function(res_code, accid, to_type, timestamp, jsonExtension) {
           assert.strictEqual(res_code, 200);
           assert.strictEqual(accid, test_info.assistUser);
           done();

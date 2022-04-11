@@ -57,7 +57,7 @@ export class NIMClient extends ev.EventEmitter {
        * @param account 帐号
        * @param password 密码
        * @param cb 登录流程的回调函数
-       * @param json_extension json扩展参数（v5.7.0 项目增加自定义参数字段）
+       * @param jsonExtension json扩展参数（v5.7.0 项目增加自定义参数字段）
        * @return bool 检查参数如果不符合要求则返回失败
        * @note
        * <pre>
@@ -75,14 +75,14 @@ export class NIMClient extends ev.EventEmitter {
         account: string,
         password: string,
         cb: LoginCallback,
-        json_extension: string): boolean {
-        return this.client.Login(appKey, account, password, cb, json_extension);
+        jsonExtension: string): boolean {
+        return this.client.Login(appKey, account, password, cb, jsonExtension);
     }
 
     /** NIM客户端注销/退出
        * @param logoutType Logout操作类型，其定义见nim_client_def.h
        * @param cb 注销/退出的回调函数
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @return void 无返回值
        * @note
        * <pre>
@@ -92,16 +92,16 @@ export class NIMClient extends ev.EventEmitter {
        */
     logout(logoutType: NIMLogoutType,
         cb: LogoutCallback,
-        json_extension: string): void {
-        return this.client.Logout(logoutType, cb, json_extension);
+        jsonExtension: string): void {
+        return this.client.Logout(logoutType, cb, jsonExtension);
     }
 
     /** NIM SDK清理
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @return void 无返回值
        */
-    cleanup(json_extension: string): void {
-        return this.client.Cleanup(json_extension);
+    cleanup(jsonExtension: string): void {
+        return this.client.Cleanup(jsonExtension);
     }
 
     /** 获取SDK配置
@@ -112,19 +112,19 @@ export class NIMClient extends ev.EventEmitter {
     }
 
     /** 获取客户端登录状态
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @return NIMLoginState 登录状态
        */
-    getLoginState(json_extension: string): NIMLoginState {
-        return <NIMLoginState>this.client.GetLoginState(json_extension);
+    getLoginState(jsonExtension: string): NIMLoginState {
+        return <NIMLoginState>this.client.GetLoginState(jsonExtension);
     }
 
     /** NIM客户端手动重连（注意 APP需要统一处理自动重连/手动重连的回调，因为如果处于某次自动重连的过程中调用手动重连接口，不起作用！）
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @return void 无返回值
        */
-    relogin(json_extension: string): void {
-        return this.client.Relogin(json_extension);
+    relogin(jsonExtension: string): void {
+        return this.client.Relogin(jsonExtension);
     }
 
     /** 将本帐号的其他端踢下线
@@ -138,7 +138,7 @@ export class NIMClient extends ev.EventEmitter {
     /** (全局回调)设置多端推送
        * @param switch_on 开关
        * @param cb 回调函数
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @return void
        * @note
        * <pre>
@@ -147,17 +147,17 @@ export class NIMClient extends ev.EventEmitter {
        */
     setMultiportPushConfigAsync(switch_on: boolean,
         cb: MultiportPushConfigCallback,
-        json_extension: string): void {
-        return this.client.SetMultiportPushConfigAsync(switch_on, cb, json_extension);
+        jsonExtension: string): void {
+        return this.client.SetMultiportPushConfigAsync(switch_on, cb, jsonExtension);
     }
 
     /** 获得多端推送设置
        * @param cb 回调函数
-       * @param json_extension json扩展参数（备用，目前不需要）
+       * @param jsonExtension json扩展参数（备用，目前不需要）
        * @return void
        */
-    getMultiportPushConfigAsync(cb: MultiportPushConfigCallback, json_extension: string): void {
-        return this.client.GetMultiportPushConfigAsync(cb, json_extension);
+    getMultiportPushConfigAsync(cb: MultiportPushConfigCallback, jsonExtension: string): void {
+        return this.client.GetMultiportPushConfigAsync(cb, jsonExtension);
     }
 
     /** 获取SDK版本号

@@ -47,18 +47,18 @@ export interface NIMTalkAPI {
     InitEventHandlers(): void;
 
     SendMsg(msg: IMMessage,
-        json_extension: string): void;
+        jsonExtension: string): void;
 
     StopSendMsg(clientMsgId: string,
         type: NIMMessageType,
-        json_extension: string): void;
+        jsonExtension: string): void;
 
     RecallMsg(msg: IMMessage,
         notify_msg: string,
         cb: RecallMsgsCallback,
         apnstext: string,
         pushpayloadconst: string,
-        json_extension: string): void;
+        jsonExtension: string): void;
 
     GetAttachmentPathFromMsg(msg: IMMessage): string;
 

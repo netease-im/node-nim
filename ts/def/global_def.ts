@@ -60,7 +60,7 @@ export interface SDKDBErrorInfo {
 
 export type ExceptionCallback = (exception: NIMSDKException, log: string) => void;
 export type SDKFeedbackCallback = (rescode: number) => void;
-export type DetectProxyCallback = (connect: boolean, step: NIMProxyDetectStep, json_extension: string) => void;
+export type DetectProxyCallback = (connect: boolean, step: NIMProxyDetectStep, jsonExtension: string) => void;
 export type GetCachedFileInfoCallback = (rescode: number, result: CachedFileInfo) => void;
 export type DeleteCachedFileCallback = (rescode: number) => void;
 export type SDKDBErrorCallback = (result: SDKDBErrorInfo) => void;
@@ -69,17 +69,17 @@ export type UploadSDKLogCallback = (rescode: number) => void;
 export interface NIMGlobalAPI {
     InitEventHandlers(): void;
 
-    SetExceptionReportCallback(json_extension: string, cb: ExceptionCallback): void;
+    SetExceptionReportCallback(jsonExtension: string, cb: ExceptionCallback): void;
 
     SetProxy(type: NIMProxyType, host: string, port: number, user: string, password: string): void;
 
     DetectProxy(type: NIMProxyType, host: string, port: number, user: string, password: string, cb: DetectProxyCallback): void;
 
-    GetSDKCachedFileInfoAsync(loginId: string, fileType: NIMCachedFileType, endTimestamp: number, json_extension: string, cb: GetCachedFileInfoCallback): void;
+    GetSDKCachedFileInfoAsync(loginId: string, fileType: NIMCachedFileType, endTimestamp: number, jsonExtension: string, cb: GetCachedFileInfoCallback): void;
 
-    DeleteSDKCachedFileAsync(loginId: string, fileType: NIMCachedFileType, endTimestamp: number, json_extension: string, cb: DeleteCachedFileCallback): void;
+    DeleteSDKCachedFileAsync(loginId: string, fileType: NIMCachedFileType, endTimestamp: number, jsonExtension: string, cb: DeleteCachedFileCallback): void;
 
-    SDKFeedbackAsync(url: string, json_extension: string, cb: SDKFeedbackCallback): void;
+    SDKFeedbackAsync(url: string, jsonExtension: string, cb: SDKFeedbackCallback): void;
 
     UploadSDKLog(feedbackStr: string, cb: UploadSDKLogCallback): void;
 }

@@ -72,7 +72,7 @@ export interface NIMNOSAPI {
     InitConfig(param: InitNosConfigParam, cb: InitNosResultCallback): void;
 
     FetchMedia(msg: IMMessage,
-        json_extension: string,
+        jsonExtension: string,
         res_cb: DownloadMediaCallback,
         prg_cb: ProgressCallback,
         speed_cb: SpeedCallback,
@@ -88,7 +88,7 @@ export interface NIMNOSAPI {
         speed_cb: SpeedCallback,
         transfer_cb: TransferInfoCallback): boolean;
 
-    StopUploadResource(task_id: string, json_extension: string): boolean;
+    StopUploadResource(task_id: string, jsonExtension: string): boolean;
 
     DownloadResource(nosUrl: string,
         param: NOSParams,
@@ -97,11 +97,11 @@ export interface NIMNOSAPI {
         speed_cb: SpeedCallback,
         transfer_cb: TransferInfoCallback): boolean;
 
-    StopDownloadResource(task_id: string, json_extension: string): boolean;
+    StopDownloadResource(task_id: string, jsonExtension: string): boolean;
 
     SafeURLToOriginURL(safe_url: string,
         cb: SafeURLToOriginURLCallback,
-        json_extension: string): void;
+        jsonExtension: string): void;
 
     SetSupportQuickTrans(quick: boolean): void;
 }

@@ -305,29 +305,29 @@ export interface NIMClientAPI {
         account: string,
         password: string,
         cb: LoginCallback,
-        json_extension: string): boolean;
+        jsonExtension: string): boolean;
 
     Logout(logoutType: NIMLogoutType,
         cb: LogoutCallback,
-        json_extension: string): void;
+        jsonExtension: string): void;
 
-    Cleanup(json_extension: string): void;
+    Cleanup(jsonExtension: string): void;
 
     GetSDKConfig(): SDKConfig;
 
     LoginCustomDataToJson(customData: string): string;
 
-    GetLoginState(json_extension: string): NIMLoginState;
+    GetLoginState(jsonExtension: string): NIMLoginState;
 
-    Relogin(json_extension: string): void;
+    Relogin(jsonExtension: string): void;
 
     KickOtherClient(clients: Array<string>): void;
 
     SetMultiportPushConfigAsync(switch_on: boolean,
         cb: MultiportPushConfigCallback,
-        json_extension: string): void;
+        jsonExtension: string): void;
 
-    GetMultiportPushConfigAsync(cb: MultiportPushConfigCallback, json_extension: string): void;
+    GetMultiportPushConfigAsync(cb: MultiportPushConfigCallback, jsonExtension: string): void;
 
     GetSDKVersion(): string;
 
