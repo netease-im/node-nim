@@ -123,7 +123,7 @@ if(APPLE)
     set_target_properties( ${TARGET_NAME}
         PROPERTIES
         BUILD_WITH_INSTALL_RPATH 1
-        INSTALL_RPATH "@rpath")
+        INSTALL_RPATH "@loader_path")
 endif ()
 
 # installation
