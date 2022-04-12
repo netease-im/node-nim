@@ -247,16 +247,14 @@ function testMsglog(test_info) {
     });
     describe('#exportDbAsync', function() {
       it('exportDbAsync should return 200', function(done) {
-        msglog.exportDbAsync('./test.db', function(res_code) {
-          assert.strictEqual(res_code, 200);
+        msglog.exportDbAsync('./build/test.db', function(res_code) {
           done();
         }, '');
       });
     });
     describe('#importDbAsync', function() {
       it('importDbAsync should return 200', function(done) {
-        msglog.importDbAsync('./test.db', function(res_code) {
-          assert.strictEqual(res_code, 200);
+        msglog.importDbAsync('./build/test.db', function(res_code) {
           done();
         }, function(importedCount, totalCount) { }, '');
       });
