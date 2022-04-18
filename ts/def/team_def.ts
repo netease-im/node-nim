@@ -84,13 +84,21 @@ export interface TeamEvent {
 export interface TeamInfoJsonValue {
     tid: string;
     name: string,
-    member_max_count: number,
     type: NIMTeamType,
+    readonly creator: string,
+    member_max_count: number,
     prop: string,
+    readonly valid: boolean,
+    readonly member_count: number,
+    readonly list_timetag: number,
+    readonly create_timetag: number,
+    readonly update_timetag: number,
+    member_valid: number, /**< 1:有效，0:无效 */
     intro: string,
     announcement: string,
     join_mode: NIMTeamJoinMode,
     custom: string,
+    readonly server_custom: string,
     icon: string,
     be_invite_mode: NIMTeamBeInviteMode,
     invite_mode: NIMTeamInviteMode,
