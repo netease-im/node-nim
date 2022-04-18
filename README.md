@@ -55,7 +55,7 @@ const result = client.init('app_key', 'app_data_dir', 'app_install_dir', {
 client.login('app_key', 'username', 'password_in_md5', (result) => {
     assert.strictEqual(result.err_code, 200)
     if (loginResult.login_step === 3) { // login has 3 steps, step 3 succeeded
-        talk.initEventHandler() // init callbacks
+        talk.initEventHandlers() // init callbacks
 
         talk.on('receiveMsg', function (result) {
             console.log(result)
