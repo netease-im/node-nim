@@ -43,7 +43,7 @@ npm run coverage
 ```
 
 ## Sample Code
-```
+```js
 const NIM = require('node-nim')
 const assert = require('assert')
 const client = new NIM.NIMClient()
