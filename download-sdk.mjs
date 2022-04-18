@@ -8,7 +8,7 @@ const sdk_group = "message";
 const sdk_name = "nim";
 const sdk_path = "sdk";
 let sdk_url = process.env.NIM_SDK_URL;
-let sdk_version = process.env.npm_package_version;
+let sdk_version = process.env.npm_package_version.split('-')[0];
 if (process.env.NIM_SDK_VERSION) {
     sdk_version = process.env.NIM_SDK_VERSION;
 }
