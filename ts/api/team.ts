@@ -3,7 +3,7 @@ import ev from 'events';
 import { IMMessage } from '../def/msglog_def';
 import {
     NIMTeamAPI, TeamInfo, TeamEventCallback, QueryAllMyTeamsCallback, QueryAllMyTeamsInfoCallback,
-    QueryMyAllMemberInfosCallback, QueryTeamMembersCallback, QueryTeamMemberCallback, QueryTeamInfoCallback,
+    QueryTeamMyAllMemberInfosCallback, QueryTeamMembersCallback, QueryTeamMemberCallback, QueryTeamInfoCallback,
     QueryTeamMembersOnlineCallback, TeamMsgAckReadCallback, QueryTeamMembersInvitorCallback, QueryTeamsInfoCallback,
     UpdateTInfoLocalCallback, GetTeamInfoBatchSFTransCallback, GetTeamInfoListCallback, TeamMemberProperty
 } from '../def/team_def';
@@ -401,7 +401,7 @@ export class NIMTeam extends ev.EventEmitter {
        * @param cb		查询所有群里我的成员信息的回调函数
        * @return void 无返回值
        */
-    queryMyAllMemberInfosAsync(cb: QueryMyAllMemberInfosCallback, jsonExtension: string): void {
+    queryMyAllMemberInfosAsync(cb: QueryTeamMyAllMemberInfosCallback, jsonExtension: string): void {
         return this.team.QueryMyAllMemberInfosAsync(cb, jsonExtension);
     }
 

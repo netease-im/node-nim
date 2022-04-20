@@ -1,7 +1,7 @@
 import sdk from '../loader';
 import ev from 'events';
 import {
-    QueryMyAllMemberInfosCallback, NIMSuperTeamAPI, SuperTeamEventCallback, SuperTeamInfo, SuperTeamMemberProperty,
+    QuerySuperTeamMyAllMemberInfosCallback, NIMSuperTeamAPI, SuperTeamEventCallback, SuperTeamInfo, SuperTeamMemberProperty,
     QueryAllMySuperTeamsCallback, QueryAllMySuperTeamsInfoCallback, QuerySuperTeamMembersCallback, QuerySuperTeamMemberCallback,
     QuerySuperTeamInfoCallback
 } from 'ts/def/super_team_def';
@@ -357,7 +357,7 @@ export class NIMSuperTeam extends ev.EventEmitter {
        * @param cb		查询所有群里我的成员信息的回调函数
        * @return void 无返回值
        */
-    queryMyAllMemberInfosAsync(cb: QueryMyAllMemberInfosCallback, jsonExtension: string): void {
+    queryMyAllMemberInfosAsync(cb: QuerySuperTeamMyAllMemberInfosCallback, jsonExtension: string): void {
         return this.team.QueryMyAllMemberInfosAsync(cb, jsonExtension);
     }
 

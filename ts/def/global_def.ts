@@ -1,12 +1,3 @@
-/** @enum NIMSDKLogLevel NIM SDK log级别，级别越高，log越详细 */
-export enum NIMSDKLogLevel {
-    kNIMSDKLogLevelFatal = 1,	/** < SDK Fatal级别Log*/
-    kNIMSDKLogLevelError = 2,	/** < SDK Error级别Log*/
-    kNIMSDKLogLevelWarn = 3,	/** < SDK Warn级别Log*/
-    kNIMSDKLogLevelApp = 5,	/** < SDK应用级别Log，正式发布时为了精简sdk log，可采用此级别*/
-    kNIMSDKLogLevelPro = 6,	/** < SDK调试过程级别Log，更加详细，更有利于开发调试*/
-}
-
 /** @enum NIMSDKException 异常 */
 export enum NIMSDKException {
     kNIMSDKExceptionSpaceEmpty = 1,	/** < 当前数据目录所在盘符空间紧张或用完, log: {"free_space" : %lf, "message":""}, free_space单位M*/

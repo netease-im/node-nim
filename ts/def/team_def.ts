@@ -127,7 +127,7 @@ export interface TeamMemberProperty {
 export type TeamEventCallback = (result: TeamEvent) => void;
 export type QueryAllMyTeamsCallback = (count: number, result: Array<string>) => void;
 export type QueryAllMyTeamsInfoCallback = (count: number, result: Array<TeamInfo>) => void;
-export type QueryMyAllMemberInfosCallback = (count: number, result: Array<TeamMemberProperty>) => void;
+export type QueryTeamMyAllMemberInfosCallback = (count: number, result: Array<TeamMemberProperty>) => void;
 export type QueryTeamMembersCallback = (tid: string, count: number, result: Array<TeamMemberProperty>) => void;
 export type QueryTeamMemberCallback = (result: TeamMemberProperty) => void;
 export type QueryTeamInfoCallback = (tid: string, result: TeamInfo) => void;
@@ -229,7 +229,7 @@ export interface NIMTeamAPI {
 
     QueryAllMyTeamsInfoAsync(cb: QueryAllMyTeamsInfoCallback, jsonExtension: string): void;
 
-    QueryMyAllMemberInfosAsync(cb: QueryMyAllMemberInfosCallback, jsonExtension: string): void;
+    QueryMyAllMemberInfosAsync(cb: QueryTeamMyAllMemberInfosCallback, jsonExtension: string): void;
 
     QueryTeamMembersAsync(tid: string, cb: QueryTeamMembersCallback, jsonExtension: string): boolean;
 

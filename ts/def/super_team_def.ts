@@ -116,7 +116,7 @@ export interface SuperTeamMemberProperty {
 export type SuperTeamEventCallback = (result: SuperTeamEvent) => void;
 export type QueryAllMySuperTeamsCallback = (count: number, result: Array<string>) => void;
 export type QueryAllMySuperTeamsInfoCallback = (count: number, result: Array<SuperTeamInfo>) => void;
-export type QueryMyAllMemberInfosCallback = (count: number, result: Array<SuperTeamMemberProperty>) => void;
+export type QuerySuperTeamMyAllMemberInfosCallback = (count: number, result: Array<SuperTeamMemberProperty>) => void;
 export type QuerySuperTeamMembersCallback = (tid: string, count: number, result: Array<SuperTeamMemberProperty>) => void;
 export type QuerySuperTeamMemberCallback = (result: SuperTeamMemberProperty) => void;
 export type QuerySuperTeamInfoCallback = (tid: string, result: SuperTeamInfo) => void;
@@ -201,7 +201,7 @@ export interface NIMSuperTeamAPI {
 
     QueryAllMySuperTeamsInfoAsync(cb: QueryAllMySuperTeamsInfoCallback, jsonExtension: string): void;
 
-    QueryMyAllMemberInfosAsync(cb: QueryMyAllMemberInfosCallback, jsonExtension: string): void;
+    QueryMyAllMemberInfosAsync(cb: QuerySuperTeamMyAllMemberInfosCallback, jsonExtension: string): void;
 
     QuerySuperTeamMembersAsync(tid: string, cb: QuerySuperTeamMembersCallback, jsonExtension: string): boolean;
 

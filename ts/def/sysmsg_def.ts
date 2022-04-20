@@ -1,5 +1,6 @@
 import { NIMResCode } from './client_def';
-import { BoolStatus } from './msglog_def'
+import { BoolStatus, NIMMessageFeature } from './msglog_def'
+import { SendMessageArc } from './talk_def';
 /** @enum NIMSysMsgStatus 系统消息状态 */
 export enum NIMSysMsgStatus {
     kNIMSysMsgStatusNone = 0,			/** < 默认,未读 */
@@ -23,15 +24,6 @@ export enum NIMSysMsgType {
     kNIMSysMsgTypeCustomTeamMsg = 101,	/** < 群透传消息（透传消息的内容放到kNIMSysMsgKeyAttach）,SDK对该类消息不计入未读数, 即使kNIMSysMsgKeyPushNeedBadge为1 */
     kNIMSysMsgTypeCustomSuperTeamMsg = 103,	/** < 超大群透传消息（透传消息的内容放到kNIMSysMsgKeyAttach）,SDK对该类消息不计入未读数, 即使kNIMSysMsgKeyPushNeedBadge为1 */
     kNIMSysMsgTypeUnknown = 1000,		/** < 未知类型，本地使用，发送时勿使用，作为默认 */
-}
-
-/** @enum NIMMessageFeature 消息种类 */
-export enum NIMMessageFeature {
-    kNIMMessageFeatureDefault = 0,       /**< 默认 */
-    kNIMMessageFeatureLeaveMsg = 1,      /**< 离线消息 */
-    kNIMMessageFeatureRoamMsg = 2,       /**< 漫游消息 */
-    kNIMMessageFeatureSyncMsg = 3,       /**< 同步消息 */
-    kNIMMessageFeatureCustomizedMsg = 4, /**< 透传消息 */
 }
 
 export interface SysMessage {
@@ -62,15 +54,6 @@ export interface SysMessageSetting {
     anti_spam_enable_: BoolStatus;                    /**< (功能暂时不开放)是否需要过易盾反垃圾 */
     anti_spam_content_: string;                  /**< (功能暂时不开放)(可选)开发者自定义的反垃圾字段 */
     env_config_: string;                         /**< (可选) 指向自定义抄送的配置 */
-}
-
-export interface SendMessageArc {
-    talk_id_: string;                  /**< 会话ID */
-    msg_id_: string;                   /**< 消息ID */
-    rescode_: NIMResCode;                   /**< 错误码 */
-    msg_timetag_: number;                  /**< 消息时间戳 */
-    third_party_callback_ext_: string; /**< 第三方回调回来的自定义扩展字段 */
-    anti_spam_res_: string;            /**< 易盾反垃圾返回的结果字段*/
 }
 
 export type SysmsgCallback = (result: SysMessage) => void;
