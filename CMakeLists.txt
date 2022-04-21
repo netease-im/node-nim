@@ -63,6 +63,9 @@ message(STATUS "CMAKE_JS_SHARED_LINKER_FLAGS ${CMAKE_JS_SHARED_LINKER_FLAGS}")
 
 # get NODE_ADDON_API_DIR
 add_definitions(-DNAPI_VERSION=4)
+if(UNIX AND NOT APPLE)
+    set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+endif()
 execute_process(COMMAND node -p "require('node-addon-api').include"
         WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
         OUTPUT_VARIABLE NODE_ADDON_API_DIR)
@@ -126,7 +129,7 @@ if(APPLE)
         PROPERTIES
         BUILD_WITH_INSTALL_RPATH 1
         INSTALL_RPATH "@loader_path")
-endif ()
+endif()
 
 # installation
 install(
