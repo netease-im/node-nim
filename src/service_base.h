@@ -25,6 +25,7 @@ struct _is_std_function;
 }
 namespace detail {
 class _Is_std_function {
+public:
     template <class TCheck>
     friend struct traits::_is_std_function;
     template <class T>
@@ -121,7 +122,7 @@ private:
     template <typename TR, typename... TArgs>
     auto _MakeNotifyCallback(const std::string& flag, const std::function<TR(TArgs...)>* ff) -> std::function<TR(TArgs...)> {
         return [this, flag](TArgs... args) {
-            return NotifyCallback<TR, TArgs...>(flag, std::forward<TArgs>(args)...);
+            return NotifyCallback<TR, std::decay_t<TArgs>...>(flag, std::forward<TArgs>(args)...);
         };
     }
 
