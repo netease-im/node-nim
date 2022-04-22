@@ -50,22 +50,19 @@ foreach(item ${CMAKE_JS_CONFIGURE_OUTPUT_LIST})
     elseif(NOT CMAKE_JS_LIB_INDEX EQUAL -1)
         string(REGEX REPLACE "^.*CMAKE_JS_LIB=(.*)\'.*" "\\1" CMAKE_JS_LIB ${item})
     elseif(NOT CMAKE_CXX_FLAGS_INDEX EQUAL -1)
-        string(REGEX REPLACE "^.*CMAKE_CXX_FLAGS=(.*)\'.*" "\\1" CMAKE_JS_CXX_FLAGS ${item})
+        string(REGEX REPLACE "^.*CMAKE_CXX_FLAGS=(.*)\'.*" "\\1" CMAKE_CXX_FLAGS ${item})
     elseif(NOT CMAKE_SHARED_LINKER_FLAGS_INDEX EQUAL -1)
-        string(REGEX REPLACE "^.*CMAKE_SHARED_LINKER_FLAGS=(.*)\'.*" "\\1" CMAKE_JS_SHARED_LINKER_FLAGS ${item})
+        string(REGEX REPLACE "^.*CMAKE_SHARED_LINKER_FLAGS=(.*)\'.*" "\\1" CMAKE_SHARED_LINKER_FLAGS ${item})
     endif()
 endforeach()
 message(STATUS "CMAKE_JS_INC ${CMAKE_JS_INC}")
 message(STATUS "CMAKE_JS_SRC ${CMAKE_JS_SRC}")
 message(STATUS "CMAKE_JS_LIB ${CMAKE_JS_LIB}")
-message(STATUS "CMAKE_JS_CXX_FLAGS ${CMAKE_JS_CXX_FLAGS}")
-message(STATUS "CMAKE_JS_SHARED_LINKER_FLAGS ${CMAKE_JS_SHARED_LINKER_FLAGS}")
+message(STATUS "CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS}")
+message(STATUS "CMAKE_SHARED_LINKER_FLAGS ${CMAKE_SHARED_LINKER_FLAGS}")
 
 # get NODE_ADDON_API_DIR
 add_definitions(-DNAPI_VERSION=4)
-if(UNIX AND NOT APPLE)
-    set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-endif()
 execute_process(COMMAND node -p "require('node-addon-api').include"
         WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
         OUTPUT_VARIABLE NODE_ADDON_API_DIR)
@@ -94,8 +91,6 @@ target_include_directories(${TARGET_NAME} PRIVATE
                            ${CMAKE_JS_INC}
                            ${CMAKE_BINARY_DIR}/src
                            ${CMAKE_CURRENT_LIST_DIR}/src)
-target_compile_options(${TARGET_NAME} PRIVATE ${CMAKE_JS_CXX_FLAGS})
-target_link_options(${TARGET_NAME} PRIVATE ${CMAKE_JS_SHARED_LINKER_FLAGS})
 if(TARGET nim_cpp_wrapper)
     # build as subproject of nim
     target_include_directories(${TARGET_NAME} PRIVATE 
@@ -129,7 +124,7 @@ if(APPLE)
         PROPERTIES
         BUILD_WITH_INSTALL_RPATH 1
         INSTALL_RPATH "@loader_path")
-endif()
+endif ()
 
 # installation
 install(
