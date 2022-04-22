@@ -114,7 +114,6 @@ target_link_libraries(${TARGET_NAME}
                       ${CMAKE_JS_LIB}
                       nim_cpp_wrapper
                       nim_chatroom_cpp_wrapper
-                      nim_qchat_cpp_wrapper
                       nim_tools_cpp_wrapper
                       nim_wrapper_util)
 
