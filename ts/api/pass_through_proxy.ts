@@ -1,11 +1,11 @@
-import { NIMPassThroughProxyAPI, NIMSendHttpRequestMethods, SendHttpRequestCallback } from '../def/pass_through_proxy_def';
+import { NIMPassThroughProxyAPI, NIMSendHttpRequestMethods, ReceivedHttpMsgCallback, SendHttpRequestCallback } from '../def/pass_through_proxy_def';
 import sdk from '../loader';
 import ev from 'events';
 
 export declare interface NIMPassThroughProxy {
     // receiveHttpMsg: 接受到 HTTP 透传消息
-    on(event: 'receiveHttpMsg', listener: () => void): this;
-    once(event: 'receiveHttpMsg', listener: () => void): this;
+    on(event: 'receiveHttpMsg', listener: ReceivedHttpMsgCallback): this;
+    once(event: 'receiveHttpMsg', listener: ReceivedHttpMsgCallback): this;
 }
 
 export class NIMPassThroughProxy extends ev.EventEmitter {

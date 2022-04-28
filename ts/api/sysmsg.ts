@@ -2,16 +2,16 @@ import sdk from '../loader';
 import ev from 'events';
 import {
     NIMSysMsgAPI, SysMessage, NIMSysMsgStatus, NIMSysMsgType, NotifySingleSysmsgCallback,
-    NotifySysmsgResCallback, QuerySysmsgCallback
+    NotifySysmsgResCallback, QuerySysmsgCallback, SendCustomSysmsgCallback, SysmsgCallback
 } from '../def/sysmsg_def';
 
 export declare interface NIMSysMsg {
     // receiveSystemMsg: 系统通知
     // sendCustomSystemMsg: 发送透传消息回调
-    on(event: 'receiveSystemMsg', listener: () => void): this;
-    on(event: 'sendCustomSystemMsg', listener: () => void): this;
-    once(event: 'receiveSystemMsg', listener: () => void): this;
-    once(event: 'sendCustomSystemMsg', listener: () => void): this;
+    on(event: 'receiveSystemMsg', listener: SysmsgCallback): this;
+    on(event: 'sendCustomSystemMsg', listener: SendCustomSysmsgCallback): this;
+    once(event: 'receiveSystemMsg', listener: SysmsgCallback): this;
+    once(event: 'sendCustomSystemMsg', listener: SendCustomSysmsgCallback): this;
 }
 
 export class NIMSysMsg extends ev.EventEmitter {

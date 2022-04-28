@@ -12,15 +12,15 @@ export declare interface NIMSession {
     // change: 会话变更
     // stickTop: 置顶会话通知
     // cancelStickTop: 取消置顶会话通知
-    // updateTtickTop: 更新置顶会话通知
-    on(event: 'change', listener: () => void): this;
-    on(event: 'stickTop', listener: () => void): this;
-    on(event: 'cancelStickTop', listener: () => void): this;
-    on(event: 'updateTtickTop', listener: () => void): this;
-    once(event: 'change', listener: () => void): this;
-    once(event: 'stickTop', listener: () => void): this;
-    once(event: 'cancelStickTop', listener: () => void): this;
-    once(event: 'updateTtickTop', listener: () => void): this;
+    // updateStickTop: 更新置顶会话通知
+    on(event: 'change', listener: SessionChangeCallback): this;
+    on(event: 'stickTop', listener: SetToStickTopSessionCallback): this;
+    on(event: 'cancelStickTop', listener: CancelToStickTopSessionCallback): this;
+    on(event: 'updateStickTop', listener: UpdateStickTopSessionCallback): this;
+    once(event: 'change', listener: SessionChangeCallback): this;
+    once(event: 'stickTop', listener: SetToStickTopSessionCallback): this;
+    once(event: 'cancelStickTop', listener: CancelToStickTopSessionCallback): this;
+    once(event: 'updateStickTop', listener: UpdateStickTopSessionCallback): this;
 }
 
 export class NIMSession extends ev.EventEmitter {

@@ -2,16 +2,16 @@ import sdk from '../loader';
 import ev from 'events';
 import {
     NIMUserAPI, SetRelationCallback, GetSpecialListCallback, GetUserNameCardCallback,
-    UpdateMyUserNameCardCallback, NINPushType, UserNameCard
+    UpdateMyUserNameCardCallback, NINPushType, UserNameCard, SpecialRelationshipChangedCallback, UserNameCardChangedCallback
 } from '../def/user_def';
 
 export declare interface NIMUser {
     // specialRelationChange: 用户属性变更
     // userNameCardChange: 用户名片变更
-    on(event: 'specialRelationChange', listener: () => void): this;
-    on(event: 'userNameCardChange', listener: () => void): this;
-    once(event: 'specialRelationChange', listener: () => void): this;
-    once(event: 'userNameCardChange', listener: () => void): this;
+    on(event: 'specialRelationChange', listener: SpecialRelationshipChangedCallback): this;
+    on(event: 'userNameCardChange', listener: UserNameCardChangedCallback): this;
+    once(event: 'specialRelationChange', listener: SpecialRelationshipChangedCallback): this;
+    once(event: 'userNameCardChange', listener: UserNameCardChangedCallback): this;
 }
 
 export class NIMUser extends ev.EventEmitter {

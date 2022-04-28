@@ -9,10 +9,10 @@ import { IMMessage } from '../def/msglog_def';
 export declare interface NIMNOS {
     // downloadComplete: 下载回调
     // uploadComplete: 上传回调
-    on(event: 'downloadComplete', listener: () => void): this;
-    on(event: 'uploadComplete', listener: () => void): this;
-    once(event: 'downloadComplete', listener: () => void): this;
-    once(event: 'uploadComplete', listener: () => void): this;
+    on(event: 'downloadComplete', listener: DownloadMediaCallback): this;
+    on(event: 'uploadComplete', listener: UploadMediaExCallback): this;
+    once(event: 'downloadComplete', listener: DownloadMediaCallback): this;
+    once(event: 'uploadComplete', listener: UploadMediaExCallback): this;
 }
 
 export class NIMNOS extends ev.EventEmitter {

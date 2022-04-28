@@ -2,16 +2,17 @@ import sdk from '../loader';
 import ev from 'events';
 import {
     NIMSubscribeEventAPI, EventData, PublishEventCallback, NIMEventType, NIMEventSubscribeSyncEventType,
-    SubscribeEventCallback, UnSubscribeEventCallback, BatchUnSubscribeEventCallback, QuerySubscribeEventCallback
+    SubscribeEventCallback, UnSubscribeEventCallback, BatchUnSubscribeEventCallback, QuerySubscribeEventCallback,
+    BatchPushEventCallback, PushEventCallback
 } from '../def/subscribe_event_def';
 
 export declare interface NIMSubscribeEvent {
     // push: 订阅的事件
     // batchPush: 批量接收订阅的事件
-    on(event: 'push', listener: () => void): this;
-    on(event: 'batchPush', listener: () => void): this;
-    once(event: 'push', listener: () => void): this;
-    once(event: 'batchPush', listener: () => void): this;
+    on(event: 'push', listener: PushEventCallback): this;
+    on(event: 'batchPush', listener: BatchPushEventCallback): this;
+    once(event: 'push', listener: PushEventCallback): this;
+    once(event: 'batchPush', listener: BatchPushEventCallback): this;
 }
 
 export class NIMSubscribeEvent extends ev.EventEmitter {

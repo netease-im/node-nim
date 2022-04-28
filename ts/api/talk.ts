@@ -1,7 +1,10 @@
 import sdk from '../loader';
 import ev from 'events';
 import { IMMessage, NIMMessageType } from '../def/msglog_def';
-import { NIMTalkAPI, RecallMsgsCallback } from '../def/talk_def';
+import {
+    MessageFilterCallback, NIMTalkAPI, RecallMsgsCallback, ReceiveBroadcastMsgCallback, ReceiveBroadcastMsgsCallback,
+    ReceiveMsgCallback, ReceiveMsgsCallback, SendMsgAckCallback, TeamNotificationFilterCallback
+} from '../def/talk_def';
 
 export declare interface NIMTalk {
     // sendMsg: 发送消息回调
@@ -12,22 +15,22 @@ export declare interface NIMTalk {
     // recallMsgs: 消息撤回通知
     // receiveBroadcastMsg: 接收广播消息
     // receiveBroadcastMsgs: 批量接收广播消息
-    on(event: 'sendMsg', listener: () => void): this;
-    on(event: 'receiveMsg', listener: () => void): this;
-    on(event: 'receiveMsgs', listener: () => void): this;
-    on(event: 'filterNotification', listener: () => void): this;
-    on(event: 'filterMsg', listener: () => void): this;
-    on(event: 'recallMsgs', listener: () => void): this;
-    on(event: 'receiveBroadcastMsg', listener: () => void): this;
-    on(event: 'receiveBroadcastMsgs', listener: () => void): this;
-    once(event: 'sendMsg', listener: () => void): this;
-    once(event: 'receiveMsg', listener: () => void): this;
-    once(event: 'receiveMsgs', listener: () => void): this;
-    once(event: 'filterNotification', listener: () => void): this;
-    once(event: 'filterMsg', listener: () => void): this;
-    once(event: 'recallMsgs', listener: () => void): this;
-    once(event: 'receiveBroadcastMsg', listener: () => void): this;
-    once(event: 'receiveBroadcastMsgs', listener: () => void): this;
+    on(event: 'sendMsg', listener: SendMsgAckCallback): this;
+    on(event: 'receiveMsg', listener: ReceiveMsgCallback): this;
+    on(event: 'receiveMsgs', listener: ReceiveMsgsCallback): this;
+    on(event: 'filterNotification', listener: TeamNotificationFilterCallback): this;
+    on(event: 'filterMsg', listener: MessageFilterCallback): this;
+    on(event: 'recallMsgs', listener: RecallMsgsCallback): this;
+    on(event: 'receiveBroadcastMsg', listener: ReceiveBroadcastMsgCallback): this;
+    on(event: 'receiveBroadcastMsgs', listener: ReceiveBroadcastMsgsCallback): this;
+    once(event: 'sendMsg', listener: SendMsgAckCallback): this;
+    once(event: 'receiveMsg', listener: ReceiveMsgCallback): this;
+    once(event: 'receiveMsgs', listener: ReceiveMsgsCallback): this;
+    once(event: 'filterNotification', listener: TeamNotificationFilterCallback): this;
+    once(event: 'filterMsg', listener: MessageFilterCallback): this;
+    once(event: 'recallMsgs', listener: RecallMsgsCallback): this;
+    once(event: 'receiveBroadcastMsg', listener: ReceiveBroadcastMsgCallback): this;
+    once(event: 'receiveBroadcastMsgs', listener: ReceiveBroadcastMsgsCallback): this;
 }
 
 export class NIMTalk extends ev.EventEmitter {

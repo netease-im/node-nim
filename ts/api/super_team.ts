@@ -8,8 +8,8 @@ import {
 
 export declare interface NIMSuperTeam {
     // superTeamEvent: 超大群事件
-    on(event: 'superTeamEvent', listener: () => void): this;
-    once(event: 'superTeamEvent', listener: () => void): this;
+    on(event: 'superTeamEvent', listener: SuperTeamEventCallback): this;
+    once(event: 'superTeamEvent', listener: SuperTeamEventCallback): this;
 }
 
 export class NIMSuperTeam extends ev.EventEmitter {

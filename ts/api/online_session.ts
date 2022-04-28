@@ -2,14 +2,14 @@ import sdk from '../loader';
 import ev from 'events';
 import { NIMSessionType } from '../def/session_def';
 import {
-    DeleteOnlineSessionInfoCallback, DeleteSessionParam, NIMOnlineSessionAPI, QueryOnlineSessionInfoCallback,
+    DeleteOnlineSessionInfoCallback, DeleteSessionParam, NIMOnlineSessionAPI, OnlineSessionChangedCallback, QueryOnlineSessionInfoCallback,
     QueryOnlineSessionListCallback, UpdateOnlineSessionInfoCallback
 } from '../def/online_session_def';
 
 export declare interface NIMOnlineSession {
     // change: 会话变更
-    on(event: 'change', listener: () => void): this;
-    once(event: 'change', listener: () => void): this;
+    on(event: 'change', listener: OnlineSessionChangedCallback): this;
+    once(event: 'change', listener: OnlineSessionChangedCallback): this;
 }
 
 export class NIMOnlineSession extends ev.EventEmitter {

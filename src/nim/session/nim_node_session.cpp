@@ -33,7 +33,7 @@ void NIMSession::InitEventHandlers() {
     RegisterSDKNotifyCallback("change", &nim::Session::RegChangeCb);
     RegisterSDKNotifyCallback("stickTop", &nim::Session::RegSetToStickTopSessionNotifyCB);
     RegisterSDKNotifyCallback("cancelStickTop", &nim::Session::RegCancelStickTopSessionNotifyCB);
-    RegisterSDKNotifyCallback("updateTtickTop", &nim::Session::RegUpdateStickTopSessionNotifyCB);
+    RegisterSDKNotifyCallback("updateStickTop", &nim::Session::RegUpdateStickTopSessionNotifyCB);
 }
 
 NIMSession::NIMSession(const Napi::CallbackInfo& info)

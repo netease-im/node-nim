@@ -1,11 +1,11 @@
 import sdk from '../loader';
 import ev from 'events';
-import { NIMDataSyncAPI } from '../def/data_sync_def';
+import { DataSyncCallback, NIMDataSyncAPI } from '../def/data_sync_def';
 
 export declare interface NIMDataSync {
     // complete: 数据同步完成
-    on(event: 'complete', listener: () => void): this;
-    once(event: 'complete', listener: () => void): this;
+    on(event: 'complete', listener: DataSyncCallback): this;
+    once(event: 'complete', listener: DataSyncCallback): this;
 }
 
 export class NIMDataSync extends ev.EventEmitter {

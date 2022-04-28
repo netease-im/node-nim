@@ -112,12 +112,17 @@ export interface TeamInfo {
 }
 
 export interface TeamMemberPropertyJsonValue {
-    tid: string,
-    type: NIMTeamUserType,
-    nick: string,
-    bits: number,
-    mute: number,
-    custom: string
+    type: NIMTeamUserType, // 群成员类型(NIMTeamUserType),默认kNIMTeamUserTypeNomal(0)
+    nick: string, // 群成员昵称
+    bits: number, // 群成员属性,位操作
+    custom: string, // 群成员自定义扩展字段,必须为可以解析为json的非格式化的字符串
+    readonly tid: string, // 群id
+    readonly accid: string, // 群成员id
+    readonly valid: boolean, // 群成员有效性标记位,有效1,无效0
+    readonly create_timetag: number, // 入群时间戳(毫秒)
+    readonly update_timetag: number, // 群成员信息上次更新时间戳(毫秒)
+    readonly mute: number, // 是否被禁言,0-非禁言(默认),1-禁言
+    readonly invitor_accid: string // 邀请者的accid 主动入群的时为空
 }
 
 export interface TeamMemberProperty {

@@ -10,8 +10,8 @@ import {
 
 export declare interface NIMTeam {
     // teamEvent: 群事件
-    on(event: 'teamEvent', listener: () => void): this;
-    once(event: 'teamEvent', listener: () => void): this;
+    on(event: 'teamEvent', listener: TeamEventCallback): this;
+    once(event: 'teamEvent', listener: TeamEventCallback): this;
 }
 
 export class NIMTeam extends ev.EventEmitter {
