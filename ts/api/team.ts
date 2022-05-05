@@ -5,13 +5,13 @@ import {
     NIMTeamAPI, TeamInfo, TeamEventCallback, QueryAllMyTeamsCallback, QueryAllMyTeamsInfoCallback,
     QueryTeamMyAllMemberInfosCallback, QueryTeamMembersCallback, QueryTeamMemberCallback, QueryTeamInfoCallback,
     QueryTeamMembersOnlineCallback, TeamMsgAckReadCallback, QueryTeamMembersInvitorCallback, QueryTeamsInfoCallback,
-    UpdateTInfoLocalCallback, GetTeamInfoBatchSFTransCallback, GetTeamInfoListCallback, TeamMemberProperty
+    UpdateTInfoLocalCallback, GetTeamInfoBatchSFTransCallback, GetTeamInfoListCallback, TeamMemberProperty, TeamEvent
 } from '../def/team_def';
 
 export declare interface NIMTeam {
     // teamEvent: 群事件
-    on(event: 'teamEvent', listener: TeamEventCallback): this;
-    once(event: 'teamEvent', listener: TeamEventCallback): this;
+    on(event: 'teamEvent', listener: (result: TeamEvent) => void): this;
+    once(event: 'teamEvent', listener: (result: TeamEvent) => void): this;
 }
 
 export class NIMTeam extends ev.EventEmitter {

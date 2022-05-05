@@ -3,13 +3,13 @@ import ev from 'events';
 import {
     QuerySuperTeamMyAllMemberInfosCallback, NIMSuperTeamAPI, SuperTeamEventCallback, SuperTeamInfo, SuperTeamMemberProperty,
     QueryAllMySuperTeamsCallback, QueryAllMySuperTeamsInfoCallback, QuerySuperTeamMembersCallback, QuerySuperTeamMemberCallback,
-    QuerySuperTeamInfoCallback
+    QuerySuperTeamInfoCallback, SuperTeamEvent
 } from 'ts/def/super_team_def';
 
 export declare interface NIMSuperTeam {
     // superTeamEvent: 超大群事件
-    on(event: 'superTeamEvent', listener: SuperTeamEventCallback): this;
-    once(event: 'superTeamEvent', listener: SuperTeamEventCallback): this;
+    on(event: 'superTeamEvent', listener: (result: SuperTeamEvent) => void): this;
+    once(event: 'superTeamEvent', listener: (result: SuperTeamEvent) => void): this;
 }
 
 export class NIMSuperTeam extends ev.EventEmitter {

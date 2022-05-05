@@ -4,8 +4,8 @@ import ev from 'events';
 
 export declare interface NIMPassThroughProxy {
     // receiveHttpMsg: 接受到 HTTP 透传消息
-    on(event: 'receiveHttpMsg', listener: ReceivedHttpMsgCallback): this;
-    once(event: 'receiveHttpMsg', listener: ReceivedHttpMsgCallback): this;
+    on(event: 'receiveHttpMsg', listener: (from_accid: string, body: string, timestamp: number) => void): this;
+    once(event: 'receiveHttpMsg', listener: (from_accid: string, body: string, timestamp: number) => void): this;
 }
 
 export class NIMPassThroughProxy extends ev.EventEmitter {

@@ -2,13 +2,13 @@ import sdk from '../loader';
 import ev from 'events';
 import {
     DeleteFriendOption, FriendProfile, NIMFriendAPI, FriendOptCallback, GetFriendProfileCallback,
-    GetFriendsListCallback, NIMVerifyType, FriendChangeCallback
+    GetFriendsListCallback, NIMVerifyType, FriendChangeEvent
 } from '../def/friend_def';
 
 export declare interface NIMFriend {
     // change: 好友变更通知
-    on(event: 'change', listener: FriendChangeCallback): this;
-    once(event: 'change', listener: FriendChangeCallback): this;
+    on(event: 'change', listener: (result: FriendChangeEvent) => void): this;
+    once(event: 'change', listener: (result: FriendChangeEvent) => void): this;
 }
 
 export class NIMFriend extends ev.EventEmitter {

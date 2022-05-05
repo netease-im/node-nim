@@ -2,17 +2,18 @@ import sdk from '../loader';
 import ev from 'events';
 import {
     DownloadMediaCallback, DownloadMediaExCallback, InitNosConfigParam, InitNosResultCallback,
-    NIMNOSAPI, NOSParams, ProgressCallback, ProgressExCallback, SafeURLToOriginURLCallback, SpeedCallback, TransferInfoCallback, UploadMediaExCallback
+    NIMNOSAPI, NOSParams, ProgressCallback, ProgressExCallback, SafeURLToOriginURLCallback, SpeedCallback, TransferInfoCallback,
+    UploadMediaExCallback, UploadMediaResult
 } from '../def/nos_def';
 import { IMMessage } from '../def/msglog_def';
 
 export declare interface NIMNOS {
     // downloadComplete: 下载回调
     // uploadComplete: 上传回调
-    on(event: 'downloadComplete', listener: DownloadMediaCallback): this;
-    on(event: 'uploadComplete', listener: UploadMediaExCallback): this;
-    once(event: 'downloadComplete', listener: DownloadMediaCallback): this;
-    once(event: 'uploadComplete', listener: UploadMediaExCallback): this;
+    on(event: 'downloadComplete', listener: (rescode: number, filePath: string, callId: string, resId: string) => void): this;
+    on(event: 'uploadComplete', listener: (rescode: number, result: UploadMediaResult) => void): this;
+    once(event: 'downloadComplete', listener: (rescode: number, filePath: string, callId: string, resId: string) => void): this;
+    once(event: 'uploadComplete', listener: (rescode: number, result: UploadMediaResult) => void): this;
 }
 
 export class NIMNOS extends ev.EventEmitter {

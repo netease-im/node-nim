@@ -2,13 +2,13 @@ import sdk from '../loader';
 import ev from 'events';
 import {
     DeleteCachedFileCallback, DetectProxyCallback, ExceptionCallback, GetCachedFileInfoCallback,
-    NIMCachedFileType, NIMGlobalAPI, NIMProxyType, SDKDBErrorCallback, SDKFeedbackCallback, UploadSDKLogCallback
+    NIMCachedFileType, NIMGlobalAPI, NIMProxyType, SDKDBErrorInfo, SDKFeedbackCallback, UploadSDKLogCallback
 } from '../def/global_def';
 
 export declare interface NIMGlobal {
     // dbError: SDK DB操作出错
-    on(event: 'dbError', listener: SDKDBErrorCallback): this;
-    once(event: 'dbError', listener: SDKDBErrorCallback): this;
+    on(event: 'dbError', listener: (result: SDKDBErrorInfo) => void): this;
+    once(event: 'dbError', listener: (result: SDKDBErrorInfo) => void): this;
 }
 
 export class NIMGlobal extends ev.EventEmitter {

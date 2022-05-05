@@ -116,8 +116,8 @@ export interface TeamMemberPropertyJsonValue {
     nick: string, // 群成员昵称
     bits: number, // 群成员属性,位操作
     custom: string, // 群成员自定义扩展字段,必须为可以解析为json的非格式化的字符串
-    readonly tid: string, // 群id
-    readonly accid: string, // 群成员id
+    tid: string, // 群id
+    accid: string, // 群成员id
     readonly valid: boolean, // 群成员有效性标记位,有效1,无效0
     readonly create_timetag: number, // 入群时间戳(毫秒)
     readonly update_timetag: number, // 群成员信息上次更新时间戳(毫秒)

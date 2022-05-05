@@ -5,7 +5,8 @@ import {
     CancelToStickTopSessionCallback, DeleteHasmoreRoammsgCallback, DeleteSessionRoamingMessageCallback,
     MultiUnreadCountZeroInfo, NIMSessionAPI, NIMSessionType, QueryAllHasmoreRoammsgCallback, QueryHasmoreRoammsgCallback,
     QuerySessionDataCallback, QuerySessionListCallback, QueryStickTopSessionListCallback, SessionChangeCallback,
-    SetMultiUnreadCountZeroAsyncCallback, SetToStickTopSessionCallback, UpdateHasmoreRoammsgCallback, UpdateStickTopSessionCallback
+    SessionData, SetMultiUnreadCountZeroAsyncCallback, SetToStickTopSessionCallback, UpdateHasmoreRoammsgCallback,
+    UpdateStickTopSessionCallback
 } from '../def/session_def';
 
 export declare interface NIMSession {
@@ -13,14 +14,14 @@ export declare interface NIMSession {
     // stickTop: 置顶会话通知
     // cancelStickTop: 取消置顶会话通知
     // updateStickTop: 更新置顶会话通知
-    on(event: 'change', listener: SessionChangeCallback): this;
-    on(event: 'stickTop', listener: SetToStickTopSessionCallback): this;
-    on(event: 'cancelStickTop', listener: CancelToStickTopSessionCallback): this;
-    on(event: 'updateStickTop', listener: UpdateStickTopSessionCallback): this;
-    once(event: 'change', listener: SessionChangeCallback): this;
-    once(event: 'stickTop', listener: SetToStickTopSessionCallback): this;
-    once(event: 'cancelStickTop', listener: CancelToStickTopSessionCallback): this;
-    once(event: 'updateStickTop', listener: UpdateStickTopSessionCallback): this;
+    on(event: 'change', listener: (rescode: number, result: SessionData, count: number) => void): this;
+    on(event: 'stickTop', listener: (result: string) => void): this;
+    on(event: 'cancelStickTop', listener: (session_id: string, session_type: NIMSessionType) => void): this;
+    on(event: 'updateStickTop', listener: (result: string) => void): this;
+    once(event: 'change', listener: (rescode: number, result: SessionData, count: number) => void): this;
+    once(event: 'stickTop', listener: (result: string) => void): this;
+    once(event: 'cancelStickTop', listener: (session_id: string, session_type: NIMSessionType) => void): this;
+    once(event: 'updateStickTop', listener: (result: string) => void): this;
 }
 
 export class NIMSession extends ev.EventEmitter {

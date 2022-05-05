@@ -9,10 +9,10 @@ import {
 export declare interface NIMSubscribeEvent {
     // push: 订阅的事件
     // batchPush: 批量接收订阅的事件
-    on(event: 'push', listener: PushEventCallback): this;
-    on(event: 'batchPush', listener: BatchPushEventCallback): this;
-    once(event: 'push', listener: PushEventCallback): this;
-    once(event: 'batchPush', listener: BatchPushEventCallback): this;
+    on(event: 'push', listener: (rescode: number, result: EventData) => void): this;
+    on(event: 'batchPush', listener: (rescode: number, result: Array<EventData>) => void): this;
+    once(event: 'push', listener: (rescode: number, result: EventData) => void): this;
+    once(event: 'batchPush', listener: (rescode: number, result: Array<EventData>) => void): this;
 }
 
 export class NIMSubscribeEvent extends ev.EventEmitter {

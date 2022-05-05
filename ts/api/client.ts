@@ -1,6 +1,6 @@
 import {
     NIMClientAPI, GetCurrentServerTimeCallback, LoginCallback, LogoutCallback, MultiportPushConfigCallback,
-    NIMLoginState, NIMLogoutType, SDKConfig, KickOtherCallback, KickoutCallback, MultiSpotLoginCallback, DisconnectCallback
+    NIMLoginState, NIMLogoutType, SDKConfig, MultiSpotLoginRes, KickOtherRes, KickoutRes, LoginRes
 } from '../def/client_def';
 import sdk from '../loader';
 import ev from 'events';
@@ -12,18 +12,18 @@ export declare interface NIMClient {
     // kickout: NIM客户端被踢
     // kickOtherClient: NIM客户端将本帐号的其他端踢下线结果
     // relogin: NIM客户端自动重连
-    on(event: 'disconnect', listener: DisconnectCallback): this;
-    on(event: 'multispotLogin', listener: MultiSpotLoginCallback): this;
-    on(event: 'syncMultiportPushConfig', listener: MultiportPushConfigCallback): this;
-    on(event: 'kickout', listener: KickoutCallback): this;
-    on(event: 'kickOtherClient', listener: KickOtherCallback): this;
-    on(event: 'relogin', listener: LoginCallback): this;
-    once(event: 'disconnect', listener: DisconnectCallback): this;
-    once(event: 'multispotLogin', listener: MultiSpotLoginCallback): this;
-    once(event: 'syncMultiportPushConfig', listener: MultiportPushConfigCallback): this;
-    once(event: 'kickout', listener: KickoutCallback): this;
-    once(event: 'kickOtherClient', listener: KickOtherCallback): this;
-    once(event: 'relogin', listener: LoginCallback): this;
+    on(event: 'disconnect', listener: () => void): this;
+    on(event: 'multispotLogin', listener: (result: MultiSpotLoginRes) => void): this;
+    on(event: 'syncMultiportPushConfig', listener: (rescode: number, open: boolean) => void): this;
+    on(event: 'kickout', listener: (result: KickoutRes) => void): this;
+    on(event: 'kickOtherClient', listener: (result: KickOtherRes) => void): this;
+    on(event: 'relogin', listener: (result: LoginRes) => void): this;
+    once(event: 'disconnect', listener: () => void): this;
+    once(event: 'multispotLogin', listener: (result: MultiSpotLoginRes) => void): this;
+    once(event: 'syncMultiportPushConfig', listener: (rescode: number, open: boolean) => void): this;
+    once(event: 'kickout', listener: (result: KickoutRes) => void): this;
+    once(event: 'kickOtherClient', listener: (result: KickOtherRes) => void): this;
+    once(event: 'relogin', listener: (result: LoginRes) => void): this;
 }
 
 export class NIMClient extends ev.EventEmitter {

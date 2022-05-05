@@ -15,16 +15,16 @@ export declare interface NIMTalkEx {
     // pin: Pin消息
     // unpin: Unpin消息
     // updatePin: 更新Pin消息
-    on(event: 'addQuickComment', listener: AddQuickCommentCallback): this;
-    on(event: 'removeQuickComment', listener: RemoveQuickCommentCallback): this;
-    on(event: 'pin', listener: PinMessageCallback): this;
-    on(event: 'unpin', listener: UnPinMessageCallback): this;
-    on(event: 'updatePin', listener: UpdatePinMessageCallback): this;
-    once(event: 'addQuickComment', listener: AddQuickCommentCallback): this;
-    once(event: 'removeQuickComment', listener: RemoveQuickCommentCallback): this;
-    once(event: 'pin', listener: PinMessageCallback): this;
-    once(event: 'unpin', listener: UnPinMessageCallback): this;
-    once(event: 'updatePin', listener: UpdatePinMessageCallback): this;
+    on(event: 'addQuickComment', listener: (code: number, info: QuickCommentInfo) => void): this;
+    on(event: 'removeQuickComment', listener: (code: number, id: string) => void): this;
+    on(event: 'pin', listener: (code: number, session: string, to_type: number, info: PinMessageInfo) => void): this;
+    on(event: 'unpin', listener: (code: number, session: string, to_type: number, id: string) => void): this;
+    on(event: 'updatePin', listener: (code: number, session: string, to_type: number, info: PinMessageInfo) => void): this;
+    once(event: 'addQuickComment', listener: (code: number, info: QuickCommentInfo) => void): this;
+    once(event: 'removeQuickComment', listener: (code: number, id: string) => void): this;
+    once(event: 'pin', listener: (code: number, session: string, to_type: number, info: PinMessageInfo) => void): this;
+    once(event: 'unpin', listener: (code: number, session: string, to_type: number, id: string) => void): this;
+    once(event: 'updatePin', listener: (code: number, session: string, to_type: number, info: PinMessageInfo) => void): this;
 }
 
 export class NIMTalkEx extends ev.EventEmitter {

@@ -6,20 +6,20 @@ import {
     NIMMsgLogStatus, ModifySingleMsglogCallback, NIMMsgLogSubStatus, DBFunctionCallback, ImportDbPrgCallback, MessageStatusChangedCallback,
     LogsBackupExportInfo, LogsBackupImportInfo, DeleteHistoryOnLineAsyncCallback, DeleteHistoryOnLineAsyncExCallback, DeleteMessageSelfAsyncCallback,
     QueryMessageIsThreadRootCallback, QueryMsgAsyncParam, QueryMessageOnlineCallback, QueryThreadHistoryMsgAsyncParam, QueryThreadHistoryMsgCallback,
-    FullTextSearchOnlineAsyncParam, FullTextSearchOnlineAsyncCallback, DeleteHistoryMessagesNotifyCallback, DeleteMsglogSelfNotifyCallback, IMMessage,
-    QueryMsgByKeywordOnlineParam, QueryMsgOnlineAsyncParam
+    FullTextSearchOnlineAsyncParam, FullTextSearchOnlineAsyncCallback, IMMessage,
+    QueryMsgByKeywordOnlineParam, QueryMsgOnlineAsyncParam, DeleteMsglogSelfNotifyItemInfo, DeleteMsglogSelfNotifyParam, MessageStatusChangedResult
 } from '../def/msglog_def';
 
 export declare interface NIMMsgLog {
     // localMsgDeleted: 单向删除消息记录通知
     // onlineMsgDeleted: 删除某一会话的云端的历史记录通知
     // msgStatusChanged: 消息状态变更
-    on(event: 'localMsgDeleted', listener: DeleteMsglogSelfNotifyCallback): this;
-    on(event: 'onlineMsgDeleted', listener: DeleteHistoryMessagesNotifyCallback): this;
-    on(event: 'msgStatusChanged', listener: MessageStatusChangedCallback): this;
-    once(event: 'localMsgDeleted', listener: DeleteMsglogSelfNotifyCallback): this;
-    once(event: 'onlineMsgDeleted', listener: DeleteHistoryMessagesNotifyCallback): this;
-    once(event: 'msgStatusChanged', listener: MessageStatusChangedCallback): this;
+    on(event: 'localMsgDeleted', listener: (result: Array<DeleteMsglogSelfNotifyItemInfo>) => void): this;
+    on(event: 'onlineMsgDeleted', listener: (result: Array<DeleteMsglogSelfNotifyParam>) => void): this;
+    on(event: 'msgStatusChanged', listener: (result: MessageStatusChangedResult) => void): this;
+    once(event: 'localMsgDeleted', listener: (result: Array<DeleteMsglogSelfNotifyItemInfo>) => void): this;
+    once(event: 'onlineMsgDeleted', listener: (result: Array<DeleteMsglogSelfNotifyParam>) => void): this;
+    once(event: 'msgStatusChanged', listener: (result: MessageStatusChangedResult) => void): this;
 }
 
 export class NIMMsgLog extends ev.EventEmitter {
