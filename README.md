@@ -15,9 +15,9 @@ node-nim will download the nim SDK which has the same version, you can override 
 For more detailed documentation, changelog and tech support. See https://dev.yunxin.163.com/. 
 
 ## Installation
-node-nim runs on Node.js and is available as a NPM package.
+node-nim runs on Node.js and is available as a NPM package. You can specify architecture and platform by `--arch` and `--platform` flags.
 ```
-npm install node-nim --save-dev
+npm install node-nim --save-dev --arch=x64 --platform=win32
 ```
 
 ## Build From Source

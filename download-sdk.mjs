@@ -2,8 +2,8 @@ import fetch from 'node-fetch';
 import compareVersions from 'compare-versions';
 import download from 'download';
 
-const arch = process.arch;
-const platform = process.platform;
+const arch = process.env.npm_config_arch || process.arch;
+const platform = process.env.npm_config_platform || process.platform;
 const sdk_group = "message";
 const sdk_name = "nim";
 const sdk_path = "sdk";
