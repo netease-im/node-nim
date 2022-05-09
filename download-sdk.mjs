@@ -13,19 +13,19 @@ if (process.env.NIM_SDK_VERSION) {
     sdk_version = process.env.NIM_SDK_VERSION;
 }
 // fetch publish list
-fetch('http://publish.netease.im/api/list').then((res) => res.json()).then((publish_json) => {
+fetch('https://admin.netease.im/public-service/free/publish/list').then((res) => res.json()).then((publish_json) => {
     // get sdk list
     if (!sdk_url) {
         let sdk_list = [];
         let latest_version = "0.0.0";
         let latest_sdk_list = [];
-        Object.keys(publish_json[sdk_group]).forEach((temp) => {
+        Object.keys(publish_json.data[sdk_group]).forEach((temp) => {
             if (compareVersions.compare(latest_version, temp, '<')) {
                 latest_version = temp;
-                latest_sdk_list = publish_json[sdk_group][temp];
+                latest_sdk_list = publish_json.data[sdk_group][temp];
             }
             if (sdk_version === temp) {
-                sdk_list = publish_json[sdk_group][temp];
+                sdk_list = publish_json.data[sdk_group][temp];
             }
         });
         if (sdk_list.length === 0) {
