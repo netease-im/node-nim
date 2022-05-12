@@ -10,14 +10,14 @@
   - [Quick Start](#quick-start)
 
 ## Introduction
-node-nim is a wrapper of [NetEase IM](https://netease.im/).  
-node-nim will download the nim SDK which has the same version, you can override the version by add `NIM_SDK_VERSION="${version}"` or `NIM_SDK_URL="${url}"` to environment variables.  
+node-nim is a wrapper of [NetEase IM](https://netease.im/).   
 For more detailed documentation, changelog and tech support. See https://dev.yunxin.163.com/. 
 
 ## Installation
 node-nim runs on Node.js and is available as a NPM package. You can specify architecture and platform by `--arch` and `--platform` flags.
+node-nim will download the nim SDK which has the same version, you can override the version by add `--nim-sdk-version` or `--nim-sdk-url` flag.
 ```
-npm install node-nim --save-dev --arch=x64 --platform=win32
+npm install node-nim --save-dev --arch=x64 --platform=win32 --nim-sdk-version=9.1.0
 ```
 
 ## Build From Source

@@ -7,10 +7,10 @@ const platform = process.env.npm_config_platform || process.platform;
 const sdk_group = "message";
 const sdk_name = "nim";
 const sdk_path = "sdk";
-let sdk_url = process.env.NIM_SDK_URL;
+let sdk_url = process.env.npm_config_nim_sdk_url
 let sdk_version = process.env.npm_package_version.split('-')[0];
-if (process.env.NIM_SDK_VERSION) {
-    sdk_version = process.env.NIM_SDK_VERSION;
+if (process.env.npm_config_nim_sdk_version) {
+    sdk_version = process.env.npm_config_nim_sdk_version;
 }
 // fetch publish list
 fetch('https://admin.netease.im/public-service/free/publish/list').then((res) => res.json()).then((publish_json) => {
