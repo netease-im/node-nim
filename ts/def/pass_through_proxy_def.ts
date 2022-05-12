@@ -9,13 +9,15 @@ export type ReceivedHttpMsgCallback = (from_accid: string, body: string, timesta
 export type SendHttpRequestCallback = (res_code: number, header: string, body: string, jsonExtension: string) => void
 
 export interface NIMPassThroughProxyAPI {
-    InitEventHandlers(): void;
+    InitEventHandlers(): void
 
-    SendHttpRequest(host: string,
+    SendHttpRequest(
+        host: string,
         path: string,
         method: NIMSendHttpRequestMethods,
         headers: string,
         body: string,
         jsonExtension: string,
-        cb: SendHttpRequestCallback): void;
+        cb: SendHttpRequestCallback
+    ): void
 }

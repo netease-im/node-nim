@@ -1,39 +1,28 @@
 {
-  "compilerOptions": {
-    "outDir": "js",
-    "baseUrl": ".",
-    "target": "es6",
-    "strict": true,
-    "module": "commonjs",
-    "esModuleInterop": true,
-    "allowJs": true,
-    "moduleResolution": "node",
-    "lib": [
-      "es6",
-      "dom"
-    ],
-    "declaration": true,
-    "declarationDir": "types",
-    "sourceMap": true
-  },
-  "typedocOptions": {
-    "entryPoints": [
-      "ts/nim.ts",
-      "ts/def"
-    ],
-    "entryPointStrategy": "expand",
-    "plugin": [
-      "typedoc-plugin-markdown",
-      "typedoc-github-wiki-theme"
-    ],
-    "theme": "github-wiki",
-    "readme": "none",
-    "excludeProtected": "true",
-    "out": "doc",
-    "sort": "source-order",
-    "hideGenerator": "true"
-  },
-  "include": [
-    "ts/**/*"
-  ]
+    "compilerOptions": {
+        "outDir": "js",
+        "baseUrl": ".",
+        "target": "es6",
+        "strict": true,
+        "module": "commonjs",
+        "esModuleInterop": true,
+        "allowJs": true,
+        "moduleResolution": "node",
+        "lib": ["es6", "dom"],
+        "declaration": true,
+        "declarationDir": "types",
+        "sourceMap": true
+    },
+    "typedocOptions": {
+        "entryPoints": ["ts/nim.ts", "ts/def"],
+        "entryPointStrategy": "expand",
+        "plugin": ["typedoc-plugin-markdown", "typedoc-github-wiki-theme"],
+        "theme": "github-wiki",
+        "readme": "none",
+        "excludeProtected": "true",
+        "out": "doc",
+        "sort": "source-order",
+        "hideGenerator": "true"
+    },
+    "include": ["ts/**/*"]
 }
