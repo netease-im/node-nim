@@ -83,19 +83,19 @@ public:
         return Napi::String::New(info.Env(), param_ref_value);
     }
 
-    template <typename TApi, TApi api, typename std::enable_if_t<!std::is_member_function_pointer<TApi>::value, nullptr_t> = nullptr>
+    template <typename TApi, TApi api, typename std::enable_if_t<!std::is_member_function_pointer<TApi>::value, std::nullptr_t> = nullptr>
     Napi::Value InvokeApi(const Napi::CallbackInfo& info) {
         return _InvokeStaticApi(info, api);
     }
-    template <typename TApi, TApi api, typename std::enable_if_t<std::is_member_function_pointer<TApi>::value, nullptr_t> = nullptr>
+    template <typename TApi, TApi api, typename std::enable_if_t<std::is_member_function_pointer<TApi>::value, std::nullptr_t> = nullptr>
     Napi::Value InvokeApi(const Napi::CallbackInfo& info) {
         return _InvokeApi(info, api);
     }
-    template <typename T, typename std::enable_if_t<!std::is_std_function<T>::value, nullptr_t> = nullptr>
+    template <typename T, typename std::enable_if_t<!std::is_std_function<T>::value, std::nullptr_t> = nullptr>
     T MakeNotifyCallbackParam(const std::string& notify_event) {
         return T();
     }
-    template <typename T, typename std::enable_if_t<std::is_std_function<T>::value, nullptr_t> = nullptr>
+    template <typename T, typename std::enable_if_t<std::is_std_function<T>::value, std::nullptr_t> = nullptr>
     T MakeNotifyCallbackParam(const std::string& notify_event) {
         return MakeNotifyCallback<T>(notify_event.c_str());
     }
@@ -126,7 +126,7 @@ private:
         };
     }
 
-    template <typename TR, typename... Args, typename std::enable_if<std::is_void<TR>::value, nullptr_t>::type = nullptr>
+    template <typename TR, typename... Args, typename std::enable_if<std::is_void<TR>::value, std::nullptr_t>::type = nullptr>
     TR NotifyCallback(const std::string& flag, Args... args) {
         auto callback = [this, flag, args...](const ApiEnv& env, const ApiFunction& js_callback, const void* value) {
             ApiValue res = emitter_.Call({Napi::String::New(env, flag), ts_cpp_conversion::StructToObject(env, args)...});
@@ -134,7 +134,7 @@ private:
         tsfn_.NonBlockingCall(reinterpret_cast<void*>(0), callback);
     }
 
-    template <typename TR, typename... Args, typename std::enable_if<!std::is_void<TR>::value, nullptr_t>::type = nullptr>
+    template <typename TR, typename... Args, typename std::enable_if<!std::is_void<TR>::value, std::nullptr_t>::type = nullptr>
     TR NotifyCallback(const std::string& flag, Args... args) {
         std::promise<TR> promise;
         std::future<TR> future = promise.get_future();
@@ -146,24 +146,24 @@ private:
         return future.get();
     }
 
-    template <typename R, typename C, typename... Args, typename std::enable_if<!std::is_void<R>::value, nullptr_t>::type = nullptr>
+    template <typename R, typename C, typename... Args, typename std::enable_if<!std::is_void<R>::value, std::nullptr_t>::type = nullptr>
     ApiValue _InvokeApi(const ApiObjectWrap& info, R (C::*f)(Args...)) {
         auto _value = CppInvoker::Invoke(info, f, GetCurrentService<C>(this));
         return ApiValue::From(info.Env(), ts_cpp_conversion::StructToObject(info.Env(), _value));
     }
-    template <typename R, typename C, typename... Args, typename std::enable_if<std::is_void<R>::value, nullptr_t>::type = nullptr>
+    template <typename R, typename C, typename... Args, typename std::enable_if<std::is_void<R>::value, std::nullptr_t>::type = nullptr>
     ApiValue _InvokeApi(const ApiObjectWrap& info, R (C::*f)(Args...)) {
         CppInvoker::Invoke(info, f, GetCurrentService<C>(this));
         return info.This();
     }
 
-    template <typename R, typename... Args, typename std::enable_if<!std::is_void<R>::value, nullptr_t>::type = nullptr>
+    template <typename R, typename... Args, typename std::enable_if<!std::is_void<R>::value, std::nullptr_t>::type = nullptr>
     APIStatic ApiValue _InvokeStaticApi(const ApiObjectWrap& info, R (*f)(Args...)) {
         auto _tuple = CppInvoker::NapiCallback2Tuple<Args...>(info);
         auto _value = CppInvoker::TupleCall(f, _tuple);
         return ApiValue::From(info.Env(), ts_cpp_conversion::StructToObject(info.Env(), _value));
     }
-    template <typename R, typename... Args, typename std::enable_if<std::is_void<R>::value, nullptr_t>::type = nullptr>
+    template <typename R, typename... Args, typename std::enable_if<std::is_void<R>::value, std::nullptr_t>::type = nullptr>
     APIStatic ApiValue _InvokeStaticApi(const ApiObjectWrap& info, R (*f)(Args...)) {
         auto _tuple = CppInvoker::NapiCallback2Tuple<Args...>(info);
         CppInvoker::TupleCall(f, _tuple);

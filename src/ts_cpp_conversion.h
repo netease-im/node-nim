@@ -97,12 +97,12 @@ static T ObjectToStruct(Napi::Env env, const Napi::Value& value) {
     return _struct;
 }
 
-template <typename T, typename std::enable_if<std::is_enum<T>::value, nullptr_t>::type = nullptr>
+template <typename T, typename std::enable_if<std::is_enum<T>::value, std::nullptr_t>::type = nullptr>
 static napi_value StructToObject(Napi::Env env, const T& value) {
     return Napi::Number::New(env, static_cast<double>(value));
 }
 
-template <typename T, typename std::enable_if<!std::is_enum<T>::value, nullptr_t>::type = nullptr>
+template <typename T, typename std::enable_if<!std::is_enum<T>::value, std::nullptr_t>::type = nullptr>
 static napi_value StructToObject(Napi::Env env, const T& value) {
     std::string _struct_json_text = xpack::json::encode(value);
     Napi::Object json = env.Global().Get("JSON").As<Napi::Object>();
