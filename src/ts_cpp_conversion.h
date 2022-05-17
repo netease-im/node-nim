@@ -113,46 +113,90 @@ static napi_value StructToObject(Napi::Env env, const T& value) {
 }  // namespace ts_cpp_conversion
 template <>
 bool ts_cpp_conversion::ObjectToStruct<bool>(Napi::Env env, const Napi::Value& value) {
+    if (!value.IsBoolean()) {
+        Napi::Error::New(env, " boolean type error").ThrowAsJavaScriptException();
+        return false;
+    }
     return value.As<Napi::Boolean>();
 }
 template <>
 int8_t ts_cpp_conversion::ObjectToStruct<int8_t>(Napi::Env env, const Napi::Value& value) {
+    if (!value.IsNumber()) {
+        Napi::Error::New(env, " int8_t type error").ThrowAsJavaScriptException();
+        return 0;
+    }
     return value.As<Napi::Number>().Int32Value();
 }
 template <>
 uint8_t ts_cpp_conversion::ObjectToStruct<uint8_t>(Napi::Env env, const Napi::Value& value) {
+    if (!value.IsNumber()) {
+        Napi::Error::New(env, " uint8_t type error").ThrowAsJavaScriptException();
+        return 0;
+    }
     return value.As<Napi::Number>().Uint32Value();
 }
 template <>
 int16_t ts_cpp_conversion::ObjectToStruct<int16_t>(Napi::Env env, const Napi::Value& value) {
+    if (!value.IsNumber()) {
+        Napi::Error::New(env, " int16_t type error").ThrowAsJavaScriptException();
+        return 0;
+    }
     return value.As<Napi::Number>().Int32Value();
 }
 template <>
 uint16_t ts_cpp_conversion::ObjectToStruct<uint16_t>(Napi::Env env, const Napi::Value& value) {
+    if (!value.IsNumber()) {
+        Napi::Error::New(env, " uint16_t type error").ThrowAsJavaScriptException();
+        return 0;
+    }
     return value.As<Napi::Number>().Uint32Value();
 }
 template <>
 int32_t ts_cpp_conversion::ObjectToStruct<int32_t>(Napi::Env env, const Napi::Value& value) {
+    if (!value.IsNumber()) {
+        Napi::Error::New(env, " int32_t type error").ThrowAsJavaScriptException();
+        return 0;
+    }
     return value.As<Napi::Number>().Int32Value();
 }
 template <>
 uint32_t ts_cpp_conversion::ObjectToStruct<uint32_t>(Napi::Env env, const Napi::Value& value) {
+    if (!value.IsNumber()) {
+        Napi::Error::New(env, " uint32_t type error").ThrowAsJavaScriptException();
+        return 0;
+    }
     return value.As<Napi::Number>().Uint32Value();
 }
 template <>
 int64_t ts_cpp_conversion::ObjectToStruct<int64_t>(Napi::Env env, const Napi::Value& value) {
+    if (!value.IsNumber()) {
+        Napi::Error::New(env, " int64_t type error").ThrowAsJavaScriptException();
+        return 0;
+    }
     return value.As<Napi::Number>().Int64Value();
 }
 template <>
 uint64_t ts_cpp_conversion::ObjectToStruct<uint64_t>(Napi::Env env, const Napi::Value& value) {
+    if (!value.IsNumber()) {
+        Napi::Error::New(env, " uint64_t type error").ThrowAsJavaScriptException();
+        return 0;
+    }
     return value.As<Napi::Number>().Int64Value();
 }
 template <>
 float ts_cpp_conversion::ObjectToStruct<float>(Napi::Env env, const Napi::Value& value) {
+    if (!value.IsNumber()) {
+        Napi::Error::New(env, " float type error").ThrowAsJavaScriptException();
+        return 0;
+    }
     return value.As<Napi::Number>().FloatValue();
 }
 template <>
 double ts_cpp_conversion::ObjectToStruct<double>(Napi::Env env, const Napi::Value& value) {
+    if (!value.IsNumber()) {
+        Napi::Error::New(env, " double type error").ThrowAsJavaScriptException();
+        return 0;
+    }
     return value.As<Napi::Number>().DoubleValue();
 }
 // template <>
@@ -165,8 +209,12 @@ std::string ts_cpp_conversion::ObjectToStruct<std::string>(Napi::Env env, const 
         Napi::Object json = env.Global().Get("JSON").As<Napi::Object>();
         Napi::Function stringify = json.Get("stringify").As<Napi::Function>();
         return stringify.Call(json, {value}).As<Napi::String>();
+    } else if (value.IsString()) {
+        return value.As<Napi::String>().operator std::string();
+    } else {
+        Napi::Error::New(env, " string type error").ThrowAsJavaScriptException();
+        return "";
     }
-    return value.As<Napi::String>().operator std::string();
 }
 template <>
 napi_value ts_cpp_conversion::StructToObject<int8_t>(Napi::Env env, const int8_t& value) {
