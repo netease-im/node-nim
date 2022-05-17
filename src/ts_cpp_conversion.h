@@ -87,7 +87,7 @@ static T ObjectToStruct(Napi::Env env, const Napi::Value& value) {
         _object_json_text = stringify.Call(json, {value}).As<Napi::String>();
         try {
             xpack::json::decode(_object_json_text, _struct);
-            ParamRegInfoCollector::GetInstance()->UpdateParamRefValue<T>(xpack::json::encode(_struct));
+            // ParamRegInfoCollector::GetInstance()->UpdateParamRefValue<T>(xpack::json::encode(_struct));
         } catch (const std::runtime_error& error) {
             throw(std::string(error.what()));
         } catch (const std::string& error) {
@@ -114,7 +114,7 @@ static napi_value StructToObject(Napi::Env env, const T& value) {
 template <>
 bool ts_cpp_conversion::ObjectToStruct<bool>(Napi::Env env, const Napi::Value& value) {
     if (!value.IsBoolean()) {
-        Napi::Error::New(env, " boolean type error").ThrowAsJavaScriptException();
+        Napi::Error::New(env, "boolean type error").ThrowAsJavaScriptException();
         return false;
     }
     return value.As<Napi::Boolean>();
@@ -122,7 +122,7 @@ bool ts_cpp_conversion::ObjectToStruct<bool>(Napi::Env env, const Napi::Value& v
 template <>
 int8_t ts_cpp_conversion::ObjectToStruct<int8_t>(Napi::Env env, const Napi::Value& value) {
     if (!value.IsNumber()) {
-        Napi::Error::New(env, " int8_t type error").ThrowAsJavaScriptException();
+        Napi::Error::New(env, "int8_t type error").ThrowAsJavaScriptException();
         return 0;
     }
     return value.As<Napi::Number>().Int32Value();
@@ -130,7 +130,7 @@ int8_t ts_cpp_conversion::ObjectToStruct<int8_t>(Napi::Env env, const Napi::Valu
 template <>
 uint8_t ts_cpp_conversion::ObjectToStruct<uint8_t>(Napi::Env env, const Napi::Value& value) {
     if (!value.IsNumber()) {
-        Napi::Error::New(env, " uint8_t type error").ThrowAsJavaScriptException();
+        Napi::Error::New(env, "uint8_t type error").ThrowAsJavaScriptException();
         return 0;
     }
     return value.As<Napi::Number>().Uint32Value();
@@ -138,7 +138,7 @@ uint8_t ts_cpp_conversion::ObjectToStruct<uint8_t>(Napi::Env env, const Napi::Va
 template <>
 int16_t ts_cpp_conversion::ObjectToStruct<int16_t>(Napi::Env env, const Napi::Value& value) {
     if (!value.IsNumber()) {
-        Napi::Error::New(env, " int16_t type error").ThrowAsJavaScriptException();
+        Napi::Error::New(env, "int16_t type error").ThrowAsJavaScriptException();
         return 0;
     }
     return value.As<Napi::Number>().Int32Value();
@@ -146,7 +146,7 @@ int16_t ts_cpp_conversion::ObjectToStruct<int16_t>(Napi::Env env, const Napi::Va
 template <>
 uint16_t ts_cpp_conversion::ObjectToStruct<uint16_t>(Napi::Env env, const Napi::Value& value) {
     if (!value.IsNumber()) {
-        Napi::Error::New(env, " uint16_t type error").ThrowAsJavaScriptException();
+        Napi::Error::New(env, "uint16_t type error").ThrowAsJavaScriptException();
         return 0;
     }
     return value.As<Napi::Number>().Uint32Value();
@@ -154,7 +154,7 @@ uint16_t ts_cpp_conversion::ObjectToStruct<uint16_t>(Napi::Env env, const Napi::
 template <>
 int32_t ts_cpp_conversion::ObjectToStruct<int32_t>(Napi::Env env, const Napi::Value& value) {
     if (!value.IsNumber()) {
-        Napi::Error::New(env, " int32_t type error").ThrowAsJavaScriptException();
+        Napi::Error::New(env, "int32_t type error").ThrowAsJavaScriptException();
         return 0;
     }
     return value.As<Napi::Number>().Int32Value();
@@ -162,7 +162,7 @@ int32_t ts_cpp_conversion::ObjectToStruct<int32_t>(Napi::Env env, const Napi::Va
 template <>
 uint32_t ts_cpp_conversion::ObjectToStruct<uint32_t>(Napi::Env env, const Napi::Value& value) {
     if (!value.IsNumber()) {
-        Napi::Error::New(env, " uint32_t type error").ThrowAsJavaScriptException();
+        Napi::Error::New(env, "uint32_t type error").ThrowAsJavaScriptException();
         return 0;
     }
     return value.As<Napi::Number>().Uint32Value();
@@ -170,7 +170,7 @@ uint32_t ts_cpp_conversion::ObjectToStruct<uint32_t>(Napi::Env env, const Napi::
 template <>
 int64_t ts_cpp_conversion::ObjectToStruct<int64_t>(Napi::Env env, const Napi::Value& value) {
     if (!value.IsNumber()) {
-        Napi::Error::New(env, " int64_t type error").ThrowAsJavaScriptException();
+        Napi::Error::New(env, "int64_t type error").ThrowAsJavaScriptException();
         return 0;
     }
     return value.As<Napi::Number>().Int64Value();
@@ -178,7 +178,7 @@ int64_t ts_cpp_conversion::ObjectToStruct<int64_t>(Napi::Env env, const Napi::Va
 template <>
 uint64_t ts_cpp_conversion::ObjectToStruct<uint64_t>(Napi::Env env, const Napi::Value& value) {
     if (!value.IsNumber()) {
-        Napi::Error::New(env, " uint64_t type error").ThrowAsJavaScriptException();
+        Napi::Error::New(env, "uint64_t type error").ThrowAsJavaScriptException();
         return 0;
     }
     return value.As<Napi::Number>().Int64Value();
@@ -186,7 +186,7 @@ uint64_t ts_cpp_conversion::ObjectToStruct<uint64_t>(Napi::Env env, const Napi::
 template <>
 float ts_cpp_conversion::ObjectToStruct<float>(Napi::Env env, const Napi::Value& value) {
     if (!value.IsNumber()) {
-        Napi::Error::New(env, " float type error").ThrowAsJavaScriptException();
+        Napi::Error::New(env, "float type error").ThrowAsJavaScriptException();
         return 0;
     }
     return value.As<Napi::Number>().FloatValue();
@@ -194,7 +194,7 @@ float ts_cpp_conversion::ObjectToStruct<float>(Napi::Env env, const Napi::Value&
 template <>
 double ts_cpp_conversion::ObjectToStruct<double>(Napi::Env env, const Napi::Value& value) {
     if (!value.IsNumber()) {
-        Napi::Error::New(env, " double type error").ThrowAsJavaScriptException();
+        Napi::Error::New(env, "double type error").ThrowAsJavaScriptException();
         return 0;
     }
     return value.As<Napi::Number>().DoubleValue();
@@ -212,7 +212,7 @@ std::string ts_cpp_conversion::ObjectToStruct<std::string>(Napi::Env env, const 
     } else if (value.IsString()) {
         return value.As<Napi::String>().operator std::string();
     } else {
-        Napi::Error::New(env, " string type error").ThrowAsJavaScriptException();
+        Napi::Error::New(env, "string type error").ThrowAsJavaScriptException();
         return "";
     }
 }

@@ -21,8 +21,17 @@ bool xpack_xtype_decode(OBJ& obj, const char* key, nim_cpp_wrapper_util::Json::V
 
 template <class OBJ>
 bool xpack_xtype_encode(OBJ& obj, const char* key, const nim_cpp_wrapper_util::Json::Value& val, const Extend* ext) {
-    std::string str = nim::GetJsonStringWithNoStyled(val);
-    return obj.encode(key, str, ext);
+    nim_cpp_wrapper_util::Json::Value json_val;
+    json_val[key] = val;
+    std::string str = nim::GetJsonStringWithNoStyled(json_val);
+    if (!str.empty()) {
+        xpack::JsonDecoder decoder(str);
+        xpack::JsonData data;
+        data.xpack_decode(decoder, key, ext);
+        return obj.encode(key, data, ext);
+    } else {
+        return obj.encode(key, str, ext);
+    }
 }
 
 // std::function
