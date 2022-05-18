@@ -68,7 +68,7 @@ function testSession(test_info) {
         })
         describe('#setAllUnreadCountZeroAsync', function () {
             it('setAllUnreadCountZeroAsync', function () {
-                session.setAllUnreadCountZeroAsync(function (rescode, result, count) {}, '')
+                session.setAllUnreadCountZeroAsync(function (rescode, result, count) { }, '')
             })
         })
         describe('#setSessionTop', function () {
@@ -192,15 +192,15 @@ function testSession(test_info) {
                 })
                 talk.sendMsg(
                     {
-                        to_type: 0,
-                        to_accid: test_info.assistUser,
-                        time: new Date().getTime(),
-                        msg_type: 0,
-                        msg_body: 'Send from NIM node test.',
-                        client_msg_id: new Date().getTime().toString()
+                        session_type_: 0, // p2p
+                        receiver_accid_: test_info.assistUser,
+                        timetag_: new Date().getTime(),
+                        type_: 0, // text message
+                        content_: 'Send from NIM node quick start.',
+                        client_msg_id_: new Date().getTime().toString() // use an uuid
                     },
                     '',
-                    function () {}
+                    function () { }
                 )
             })
         })

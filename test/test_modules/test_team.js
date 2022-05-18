@@ -53,15 +53,15 @@ function testTeam(test_info) {
                 })
                 talk.sendMsg(
                     {
-                        to_type: 1,
-                        to_accid: team_data.team_id_,
-                        time: new Date().getTime(),
-                        msg_type: 0,
-                        msg_body: 'Send from NIM node test.',
-                        client_msg_id: new Date().getTime().toString()
+                        session_type_: 1,
+                        receiver_accid_: team_data.team_id_,
+                        timetag_: new Date().getTime(),
+                        type_: 0, // text message
+                        content_: 'Send from NIM node test.',
+                        client_msg_id_: new Date().getTime().toString() // use an uuid
                     },
                     '',
-                    function () {}
+                    function () { }
                 )
             })
         })
@@ -332,12 +332,12 @@ function testTeam(test_info) {
         })
         describe('#teamMsgAckRead', function () {
             it('teamMsgAckRead', function () {
-                team.teamMsgAckRead(team_data.team_id_, [immessage], function (tid, success_ids, failure_ids, ignored_ids) {}, '')
+                team.teamMsgAckRead(team_data.team_id_, [immessage], function (tid, success_ids, failure_ids, ignored_ids) { }, '')
             })
         })
         describe('#teamMsgQueryUnreadList', function () {
             it('teamMsgQueryUnreadList', function () {
-                team.teamMsgQueryUnreadList(team_data.team_id_, immessage, [test_info.mainUser], function (result) {}, '')
+                team.teamMsgQueryUnreadList(team_data.team_id_, immessage, [test_info.mainUser], function (result) { }, '')
             })
         })
         describe('#queryTeamMembersInvitor', function () {

@@ -4,12 +4,14 @@
 
 ## Table of Contents
 
--   [Introduction](#introduction)
--   [Installation](#installation)
--   [Build From Source](#build-from-source)
--   [Unit Test](#unit-test)
--   [Sample Code](#sample-code)
--   [Quick Start](#quick-start)
+- [NetEase IM Node.js addon wrapper](#netease-im-nodejs-addon-wrapper)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Installation](#installation)
+  - [Build From Source](#build-from-source)
+  - [Unit Test](#unit-test)
+  - [Sample Code](#sample-code)
+  - [Quick Start](#quick-start)
 
 ## Introduction
 
@@ -81,12 +83,12 @@ client.login(
 
             talk.sendMsg(
                 {
-                    to_type: 0, // p2p
-                    to_accid: 'receiver_accid',
-                    time: new Date().getTime(),
-                    msg_type: 0, // text message
-                    msg_body: 'Send from NIM node quick start.',
-                    client_msg_id: new Date().getTime().toString() // use an uuid
+                    session_type_: 0, // p2p
+                    receiver_accid_: 'receiver_accid',
+                    timetag_: new Date().getTime(),
+                    type_: 0, // text message
+                    content_: 'Send from NIM node quick start.',
+                    client_msg_id_: new Date().getTime().toString() // use an uuid
                 },
                 '',
                 function () {}

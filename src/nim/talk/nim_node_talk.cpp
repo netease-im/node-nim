@@ -14,9 +14,10 @@ namespace node_nim {
 GetCurrentSDKServiceImpl(NIMTalk, NIMTalk, holder_service);
 Napi::Object NIMTalk::Init(Napi::Env env, Napi::Object exports) {
     return InternalInit("NIMTalk", env, exports,
-        {RegApi("InitEventHandlers", &NIMTalk::InitEventHandlers), RegApi("SendMsg", &Talk::SendMsg), RegApi("StopSendMsg", &Talk::StopSendMsg),
-            RegApi("RecallMsg", &Talk::RecallMsg2), RegApi("GetAttachmentPathFromMsg", &Talk::GetAttachmentPathFromMsg),
-            RegApi("ReplyMessage", &Talk::ReplyMessage)});
+        {RegApi("InitEventHandlers", &NIMTalk::InitEventHandlers),
+            RegAmbApi("SendMsg", &Talk::SendMsg, void (*)(const nim::IMMessage&, const std::string&, Talk::FileUpPrgCallback*)),
+            RegApi("StopSendMsg", &Talk::StopSendMsg), RegApi("RecallMsg", &Talk::RecallMsg2),
+            RegApi("GetAttachmentPathFromMsg", &Talk::GetAttachmentPathFromMsg), RegApi("ReplyMessage", &Talk::ReplyMessage)});
 }
 
 void NIMTalk::InitEventHandlers() {

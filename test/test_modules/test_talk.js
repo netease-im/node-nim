@@ -31,12 +31,12 @@ function testTalk(test_info) {
                     )
                 })
                 let obj = {
-                    to_type: 0,
-                    to_accid: test_info.mainUser,
-                    time: new Date().getTime(),
-                    msg_type: 0,
-                    msg_body: 'Send from NIM node test.',
-                    client_msg_id: new Date().getTime().toString()
+                    session_type_: 0, // p2p
+                    receiver_accid_: test_info.mainUser,
+                    timetag_: new Date().getTime(),
+                    type_: 0, // text message
+                    content_: 'Send from NIM node test.',
+                    client_msg_id_: new Date().getTime().toString() // use an uuid
                 }
                 talk.sendMsg(obj, '')
             })
