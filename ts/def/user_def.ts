@@ -41,7 +41,7 @@ export interface UserNameCard {
 
 export interface SpecialRelationshipChangeEvent {
     type_: NIMUserSpecialRelationshipChangeType /**< 黑名单/静音名单更新事件类型 */
-    content_: string /**< 黑名单/静音名单更新事件内容，根据事件类型调用ParseXXXChange接口（nim_cpp_user.h）解析该内容 */
+    content_: object /**< 黑名单/静音名单更新事件内容 */
 }
 
 export type SpecialRelationshipChangedCallback = (result: SpecialRelationshipChangeEvent) => void
