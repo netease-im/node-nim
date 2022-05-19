@@ -41,7 +41,7 @@ template <class OBJ>
 bool xpack_xtype_decode(OBJ& obj, const char* key, SpecialRelationshipChangeEvent& val, const Extend* ext) {
     xpack::JsonData data;
     data.xpack_decode(obj, key, ext);
-    val.type_ = data["type_"].GetString();
+    val.type_ = (NIMUserSpecialRelationshipChangeType)data["type_"].GetInt();
     val.content_ = data["content_"].String();
     return true;
 }

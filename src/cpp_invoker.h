@@ -128,7 +128,7 @@ public:
 #define CallbackDescription(Callback) ((Callback*)(nullptr))
 #define DefCallbackType(TReturn, ...) std::function<TReturn(__VA_ARGS__)>
 
-    template <typename TReturn, typename... TArgs, typename std::enable_if<!std::is_void<TReturn>::value, nullptr_t>::type = nullptr>
+    template <typename TReturn, typename... TArgs, typename std::enable_if<!std::is_void<TReturn>::value, std : nullptr_t>::type = nullptr>
     static DefCallbackType(TReturn, TArgs...) ToThreadSafeCallback(Napi::Env env,
         const Napi::Function& fun,
         const std::string& fun_location_name,
@@ -152,7 +152,7 @@ public:
         return callback;
     }
 
-    template <typename TReturn, typename... TArgs, typename std::enable_if<std::is_void<TReturn>::value, nullptr_t>::type = nullptr>
+    template <typename TReturn, typename... TArgs, typename std::enable_if<std::is_void<TReturn>::value, std : nullptr_t>::type = nullptr>
     static DefCallbackType(TReturn, TArgs...) ToThreadSafeCallback(Napi::Env env,
         const Napi::Function& fun,
         const std::string& fun_location_name,
