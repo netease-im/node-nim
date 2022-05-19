@@ -8,7 +8,6 @@ if(NOT NODE_NIM_VERSION)
     message(STATUS "NODE_NIM_VERSION is not set, use default version")
     set(NODE_NIM_VERSION "0.0.0")
 endif()
-CONFIGURE_FILE(${CMAKE_CURRENT_LIST_DIR}/package.json.in ${CMAKE_CURRENT_LIST_DIR}/package.json)
 
 # platform specific settings
 if (WIN32)
