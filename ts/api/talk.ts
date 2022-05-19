@@ -1,30 +1,32 @@
 import sdk from '../loader'
 import ev from 'events'
 import { IMMessage, NIMMessageType } from '../def/msglog_def'
-import { BroadcastMessage, NIMTalkAPI, RecallMsgNotify, RecallMsgsCallback, SendMessageArc } from '../def/talk_def'
+import {
+    BroadcastMessage,
+    MessageFilterCallback,
+    NIMTalkAPI,
+    RecallMsgNotify,
+    RecallMsgsCallback,
+    SendMessageArc,
+    TeamNotificationFilterCallback
+} from '../def/talk_def'
 
 export declare interface NIMTalk {
     // sendMsg: 发送消息回调
     // receiveMsg: 接收消息
     // receiveMsgs: 批量接收消息，如离线/漫游消息
-    // filterNotification: 过滤通知
-    // filterMsg: 过滤消息
     // recallMsgs: 消息撤回通知
     // receiveBroadcastMsg: 接收广播消息
     // receiveBroadcastMsgs: 批量接收广播消息
     on(event: 'sendMsg', listener: (result: SendMessageArc) => void): this
     on(event: 'receiveMsg', listener: (result: IMMessage) => void): this
     on(event: 'receiveMsgs', listener: (result: Array<IMMessage>) => void): this
-    on(event: 'filterNotification', listener: (result: IMMessage) => void): this
-    on(event: 'filterMsg', listener: (result: IMMessage) => boolean): this
     on(event: 'recallMsgs', listener: (rescode: number, result: Array<RecallMsgNotify>) => void): this
     on(event: 'receiveBroadcastMsg', listener: (result: BroadcastMessage) => void): this
     on(event: 'receiveBroadcastMsgs', listener: (result: Array<BroadcastMessage>) => void): this
     once(event: 'sendMsg', listener: (result: SendMessageArc) => void): this
     once(event: 'receiveMsg', listener: (result: IMMessage) => void): this
     once(event: 'receiveMsgs', listener: (result: Array<IMMessage>) => void): this
-    once(event: 'filterNotification', listener: (result: IMMessage) => void): this
-    once(event: 'filterMsg', listener: (result: IMMessage) => boolean): this
     once(event: 'recallMsgs', listener: (rescode: number, result: Array<RecallMsgNotify>) => void): this
     once(event: 'receiveBroadcastMsg', listener: (result: BroadcastMessage) => void): this
     once(event: 'receiveBroadcastMsgs', listener: (result: Array<BroadcastMessage>) => void): this
@@ -96,5 +98,23 @@ export class NIMTalk extends ev.EventEmitter {
      */
     replyMessage(msg: IMMessage, json_reply_msg: string): void {
         return this.talk.ReplyMessage(msg, json_reply_msg)
+    }
+
+    /** (全局回调)注册消息过滤接口 （堵塞线程，谨慎使用，避免耗时行为）
+     * @param[in] filter    过滤接口
+     * @param[in] json_extension json扩展参数（备用,目前不需要）
+     * @return void 无返回值
+     */
+    regMessageFilter(cb: MessageFilterCallback, jsonExtension: string): void {
+        return this.talk.RegMessageFilter(cb, jsonExtension)
+    }
+
+    /** (全局回调)注册群通知过滤接口 （堵塞线程，谨慎使用，避免耗时行为）
+     * @param[in] json_extension json扩展参数（备用,目前不需要）
+     * @param[in] filter    过滤接口
+     * @return void 无返回值
+     */
+    regTeamNotificationFilter(cb: TeamNotificationFilterCallback, jsonExtension: string): void {
+        return this.talk.RegTeamNotificationFilter(cb, jsonExtension)
     }
 }

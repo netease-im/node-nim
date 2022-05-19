@@ -32,8 +32,8 @@ ReflectionDefinition_O(RecallMsgNotify,
 CallbackSpecialization(Talk::SendMsgAckCallback);
 CallbackSpecialization(Talk::ReceiveMsgCallback);
 CallbackSpecialization(Talk::ReceiveMsgsCallback);
+CallbackSpecialization(Talk::MessageFilter);
 CallbackPointerSpecialization(Talk::FileUpPrgCallback);
-CallbackSpecialization(Talk::TeamNotificationFilter);
 CallbackSpecialization(Talk::RecallMsgsCallback);
 CallbackSpecialization(Talk::ReceiveBroadcastMsgCallback);
 CallbackSpecialization(Talk::ReceiveBroadcastMsgsCallback);

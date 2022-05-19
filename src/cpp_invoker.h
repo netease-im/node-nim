@@ -127,7 +127,32 @@ public:
 
 #define CallbackDescription(Callback) ((Callback*)(nullptr))
 #define DefCallbackType(TReturn, ...) std::function<TReturn(__VA_ARGS__)>
-    template <typename TReturn, typename... TArgs>
+
+    template <typename TReturn, typename... TArgs, typename std::enable_if<!std::is_void<TReturn>::value, nullptr_t>::type = nullptr>
+    static DefCallbackType(TReturn, TArgs...) ToThreadSafeCallback(Napi::Env env,
+        const Napi::Function& fun,
+        const std::string& fun_location_name,
+        const DefCallbackType(TReturn, TArgs...) * realcb,
+        std::size_t maxQueueSize = 0,
+        std::size_t initialThreadCount = 1) {
+        auto tsfn = Napi::ThreadSafeFunction::New(env, fun, fun_location_name, maxQueueSize, initialThreadCount);
+        auto callback = [tsfn](TArgs... param) -> TReturn {
+            auto tup = std::make_tuple(std::forward<TArgs>(param)...);
+            std::promise<TReturn> promise;
+            auto future = promise.get_future();
+            auto tsfn_cb = [tup, &promise](const Napi::Env& env, const Napi::Function& js_callback, const void* value) -> Napi::Value {
+                auto&& args = TupleToCbArgs(env, tup);
+                auto return_value = js_callback.Call(args);
+                promise.set_value(ts_cpp_conversion::ObjectToStruct<TReturn>(env, return_value));
+                return env.Null();
+            };
+            tsfn.NonBlockingCall((void*)0, tsfn_cb);
+            return future.get();
+        };
+        return callback;
+    }
+
+    template <typename TReturn, typename... TArgs, typename std::enable_if<std::is_void<TReturn>::value, nullptr_t>::type = nullptr>
     static DefCallbackType(TReturn, TArgs...) ToThreadSafeCallback(Napi::Env env,
         const Napi::Function& fun,
         const std::string& fun_location_name,
@@ -141,45 +166,6 @@ public:
                 auto&& args = TupleToCbArgs(env, tup);
                 js_callback.Call(args);
                 return env.Null();
-            };
-            tsfn.NonBlockingCall((void*)0, tsfn_cb);
-            return TReturn();
-        };
-        return callback;
-    }
-
-    template <typename TReturn, typename TArg>
-    static DefCallbackType(TReturn, TArg) ToThreadSafeCallback(Napi::Env env,
-        const Napi::Function& fun,
-        const std::string& fun_location_name,
-        const DefCallbackType(TReturn, TArg) * realcb,
-        std::size_t maxQueueSize = 0,
-        std::size_t initialThreadCount = 1) {
-        auto tsfn = Napi::ThreadSafeFunction::New(env, fun, fun_location_name, maxQueueSize, initialThreadCount);
-        auto callback = [tsfn](TArg param) -> TReturn {
-            auto tup = std::make_tuple(std::forward<TArg>(param));
-            auto tsfn_cb = [tup](const Napi::Env& env, const Napi::Function& js_callback, const void* value) -> Napi::Value {
-                auto&& args = TupleToCbArgs(env, tup);
-                js_callback.Call(args);
-                return env.Null();
-            };
-            tsfn.NonBlockingCall((void*)0, tsfn_cb);
-            return TReturn();
-        };
-        return callback;
-    }
-
-    template <typename TReturn>
-    static DefCallbackType(TReturn) ToThreadSafeCallback(const Napi::Env& env,
-        const Napi::Function& fun,
-        const std::string& fun_location_name,
-        const DefCallbackType(TReturn) * realcb,
-        std::size_t maxQueueSize = 0,
-        std::size_t initialThreadCount = 1) {
-        auto tsfn = Napi::ThreadSafeFunction::New(env, fun, fun_location_name, maxQueueSize, initialThreadCount);
-        auto callback = [tsfn]() -> TReturn {
-            auto tsfn_cb = [](const Napi::Env& env, const Napi::Function& js_callback, const void* value) -> Napi::Value {
-                return js_callback.Call(std::vector<napi_value>());
             };
             tsfn.NonBlockingCall((void*)0, tsfn_cb);
             return TReturn();

@@ -40,7 +40,7 @@ export type ReceiveMsgsCallback = (result: Array<IMMessage>) => void
 export type RecallMsgsCallback = (rescode: number, result: Array<RecallMsgNotify>) => void
 export type ReceiveBroadcastMsgCallback = (result: BroadcastMessage) => void
 export type ReceiveBroadcastMsgsCallback = (result: Array<BroadcastMessage>) => void
-export type TeamNotificationFilterCallback = (result: IMMessage) => void
+export type TeamNotificationFilterCallback = (result: IMMessage) => boolean
 export type MessageFilterCallback = (result: IMMessage) => boolean
 
 export interface NIMTalkAPI {
@@ -55,4 +55,8 @@ export interface NIMTalkAPI {
     GetAttachmentPathFromMsg(msg: IMMessage): string
 
     ReplyMessage(msg: IMMessage, json_reply_msg: string): void
+
+    RegMessageFilter(cb: MessageFilterCallback, jsonExtension: string): void
+
+    RegTeamNotificationFilter(cb: TeamNotificationFilterCallback, jsonExtension: string): void
 }

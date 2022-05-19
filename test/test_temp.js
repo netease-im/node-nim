@@ -1,4 +1,4 @@
-const NIM = require('../js/nim')
+const { NIMClient, NIMTalk } = require('../js/nim')
 const assert = require('assert')
 const test_info = {
     appKey: '45c6af3c98409b18a84451215d0bdd6e',
@@ -9,14 +9,13 @@ const test_info = {
     superTeamID: '219184'
 }
 
-const client = new NIM.NIMClient()
-const friend = new NIM.NIMFriend()
+const client = new NIMClient()
+const talk = new NIMTalk()
 function emit_function(type, data) {
     console.log(type, data)
 }
 
 var result = client.init('', 'NIM_SDK_NODE_TEST', '', {
-    database_encrypt_key_: 'abcdefghijklmnopqrstuvwxyz012345'
 })
 
 client.initEventHandlers()
@@ -30,16 +29,15 @@ client.login(
     (loginResult) => {
         console.log('loginResult', loginResult)
         if (loginResult.login_step_ == 3) {
-            result = friend.request(
-                test_info.assistUser,
-                1,
-                'Request msg',
-                (res_code) => {
-                    assert.strictEqual(res_code, 200)
-                },
-                ''
-            )
+
         }
     },
     ''
 )
+talk.initEventHandlers()
+talk.on("receiveMsg", (msg) => {
+    console.log(msg)
+})
+talk.regMessageFilter((result) => {
+    return false
+}, "")
