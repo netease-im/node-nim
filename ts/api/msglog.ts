@@ -31,7 +31,8 @@ import {
     QueryMsgOnlineAsyncParam,
     DeleteMsglogSelfNotifyItemInfo,
     DeleteMsglogSelfNotifyParam,
-    MessageStatusChangedResult
+    MessageStatusChangedResult,
+    QueryMsgByOptionsAsyncParam
 } from '../def/msglog_def'
 
 export declare interface NIMMsgLog {
@@ -164,50 +165,16 @@ export class NIMMsgLog extends ev.EventEmitter {
     }
 
     /** 根据指定条件查询本地消息,使用此接口可以完成全局搜索等功能,具体请参阅开发手册
-     * @param queryRange	消息历史的检索范围（目前暂不支持某些范围的组合检索，详见NIMMsgLogQueryRange说明）
-     * @param ids			会话id（对方的account id或者群组tid）的集合，目前暂不支持多个的组合检索，详见NIMMsgLogQueryRange说明
-     * @param limit_count	本次查询的消息条数上限(最多100条)
-     * @param fromTime		起始时间点，单位：毫秒
-     * @param endTime		结束时间点，单位：毫秒
-     * @param endClientMsgId		结束查询的最后一条消息的end_client_msg_id(不包含在查询结果中)
-     * @param reverse		true：反向查询(按时间正序起查，正序排列)，false：按时间逆序起查，逆序排列（建议默认为false）
-     * @param msgType		检索的消息类型（目前只支持kNIMMessageTypeText、kNIMMessageTypeImage和kNIMMessageTypeFile这三种类型消息）
-     * @param searchContent
-     * 检索文本（目前只支持kNIMMessageTypeText和kNIMMessageTypeFile这两种类型消息的文本关键字检索，即支持文字消息和文件名的检索。如果合并检索，需使用未知类型消息kNIMMessageTypeUnknown）
-     * @param cb				在线查询消息的回调函数
-     * @param jsonExtension	json扩展参数（备用，目前不需要）
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @param param  查询参数
+     * @param cb	 在线查询消息的回调函数
+     * @return bool  检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
      * </pre>
      */
-    queryMsgByOptionsAsync(
-        queryRange: NIMMsgLogQueryRange,
-        ids: Array<string>,
-        limit_count: number,
-        fromTime: number,
-        endTime: number,
-        endClientMsgId: string,
-        reverse: boolean,
-        msgType: NIMMessageType,
-        searchContent: string,
-        cb: QueryMsgCallback,
-        jsonExtension: string
-    ): boolean {
-        return this.msglog.QueryMsgByOptionsAsync(
-            queryRange,
-            ids,
-            limit_count,
-            fromTime,
-            endTime,
-            endClientMsgId,
-            reverse,
-            msgType,
-            searchContent,
-            cb,
-            jsonExtension
-        )
+    queryMsgByOptionsAsync(param: QueryMsgByOptionsAsyncParam, cb: QueryMsgCallback): boolean {
+        return this.msglog.QueryMsgByOptionsAsync(param, cb)
     }
 
     /** 批量设置已读状态

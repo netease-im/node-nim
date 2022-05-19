@@ -374,19 +374,7 @@ export interface NIMMsgLogAPI {
         jsonExtension: string
     ): boolean
 
-    QueryMsgByOptionsAsync(
-        queryRange: NIMMsgLogQueryRange,
-        ids: Array<string>,
-        limit_count: number,
-        fromTime: number,
-        endTime: number,
-        endClientMsgId: string,
-        reverse: boolean,
-        msgType: NIMMessageType,
-        searchContent: string,
-        cb: QueryMsgCallback,
-        jsonExtension: string
-    ): boolean
+    QueryMsgByOptionsAsync(param: QueryMsgByOptionsAsyncParam, cb: QueryMsgCallback): boolean
 
     BatchStatusReadAsync(accid: string, to_type: NIMSessionType, cb: ModifyMultipleMsglogCallback, jsonExtension: string): boolean
 
