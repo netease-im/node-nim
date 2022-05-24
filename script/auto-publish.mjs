@@ -1,5 +1,5 @@
 import git_describe from 'git-describe'
-import { exec } from 'child_process'
+import { exec, execSync } from 'child_process'
 
 const git_info = git_describe.gitDescribeSync({ match: "*", customArguments: ["--exact-match"] })
 if (!git_info.tag) {
@@ -11,5 +11,6 @@ exec(`npm --no-git-tag-version version ${git_info.tag}`, (err, stdout, stderr) =
         console.error(err)
         return
     }
-    exec(`npm publish`)
+    console.log(stdout)
+    execSync(`npm publish`)
 })
