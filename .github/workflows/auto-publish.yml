@@ -16,9 +16,7 @@ jobs:
               with:
                   node-version: 16.x
 
-            - name: publish
-              run: npm install
-              run: npm run auto_publish
+            - run: npm install
+            - run: npm run auto_publish
               env:
-                NODE_AUTH_TOKEN: ${{secrets.NPM_PUBLISH_TOKEN}}
-
+                  NODE_AUTH_TOKEN: ${{secrets.NPM_PUBLISH_TOKEN}}
