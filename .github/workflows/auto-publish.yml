@@ -1,21 +1,22 @@
 name: Auto Publish On Tag Push
 
 on:
-  push:
-    tags:
-      - '*'
+    push:
+        tags:
+            - '*'
 
 jobs:
-  auto-publish:
-    runs-on: windows-latest
-    steps:
-    - uses: actions/checkout@v3
-    
-    - name: Use Node.js 16.x
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16.x
+    auto-publish:
+        runs-on: windows-latest
+        steps:
+            - uses: actions/checkout@v3
 
-    - name: publish
-      run: |
-        npm run auto_publish
+            - name: Use Node.js 16.x
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 16.x
+
+            - name: publish
+              run: |
+                  npm install
+                  npm run auto_publish
