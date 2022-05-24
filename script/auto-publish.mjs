@@ -11,5 +11,5 @@ exec(`npm --no-git-tag-version version ${git_info.tag}`, (err, stdout, stderr) =
         console.error(err)
         return
     }
-    exec(`npm publish --dry-run`)
+    exec(`npm publish`)
 })
