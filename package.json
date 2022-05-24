@@ -17,7 +17,6 @@
         "build_doc": "typedoc",
         "prepublish": "npm run build_ts",
         "install": "npm run download_sdk",
-        "auto_publish": "node script/auto-publish.mjs",
         "download_sdk": "node script/download-sdk.mjs"
     },
     "nyc": {
