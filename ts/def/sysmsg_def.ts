@@ -49,7 +49,7 @@ export interface SysMessageSetting {
     push_need_badge_: BoolStatus /**< 是否要做消息计数 */
     push_need_prefix_: BoolStatus /**< 需要推送昵称 */
     need_offline_: BoolStatus /**< 是否支持离线消息 */
-    push_payload_: string /**< 第三方自定义的推送属性，长度2048 */
+    push_payload_: object /**< 第三方自定义的推送属性，长度2048 */
     push_content_: string /**< 自定义推送文案，长度限制200字节 */
     anti_spam_enable_: BoolStatus /**< (功能暂时不开放)是否需要过易盾反垃圾 */
     anti_spam_content_: string /**< (功能暂时不开放)(可选)开发者自定义的反垃圾字段 */

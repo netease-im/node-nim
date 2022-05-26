@@ -180,9 +180,9 @@ export interface MessageSetting {
     push_need_prefix_: BoolStatus /**< 需要推送昵称 */
     routable_: BoolStatus /**< 是否要抄送 */
     need_offline_: BoolStatus /**< 是否支持离线消息 */
-    push_payload_: string /**< 第三方自定义的推送属性，长度2048 */
+    push_payload_: object /**< 第三方自定义的推送属性，长度2048, json object */
     push_content_: string /**< 自定义推送文案，长度限制200字节 */
-    server_ext_: string /**< 第三方扩展字段, 长度限制1024 */
+    server_ext_: object /**< 第三方扩展字段, 长度限制1024 */
     local_ext_: string /**< 本地扩展字段, 格式不限，长度限制1024 */
     is_force_push_: BoolStatus /**< 群组消息强推开关，强推全员设置true并强推列表为空 */
     force_push_ids_list_: Array<string> /**< 群组消息强推列表 */

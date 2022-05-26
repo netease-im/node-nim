@@ -29,13 +29,26 @@ client.login(
     (loginResult) => {
         console.log('loginResult', loginResult)
         if (loginResult.login_step_ == 3) {
-
+            talk.sendMsg({
+                session_type_: 0, // p2p
+                receiver_accid_: "zvc1",
+                timetag_: new Date().getTime(),
+                type_: 0, // text message
+                content_: 'Send from NIM node test.',
+                client_msg_id_: new Date().getTime().toString(), // use an uuid
+                msg_setting_: {
+                    push_payload_: { test: "qq" }
+                }
+            }, '')
         }
     },
     ''
 )
 talk.initEventHandlers()
 talk.on("receiveMsg", (msg) => {
+    console.log(msg)
+})
+talk.on("sendMsg", (msg) => {
     console.log(msg)
 })
 talk.regMessageFilter((result) => {
