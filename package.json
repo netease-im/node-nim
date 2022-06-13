@@ -1,6 +1,6 @@
 {
     "name": "node-nim",
-    "version": "0.0.0",
+    "version": "9.2.5-rc.2",
     "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
     "main": "js/nim.js",
     "types": "types/nim.d.ts",
