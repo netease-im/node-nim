@@ -8,7 +8,7 @@ let sdk_path = ''
 if (process.platform === 'win32') {
     sdk_path = path.join(__dirname, '../sdk/bin')
     process.env.PATH = `${sdk_path};${process.env.PATH}`
-} else if (process.platform === 'darwin') {
+} else {
     sdk_path = path.join(__dirname, '../sdk/lib')
 }
 let paths = [path.join(sdk_path, 'node-nim.node'), path.join(process.cwd(), 'node-nim.node'), path.join(path.dirname(process.execPath), 'node-nim.node')]
