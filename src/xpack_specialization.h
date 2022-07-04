@@ -1,6 +1,8 @@
+#include "cpp_invoker.h"
 #include "nim_cpp_wrapper/helper/nim_talk_helper.h"
 #include "nim_wrapper_util/nim_json_util.h"
 #include "xpack/json.h"
+
 #ifndef XPACK_SPECIALIZATION_H
 #define XPACK_SPECIALIZATION_H
 namespace xpack {
@@ -42,19 +44,18 @@ struct is_xpack_xtype<std::function<TR(Args...)>> {
 
 template <class OBJ, typename TR, typename... Args>
 bool xpack_xtype_decode(OBJ& obj, const char* key, std::function<TR(Args...)>& val, const Extend* ext) {
-    std::string str;
-    obj.decode(key, str, ext);
-    if (str.empty()) {
+    if (ts_cpp_conversion::ts_cpp_conversion_functions.empty()) {
         return false;
     }
-    // todo
+    val = CppInvoker::ToThreadSafeCallback(ts_cpp_conversion::ts_cpp_conversion_functions.front().env,
+        ts_cpp_conversion::ts_cpp_conversion_functions.front().function, "TempMemberCallback", (std::function<TR(Args...)>*)(nullptr));
+    ts_cpp_conversion::ts_cpp_conversion_functions.pop();
     return true;
 }
 
 template <class OBJ, typename TR, typename... Args>
 bool xpack_xtype_encode(OBJ& obj, const char* key, const std::function<TR(Args...)>& val, const Extend* ext) {
-    std::string str;
-    // todo
+    std::string str = "function is not supported to encode";
     return obj.encode(key, str, ext);
 }
 

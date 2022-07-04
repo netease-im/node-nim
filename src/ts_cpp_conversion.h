@@ -15,6 +15,7 @@
 #include <napi.h>
 #include <map>
 #include <mutex>
+#include <queue>
 #include <string>
 #include "xpack/json.h"
 
@@ -74,6 +75,21 @@ struct ParamRegistrar {
 namespace ts_cpp_conversion {
 using ptr_int8_t = char*;
 using ptr_void_t = void*;
+struct NapiFunctionDesc {
+    Napi::Env env;
+    Napi::Function function;
+};
+inline thread_local std::queue<NapiFunctionDesc> ts_cpp_conversion_functions;
+static void StoreFunctionInObject(Napi::Env env, const Napi::Object& obj) {
+    for (auto it = obj.begin(); it != obj.end(); ++it) {
+        auto member = (*it).second.operator Napi::Value();
+        if (member.IsFunction()) {
+            ts_cpp_conversion_functions.push({env, member.As<Napi::Function>()});
+        } else if (member.IsObject()) {
+            StoreFunctionInObject(env, member.As<Napi::Object>());
+        }
+    }
+}
 template <typename T>
 static T ObjectToStruct(Napi::Env env, const Napi::Value& value) {
     T _struct;
@@ -81,6 +97,9 @@ static T ObjectToStruct(Napi::Env env, const Napi::Value& value) {
         int64_t temp = value.As<Napi::Number>().Int64Value();
         _struct = *(reinterpret_cast<T*>(&temp));
     } else {
+        if (value.IsObject()) {
+            StoreFunctionInObject(env, value.As<Napi::Object>());
+        }
         std::string _object_json_text;
         Napi::Object json = env.Global().Get("JSON").As<Napi::Object>();
         Napi::Function stringify = json.Get("stringify").As<Napi::Function>();
