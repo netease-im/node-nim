@@ -15,7 +15,6 @@
 #include <napi.h>
 #include <tuple>
 #include "ts_cpp_conversion.h"
-#include "xpack_specialization.h"
 
 struct CppInvoker {
 public:

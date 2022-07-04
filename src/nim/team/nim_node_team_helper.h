@@ -10,8 +10,9 @@
 #define NIM_NODE_TEAM_HELPER_H
 #include "../msglog/nim_node_msglog_helper.h"
 #include "../user/nim_node_user_helper.h"
-#include "cpp_invoker.h"
 #include "nim_cpp_wrapper/nim_cpp_api.h"
+#include "xpack_specialization.h"
+
 using namespace nim;
 ReflectionDefinition_O(TeamEvent,
     res_code_,

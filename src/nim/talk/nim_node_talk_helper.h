@@ -9,8 +9,9 @@
 #ifndef NIM_NODE_TALK_HELPER_H
 #define NIM_NODE_TALK_HELPER_H
 #include "../msglog/nim_node_msglog_helper.h"
-#include "cpp_invoker.h"
 #include "nim_cpp_wrapper/nim_cpp_api.h"
+#include "xpack_specialization.h"
+
 using namespace nim;
 ReflectionDefinition_O(SendMessageArc, talk_id_, msg_id_, rescode_, msg_timetag_, third_party_callback_ext_, anti_spam_res_);
 ReflectionDefinition_O(BroadcastMessage, body_, time_, id_, from_id_);

@@ -16,7 +16,7 @@
 #include <future>
 #include <string>
 #include <vector>
-#include "cpp_invoker.h"
+#include "xpack_specialization.h"
 
 namespace {
 namespace traits {

@@ -8,8 +8,9 @@
  */
 #ifndef NIM_NODE_ONLINE_SESSION_HELPER_H
 #define NIM_NODE_ONLINE_SESSION_HELPER_H
-#include "cpp_invoker.h"
 #include "nim_cpp_wrapper/nim_cpp_api.h"
+#include "xpack_specialization.h"
+
 using namespace nim;
 ReflectionDefinition_O(SessionOnLineServiceHelper::SessionInfo, id_, type_, ext_, last_message_, update_time_, last_message_type_);
 ReflectionDefinition_O(SessionOnLineServiceHelper::QuerySessionListResult, res_code, session_list_, has_more_);

@@ -8,8 +8,9 @@
  */
 #ifndef NIM_NODE_PLUGIN_HELPER_H
 #define NIM_NODE_PLUGIN_HELPER_H
-#include "cpp_invoker.h"
 #include "nim_cpp_wrapper/nim_cpp_api.h"
+#include "xpack_specialization.h"
+
 using namespace nim;
 // Callback
 CallbackSpecialization(PluginIn::ChatRoomRequestEnterCallback);
