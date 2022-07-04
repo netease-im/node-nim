@@ -18,29 +18,30 @@ fetch('https://admin.netease.im/public-service/free/publish/list')
     .then((publish_json) => {
         // get sdk list
         if (!sdk_url) {
-            let sdk_list = []
             let latest_version = '0.0.0'
-            let latest_sdk_list = []
+            let latest_sdk_url = ''
             Object.keys(publish_json.data[sdk_group]).forEach((temp) => {
                 if (compareVersions.compare(latest_version, temp, '<')) {
                     latest_version = temp
-                    latest_sdk_list = publish_json.data[sdk_group][temp]
+                    publish_json.data[sdk_group][temp].forEach((member) => {
+                        if (member.filename.includes(sdk_name) && member.filename.includes(platform) && member.filename.includes(arch)) {
+                            latest_sdk_url = member.cdnlink
+                        }
+                    })
                 }
                 if (sdk_version === temp) {
-                    sdk_list = publish_json.data[sdk_group][temp]
+                    publish_json.data[sdk_group][temp].forEach((member) => {
+                        if (member.filename.includes(sdk_name) && member.filename.includes(platform) && member.filename.includes(arch)) {
+                            sdk_url = member.cdnlink
+                        }
+                    })
                 }
             })
-            if (sdk_list.length === 0) {
+            if (!sdk_url || sdk_url.length === 0) {
                 console.log(`${sdk_name} sdk version ${sdk_version} not found, use latest version ${latest_version}`)
-                sdk_list = latest_sdk_list
+                sdk_url = latest_sdk_url
             }
             console.log(`[node_pre_build] downloadSDK sdk_name:${sdk_name}, platform:${platform}, arch:${arch}`)
-            // use platform and arch to find the sdk
-            sdk_list.forEach((member) => {
-                if (member.filename.includes(sdk_name) && member.filename.includes(platform) && member.filename.includes(arch)) {
-                    sdk_url = member.cdnlink
-                }
-            })
         }
         if (!sdk_url) {
             console.error(`[node_pre_build] downloadSDK sdk_name:${sdk_name}, platform:${platform}, arch:${arch} not found`)
