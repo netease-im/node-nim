@@ -1,6 +1,6 @@
 import sdk from '../loader'
 import ev from 'events'
-import { NIMDataSyncAPI, NIMDataSyncStatus, NIMDataSyncType } from '../def/data_sync_def'
+import { NIMDataSyncAPI, NIMDataSyncStatus, NIMDataSyncType } from '../nim_def/data_sync_def'
 
 export declare interface NIMDataSync {
     // complete: 数据同步完成

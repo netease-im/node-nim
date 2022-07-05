@@ -1,6 +1,6 @@
 import sdk from '../loader'
 import ev from 'events'
-import { NIMToolAPI, NIMAppDataType, AudioInfo, GetAudioTextCallback, FilterClientAntispamCallback } from '../def/tool_def'
+import { NIMToolAPI, NIMAppDataType, AudioInfo, GetAudioTextCallback, FilterClientAntispamCallback } from '../nim_def/tool_def'
 
 export class NIMTool extends ev.EventEmitter {
     tool: NIMToolAPI

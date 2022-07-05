@@ -1,6 +1,6 @@
 import sdk from '../loader'
 import ev from 'events'
-import { IMMessage, NIMMessageType } from '../def/msglog_def'
+import { IMMessage, NIMMessageType } from '../nim_def/msglog_def'
 import {
     CancelToStickTopSessionCallback,
     DeleteHasmoreRoammsgCallback,
@@ -19,7 +19,7 @@ import {
     SetToStickTopSessionCallback,
     UpdateHasmoreRoammsgCallback,
     UpdateStickTopSessionCallback
-} from '../def/session_def'
+} from '../nim_def/session_def'
 
 export declare interface NIMSession {
     // change: 会话变更

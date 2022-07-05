@@ -1,6 +1,6 @@
 import sdk from '../loader'
 import ev from 'events'
-import { NIMSessionType } from '../def/session_def'
+import { NIMSessionType } from '../nim_def/session_def'
 import {
     NIMMsgLogAPI,
     QuerySingleMsgCallback,
@@ -33,7 +33,7 @@ import {
     DeleteMsglogSelfNotifyParam,
     MessageStatusChangedResult,
     QueryMsgByOptionsAsyncParam
-} from '../def/msglog_def'
+} from '../nim_def/msglog_def'
 
 export declare interface NIMMsgLog {
     // localMsgDeleted: 单向删除消息记录通知

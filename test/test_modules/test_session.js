@@ -1,4 +1,4 @@
-const NIM = require('../../js/nim')
+const NIM = require('../../js/node-nim')
 const assert = require('assert')
 
 const session = new NIM.NIMSession()
@@ -68,7 +68,7 @@ function testSession(test_info) {
         })
         describe('#setAllUnreadCountZeroAsync', function () {
             it('setAllUnreadCountZeroAsync', function () {
-                session.setAllUnreadCountZeroAsync(function (rescode, result, count) { }, '')
+                session.setAllUnreadCountZeroAsync(function (rescode, result, count) {}, '')
             })
         })
         describe('#setSessionTop', function () {
@@ -200,7 +200,7 @@ function testSession(test_info) {
                         client_msg_id_: new Date().getTime().toString() // use an uuid
                     },
                     '',
-                    function () { }
+                    function () {}
                 )
             })
         })

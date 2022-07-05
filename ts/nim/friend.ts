@@ -9,7 +9,7 @@ import {
     GetFriendsListCallback,
     NIMVerifyType,
     FriendChangeEvent
-} from '../def/friend_def'
+} from '../nim_def/friend_def'
 
 export declare interface NIMFriend {
     // change: 好友变更通知

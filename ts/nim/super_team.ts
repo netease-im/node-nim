@@ -1,63 +1,35 @@
 import sdk from '../loader'
 import ev from 'events'
-import { IMMessage } from '../def/msglog_def'
 import {
-    NIMTeamAPI,
-    TeamInfo,
-    TeamEventCallback,
-    QueryAllMyTeamsCallback,
-    QueryAllMyTeamsInfoCallback,
-    QueryTeamMyAllMemberInfosCallback,
-    QueryTeamMembersCallback,
-    QueryTeamMemberCallback,
-    QueryTeamInfoCallback,
-    QueryTeamMembersOnlineCallback,
-    TeamMsgAckReadCallback,
-    QueryTeamMembersInvitorCallback,
-    QueryTeamsInfoCallback,
-    UpdateTInfoLocalCallback,
-    GetTeamInfoBatchSFTransCallback,
-    GetTeamInfoListCallback,
-    TeamMemberProperty,
-    TeamEvent
-} from '../def/team_def'
+    QuerySuperTeamMyAllMemberInfosCallback,
+    NIMSuperTeamAPI,
+    SuperTeamEventCallback,
+    SuperTeamInfo,
+    SuperTeamMemberProperty,
+    QueryAllMySuperTeamsCallback,
+    QueryAllMySuperTeamsInfoCallback,
+    QuerySuperTeamMembersCallback,
+    QuerySuperTeamMemberCallback,
+    QuerySuperTeamInfoCallback,
+    SuperTeamEvent
+} from 'ts/nim_def/super_team_def'
 
-export declare interface NIMTeam {
-    // teamEvent: 群事件
-    on(event: 'teamEvent', listener: (result: TeamEvent) => void): this
-    once(event: 'teamEvent', listener: (result: TeamEvent) => void): this
+export declare interface NIMSuperTeam {
+    // superTeamEvent: 超大群事件
+    on(event: 'superTeamEvent', listener: (result: SuperTeamEvent) => void): this
+    once(event: 'superTeamEvent', listener: (result: SuperTeamEvent) => void): this
 }
 
-export class NIMTeam extends ev.EventEmitter {
-    team: NIMTeamAPI
+export class NIMSuperTeam extends ev.EventEmitter {
+    team: NIMSuperTeamAPI
     constructor() {
         super()
-        this.team = new sdk.NIMTeam({ emit: this.emit.bind(this) })
+        this.team = new sdk.NIMSuperTeam({ emit: this.emit.bind(this) })
     }
 
     /** 注册全局回调 */
     initEventHandlers(): void {
         return this.team.InitEventHandlers()
-    }
-
-    /** 创建群组
-     * @param team_info 群组信息
-     * @param ids		邀请对象id
-     * @param invitation_postscript 邀请附言
-     * @param jsonExtension json扩展参数（备用，目前不需要）
-     * @param cb		群通知的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
-     * @note
-     * <pre>
-     * 200:成功
-     * 810:如果创建的是高级群，返回810表示邀请成功并带上tinfo
-     * 414:成员不足
-     * 801:成员数超限制
-     * 404:成员中有非法用户
-     * </pre>
-     */
-    createTeamAsync(info: TeamInfo, ids: Array<string>, invitationPostscript: string, cb: TeamEventCallback, jsonExtension: string): boolean {
-        return this.team.CreateTeamAsync(info, ids, invitationPostscript, cb, jsonExtension)
     }
 
     /** 邀请
@@ -83,7 +55,7 @@ export class NIMTeam extends ev.EventEmitter {
         ids: Array<string>,
         invitationPostscript: string,
         invitationAttachment: string,
-        cb: TeamEventCallback,
+        cb: SuperTeamEventCallback,
         jsonExtension: string
     ): boolean {
         return this.team.InviteAsync(tid, ids, invitationPostscript, invitationAttachment, cb, jsonExtension)
@@ -105,7 +77,7 @@ export class NIMTeam extends ev.EventEmitter {
      * 804:用户不在群里面
      * </pre>
      */
-    kickAsync(tid: string, ids: Array<string>, cb: TeamEventCallback, jsonExtension: string): boolean {
+    kickAsync(tid: string, ids: Array<string>, cb: SuperTeamEventCallback, jsonExtension: string): boolean {
         return this.team.KickAsync(tid, ids, cb, jsonExtension)
     }
 
@@ -123,24 +95,8 @@ export class NIMTeam extends ev.EventEmitter {
      * 804:用户不在群里
      * </pre>
      */
-    leaveAsync(tid: string, cb: TeamEventCallback, jsonExtension: string): boolean {
+    leaveAsync(tid: string, cb: SuperTeamEventCallback, jsonExtension: string): boolean {
         return this.team.LeaveAsync(tid, cb, jsonExtension)
-    }
-
-    /** 解散群
-     * @param tid		群组id
-     * @param jsonExtension json扩展参数（备用，目前不需要）
-     * @param cb		解散群的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
-     * @note
-     * <pre>
-     * 200:成功
-     * 802:没有权限
-     * 803:群不存在
-     * </pre>
-     */
-    dismissAsync(tid: string, cb: TeamEventCallback, jsonExtension: string): boolean {
-        return this.team.DismissAsync(tid, cb, jsonExtension)
     }
 
     /** 更新群信息
@@ -152,12 +108,12 @@ export class NIMTeam extends ev.EventEmitter {
      * @note
      * <pre>
      * 200:成功
-     * 802:没有权限
+     * 802:没有群权限、群主不能退群
      * 803:群不存在
      * </pre>
      */
-    updateTeamInfoAsync(tid: string, info: TeamInfo, cb: TeamEventCallback, jsonExtension: string): boolean {
-        return this.team.UpdateTeamInfoAsync(tid, info, cb, jsonExtension)
+    updateSuperTeamInfoAsync(tid: string, info: SuperTeamInfo, cb: SuperTeamEventCallback, jsonExtension: string): boolean {
+        return this.team.UpdateSuperTeamInfoAsync(tid, info, cb, jsonExtension)
     }
 
     /** 申请入群
@@ -177,7 +133,7 @@ export class NIMTeam extends ev.EventEmitter {
      * 805:群类型不对
      * </pre>
      */
-    applyJoinAsync(tid: string, reason: string, cb: TeamEventCallback, jsonExtension: string): boolean {
+    applyJoinAsync(tid: string, reason: string, cb: SuperTeamEventCallback, jsonExtension: string): boolean {
         return this.team.ApplyJoinAsync(tid, reason, cb, jsonExtension)
     }
 
@@ -198,7 +154,7 @@ export class NIMTeam extends ev.EventEmitter {
      * 805:群类型不对
      * </pre>
      */
-    passJoinApplyAsync(tid: string, applicantId: string, cb: TeamEventCallback, jsonExtension: string): boolean {
+    passJoinApplyAsync(tid: string, applicantId: string, cb: SuperTeamEventCallback, jsonExtension: string): boolean {
         return this.team.PassJoinApplyAsync(tid, applicantId, cb, jsonExtension)
     }
 
@@ -218,7 +174,7 @@ export class NIMTeam extends ev.EventEmitter {
      * 805:群类型不对
      * </pre>
      */
-    rejectJoinApplyAsync(tid: string, applicantId: string, reason: string, cb: TeamEventCallback, jsonExtension: string): boolean {
+    rejectJoinApplyAsync(tid: string, applicantId: string, reason: string, cb: SuperTeamEventCallback, jsonExtension: string): boolean {
         return this.team.RejectJoinApplyAsync(tid, applicantId, reason, cb, jsonExtension)
     }
 
@@ -236,7 +192,7 @@ export class NIMTeam extends ev.EventEmitter {
      * 805:群类型不对
      * </pre>
      */
-    addManagersAsync(tid: string, ids: Array<string>, cb: TeamEventCallback, jsonExtension: string): boolean {
+    addManagersAsync(tid: string, ids: Array<string>, cb: SuperTeamEventCallback, jsonExtension: string): boolean {
         return this.team.AddManagersAsync(tid, ids, cb, jsonExtension)
     }
 
@@ -254,7 +210,7 @@ export class NIMTeam extends ev.EventEmitter {
      * 805:群类型不对
      * </pre>
      */
-    removeManagersAsync(tid: string, ids: Array<string>, cb: TeamEventCallback, jsonExtension: string): boolean {
+    removeManagersAsync(tid: string, ids: Array<string>, cb: SuperTeamEventCallback, jsonExtension: string): boolean {
         return this.team.RemoveManagersAsync(tid, ids, cb, jsonExtension)
     }
 
@@ -274,7 +230,7 @@ export class NIMTeam extends ev.EventEmitter {
      * 806:群数量上限
      * </pre>
      */
-    transferTeamAsync(tid: string, newOwnerId: string, isLeave: boolean, cb: TeamEventCallback, jsonExtension: string): boolean {
+    transferTeamAsync(tid: string, newOwnerId: string, isLeave: boolean, cb: SuperTeamEventCallback, jsonExtension: string): boolean {
         return this.team.TransferTeamAsync(tid, newOwnerId, isLeave, cb, jsonExtension)
     }
 
@@ -287,11 +243,10 @@ export class NIMTeam extends ev.EventEmitter {
      * <pre>
      * 200:成功
      * 803:群不存在
-     * 804:不在群里
-     * 805:群类型不对
+     * 805:群类型不对s
      * </pre>
      */
-    updateMyPropertyAsync(prop: TeamMemberProperty, cb: TeamEventCallback, jsonExtension: string): boolean {
+    updateMyPropertyAsync(prop: SuperTeamMemberProperty, cb: SuperTeamEventCallback, jsonExtension: string): boolean {
         return this.team.UpdateMyPropertyAsync(prop, cb, jsonExtension)
     }
 
@@ -303,12 +258,13 @@ export class NIMTeam extends ev.EventEmitter {
      * @note
      * <pre>
      * 200:成功
+     * 802:没有权限
      * 803:群不存在
      * 804:不在群里
      * 805:群类型不对
      * </pre>
      */
-    updateOtherNickAsync(prop: TeamMemberProperty, cb: TeamEventCallback, jsonExtension: string): boolean {
+    updateOtherNickAsync(prop: SuperTeamMemberProperty, cb: SuperTeamEventCallback, jsonExtension: string): boolean {
         return this.team.UpdateOtherNickAsync(prop, cb, jsonExtension)
     }
 
@@ -326,7 +282,7 @@ export class NIMTeam extends ev.EventEmitter {
      * 805:群类型不对
      * </pre>
      */
-    acceptInvitationAsync(tid: string, inviterId: string, cb: TeamEventCallback, jsonExtension: string): boolean {
+    acceptInvitationAsync(tid: string, inviterId: string, cb: SuperTeamEventCallback, jsonExtension: string): boolean {
         return this.team.AcceptInvitationAsync(tid, inviterId, cb, jsonExtension)
     }
 
@@ -345,7 +301,7 @@ export class NIMTeam extends ev.EventEmitter {
      * 805:群类型不对
      * </pre>
      */
-    rejectInvitationAsync(tid: string, inviterId: string, reason: string, cb: TeamEventCallback, jsonExtension: string): boolean {
+    rejectInvitationAsync(tid: string, inviterId: string, reason: string, cb: SuperTeamEventCallback, jsonExtension: string): boolean {
         return this.team.RejectInvitationAsync(tid, inviterId, reason, cb, jsonExtension)
     }
 
@@ -354,8 +310,8 @@ export class NIMTeam extends ev.EventEmitter {
      * @param cb		查询所有群的回调函数
      * @return void 无返回值
      */
-    queryAllMyTeamsAsync(cb: QueryAllMyTeamsCallback, jsonExtension: string): void {
-        return this.team.QueryAllMyTeamsAsync(cb, jsonExtension)
+    queryAllMySuperTeamsAsync(cb: QueryAllMySuperTeamsCallback, jsonExtension: string): void {
+        return this.team.QueryAllMySuperTeamsAsync(cb, jsonExtension)
     }
 
     /** 查询所有群信息
@@ -363,8 +319,8 @@ export class NIMTeam extends ev.EventEmitter {
      * @param cb		查询所有群信息的回调函数
      * @return void 无返回值
      */
-    queryAllMyTeamsInfoAsync(cb: QueryAllMyTeamsInfoCallback, jsonExtension: string): void {
-        return this.team.QueryAllMyTeamsInfoAsync(cb, jsonExtension)
+    queryAllMySuperTeamsInfoAsync(cb: QueryAllMySuperTeamsInfoCallback, jsonExtension: string): void {
+        return this.team.QueryAllMySuperTeamsInfoAsync(cb, jsonExtension)
     }
 
     /** 查询所有群里我的成员信息（使用场景：获取了所有群列表后，需要查询自己在每个群里自己的成员信息，使用成员信息里的bits字段，可以判断当某个群发来消息后，是否做消息通知）
@@ -372,7 +328,7 @@ export class NIMTeam extends ev.EventEmitter {
      * @param cb		查询所有群里我的成员信息的回调函数
      * @return void 无返回值
      */
-    queryMyAllMemberInfosAsync(cb: QueryTeamMyAllMemberInfosCallback, jsonExtension: string): void {
+    queryMyAllMemberInfosAsync(cb: QuerySuperTeamMyAllMemberInfosCallback, jsonExtension: string): void {
         return this.team.QueryMyAllMemberInfosAsync(cb, jsonExtension)
     }
 
@@ -388,8 +344,8 @@ export class NIMTeam extends ev.EventEmitter {
      * 802:没有权限
      * </pre>
      */
-    queryTeamMembersAsync(tid: string, cb: QueryTeamMembersCallback, jsonExtension: string): boolean {
-        return this.team.QueryTeamMembersAsync(tid, cb, jsonExtension)
+    querySuperTeamMembersAsync(tid: string, cb: QuerySuperTeamMembersCallback, jsonExtension: string): boolean {
+        return this.team.QuerySuperTeamMembersAsync(tid, cb, jsonExtension)
     }
 
     /** 查询(单个)群成员信息
@@ -399,8 +355,8 @@ export class NIMTeam extends ev.EventEmitter {
      * @param cb		查询群成员的回调函数
      * @return bool 检查参数如果不符合要求则返回失败
      */
-    queryTeamMemberAsync(tid: string, id: string, cb: QueryTeamMemberCallback, jsonExtension: string): void {
-        return this.team.QueryTeamMemberAsync(tid, id, cb, jsonExtension)
+    querySuperTeamMemberAsync(tid: string, id: string, cb: QuerySuperTeamMemberCallback, jsonExtension: string): void {
+        return this.team.QuerySuperTeamMemberAsync(tid, id, cb, jsonExtension)
     }
 
     /** 查询群信息
@@ -409,8 +365,8 @@ export class NIMTeam extends ev.EventEmitter {
      * @param cb		查询群信息的回调函数
      * @return bool 检查参数如果不符合要求则返回失败
      */
-    queryTeamInfoAsync(tid: string, cb: QueryTeamInfoCallback, jsonExtension: string): boolean {
-        return this.team.QueryTeamInfoAsync(tid, cb, jsonExtension)
+    querySuperTeamInfoAsync(tid: string, cb: QuerySuperTeamInfoCallback, jsonExtension: string): boolean {
+        return this.team.QuerySuperTeamInfoAsync(tid, cb, jsonExtension)
     }
 
     /** 获取群信息（从服务器获取）
@@ -424,11 +380,11 @@ export class NIMTeam extends ev.EventEmitter {
      * 803:群不存在
      * </pre>
      */
-    queryTeamInfoOnlineAsync(tid: string, cb: TeamEventCallback, jsonExtension: string): boolean {
-        return this.team.QueryTeamInfoOnlineAsync(tid, cb, jsonExtension)
+    querySuperTeamInfoOnlineAsync(tid: string, cb: SuperTeamEventCallback, jsonExtension: string): boolean {
+        return this.team.QuerySuperTeamInfoOnlineAsync(tid, cb, jsonExtension)
     }
 
-    /** 禁言/解除禁言
+    /**  禁言/解除禁言
      * @param tid		群组id
      * @param member_id	操作对象id
      * @param set_mute	禁言/解除禁言
@@ -444,24 +400,8 @@ export class NIMTeam extends ev.EventEmitter {
      * 802:没有权限
      * </pre>
      */
-    muteMemberAsync(tid: string, member_id: string, set_mute: boolean, cb: TeamEventCallback, jsonExtension: string): boolean {
+    muteMemberAsync(tid: string, member_id: string, set_mute: boolean, cb: SuperTeamEventCallback, jsonExtension: string): boolean {
         return this.team.MuteMemberAsync(tid, member_id, set_mute, cb, jsonExtension)
-    }
-
-    /** 获取群禁言成员列表
-     * @param tid	群组id
-     * @param cb		回调函数
-     * @param jsonExtension json扩展参数（备用，目前不需要）
-     * @return bool 检查参数如果不符合要求则返回失败
-     * @note
-     * <pre>
-     * 200:成功
-     * 802:没有权限
-     * 803:群不存在
-     * </pre>
-     */
-    queryMuteListOnlineAsync(tid: string, cb: QueryTeamMembersOnlineCallback, jsonExtension: string): boolean {
-        return this.team.QueryMuteListOnlineAsync(tid, cb, jsonExtension)
     }
 
     /** 群禁言/解除群禁言
@@ -469,108 +409,24 @@ export class NIMTeam extends ev.EventEmitter {
      * @param set_mute	禁言/解除禁言
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb		踢人的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败.
+     * @return bool 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
      * 414:参数错误
      * </pre>
      */
-    muteAsync(tid: string, set_mute: boolean, cb: TeamEventCallback, jsonExtension: string): boolean {
+    muteAsync(tid: string, set_mute: boolean, cb: SuperTeamEventCallback, jsonExtension: string): boolean {
         return this.team.MuteAsync(tid, set_mute, cb, jsonExtension)
     }
 
-    /** 群消息回执
-     * @param tid		群组id
-     * @param msgs		需要发送消息回执的群消息
+    /** 查询所有群信息
+     * @param keyword 要查询的关键字
      * @param jsonExtension json扩展参数（备用，目前不需要）
-     * @param cb		回调函数
-     * @return void 无返回值
-     * @note
-     * <pre>
-     * 200:成功
-     * 414:参数错误
-     * </pre>
-     */
-    teamMsgAckRead(tid: string, msgs: Array<IMMessage>, cb: TeamMsgAckReadCallback, jsonExtension: string): void {
-        return this.team.TeamMsgAckRead(tid, msgs, cb, jsonExtension)
-    }
-
-    /** 根据指定 ID 获取群组消息已读未读情况
-     * @param[in] tid		群组id
-     * @param[in] msg		群消息
-     * @param[in] accids    要查询的 ID 列表
-     * @param[in] jsonExtension json扩展参数（备用，目前不需要）
-     * @param[in] cb		回调函数
-     * @return void 无返回值
-     * @note
-     * <pre>
-     * 200:成功
-     * 414:参数错误
-     * </pre>
-     */
-    teamMsgQueryUnreadList(tid: string, msg: IMMessage, accids: Array<string>, cb: TeamEventCallback, jsonExtension: string): void {
-        return this.team.TeamMsgQueryUnreadList(tid, msg, accids, cb, jsonExtension)
-    }
-
-    /** 查询群成员的邀请人 accid 由接口 原 TeamQueryTeamMembersInvitor方法
-     * @param tid		群组id
-     * @param members		要查询 的群成员accid列表
-     * @param cb		回调函数
-     * @return void 无返回值
-     * @note
-     * <pre>
-     * 200:成功
-     * </pre>
-     */
-    queryTeamMembersInvitor(tid: string, members: Array<string>, cb: QueryTeamMembersInvitorCallback): void {
-        return this.team.QueryTeamMembersInvitor(tid, members, cb)
-    }
-
-    /** 查询群信息
-     * @param keyword		要查询的关键字
-     * @param cb				查询群信息的回调函数
-     * @param jsonExtension json扩展参数（备用，目前不需要）
+     * @param cb		查询所有群信息的回调函数
      * @return bool 检查参数如果不符合要求则返回失败
      */
-    queryTeamInfoByKeywordAsync(keyword: string, cb: QueryTeamsInfoCallback, jsonExtension: string): boolean {
-        return this.team.QueryTeamInfoByKeywordAsync(keyword, cb, jsonExtension)
-    }
-
-    /** 更新群信息
-     * @param tid		群组id
-     * @param team_infos	群组信息
-     * @param notify_event	更新后是否触发事件以通知应用层
-     * @param cb		更新群信息的回调函数,回调中会指明更新成功与失败的群ID
-     * @param jsonExtension json扩展参数（备用，目前不需要）
-     * @return void
-     */
-    updateTInfoLocal(infos: Array<TeamInfo>, cb: UpdateTInfoLocalCallback, jsonExtension: string): void {
-        return this.team.UpdateTInfoLocal(infos, cb, jsonExtension)
-    }
-
-    /** 查询所有群
-     * @param cb		查询所有群的回调函数
-     * @param time_tag	时间戳，没有特殊需求此参数赋0
-     * @param jsonExtension json扩展参数（备用，目前不需要）
-     * @return void 无返回值
-     */
-    getTeamInfoBatchTrans(cb: GetTeamInfoBatchSFTransCallback, time_tag: number, jsonExtension: string): void {
-        return this.team.GetTeamInfoBatchSFTrans(cb, time_tag, jsonExtension)
-    }
-
-    /** 查询给定的一组群ID详细信息
-     * @param tid_list	 群组id列表，最多10个
-     * @param cb	查询给定的一组群ID详细信息的回调模板
-     * @return void 无返回值
-     * @note
-     * <pre>
-     * 200:成功
-     * 414:参数错误
-     * 816:部分成功
-     * </pre>
-     */
-    getTeaminfoList(tids: Array<string>, cb: GetTeamInfoListCallback): void {
-        return this.team.GetTeaminfoList(tids, cb)
+    querySuperTeamsInfoByKeywordAsync(keyword: string, cb: QueryAllMySuperTeamsInfoCallback, jsonExtension: string): void {
+        return this.team.QuerySuperTeamsInfoByKeywordAsync(keyword, cb, jsonExtension)
     }
 }

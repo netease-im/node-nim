@@ -14,8 +14,8 @@ import {
     TransferInfoCallback,
     UploadMediaExCallback,
     UploadMediaResult
-} from '../def/nos_def'
-import { IMMessage } from '../def/msglog_def'
+} from '../nim_def/nos_def'
+import { IMMessage } from '../nim_def/msglog_def'
 
 export declare interface NIMNOS {
     // downloadComplete: 下载回调

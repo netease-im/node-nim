@@ -1,6 +1,6 @@
 import sdk from '../loader'
 import ev from 'events'
-import { IMMessage, NIMMessageType } from '../def/msglog_def'
+import { IMMessage, NIMMessageType } from '../nim_def/msglog_def'
 import {
     BroadcastMessage,
     MessageFilterCallback,
@@ -9,7 +9,7 @@ import {
     RecallMsgsCallback,
     SendMessageArc,
     TeamNotificationFilterCallback
-} from '../def/talk_def'
+} from '../nim_def/talk_def'
 
 export declare interface NIMTalk {
     // sendMsg: 发送消息回调

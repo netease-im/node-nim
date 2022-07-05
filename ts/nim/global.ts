@@ -11,7 +11,7 @@ import {
     SDKDBErrorInfo,
     SDKFeedbackCallback,
     UploadSDKLogCallback
-} from '../def/global_def'
+} from '../nim_def/global_def'
 
 export declare interface NIMGlobal {
     // dbError: SDK DB操作出错

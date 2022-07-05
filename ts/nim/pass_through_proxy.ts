@@ -1,4 +1,4 @@
-import { NIMPassThroughProxyAPI, NIMSendHttpRequestMethods, ReceivedHttpMsgCallback, SendHttpRequestCallback } from '../def/pass_through_proxy_def'
+import { NIMPassThroughProxyAPI, NIMSendHttpRequestMethods, ReceivedHttpMsgCallback, SendHttpRequestCallback } from '../nim_def/pass_through_proxy_def'
 import sdk from '../loader'
 import ev from 'events'
 

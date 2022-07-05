@@ -8,8 +8,8 @@ import {
     NotifySingleSysmsgCallback,
     NotifySysmsgResCallback,
     QuerySysmsgCallback
-} from '../def/sysmsg_def'
-import { SendMessageArc } from 'ts/def/talk_def'
+} from '../nim_def/sysmsg_def'
+import { SendMessageArc } from 'ts/nim_def/talk_def'
 
 export declare interface NIMSysMsg {
     // receiveSystemMsg: 系统通知

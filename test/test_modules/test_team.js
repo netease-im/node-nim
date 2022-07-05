@@ -1,4 +1,4 @@
-const NIM = require('../../js/nim')
+const NIM = require('../../js/node-nim')
 const assert = require('assert')
 
 const talk = new NIM.NIMTalk()
@@ -61,7 +61,7 @@ function testTeam(test_info) {
                         client_msg_id_: new Date().getTime().toString() // use an uuid
                     },
                     '',
-                    function () { }
+                    function () {}
                 )
             })
         })
@@ -332,12 +332,12 @@ function testTeam(test_info) {
         })
         describe('#teamMsgAckRead', function () {
             it('teamMsgAckRead', function () {
-                team.teamMsgAckRead(team_data.team_id_, [immessage], function (tid, success_ids, failure_ids, ignored_ids) { }, '')
+                team.teamMsgAckRead(team_data.team_id_, [immessage], function (tid, success_ids, failure_ids, ignored_ids) {}, '')
             })
         })
         describe('#teamMsgQueryUnreadList', function () {
             it('teamMsgQueryUnreadList', function () {
-                team.teamMsgQueryUnreadList(team_data.team_id_, immessage, [test_info.mainUser], function (result) { }, '')
+                team.teamMsgQueryUnreadList(team_data.team_id_, immessage, [test_info.mainUser], function (result) {}, '')
             })
         })
         describe('#queryTeamMembersInvitor', function () {

@@ -11,7 +11,7 @@ import {
     KickOtherRes,
     KickoutRes,
     LoginRes
-} from '../def/client_def'
+} from '../nim_def/client_def'
 import sdk from '../loader'
 import { EventEmitter } from 'events'
 

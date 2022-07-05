@@ -9,7 +9,7 @@ import {
     NINPushType,
     UserNameCard,
     SpecialRelationshipChangeEvent
-} from '../def/user_def'
+} from '../nim_def/user_def'
 
 export declare interface NIMUser {
     // specialRelationChange: 用户属性变更

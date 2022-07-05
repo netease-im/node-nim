@@ -1,4 +1,4 @@
-const { NIMClient, NIMTalk } = require('../js/nim')
+const { NIMClient, NIMTalk } = require('../js/node-nim')
 const assert = require('assert')
 const test_info = {
     appKey: '45c6af3c98409b18a84451215d0bdd6e',
@@ -15,8 +15,7 @@ function emit_function(type, data) {
     console.log(type, data)
 }
 
-var result = client.init('', 'NIM_SDK_NODE_TEST', '', {
-})
+var result = client.init('', 'NIM_SDK_NODE_TEST', '', {})
 
 client.initEventHandlers()
 
@@ -29,28 +28,31 @@ client.login(
     (loginResult) => {
         console.log('loginResult', loginResult)
         if (loginResult.login_step_ == 3) {
-            talk.sendMsg({
-                session_type_: 0, // p2p
-                receiver_accid_: "zvc1",
-                timetag_: new Date().getTime(),
-                type_: 0, // text message
-                content_: 'Send from NIM node test.',
-                client_msg_id_: new Date().getTime().toString(), // use an uuid
-                msg_setting_: {
-                    push_payload_: { test: "qq" }
-                }
-            }, '')
+            talk.sendMsg(
+                {
+                    session_type_: 0, // p2p
+                    receiver_accid_: 'zvc1',
+                    timetag_: new Date().getTime(),
+                    type_: 0, // text message
+                    content_: 'Send from NIM node test.',
+                    client_msg_id_: new Date().getTime().toString(), // use an uuid
+                    msg_setting_: {
+                        push_payload_: { test: 'qq' }
+                    }
+                },
+                ''
+            )
         }
     },
     ''
 )
 talk.initEventHandlers()
-talk.on("receiveMsg", (msg) => {
+talk.on('receiveMsg', (msg) => {
     console.log(msg)
 })
-talk.on("sendMsg", (msg) => {
+talk.on('sendMsg', (msg) => {
     console.log(msg)
 })
 talk.regMessageFilter((result) => {
     return false
-}, "")
+}, '')

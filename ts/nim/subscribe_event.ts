@@ -12,7 +12,7 @@ import {
     QuerySubscribeEventCallback,
     BatchPushEventCallback,
     PushEventCallback
-} from '../def/subscribe_event_def'
+} from '../nim_def/subscribe_event_def'
 
 export declare interface NIMSubscribeEvent {
     // push: 订阅的事件

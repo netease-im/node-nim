@@ -1,4 +1,4 @@
-import { NIMPluginAPI, ChatRoomRequestEnterCallback, QChatRequestLinkAddressCallback } from '../def/plugin_def'
+import { NIMPluginAPI, ChatRoomRequestEnterCallback, QChatRequestLinkAddressCallback } from '../nim_def/plugin_def'
 import ev from 'events'
 import sdk from '../loader'
 

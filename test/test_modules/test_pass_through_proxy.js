@@ -1,4 +1,4 @@
-const NIM = require('../../js/nim')
+const NIM = require('../../js/node-nim')
 const assert = require('assert')
 
 const pass_through_proxy = new NIM.NIMPassThroughProxy()

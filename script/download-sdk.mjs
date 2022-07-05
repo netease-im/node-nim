@@ -4,9 +4,9 @@ import download from 'download'
 
 const arch = process.env.npm_config_arch || process.arch
 const platform = process.env.npm_config_platform || process.platform
-const sdk_group = "message"
-const sdk_name = "nim"
-const sdk_path = "sdk"
+const sdk_group = 'message'
+const sdk_name = 'nim'
+const sdk_path = 'sdk'
 let sdk_url = process.env.npm_config_nim_sdk_url
 let sdk_version = process.env.npm_package_version.split('-')[0]
 if (process.env.npm_config_nim_sdk_version) {

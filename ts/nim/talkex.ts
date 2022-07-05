@@ -22,8 +22,8 @@ import {
     UnPinMessageCallback,
     UpdatePinMessageCallback,
     QueryPinMessageCallback
-} from '../def/talkex_def'
-import { IMMessage } from '../def/msglog_def'
+} from '../nim_def/talkex_def'
+import { IMMessage } from '../nim_def/msglog_def'
 
 export declare interface NIMTalkEx {
     // addQuickComment: 添加快捷回复
