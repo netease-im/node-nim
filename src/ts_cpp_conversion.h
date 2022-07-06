@@ -1,8 +1,6 @@
 /**
  * @file ts_cpp_conversion.h
  * @author haokui
- * @brief
- * @version 0.1
  * @date 2021-11-08
  *
  * @copyright Copyright (c) 2021

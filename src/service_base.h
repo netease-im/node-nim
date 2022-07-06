@@ -1,8 +1,6 @@
 /**
  * @file nim_chatroom_service.h
  * @author Dylan
- * @brief
- * @version 0.1
  * @date 2021-11-08
  *
  * @copyright Copyright (c) 2021

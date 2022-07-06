@@ -1,8 +1,6 @@
 /**
  * @file nim_node_nos_helper.h
  * @author NetEase Yunxin
- * @brief
- * @version 0.1
  * @date 2022-02-21
  * @copyright (c) 2022, NetEase Inc. All rights reserved
  */
@@ -11,7 +9,6 @@
 #include "../msglog/nim_node_msglog_helper.h"
 #include "nim_cpp_wrapper/nim_cpp_api.h"
 #include "xpack_specialization.h"
-
 
 using namespace nim;
 ReflectionDefinition_O(InitNosConfigParam, tag_list_);

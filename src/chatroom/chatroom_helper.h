@@ -1,8 +1,6 @@
 /**
  * @file chatroom_helper.h
  * @author NetEase Yunxin
- * @brief
- * @version 0.1
  * @date 2022-07-05
  * @copyright (c) 2022, NetEase Inc. All rights reserved
  */

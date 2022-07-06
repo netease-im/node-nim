@@ -1,8 +1,6 @@
 /**
  * @file nim_node_pass_through_proxy.cpp
  * @author NetEase Yunxin
- * @brief
- * @version 0.1
  * @date 2022-02-21
  * @copyright (c) 2022, NetEase Inc. All rights reserved
  */

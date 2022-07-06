@@ -1,8 +1,6 @@
 /**
  * @file cpp_invoker.h
  * @author haokui
- * @brief
- * @version 0.1
  * @date 2021-11-03
  *
  * @copyright Copyright (c) 2021
