@@ -235,43 +235,43 @@ std::string ts_cpp_conversion::ObjectToStruct<std::string>(Napi::Env env, const 
 }
 template <>
 napi_value ts_cpp_conversion::StructToObject<int8_t>(Napi::Env env, const int8_t& value) {
-    return Napi::Number::New(env, value);
+    return Napi::Number::New(env, static_cast<double>(value));
 }
 template <>
 napi_value ts_cpp_conversion::StructToObject<uint8_t>(Napi::Env env, const uint8_t& value) {
-    return Napi::Number::New(env, value);
+    return Napi::Number::New(env, static_cast<double>(value));
 }
 template <>
 napi_value ts_cpp_conversion::StructToObject<int16_t>(Napi::Env env, const int16_t& value) {
-    return Napi::Number::New(env, value);
+    return Napi::Number::New(env, static_cast<double>(value));
 }
 template <>
 napi_value ts_cpp_conversion::StructToObject<uint16_t>(Napi::Env env, const uint16_t& value) {
-    return Napi::Number::New(env, value);
+    return Napi::Number::New(env, static_cast<double>(value));
 }
 template <>
 napi_value ts_cpp_conversion::StructToObject<bool>(Napi::Env env, const bool& value) {
-    return Napi::Boolean::New(env, value);
+    return Napi::Boolean::New(env, static_cast<double>(value));
 }
 template <>
 napi_value ts_cpp_conversion::StructToObject<int32_t>(Napi::Env env, const int32_t& value) {
-    return Napi::Number::New(env, value);
+    return Napi::Number::New(env, static_cast<double>(value));
 }
 template <>
 napi_value ts_cpp_conversion::StructToObject<uint32_t>(Napi::Env env, const uint32_t& value) {
-    return Napi::Number::New(env, value);
+    return Napi::Number::New(env, static_cast<double>(value));
 }
 template <>
 napi_value ts_cpp_conversion::StructToObject<int64_t>(Napi::Env env, const int64_t& value) {
-    return Napi::Number::New(env, value);
+    return Napi::Number::New(env, static_cast<double>(value));
 }
 template <>
 napi_value ts_cpp_conversion::StructToObject<uint64_t>(Napi::Env env, const uint64_t& value) {
-    return Napi::Number::New(env, value);
+    return Napi::Number::New(env, static_cast<double>(value));
 }
 template <>
 napi_value ts_cpp_conversion::StructToObject<float>(Napi::Env env, const float& value) {
-    return Napi::Number::New(env, value);
+    return Napi::Number::New(env, static_cast<double>(value));
 }
 template <>
 napi_value ts_cpp_conversion::StructToObject<double>(Napi::Env env, const double& value) {

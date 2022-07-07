@@ -105,6 +105,12 @@ public:
     void RegisterSDKNotifyCallback(const std::string& notify_event, R (*fun)(Arg...)) {
         (fun)(MakeNotifyCallbackParam<std::decay_t<Arg>>(notify_event)...);
     }
+    template <typename R, typename Arg>
+    void RegisterSDKNotifyCallbackInParam(const std::string& notify_event, R (*fun)(Arg)) {
+        std::decay_t<Arg> arg{};
+        arg.cb = MakeNotifyCallback<decltype(arg.cb)>(notify_event.c_str());
+        (fun)(arg);
+    }
     template <typename TService>
     TService* GetCurrentService(ServiceBase* obj_holder) {
         return nullptr;
@@ -186,7 +192,7 @@ public:
         : ServiceBase(service_name, info)
         , ObjectWrap<TSubClass>(info) {
         ApiEnv env = info.Env();
-        int length = info.Length();
+        size_t length = info.Length();
         if (length <= 0 && !TClient::HasInstance(info[0])) {
             Napi::TypeError::New(env, "NIM client object expected").ThrowAsJavaScriptException();
             return;

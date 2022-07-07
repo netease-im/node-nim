@@ -15,7 +15,7 @@ Napi::Object NIMChatRoom::Init(Napi::Env env, Napi::Object exports) {
         RegApi("Exit", &ChatRoom::Exit),
         RegApi("GetLoginState", &ChatRoom::GetLoginState),
         RegApi("SetMsgsBatchReport", &ChatRoom::SetMsgsBatchReport),
-        RegAmbApi("SendMsg", &ChatRoom::SendMsg, void (*)(const int64_t, const nim_chatroom::ChatRoomMessage&, const std::string&)),
+        RegAmbApi("SendMsg", &ChatRoom::SendMsg, void (*)(const int64_t, const ChatRoomMessage&, const std::string&)),
         RegApi("GetMembersOnlineAsync", &ChatRoom::GetMembersOnlineAsync),
         RegApi("GetMembersByTagOnlineAsync", &ChatRoom::GetMembersByTagOnlineAsync),
         RegApi("GetMembersCountByTagOnlineAsync", &ChatRoom::GetMembersCountByTagOnlineAsync),
@@ -42,13 +42,13 @@ Napi::Object NIMChatRoom::Init(Napi::Env env, Napi::Object exports) {
 }
 
 void NIMChatRoom::InitEventHandlers() {
-    RegisterSDKNotifyCallback("enter", &nim_chatroom::ChatRoom::RegEnterCb);
-    RegisterSDKNotifyCallback("exit", &nim_chatroom::ChatRoom::RegExitCb_2);
-    RegisterSDKNotifyCallback("sendMsg", &nim_chatroom::ChatRoom::RegSendMsgAckCb);
-    RegisterSDKNotifyCallback("receiveMsg", &nim_chatroom::ChatRoom::RegReceiveMsgCb);
-    RegisterSDKNotifyCallback("receiveMsgs", &nim_chatroom::ChatRoom::RegReceiveMsgsCb);
-    RegisterSDKNotifyCallback("notification", &nim_chatroom::ChatRoom::RegNotificationCb);
-    RegisterSDKNotifyCallback("linkCondition", &nim_chatroom::ChatRoom::RegLinkConditionCb);
+    RegisterSDKNotifyCallback("enter", &ChatRoom::RegEnterCb);
+    RegisterSDKNotifyCallback("exit", &ChatRoom::RegExitCb_2);
+    RegisterSDKNotifyCallback("sendMsg", &ChatRoom::RegSendMsgAckCb);
+    RegisterSDKNotifyCallback("receiveMsg", &ChatRoom::RegReceiveMsgCb);
+    RegisterSDKNotifyCallback("receiveMsgs", &ChatRoom::RegReceiveMsgsCb);
+    RegisterSDKNotifyCallback("notification", &ChatRoom::RegNotificationCb);
+    RegisterSDKNotifyCallback("linkCondition", &ChatRoom::RegLinkConditionCb);
 }
 
 NIMChatRoom::NIMChatRoom(const Napi::CallbackInfo& info)

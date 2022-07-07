@@ -152,8 +152,9 @@ bool xpack_xtype_decode(OBJ& obj, const char* key, std::tuple<nim::IMMessage, st
     if (str.empty()) {
         return false;
     }
-    nim_cpp_wrapper_util::Json::Value json_value(str);
-    if (!json_value.isObject()) {
+    nim_cpp_wrapper_util::Json::Reader reader;
+    nim_cpp_wrapper_util::Json::Value json_value;
+    if (!reader.parse(str, json_value) || !json_value.isObject()) {
         return false;
     }
     val = std::make_tuple(nim::IMMessage(json_value["msg"].asString()), json_value["ext"].asString());
