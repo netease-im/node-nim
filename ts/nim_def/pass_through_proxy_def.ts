@@ -1,3 +1,5 @@
+import { NIMResCode } from './client_def'
+
 export enum NIMSendHttpRequestMethods {
     kNIMHttpGet = 1,
     kNIMHttpPost,
@@ -6,7 +8,7 @@ export enum NIMSendHttpRequestMethods {
 }
 
 export type ReceivedHttpMsgCallback = (from_accid: string, body: string, timestamp: number) => void
-export type SendHttpRequestCallback = (res_code: number, header: string, body: string, jsonExtension: string) => void
+export type SendHttpRequestCallback = (res_code: NIMResCode, header: string, body: string, jsonExtension: string) => void
 
 export interface NIMPassThroughProxyAPI {
     InitEventHandlers(): void

@@ -1,12 +1,11 @@
 /**
  * @file entry.cpp
  * @author NetEase Yunxin
- * @brief
- * @version 0.1
  * @date 2022-02-21
  * @copyright (c) 2022, NetEase Inc. All rights reserved
  */
 #include <napi.h>
+#include "chatroom/chatroom.h"
 #include "nim/client/nim_node_client.h"
 #include "nim/data_sync/nim_node_data_sync.h"
 #include "nim/friend/nim_node_friend.h"
@@ -25,6 +24,14 @@
 #include "nim/team/nim_node_team.h"
 #include "nim/tool/nim_node_tool.h"
 #include "nim/user/nim_node_user.h"
+#include "qchat/attachment/qchat_attachment.h"
+#include "qchat/channel/qchat_channel.h"
+#include "qchat/channel_category/qchat_channel_category.h"
+#include "qchat/instance/qchat_instance.h"
+#include "qchat/message/qchat_message.h"
+#include "qchat/role/qchat_role.h"
+#include "qchat/server/qchat_server.h"
+#include "qchat/system_notification/qchat_system_notification.h"
 #include "ts_cpp_conversion.h"
 
 namespace {
@@ -49,6 +56,15 @@ Napi::Object RegisterModule(Napi::Env env, Napi::Object exports) {
     node_nim::NIMTeam::Init(env, exports);
     node_nim::NIMTool::Init(env, exports);
     node_nim::NIMUser::Init(env, exports);
+    node_nim::NIMChatRoom::Init(env, exports);
+    node_nim::QChatAttachment::Init(env, exports);
+    node_nim::QChatChannel::Init(env, exports);
+    node_nim::QChatChannelCategory::Init(env, exports);
+    node_nim::QChatInstance::Init(env, exports);
+    node_nim::QChatMessage::Init(env, exports);
+    node_nim::QChatRole::Init(env, exports);
+    node_nim::QChatServer::Init(env, exports);
+    node_nim::QChatSystemNotification::Init(env, exports);
     return exports;
 }
 

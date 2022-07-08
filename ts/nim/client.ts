@@ -45,7 +45,7 @@ export class NIMClient extends EventEmitter {
 
     /** NIM SDK初始化
      * @param appKey 应用注册的APP KEY
-     * @param appDataDir 推荐用户目录放置在系统目录{AppData\Local}，默认只需要传入目录名，SDK会默认在系统目录下创建该级用户目录。如果要使用其他自定义路径，需传入绝对路径路径，并确保该目录有正确的读写权限。
+     * @param appDataDir 推荐用户目录放置在系统目录AppData\Local，默认只需要传入目录名，SDK会默认在系统目录下创建该级用户目录。如果要使用其他自定义路径，需传入绝对路径路径，并确保该目录有正确的读写权限。
      * @param appInstallDir SDK动态库所在的目录全路径（如果传入为空，则按照默认规则搜索该动态库）
      * @param config 初始化参数
      * @return bool 返回值true: 成功， false: 失败

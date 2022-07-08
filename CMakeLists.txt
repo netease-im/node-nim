@@ -35,7 +35,7 @@ elseif(CONAN_SETTINGS_ARCH STREQUAL "x86_64")
 elseif(CONAN_SETTINGS_ARCH STREQUAL "armv8")
     set(CMAKE_JS_ARCH "arm64")
 endif()
-execute_process(COMMAND ${NPM_EXUTABLE} install
+execute_process(COMMAND ${NPM_EXUTABLE} install --nim-sdk-url=${NIM_SDK_URL}
         WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
         OUTPUT_QUIET)
 execute_process(COMMAND ${NPX_EXUTABLE} cmake-js print-configure -l error -a ${CMAKE_JS_ARCH}
@@ -123,6 +123,7 @@ target_link_libraries(${TARGET_NAME}
                       nim_cpp_wrapper
                       nim_chatroom_cpp_wrapper
                       nim_tools_cpp_wrapper
+                      nim_qchat_cpp_wrapper
                       nim_wrapper_util)
 
 set_target_properties(${TARGET_NAME} PROPERTIES PREFIX "" SUFFIX ".node")

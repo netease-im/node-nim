@@ -9,7 +9,7 @@ import {
     NotifySysmsgResCallback,
     QuerySysmsgCallback
 } from '../nim_def/sysmsg_def'
-import { SendMessageArc } from 'ts/nim_def/talk_def'
+import { SendMessageArc } from '../nim_def/talk_def'
 
 export declare interface NIMSysMsg {
     // receiveSystemMsg: 系统通知
@@ -45,7 +45,7 @@ export class NIMSysMsg extends ev.EventEmitter {
      * @param last_time	上次查询最后一条消息的时间戳
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb			查询本地系统消息的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      */
     queryMsgAsync(limit_count: number, last_time: number, cb: QuerySysmsgCallback, jsonExtension: string): boolean {
         return this.sysmsg.QueryMsgAsync(limit_count, last_time, cb, jsonExtension)
@@ -96,7 +96,7 @@ export class NIMSysMsg extends ev.EventEmitter {
      * @param msg_id		消息id
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb			删除消息的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功

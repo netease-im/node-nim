@@ -37,7 +37,7 @@ export class NIMUser extends ev.EventEmitter {
      * @param set_black 取消或设置
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -53,7 +53,7 @@ export class NIMUser extends ev.EventEmitter {
      * @param set_mute 取消或设置
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -67,7 +67,7 @@ export class NIMUser extends ev.EventEmitter {
     /** 获得静音名单列表
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -107,7 +107,7 @@ export class NIMUser extends ev.EventEmitter {
      * @param accids
      * @param cb 操作结果回调
      * @param jsonExtension json扩展参数（备用，目前不需要）
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -124,7 +124,7 @@ export class NIMUser extends ev.EventEmitter {
      * @param namecard 用户名片内容
      * @param cb 操作结果回调
      * @param jsonExtension json扩展参数（备用，目前不需要）
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -139,7 +139,7 @@ export class NIMUser extends ev.EventEmitter {
      * @param keyword	要查询的关键字
      * @param cb			操作结果回调
      * @param jsonExtension json扩展参数（备用，目前不需要）
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      */
     queryUserListByKeyword(keyword: string, cb: GetUserNameCardCallback, jsonExtension: string): boolean {
         return this.user.QueryUserListByKeyword(keyword, cb, jsonExtension)

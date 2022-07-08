@@ -72,7 +72,7 @@ export class NIMTool extends ev.EventEmitter {
      * @param audio_info 语音信息
      * @param cb 语音转文字回调
      * @param jsonExtension json扩展参数（备用，目前不需要）
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功

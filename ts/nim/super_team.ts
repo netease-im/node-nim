@@ -12,7 +12,7 @@ import {
     QuerySuperTeamMemberCallback,
     QuerySuperTeamInfoCallback,
     SuperTeamEvent
-} from 'ts/nim_def/super_team_def'
+} from '../nim_def/super_team_def'
 
 export declare interface NIMSuperTeam {
     // superTeamEvent: 超大群事件
@@ -39,7 +39,7 @@ export class NIMSuperTeam extends ev.EventEmitter {
      * @param invitation_attachment 用户可自定义的补充邀请信息
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb		邀请的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -66,7 +66,7 @@ export class NIMSuperTeam extends ev.EventEmitter {
      * @param ids		被踢对象id
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb		踢人的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -85,7 +85,7 @@ export class NIMSuperTeam extends ev.EventEmitter {
      * @param tid		群组id
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb		离开群的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -104,7 +104,7 @@ export class NIMSuperTeam extends ev.EventEmitter {
      * @param team_info	群组信息
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb		更新群信息的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -121,7 +121,7 @@ export class NIMSuperTeam extends ev.EventEmitter {
      * @param reason		附言
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb		申请入群的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -142,7 +142,7 @@ export class NIMSuperTeam extends ev.EventEmitter {
      * @param applicant_id	申请者id
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb				同意入群申请的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -164,7 +164,7 @@ export class NIMSuperTeam extends ev.EventEmitter {
      * @param reason			附言
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb				拒绝入群申请的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功，如果用户处于申请状态则会通知申请用户被拒绝
@@ -183,7 +183,7 @@ export class NIMSuperTeam extends ev.EventEmitter {
      * @param ids	管理员id
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb		添加管理员的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -201,7 +201,7 @@ export class NIMSuperTeam extends ev.EventEmitter {
      * @param ids	管理员id
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb		删除管理员的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -220,7 +220,7 @@ export class NIMSuperTeam extends ev.EventEmitter {
      * @param is_leave		是否同时退出群
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb		移交群主的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -238,7 +238,7 @@ export class NIMSuperTeam extends ev.EventEmitter {
      * @param prop	群成员属性
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb		更新自己的群属性的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -254,7 +254,7 @@ export class NIMSuperTeam extends ev.EventEmitter {
      * @param prop	群成员属性
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb		修改别人的群昵称的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -273,7 +273,7 @@ export class NIMSuperTeam extends ev.EventEmitter {
      * @param invitor_id	邀请者id
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb		接受邀请的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -292,7 +292,7 @@ export class NIMSuperTeam extends ev.EventEmitter {
      * @param reason	附言
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb		拒绝邀请的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -336,7 +336,7 @@ export class NIMSuperTeam extends ev.EventEmitter {
      * @param tid		群组id
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb		查询群成员的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -353,7 +353,7 @@ export class NIMSuperTeam extends ev.EventEmitter {
      * @param id		    群成员id
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb		查询群成员的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      */
     querySuperTeamMemberAsync(tid: string, id: string, cb: QuerySuperTeamMemberCallback, jsonExtension: string): void {
         return this.team.QuerySuperTeamMemberAsync(tid, id, cb, jsonExtension)
@@ -363,7 +363,7 @@ export class NIMSuperTeam extends ev.EventEmitter {
      * @param tid		群组id
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb		查询群信息的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      */
     querySuperTeamInfoAsync(tid: string, cb: QuerySuperTeamInfoCallback, jsonExtension: string): boolean {
         return this.team.QuerySuperTeamInfoAsync(tid, cb, jsonExtension)
@@ -373,7 +373,7 @@ export class NIMSuperTeam extends ev.EventEmitter {
      * @param tid		群组id
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb		获取群信息的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -390,7 +390,7 @@ export class NIMSuperTeam extends ev.EventEmitter {
      * @param set_mute	禁言/解除禁言
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb		踢人的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -409,7 +409,7 @@ export class NIMSuperTeam extends ev.EventEmitter {
      * @param set_mute	禁言/解除禁言
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb		踢人的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -424,7 +424,7 @@ export class NIMSuperTeam extends ev.EventEmitter {
      * @param keyword 要查询的关键字
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb		查询所有群信息的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      */
     querySuperTeamsInfoByKeywordAsync(keyword: string, cb: QueryAllMySuperTeamsInfoCallback, jsonExtension: string): void {
         return this.team.QuerySuperTeamsInfoByKeywordAsync(keyword, cb, jsonExtension)

@@ -59,10 +59,44 @@ npm run coverage
 ## Sample Code
 
 ```js
-const NIM = require('node-nim')
+// QChat
+const node_nim = require('node-nim')
+const instance = new node_nim.QChatInstanceModule()
+let ret = instance.init({})
+if (!ret) {
+    console.log('init failed')
+    process.exit(1)
+}
+let resp = await instance.login({
+    appkey: 'app_key',
+    accid: 'username',
+    auth_type: 0,
+    login_token: 'password',
+    link_address: ['link1', 'link2']
+})
+console.log(resp)
+```
+```js
+// Chatroom
+const node_nim = require('node-nim')
+const chatroom = new node_nim.ChatroomModule()
+let ret = chatroom.init('', '')
+if (!ret) {
+    console.log('init failed')
+    process.exit(1)
+}
+ret = chatroom.enter('room_id', 'login_data', {}, '')
+if (!ret) {
+    console.log('enter failed')
+    process.exit(1)
+}
+```
+```js
+// NIM
+const node_nim = require('node-nim')
 const assert = require('assert')
-const client = new NIM.NIMClient()
-const talk = new NIM.NIMTalk()
+const client = new node_nim.NIMClient()
+const talk = new node_nim.NIMTalk()
 const result = client.init('app_key', 'app_data_dir', 'app_install_dir', {
     db_encrypt_key: 'abcdefghijklmnopqrstuvwxyz012345'
 })
@@ -70,7 +104,7 @@ const result = client.init('app_key', 'app_data_dir', 'app_install_dir', {
 client.login(
     'app_key',
     'username',
-    'password_in_md5',
+    'password',
     (result) => {
         assert.strictEqual(result.err_code, 200)
         if (loginResult.login_step === 3) {

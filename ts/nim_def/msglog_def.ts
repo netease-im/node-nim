@@ -10,7 +10,7 @@ export enum NIMNotificationId {
     kNIMNotificationIdTeamUpdate = 3 /** < 群信息更新，{"team_info":team_info,"user_namecards":["namecard1", "namecard2"]}*/,
     kNIMNotificationIdTeamDismiss = 4 /** < 群解散，{"user_namecards":["namecard1", "namecard2"]}*/,
     kNIMNotificationIdTeamApplyPass = 5 /** < 高级群申请加入成功，{"id":"a1","user_namecards":["namecard1", "namecard2"]}*/,
-    kNIMNotificationIdTeamOwnerTransfer = 6 /** < 高级群移交群主，{"id":"a1", "leave" : bool,"user_namecards":["namecard1", "namecard2"]}*/,
+    kNIMNotificationIdTeamOwnerTransfer = 6 /** < 高级群移交群主，{"id":"a1", "leave" : boolean,"user_namecards":["namecard1", "namecard2"]}*/,
     kNIMNotificationIdTeamAddManager = 7 /** < 增加管理员，{"ids":["a1","a2"],"user_namecards":["namecard1", "namecard2"]}*/,
     kNIMNotificationIdTeamRemoveManager = 8 /** < 删除管理员，{"ids":["a1","a2"],"user_namecards":["namecard1", "namecard2"]}*/,
     kNIMNotificationIdTeamInviteAccept = 9 /** < 高级群接受邀请进群，{"id":"a1","user_namecards":["namecard1", "namecard2"]}*/,
@@ -260,27 +260,27 @@ export interface QueryThreadHistoryMsgAsyncParam {
     reverse: number /**<  number 排序 缺省0 false */
 }
 export interface FullTextSearchOnlineAsyncParam {
-    /// 要搜索的关键字
+    /** 要搜索的关键字 */
     keyword_: string
-    /// 查询的起始时间，0 为从最开始查询
+    /** 查询的起始时间，0 为从最开始查询 */
     from_time_: number
-    /// 查询的结束时间
+    /** 查询的结束时间 */
     to_time_: number
-    /// 限制会话的返回数量
+    /** 限制会话的返回数量 */
     session_limit_: number
-    /// 限制每个会话返回的消息数量
+    /** 限制每个会话返回的消息数量 */
     msglog_limit_: number
-    /// 设置查找规则, 例如升序不分组: kNIMFullTextSearchOrderByAsc | kNIMFullTextSearchNoGroupBySession
+    /** 设置查找规则, 例如升序不分组: kNIMFullTextSearchOrderByAsc | kNIMFullTextSearchNoGroupBySession */
     search_rule_: number
-    /// P2P 会话过滤列表
+    /** P2P 会话过滤列表 */
     p2p_filter_list_: Array<string>
-    /// Team 群租会话过滤列表
+    /** Team 群租会话过滤列表 */
     team_filter_list_: Array<string>
-    /// 发送者过滤列表
+    /** 发送者过滤列表 */
     sender_filter_list_: Array<string>
-    /// 消息类型过滤
+    /** 消息类型过滤 */
     msg_type_filter_list_: Array<NIMMessageType>
-    /// 消息子类型过滤
+    /** 消息子类型过滤 */
     msg_sub_type_filter_list_: Array<number>
 }
 

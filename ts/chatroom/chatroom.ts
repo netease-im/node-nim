@@ -1,7 +1,6 @@
 import sdk from '../loader'
 import { EventEmitter } from 'events'
 import {
-    ChatRoomAPI,
     ChatRoomIndependentEnterInfo,
     ChatRoomAnoymityEnterInfo,
     ChatRoomEnterInfo,
@@ -38,7 +37,7 @@ import {
     NIMChatRoomEnterStep,
     NIMChatRoomExitReason,
     NIMChatRoomLinkCondition
-} from 'ts/chatroom_def/chatroom_def'
+} from '../chatroom_def/chatroom_def'
 
 export declare interface ChatRoom {
     // enter: 登录
@@ -70,8 +69,8 @@ export declare interface ChatRoom {
     once(event: 'linkCondition', listener: (room_id: number, condition: NIMChatRoomLinkCondition) => void): this
 }
 
-export class ChatRoom extends EventEmitter {
-    chatroom: ChatRoomAPI
+export class ChatRoomModule extends EventEmitter {
+    chatroom: any
     constructor() {
         super()
         this.chatroom = new sdk.NIMChatRoom({ emit: this.emit.bind(this) })

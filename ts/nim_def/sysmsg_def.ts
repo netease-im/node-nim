@@ -58,8 +58,8 @@ export interface SysMessageSetting {
 
 export type SysmsgCallback = (result: SysMessage) => void
 export type SendCustomSysmsgCallback = (result: SendMessageArc) => void
-export type NotifySingleSysmsgCallback = (res_code: number, msg_id: number, unread_count: number) => void
-export type NotifySysmsgResCallback = (res_code: number, unread_count: number) => void
+export type NotifySingleSysmsgCallback = (res_code: NIMResCode, msg_id: number, unread_count: number) => void
+export type NotifySysmsgResCallback = (res_code: NIMResCode, unread_count: number) => void
 export type QuerySysmsgCallback = (count: number, unread_count: number, result: Array<SysMessage>) => void
 
 export interface NIMSysMsgAPI {
