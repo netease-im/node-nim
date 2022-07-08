@@ -102,8 +102,7 @@ export enum NIMChatRoomNotificationId {
     kNIMChatRoomNotificationIdTagTempMuteAdd = 321 /**< 聊天室新增标签禁言，包括的字段是muteDuration、targetTag、operator、opeNick字段 */,
     kNIMChatRoomNotificationIdTagTempMuteRemove = 322 /**< 聊天室移除标签禁言，包括的字段是muteDuration、targetTag、operator、opeNick字段 */,
     kNIMChatRoomNotificationIdRecallMessage = 323 /**< 聊天室消息撤回，包括的字段是operator、target、msgTime、msgId、ext字段 */,
-    /** 聊天室麦序队列中有批量增加通知消息 "ext" :{"_e":"BATCH_OFFER","elements":[{"nick":"ddd","accid":"ljmt","value":"v2","key":"hzlj02_key2"}]} */
-    kNIMChatRoomNotificationIdQueueBatchOffer = 324
+    kNIMChatRoomNotificationIdQueueBatchOffer = 324 /** 聊天室麦序队列中有批量增加通知消息*/
 }
 export interface NIMChatRoomLocation {
     /** 位置信息 x 坐标 */

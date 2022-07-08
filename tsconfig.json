@@ -15,7 +15,7 @@
         "stripInternal": true
     },
     "typedocOptions": {
-        "entryPoints": ["ts/nim.ts", "ts/def"],
+        "entryPoints": ["ts/node-nim.ts", "ts/chatroom", "ts/chatroom_def", "ts/nim", "ts/nim_def", "ts/qchat", "ts/qchat_def"],
         "entryPointStrategy": "expand",
         "plugin": ["typedoc-plugin-markdown", "typedoc-github-wiki-theme"],
         "theme": "github-wiki",

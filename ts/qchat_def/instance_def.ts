@@ -132,9 +132,9 @@ export type GetRTCTokenCallback = (resp: QChatGetRTCTokenResp) => void
  * @brief 圈组协议加密配置
  */
 export interface QChatEncryptionConfiguration {
-    /** "交换密钥"协议加密算法 {1(RSA),2(SM2)}, def:1(RSA) 非对称加密 */
+    /** "交换密钥"协议加密算法 1(RSA),2(SM2) 非对称加密 */
     nego_key_neca: NIMQChatExchangeKeyEncryptionAlgorithm
-    /** 通信加密算法 {1(RC4),2(AES128),4(SM4)} def:1(RC4) 对称加密 */
+    /** 通信加密算法 1(RC4),2(AES128),4(SM4) 对称加密 */
     comm_neca: NIMQChatCommEncryptionAlgorithm
     /** 握手协议类型 0:支持配置多种对称与非对称加密算法,1:只支持RAS + RC4 */
     hand_shake_type: NIMQChatHandShakeType
