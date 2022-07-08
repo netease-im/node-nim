@@ -5,12 +5,14 @@ import {
     AttachmentUploadCallback,
     AttachmentDownloadCallback,
     AttachmentProgressCallback,
-    QChatAttachmentAPI,
     QChatAttachmentUploadParam,
     QChatAttachmentStopUploadParam,
     QChatAttachmentDownloadParam,
-    QChatAttachmentStopDownloadParam
-} from 'ts/qchat_def/attachment_def'
+    QChatAttachmentStopDownloadParam,
+    QChatAttachmentDownloadResp,
+    QChatAttachmentUploadResp
+} from '../qchat_def/attachment_def'
+import { NIMResCode } from '../qchat_def/public_def'
 export declare interface QChatAttachment {
     // customToken: 自定义token
     // upload: 上传全局回调，例如发送多媒体消息自动上传时会触发此回调
@@ -26,8 +28,8 @@ export declare interface QChatAttachment {
     once(event: 'progress', listener: AttachmentProgressCallback): this
 }
 
-export class QChatAttachment extends EventEmitter {
-    instance: QChatAttachmentAPI
+export class QChatAttachmentModule extends EventEmitter {
+    instance: any
     constructor() {
         super()
         this.instance = new sdk.QChatAttachment({ emit: this.emit.bind(this) })
@@ -37,13 +39,23 @@ export class QChatAttachment extends EventEmitter {
         return this.instance.InitEventHandlers()
     }
 
-    /** @fn void Upload(const QChatAttachmentUploadParam& param)
+    /** @fn upload(param: QChatAttachmentUploadParam)
      * 上传附件
      * @param[in] param 接口参数
      * @return void
      */
-    upload(param: QChatAttachmentUploadParam): void {
-        return this.instance.Upload(param)
+    upload(param: QChatAttachmentUploadParam): Promise<QChatAttachmentUploadResp> {
+        const p = new Promise<QChatAttachmentUploadResp>((resolve, reject) => {
+            param.cb = (resp: QChatAttachmentUploadResp) => {
+                if (resp.res_code === NIMResCode.kNIMResSuccess) {
+                    resolve(resp)
+                } else {
+                    reject(resp)
+                }
+            }
+            this.instance.Upload(param)
+        })
+        return p
     }
 
     /** @fn void StopUpload(const std::string& task_id)
@@ -55,16 +67,26 @@ export class QChatAttachment extends EventEmitter {
         return this.instance.StopUpload(param)
     }
 
-    /** @fn void Download(const QChatAttachmentDownloadParam& param)
+    /** @fn download(param: QChatAttachmentDownloadParam)
      * 下载附件
      * @param[in] param 接口参数
      * @return void
      */
-    download(param: QChatAttachmentDownloadParam): void {
-        return this.instance.Download(param)
+    download(param: QChatAttachmentDownloadParam): Promise<QChatAttachmentDownloadResp> {
+        const p = new Promise<QChatAttachmentDownloadResp>((resolve, reject) => {
+            param.cb = (resp: QChatAttachmentDownloadResp) => {
+                if (resp.res_code === NIMResCode.kNIMResSuccess) {
+                    resolve(resp)
+                } else {
+                    reject(resp)
+                }
+            }
+            this.instance.Download(param)
+        })
+        return p
     }
 
-    /** @fn void StopDownload(const QChatAttachmentStopDownloadParam& param)
+    /** @fn stopDownload(param: QChatAttachmentStopDownloadParam)
      * 停止下载附件
      * @param[in] param 接口参数
      * @return void

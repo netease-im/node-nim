@@ -2,7 +2,7 @@
     "name": "node-nim",
     "version": "0.0.0",
     "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
-    "main": "js/node-nim.js",
+    "main": "dist/node-nim.js",
     "types": "types/node-nim.d.ts",
     "author": "Netease",
     "license": "ISC",
@@ -55,7 +55,7 @@
         "nim electron"
     ],
     "files": [
-        "js/",
+        "dist/",
         "types/",
         "package.json",
         "script/"

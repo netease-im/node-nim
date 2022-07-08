@@ -129,7 +129,7 @@ export class NIMSession extends ev.EventEmitter {
      * @param id			对方的account id或者群组tid。
      * @param delete_roaming 是否同时删除漫游消息
      * @param cb			最近会话列表项变更的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -157,7 +157,7 @@ export class NIMSession extends ev.EventEmitter {
      * @param id			对方的account id或者群组tid。
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb			删除结果 回调回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -172,7 +172,7 @@ export class NIMSession extends ev.EventEmitter {
      * @param id			对方的account id或者群组tid。
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb			最近会话列表项变更的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -186,7 +186,7 @@ export class NIMSession extends ev.EventEmitter {
      * @param is_super_team	会话列表中的会话是否是超大群会话
      * @param zero_list	清零的会话信息列表。
      * @param cb			最近会话列表项变更的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -202,7 +202,7 @@ export class NIMSession extends ev.EventEmitter {
      * @param top			true - 置顶 false - 取消置顶
      * @param cb			回调函数
      * @param jsonExtension json扩展参数（备用，目前不需要）
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -218,7 +218,7 @@ export class NIMSession extends ev.EventEmitter {
      * @param data			扩展数据,建议使用灵活可扩展的数据结构,例如Json
      * @param cb			回调函数
      * @param jsonExtension json扩展参数（备用，目前不需要）
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -231,7 +231,7 @@ export class NIMSession extends ev.EventEmitter {
     /** 最近联系人项全部未读数清零
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb			最近会话列表项变更的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功

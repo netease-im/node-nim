@@ -39,7 +39,7 @@ export class NIMSubscribeEvent extends ev.EventEmitter {
      * @param event_data	事件
      * @param cb			发布事件回调函数
      * @param jsonExtension json扩展参数（备用，目前不需要）
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -60,7 +60,7 @@ export class NIMSubscribeEvent extends ev.EventEmitter {
      * @param accid_list		要订阅的用户列表
      * @param cb				订阅事件回调函数
      * @param jsonExtension json扩展参数（备用，目前不需要）
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -84,7 +84,7 @@ export class NIMSubscribeEvent extends ev.EventEmitter {
      * @param accid_list		要取消订阅的用户列表
      * @param cb				取消订阅事件回调函数
      * @param jsonExtension json扩展参数（备用，目前不需要）
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -100,7 +100,7 @@ export class NIMSubscribeEvent extends ev.EventEmitter {
      * @param event_type		事件类型
      * @param cb				取消订阅事件回调函数
      * @param jsonExtension json扩展参数（备用，目前不需要）
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -117,7 +117,7 @@ export class NIMSubscribeEvent extends ev.EventEmitter {
      * @param accid_list		要查询订阅关系的用户列表
      * @param cb				查询订阅关系回调函数
      * @param jsonExtension json扩展参数（备用，目前不需要）
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功

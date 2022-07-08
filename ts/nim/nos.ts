@@ -54,7 +54,7 @@ export class NIMNOS extends ev.EventEmitter {
      * @param prg_cb 下载进度的回调函数
      * @param speed_cb 下载速度的回调函数
      * @param transfer_cb 最终下载信息的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -76,7 +76,7 @@ export class NIMNOS extends ev.EventEmitter {
 
     /** 停止获取资源（目前仅对文件消息类型有效）
      * @param msg 消息内容
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note 错误码	10206:成功
      */
     stopFetchMedia(msg: IMMessage): boolean {
@@ -92,7 +92,7 @@ export class NIMNOS extends ev.EventEmitter {
      * @param prg_cb 扩展上传进度的回调函数
      * @param speed_cb 上传速度的回调函数
      * @param transfer_cb 最终上传信息的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -116,7 +116,7 @@ export class NIMNOS extends ev.EventEmitter {
     /** 停止上传资源(只能用于调用了UploadResource接口的上传任务)
      * @param task_id 停止上传任务的ID
      * @param jsonExtension json扩展参数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 10200:成功
@@ -133,7 +133,7 @@ export class NIMNOS extends ev.EventEmitter {
      * @param prg_cb 扩展下载进度的回调函数
      * @param speed_cb 下载速度的回调函数
      * @param transfer_cb 最终下载信息的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -156,7 +156,7 @@ export class NIMNOS extends ev.EventEmitter {
     /** 停止下载资源(只能用于调用了DownloadResourceEx接口的下载任务)
      * @param task_id 停止下载任务的ID
      * @param jsonExtension json扩展参数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 10206:成功

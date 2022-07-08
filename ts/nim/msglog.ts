@@ -63,7 +63,7 @@ export class NIMMsgLog extends ev.EventEmitter {
      * @param clientMsgId		客户端消息ID
      * @param jsonExtension	json扩展参数（备用，目前不需要）
      * @param cb				查询本地消息的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -81,7 +81,7 @@ export class NIMMsgLog extends ev.EventEmitter {
      * 作为此次查询的定位点的消息历史的消息时间戳（上次查询最后一条消息的时间戳，按指定的时间的顺序起查，默认为逆序，2.4.0之前命名为last_name）
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb			查询本地消息的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -94,7 +94,7 @@ export class NIMMsgLog extends ev.EventEmitter {
     /** 在线查询消息（不包括系统消息）
      * @param param			查询参数
      * @param cb				在线查询消息的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -109,7 +109,7 @@ export class NIMMsgLog extends ev.EventEmitter {
     /** 在线查询消息（不包括系统消息）
      * @param param			查询参数
      * @param cb				在线查询消息的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -132,7 +132,7 @@ export class NIMMsgLog extends ev.EventEmitter {
      * @param msgType		检索的消息类型
      * @param jsonExtension	json扩展参数（备用，目前不需要）
      * @param cb				在线查询消息的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -167,7 +167,7 @@ export class NIMMsgLog extends ev.EventEmitter {
     /** 根据指定条件查询本地消息,使用此接口可以完成全局搜索等功能,具体请参阅开发手册
      * @param param  查询参数
      * @param cb	 在线查询消息的回调函数
-     * @return bool  检查参数如果不符合要求则返回失败
+     * @return boolean  检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -182,7 +182,7 @@ export class NIMMsgLog extends ev.EventEmitter {
      * @param to_type	    会话类型，双人0，群组1 (见nim_msglog_def.h)
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb			操作结果的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -198,7 +198,7 @@ export class NIMMsgLog extends ev.EventEmitter {
      * @param revert_by_query_online	是否可以通过服务端查询消息记录(含入库选项)进行恢复,true:是,false:否
      * @param cb			操作结果的回调函数
      * @param jsonExtension json扩展参数（备用，目前不需要）
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -219,7 +219,7 @@ export class NIMMsgLog extends ev.EventEmitter {
      * @param status 消息状态枚举值
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb			操作结果的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -234,7 +234,7 @@ export class NIMMsgLog extends ev.EventEmitter {
      * @param status 消息子状态枚举值
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb			操作结果的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -251,7 +251,7 @@ export class NIMMsgLog extends ev.EventEmitter {
      * @param composeLastMsg      如果消息历史中有该会话的消息，是否将该会话最后一条消息随会话变更上报，true 为携带，否则不携带
      * @param excludeMsgType      如果 compose_last_msg = true，则可根据需要排除指定最后一条消息的类型
      * @param cb                    操作结果的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -274,7 +274,7 @@ export class NIMMsgLog extends ev.EventEmitter {
      * @param revert_by_query_online	是否可以通过服务端查询消息记录(含入库选项)进行恢复,true:是,false:否
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb			操作结果的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -296,7 +296,7 @@ export class NIMMsgLog extends ev.EventEmitter {
      * @param msg_id		消息id
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb			操作结果的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -314,7 +314,7 @@ export class NIMMsgLog extends ev.EventEmitter {
        * @param revert_by_query_online	是否可以通过服务端查询消息记录(含入库选项)进行恢复,true:是,false:否
        * @param jsonExtension json扩展参数（备用，目前不需要）
        * @param cb			操作结果的回调函数
-       * @return bool 检查参数如果不符合要求则返回失败
+       * @return boolean 检查参数如果不符合要求则返回失败
        * @note
        * <pre>
        * 200:成功
@@ -332,7 +332,7 @@ export class NIMMsgLog extends ev.EventEmitter {
      * @param timestamp2 单位ms timestamp2	与 timestamp1 组成一个时间段，SDK 内部会判断大小调整入参顺序
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb			操作结果的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -354,7 +354,7 @@ export class NIMMsgLog extends ev.EventEmitter {
      * @param dst_path		导出时保存的目标全路径（UTF-8编码）。
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb			操作结果的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -369,7 +369,7 @@ export class NIMMsgLog extends ev.EventEmitter {
      * @param jsonExtension	json扩展参数（备用，目前不需要）
      * @param cb			操作结果的回调函数
      * @param prg_cb			导入进度的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -399,7 +399,7 @@ export class NIMMsgLog extends ev.EventEmitter {
 
     /** 查询自己发送的消息是否被对方已读
      * @param msg			消息。
-     * @return bool 是否被已读
+     * @return boolean 是否被已读
      */
     querySentMessageBeReaded(msg: IMMessage): boolean {
         return this.msglog.QuerySentMessageBeReaded(msg)
@@ -407,7 +407,7 @@ export class NIMMsgLog extends ev.EventEmitter {
 
     /** 查询收到的消息是否已经发送过已读回执
      * @param msg			消息。
-     * @return bool 是否已发送过
+     * @return boolean 是否已发送过
      */
     queryReceivedMsgReceiptSent(msg: IMMessage): boolean {
         return this.msglog.QueryReceivedMsgReceiptSent(msg)
@@ -418,7 +418,7 @@ export class NIMMsgLog extends ev.EventEmitter {
      * @param local_ext  本地扩展字段内容
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb			操作结果的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -431,7 +431,7 @@ export class NIMMsgLog extends ev.EventEmitter {
     /** 全部未读消息历史标记为已读
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb			操作结果的回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -443,7 +443,7 @@ export class NIMMsgLog extends ev.EventEmitter {
 
     /** 导出本地消息记录到云端
      * @param export_info 导出需要的参数参考LogsBackupExportInfo定义
-     * @return bool false : 当前有导入/导出操作正在进行中
+     * @return boolean false : 当前有导入/导出操作正在进行中
      */
     exportBackupToRemote(export_info: LogsBackupExportInfo): boolean {
         return this.msglog.ExportBackupToRemote(export_info)
@@ -451,7 +451,7 @@ export class NIMMsgLog extends ev.EventEmitter {
 
     /** 导入已备份在云端的消息记录
      * @param import_info 导入需要的参数参考LogsBackupImportInfo定义
-     * @return bool false : 当前有导入/导出操作正在进行中
+     * @return boolean false : 当前有导入/导出操作正在进行中
      */
     importBackupToRemote(export_info: LogsBackupImportInfo): boolean {
         return this.msglog.ImportBackupToRemote(export_info)

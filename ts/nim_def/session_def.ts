@@ -1,3 +1,4 @@
+import { NIMResCode } from './client_def'
 import { NIMMsgLogStatus, NIMMsgLogSubStatus, NIMMessageType, IMMessage } from './msglog_def'
 /** @enum NIMSessionType 会话类型 */
 export enum NIMSessionType {
@@ -90,15 +91,15 @@ export type QuerySessionDataCallback = (rescode: number, result: SessionData) =>
 export type SetToStickTopSessionNotifyCallback = (result: string) => void
 export type CancelStickTopSessionNotifyCallback = (session_id: string, session_type: NIMSessionType) => void
 export type UpdateStickTopSessionNotifyCallback = (result: string) => void
-export type QueryStickTopSessionListCallback = (res_code: number, result: string) => void
-export type SetToStickTopSessionCallback = (res_code: number, result: string) => void
-export type UpdateStickTopSessionCallback = (res_code: number, result: string) => void
-export type CancelToStickTopSessionCallback = (res_code: number, session_id: string, session_type: NIMSessionType) => void
-export type QueryHasmoreRoammsgCallback = (res_code: number, info: SessionRoamMsgHasMoreTagInfo) => void
-export type QueryAllHasmoreRoammsgCallback = (res_code: number, info_list: Array<SessionRoamMsgHasMoreTagInfo>) => void
-export type UpdateHasmoreRoammsgCallback = (res_code: number) => void
-export type DeleteHasmoreRoammsgCallback = (res_code: number) => void
-export type SetMultiUnreadCountZeroAsyncCallback = (res_code: number, data_list: Array<SessionData>, unread_count: number) => void
+export type QueryStickTopSessionListCallback = (res_code: NIMResCode, result: string) => void
+export type SetToStickTopSessionCallback = (res_code: NIMResCode, result: string) => void
+export type UpdateStickTopSessionCallback = (res_code: NIMResCode, result: string) => void
+export type CancelToStickTopSessionCallback = (res_code: NIMResCode, session_id: string, session_type: NIMSessionType) => void
+export type QueryHasmoreRoammsgCallback = (res_code: NIMResCode, info: SessionRoamMsgHasMoreTagInfo) => void
+export type QueryAllHasmoreRoammsgCallback = (res_code: NIMResCode, info_list: Array<SessionRoamMsgHasMoreTagInfo>) => void
+export type UpdateHasmoreRoammsgCallback = (res_code: NIMResCode) => void
+export type DeleteHasmoreRoammsgCallback = (res_code: NIMResCode) => void
+export type SetMultiUnreadCountZeroAsyncCallback = (res_code: NIMResCode, data_list: Array<SessionData>, unread_count: number) => void
 
 export interface NIMSessionAPI {
     InitEventHandlers(): void

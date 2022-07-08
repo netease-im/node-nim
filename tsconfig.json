@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "outDir": "js",
+        "outDir": "dist",
         "baseUrl": ".",
         "target": "es6",
         "strict": true,
@@ -11,7 +11,8 @@
         "lib": ["es6", "dom"],
         "declaration": true,
         "declarationDir": "types",
-        "sourceMap": true
+        "sourceMap": true,
+        "stripInternal": true
     },
     "typedocOptions": {
         "entryPoints": ["ts/nim.ts", "ts/def"],

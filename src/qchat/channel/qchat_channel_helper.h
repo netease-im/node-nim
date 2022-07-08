@@ -11,7 +11,7 @@
 #include "nim_qchat_cpp_wrapper/nim_cpp_qchat_api.h"
 #include "xpack_specialization.h"
 using namespace nim_qchat;
-ReflectionDefinition_O(QChatChannelSubscribeResp, res_code, failed_channels, unread_infos);
+ReflectionDefinition_O(QChatChannelSubscribeResp, res_code, failed_channels);
 ReflectionDefinition_O(QChatChannelQueryUnreadInfoResp, res_code, unread_infos);
 ReflectionDefinition_O(QChatChannelCreateResp, res_code, channel_info);
 ReflectionDefinition_O(QChatChannelGetChannelsResp, res_code, channel_list);

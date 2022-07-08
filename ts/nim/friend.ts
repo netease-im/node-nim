@@ -35,7 +35,7 @@ export class NIMFriend extends ev.EventEmitter {
      * @param msg 接口扩展字段
      * @param cb	好友请求回调函数
      * @param jsonExtension json扩展参数（备用，目前不需要）
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -51,7 +51,7 @@ export class NIMFriend extends ev.EventEmitter {
      * @param accid	对方帐号
      * @param option 删除好友选项，目前仅有是否删除备注信息选项
      * @param cb	删除好友回调函数
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -67,7 +67,7 @@ export class NIMFriend extends ev.EventEmitter {
      * @param profile 好友资料
      * @param cb	更新好友资料回调函数
      * @param jsonExtension json扩展参数（备用，目前不需要）
-     * @return bool 检查参数如果不符合要求则返回失败
+     * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -106,7 +106,7 @@ export class NIMFriend extends ev.EventEmitter {
      * @param keyword 要查询的关键字
      * @param cb	获取好友列表回调函数
      * @param jsonExtension json扩展参数（备用，目前不需要）
-     * @return bool 返回 true 表示发送查询请求成功，返回 false 表示关键字为空
+     * @return boolean 返回 true 表示发送查询请求成功，返回 false 表示关键字为空
      * @note
      * <pre>
      * 200:成功
