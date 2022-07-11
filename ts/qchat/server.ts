@@ -1,5 +1,5 @@
 import sdk from '../loader'
-import { EventEmitter } from 'events'
+import { EventEmitter } from 'eventemitter3'
 import {
     QChatServerAcceptApplyParam,
     QChatServerAcceptApplyResp,
@@ -49,15 +49,19 @@ import {
     QChatServerSubscribeResp,
     QChatServerUnbanMemberParam,
     QChatServerUnbanMemberResp,
+    QChatServerUnreadResp,
     QChatServerUpdateMemberInfoParam,
     QChatServerUpdateMemberInfoResp,
     QChatServerUpdateParam,
     QChatServerUpdateResp
 } from '../qchat_def/server_def'
 import { NIMResCode } from '../qchat_def/public_def'
-export declare interface QChatServer {}
+export declare interface QChatServerEvents {
+    /** 服务器未读数 */
+    unread: [QChatServerUnreadResp]
+}
 
-export class QChatServerModule extends EventEmitter {
+export class QChatServerModule extends EventEmitter<QChatServerEvents> {
     instance: any
     constructor() {
         super()

@@ -1,8 +1,10 @@
 import { NIMPluginAPI, ChatRoomRequestEnterCallback, QChatRequestLinkAddressCallback } from '../nim_def/plugin_def'
-import ev from 'events'
+import { EventEmitter } from 'eventemitter3'
 import sdk from '../loader'
 
-export class NIMPlugin extends ev.EventEmitter {
+export declare interface NIMPluginEvents {}
+
+export class NIMPlugin extends EventEmitter<NIMPluginEvents> {
     plugin: NIMPluginAPI
     constructor() {
         super()

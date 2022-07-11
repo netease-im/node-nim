@@ -1,5 +1,5 @@
 import sdk from '../loader'
-import ev from 'events'
+import { EventEmitter } from 'eventemitter3'
 import {
     DownloadMediaCallback,
     DownloadMediaExCallback,
@@ -17,16 +17,14 @@ import {
 } from '../nim_def/nos_def'
 import { IMMessage } from '../nim_def/msglog_def'
 
-export declare interface NIMNOS {
-    // downloadComplete: 下载回调
-    // uploadComplete: 上传回调
-    on(event: 'downloadComplete', listener: (rescode: number, filePath: string, callId: string, resId: string) => void): this
-    on(event: 'uploadComplete', listener: (rescode: number, result: UploadMediaResult) => void): this
-    once(event: 'downloadComplete', listener: (rescode: number, filePath: string, callId: string, resId: string) => void): this
-    once(event: 'uploadComplete', listener: (rescode: number, result: UploadMediaResult) => void): this
+export declare interface NIMNOSEvents {
+    /** 下载回调 */
+    downloadComplete: [number, string, string, string]
+    /** 上传回调 */
+    uploadComplete: [number, UploadMediaResult]
 }
 
-export class NIMNOS extends ev.EventEmitter {
+export class NIMNOS extends EventEmitter<NIMNOSEvents> {
     nos: NIMNOSAPI
     constructor() {
         super()

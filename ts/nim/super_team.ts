@@ -1,5 +1,5 @@
 import sdk from '../loader'
-import ev from 'events'
+import { EventEmitter } from 'eventemitter3'
 import {
     QuerySuperTeamMyAllMemberInfosCallback,
     NIMSuperTeamAPI,
@@ -14,13 +14,12 @@ import {
     SuperTeamEvent
 } from '../nim_def/super_team_def'
 
-export declare interface NIMSuperTeam {
-    // superTeamEvent: 超大群事件
-    on(event: 'superTeamEvent', listener: (result: SuperTeamEvent) => void): this
-    once(event: 'superTeamEvent', listener: (result: SuperTeamEvent) => void): this
+export declare interface NIMSuperTeamEvents {
+    /** 超大群事件 */
+    superTeamEvent: [SuperTeamEvent]
 }
 
-export class NIMSuperTeam extends ev.EventEmitter {
+export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
     team: NIMSuperTeamAPI
     constructor() {
         super()

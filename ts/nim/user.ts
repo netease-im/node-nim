@@ -1,5 +1,5 @@
 import sdk from '../loader'
-import ev from 'events'
+import { EventEmitter } from 'eventemitter3'
 import {
     NIMUserAPI,
     SetRelationCallback,
@@ -11,16 +11,14 @@ import {
     SpecialRelationshipChangeEvent
 } from '../nim_def/user_def'
 
-export declare interface NIMUser {
-    // specialRelationChange: 用户属性变更
-    // userNameCardChange: 用户名片变更
-    on(event: 'specialRelationChange', listener: (result: SpecialRelationshipChangeEvent) => void): this
-    on(event: 'userNameCardChange', listener: (result: Array<UserNameCard>) => void): this
-    once(event: 'specialRelationChange', listener: (result: SpecialRelationshipChangeEvent) => void): this
-    once(event: 'userNameCardChange', listener: (result: Array<UserNameCard>) => void): this
+export declare interface NIMUserEvents {
+    /** 用户属性变更 */
+    specialRelationChange: [SpecialRelationshipChangeEvent]
+    /** 用户名片变更 */
+    userNameCardChange: [Array<UserNameCard>]
 }
 
-export class NIMUser extends ev.EventEmitter {
+export class NIMUser extends EventEmitter<NIMUserEvents> {
     user: NIMUserAPI
     constructor() {
         super()

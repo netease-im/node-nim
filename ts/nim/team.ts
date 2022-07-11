@@ -1,5 +1,5 @@
 import sdk from '../loader'
-import ev from 'events'
+import { EventEmitter } from 'eventemitter3'
 import { IMMessage } from '../nim_def/msglog_def'
 import {
     NIMTeamAPI,
@@ -22,13 +22,12 @@ import {
     TeamEvent
 } from '../nim_def/team_def'
 
-export declare interface NIMTeam {
-    // teamEvent: 群事件
-    on(event: 'teamEvent', listener: (result: TeamEvent) => void): this
-    once(event: 'teamEvent', listener: (result: TeamEvent) => void): this
+export declare interface NIMTeamEvents {
+    /** 群事件 */
+    teamEvent: [TeamEvent]
 }
 
-export class NIMTeam extends ev.EventEmitter {
+export class NIMTeam extends EventEmitter<NIMTeamEvents> {
     team: NIMTeamAPI
     constructor() {
         super()

@@ -1,5 +1,5 @@
 import sdk from '../loader'
-import ev from 'events'
+import { EventEmitter } from 'eventemitter3'
 import { NIMSessionType } from '../nim_def/session_def'
 import {
     NIMMsgLogAPI,
@@ -35,19 +35,16 @@ import {
     QueryMsgByOptionsAsyncParam
 } from '../nim_def/msglog_def'
 
-export declare interface NIMMsgLog {
-    // localMsgDeleted: 单向删除消息记录通知
-    // onlineMsgDeleted: 删除某一会话的云端的历史记录通知
-    // msgStatusChanged: 消息状态变更
-    on(event: 'localMsgDeleted', listener: (result: Array<DeleteMsglogSelfNotifyItemInfo>) => void): this
-    on(event: 'onlineMsgDeleted', listener: (result: Array<DeleteMsglogSelfNotifyParam>) => void): this
-    on(event: 'msgStatusChanged', listener: (result: MessageStatusChangedResult) => void): this
-    once(event: 'localMsgDeleted', listener: (result: Array<DeleteMsglogSelfNotifyItemInfo>) => void): this
-    once(event: 'onlineMsgDeleted', listener: (result: Array<DeleteMsglogSelfNotifyParam>) => void): this
-    once(event: 'msgStatusChanged', listener: (result: MessageStatusChangedResult) => void): this
+export declare interface NIMMsgLogEvents {
+    /** 单向删除消息记录通知 */
+    localMsgDeleted: [Array<DeleteMsglogSelfNotifyItemInfo>]
+    /** 删除某一会话的云端的历史记录通知 */
+    onlineMsgDeleted: [Array<DeleteMsglogSelfNotifyParam>]
+    /** 消息状态变更 */
+    msgStatusChanged: [MessageStatusChangedResult]
 }
 
-export class NIMMsgLog extends ev.EventEmitter {
+export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     msglog: NIMMsgLogAPI
     constructor() {
         super()

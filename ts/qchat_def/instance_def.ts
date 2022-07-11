@@ -113,7 +113,7 @@ export interface QChatGetRTCTokenResp {
 export type CustomTokenCallback = (resp: QChatCustomTokenResp) => QChatCustomTokenResp
 /** 被踢回调 */
 export type KickedCallback = (resp: QChatKickedResp) => void
-/** 被踢回调 */
+/** 登录状态回调 */
 export type LoginStatusCallback = (resp: QChatLoginStatusResp) => void
 /** 多点登录回调 */
 export type MultispotLoginCallback = (resp: QChatMultispotLoginResp) => void

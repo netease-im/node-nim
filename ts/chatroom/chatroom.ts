@@ -1,5 +1,5 @@
 import sdk from '../loader'
-import { EventEmitter } from 'events'
+import { EventEmitter } from 'eventemitter3'
 import {
     ChatRoomIndependentEnterInfo,
     ChatRoomAnoymityEnterInfo,
@@ -39,37 +39,24 @@ import {
     NIMChatRoomLinkCondition
 } from '../chatroom_def/chatroom_def'
 
-export declare interface ChatRoom {
-    // enter: 登录
-    // exit: 登出、被踢
-    // sendMsg: 发送消息
-    // receiveMsg: 接收消息
-    // receiveMsgs: 接收批量消息
-    // notification: 通知
-    // linkCondition: 服务连接情况
-    on(
-        event: 'enter',
-        listener: (room_id: number, step: NIMChatRoomEnterStep, error_code: number, info: ChatRoomInfo, my_info: ChatRoomMemberInfo) => void
-    ): this
-    on(event: 'exit', listener: (room_id: number, error_code: number, exit_reason: NIMChatRoomExitReason) => void): this
-    on(event: 'sendMsg', listener: (room_id: number, error_code: number, message: ChatRoomMessage) => void): this
-    on(event: 'receiveMsg', listener: (room_id: number, message: ChatRoomMessage) => void): this
-    on(event: 'receiveMsgs', listener: (room_id: number, message: Array<ChatRoomMessage>) => void): this
-    on(event: 'notification', listener: (room_id: number, notification: ChatRoomNotification) => void): this
-    on(event: 'linkCondition', listener: (room_id: number, condition: NIMChatRoomLinkCondition) => void): this
-    once(
-        event: 'enter',
-        listener: (room_id: number, step: NIMChatRoomEnterStep, error_code: number, info: ChatRoomInfo, my_info: ChatRoomMemberInfo) => void
-    ): this
-    once(event: 'exit', listener: (room_id: number, error_code: number, exit_reason: NIMChatRoomExitReason) => void): this
-    once(event: 'sendMsg', listener: (room_id: number, error_code: number, message: ChatRoomMessage) => void): this
-    once(event: 'receiveMsg', listener: (room_id: number, message: ChatRoomMessage) => void): this
-    once(event: 'receiveMsgs', listener: (room_id: number, message: Array<ChatRoomMessage>) => void): this
-    once(event: 'notification', listener: (room_id: number, notification: ChatRoomNotification) => void): this
-    once(event: 'linkCondition', listener: (room_id: number, condition: NIMChatRoomLinkCondition) => void): this
+export declare interface ChatRoomEvents {
+    /** 登录 */
+    enter: [number, NIMChatRoomEnterStep, number, ChatRoomInfo, ChatRoomMemberInfo]
+    /** 登出、被踢 */
+    exit: [number, number, NIMChatRoomExitReason]
+    /** 发送消息 */
+    sendMsg: [number, number, ChatRoomMessage]
+    /** 接收消息 */
+    receiveMsg: [number, ChatRoomMessage]
+    /** 接收批量消息 */
+    receiveMsgs: [number, Array<ChatRoomMessage>]
+    /** 通知 */
+    notification: [number, ChatRoomNotification]
+    /** 服务连接情况 */
+    linkCondition: [number, NIMChatRoomLinkCondition]
 }
 
-export class ChatRoomModule extends EventEmitter {
+export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
     chatroom: any
     constructor() {
         super()

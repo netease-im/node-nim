@@ -1,5 +1,5 @@
 import sdk from '../loader'
-import { EventEmitter } from 'events'
+import { EventEmitter } from 'eventemitter3'
 import {
     QChatSendMessageParam,
     QChatUpdateMessageParam,
@@ -30,12 +30,19 @@ import {
     QChatRemoveQuickCommentResp,
     QChatReplyMessageResp,
     QChatSendMessageResp,
-    QChatUpdateMessageResp
+    QChatUpdateMessageResp,
+    QChatMsgUpdatedResp,
+    QChatRecvMsgResp
 } from '../qchat_def/message_def'
 import { NIMResCode } from '../qchat_def/public_def'
-export declare interface QChatMessage {}
+export declare interface QChatMessageEvents {
+    /** 新消息通知 */
+    message: [QChatRecvMsgResp]
+    /** 消息变更通知 */
+    update: [QChatMsgUpdatedResp]
+}
 
-export class QChatMessageModule extends EventEmitter {
+export class QChatMessageModule extends EventEmitter<QChatMessageEvents> {
     instance: any
     constructor() {
         super()

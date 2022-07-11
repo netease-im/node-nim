@@ -1,5 +1,5 @@
 import sdk from '../loader'
-import ev from 'events'
+import { EventEmitter } from 'eventemitter3'
 import {
     NIMTalkExAPI,
     CollectInfo,
@@ -25,25 +25,20 @@ import {
 } from '../nim_def/talkex_def'
 import { IMMessage } from '../nim_def/msglog_def'
 
-export declare interface NIMTalkEx {
-    // addQuickComment: 添加快捷回复
-    // removeQuickComment: 删除快捷回复
-    // pin: Pin消息
-    // unpin: Unpin消息
-    // updatePin: 更新Pin消息
-    on(event: 'addQuickComment', listener: (code: number, info: QuickCommentInfo) => void): this
-    on(event: 'removeQuickComment', listener: (code: number, id: string) => void): this
-    on(event: 'pin', listener: (code: number, session: string, to_type: number, info: PinMessageInfo) => void): this
-    on(event: 'unpin', listener: (code: number, session: string, to_type: number, id: string) => void): this
-    on(event: 'updatePin', listener: (code: number, session: string, to_type: number, info: PinMessageInfo) => void): this
-    once(event: 'addQuickComment', listener: (code: number, info: QuickCommentInfo) => void): this
-    once(event: 'removeQuickComment', listener: (code: number, id: string) => void): this
-    once(event: 'pin', listener: (code: number, session: string, to_type: number, info: PinMessageInfo) => void): this
-    once(event: 'unpin', listener: (code: number, session: string, to_type: number, id: string) => void): this
-    once(event: 'updatePin', listener: (code: number, session: string, to_type: number, info: PinMessageInfo) => void): this
+export declare interface NIMTalkExEvents {
+    /** 添加快捷回复 */
+    addQuickComment: [number, QuickCommentInfo]
+    /** 删除快捷回复 */
+    removeQuickComment: [number, string]
+    /** Pin消息 */
+    pin: [number, string, number, PinMessageInfo]
+    /** Unpin消息 */
+    unpin: [number, string, number, string]
+    /** 更新Pin消息 */
+    updatePin: [number, string, number, PinMessageInfo]
 }
 
-export class NIMTalkEx extends ev.EventEmitter {
+export class NIMTalkEx extends EventEmitter<NIMTalkExEvents> {
     talkex: NIMTalkExAPI
     constructor() {
         super()
@@ -55,7 +50,7 @@ export class NIMTalkEx extends ev.EventEmitter {
         return this.talkex.InitEventHandlers()
     }
 
-    // Collect
+    /** Collect */
     /** 添加收藏
      * @param collect_info	收藏内容
      * @param cb		执行结果回调函数
@@ -122,7 +117,7 @@ export class NIMTalkEx extends ev.EventEmitter {
         this.talkex.QueryQuickCommentList(query_param, cb)
     }
 
-    // PinMsg
+    /** PinMsg */
     /** Pin某条消息
      * @param msg	要Pin的消息
      * @param pin_info	Pin的内容 只需赋值 ext参数,其它参数SDK来补充

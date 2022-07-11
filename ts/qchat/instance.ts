@@ -1,5 +1,5 @@
 import sdk from '../loader'
-import { EventEmitter } from 'events'
+import { EventEmitter } from 'eventemitter3'
 import {
     QChatInitParam,
     QChatCleanupParam,
@@ -8,12 +8,21 @@ import {
     QChatKickParam,
     QChatLoginResp,
     QChatKickResp,
-    QChatLogoutResp
+    QChatLogoutResp,
+    QChatKickedResp,
+    QChatMultispotLoginResp
 } from '../qchat_def/instance_def'
 import { NIMResCode } from '../qchat_def/public_def'
-export declare interface QChatInstance {}
+export declare interface QChatInstanceEvents {
+    /** 登录状态 */
+    loginStatus: [QChatLoginResp]
+    /** 被踢 */
+    kickedOut: [QChatKickedResp]
+    /** 多端登录通知 */
+    multispotLogin: [QChatMultispotLoginResp]
+}
 
-export class QChatInstanceModule extends EventEmitter {
+export class QChatInstanceModule extends EventEmitter<QChatInstanceEvents> {
     instance: any
     constructor() {
         super()

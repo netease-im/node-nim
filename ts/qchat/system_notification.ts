@@ -1,5 +1,5 @@
 import sdk from '../loader'
-import { EventEmitter } from 'events'
+import { EventEmitter } from 'eventemitter3'
 import {
     QChatSendSystemNotificationParam,
     QChatUpdateSystemNotificationParam,
@@ -8,12 +8,22 @@ import {
     QChatMarkSystemNotificationsReadResp,
     QChatSendSystemNotificationResp,
     QChatSendTypingEventResp,
-    QChatUpdateSystemNotificationResp
+    QChatUpdateSystemNotificationResp,
+    QChatRecvSystemNotificationResp,
+    QChatRecvTypingEventResp,
+    QChatSystemNotificationUpdatedResp
 } from '../qchat_def/system_notification_def'
 import { NIMResCode } from '../qchat_def/public_def'
-export declare interface QChatSystemNotification {}
+export declare interface QChatSystemNotificationEvents {
+    /** 接受系统通知 */
+    notification: [QChatRecvSystemNotificationResp]
+    /** 正在输入事件 */
+    typingEvent: [QChatRecvTypingEventResp]
+    /** 系统通知更新 */
+    update: [QChatSystemNotificationUpdatedResp]
+}
 
-export class QChatSystemNotificationModule extends EventEmitter {
+export class QChatSystemNotificationModule extends EventEmitter<QChatSystemNotificationEvents> {
     instance: any
     constructor() {
         super()

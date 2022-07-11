@@ -1,5 +1,5 @@
 import sdk from '../loader'
-import ev from 'events'
+import { EventEmitter } from 'eventemitter3'
 import {
     NIMSysMsgAPI,
     SysMessage,
@@ -11,16 +11,14 @@ import {
 } from '../nim_def/sysmsg_def'
 import { SendMessageArc } from '../nim_def/talk_def'
 
-export declare interface NIMSysMsg {
-    // receiveSystemMsg: 系统通知
-    // sendCustomSystemMsg: 发送透传消息回调
-    on(event: 'receiveSystemMsg', listener: (result: SysMessage) => void): this
-    on(event: 'sendCustomSystemMsg', listener: (result: SendMessageArc) => void): this
-    once(event: 'receiveSystemMsg', listener: (result: SysMessage) => void): this
-    once(event: 'sendCustomSystemMsg', listener: (result: SendMessageArc) => void): this
+export declare interface NIMSysMsgEvents {
+    /** 系统通知 */
+    receiveSystemMsg: [SysMessage]
+    /** 发送透传消息回调 */
+    sendCustomSystemMsg: [SendMessageArc]
 }
 
-export class NIMSysMsg extends ev.EventEmitter {
+export class NIMSysMsg extends EventEmitter<NIMSysMsgEvents> {
     sysmsg: NIMSysMsgAPI
     constructor() {
         super()

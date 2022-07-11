@@ -1,5 +1,5 @@
 import sdk from '../loader'
-import { EventEmitter } from 'events'
+import { EventEmitter } from 'eventemitter3'
 import {
     QChatCreateServerRoleParam,
     QChatUpdateServerRoleParam,
@@ -63,9 +63,9 @@ import {
     QChatUpdateServerRoleResp
 } from '../qchat_def/role_def'
 import { NIMResCode } from '../qchat_def/public_def'
-export declare interface QChatRole {}
+export declare interface QChatRoleEvents {}
 
-export class QChatRoleModule extends EventEmitter {
+export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
     instance: any
     constructor() {
         super()

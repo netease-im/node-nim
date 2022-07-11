@@ -1,5 +1,5 @@
 import sdk from '../loader'
-import { EventEmitter } from 'events'
+import { EventEmitter } from 'eventemitter3'
 import {
     QChatChannelCreateParam,
     QChatChannelDeleteParam,
@@ -40,12 +40,16 @@ import {
     QChatChannelUpdateResp,
     QChatChannelUpdateRTCInfoResp,
     QChatChannelUpdateWhiteBlackMembersResp,
-    QChatChannelUpdateWhiteBlackRoleResp
+    QChatChannelUpdateWhiteBlackRoleResp,
+    QChatChannelUnreadResp
 } from '../qchat_def/channel_def'
 import { NIMResCode } from '../qchat_def/public_def'
-export declare interface QChatChannel {}
+export declare interface QChatChannelEvents {
+    /** 频道未读数 */
+    unread: [QChatChannelUnreadResp]
+}
 
-export class QChatChannelModule extends EventEmitter {
+export class QChatChannelModule extends EventEmitter<QChatChannelEvents> {
     instance: any
     constructor() {
         super()

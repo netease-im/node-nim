@@ -1,5 +1,5 @@
 import sdk from '../loader'
-import { EventEmitter } from 'events'
+import { EventEmitter } from 'eventemitter3'
 import {
     QChatChannelCategoryCreateParam,
     QChatChannelCategoryUpdateParam,
@@ -27,9 +27,9 @@ import {
     QChatChannelGetCategoryChannelsPageResp
 } from '../qchat_def/channel_def'
 import { NIMResCode } from '../qchat_def/public_def'
-export declare interface QChatChannelCategory {}
+export declare interface QChatChannelCategoryEvents {}
 
-export class QChatChannelCategoryModule extends EventEmitter {
+export class QChatChannelCategoryModule extends EventEmitter<QChatChannelCategoryEvents> {
     instance: any
     constructor() {
         super()

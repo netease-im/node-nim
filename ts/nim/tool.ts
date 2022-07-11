@@ -1,8 +1,10 @@
 import sdk from '../loader'
-import ev from 'events'
+import { EventEmitter } from 'eventemitter3'
 import { NIMToolAPI, NIMAppDataType, AudioInfo, GetAudioTextCallback, FilterClientAntispamCallback } from '../nim_def/tool_def'
 
-export class NIMTool extends ev.EventEmitter {
+export declare interface NIMToolEvents {}
+
+export class NIMTool extends EventEmitter<NIMToolEvents> {
     tool: NIMToolAPI
     constructor() {
         super()

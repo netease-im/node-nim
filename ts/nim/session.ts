@@ -1,5 +1,5 @@
 import sdk from '../loader'
-import ev from 'events'
+import { EventEmitter } from 'eventemitter3'
 import { IMMessage, NIMMessageType } from '../nim_def/msglog_def'
 import {
     CancelToStickTopSessionCallback,
@@ -21,22 +21,18 @@ import {
     UpdateStickTopSessionCallback
 } from '../nim_def/session_def'
 
-export declare interface NIMSession {
-    // change: 会话变更
-    // stickTop: 置顶会话通知
-    // cancelStickTop: 取消置顶会话通知
-    // updateStickTop: 更新置顶会话通知
-    on(event: 'change', listener: (rescode: number, result: SessionData, count: number) => void): this
-    on(event: 'stickTop', listener: (result: string) => void): this
-    on(event: 'cancelStickTop', listener: (session_id: string, session_type: NIMSessionType) => void): this
-    on(event: 'updateStickTop', listener: (result: string) => void): this
-    once(event: 'change', listener: (rescode: number, result: SessionData, count: number) => void): this
-    once(event: 'stickTop', listener: (result: string) => void): this
-    once(event: 'cancelStickTop', listener: (session_id: string, session_type: NIMSessionType) => void): this
-    once(event: 'updateStickTop', listener: (result: string) => void): this
+export declare interface NIMSessionEvents {
+    /** 会话变更 */
+    change: [number, SessionData, number]
+    /** 置顶会话通知 */
+    stickTop: [string]
+    /** 取消置顶会话通知 */
+    cancelStickTop: [string, NIMSessionType]
+    /** 更新置顶会话通知 */
+    updateStickTop: [string]
 }
 
-export class NIMSession extends ev.EventEmitter {
+export class NIMSession extends EventEmitter<NIMSessionEvents> {
     session: NIMSessionAPI
     constructor() {
         super()

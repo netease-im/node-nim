@@ -1,5 +1,5 @@
 import sdk from '../loader'
-import ev from 'events'
+import { EventEmitter } from 'eventemitter3'
 import { NIMSessionType } from '../nim_def/session_def'
 import {
     DeleteOnlineSessionInfoCallback,
@@ -11,13 +11,12 @@ import {
     UpdateOnlineSessionInfoCallback
 } from '../nim_def/online_session_def'
 
-export declare interface NIMOnlineSession {
-    // change: 会话变更
-    on(event: 'change', listener: (result: SessionInfo) => void): this
-    once(event: 'change', listener: (result: SessionInfo) => void): this
+export declare interface NIMOnlineSessionEvents {
+    /** 会话变更 */
+    change: [SessionInfo]
 }
 
-export class NIMOnlineSession extends ev.EventEmitter {
+export class NIMOnlineSession extends EventEmitter<NIMOnlineSessionEvents> {
     session: NIMOnlineSessionAPI
     constructor() {
         super()

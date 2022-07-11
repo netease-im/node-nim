@@ -4,18 +4,25 @@ const assert = require('assert')
 async function testQChat() {
     const instance = new node_nim.QChatInstanceModule()
     let ret = instance.init({})
+    instance.initEventHandlers()
     if (!ret) {
         console.log('init failed')
         process.exit(1)
     }
-    let resp = await instance.login({
-        appkey: '45c6af3c98409b18a84451215d0bdd6e',
-        accid: 'zvc0',
-        auth_type: 0,
-        login_token: 'e10adc3949ba59abbe56e057f20f883e',
-        link_address: ['qchatlink-yqsx23.netease.im:9092', 'qchatlink-yqsx23.netease.im:8080']
+    instance.on('loginStatus', (resp) => {
+        console.log('loginStatus', resp)
     })
-    console.log(resp)
+    instance
+        .login({
+            appkey: '45c6af3c98409b18a84451215d0bdd6e',
+            accid: 'zvc0',
+            auth_type: 0,
+            login_token: 'e10adc3949ba59abbe56e057f20f883e',
+            link_address: ['qchatlink-yqsx23.netease.im:9092', 'qchatlink-yqsx23.netease.im:8080']
+        })
+        .then((resp) => {
+            console.log('login', resp)
+        })
 }
 function testNIM() {
     const client = new node_nim.NIMClient()

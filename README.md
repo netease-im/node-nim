@@ -67,6 +67,7 @@ if (!ret) {
     console.log('init failed')
     process.exit(1)
 }
+instance.initEventHandlers()
 let resp = await instance.login({
     appkey: 'app_key',
     accid: 'username',
@@ -85,6 +86,7 @@ if (!ret) {
     console.log('init failed')
     process.exit(1)
 }
+chatroom.initEventHandlers()
 ret = chatroom.enter('room_id', 'login_data', {}, '')
 if (!ret) {
     console.log('enter failed')

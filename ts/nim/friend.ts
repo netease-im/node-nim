@@ -1,5 +1,5 @@
 import sdk from '../loader'
-import ev from 'events'
+import { EventEmitter } from 'eventemitter3'
 import {
     DeleteFriendOption,
     FriendProfile,
@@ -11,13 +11,12 @@ import {
     FriendChangeEvent
 } from '../nim_def/friend_def'
 
-export declare interface NIMFriend {
-    // change: 好友变更通知
-    on(event: 'change', listener: (result: FriendChangeEvent) => void): this
-    once(event: 'change', listener: (result: FriendChangeEvent) => void): this
+export declare interface NIMFriendEvents {
+    /** 好友变更通知 */
+    change: [FriendChangeEvent]
 }
 
-export class NIMFriend extends ev.EventEmitter {
+export class NIMFriend extends EventEmitter<NIMFriendEvents> {
     friend: NIMFriendAPI
     constructor() {
         super()

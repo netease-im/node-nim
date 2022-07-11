@@ -1,5 +1,5 @@
 import sdk from '../loader'
-import ev from 'events'
+import { EventEmitter } from 'eventemitter3'
 import {
     DeleteCachedFileCallback,
     DetectProxyCallback,
@@ -13,13 +13,12 @@ import {
     UploadSDKLogCallback
 } from '../nim_def/global_def'
 
-export declare interface NIMGlobal {
-    // dbError: SDK DB操作出错
-    on(event: 'dbError', listener: (result: SDKDBErrorInfo) => void): this
-    once(event: 'dbError', listener: (result: SDKDBErrorInfo) => void): this
+export declare interface NIMGlobalEvents {
+    /** SDK DB操作出错 */
+    dbError: [SDKDBErrorInfo]
 }
 
-export class NIMGlobal extends ev.EventEmitter {
+export class NIMGlobal extends EventEmitter<NIMGlobalEvents> {
     global: NIMGlobalAPI
     constructor() {
         super()

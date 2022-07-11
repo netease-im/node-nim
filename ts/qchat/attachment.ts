@@ -1,5 +1,5 @@
 import sdk from '../loader'
-import { EventEmitter } from 'events'
+import { EventEmitter } from 'eventemitter3'
 import {
     AttachmentCustomTokenCallback,
     AttachmentUploadCallback,
@@ -13,22 +13,17 @@ import {
     QChatAttachmentUploadResp
 } from '../qchat_def/attachment_def'
 import { NIMResCode } from '../qchat_def/public_def'
-export declare interface QChatAttachment {
-    // customToken: 自定义token
-    // upload: 上传全局回调，例如发送多媒体消息自动上传时会触发此回调
-    // download: 下载全局回调，例如接收多媒体消息自动下载时会触发此回调
-    // progress: 上传/下载全局进度回调，例如多媒体消息自动上传/下载时会触发此回调
-    on(event: 'customToken', listener: AttachmentCustomTokenCallback): this
-    on(event: 'upload', listener: AttachmentUploadCallback): this
-    on(event: 'download', listener: AttachmentDownloadCallback): this
-    on(event: 'progress', listener: AttachmentProgressCallback): this
-    once(event: 'customToken', listener: AttachmentCustomTokenCallback): this
-    once(event: 'upload', listener: AttachmentUploadCallback): this
-    once(event: 'download', listener: AttachmentDownloadCallback): this
-    once(event: 'progress', listener: AttachmentProgressCallback): this
+
+export declare interface QChatAttachmentEvents {
+    /** 上传全局回调，例如发送多媒体消息自动上传时会触发此回调 */
+    upload: [QChatAttachmentUploadResp]
+    /** 下载全局回调，例如接收多媒体消息自动下载时会触发此回调 */
+    download: [QChatAttachmentDownloadResp]
+    /** 上传/下载全局进度回调，例如多媒体消息自动上传/下载时会触发此回调 */
+    progress: [QChatAttachmentDownloadResp]
 }
 
-export class QChatAttachmentModule extends EventEmitter {
+export class QChatAttachmentModule extends EventEmitter<QChatAttachmentEvents> {
     instance: any
     constructor() {
         super()

@@ -13,30 +13,24 @@ import {
     LoginRes
 } from '../nim_def/client_def'
 import sdk from '../loader'
-import { EventEmitter } from 'events'
+import { EventEmitter } from 'eventemitter3'
 
-export declare interface NIMClient {
-    // disconnect: NIM客户端掉线
-    // multispotLogin: NIM客户端多点登录通知
-    // syncMultiportPushConfig: 多端推送开关同步
-    // kickout: NIM客户端被踢
-    // kickOtherClient: NIM客户端将本帐号的其他端踢下线结果
-    // relogin: NIM客户端自动重连
-    on(event: 'disconnect', listener: () => void): this
-    on(event: 'multispotLogin', listener: (result: MultiSpotLoginRes) => void): this
-    on(event: 'syncMultiportPushConfig', listener: (rescode: number, open: boolean) => void): this
-    on(event: 'kickout', listener: (result: KickoutRes) => void): this
-    on(event: 'kickOtherClient', listener: (result: KickOtherRes) => void): this
-    on(event: 'relogin', listener: (result: LoginRes) => void): this
-    once(event: 'disconnect', listener: () => void): this
-    once(event: 'multispotLogin', listener: (result: MultiSpotLoginRes) => void): this
-    once(event: 'syncMultiportPushConfig', listener: (rescode: number, open: boolean) => void): this
-    once(event: 'kickout', listener: (result: KickoutRes) => void): this
-    once(event: 'kickOtherClient', listener: (result: KickOtherRes) => void): this
-    once(event: 'relogin', listener: (result: LoginRes) => void): this
+export declare interface NIMClientEvents {
+    /** NIM客户端掉线 */
+    disconnect: []
+    /** NIM客户端多点登录通知 */
+    multispotLogin: [MultiSpotLoginRes]
+    /** 多端推送开关同步 */
+    syncMultiportPushConfig: [number, boolean]
+    /** NIM客户端被踢 */
+    kickOtherClient: [KickOtherRes]
+    /** NIM客户端将本帐号的其他端踢下线结果 */
+    kickout: [KickoutRes]
+    /** NIM客户端自动重连 */
+    relogin: [LoginRes]
 }
 
-export class NIMClient extends EventEmitter {
+export class NIMClient extends EventEmitter<NIMClientEvents> {
     client: NIMClientAPI
     constructor() {
         super()

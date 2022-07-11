@@ -1,5 +1,5 @@
 import sdk from '../loader'
-import ev from 'events'
+import { EventEmitter } from 'eventemitter3'
 import { IMMessage, NIMMessageType } from '../nim_def/msglog_def'
 import {
     BroadcastMessage,
@@ -11,28 +11,22 @@ import {
     TeamNotificationFilterCallback
 } from '../nim_def/talk_def'
 
-export declare interface NIMTalk {
-    // sendMsg: 发送消息回调
-    // receiveMsg: 接收消息
-    // receiveMsgs: 批量接收消息，如离线/漫游消息
-    // recallMsgs: 消息撤回通知
-    // receiveBroadcastMsg: 接收广播消息
-    // receiveBroadcastMsgs: 批量接收广播消息
-    on(event: 'sendMsg', listener: (result: SendMessageArc) => void): this
-    on(event: 'receiveMsg', listener: (result: IMMessage) => void): this
-    on(event: 'receiveMsgs', listener: (result: Array<IMMessage>) => void): this
-    on(event: 'recallMsgs', listener: (rescode: number, result: Array<RecallMsgNotify>) => void): this
-    on(event: 'receiveBroadcastMsg', listener: (result: BroadcastMessage) => void): this
-    on(event: 'receiveBroadcastMsgs', listener: (result: Array<BroadcastMessage>) => void): this
-    once(event: 'sendMsg', listener: (result: SendMessageArc) => void): this
-    once(event: 'receiveMsg', listener: (result: IMMessage) => void): this
-    once(event: 'receiveMsgs', listener: (result: Array<IMMessage>) => void): this
-    once(event: 'recallMsgs', listener: (rescode: number, result: Array<RecallMsgNotify>) => void): this
-    once(event: 'receiveBroadcastMsg', listener: (result: BroadcastMessage) => void): this
-    once(event: 'receiveBroadcastMsgs', listener: (result: Array<BroadcastMessage>) => void): this
+export declare interface NIMTalkEvents {
+    /** 发送消息回调 */
+    sendMsg: [SendMessageArc]
+    /** 接收消息 */
+    receiveMsg: [IMMessage]
+    /** 批量接收消息，如离线/漫游消息 */
+    receiveMsgs: [Array<IMMessage>]
+    /** 消息撤回通知 */
+    recallMsgs: [number, Array<RecallMsgNotify>]
+    /** 接收广播消息 */
+    receiveBroadcastMsg: [BroadcastMessage]
+    /** 批量接收广播消息 */
+    receiveBroadcastMsgs: [Array<BroadcastMessage>]
 }
 
-export class NIMTalk extends ev.EventEmitter {
+export class NIMTalk extends EventEmitter<NIMTalkEvents> {
     talk: NIMTalkAPI
     constructor() {
         super()

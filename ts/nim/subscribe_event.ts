@@ -1,5 +1,5 @@
 import sdk from '../loader'
-import ev from 'events'
+import { EventEmitter } from 'eventemitter3'
 import {
     NIMSubscribeEventAPI,
     EventData,
@@ -14,16 +14,14 @@ import {
     PushEventCallback
 } from '../nim_def/subscribe_event_def'
 
-export declare interface NIMSubscribeEvent {
-    // push: 订阅的事件
-    // batchPush: 批量接收订阅的事件
-    on(event: 'push', listener: (rescode: number, result: EventData) => void): this
-    on(event: 'batchPush', listener: (rescode: number, result: Array<EventData>) => void): this
-    once(event: 'push', listener: (rescode: number, result: EventData) => void): this
-    once(event: 'batchPush', listener: (rescode: number, result: Array<EventData>) => void): this
+export declare interface NIMSubscribeEventEvents {
+    /** 订阅的事件 */
+    push: [number, EventData]
+    /** 批量接收订阅的事件 */
+    batchPush: [number, Array<EventData>]
 }
 
-export class NIMSubscribeEvent extends ev.EventEmitter {
+export class NIMSubscribeEvent extends EventEmitter<NIMSubscribeEventEvents> {
     subscribeEvent: NIMSubscribeEventAPI
     constructor() {
         super()

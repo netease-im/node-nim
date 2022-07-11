@@ -20,10 +20,11 @@
         "plugin": ["typedoc-plugin-markdown", "typedoc-github-wiki-theme"],
         "theme": "github-wiki",
         "readme": "none",
-        "excludeProtected": "true",
         "out": "doc",
         "sort": "source-order",
-        "hideGenerator": "true"
+        "excludeProtected": "true",
+        "hideGenerator": "true",
+        "excludeInternal": "true"
     },
     "include": ["ts/**/*"]
 }
