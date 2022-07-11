@@ -1,4 +1,4 @@
-const NIM = require('../../js/node-nim')
+const NIM = require('../../dist/node-nim')
 const assert = require('assert')
 
 const tool = new NIM.NIMTool()

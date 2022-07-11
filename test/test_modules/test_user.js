@@ -1,4 +1,4 @@
-const NIM = require('../../js/node-nim')
+const NIM = require('../../dist/node-nim')
 const assert = require('assert')
 
 const user = new NIM.NIMUser()
@@ -138,14 +138,10 @@ function testUser(test_info) {
             it('update my user name card should return 200', function (done) {
                 myNameCard.nickname_ = `${new Date().getTime()}_Node`
                 myNameCard.expand_ = `{}`
-                user.updateMyUserNameCard(
-                    myNameCard,
-                    (res_code) => {
-                        assert.strictEqual(res_code, 200)
-                        done()
-                    },
-                    ''
-                )
+                user.updateMyUserNameCard(myNameCard, null, '').then(([res_code]) => {
+                    assert.strictEqual(res_code, 200)
+                    done()
+                })
             })
         })
         describe('#QueryUserListByKeyword', function () {

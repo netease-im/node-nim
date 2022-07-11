@@ -1,4 +1,4 @@
-const NIM = require('../../js/node-nim')
+const NIM = require('../../dist/node-nim')
 const assert = require('assert')
 
 const friend = new NIM.NIMFriend()
@@ -22,7 +22,6 @@ function testFriend(test_info) {
                     },
                     ''
                 )
-                assert.strictEqual(result, true)
             })
         })
         describe('#Update', function () {
@@ -38,7 +37,6 @@ function testFriend(test_info) {
                     },
                     ''
                 )
-                assert.strictEqual(result, true)
             })
         })
         describe('#GetList', function () {
@@ -94,7 +92,6 @@ function testFriend(test_info) {
                         done()
                     }
                 )
-                assert.strictEqual(result, true)
             })
         })
     })

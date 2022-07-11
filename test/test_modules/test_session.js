@@ -1,4 +1,4 @@
-const NIM = require('../../js/node-nim')
+const NIM = require('../../dist/node-nim')
 const assert = require('assert')
 
 const session = new NIM.NIMSession()
@@ -63,7 +63,6 @@ function testSession(test_info) {
                         done()
                     }
                 )
-                assert.strictEqual(result, true)
             })
         })
         describe('#setAllUnreadCountZeroAsync', function () {
@@ -157,7 +156,6 @@ function testSession(test_info) {
                     },
                     ''
                 )
-                assert.strictEqual(result, true)
             })
         })
         describe('#queryHasmoreRoammsg', function () {

@@ -1,4 +1,4 @@
-const NIM = require('../../js/node-nim')
+const NIM = require('../../dist/node-nim')
 const assert = require('assert')
 
 const nos = new NIM.NIMNOS()
@@ -41,13 +41,11 @@ function testNos(test_info) {
                     function (speed) {},
                     function (actual_size, speed) {}
                 )
-                assert.strictEqual(result, true)
             })
         })
         describe('#stopUploadResource', function () {
             it('stopUploadResource', function () {
                 const result = nos.stopUploadResource('123456', '')
-                assert.strictEqual(result, true)
             })
         })
         describe('#downloadResource', function () {
@@ -65,13 +63,11 @@ function testNos(test_info) {
                     function (speed) {},
                     function (actual_size, speed) {}
                 )
-                assert.strictEqual(result, true)
             })
         })
         describe('#stopDownloadResource', function () {
             it('stopDownloadResource', function () {
                 const result = nos.stopDownloadResource('456789', '')
-                assert.strictEqual(result, true)
             })
         })
         describe('#safeURLToOriginURL', function () {

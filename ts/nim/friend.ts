@@ -43,20 +43,24 @@ export class NIMFriend extends EventEmitter<NIMFriendEvents> {
      * 500:未知错误
      * </pre>
      */
-    request(accid: string, verify_type: NIMVerifyType, msg: string, cb: FriendOptCallback, jsonExtension: string): Promise<[NIMResCode]> {
+    request(accid: string, verify_type: NIMVerifyType, msg: string, cb: FriendOptCallback, jsonExtension: string): Promise<[NIMResCode] | null> {
         return new Promise((resolve) => {
-            this.friend.Request(
-                accid,
-                verify_type,
-                msg,
-                (res) => {
-                    if (cb) {
-                        cb(res)
-                    }
-                    resolve([res])
-                },
-                jsonExtension
-            )
+            if (
+                !this.friend.Request(
+                    accid,
+                    verify_type,
+                    msg,
+                    (res) => {
+                        if (cb) {
+                            cb(res)
+                        }
+                        resolve([res])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
         })
     }
 
@@ -72,14 +76,18 @@ export class NIMFriend extends EventEmitter<NIMFriendEvents> {
      * 500:未知错误
      * </pre>
      */
-    delete(accid: string, option: DeleteFriendOption, cb: FriendOptCallback): Promise<[NIMResCode]> {
+    delete(accid: string, option: DeleteFriendOption, cb: FriendOptCallback): Promise<[NIMResCode] | null> {
         return new Promise((resolve) => {
-            this.friend.Delete(accid, option, (res) => {
-                if (cb) {
-                    cb(res)
-                }
-                resolve([res])
-            })
+            if (
+                !this.friend.Delete(accid, option, (res) => {
+                    if (cb) {
+                        cb(res)
+                    }
+                    resolve([res])
+                })
+            ) {
+                resolve(null)
+            }
         })
     }
 
@@ -95,18 +103,22 @@ export class NIMFriend extends EventEmitter<NIMFriendEvents> {
      * 500:未知错误
      * </pre>
      */
-    update(profile: FriendProfile, cb: FriendOptCallback, jsonExtension: string): Promise<[NIMResCode]> {
+    update(profile: FriendProfile, cb: FriendOptCallback, jsonExtension: string): Promise<[NIMResCode] | null> {
         return new Promise((resolve) => {
-            this.friend.Update(
-                profile,
-                (res) => {
-                    if (cb) {
-                        cb(res)
-                    }
-                    resolve([res])
-                },
-                jsonExtension
-            )
+            if (
+                !this.friend.Update(
+                    profile,
+                    (res) => {
+                        if (cb) {
+                            cb(res)
+                        }
+                        resolve([res])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
         })
     }
 
@@ -161,18 +173,22 @@ export class NIMFriend extends EventEmitter<NIMFriendEvents> {
      * 200:成功
      * </pre>
      */
-    queryFriendListByKeyword(keyword: string, cb: GetFriendsListCallback, jsonExtension: string): Promise<[NIMResCode, Array<FriendProfile>]> {
+    queryFriendListByKeyword(keyword: string, cb: GetFriendsListCallback, jsonExtension: string): Promise<[NIMResCode, Array<FriendProfile>] | null> {
         return new Promise((resolve) => {
-            this.friend.QueryFriendListByKeyword(
-                keyword,
-                (res, profiles) => {
-                    if (cb) {
-                        cb(res, profiles)
-                    }
-                    resolve([res, profiles])
-                },
-                jsonExtension
-            )
+            if (
+                !this.friend.QueryFriendListByKeyword(
+                    keyword,
+                    (res, profiles) => {
+                        if (cb) {
+                            cb(res, profiles)
+                        }
+                        resolve([res, profiles])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
         })
     }
 }

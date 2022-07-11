@@ -1,4 +1,4 @@
-const NIM = require('../../js/node-nim')
+const NIM = require('../../dist/node-nim')
 const assert = require('assert')
 
 const client = new NIM.NIMClient()
@@ -10,7 +10,6 @@ function iniClient(test_info) {
                 const result = client.init('', 'NIM_SDK_NODE_TEST', '', {
                     database_encrypt_key_: 'abcdefghijklmnopqrstuvwxyz012345'
                 })
-                assert.strictEqual(result, true)
             })
         })
         describe('NIM client Login', function () {
@@ -95,7 +94,6 @@ function testClient(test_info) {
                     true,
                     (errorCode, result) => {
                         assert.strictEqual(errorCode, 200)
-                        assert.strictEqual(result, true)
                         done()
                     },
                     ''
@@ -106,7 +104,6 @@ function testClient(test_info) {
             it('get multiport push config should return true', function (done) {
                 client.getMultiportPushConfigAsync((errorCode, result) => {
                     assert.strictEqual(errorCode, 200)
-                    assert.strictEqual(result, true)
                     done()
                 }, '')
             })

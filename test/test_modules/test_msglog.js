@@ -1,4 +1,4 @@
-const NIM = require('../../js/node-nim')
+const NIM = require('../../dist/node-nim')
 const assert = require('assert')
 
 const msglog = new NIM.NIMMsgLog()
@@ -98,7 +98,6 @@ function testMsglog(test_info) {
                         done()
                     }
                 )
-                assert.strictEqual(result, true)
             }).timeout(1000 * 10)
         })
         describe('#queryMsgOfSpecifiedTypeInASessionAsync', function () {
@@ -148,7 +147,6 @@ function testMsglog(test_info) {
                     },
                     ''
                 )
-                assert.strictEqual(result, true)
             })
         })
         describe('#batchStatusReadAsync', function () {
