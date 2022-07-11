@@ -1,3 +1,5 @@
+import { NIMResCode } from './client_def'
+
 /** @enum NIMAppDataType AppData类型 */
 export enum NIMAppDataType {
     kNIMAppDataTypeUnknownOtherRes = 0 /** < 其他资源文件（除了消息历史文件和已知类型之外的消息数据缓存文件） */,
@@ -13,8 +15,8 @@ export interface AudioInfo {
     duration_: number /** < long 语音时长，毫秒*/
 }
 
-export type GetAudioTextCallback = (rescode: number, text: string) => void
-export type FilterClientAntispamCallback = (succeed: boolean, rescode: number, text: string) => void
+export type GetAudioTextCallback = (rescode: NIMResCode, text: string) => void
+export type FilterClientAntispamCallback = (succeed: boolean, rescode: NIMResCode, text: string) => void
 
 export interface NIMToolAPI {
     InitEventHandlers(): void

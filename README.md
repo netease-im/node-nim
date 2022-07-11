@@ -60,7 +60,7 @@ npm run coverage
 
 ```js
 // QChat
-const node_nim = require('node-nim')
+import * as node_nim from 'node-nim'
 const instance = new node_nim.QChatInstanceModule()
 let ret = instance.init({})
 if (!ret) {
@@ -79,7 +79,7 @@ console.log(resp)
 ```
 ```js
 // Chatroom
-const node_nim = require('node-nim')
+import * as node_nim from 'node-nim'
 const chatroom = new node_nim.ChatroomModule()
 let ret = chatroom.init('', '')
 if (!ret) {
@@ -95,54 +95,53 @@ if (!ret) {
 ```
 ```js
 // NIM
-const node_nim = require('node-nim')
-const assert = require('assert')
+import * as node_nim from 'node-nim'
 const client = new node_nim.NIMClient()
 const talk = new node_nim.NIMTalk()
 const result = client.init('app_key', 'app_data_dir', 'app_install_dir', {
     db_encrypt_key: 'abcdefghijklmnopqrstuvwxyz012345'
 })
 
-client.login(
+if(!result) {
+    console.log('init failed')
+    process.exit(1)
+}
+
+client.initEventHandlers()
+talk.initEventHandlers()
+
+let resp = await client.login(
     'app_key',
     'username',
     'password',
-    (result) => {
-        assert.strictEqual(result.err_code, 200)
-        if (loginResult.login_step === 3) {
-            // login has 3 steps, step 3 succeeded
-            talk.initEventHandlers() // init callbacks
+    null, // pass your callback function if you dont use the return Promise
+    ''
+)
+if(resp[0].res_code_ != node_nim.NIMResCode.kNIMResSuccess) {
+        console.log('login failed')
+        process.exit(1)
+}
+console.log('loginResult', res)
+// login has 3 steps, step 3 succeeded
+talk.on('receiveMsg', function (result) {
+    console.log('receiveMsg', result)
+})
+talk.on('sendMsg', (msg) => {
+    console.log('sendMsg', msg)
+})
 
-            talk.on('receiveMsg', function (result) {
-                console.log(result)
-            })
-
-            talk.sendMsg(
-                {
-                    session_type_: 0, // p2p
-                    receiver_accid_: 'receiver_accid',
-                    timetag_: new Date().getTime(),
-                    type_: 0, // text message
-                    content_: 'Send from NIM node quick start.',
-                    client_msg_id_: new Date().getTime().toString() // use an uuid
-                },
-                '',
-                function () {}
-            )
-
-            client.logout(
-                1,
-                (err_code) => {
-                    assert.strictEqual(err_code, 200)
-                },
-                ''
-            )
-
-            client.cleanUp('')
-        }
+talk.sendMsg(
+    {
+        session_type_: 0, // p2p
+        receiver_accid_: 'receiver_accid',
+        timetag_: new Date().getTime(),
+        type_: 0, // text message
+        content_: 'Send from NIM node quick start.',
+        client_msg_id_: new Date().getTime().toString() // use an uuid
     },
     ''
 )
+            
 ```
 
 ## Quick Start

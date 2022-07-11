@@ -21,9 +21,13 @@ import {
     ModifyPinMessageParam,
     UnPinMessageCallback,
     UpdatePinMessageCallback,
-    QueryPinMessageCallback
+    QueryPinMessageCallback,
+    CollectInfoList,
+    QueryQuickCommentsResponse,
+    QueryAllPinMessageResponse
 } from '../nim_def/talkex_def'
 import { IMMessage } from '../nim_def/msglog_def'
+import { NIMResCode } from 'ts/nim_def/client_def'
 
 export declare interface NIMTalkExEvents {
     /** 添加快捷回复 */
@@ -56,8 +60,15 @@ export class NIMTalkEx extends EventEmitter<NIMTalkExEvents> {
      * @param cb		执行结果回调函数
      * @return void 无返回值
      */
-    addCollect(collect_info: CollectInfo, cb: AddCollectCallback): void {
-        this.talkex.AddCollect(collect_info, cb)
+    addCollect(collect_info: CollectInfo, cb: AddCollectCallback): Promise<[NIMResCode, CollectInfo]> {
+        return new Promise((resolve) => {
+            this.talkex.AddCollect(collect_info, (rescode, info) => {
+                if (cb) {
+                    cb(rescode, info)
+                }
+                resolve([rescode, info])
+            })
+        })
     }
 
     /** 批量删除收藏
@@ -65,8 +76,15 @@ export class NIMTalkEx extends EventEmitter<NIMTalkExEvents> {
      * @param cb		执行结果回调函数
      * @return void 无返回值
      */
-    removeCollects(collect_list: RemoveCollectsParm, cb: RemoveCollectsCallback): void {
-        this.talkex.RemoveCollects(collect_list, cb)
+    removeCollects(collect_list: RemoveCollectsParm, cb: RemoveCollectsCallback): Promise<[NIMResCode, number]> {
+        return new Promise((resolve) => {
+            this.talkex.RemoveCollects(collect_list, (rescode, count) => {
+                if (cb) {
+                    cb(rescode, count)
+                }
+                resolve([rescode, count])
+            })
+        })
     }
 
     /** 更新收藏扩展字段
@@ -75,8 +93,15 @@ export class NIMTalkEx extends EventEmitter<NIMTalkExEvents> {
      * @param cb		执行结果回调函数
      * @return void 无返回值
      */
-    updateCollectExt(collect_match_param: MatchCollectParm, ext: string, cb: UpdateCollectCallback): void {
-        this.talkex.UpdateCollectExt(collect_match_param, ext, cb)
+    updateCollectExt(collect_match_param: MatchCollectParm, ext: string, cb: UpdateCollectCallback): Promise<[NIMResCode, CollectInfo]> {
+        return new Promise((resolve) => {
+            this.talkex.UpdateCollectExt(collect_match_param, ext, (rescode, info) => {
+                if (cb) {
+                    cb(rescode, info)
+                }
+                resolve([rescode, info])
+            })
+        })
     }
 
     /** 分页查询收藏列表
@@ -84,8 +109,15 @@ export class NIMTalkEx extends EventEmitter<NIMTalkExEvents> {
      * @param cb		执行结果回调函数
      * @return void 无返回值
      */
-    queryCollectList(query_collect_list_param: QueryCollectsParm, cb: QueryCollectsCallback): void {
-        this.talkex.QueryCollectList(query_collect_list_param, cb)
+    queryCollectList(query_collect_list_param: QueryCollectsParm, cb: QueryCollectsCallback): Promise<[NIMResCode, number, CollectInfoList]> {
+        return new Promise((resolve) => {
+            this.talkex.QueryCollectList(query_collect_list_param, (rescode, count, info_list) => {
+                if (cb) {
+                    cb(rescode, count, info_list)
+                }
+                resolve([rescode, count, info_list])
+            })
+        })
     }
 
     /** 添加快捷回复
@@ -94,8 +126,15 @@ export class NIMTalkEx extends EventEmitter<NIMTalkExEvents> {
      * @param cb		执行结果回调函数
      * @return void 无返回值
      */
-    addQuickComment(msg: IMMessage, info: QuickCommentInfo, cb: AddQuickCommentCallback): void {
-        this.talkex.AddQuickComment(msg, info, cb)
+    addQuickComment(msg: IMMessage, info: QuickCommentInfo, cb: AddQuickCommentCallback): Promise<[NIMResCode, QuickCommentInfo]> {
+        return new Promise((resolve) => {
+            this.talkex.AddQuickComment(msg, info, (rescode, info) => {
+                if (cb) {
+                    cb(rescode, info)
+                }
+                resolve([rescode, info])
+            })
+        })
     }
 
     /** 删除快捷回复
@@ -104,8 +143,15 @@ export class NIMTalkEx extends EventEmitter<NIMTalkExEvents> {
      * @param cb		执行结果回调函数
      * @return void 无返回值
      */
-    removeQuickComment(msg: IMMessage, param: RemoveQuickCommentParam, cb: RemoveQuickCommentCallback): void {
-        this.talkex.RemoveQuickComment(msg, param, cb)
+    removeQuickComment(msg: IMMessage, param: RemoveQuickCommentParam, cb: RemoveQuickCommentCallback): Promise<[NIMResCode, string]> {
+        return new Promise((resolve) => {
+            this.talkex.RemoveQuickComment(msg, param, (rescode, id) => {
+                if (cb) {
+                    cb(rescode, id)
+                }
+                resolve([rescode, id])
+            })
+        })
     }
 
     /** 查询快捷回复
@@ -113,8 +159,15 @@ export class NIMTalkEx extends EventEmitter<NIMTalkExEvents> {
      * @param cb		执行结果回调函数
      * @return void 无返回值
      */
-    queryQuickCommentList(query_param: QueryQuickCommentsParam, cb: QueryQuickCommentCallback): void {
-        this.talkex.QueryQuickCommentList(query_param, cb)
+    queryQuickCommentList(query_param: QueryQuickCommentsParam, cb: QueryQuickCommentCallback): Promise<[NIMResCode, QueryQuickCommentsResponse]> {
+        return new Promise((resolve) => {
+            this.talkex.QueryQuickCommentList(query_param, (rescode, response) => {
+                if (cb) {
+                    cb(rescode, response)
+                }
+                resolve([rescode, response])
+            })
+        })
     }
 
     /** PinMsg */
@@ -124,8 +177,15 @@ export class NIMTalkEx extends EventEmitter<NIMTalkExEvents> {
      * @param cb		执行结果回调函数
      * @return void 无返回值
      */
-    addPinMessage(msg: IMMessage, info: PinMessageInfo, cb: PinMessageCallback): void {
-        this.talkex.AddPinMessage(msg, info, cb)
+    addPinMessage(msg: IMMessage, info: PinMessageInfo, cb: PinMessageCallback): Promise<[NIMResCode, string, number, PinMessageInfo]> {
+        return new Promise((resolve) => {
+            this.talkex.AddPinMessage(msg, info, (rescode, session, to_type, info) => {
+                if (cb) {
+                    cb(rescode, session, to_type, info)
+                }
+                resolve([rescode, session, to_type, info])
+            })
+        })
     }
 
     /** 取消Pin某条消息
@@ -133,8 +193,15 @@ export class NIMTalkEx extends EventEmitter<NIMTalkExEvents> {
      * @param cb		执行结果回调函数
      * @return void 无返回值
      */
-    unPinMessage(modify_param: ModifyPinMessageParam, cb: UnPinMessageCallback): void {
-        this.talkex.UnPinMessage(modify_param, cb)
+    unPinMessage(modify_param: ModifyPinMessageParam, cb: UnPinMessageCallback): Promise<[NIMResCode, string, number, string]> {
+        return new Promise((resolve) => {
+            this.talkex.UnPinMessage(modify_param, (rescode, session, to_type, id) => {
+                if (cb) {
+                    cb(rescode, session, to_type, id)
+                }
+                resolve([rescode, session, to_type, id])
+            })
+        })
     }
 
     /** 更新 Pin Message ext字段
@@ -142,8 +209,15 @@ export class NIMTalkEx extends EventEmitter<NIMTalkExEvents> {
      * @param cb		执行结果回调函数
      * @return void 无返回值
      */
-    updatePinMessage(modify_param: ModifyPinMessageParam, cb: UpdatePinMessageCallback): void {
-        this.talkex.UpdatePinMessage(modify_param, cb)
+    updatePinMessage(modify_param: ModifyPinMessageParam, cb: UpdatePinMessageCallback): Promise<[NIMResCode, string, number, PinMessageInfo]> {
+        return new Promise((resolve) => {
+            this.talkex.UpdatePinMessage(modify_param, (rescode, session, to_type, info) => {
+                if (cb) {
+                    cb(rescode, session, to_type, info)
+                }
+                resolve([rescode, session, to_type, info])
+            })
+        })
     }
 
     /** 查询会话的所有 Pin Message
@@ -152,7 +226,14 @@ export class NIMTalkEx extends EventEmitter<NIMTalkExEvents> {
      * @param cb		执行结果回调函数
      * @return void 无返回值
      */
-    queryAllPinMessage(session: string, to_type: number, cb: QueryPinMessageCallback): void {
-        this.talkex.QueryAllPinMessage(session, to_type, cb)
+    queryAllPinMessage(session: string, to_type: number, cb: QueryPinMessageCallback): Promise<[NIMResCode, string, number, QueryAllPinMessageResponse]> {
+        return new Promise((resolve) => {
+            this.talkex.QueryAllPinMessage(session, to_type, (rescode, session, to_type, response) => {
+                if (cb) {
+                    cb(rescode, session, to_type, response)
+                }
+                resolve([rescode, session, to_type, response])
+            })
+        })
     }
 }

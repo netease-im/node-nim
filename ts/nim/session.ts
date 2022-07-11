@@ -15,11 +15,14 @@ import {
     QueryStickTopSessionListCallback,
     SessionChangeCallback,
     SessionData,
+    SessionDataList,
+    SessionRoamMsgHasMoreTagInfo,
     SetMultiUnreadCountZeroAsyncCallback,
     SetToStickTopSessionCallback,
     UpdateHasmoreRoammsgCallback,
     UpdateStickTopSessionCallback
 } from '../nim_def/session_def'
+import { NIMResCode } from 'ts/nim_def/client_def'
 
 export declare interface NIMSessionEvents {
     /** 会话变更 */
@@ -52,8 +55,15 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
      * 200:成功
      * </pre>
      */
-    queryStickTopSessionList(cb: QueryStickTopSessionListCallback) {
-        return this.session.QueryStickTopSessionList(cb)
+    queryStickTopSessionList(cb: QueryStickTopSessionListCallback): Promise<[NIMResCode, string]> {
+        return new Promise((resolve) => {
+            this.session.QueryStickTopSessionList((rescode, result) => {
+                if (cb) {
+                    cb(rescode, result)
+                }
+                resolve([rescode, result])
+            })
+        })
     }
 
     /** 设置置顶会话
@@ -67,8 +77,15 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
      * 200:成功
      * </pre>
      */
-    setToStickTopSession(session_id: string, to_type: number, ext: string, cb: SetToStickTopSessionCallback) {
-        return this.session.SetToStickTopSession(session_id, to_type, ext, cb)
+    setToStickTopSession(session_id: string, to_type: number, ext: string, cb: SetToStickTopSessionCallback): Promise<[NIMResCode, string]> {
+        return new Promise((resolve) => {
+            this.session.SetToStickTopSession(session_id, to_type, ext, (rescode, result) => {
+                if (cb) {
+                    cb(rescode, result)
+                }
+                resolve([rescode, result])
+            })
+        })
     }
 
     /** 更新置顶会话列表
@@ -82,8 +99,15 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
      * 200:成功
      * </pre>
      */
-    updateToStickTopSession(session_id: string, to_type: number, ext: string, cb: UpdateStickTopSessionCallback): void {
-        return this.session.UpdateToStickTopSession(session_id, to_type, ext, cb)
+    updateToStickTopSession(session_id: string, to_type: number, ext: string, cb: UpdateStickTopSessionCallback): Promise<[NIMResCode, string]> {
+        return new Promise((resolve) => {
+            this.session.UpdateToStickTopSession(session_id, to_type, ext, (rescode, result) => {
+                if (cb) {
+                    cb(rescode, result)
+                }
+                resolve([rescode, result])
+            })
+        })
     }
 
     /** 取消置顶会话列表
@@ -96,8 +120,15 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
      * 200:成功
      * </pre>
      */
-    cancelToStickTopSession(session_id: string, to_type: number, cb: CancelToStickTopSessionCallback): void {
-        return this.session.CancelToStickTopSession(session_id, to_type, cb)
+    cancelToStickTopSession(session_id: string, to_type: number, cb: CancelToStickTopSessionCallback): Promise<[NIMResCode, string, NIMSessionType]> {
+        return new Promise((resolve) => {
+            this.session.CancelToStickTopSession(session_id, to_type, (rescode, session_id, session_type) => {
+                if (cb) {
+                    cb(rescode, session_id, session_type)
+                }
+                resolve([rescode, session_id, session_type])
+            })
+        })
     }
 
     /** 查询指定数量的最后会话数据
@@ -106,8 +137,19 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @return void 无返回值
      */
-    queryLastFewSessionAsync(limit: number, cb: QuerySessionListCallback, jsonExtension: string): void {
-        return this.session.QueryLastFewSessionAsync(limit, cb, jsonExtension)
+    queryLastFewSessionAsync(limit: number, cb: QuerySessionListCallback, jsonExtension: string): Promise<[NIMResCode, SessionDataList]> {
+        return new Promise((resolve) => {
+            this.session.QueryLastFewSessionAsync(
+                limit,
+                (rescode, result) => {
+                    if (cb) {
+                        cb(rescode, result)
+                    }
+                    resolve([rescode, result])
+                },
+                jsonExtension
+            )
+        })
     }
 
     /** 查询会话列表,可指定最后一条会话消息要排除掉的类型(列表)
@@ -116,8 +158,23 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @return void 无返回值
      */
-    queryAllRecentSessionAsync(msg_excluded_type_list: Array<NIMMessageType>, cb: QuerySessionListCallback, jsonExtension: string): void {
-        return this.session.QueryAllRecentSessionAsync(msg_excluded_type_list, cb, jsonExtension)
+    queryAllRecentSessionAsync(
+        msg_excluded_type_list: Array<NIMMessageType>,
+        cb: QuerySessionListCallback,
+        jsonExtension: string
+    ): Promise<[NIMResCode, SessionDataList]> {
+        return new Promise((resolve) => {
+            this.session.QueryAllRecentSessionAsync(
+                msg_excluded_type_list,
+                (rescode, result) => {
+                    if (cb) {
+                        cb(rescode, result)
+                    }
+                    resolve([rescode, result])
+                },
+                jsonExtension
+            )
+        })
     }
 
     /** 删除最近联系人
@@ -131,8 +188,20 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
      * 200:成功
      * </pre>
      */
-    deleteRecentSession(type: NIMSessionType, id: string, cb: SessionChangeCallback, delete_roaming: boolean): void {
-        return this.session.DeleteRecentSession(type, id, cb, delete_roaming)
+    deleteRecentSession(type: NIMSessionType, id: string, cb: SessionChangeCallback, delete_roaming: boolean): Promise<[NIMResCode, SessionData, number]> {
+        return new Promise((resolve) => {
+            this.session.DeleteRecentSession(
+                type,
+                id,
+                (rescode, session_data, count) => {
+                    if (cb) {
+                        cb(rescode, session_data, count)
+                    }
+                    resolve([rescode, session_data, count])
+                },
+                delete_roaming
+            )
+        })
     }
 
     /** 删除全部最近联系人
@@ -144,8 +213,15 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
      * 200:成功
      * </pre>
      */
-    deleteAllRecentSession(cb: SessionChangeCallback, jsonExtension: string): void {
-        return this.session.DeleteAllRecentSession(cb, jsonExtension)
+    deleteAllRecentSession(cb: SessionChangeCallback, jsonExtension: string): Promise<[NIMResCode, SessionData, number]> {
+        return new Promise((resolve) => {
+            this.session.DeleteAllRecentSession((rescode, session_data, count) => {
+                if (cb) {
+                    cb(rescode, session_data, count)
+                }
+                resolve([rescode, session_data, count])
+            }, jsonExtension)
+        })
     }
 
     /** 删除某会话的漫游消息
@@ -159,8 +235,25 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
      * 200:成功
      * </pre>
      */
-    deleteSessionRoamingMessage(to_type: number, session_id: string, cb: DeleteSessionRoamingMessageCallback, ext: string): boolean {
-        return this.session.DeleteSessionRoamingMessage(to_type, session_id, cb, ext)
+    deleteSessionRoamingMessage(
+        to_type: number,
+        session_id: string,
+        cb: DeleteSessionRoamingMessageCallback,
+        ext: string
+    ): Promise<[NIMResCode, number, string]> {
+        return new Promise((resolve) => {
+            this.session.DeleteSessionRoamingMessage(
+                to_type,
+                session_id,
+                (rescode, to_type, session_id) => {
+                    if (cb) {
+                        cb(rescode, to_type, session_id)
+                    }
+                    resolve([rescode, to_type, session_id])
+                },
+                ext
+            )
+        })
     }
 
     /** 最近联系人项未读数清零
@@ -174,8 +267,29 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
      * 200:成功
      * </pre>
      */
-    setUnreadCountZeroAsync(type: NIMSessionType, id: string, cb: SessionChangeCallback, jsonExtension: string): boolean {
-        return this.session.SetUnreadCountZeroAsync(type, id, cb, jsonExtension)
+    setUnreadCountZeroAsync(
+        type: NIMSessionType,
+        id: string,
+        cb: SessionChangeCallback,
+        jsonExtension: string
+    ): Promise<[NIMResCode, SessionData, number] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.session.SetUnreadCountZeroAsync(
+                    type,
+                    id,
+                    (rescode, session_data, count) => {
+                        if (cb) {
+                            cb(rescode, session_data, count)
+                        }
+                        resolve([rescode, session_data, count])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 最近联系人项未读数清零
@@ -188,8 +302,23 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
      * 200:成功
      * </pre>
      */
-    setMultiUnreadCountZeroAsync(is_super_team: boolean, zero_list: Array<MultiUnreadCountZeroInfo>, cb: SetMultiUnreadCountZeroAsyncCallback): boolean {
-        return this.session.SetMultiUnreadCountZeroAsync(is_super_team, zero_list, cb)
+    setMultiUnreadCountZeroAsync(
+        is_super_team: boolean,
+        zero_list: Array<MultiUnreadCountZeroInfo>,
+        cb: SetMultiUnreadCountZeroAsyncCallback
+    ): Promise<[NIMResCode, Array<SessionData>, number] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.session.SetMultiUnreadCountZeroAsync(is_super_team, zero_list, (rescode, data_list, unread_count) => {
+                    if (cb) {
+                        cb(rescode, data_list, unread_count)
+                    }
+                    resolve([rescode, data_list, unread_count])
+                })
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 设置会话项是否置顶(置顶属性只保存在本地)
@@ -204,8 +333,31 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
      * 200:成功
      * </pre>
      */
-    setSessionTop(type: NIMSessionType, id: string, top: boolean, cb: SessionChangeCallback, jsonExtension: string): boolean {
-        return this.session.SetSessionTop(type, id, top, cb, jsonExtension)
+    setSessionTop(
+        type: NIMSessionType,
+        id: string,
+        top: boolean,
+        cb: SessionChangeCallback,
+        jsonExtension: string
+    ): Promise<[NIMResCode, SessionData, number] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.session.SetSessionTop(
+                    type,
+                    id,
+                    top,
+                    (rescode, session_data, count) => {
+                        if (cb) {
+                            cb(rescode, session_data, count)
+                        }
+                        resolve([rescode, session_data, count])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 设置会话项扩展数据(扩展数据只保存在本地)
@@ -220,8 +372,31 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
      * 200:成功
      * </pre>
      */
-    setSessionExtendData(type: NIMSessionType, id: string, data: string, cb: SessionChangeCallback, jsonExtension: string): boolean {
-        return this.session.SetSessionExtendData(type, id, data, cb, jsonExtension)
+    setSessionExtendData(
+        type: NIMSessionType,
+        id: string,
+        data: string,
+        cb: SessionChangeCallback,
+        jsonExtension: string
+    ): Promise<[NIMResCode, SessionData, number] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.session.SetSessionExtendData(
+                    type,
+                    id,
+                    data,
+                    (rescode, session_data, count) => {
+                        if (cb) {
+                            cb(rescode, session_data, count)
+                        }
+                        resolve([rescode, session_data, count])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 最近联系人项全部未读数清零
@@ -233,8 +408,19 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
      * 200:成功
      * </pre>
      */
-    setAllUnreadCountZeroAsync(cb: SessionChangeCallback, jsonExtension: string): boolean {
-        return this.session.SetAllUnreadCountZeroAsync(cb, jsonExtension)
+    setAllUnreadCountZeroAsync(cb: SessionChangeCallback, jsonExtension: string): Promise<[NIMResCode, SessionData, number] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.session.SetAllUnreadCountZeroAsync((rescode, session_data, count) => {
+                    if (cb) {
+                        cb(rescode, session_data, count)
+                    }
+                    resolve([rescode, session_data, count])
+                }, jsonExtension)
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 根据给定的id查询相应会话的信息
@@ -248,8 +434,20 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
      * 200:成功
      * </pre>
      */
-    querySessionDataById(type: NIMSessionType, id: string, cb: QuerySessionDataCallback, jsonExtension: string): void {
-        return this.session.QuerySessionDataById(type, id, cb, jsonExtension)
+    querySessionDataById(type: NIMSessionType, id: string, cb: QuerySessionDataCallback, jsonExtension: string): Promise<[NIMResCode, SessionData]> {
+        return new Promise((resolve) => {
+            this.session.QuerySessionDataById(
+                type,
+                id,
+                (rescode, session_data) => {
+                    if (cb) {
+                        cb(rescode, session_data)
+                    }
+                    resolve([rescode, session_data])
+                },
+                jsonExtension
+            )
+        })
     }
 
     /** 查询会话是漫游消息未拉取信息
@@ -262,16 +460,30 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
      * 200:成功
      * </pre>
      */
-    queryHasmoreRoammsg(session_id: string, to_type: number, cb: QueryHasmoreRoammsgCallback): void {
-        return this.session.QueryHasmoreRoammsg(session_id, to_type, cb)
+    queryHasmoreRoammsg(session_id: string, to_type: number, cb: QueryHasmoreRoammsgCallback): Promise<[NIMResCode, SessionRoamMsgHasMoreTagInfo]> {
+        return new Promise((resolve) => {
+            this.session.QueryHasmoreRoammsg(session_id, to_type, (rescode, info) => {
+                if (cb) {
+                    cb(rescode, info)
+                }
+                resolve([rescode, info])
+            })
+        })
     }
 
     /** 查询所有漫游消息未拉取完全的会话
      * @param cb	结果回调
      * @return void 无返回值
      */
-    queryAllHasmoreRoammsg(cb: QueryAllHasmoreRoammsgCallback): void {
-        return this.session.QueryAllHasmoreRoammsg(cb)
+    queryAllHasmoreRoammsg(cb: QueryAllHasmoreRoammsgCallback): Promise<[NIMResCode, Array<SessionRoamMsgHasMoreTagInfo>]> {
+        return new Promise((resolve) => {
+            this.session.QueryAllHasmoreRoammsg((rescode, infos) => {
+                if (cb) {
+                    cb(rescode, infos)
+                }
+                resolve([rescode, infos])
+            })
+        })
     }
 
     /** 更新会话是漫游消息未拉取信息
@@ -279,8 +491,15 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
      * @param cb	结果回调
      * @return void 无返回值
      */
-    updateHasmoreRoammsg(msg: IMMessage, cb: UpdateHasmoreRoammsgCallback): void {
-        return this.session.UpdateHasmoreRoammsg(msg, cb)
+    updateHasmoreRoammsg(msg: IMMessage, cb: UpdateHasmoreRoammsgCallback): Promise<[NIMResCode]> {
+        return new Promise((resolve) => {
+            this.session.UpdateHasmoreRoammsg(msg, (rescode) => {
+                if (cb) {
+                    cb(rescode)
+                }
+                resolve([rescode])
+            })
+        })
     }
 
     /** 删除会话是漫游消息未拉取信息
@@ -289,7 +508,14 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
      * @param cb	结果回调
      * @return void 无返回值
      */
-    deleteHasmoreRoammsg(session_id: string, to_type: NIMSessionType, cb: DeleteHasmoreRoammsgCallback): void {
-        return this.session.DeleteHasmoreRoammsg(session_id, to_type, cb)
+    deleteHasmoreRoammsg(session_id: string, to_type: NIMSessionType, cb: DeleteHasmoreRoammsgCallback): Promise<[NIMResCode]> {
+        return new Promise((resolve) => {
+            this.session.DeleteHasmoreRoammsg(session_id, to_type, (rescode) => {
+                if (cb) {
+                    cb(rescode)
+                }
+                resolve([rescode])
+            })
+        })
     }
 }

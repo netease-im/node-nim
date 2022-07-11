@@ -1,3 +1,5 @@
+import { NIMResCode } from './client_def'
+
 /** @enum NIMUserSpecialRelationshipChangeType 用户特殊关系数据变更类型 */
 export enum NIMUserSpecialRelationshipChangeType {
     kNIMUserSpecialRelationshipChangeTypeMarkBlack = 1 /** < 添加删除黑名单 */,
@@ -46,10 +48,10 @@ export interface SpecialRelationshipChangeEvent {
 
 export type SpecialRelationshipChangedCallback = (result: SpecialRelationshipChangeEvent) => void
 export type UserNameCardChangedCallback = (result: Array<UserNameCard>) => void
-export type SetRelationCallback = (rescode: number, accid: string, setOpt: boolean) => void
-export type GetSpecialListCallback = (rescode: number, result: Array<BlackMuteListInfo>) => void
+export type SetRelationCallback = (rescode: NIMResCode, accid: string, setOpt: boolean) => void
+export type GetSpecialListCallback = (rescode: NIMResCode, result: Array<BlackMuteListInfo>) => void
 export type GetUserNameCardCallback = (result: Array<UserNameCard>) => void
-export type UpdateMyUserNameCardCallback = (rescode: number) => void
+export type UpdateMyUserNameCardCallback = (rescode: NIMResCode) => void
 
 export interface NIMUserAPI {
     InitEventHandlers(): void

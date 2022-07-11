@@ -83,11 +83,11 @@ export interface SessionRoamMsgHasMoreTagInfo {
     message_server_id: number
 }
 
-export type SessionChangeCallback = (rescode: number, result: SessionData, count: number) => void
-export type DeleteSessionRoamingMessageCallback = (rescode: number, to_type: number, session_id: string) => void
+export type SessionChangeCallback = (rescode: NIMResCode, result: SessionData, count: number) => void
+export type DeleteSessionRoamingMessageCallback = (rescode: NIMResCode, to_type: number, session_id: string) => void
 export type BadgeCountCallback = (result: string) => void
 export type QuerySessionListCallback = (count: number, result: SessionDataList) => void
-export type QuerySessionDataCallback = (rescode: number, result: SessionData) => void
+export type QuerySessionDataCallback = (rescode: NIMResCode, result: SessionData) => void
 export type SetToStickTopSessionNotifyCallback = (result: string) => void
 export type CancelStickTopSessionNotifyCallback = (session_id: string, session_type: NIMSessionType) => void
 export type UpdateStickTopSessionNotifyCallback = (result: string) => void

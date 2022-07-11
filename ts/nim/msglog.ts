@@ -32,8 +32,10 @@ import {
     DeleteMsglogSelfNotifyItemInfo,
     DeleteMsglogSelfNotifyParam,
     MessageStatusChangedResult,
-    QueryMsgByOptionsAsyncParam
+    QueryMsgByOptionsAsyncParam,
+    QueryMsglogResult
 } from '../nim_def/msglog_def'
+import { NIMResCode } from 'ts/nim_def/client_def'
 
 export declare interface NIMMsgLogEvents {
     /** 单向删除消息记录通知 */
@@ -66,8 +68,23 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
      * 200:成功
      * </pre>
      */
-    queryMsgByIDAysnc(clientMsgId: string, cb: QuerySingleMsgCallback, jsonExtension: string): boolean {
-        return this.msglog.QueryMsgByIDAysnc(clientMsgId, cb, jsonExtension)
+    queryMsgByIDAysnc(clientMsgId: string, cb: QuerySingleMsgCallback, jsonExtension: string): Promise<[NIMResCode, string, IMMessage] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.msglog.QueryMsgByIDAysnc(
+                    clientMsgId,
+                    (rescode, id, msg) => {
+                        if (cb) {
+                            cb(rescode, id, msg)
+                        }
+                        resolve([rescode, id, msg])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 查询本地消息
@@ -84,8 +101,33 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
      * 200:成功
      * </pre>
      */
-    queryMsgAsync(accid: string, to_type: NIMSessionType, limit_count: number, anchor_msg_time: number, cb: QueryMsgCallback, jsonExtension: string): boolean {
-        return this.msglog.QueryMsgAsync(accid, to_type, limit_count, anchor_msg_time, cb, jsonExtension)
+    queryMsgAsync(
+        accid: string,
+        to_type: NIMSessionType,
+        limit_count: number,
+        anchor_msg_time: number,
+        cb: QueryMsgCallback,
+        jsonExtension: string
+    ): Promise<[NIMResCode, string, NIMSessionType, QueryMsglogResult] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.msglog.QueryMsgAsync(
+                    accid,
+                    to_type,
+                    limit_count,
+                    anchor_msg_time,
+                    (rescode, id, to_type, result) => {
+                        if (cb) {
+                            cb(rescode, id, to_type, result)
+                        }
+                        resolve([rescode, id, to_type, result])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 在线查询消息（不包括系统消息）
@@ -99,8 +141,19 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
      * 414:参数错误
      * </pre>
      */
-    queryMsgOnlineAsync(param: QueryMsgOnlineAsyncParam, cb: QueryMsgCallback): boolean {
-        return this.msglog.QueryMsgOnlineAsync(param, cb)
+    queryMsgOnlineAsync(param: QueryMsgOnlineAsyncParam, cb: QueryMsgCallback): Promise<[NIMResCode, string, NIMSessionType, QueryMsglogResult] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.msglog.QueryMsgOnlineAsync(param, (rescode, id, to_type, result) => {
+                    if (cb) {
+                        cb(rescode, id, to_type, result)
+                    }
+                    resolve([rescode, id, to_type, result])
+                })
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 在线查询消息（不包括系统消息）
@@ -114,8 +167,22 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
      * 414:参数错误
      * </pre>
      */
-    queryMsgByKeywordOnlineAsync(param: QueryMsgByKeywordOnlineParam, cb: QueryMsgCallback): boolean {
-        return this.msglog.QueryMsgByKeywordOnlineAsync(param, cb)
+    queryMsgByKeywordOnlineAsync(
+        param: QueryMsgByKeywordOnlineParam,
+        cb: QueryMsgCallback
+    ): Promise<[NIMResCode, string, NIMSessionType, QueryMsglogResult] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.msglog.QueryMsgByKeywordOnlineAsync(param, (rescode, id, to_type, result) => {
+                    if (cb) {
+                        cb(rescode, id, to_type, result)
+                    }
+                    resolve([rescode, id, to_type, result])
+                })
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 根据指定条件在一个会话中查询指定单个或多个类型的本地消息
@@ -146,19 +213,30 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
         msgType: Array<NIMMessageType>,
         cb: QueryMsgCallback,
         jsonExtension: string
-    ): boolean {
-        return this.msglog.QueryMsgOfSpecifiedTypeInASessionAsync(
-            to_type,
-            id,
-            limit_count,
-            fromTime,
-            endTime,
-            endClientMsgId,
-            reverse,
-            msgType,
-            cb,
-            jsonExtension
-        )
+    ): Promise<[NIMResCode, string, NIMSessionType, QueryMsglogResult] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.msglog.QueryMsgOfSpecifiedTypeInASessionAsync(
+                    to_type,
+                    id,
+                    limit_count,
+                    fromTime,
+                    endTime,
+                    endClientMsgId,
+                    reverse,
+                    msgType,
+                    (rescode, id, to_type, result) => {
+                        if (cb) {
+                            cb(rescode, id, to_type, result)
+                        }
+                        resolve([rescode, id, to_type, result])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 根据指定条件查询本地消息,使用此接口可以完成全局搜索等功能,具体请参阅开发手册
@@ -170,8 +248,19 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
      * 200:成功
      * </pre>
      */
-    queryMsgByOptionsAsync(param: QueryMsgByOptionsAsyncParam, cb: QueryMsgCallback): boolean {
-        return this.msglog.QueryMsgByOptionsAsync(param, cb)
+    queryMsgByOptionsAsync(param: QueryMsgByOptionsAsyncParam, cb: QueryMsgCallback): Promise<[NIMResCode, string, NIMSessionType, QueryMsglogResult] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.msglog.QueryMsgByOptionsAsync(param, (rescode, id, to_type, result) => {
+                    if (cb) {
+                        cb(rescode, id, to_type, result)
+                    }
+                    resolve([rescode, id, to_type, result])
+                })
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 批量设置已读状态
@@ -185,8 +274,29 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
      * 200:成功
      * </pre>
      */
-    batchStatusReadAsync(accid: string, to_type: NIMSessionType, cb: ModifyMultipleMsglogCallback, jsonExtension: string): boolean {
-        return this.msglog.BatchStatusReadAsync(accid, to_type, cb, jsonExtension)
+    batchStatusReadAsync(
+        accid: string,
+        to_type: NIMSessionType,
+        cb: ModifyMultipleMsglogCallback,
+        jsonExtension: string
+    ): Promise<[NIMResCode, string, NIMSessionType] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.msglog.BatchStatusReadAsync(
+                    accid,
+                    to_type,
+                    (rescode, uid, to_type) => {
+                        if (cb) {
+                            cb(rescode, uid, to_type)
+                        }
+                        resolve([rescode, uid, to_type])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 删除某个会话的全部聊天记录
@@ -207,8 +317,25 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
         revert_by_query_online: boolean,
         cb: ModifyMultipleMsglogCallback,
         jsonExtension: string
-    ): boolean {
-        return this.msglog.BatchStatusDeleteAsync(accid, to_type, revert_by_query_online, cb, jsonExtension)
+    ): Promise<[NIMResCode, string, NIMSessionType] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.msglog.BatchStatusDeleteAsync(
+                    accid,
+                    to_type,
+                    revert_by_query_online,
+                    (rescode, uid, to_type) => {
+                        if (cb) {
+                            cb(rescode, uid, to_type)
+                        }
+                        resolve([rescode, uid, to_type])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 设置消息状态
@@ -222,8 +349,24 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
      * 200:成功
      * </pre>
      */
-    setStatusAsync(msg_id: string, status: NIMMsgLogStatus, cb: ModifySingleMsglogCallback, jsonExtension: string): boolean {
-        return this.msglog.SetStatusAsync(msg_id, status, cb, jsonExtension)
+    setStatusAsync(msg_id: string, status: NIMMsgLogStatus, cb: ModifySingleMsglogCallback, jsonExtension: string): Promise<[NIMResCode, string] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.msglog.SetStatusAsync(
+                    msg_id,
+                    status,
+                    (rescode, msg_id) => {
+                        if (cb) {
+                            cb(rescode, msg_id)
+                        }
+                        resolve([rescode, msg_id])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 设置消息子状态
@@ -237,8 +380,24 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
      * 200:成功
      * </pre>
      */
-    setSubStatusAsync(msg_id: string, status: NIMMsgLogSubStatus, cb: ModifySingleMsglogCallback, jsonExtension: string): boolean {
-        return this.msglog.SetSubStatusAsync(msg_id, status, cb, jsonExtension)
+    setSubStatusAsync(msg_id: string, status: NIMMsgLogSubStatus, cb: ModifySingleMsglogCallback, jsonExtension: string): Promise<[NIMResCode, string] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.msglog.SetSubStatusAsync(
+                    msg_id,
+                    status,
+                    (rescode, msg_id) => {
+                        if (cb) {
+                            cb(rescode, msg_id)
+                        }
+                        resolve([rescode, msg_id])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 只往本地消息历史数据库里写入一条消息（如果已存在这条消息，则更新。通常是APP的本地自定义消息，并不会发给服务器）
@@ -261,8 +420,19 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
         composeLastMsg: boolean,
         excludeMsgType: Array<number>,
         cb: ModifySingleMsglogCallback
-    ): boolean {
-        return this.msglog.WriteMsglogToLocalAsync(talkId, msg, needUpdateSession, composeLastMsg, excludeMsgType, cb)
+    ): Promise<[NIMResCode, string] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.msglog.WriteMsglogToLocalAsync(talkId, msg, needUpdateSession, composeLastMsg, excludeMsgType, (rescode, msg_id) => {
+                    if (cb) {
+                        cb(rescode, msg_id)
+                    }
+                    resolve([rescode, msg_id])
+                })
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 删除指定会话类型的所有消息
@@ -283,8 +453,25 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
         revert_by_query_online: boolean,
         cb: ModifyMultipleMsglogCallback,
         jsonExtension: string
-    ): boolean {
-        return this.msglog.DeleteBySessionTypeAsync(delSessions, to_type, revert_by_query_online, cb, jsonExtension)
+    ): Promise<[NIMResCode, string, NIMSessionType] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.msglog.DeleteBySessionTypeAsync(
+                    delSessions,
+                    to_type,
+                    revert_by_query_online,
+                    (rescode, msg_id, to_type) => {
+                        if (cb) {
+                            cb(rescode, msg_id, to_type)
+                        }
+                        resolve([rescode, msg_id, to_type])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 删除指定一条消息
@@ -299,8 +486,31 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
      * 200:成功
      * </pre>
      */
-    deleteAsync(session_id: string, to_type: NIMSessionType, msg_id: string, cb: ModifySingleMsglogCallback, jsonExtension: string): boolean {
-        return this.msglog.DeleteAsync(session_id, to_type, msg_id, cb, jsonExtension)
+    deleteAsync(
+        session_id: string,
+        to_type: NIMSessionType,
+        msg_id: string,
+        cb: ModifySingleMsglogCallback,
+        jsonExtension: string
+    ): Promise<[NIMResCode, string] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.msglog.DeleteAsync(
+                    session_id,
+                    to_type,
+                    msg_id,
+                    (rescode, msg_id) => {
+                        if (cb) {
+                            cb(rescode, msg_id)
+                        }
+                        resolve([rescode, msg_id])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 删除全部消息历史
@@ -317,8 +527,24 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
        * 200:成功
        * </pre>
        */
-    deleteAllAsync(del_session: boolean, revert_by_query_online: boolean, cb: DBFunctionCallback, jsonExtension: string): boolean {
-        return this.msglog.DeleteAllAsync(del_session, revert_by_query_online, cb, jsonExtension)
+    deleteAllAsync(del_session: boolean, revert_by_query_online: boolean, cb: DBFunctionCallback, jsonExtension: string): Promise<[NIMResCode] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.msglog.DeleteAllAsync(
+                    del_session,
+                    revert_by_query_online,
+                    (rescode) => {
+                        if (cb) {
+                            cb(rescode)
+                        }
+                        resolve([rescode])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 根据时间段删除部分会话的历史消息
@@ -343,8 +569,27 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
         timestamp2: number,
         cb: DBFunctionCallback,
         jsonExtension: string
-    ): boolean {
-        return this.msglog.DeleteMsgByTimeAsync(session_id, to_type, revert_by_query_online, timestamp1, timestamp2, cb, jsonExtension)
+    ): Promise<[NIMResCode] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.msglog.DeleteMsgByTimeAsync(
+                    session_id,
+                    to_type,
+                    revert_by_query_online,
+                    timestamp1,
+                    timestamp2,
+                    (rescode) => {
+                        if (cb) {
+                            cb(rescode)
+                        }
+                        resolve([rescode])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 导出整个消息历史DB文件（不包括系统消息历史）
@@ -357,8 +602,19 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
      * 200:成功
      * </pre>
      */
-    exportDbAsync(dst_path: string, cb: DBFunctionCallback, jsonExtension: string): boolean {
-        return this.msglog.ExportDbAsync(dst_path, cb, jsonExtension)
+    exportDbAsync(dst_path: string, cb: DBFunctionCallback, jsonExtension: string): Promise<[NIMResCode]> {
+        return new Promise((resolve) => {
+            this.msglog.ExportDbAsync(
+                dst_path,
+                (rescode) => {
+                    if (cb) {
+                        cb(rescode)
+                    }
+                    resolve([rescode])
+                },
+                jsonExtension
+            )
+        })
     }
 
     /** 导入消息历史DB文件（不包括系统消息历史）。先验证是否自己的消息历史文件和DB加密密钥(见nim_client_def.h里的kNIMDataBaseEncryptKey），如果验证不通过，则不导入。
@@ -374,8 +630,20 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
      * 10601:导入消息历史时写记录失败
      * </pre>
      */
-    importDbAsync(src_path: string, cb: DBFunctionCallback, prg_cb: ImportDbPrgCallback, jsonExtension: string): boolean {
-        return this.msglog.ImportDbAsync(src_path, cb, prg_cb, jsonExtension)
+    importDbAsync(src_path: string, cb: DBFunctionCallback, prg_cb: ImportDbPrgCallback, jsonExtension: string): Promise<[NIMResCode]> {
+        return new Promise((resolve) => {
+            this.msglog.ImportDbAsync(
+                src_path,
+                (rescode) => {
+                    if (cb) {
+                        cb(rescode)
+                    }
+                    resolve([rescode])
+                },
+                prg_cb,
+                jsonExtension
+            )
+        })
     }
 
     /** 发送消息已读回执
@@ -390,8 +658,15 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
      * 10414:本地错误码，参数错误
      * </pre>
      */
-    sendReceiptAsync(msg: IMMessage, cb: MessageStatusChangedCallback): void {
-        return this.msglog.SendReceiptAsync(msg, cb)
+    sendReceiptAsync(msg: IMMessage, cb: MessageStatusChangedCallback): Promise<[MessageStatusChangedResult]> {
+        return new Promise((resolve) => {
+            this.msglog.SendReceiptAsync(msg, (result) => {
+                if (cb) {
+                    cb(result)
+                }
+                resolve([result])
+            })
+        })
     }
 
     /** 查询自己发送的消息是否被对方已读
@@ -421,8 +696,20 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
      * 200:成功
      * </pre>
      */
-    updateLocalExtAsync(msg_id: string, local_ext: string, cb: ModifySingleMsglogCallback, jsonExtension: string): boolean {
-        return this.msglog.UpdateLocalExtAsync(msg_id, local_ext, cb, jsonExtension)
+    updateLocalExtAsync(msg_id: string, local_ext: string, cb: ModifySingleMsglogCallback, jsonExtension: string): Promise<[NIMResCode, string]> {
+        return new Promise((resolve) => {
+            this.msglog.UpdateLocalExtAsync(
+                msg_id,
+                local_ext,
+                (rescode, local_ext) => {
+                    if (cb) {
+                        cb(rescode, local_ext)
+                    }
+                    resolve([rescode, local_ext])
+                },
+                jsonExtension
+            )
+        })
     }
 
     /** 全部未读消息历史标记为已读
@@ -434,8 +721,15 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
      * 200:成功
      * </pre>
      */
-    readAllAsync(cb: DBFunctionCallback, jsonExtension: string): boolean {
-        return this.msglog.ReadAllAsync(cb, jsonExtension)
+    readAllAsync(cb: DBFunctionCallback, jsonExtension: string): Promise<[NIMResCode]> {
+        return new Promise((resolve) => {
+            this.msglog.ReadAllAsync((rescode) => {
+                if (cb) {
+                    cb(rescode)
+                }
+                resolve([rescode])
+            }, jsonExtension)
+        })
     }
 
     /** 导出本地消息记录到云端
@@ -479,8 +773,15 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
      * 200:成功
      * </pre>
      */
-    deleteHistoryOnlineAsync(accid: string, del_remote: boolean, jsonExtension: string, cb: DeleteHistoryOnLineAsyncCallback): void {
-        return this.msglog.DeleteHistoryOnlineAsync(accid, del_remote, jsonExtension, cb)
+    deleteHistoryOnlineAsync(accid: string, del_remote: boolean, jsonExtension: string, cb: DeleteHistoryOnLineAsyncCallback): Promise<[NIMResCode, string]> {
+        return new Promise((resolve) => {
+            this.msglog.DeleteHistoryOnlineAsync(accid, del_remote, jsonExtension, (rescode, accid) => {
+                if (cb) {
+                    cb(rescode, accid)
+                }
+                resolve([rescode, accid])
+            })
+        })
     }
 
     /** 删除某一会话的云端的历史记录[v8.0.0]
@@ -498,8 +799,15 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
         needs_notify_self: boolean,
         jsonExtension: string,
         cb: DeleteHistoryOnLineAsyncExCallback
-    ): void {
-        return this.msglog.DeleteHistoryOnlineAsyncEx(accid, to_type, needs_notify_self, jsonExtension, cb)
+    ): Promise<[NIMResCode, string, number, number, string]> {
+        return new Promise((resolve) => {
+            this.msglog.DeleteHistoryOnlineAsyncEx(accid, to_type, needs_notify_self, jsonExtension, (rescode, accid, to_type, timestamp, jsonExtension) => {
+                if (cb) {
+                    cb(rescode, accid, to_type, timestamp, jsonExtension)
+                }
+                resolve([rescode, accid, to_type, timestamp, jsonExtension])
+            })
+        })
     }
 
     /** 单向删除某条消息记录(同时删除本地与云端)
@@ -512,8 +820,15 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
      * 200:成功
      * </pre>
      */
-    deleteMessageSelfAsync(msg: IMMessage, ext: string, cb: DeleteMessageSelfAsyncCallback): void {
-        return this.msglog.DeleteMessageSelfAsync(msg, ext, cb)
+    deleteMessageSelfAsync(msg: IMMessage, ext: string, cb: DeleteMessageSelfAsyncCallback): Promise<[NIMResCode]> {
+        return new Promise((resolve) => {
+            this.msglog.DeleteMessageSelfAsync(msg, ext, (rescode) => {
+                if (cb) {
+                    cb(rescode)
+                }
+                resolve([rescode])
+            })
+        })
     }
 
     /** 查询某条消息是否为thread聊天的根消息
@@ -525,8 +840,15 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
      * 200:成功
      * </pre>
      */
-    queryMessageIsThreadRoot(client_id: string, cb: QueryMessageIsThreadRootCallback): void {
-        return this.msglog.QueryMessageIsThreadRoot(client_id, cb)
+    queryMessageIsThreadRoot(client_id: string, cb: QueryMessageIsThreadRootCallback): Promise<[NIMResCode, string, boolean]> {
+        return new Promise((resolve) => {
+            this.msglog.QueryMessageIsThreadRoot(client_id, (rescode, client_id, is_thread_root) => {
+                if (cb) {
+                    cb(rescode, client_id, is_thread_root)
+                }
+                resolve([rescode, client_id, is_thread_root])
+            })
+        })
     }
 
     /** 查询某条消息的具体内容一般用在thread talk 场景中
@@ -538,8 +860,15 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
      * 200:成功
      * </pre>
      */
-    queryMessageOnline(param: QueryMsgAsyncParam, cb: QueryMessageOnlineCallback): void {
-        return this.msglog.QueryMessageOnline(param, cb)
+    queryMessageOnline(param: QueryMsgAsyncParam, cb: QueryMessageOnlineCallback): Promise<[NIMResCode, string, IMMessage]> {
+        return new Promise((resolve) => {
+            this.msglog.QueryMessageOnline(param, (rescode, param, msg) => {
+                if (cb) {
+                    cb(rescode, param, msg)
+                }
+                resolve([rescode, param, msg])
+            })
+        })
     }
 
     /** 分页查询thread talk消息历史
@@ -552,8 +881,19 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
      * 200:成功
      * </pre>
      */
-    queryThreadHistoryMsg(msg: IMMessage, param: QueryThreadHistoryMsgAsyncParam, cb: QueryThreadHistoryMsgCallback): void {
-        return this.msglog.QueryThreadHistoryMsg(msg, param, cb)
+    queryThreadHistoryMsg(
+        msg: IMMessage,
+        param: QueryThreadHistoryMsgAsyncParam,
+        cb: QueryThreadHistoryMsgCallback
+    ): Promise<[NIMResCode, IMMessage, number, number, Array<IMMessage>]> {
+        return new Promise((resolve) => {
+            this.msglog.QueryThreadHistoryMsg(msg, param, (rescode, root_msg, total, last_msg_time, msg_array) => {
+                if (cb) {
+                    cb(rescode, root_msg, total, last_msg_time, msg_array)
+                }
+                resolve([rescode, root_msg, total, last_msg_time, msg_array])
+            })
+        })
     }
 
     /** 在线全文检索
@@ -565,7 +905,14 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
      * 200:成功
      * </pre>
      */
-    fullTextSearchOnlineAsync(param: FullTextSearchOnlineAsyncParam, cb: FullTextSearchOnlineAsyncCallback): void {
-        return this.msglog.FullTextSearchOnlineAsync(param, cb)
+    fullTextSearchOnlineAsync(param: FullTextSearchOnlineAsyncParam, cb: FullTextSearchOnlineAsyncCallback): Promise<[NIMResCode, QueryMsglogResult]> {
+        return new Promise((resolve) => {
+            this.msglog.FullTextSearchOnlineAsync(param, (rescode, result) => {
+                if (cb) {
+                    cb(rescode, result)
+                }
+                resolve([rescode, result])
+            })
+        })
     }
 }

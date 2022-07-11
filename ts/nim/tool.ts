@@ -1,6 +1,7 @@
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
 import { NIMToolAPI, NIMAppDataType, AudioInfo, GetAudioTextCallback, FilterClientAntispamCallback } from '../nim_def/tool_def'
+import { NIMResCode } from 'ts/nim_def/client_def'
 
 export declare interface NIMToolEvents {}
 
@@ -87,8 +88,23 @@ export class NIMTool extends EventEmitter<NIMToolEvents> {
      * 6104:audioUrl不合法
      * </pre>
      */
-    getAudioTextAsync(audioInfo: AudioInfo, cb: GetAudioTextCallback, jsonExtension: string): boolean {
-        return this.tool.GetAudioTextAsync(audioInfo, cb, jsonExtension)
+    getAudioTextAsync(audioInfo: AudioInfo, cb: GetAudioTextCallback, jsonExtension: string): Promise<[NIMResCode, string] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.tool.GetAudioTextAsync(
+                    audioInfo,
+                    (rescode, text) => {
+                        if (cb) {
+                            cb(rescode, text)
+                        }
+                        resolve([rescode, text])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 客户端本地反垃圾
@@ -105,7 +121,14 @@ export class NIMTool extends EventEmitter<NIMToolEvents> {
      * 3：需要将内容设置在消息结构的反垃圾字段里，由服务器过滤
      * </pre>
      */
-    filterClientAntispam(text: string, replaceString: string, libName: string, cb: FilterClientAntispamCallback): void {
-        return this.tool.FilterClientAntispam(text, replaceString, libName, cb)
+    filterClientAntispam(text: string, replaceString: string, libName: string, cb: FilterClientAntispamCallback): Promise<[boolean, NIMResCode, string]> {
+        return new Promise((resolve) => {
+            this.tool.FilterClientAntispam(text, replaceString, libName, (ret, rescode, text) => {
+                if (cb) {
+                    cb(ret, rescode, text)
+                }
+                resolve([ret, rescode, text])
+            })
+        })
     }
 }

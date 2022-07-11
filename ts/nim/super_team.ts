@@ -56,8 +56,26 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
         invitationAttachment: string,
         cb: SuperTeamEventCallback,
         jsonExtension: string
-    ): boolean {
-        return this.team.InviteAsync(tid, ids, invitationPostscript, invitationAttachment, cb, jsonExtension)
+    ): Promise<[SuperTeamEvent] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.team.InviteAsync(
+                    tid,
+                    ids,
+                    invitationPostscript,
+                    invitationAttachment,
+                    (event) => {
+                        if (cb) {
+                            cb(event)
+                        }
+                        resolve([event])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 踢人
@@ -76,8 +94,24 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
      * 804:用户不在群里面
      * </pre>
      */
-    kickAsync(tid: string, ids: Array<string>, cb: SuperTeamEventCallback, jsonExtension: string): boolean {
-        return this.team.KickAsync(tid, ids, cb, jsonExtension)
+    kickAsync(tid: string, ids: Array<string>, cb: SuperTeamEventCallback, jsonExtension: string): Promise<[SuperTeamEvent] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.team.KickAsync(
+                    tid,
+                    ids,
+                    (event) => {
+                        if (cb) {
+                            cb(event)
+                        }
+                        resolve([event])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 离开群
@@ -94,8 +128,23 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
      * 804:用户不在群里
      * </pre>
      */
-    leaveAsync(tid: string, cb: SuperTeamEventCallback, jsonExtension: string): boolean {
-        return this.team.LeaveAsync(tid, cb, jsonExtension)
+    leaveAsync(tid: string, cb: SuperTeamEventCallback, jsonExtension: string): Promise<[SuperTeamEvent] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.team.LeaveAsync(
+                    tid,
+                    (event) => {
+                        if (cb) {
+                            cb(event)
+                        }
+                        resolve([event])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 更新群信息
@@ -111,8 +160,24 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
      * 803:群不存在
      * </pre>
      */
-    updateSuperTeamInfoAsync(tid: string, info: SuperTeamInfo, cb: SuperTeamEventCallback, jsonExtension: string): boolean {
-        return this.team.UpdateSuperTeamInfoAsync(tid, info, cb, jsonExtension)
+    updateSuperTeamInfoAsync(tid: string, info: SuperTeamInfo, cb: SuperTeamEventCallback, jsonExtension: string): Promise<[SuperTeamEvent] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.team.UpdateSuperTeamInfoAsync(
+                    tid,
+                    info,
+                    (event) => {
+                        if (cb) {
+                            cb(event)
+                        }
+                        resolve([event])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 申请入群
@@ -132,8 +197,24 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
      * 805:群类型不对
      * </pre>
      */
-    applyJoinAsync(tid: string, reason: string, cb: SuperTeamEventCallback, jsonExtension: string): boolean {
-        return this.team.ApplyJoinAsync(tid, reason, cb, jsonExtension)
+    applyJoinAsync(tid: string, reason: string, cb: SuperTeamEventCallback, jsonExtension: string): Promise<[SuperTeamEvent] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.team.ApplyJoinAsync(
+                    tid,
+                    reason,
+                    (event) => {
+                        if (cb) {
+                            cb(event)
+                        }
+                        resolve([event])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 同意入群申请
@@ -153,8 +234,24 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
      * 805:群类型不对
      * </pre>
      */
-    passJoinApplyAsync(tid: string, applicantId: string, cb: SuperTeamEventCallback, jsonExtension: string): boolean {
-        return this.team.PassJoinApplyAsync(tid, applicantId, cb, jsonExtension)
+    passJoinApplyAsync(tid: string, applicantId: string, cb: SuperTeamEventCallback, jsonExtension: string): Promise<[SuperTeamEvent] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.team.PassJoinApplyAsync(
+                    tid,
+                    applicantId,
+                    (event) => {
+                        if (cb) {
+                            cb(event)
+                        }
+                        resolve([event])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 拒绝入群申请
@@ -173,8 +270,31 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
      * 805:群类型不对
      * </pre>
      */
-    rejectJoinApplyAsync(tid: string, applicantId: string, reason: string, cb: SuperTeamEventCallback, jsonExtension: string): boolean {
-        return this.team.RejectJoinApplyAsync(tid, applicantId, reason, cb, jsonExtension)
+    rejectJoinApplyAsync(
+        tid: string,
+        applicantId: string,
+        reason: string,
+        cb: SuperTeamEventCallback,
+        jsonExtension: string
+    ): Promise<[SuperTeamEvent] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.team.RejectJoinApplyAsync(
+                    tid,
+                    applicantId,
+                    reason,
+                    (event) => {
+                        if (cb) {
+                            cb(event)
+                        }
+                        resolve([event])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 添加管理员
@@ -191,8 +311,24 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
      * 805:群类型不对
      * </pre>
      */
-    addManagersAsync(tid: string, ids: Array<string>, cb: SuperTeamEventCallback, jsonExtension: string): boolean {
-        return this.team.AddManagersAsync(tid, ids, cb, jsonExtension)
+    addManagersAsync(tid: string, ids: Array<string>, cb: SuperTeamEventCallback, jsonExtension: string): Promise<[SuperTeamEvent] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.team.AddManagersAsync(
+                    tid,
+                    ids,
+                    (event) => {
+                        if (cb) {
+                            cb(event)
+                        }
+                        resolve([event])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 删除管理员
@@ -209,8 +345,24 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
      * 805:群类型不对
      * </pre>
      */
-    removeManagersAsync(tid: string, ids: Array<string>, cb: SuperTeamEventCallback, jsonExtension: string): boolean {
-        return this.team.RemoveManagersAsync(tid, ids, cb, jsonExtension)
+    removeManagersAsync(tid: string, ids: Array<string>, cb: SuperTeamEventCallback, jsonExtension: string): Promise<[SuperTeamEvent] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.team.RemoveManagersAsync(
+                    tid,
+                    ids,
+                    (event) => {
+                        if (cb) {
+                            cb(event)
+                        }
+                        resolve([event])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 移交群主
@@ -229,8 +381,25 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
      * 806:群数量上限
      * </pre>
      */
-    transferTeamAsync(tid: string, newOwnerId: string, isLeave: boolean, cb: SuperTeamEventCallback, jsonExtension: string): boolean {
-        return this.team.TransferTeamAsync(tid, newOwnerId, isLeave, cb, jsonExtension)
+    transferTeamAsync(tid: string, newOwnerId: string, isLeave: boolean, cb: SuperTeamEventCallback, jsonExtension: string): Promise<[SuperTeamEvent] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.team.TransferTeamAsync(
+                    tid,
+                    newOwnerId,
+                    isLeave,
+                    (event) => {
+                        if (cb) {
+                            cb(event)
+                        }
+                        resolve([event])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 更新自己的群属性
@@ -245,8 +414,23 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
      * 805:群类型不对s
      * </pre>
      */
-    updateMyPropertyAsync(prop: SuperTeamMemberProperty, cb: SuperTeamEventCallback, jsonExtension: string): boolean {
-        return this.team.UpdateMyPropertyAsync(prop, cb, jsonExtension)
+    updateMyPropertyAsync(prop: SuperTeamMemberProperty, cb: SuperTeamEventCallback, jsonExtension: string): Promise<[SuperTeamEvent] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.team.UpdateMyPropertyAsync(
+                    prop,
+                    (event) => {
+                        if (cb) {
+                            cb(event)
+                        }
+                        resolve([event])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 修改别人的群昵称
@@ -263,8 +447,23 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
      * 805:群类型不对
      * </pre>
      */
-    updateOtherNickAsync(prop: SuperTeamMemberProperty, cb: SuperTeamEventCallback, jsonExtension: string): boolean {
-        return this.team.UpdateOtherNickAsync(prop, cb, jsonExtension)
+    updateOtherNickAsync(prop: SuperTeamMemberProperty, cb: SuperTeamEventCallback, jsonExtension: string): Promise<[SuperTeamEvent] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.team.UpdateOtherNickAsync(
+                    prop,
+                    (event) => {
+                        if (cb) {
+                            cb(event)
+                        }
+                        resolve([event])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 接受邀请
@@ -281,8 +480,24 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
      * 805:群类型不对
      * </pre>
      */
-    acceptInvitationAsync(tid: string, inviterId: string, cb: SuperTeamEventCallback, jsonExtension: string): boolean {
-        return this.team.AcceptInvitationAsync(tid, inviterId, cb, jsonExtension)
+    acceptInvitationAsync(tid: string, inviterId: string, cb: SuperTeamEventCallback, jsonExtension: string): Promise<[SuperTeamEvent] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.team.AcceptInvitationAsync(
+                    tid,
+                    inviterId,
+                    (event) => {
+                        if (cb) {
+                            cb(event)
+                        }
+                        resolve([event])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 拒绝邀请
@@ -300,8 +515,25 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
      * 805:群类型不对
      * </pre>
      */
-    rejectInvitationAsync(tid: string, inviterId: string, reason: string, cb: SuperTeamEventCallback, jsonExtension: string): boolean {
-        return this.team.RejectInvitationAsync(tid, inviterId, reason, cb, jsonExtension)
+    rejectInvitationAsync(tid: string, inviterId: string, reason: string, cb: SuperTeamEventCallback, jsonExtension: string): Promise<[SuperTeamEvent] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.team.RejectInvitationAsync(
+                    tid,
+                    inviterId,
+                    reason,
+                    (event) => {
+                        if (cb) {
+                            cb(event)
+                        }
+                        resolve([event])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 查询所有群
@@ -309,8 +541,15 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
      * @param cb		查询所有群的回调函数
      * @return void 无返回值
      */
-    queryAllMySuperTeamsAsync(cb: QueryAllMySuperTeamsCallback, jsonExtension: string): void {
-        return this.team.QueryAllMySuperTeamsAsync(cb, jsonExtension)
+    queryAllMySuperTeamsAsync(cb: QueryAllMySuperTeamsCallback, jsonExtension: string): Promise<[number, Array<string>]> {
+        return new Promise((resolve) => {
+            this.team.QueryAllMySuperTeamsAsync((count, result) => {
+                if (cb) {
+                    cb(count, result)
+                }
+                resolve([count, result])
+            }, jsonExtension)
+        })
     }
 
     /** 查询所有群信息
@@ -318,8 +557,15 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
      * @param cb		查询所有群信息的回调函数
      * @return void 无返回值
      */
-    queryAllMySuperTeamsInfoAsync(cb: QueryAllMySuperTeamsInfoCallback, jsonExtension: string): void {
-        return this.team.QueryAllMySuperTeamsInfoAsync(cb, jsonExtension)
+    queryAllMySuperTeamsInfoAsync(cb: QueryAllMySuperTeamsInfoCallback, jsonExtension: string): Promise<[number, Array<SuperTeamInfo>]> {
+        return new Promise((resolve) => {
+            this.team.QueryAllMySuperTeamsInfoAsync((count, result) => {
+                if (cb) {
+                    cb(count, result)
+                }
+                resolve([count, result])
+            }, jsonExtension)
+        })
     }
 
     /** 查询所有群里我的成员信息（使用场景：获取了所有群列表后，需要查询自己在每个群里自己的成员信息，使用成员信息里的bits字段，可以判断当某个群发来消息后，是否做消息通知）
@@ -327,8 +573,15 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
      * @param cb		查询所有群里我的成员信息的回调函数
      * @return void 无返回值
      */
-    queryMyAllMemberInfosAsync(cb: QuerySuperTeamMyAllMemberInfosCallback, jsonExtension: string): void {
-        return this.team.QueryMyAllMemberInfosAsync(cb, jsonExtension)
+    queryMyAllMemberInfosAsync(cb: QuerySuperTeamMyAllMemberInfosCallback, jsonExtension: string): Promise<[number, Array<SuperTeamMemberProperty>]> {
+        return new Promise((resolve) => {
+            this.team.QueryMyAllMemberInfosAsync((count, result) => {
+                if (cb) {
+                    cb(count, result)
+                }
+                resolve([count, result])
+            }, jsonExtension)
+        })
     }
 
     /** 查询群成员
@@ -343,8 +596,27 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
      * 802:没有权限
      * </pre>
      */
-    querySuperTeamMembersAsync(tid: string, cb: QuerySuperTeamMembersCallback, jsonExtension: string): boolean {
-        return this.team.QuerySuperTeamMembersAsync(tid, cb, jsonExtension)
+    querySuperTeamMembersAsync(
+        tid: string,
+        cb: QuerySuperTeamMembersCallback,
+        jsonExtension: string
+    ): Promise<[string, number, Array<SuperTeamMemberProperty>] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.team.QuerySuperTeamMembersAsync(
+                    tid,
+                    (tid, count, result) => {
+                        if (cb) {
+                            cb(tid, count, result)
+                        }
+                        resolve([tid, count, result])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 查询(单个)群成员信息
@@ -354,8 +626,20 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
      * @param cb		查询群成员的回调函数
      * @return boolean 检查参数如果不符合要求则返回失败
      */
-    querySuperTeamMemberAsync(tid: string, id: string, cb: QuerySuperTeamMemberCallback, jsonExtension: string): void {
-        return this.team.QuerySuperTeamMemberAsync(tid, id, cb, jsonExtension)
+    querySuperTeamMemberAsync(tid: string, id: string, cb: QuerySuperTeamMemberCallback, jsonExtension: string): Promise<[SuperTeamMemberProperty]> {
+        return new Promise((resolve) => {
+            this.team.QuerySuperTeamMemberAsync(
+                tid,
+                id,
+                (result) => {
+                    if (cb) {
+                        cb(result)
+                    }
+                    resolve([result])
+                },
+                jsonExtension
+            )
+        })
     }
 
     /** 查询群信息
@@ -364,8 +648,23 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
      * @param cb		查询群信息的回调函数
      * @return boolean 检查参数如果不符合要求则返回失败
      */
-    querySuperTeamInfoAsync(tid: string, cb: QuerySuperTeamInfoCallback, jsonExtension: string): boolean {
-        return this.team.QuerySuperTeamInfoAsync(tid, cb, jsonExtension)
+    querySuperTeamInfoAsync(tid: string, cb: QuerySuperTeamInfoCallback, jsonExtension: string): Promise<[string, SuperTeamInfo] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.team.QuerySuperTeamInfoAsync(
+                    tid,
+                    (tid, result) => {
+                        if (cb) {
+                            cb(tid, result)
+                        }
+                        resolve([tid, result])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 获取群信息（从服务器获取）
@@ -379,8 +678,23 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
      * 803:群不存在
      * </pre>
      */
-    querySuperTeamInfoOnlineAsync(tid: string, cb: SuperTeamEventCallback, jsonExtension: string): boolean {
-        return this.team.QuerySuperTeamInfoOnlineAsync(tid, cb, jsonExtension)
+    querySuperTeamInfoOnlineAsync(tid: string, cb: SuperTeamEventCallback, jsonExtension: string): Promise<[SuperTeamEvent] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.team.QuerySuperTeamInfoOnlineAsync(
+                    tid,
+                    (result) => {
+                        if (cb) {
+                            cb(result)
+                        }
+                        resolve([result])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /**  禁言/解除禁言
@@ -399,8 +713,25 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
      * 802:没有权限
      * </pre>
      */
-    muteMemberAsync(tid: string, member_id: string, set_mute: boolean, cb: SuperTeamEventCallback, jsonExtension: string): boolean {
-        return this.team.MuteMemberAsync(tid, member_id, set_mute, cb, jsonExtension)
+    muteMemberAsync(tid: string, member_id: string, set_mute: boolean, cb: SuperTeamEventCallback, jsonExtension: string): Promise<[SuperTeamEvent] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.team.MuteMemberAsync(
+                    tid,
+                    member_id,
+                    set_mute,
+                    (result) => {
+                        if (cb) {
+                            cb(result)
+                        }
+                        resolve([result])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 群禁言/解除群禁言
@@ -415,8 +746,24 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
      * 414:参数错误
      * </pre>
      */
-    muteAsync(tid: string, set_mute: boolean, cb: SuperTeamEventCallback, jsonExtension: string): boolean {
-        return this.team.MuteAsync(tid, set_mute, cb, jsonExtension)
+    muteAsync(tid: string, set_mute: boolean, cb: SuperTeamEventCallback, jsonExtension: string): Promise<[SuperTeamEvent] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.team.MuteAsync(
+                    tid,
+                    set_mute,
+                    (result) => {
+                        if (cb) {
+                            cb(result)
+                        }
+                        resolve([result])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 查询所有群信息
@@ -425,7 +772,18 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
      * @param cb		查询所有群信息的回调函数
      * @return boolean 检查参数如果不符合要求则返回失败
      */
-    querySuperTeamsInfoByKeywordAsync(keyword: string, cb: QueryAllMySuperTeamsInfoCallback, jsonExtension: string): void {
-        return this.team.QuerySuperTeamsInfoByKeywordAsync(keyword, cb, jsonExtension)
+    querySuperTeamsInfoByKeywordAsync(keyword: string, cb: QueryAllMySuperTeamsInfoCallback, jsonExtension: string): Promise<[number, Array<SuperTeamInfo>]> {
+        return new Promise((resolve) => {
+            this.team.QuerySuperTeamsInfoByKeywordAsync(
+                keyword,
+                (code, result) => {
+                    if (cb) {
+                        cb(code, result)
+                    }
+                    resolve([code, result])
+                },
+                jsonExtension
+            )
+        })
     }
 }

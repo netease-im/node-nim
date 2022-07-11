@@ -10,6 +10,7 @@ import {
     NIMVerifyType,
     FriendChangeEvent
 } from '../nim_def/friend_def'
+import { NIMResCode } from 'ts/nim_def/client_def'
 
 export declare interface NIMFriendEvents {
     /** 好友变更通知 */
@@ -42,8 +43,21 @@ export class NIMFriend extends EventEmitter<NIMFriendEvents> {
      * 500:未知错误
      * </pre>
      */
-    request(accid: string, verify_type: NIMVerifyType, msg: string, cb: FriendOptCallback, jsonExtension: string): boolean {
-        return this.friend.Request(accid, verify_type, msg, cb, jsonExtension)
+    request(accid: string, verify_type: NIMVerifyType, msg: string, cb: FriendOptCallback, jsonExtension: string): Promise<[NIMResCode]> {
+        return new Promise((resolve) => {
+            this.friend.Request(
+                accid,
+                verify_type,
+                msg,
+                (res) => {
+                    if (cb) {
+                        cb(res)
+                    }
+                    resolve([res])
+                },
+                jsonExtension
+            )
+        })
     }
 
     /** 删除好友
@@ -58,8 +72,15 @@ export class NIMFriend extends EventEmitter<NIMFriendEvents> {
      * 500:未知错误
      * </pre>
      */
-    delete(accid: string, option: DeleteFriendOption, cb: FriendOptCallback): boolean {
-        return this.friend.Delete(accid, option, cb)
+    delete(accid: string, option: DeleteFriendOption, cb: FriendOptCallback): Promise<[NIMResCode]> {
+        return new Promise((resolve) => {
+            this.friend.Delete(accid, option, (res) => {
+                if (cb) {
+                    cb(res)
+                }
+                resolve([res])
+            })
+        })
     }
 
     /** 更新好友资料
@@ -74,8 +95,19 @@ export class NIMFriend extends EventEmitter<NIMFriendEvents> {
      * 500:未知错误
      * </pre>
      */
-    update(profile: FriendProfile, cb: FriendOptCallback, jsonExtension: string): boolean {
-        return this.friend.Update(profile, cb, jsonExtension)
+    update(profile: FriendProfile, cb: FriendOptCallback, jsonExtension: string): Promise<[NIMResCode]> {
+        return new Promise((resolve) => {
+            this.friend.Update(
+                profile,
+                (res) => {
+                    if (cb) {
+                        cb(res)
+                    }
+                    resolve([res])
+                },
+                jsonExtension
+            )
+        })
     }
 
     /** 增量获取好友列表
@@ -87,8 +119,15 @@ export class NIMFriend extends EventEmitter<NIMFriendEvents> {
      * 200:成功
      * </pre>
      */
-    getList(cb: GetFriendsListCallback, jsonExtension: string): void {
-        return this.friend.GetList(cb, jsonExtension)
+    getList(cb: GetFriendsListCallback, jsonExtension: string): Promise<[NIMResCode, Array<FriendProfile>]> {
+        return new Promise((resolve) => {
+            this.friend.GetList((res, profiles) => {
+                if (cb) {
+                    cb(res, profiles)
+                }
+                resolve([res, profiles])
+            }, jsonExtension)
+        })
     }
 
     /** 获取好友信息
@@ -97,8 +136,19 @@ export class NIMFriend extends EventEmitter<NIMFriendEvents> {
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @return void 无返回值
      */
-    getFriendProfile(accid: string, cb: GetFriendProfileCallback, jsonExtension: string): void {
-        return this.friend.GetFriendProfile(accid, cb, jsonExtension)
+    getFriendProfile(accid: string, cb: GetFriendProfileCallback, jsonExtension: string): Promise<[string, FriendProfile]> {
+        return new Promise((resolve) => {
+            this.friend.GetFriendProfile(
+                accid,
+                (res, profile) => {
+                    if (cb) {
+                        cb(res, profile)
+                    }
+                    resolve([res, profile])
+                },
+                jsonExtension
+            )
+        })
     }
 
     /** 增量获取好友列表
@@ -111,7 +161,18 @@ export class NIMFriend extends EventEmitter<NIMFriendEvents> {
      * 200:成功
      * </pre>
      */
-    queryFriendListByKeyword(keyword: string, cb: GetFriendsListCallback, jsonExtension: string): boolean {
-        return this.friend.QueryFriendListByKeyword(keyword, cb, jsonExtension)
+    queryFriendListByKeyword(keyword: string, cb: GetFriendsListCallback, jsonExtension: string): Promise<[NIMResCode, Array<FriendProfile>]> {
+        return new Promise((resolve) => {
+            this.friend.QueryFriendListByKeyword(
+                keyword,
+                (res, profiles) => {
+                    if (cb) {
+                        cb(res, profiles)
+                    }
+                    resolve([res, profiles])
+                },
+                jsonExtension
+            )
+        })
     }
 }

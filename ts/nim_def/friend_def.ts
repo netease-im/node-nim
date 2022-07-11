@@ -1,3 +1,5 @@
+import { NIMResCode } from './client_def'
+
 /** @enum NIMFriendFlag 好友类型  */
 export enum NIMFriendFlag {
     kNIMFriendFlagNotFriend = 0 /** < 陌生人 */,
@@ -59,8 +61,8 @@ export interface FriendChangeEvent {
 }
 
 export type FriendChangeCallback = (result: FriendChangeEvent) => void
-export type FriendOptCallback = (rescode: number) => void
-export type GetFriendsListCallback = (rescode: number, result: Array<FriendProfile>) => void
+export type FriendOptCallback = (rescode: NIMResCode) => void
+export type GetFriendsListCallback = (rescode: NIMResCode, result: Array<FriendProfile>) => void
 export type GetFriendProfileCallback = (accid: string, result: FriendProfile) => void
 
 export interface NIMFriendAPI {

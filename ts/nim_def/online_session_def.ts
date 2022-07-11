@@ -25,10 +25,10 @@ export interface DeleteSessionParam {
     delete_list_: Array<DeleteSessionItem>
 }
 
-export type QueryOnlineSessionInfoCallback = (rescode: number, result: SessionInfo) => void
+export type QueryOnlineSessionInfoCallback = (rescode: NIMResCode, result: SessionInfo) => void
 export type QueryOnlineSessionListCallback = (result: QuerySessionListResult) => void
-export type UpdateOnlineSessionInfoCallback = (rescode: number) => void
-export type DeleteOnlineSessionInfoCallback = (rescode: number) => void
+export type UpdateOnlineSessionInfoCallback = (rescode: NIMResCode) => void
+export type DeleteOnlineSessionInfoCallback = (rescode: NIMResCode) => void
 export type OnlineSessionChangedCallback = (result: SessionInfo) => void
 
 export interface NIMOnlineSessionAPI {

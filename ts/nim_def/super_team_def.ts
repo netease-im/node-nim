@@ -118,7 +118,7 @@ export type QuerySuperTeamMyAllMemberInfosCallback = (count: number, result: Arr
 export type QuerySuperTeamMembersCallback = (tid: string, count: number, result: Array<SuperTeamMemberProperty>) => void
 export type QuerySuperTeamMemberCallback = (result: SuperTeamMemberProperty) => void
 export type QuerySuperTeamInfoCallback = (tid: string, result: SuperTeamInfo) => void
-export type QuerySuperTeamMembersOnlineCallback = (rescode: number, count: number, result: Array<SuperTeamMemberProperty>) => void
+export type QuerySuperTeamMembersOnlineCallback = (rescode: NIMResCode, count: number, result: Array<SuperTeamMemberProperty>) => void
 
 export interface NIMSuperTeamAPI {
     InitEventHandlers(): void

@@ -1,3 +1,5 @@
+import { NIMResCode } from './client_def'
+
 /** @enum NIMEventBroadcastType 事件广播类型 */
 export enum NIMEventBroadcastType {
     kNIMEventBroadcastTypeOnline = 1 /** < 仅在线 */,
@@ -75,13 +77,13 @@ export interface EventSubscribeData {
     subscribe_time_: number /**< 订阅时间戳 */
 }
 
-export type PushEventCallback = (rescode: number, result: EventData) => void
-export type BatchPushEventCallback = (rescode: number, result: Array<EventData>) => void
-export type PublishEventCallback = (rescode: number, eventType: number, result: EventData) => void
-export type SubscribeEventCallback = (rescode: number, eventType: number, failedList: Array<string>) => void
-export type UnSubscribeEventCallback = (rescode: number, eventType: number, failedList: Array<string>) => void
-export type BatchUnSubscribeEventCallback = (rescode: number, eventType: number) => void
-export type QuerySubscribeEventCallback = (rescode: number, eventType: number, result: Array<EventSubscribeData>) => void
+export type PushEventCallback = (rescode: NIMResCode, result: EventData) => void
+export type BatchPushEventCallback = (rescode: NIMResCode, result: Array<EventData>) => void
+export type PublishEventCallback = (rescode: NIMResCode, eventType: number, result: EventData) => void
+export type SubscribeEventCallback = (rescode: NIMResCode, eventType: number, failedList: Array<string>) => void
+export type UnSubscribeEventCallback = (rescode: NIMResCode, eventType: number, failedList: Array<string>) => void
+export type BatchUnSubscribeEventCallback = (rescode: NIMResCode, eventType: number) => void
+export type QuerySubscribeEventCallback = (rescode: NIMResCode, eventType: number, result: Array<EventSubscribeData>) => void
 
 export interface NIMSubscribeEventAPI {
     InitEventHandlers(): void

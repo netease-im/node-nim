@@ -10,6 +10,7 @@ import {
     SendMessageArc,
     TeamNotificationFilterCallback
 } from '../nim_def/talk_def'
+import { NIMResCode } from 'ts/nim_def/client_def'
 
 export declare interface NIMTalkEvents {
     /** 发送消息回调 */
@@ -72,8 +73,29 @@ export class NIMTalk extends EventEmitter<NIMTalkEvents> {
      * 10508:本地错误码,超过配置有效期或者所需参数不存在
      * </pre>
      */
-    recallMsg(msg: IMMessage, notify_msg: string, cb: RecallMsgsCallback, apnstext: string, pushpayloadconst: string, jsonExtension: string): void {
-        return this.talk.RecallMsg(msg, notify_msg, cb, apnstext, pushpayloadconst, jsonExtension)
+    recallMsg(
+        msg: IMMessage,
+        notify_msg: string,
+        cb: RecallMsgsCallback,
+        apnstext: string,
+        pushpayloadconst: string,
+        jsonExtension: string
+    ): Promise<[NIMResCode, Array<RecallMsgNotify>]> {
+        return new Promise((resolve) => {
+            this.talk.RecallMsg(
+                msg,
+                notify_msg,
+                (rescode, result) => {
+                    if (cb) {
+                        cb(rescode, result)
+                    }
+                    resolve([rescode, result])
+                },
+                apnstext,
+                pushpayloadconst,
+                jsonExtension
+            )
+        })
     }
 
     /** 从消息体中获取附件（图片、语音、视频等）的本地路径

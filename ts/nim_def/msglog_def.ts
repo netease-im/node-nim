@@ -333,22 +333,28 @@ export interface QueryMsgByOptionsAsyncParam {
     search_content_: string /**< 检索文本（目前只支持kNIMMessageTypeText和kNIMMessageTypeFile这两种类型消息的文本关键字检索，即支持文字消息和文件名的检索 */
 }
 
-export type QueryMsgCallback = (rescode: number, id: string, to_type: NIMSessionType, result: QueryMsglogResult) => void
-export type QuerySingleMsgCallback = (rescode: number, id: string, msg: IMMessage) => void
-export type ModifyMultipleMsglogCallback = (rescode: number, uid: string, to_type: NIMSessionType) => void
-export type ModifySingleMsglogCallback = (rescode: number, msg_id: string) => void
-export type DBFunctionCallback = (rescode: number) => void
+export type QueryMsgCallback = (rescode: NIMResCode, id: string, to_type: NIMSessionType, result: QueryMsglogResult) => void
+export type QuerySingleMsgCallback = (rescode: NIMResCode, id: string, msg: IMMessage) => void
+export type ModifyMultipleMsglogCallback = (rescode: NIMResCode, uid: string, to_type: NIMSessionType) => void
+export type ModifySingleMsglogCallback = (rescode: NIMResCode, msg_id: string) => void
+export type DBFunctionCallback = (rescode: NIMResCode) => void
 export type DeleteMsglogSelfNotifyCallback = (result: Array<DeleteMsglogSelfNotifyItemInfo>) => void
 export type DeleteHistoryMessagesNotifyCallback = (result: Array<DeleteMsglogSelfNotifyParam>) => void
-export type DeleteMessageSelfAsyncCallback = (rescode: number) => void
+export type DeleteMessageSelfAsyncCallback = (rescode: NIMResCode) => void
 export type MessageStatusChangedCallback = (result: MessageStatusChangedResult) => void
 export type ImportDbPrgCallback = (importedCount: number, totalCount: number) => void
-export type DeleteHistoryOnLineAsyncCallback = (rescode: number, accid: string) => void
-export type DeleteHistoryOnLineAsyncExCallback = (rescode: number, accid: string, to_type: number, timestamp: number, jsonExtension: string) => void
-export type QueryMessageIsThreadRootCallback = (rescode: number, client_id: string, is_root: boolean) => void
-export type QueryMessageOnlineCallback = (rescode: number, client_id: string, msg: IMMessage) => void
-export type QueryThreadHistoryMsgCallback = (rescode: number, root_msg: IMMessage, total: number, last_msg_time: number, msg_array: Array<IMMessage>) => void
-export type FullTextSearchOnlineAsyncCallback = (rescode: number, result: QueryMsglogResult) => void
+export type DeleteHistoryOnLineAsyncCallback = (rescode: NIMResCode, accid: string) => void
+export type DeleteHistoryOnLineAsyncExCallback = (rescode: NIMResCode, accid: string, to_type: number, timestamp: number, jsonExtension: string) => void
+export type QueryMessageIsThreadRootCallback = (rescode: NIMResCode, client_id: string, is_root: boolean) => void
+export type QueryMessageOnlineCallback = (rescode: NIMResCode, client_id: string, msg: IMMessage) => void
+export type QueryThreadHistoryMsgCallback = (
+    rescode: NIMResCode,
+    root_msg: IMMessage,
+    total: number,
+    last_msg_time: number,
+    msg_array: Array<IMMessage>
+) => void
+export type FullTextSearchOnlineAsyncCallback = (rescode: NIMResCode, result: QueryMsglogResult) => void
 
 export interface NIMMsgLogAPI {
     InitEventHandlers(): void

@@ -1,3 +1,4 @@
+import { NIMResCode } from './client_def'
 import { IMMessage } from './msglog_def'
 import { NIMSessionType } from './session_def'
 
@@ -93,19 +94,19 @@ export interface QueryAllPinMessageResponse {
     pin_list: Array<PinMessageInfo>
 }
 
-export type AddCollectCallback = (code: number, info: CollectInfo) => void
-export type RemoveCollectsCallback = (code: number, count: number) => void
-export type UpdateCollectCallback = (code: number, info: CollectInfo) => void
-export type QueryCollectsCallback = (code: number, count: number, info: CollectInfoList) => void
-export type AddQuickCommentCallback = (code: number, info: QuickCommentInfo) => void
-export type RemoveQuickCommentCallback = (code: number, id: string) => void
-export type QueryQuickCommentCallback = (code: number, res: QueryQuickCommentsResponse) => void
+export type AddCollectCallback = (rescode: NIMResCode, info: CollectInfo) => void
+export type RemoveCollectsCallback = (rescode: NIMResCode, count: number) => void
+export type UpdateCollectCallback = (rescode: NIMResCode, info: CollectInfo) => void
+export type QueryCollectsCallback = (rescode: NIMResCode, count: number, info: CollectInfoList) => void
+export type AddQuickCommentCallback = (rescode: NIMResCode, info: QuickCommentInfo) => void
+export type RemoveQuickCommentCallback = (rescode: NIMResCode, id: string) => void
+export type QueryQuickCommentCallback = (rescode: NIMResCode, res: QueryQuickCommentsResponse) => void
 export type AddQuickCommentNotifyCallback = (session: string, to_type: NIMSessionType, msg_client_id: string, qc_info: QuickCommentInfo) => void
 export type RemoveQuickCommentNotifyCallback = (session: string, to_type: NIMSessionType, msg_client_id: string, quick_comment_id: string, ext: string) => void
-export type PinMessageCallback = (code: number, session: string, to_type: number, info: PinMessageInfo) => void
-export type UnPinMessageCallback = (code: number, session: string, to_type: number, id: string) => void
-export type UpdatePinMessageCallback = (code: number, session: string, to_type: number, info: PinMessageInfo) => void
-export type QueryPinMessageCallback = (code: number, session: string, to_type: number, res: QueryAllPinMessageResponse) => void
+export type PinMessageCallback = (rescode: NIMResCode, session: string, to_type: number, info: PinMessageInfo) => void
+export type UnPinMessageCallback = (rescode: NIMResCode, session: string, to_type: number, id: string) => void
+export type UpdatePinMessageCallback = (rescode: NIMResCode, session: string, to_type: number, info: PinMessageInfo) => void
+export type QueryPinMessageCallback = (rescode: NIMResCode, session: string, to_type: number, res: QueryAllPinMessageResponse) => void
 export type AddPinMessageNotifyCallback = (session: string, to_type: number, info: PinMessageInfo) => void
 export type UnPinMessageNotifyCallback = (session: string, to_type: number, id: string) => void
 export type UpdatePinMessageNotifyCallback = (session: string, to_type: number, info: PinMessageInfo) => void

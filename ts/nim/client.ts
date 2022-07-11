@@ -10,7 +10,9 @@ import {
     MultiSpotLoginRes,
     KickOtherRes,
     KickoutRes,
-    LoginRes
+    LoginRes,
+    NIMResCode,
+    NIMLoginStep
 } from '../nim_def/client_def'
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
@@ -72,8 +74,23 @@ export class NIMClient extends EventEmitter<NIMClientEvents> {
      * 422:账号被禁用
      * </pre>
      */
-    login(appKey: string, account: string, password: string, cb: LoginCallback, jsonExtension: string): boolean {
-        return this.client.Login(appKey, account, password, cb, jsonExtension)
+    login(appKey: string, account: string, password: string, cb: LoginCallback, jsonExtension: string): Promise<[LoginRes]> {
+        return new Promise((resolve) => {
+            this.client.Login(
+                appKey,
+                account,
+                password,
+                (res) => {
+                    if (cb) {
+                        cb(res)
+                    }
+                    if (res.res_code_ != NIMResCode.kNIMResSuccess || res.login_step_ == NIMLoginStep.kNIMLoginStepLogin) {
+                        resolve([res])
+                    }
+                },
+                jsonExtension
+            )
+        })
     }
 
     /** NIM客户端注销/退出
@@ -87,8 +104,19 @@ export class NIMClient extends EventEmitter<NIMClientEvents> {
      * 500:未知错误
      * </pre>
      */
-    logout(logoutType: NIMLogoutType, cb: LogoutCallback, jsonExtension: string): void {
-        return this.client.Logout(logoutType, cb, jsonExtension)
+    logout(logoutType: NIMLogoutType, cb: LogoutCallback, jsonExtension: string): Promise<[NIMResCode]> {
+        return new Promise((resolve) => {
+            this.client.Logout(
+                logoutType,
+                (res) => {
+                    if (cb) {
+                        cb(res)
+                    }
+                    resolve([res])
+                },
+                jsonExtension
+            )
+        })
     }
 
     /** NIM SDK清理
@@ -140,8 +168,19 @@ export class NIMClient extends EventEmitter<NIMClientEvents> {
      * 200:成功
      * </pre>
      */
-    setMultiportPushConfigAsync(switch_on: boolean, cb: MultiportPushConfigCallback, jsonExtension: string): void {
-        return this.client.SetMultiportPushConfigAsync(switch_on, cb, jsonExtension)
+    setMultiportPushConfigAsync(switch_on: boolean, cb: MultiportPushConfigCallback, jsonExtension: string): Promise<[NIMResCode, boolean]> {
+        return new Promise((resolve) => {
+            this.client.SetMultiportPushConfigAsync(
+                switch_on,
+                (res, open) => {
+                    if (cb) {
+                        cb(res, open)
+                    }
+                    resolve([res, open])
+                },
+                jsonExtension
+            )
+        })
     }
 
     /** 获得多端推送设置
@@ -149,8 +188,15 @@ export class NIMClient extends EventEmitter<NIMClientEvents> {
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @return void
      */
-    getMultiportPushConfigAsync(cb: MultiportPushConfigCallback, jsonExtension: string): void {
-        return this.client.GetMultiportPushConfigAsync(cb, jsonExtension)
+    getMultiportPushConfigAsync(cb: MultiportPushConfigCallback, jsonExtension: string): Promise<[NIMResCode, boolean]> {
+        return new Promise((resolve) => {
+            this.client.GetMultiportPushConfigAsync((res, open) => {
+                if (cb) {
+                    cb(res, open)
+                }
+                resolve([res, open])
+            }, jsonExtension)
+        })
     }
 
     /** 获取SDK版本号
@@ -171,8 +217,15 @@ export class NIMClient extends EventEmitter<NIMClientEvents> {
      * 时的方案以减少服务端的压力，并会在回调中指明返回的时间是由本地计算的。 如果返回 code != 200,同样会返回一个本地计算结果
      * </pre>
      */
-    getServerCurrentTime(cb: GetCurrentServerTimeCallback, calcLocal: boolean): void {
-        return this.client.GetServerCurrentTime(cb, calcLocal)
+    getServerCurrentTime(cb: GetCurrentServerTimeCallback, calcLocal: boolean): Promise<[number, boolean, number]> {
+        return new Promise((resolve) => {
+            this.client.GetServerCurrentTime((rescode, calcLocal, time) => {
+                if (cb) {
+                    cb(rescode, calcLocal, time)
+                }
+                resolve([rescode, calcLocal, time])
+            }, calcLocal)
+        })
     }
 
     /** 获取当前登录的用户账号(accid)

@@ -37,7 +37,7 @@ export interface RecallMsgNotify {
 export type SendMsgAckCallback = (result: SendMessageArc) => void
 export type ReceiveMsgCallback = (result: IMMessage) => void
 export type ReceiveMsgsCallback = (result: Array<IMMessage>) => void
-export type RecallMsgsCallback = (rescode: number, result: Array<RecallMsgNotify>) => void
+export type RecallMsgsCallback = (rescode: NIMResCode, result: Array<RecallMsgNotify>) => void
 export type ReceiveBroadcastMsgCallback = (result: BroadcastMessage) => void
 export type ReceiveBroadcastMsgsCallback = (result: Array<BroadcastMessage>) => void
 export type TeamNotificationFilterCallback = (result: IMMessage) => boolean

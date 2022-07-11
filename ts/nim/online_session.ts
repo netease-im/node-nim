@@ -7,9 +7,11 @@ import {
     NIMOnlineSessionAPI,
     QueryOnlineSessionInfoCallback,
     QueryOnlineSessionListCallback,
+    QuerySessionListResult,
     SessionInfo,
     UpdateOnlineSessionInfoCallback
 } from '../nim_def/online_session_def'
+import { NIMResCode } from 'ts/nim_def/client_def'
 
 export declare interface NIMOnlineSessionEvents {
     /** 会话变更 */
@@ -36,8 +38,21 @@ export class NIMOnlineSession extends EventEmitter<NIMOnlineSessionEvents> {
      * @param cb 结果回调  可查看NIMQueryOnlineSessionListCallback定义
      * @return void 无返回值
      */
-    querySessionList(minTime: number, maxTime: number, needLastMsg: boolean, limit: number, cb: QueryOnlineSessionListCallback): void {
-        return this.session.QuerySessionList(minTime, maxTime, needLastMsg, limit, cb)
+    querySessionList(
+        minTime: number,
+        maxTime: number,
+        needLastMsg: boolean,
+        limit: number,
+        cb: QueryOnlineSessionListCallback
+    ): Promise<[QuerySessionListResult]> {
+        return new Promise((resolve) => {
+            this.session.QuerySessionList(minTime, maxTime, needLastMsg, limit, (result) => {
+                if (cb) {
+                    cb(result)
+                }
+                resolve([result])
+            })
+        })
     }
 
     /** 会话服务 查询会话
@@ -46,8 +61,15 @@ export class NIMOnlineSession extends EventEmitter<NIMOnlineSessionEvents> {
      * @param cb 结果回调  可查看NIMQuerySessionInfoCallback定义
      * @return void 无返回值
      */
-    querySession(to_type: NIMSessionType, session_id: string, cb: QueryOnlineSessionInfoCallback): void {
-        return this.session.QuerySession(to_type, session_id, cb)
+    querySession(to_type: NIMSessionType, session_id: string, cb: QueryOnlineSessionInfoCallback): Promise<[NIMResCode, SessionInfo]> {
+        return new Promise((resolve) => {
+            this.session.QuerySession(to_type, session_id, (rescode, info) => {
+                if (cb) {
+                    cb(rescode, info)
+                }
+                resolve([rescode, info])
+            })
+        })
     }
 
     /** 会话服务 更新会话
@@ -57,8 +79,15 @@ export class NIMOnlineSession extends EventEmitter<NIMOnlineSessionEvents> {
      * @param cb 结果回调  可查看NIMUpdateSessionInfoCallback定义
      * @return void 无返回值
      */
-    updateSession(to_type: NIMSessionType, session_id: string, ext: string, cb: UpdateOnlineSessionInfoCallback): void {
-        return this.session.UpdateSession(to_type, session_id, ext, cb)
+    updateSession(to_type: NIMSessionType, session_id: string, ext: string, cb: UpdateOnlineSessionInfoCallback): Promise<[NIMResCode]> {
+        return new Promise((resolve) => {
+            this.session.UpdateSession(to_type, session_id, ext, (rescode) => {
+                if (cb) {
+                    cb(rescode)
+                }
+                resolve([rescode])
+            })
+        })
     }
 
     /** 会话服务 删除会话
@@ -66,7 +95,14 @@ export class NIMOnlineSession extends EventEmitter<NIMOnlineSessionEvents> {
      * @param cb 结果回调  可查看DeleteSessionInfoCallback定义
      * @return void 无返回值
      */
-    deleteSession(param: DeleteSessionParam, cb: DeleteOnlineSessionInfoCallback): void {
-        return this.session.DeleteSession(param, cb)
+    deleteSession(param: DeleteSessionParam, cb: DeleteOnlineSessionInfoCallback): Promise<[NIMResCode]> {
+        return new Promise((resolve) => {
+            this.session.DeleteSession(param, (rescode) => {
+                if (cb) {
+                    cb(rescode)
+                }
+                resolve([rescode])
+            })
+        })
     }
 }

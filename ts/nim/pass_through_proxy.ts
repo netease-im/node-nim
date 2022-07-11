@@ -1,6 +1,7 @@
 import { NIMPassThroughProxyAPI, NIMSendHttpRequestMethods, ReceivedHttpMsgCallback, SendHttpRequestCallback } from '../nim_def/pass_through_proxy_def'
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
+import { NIMResCode } from 'ts/nim_def/client_def'
 
 export declare interface NIMPassThroughProxyEvents {
     /** 接受到 HTTP 透传消息 */
@@ -37,7 +38,14 @@ export class NIMPassThroughProxy extends EventEmitter<NIMPassThroughProxyEvents>
         body: string,
         jsonExtension: string,
         cb: SendHttpRequestCallback
-    ): void {
-        return this.proxy.SendHttpRequest(host, path, method, headers, body, jsonExtension, cb)
+    ): Promise<[NIMResCode, string, string, string]> {
+        return new Promise((resolve) => {
+            this.proxy.SendHttpRequest(host, path, method, headers, body, jsonExtension, (rescode, header, body, jsonExtension) => {
+                if (cb) {
+                    cb(rescode, header, body, jsonExtension)
+                }
+                resolve([rescode, header, body, jsonExtension])
+            })
+        })
     }
 }

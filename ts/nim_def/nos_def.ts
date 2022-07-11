@@ -1,3 +1,4 @@
+import { NIMResCode } from './client_def'
 import { NIMDocTranscodingFileType, NIMDocTranscodingImageType } from './doc_trans_def'
 import { IMMessage } from './msglog_def'
 export enum NIMNosInitConfigResultType {
@@ -57,13 +58,13 @@ export interface ProgressData {
 }
 
 export type InitNosResultCallback = (res: InitNosResult) => void
-export type DownloadMediaCallback = (rescode: number, filePath: string, callId: string, resId: string) => void
-export type UploadMediaExCallback = (rescode: number, result: UploadMediaResult) => void
+export type DownloadMediaCallback = (rescode: NIMResCode, filePath: string, callId: string, resId: string) => void
+export type UploadMediaExCallback = (rescode: NIMResCode, result: UploadMediaResult) => void
 export type ProgressCallback = (completedSize: number, fileSize: number) => void
 export type TransferInfoCallback = (actualSize: number, speed: number) => void
 export type ProgressExCallback = (completeSsize: number, fileSize: number, result: ProgressData) => void
-export type DownloadMediaExCallback = (rescode: number, result: DownloadMediaResult) => void
-export type SafeURLToOriginURLCallback = (rescode: number, originalUrl: string) => void
+export type DownloadMediaExCallback = (rescode: NIMResCode, result: DownloadMediaResult) => void
+export type SafeURLToOriginURLCallback = (rescode: NIMResCode, originalUrl: string) => void
 export type SpeedCallback = (speed: number) => void
 
 export interface NIMNOSAPI {

@@ -1,3 +1,5 @@
+import { NIMResCode } from './client_def'
+
 /** @enum NIMSDKException 异常 */
 export enum NIMSDKException {
     kNIMSDKExceptionSpaceEmpty = 1 /** < 当前数据目录所在盘符空间紧张或用完, log: {"free_space" : %lf, "message":""}, free_space单位M*/
@@ -50,12 +52,12 @@ export interface SDKDBErrorInfo {
 }
 
 export type ExceptionCallback = (exception: NIMSDKException, log: string) => void
-export type SDKFeedbackCallback = (rescode: number) => void
+export type SDKFeedbackCallback = (rescode: NIMResCode) => void
 export type DetectProxyCallback = (connect: boolean, step: NIMProxyDetectStep, jsonExtension: string) => void
-export type GetCachedFileInfoCallback = (rescode: number, result: CachedFileInfo) => void
-export type DeleteCachedFileCallback = (rescode: number) => void
+export type GetCachedFileInfoCallback = (rescode: NIMResCode, result: CachedFileInfo) => void
+export type DeleteCachedFileCallback = (rescode: NIMResCode) => void
 export type SDKDBErrorCallback = (result: SDKDBErrorInfo) => void
-export type UploadSDKLogCallback = (rescode: number) => void
+export type UploadSDKLogCallback = (rescode: NIMResCode) => void
 
 export interface NIMGlobalAPI {
     InitEventHandlers(): void

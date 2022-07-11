@@ -136,8 +136,8 @@ export type QueryTeamMyAllMemberInfosCallback = (count: number, result: Array<Te
 export type QueryTeamMembersCallback = (tid: string, count: number, result: Array<TeamMemberProperty>) => void
 export type QueryTeamMemberCallback = (result: TeamMemberProperty) => void
 export type QueryTeamInfoCallback = (tid: string, result: TeamInfo) => void
-export type QueryTeamMembersOnlineCallback = (rescode: number, count: number, result: Array<TeamMemberProperty>) => void
-export type QueryTeamMembersInvitorCallback = (rescode: number, count: number, result: Map<string, string>) => void
+export type QueryTeamMembersOnlineCallback = (rescode: NIMResCode, count: number, result: Array<TeamMemberProperty>) => void
+export type QueryTeamMembersInvitorCallback = (rescode: NIMResCode, count: number, result: Map<string, string>) => void
 export type QueryTeamsInfoCallback = (count: number, result: Array<TeamInfo>) => void
 export type TeamMsgAckReadCallback = (tid: string, success_ids: Array<string>, failure_ids: Array<string>, ignored_ids: Array<string>) => void
 export type UpdateTInfoLocalCallback = (success_ids: Array<string>, failure_ids: Array<string>) => void

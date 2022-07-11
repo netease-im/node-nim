@@ -294,8 +294,8 @@ export type KickoutCallback = (result: KickoutRes) => void
 export type DisconnectCallback = () => void
 export type MultiSpotLoginCallback = (result: MultiSpotLoginRes) => void
 export type KickOtherCallback = (result: KickOtherRes) => void
-export type MultiportPushConfigCallback = (rescode: number, open: boolean) => void
-export type GetCurrentServerTimeCallback = (rescode: number, calcLocal: boolean, time: number) => void
+export type MultiportPushConfigCallback = (rescode: NIMResCode, open: boolean) => void
+export type GetCurrentServerTimeCallback = (rescode: NIMResCode, calcLocal: boolean, time: number) => void
 
 export interface NIMClientAPI {
     Init(appKey: string, appDataDir: string, appInstallDir: string, config: SDKConfig): boolean

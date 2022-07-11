@@ -3,7 +3,9 @@ import { EventEmitter } from 'eventemitter3'
 import {
     DownloadMediaCallback,
     DownloadMediaExCallback,
+    DownloadMediaResult,
     InitNosConfigParam,
+    InitNosResult,
     InitNosResultCallback,
     NIMNOSAPI,
     NOSParams,
@@ -16,6 +18,7 @@ import {
     UploadMediaResult
 } from '../nim_def/nos_def'
 import { IMMessage } from '../nim_def/msglog_def'
+import { NIMResCode } from 'ts/nim_def/client_def'
 
 export declare interface NIMNOSEvents {
     /** 下载回调 */
@@ -41,8 +44,15 @@ export class NIMNOS extends EventEmitter<NIMNOSEvents> {
      * @param cb 结果回调函数
      * @return void 无返回值
      */
-    initConfig(param: InitNosConfigParam, cb: InitNosResultCallback): void {
-        return this.nos.InitConfig(param, cb)
+    initConfig(param: InitNosConfigParam, cb: InitNosResultCallback): Promise<[InitNosResult]> {
+        return new Promise((resolve) => {
+            this.nos.InitConfig(param, (result) => {
+                if (cb) {
+                    cb(result)
+                }
+                resolve([result])
+            })
+        })
     }
 
     /** 获取资源
@@ -68,8 +78,26 @@ export class NIMNOS extends EventEmitter<NIMNOSEvents> {
         prg_cb: ProgressCallback,
         speed_cb: SpeedCallback,
         transfer_cb: TransferInfoCallback
-    ): boolean {
-        return this.nos.FetchMedia(msg, jsonExtension, res_cb, prg_cb, speed_cb, transfer_cb)
+    ): Promise<[NIMResCode, string, string, string] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.nos.FetchMedia(
+                    msg,
+                    jsonExtension,
+                    (code, file_url, file_size, file_md5) => {
+                        if (res_cb) {
+                            res_cb(code, file_url, file_size, file_md5)
+                        }
+                        resolve([code, file_url, file_size, file_md5])
+                    },
+                    prg_cb,
+                    speed_cb,
+                    transfer_cb
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 停止获取资源（目前仅对文件消息类型有效）
@@ -107,8 +135,27 @@ export class NIMNOS extends EventEmitter<NIMNOSEvents> {
         prg_cb: ProgressExCallback,
         speed_cb: SpeedCallback,
         transfer_cb: TransferInfoCallback
-    ): boolean {
-        return this.nos.UploadResource(local_file, tag, param, res_cb, prg_cb, speed_cb, transfer_cb)
+    ): Promise<[NIMResCode, UploadMediaResult] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.nos.UploadResource(
+                    local_file,
+                    tag,
+                    param,
+                    (code, result) => {
+                        if (res_cb) {
+                            res_cb(code, result)
+                        }
+                        resolve([code, result])
+                    },
+                    prg_cb,
+                    speed_cb,
+                    transfer_cb
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 停止上传资源(只能用于调用了UploadResource接口的上传任务)
@@ -147,8 +194,26 @@ export class NIMNOS extends EventEmitter<NIMNOSEvents> {
         prg_cb: ProgressExCallback,
         speed_cb: SpeedCallback,
         transfer_cb: TransferInfoCallback
-    ): boolean {
-        return this.nos.DownloadResource(nosUrl, param, res_cb, prg_cb, speed_cb, transfer_cb)
+    ): Promise<[NIMResCode, DownloadMediaResult] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.nos.DownloadResource(
+                    nosUrl,
+                    param,
+                    (code, result) => {
+                        if (res_cb) {
+                            res_cb(code, result)
+                        }
+                        resolve([code, result])
+                    },
+                    prg_cb,
+                    speed_cb,
+                    transfer_cb
+                )
+            ) {
+                resolve(null)
+            }
+        })
     }
 
     /** 停止下载资源(只能用于调用了DownloadResourceEx接口的下载任务)
@@ -175,8 +240,19 @@ export class NIMNOS extends EventEmitter<NIMNOSEvents> {
      * 414 不存在该短链或 safe_url 不是一个有效的短链
      * </pre>
      */
-    safeURLToOriginURL(safe_url: string, cb: SafeURLToOriginURLCallback, jsonExtension: string): void {
-        return this.nos.SafeURLToOriginURL(safe_url, cb, jsonExtension)
+    safeURLToOriginURL(safe_url: string, cb: SafeURLToOriginURLCallback, jsonExtension: string): Promise<[NIMResCode, string]> {
+        return new Promise((resolve) => {
+            this.nos.SafeURLToOriginURL(
+                safe_url,
+                (code, url) => {
+                    if (cb) {
+                        cb(code, url)
+                    }
+                    resolve([code, url])
+                },
+                jsonExtension
+            )
+        })
     }
 
     /** 打开或关闭文件快传开关
