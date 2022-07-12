@@ -58,43 +58,5 @@ bool xpack_xtype_encode(OBJ& obj, const char* key, const std::function<TR(Args..
     return obj.encode(key, str, ext);
 }
 
-// std::map<enum, T>
-template <typename TK, typename TV>
-struct is_xpack_xtype<std::map<TK, TV>> {
-    static bool const value = true;
-};
-
-template <class OBJ, typename TK, typename TV>
-bool xpack_xtype_decode(OBJ& obj, const char* key, std::map<TK, TV>& val, const Extend* ext) {
-    if constexpr (std::is_enum_v<TK>) {
-        std::map<int64_t, TV> tmp;
-        if (!obj.decode(key, tmp, ext)) {
-            return false;
-        }
-        val.clear();
-        for (auto&& item : tmp) {
-            val[static_cast<TK>(item.first)] = item.second;
-        }
-        return true;
-    } else {
-        static_assert(false, "std::map with this key type is not supported to decode");
-        return false;
-    }
-}
-
-template <class OBJ, typename TK, typename TV>
-bool xpack_xtype_encode(OBJ& obj, const char* key, const std::map<TK, TV>& val, const Extend* ext) {
-    if constexpr (std::is_enum_v<TK>) {
-        std::map<int64_t, TV> tmp;
-        for (auto&& item : val) {
-            tmp[static_cast<int64_t>(item.first)] = item.second;
-        }
-        return obj.encode(key, tmp, ext);
-    } else {
-        static_assert(false, "std::map with this key type is not supported to encode");
-        return false;
-    }
-}
-
 }  // namespace xpack
 #endif

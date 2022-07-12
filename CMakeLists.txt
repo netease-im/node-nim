@@ -83,7 +83,7 @@ include(FetchContent)
 FetchContent_Declare(
     xpack
     GIT_REPOSITORY https://github.com/xyz347/xpack.git
-    GIT_TAG master
+    GIT_TAG map-enum-key
     SOURCE_DIR ${CMAKE_BINARY_DIR}/src/xpack
 )
 FetchContent_MakeAvailable(xpack)
