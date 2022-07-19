@@ -1,6 +1,6 @@
 #include "cpp_invoker.h"
 #include "nim_wrapper_util/nim_json_util.h"
-#include "xpack/json.h"
+#include "third_party/xpack/json.h"
 
 #ifndef XPACK_SPECIALIZATION_H
 #define XPACK_SPECIALIZATION_H

@@ -15,7 +15,7 @@
 #include <mutex>
 #include <queue>
 #include <string>
-#include "xpack/json.h"
+#include "third_party/xpack/json.h"
 
 class ParamRegInfoCollector {
 private:

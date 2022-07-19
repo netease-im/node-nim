@@ -78,16 +78,6 @@ string(REPLACE "\n" "" NODE_ADDON_API_DIR ${NODE_ADDON_API_DIR})
 string(REPLACE "\"" "" NODE_ADDON_API_DIR ${NODE_ADDON_API_DIR})
 message(STATUS "NODE_ADDON_API_DIR ${NODE_ADDON_API_DIR}")
 
-# get xpack
-include(FetchContent)
-FetchContent_Declare(
-    xpack
-    GIT_REPOSITORY https://github.com/xyz347/xpack.git
-    GIT_TAG map-enum-key
-    SOURCE_DIR ${CMAKE_BINARY_DIR}/src/xpack
-)
-FetchContent_MakeAvailable(xpack)
-
 # configure project
 add_definitions(-DNIM_SDK_DLL_IMPORT)
 file(GLOB_RECURSE NIM_NODE_SOURCE ${CMAKE_CURRENT_LIST_DIR}/src/*.cpp
@@ -97,7 +87,6 @@ add_library(${TARGET_NAME} SHARED ${NIM_NODE_SOURCE} ${CMAKE_JS_SRC})
 target_include_directories(${TARGET_NAME} PRIVATE 
                            ${NODE_ADDON_API_DIR}
                            ${CMAKE_JS_INC}
-                           ${CMAKE_BINARY_DIR}/src
                            ${CMAKE_CURRENT_LIST_DIR}/src)
 if(TARGET nim_cpp_wrapper)
     # build as subproject of nim

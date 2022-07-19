@@ -1,0 +1,420 @@
+# xpack
+
+-   用于在 C++结构体和 json/xml 之间互相转换, bson 在[xbson](https://github.com/xyz347/xbson)中支持。
+-   只有头文件, 无需编译库文件，所以也没有 Makefile。
+-   具体可以参考 example 的例子
+
+---
+
+-   [基本用法](#基本用法)
+-   [容器支持](#容器支持)
+-   [FLAG](#flag)
+-   [别名](#别名)
+-   [位域](#位域)
+-   [继承](#继承)
+-   [枚举](#枚举)
+-   [自定义编解码](#自定义编解码)
+-   [支持新类型](#支持新类型)
+-   [不定类型](#不定类型)
+-   [数组](#数组)
+-   [第三方类和结构体](#第三方类和结构体)
+-   [格式化缩进](#格式化缩进)
+-   [XML 数组](#xml数组)
+-   [Qt 支持](#qt支持)
+-   [重要说明](#重要说明)
+
+## 基本用法
+
+-   结构体后面用 XPACK 宏包含各个变量，XPACK 内还需要一个字母，不同字母的意义请参考[FLAG](#flag)
+-   用 xpack::json::encode 把结构体转 json
+-   用 xpack::json::decode 把 json 转结构体
+
+```C++
+#include <iostream>
+#include "third_party/xpack/json.h" // Json包含这个头文件，xml则包含third_party/xpack/xml.h
+
+using namespace std;
+
+struct User {
+    int id;
+    string  name;
+    XPACK(O(id, name)); // 添加宏定义XPACK在结构体定义结尾
+};
+
+int main(int argc, char *argv[]) {
+    User u;
+    string data = "{\"id\":12345, \"name\":\"xpack\"}";
+
+    xpack::json::decode(data, u);          // json转结构体
+    cout<<u.id<<';'<<u.name<<endl;
+
+    string json = xpack::json::encode(u);  // 结构体转json
+    cout<<json<<endl;
+
+    return 0;
+}
+```
+
+## 容器支持
+
+目前支持下列容器(std)
+
+-   vector
+-   set
+-   list
+-   map<string, T>
+-   map<integer, T> // 仅 JSON，XML 不支持
+-   unordered_map<string, T> (需要 C++11 支持)
+-   shared_ptr (需要 C++11 支持)
+
+## FLAG
+
+宏 XPACK 里面，需要用字母将变量包含起来，比如 XPACK(O(a,b))，XPACK 可以包含多个字母，每个字母可以包含多个变量。目前支持的字母有：
+
+-   X。格式是 X(F(flag1, flag2...), member1, member2,...) F 里面包含各种 FLAG，目前支持的有：
+    -   0 没有任何 FLAG
+    -   OE omitempty，encode 的时候，如果变量是 0 或者空字符串或者 false，则不生成对应的 key 信息
+    -   EN empty as null, 用于 json 的 encode，OE 是直接不生成 empty 的字段，EN 则是生成一个 null
+    -   M mandatory，decode 的时候，如果这个字段不存在，则抛出异常，用于一些 id 字段。
+    -   ATTR attribute，xml encode 的时候，把值放到 attribute 里面。
+-   C。格式是 C(customcodec, F(flag1,flags...), member1, member2,...)用于自定义编解码函数，详情请参考[自定义编解码](#自定义编解码)
+-   O。等价于 X(F(0), ...) 没有任何 FLAG。
+-   M。等价于 X(F(M)，...) 表示这些字段是必须存在的。
+-   A。[别名](#别名)，A(member1, alias1, member2, alias2...)，用于变量和 key 名不一样的情况
+-   AF。带 FLAG 的[别名](#别名)，AF(F(flag1, flag2,...), member1, alias1, member2, alias2...)
+-   B。[位域](#位域)，B(F(flag1, flag2, ...), member1, member2, ...) **位域不支持别名**
+-   I。[继承](#继承)，I(baseclass1, baseclass2....)，里面放父类
+-   E。[枚举](#枚举):
+    -   如果编译器支持 C++11，不需要用 E，枚举可以放 X/O/M/A 里面。
+    -   否则枚举只能放 E 里面，不支持别名
+
+## 别名
+
+-   用于变量名和 key 名不一致的场景
+-   格式是 A(变量，别名....)或者 AF(F(flags), 变量，别名....)，别名的格式是"x t:n"的格式
+    -   x 表示全局别名，t 表示类型(目前支持 json、xml、bson)，n 表示类型下的别名
+    -   全局别名可以没有，比如"json:\_id"是合法的
+    -   类型别名可以没有，比如"\_id"是合法的
+    -   有类型别名优先用类型别名，否则用全局别名，都没有，则用变量名
+
+```C++
+#include <iostream>
+#include "third_party/xpack/json.h"
+
+using namespace std;
+
+struct Test {
+    long uid;
+    string  name;
+    XPACK(A(uid, "id"), O(name)); // "uid"的别名是"id"
+};
+
+int main(int argc, char *argv[]) {
+    Test t;
+    string json="{\"id\":123, \"name\":\"Pony\"}";
+
+    xpack::json::decode(json, t);
+    cout<<t.uid<<endl;
+    return 0;
+}
+
+```
+
+## 位域
+
+-   使用"B"来包含位域变量，**位域不支持别名**
+
+```C++
+#include <iostream>
+#include "third_party/xpack/json.h"
+
+using namespace std;
+
+struct Test {
+    short ver:8;
+    short len:8;
+    string  name;
+    XPACK(B(F(0), ver, len), O(name));
+};
+
+int main(int argc, char *argv[]) {
+    Test t;
+    string json="{\"ver\":4, \"len\":20, \"name\":\"IPv4\"}";
+
+    xpack::json::decode(json, t);
+    cout<<t.ver<<endl;
+    cout<<t.len<<endl;
+    return 0;
+}
+```
+
+## 继承
+
+-   使用"I"来包含父类。需要用到父类的变量就包含，用不到可以不包含。
+-   父类的父类也需要包含，比如 class Base; class Base1:public Base; class Base2:public Base1;那么在 Base2 中需要 I(Base1, Base)
+-   父类也需要定义 third_party/xpack/XPACK_OUT 宏。
+
+```C++
+#include <iostream>
+#include "third_party/xpack/json.h"
+
+using namespace std;
+
+struct P1 {
+    string mail;
+    XPACK(O(mail));
+};
+
+struct P2 {
+    long version;
+    XPACK(O(version));
+};
+
+struct Test:public P1, public P2 {
+    long uid;
+    string  name;
+    XPACK(I(P1, P2), O(uid, name));
+};
+
+int main(int argc, char *argv[]) {
+    Test t;
+    string json="{\"mail\":\"pony@xpack.com\", \"version\":2019, \"id\":123, \"name\":\"Pony\"}";
+
+    xpack::json::decode(json, t);
+    cout<<t.mail<<endl;
+    cout<<t.version<<endl;
+    return 0;
+}
+
+```
+
+## 枚举
+
+-   如果编译器支持 C++11，则枚举和普通变量名一样，放 X/O/M/A 里面皆可。
+-   否则需要放到 E 里面，格式是 E(F(...), member1, member2, ...)
+
+```C++
+#include <iostream>
+#include "third_party/xpack/json.h"
+
+using namespace std;
+
+enum Enum {
+    X = 0,
+    Y = 1,
+    Z = 2,
+};
+
+struct Test {
+    string  name;
+    Enum    e;
+    XPACK(O(name), E(F(0), e));
+};
+
+int main(int argc, char *argv[]) {
+    Test t;
+    string json="{\"name\":\"IPv4\", \"e\":1}";
+
+    xpack::json::decode(json, t);
+    cout<<t.name<<endl;
+    cout<<t.e<<endl;
+    return 0;
+}
+
+```
+
+## 自定义编解码
+
+应用场景：部分类型可能不想按结构体变量逐个编码，比如定义了一个时间结构体：
+
+```C++
+struct Time {
+    long ts; //unix timestamp
+};
+```
+
+并不希望编码成{"ts":1218196800} 这种格式，而是希望编码成"2008-08-08 20:00:00"这种格式，这个时候就可以用自定义编解码实现。
+这里有两种方式：
+
+-   **推荐**用 C 来包含需要自定义编解码的变量（简称方法 1）
+-   使用 xtype（简称方法 2）可以参考[例子](example/xtype.cpp)
+
+两种方法本质上都是自己去实现 encode/decode，但是有以下区别：
+
+-   方法 1 能支持基本类型(int/string 等）和非基本类型的自定义编解码；方法 2 只支持非基本类型的自定义编解码
+-   方法 1 是精细到变量级别，同样的类型，可以某个变量用自定义编解码，其他用默认编解码，方法 2 是类型级别，一旦某个类型定义了 xtype，那该类型所有变量都用自定义编解码。
+
+因此推荐方法 1。方法 1 的实现可以参考该[例子](example/custom.cpp)。步骤有
+
+-   用 C 包含需要自定义编解码的变量：C(customcodec, F(flag1, flag2,...), member1, member2, ...)
+-   实现 customcodec_encode 和 customcodec_decode 函数。注意需要放到 xpack 这个 namespace 下
+
+## 支持新类型
+
+-   可以用[自定义编解码](#自定义编解码)的机制来支持新类型，下面的例子是支持 CString 的方法
+
+```C++
+namespace xpack { // must define in namespace xpack
+
+// implement decode
+template<class OBJ>
+bool cstring_decode(OBJ &obj, const char*key, CString &val, const Extend *ext) {
+    std::string str;
+    obj.decode(key, str, ext);
+    if (str.empty()) {
+        return false;
+    }
+
+    // TODO 把str转到val里面去
+    return true;
+}
+
+// implement encode
+template<class OBJ>
+bool cstring_encode(OBJ &obj, const char*key, const CString &val, const Extend *ext) {
+    std::string str;
+
+    // TODO 把val转到str里面去
+    return obj.encode(key, str, ext);
+}
+
+}
+
+// cstring类型的变量就可以这么包含
+// C(cstring, F(0), val1, val2, ...)
+```
+
+## 数组
+
+-   decode 的时候如果元素个数超过数组的长度，会截断
+-   char 数组按有\0 结束符处理
+
+```C++
+#include <iostream>
+#include "third_party/xpack/json.h"
+
+using namespace std;
+
+
+struct Test {
+    char  name[64];
+    char  email[64];
+    XPACK(O(name, email));
+};
+
+int main(int argc, char *argv[]) {
+    Test t;
+    string json="{\"name\":\"Pony\", \"email\":\"pony@xpack.com\"}";
+
+    xpack::json::decode(json, t);
+    cout<<t.name<<endl;
+    cout<<t.email<<endl;
+    return 0;
+}
+```
+
+## 不定类型
+
+-   用于 json 的 schema 不确定的场景
+-   用[xpack::JsonData](json_data.h)来接收这些信息
+-   可以参考[例子](example/json-data.cpp)
+-   xpack::JsonData 主要的方法有：
+    -   Type。用于获取类型
+    -   IsXXX 系列函数。用于判断是否是某种类型，基本等价于 return Type()==xxxx;
+    -   GetXXX 系列函数。用来提取值。
+    -   重载 bool。用来判断是否是一个合法的 JsonData。
+    -   Size。用于数组类型判断元素的个数
+    -   `operator [](size_t index)` 用来取数组的第 index 个元素（从 0 开始）
+    -   `operator [](const char *key)` 用来根据 key 取 Object 类型的元素
+    -   Begin。用来遍历 Object 的元素，取第一个。
+    -   Next。配合 Begin 使用，获取下一个元素。
+    -   Key。配置 Begin 和 Next 使用，遍历的时候获取 Key
+
+## 第三方类和结构体
+
+-   用 XPACK_OUT 而非 XPACK 来包含变量
+-   XPACK_OUT 必须定义在全局命名空间
+
+```c++
+#include <sys/time.h>
+#include <iostream>
+#include "third_party/xpack/json.h"
+
+using namespace std;
+
+/*
+struct timeval {
+    time_t      tv_sec;
+    suseconds_t tv_usec;
+};
+*/
+
+// timeval is thirdparty struct
+XPACK_OUT(timeval, O(tv_sec, tv_usec));
+
+struct T {
+    int  a;
+    string b;
+    timeval t;
+    XPACK(O(a, b, t));
+};
+
+
+int main(int argc, char *argv[]) {
+    T t;
+    T r;
+    t.a = 123;
+    t.b = "xpack";
+    t.t.tv_sec = 888;
+    t.t.tv_usec = 999;
+    string s = xpack::json::encode(t);
+    cout<<s<<endl;
+    xpack::json::decode(s, r);
+    cout<<r.a<<','<<r.b<<','<<r.t.tv_sec<<','<<r.t.tv_usec<<endl;
+    return 0;
+}
+```
+
+## 格式化缩进
+
+-   encode 缺省生成的 json/xml 是没有缩进的，适合程序使用，如果让人读，可以进行缩进。
+-   encode 的最后两个参数控制
+    -   indentCount 表示缩进的字符数，<0 表示不缩进，0 则是换行但是不缩进
+    -   indentChar 表示缩进的字符，用空格或者制表符
+
+## XML 数组
+
+-   数组默认会用"x"作为标签，比如"ids":[1,2,3]，对应的 xml 是:
+
+```xml
+<ids>
+    <x>1</x>
+    <x>2</x>
+    <x>3</x>
+</ids>
+```
+
+-   可以用别名的方式来控制数组的标签，比如 A(ids,"xml:ids,vl@id")，vl 后面跟着一个@xx，xx 就是数组的标签，生成的结果就是：
+
+```xml
+<ids>
+    <id>1</id>
+    <id>2</id>
+    <id>3</id>
+</ids>
+```
+
+## Qt 支持
+
+-   修改 config.h，开启 XPACK_SUPPORT_QT 这个宏(或者在编译选项开启)
+-   当前支持 QString/QMap/QList/QVector
+
+## 重要说明
+
+-   变量名尽量不要用\_\_x_pack 开头，不然可能会和库有冲突。
+-   vc6 不支持。
+-   msvc 没有做很多测试，只用 2019 做过简单测试。
+-   json 的序列化反序列化用的是[rapidjson](https://github.com/Tencent/rapidjson)
+-   xml 的反序列化用的是[rapidxml](http://rapidxml.sourceforge.net)
+-   xml 的序列化是我自己写的，没有参考 RFC，可能有和标准不一样的地方.
+-   有疑问可以加 QQ 群 878041110
