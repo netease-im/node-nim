@@ -16,7 +16,7 @@ ReflectionDefinition_O(QChatChannelQueryUnreadInfoResp, res_code, unread_infos);
 ReflectionDefinition_O(QChatChannelCreateResp, res_code, channel_info);
 ReflectionDefinition_O(QChatChannelGetChannelsResp, res_code, channel_list);
 ReflectionDefinition_O(QChatChannelGetChannelsPageResp, res_code, page_info, channel_list);
-ReflectionDefinition_O(QChatChannelUnreadResp, subscribe_type, unread_info);
+ReflectionDefinition_O(QChatChannelUnreadResp, unread_infos);
 ReflectionDefinition_O(QChatChannelGetWhiteBlackRolesPageResp, res_code, page_info, roles);
 ReflectionDefinition_O(QChatChannelGetWhiteBlackMembersPageResp, res_code, page_info, members);
 ReflectionDefinition_O(QChatChannelGetExistingWhiteBlackRolesResp, res_code, roles);

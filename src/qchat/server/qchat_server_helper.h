@@ -56,7 +56,7 @@ ReflectionDefinition_O(QChatServerGetMembersResp, res_code, member_list);
 ReflectionDefinition_O(QChatServerGetMembersPageResp, res_code, page_info, member_list);
 ReflectionDefinition_O(QChatServerSubscribeResp, res_code, failed_servers);
 ReflectionDefinition_O(QChatServerGetBannedMembersPageResp, res_code, page_info, ban_list);
-ReflectionDefinition_O(QChatServerUnreadResp, unread_info);
+ReflectionDefinition_O(QChatServerUnreadResp, unread_infos);
 ReflectionDefinition_O(QChatServerGenerateInviteCodeResp, res_code, invite_code, expire_time);
 ReflectionDefinition_O(QChatServerGetInviteApplyRecordOfServerResp, res_code, invite_apply_records);
 ReflectionDefinition_O(QChatServerCreateParam, cb, server_info, anti_spam_info);

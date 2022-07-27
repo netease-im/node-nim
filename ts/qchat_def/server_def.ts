@@ -167,7 +167,7 @@ export interface NIMQChatServerUnreadInfo {
 /** @interface QChatServerUnreadResp */
 export interface QChatServerUnreadResp {
     /** 未读数信息 */
-    unread_info?: NIMQChatServerUnreadInfo
+    unread_infos?: Array<NIMQChatServerUnreadInfo>
 }
 
 /** QChatServerGenerateInviteCodeResp */

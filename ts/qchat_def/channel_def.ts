@@ -140,10 +140,8 @@ export interface QChatChannelGetChannelsPageResp {
 }
 
 export interface QChatChannelUnreadResp {
-    /** 订阅类型 */
-    subscribe_type?: NIMQChatSubscribeType
     /** 未读数信息 */
-    unread_info?: NIMQChatUnreadInfo
+    unread_infos?: Array<NIMQChatUnreadInfo>
 }
 
 export type QChatChannelUpdateWhiteBlackRoleResp = QChatBaseResp
