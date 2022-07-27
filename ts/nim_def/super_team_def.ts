@@ -64,51 +64,51 @@ export enum NIMSuperTeamMuteType {
 }
 
 export interface SuperTeamEvent {
-    res_code_: NIMResCode /**< 错误码 */
-    notification_id_: NIMNotificationId /**< 通知类型ID */
-    team_id_: string /**< 群组ID */
-    ids_: Array<string> /**< 通知可能涉及到的群成员ID */
-    invalid_ids_: Array<string> /**< 通知可能涉及到的失效的群成员ID，比如邀请入群的成员的群数量超限导致当次邀请失败 */
-    namecards_: Array<UserNameCard> /**< 通知可能涉及到的群成员的用户名片 */
-    team_info_: SuperTeamInfo /**< 通知可能涉及到的群信息 */
-    member_property_: SuperTeamMemberProperty /**< 群成员属性 */
-    opt_: boolean /**< 操作 */
-    attach_: string /**< 扩展字段,目前仅kick和invite事件可选 */
-    src_data_: string /**< 未解析过的原信息，目前仅支持群消息未读数相关事件 */
+    res_code_?: NIMResCode /**< 错误码 */
+    notification_id_?: NIMNotificationId /**< 通知类型ID */
+    team_id_?: string /**< 群组ID */
+    ids_?: Array<string> /**< 通知可能涉及到的群成员ID */
+    invalid_ids_?: Array<string> /**< 通知可能涉及到的失效的群成员ID，比如邀请入群的成员的群数量超限导致当次邀请失败 */
+    namecards_?: Array<UserNameCard> /**< 通知可能涉及到的群成员的用户名片 */
+    team_info_?: SuperTeamInfo /**< 通知可能涉及到的群信息 */
+    member_property_?: SuperTeamMemberProperty /**< 群成员属性 */
+    opt_?: boolean /**< 操作 */
+    attach_?: string /**< 扩展字段,目前仅kick和invite事件可选 */
+    src_data_?: string /**< 未解析过的原信息，目前仅支持群消息未读数相关事件 */
 }
 
 export interface SuperTeamInfoJsonValue {
-    tid: string
-    name: string
-    member_max_count: number
-    prop: string
-    intro: string
-    announcement: string
-    join_mode: NIMSuperTeamJoinMode
-    custom: string
-    icon: string
-    be_invite_mode: NIMSuperTeamBeInviteMode
-    invite_mode: NIMSuperTeamInviteMode
-    update_info_mode: NIMSuperTeamUpdateInfoMode
-    update_custom_mode: NIMSuperTeamUpdateCustomMode
-    mute_type: NIMSuperTeamMuteType
+    tid?: string
+    name?: string
+    member_max_count?: number
+    prop?: string
+    intro?: string
+    announcement?: string
+    join_mode?: NIMSuperTeamJoinMode
+    custom?: string
+    icon?: string
+    be_invite_mode?: NIMSuperTeamBeInviteMode
+    invite_mode?: NIMSuperTeamInviteMode
+    update_info_mode?: NIMSuperTeamUpdateInfoMode
+    update_custom_mode?: NIMSuperTeamUpdateCustomMode
+    mute_type?: NIMSuperTeamMuteType
 }
 
 export interface SuperTeamInfo {
-    team_info_json_value_: SuperTeamInfoJsonValue
+    team_info_json_value_?: SuperTeamInfoJsonValue
 }
 
 export interface SuperTeamMemberPropertyJsonValue {
-    tid: string
-    type: NIMSuperTeamUserType
-    nick: string
-    bits: number
-    mute: number
-    custom: string
+    tid?: string
+    type?: NIMSuperTeamUserType
+    nick?: string
+    bits?: number
+    mute?: number
+    custom?: string
 }
 
 export interface SuperTeamMemberProperty {
-    member_info_json_value_: SuperTeamMemberPropertyJsonValue
+    member_info_json_value_?: SuperTeamMemberPropertyJsonValue
 }
 
 export type SuperTeamEventCallback = (result: SuperTeamEvent) => void

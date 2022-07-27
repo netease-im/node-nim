@@ -9,10 +9,10 @@ export enum NIMAppDataType {
 }
 
 export interface AudioInfo {
-    mime_type_: string /** < string 语音类型 */
-    samplerate_: string /** < string 语音采样率 */
-    url_: string /** < string 语音url*/
-    duration_: number /** < long 语音时长，毫秒*/
+    mime_type_?: string /** < string 语音类型 */
+    samplerate_?: string /** < string 语音采样率 */
+    url_?: string /** < string 语音url*/
+    duration_?: number /** < long 语音时长，毫秒*/
 }
 
 export type GetAudioTextCallback = (rescode: NIMResCode, text: string) => void

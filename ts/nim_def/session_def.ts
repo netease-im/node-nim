@@ -24,63 +24,63 @@ export enum NIMSessionCommand {
 }
 
 export interface SessionData {
-    id_: string /**< 会话ID */
-    type_: NIMSessionType /**< 会话类型 */
-    unread_count_: number /**< 当前会话消息未读数 */
-    command_: NIMSessionCommand /**< 会话修改命令 */
-    msg_id_: string /**< 当前会话最新一条消息ID */
-    msg_sender_accid_: string /**< 当前会话最新一条消息发送方ID */
-    msg_timetag_: number /**< 当前会话最新一条消息时间戳（毫秒） */
-    msg_type_: NIMMessageType /**< 当前会话最新一条消息类型 */
-    msg_content_: string /**< 当前会话最新一条消息内容 */
-    msg_attach_: string /**< 当前会话最新一条消息附件 */
-    msg_status_: NIMMsgLogStatus /**< 当前会话最新一条消息状态 */
-    msg_sub_status_: NIMMsgLogSubStatus /**< 当前会话最新一条消息子状态 */
-    last_updated_msg_: boolean /**< (批量)消息变更或增加时是否是最后一条变更的信息 */
-    placed_on_top_: boolean /**< 置顶标识 */
-    extend_data_: string /**< 本地扩展字段,限制4096 */
-    is_robot_session_: boolean /**< 是否为机器人会话, 默认为false */
-    stick_top_info_: StickTopSessionInfo /**< 置顶信息 v7.6添加,推荐使用此字段代替 "placed_on_top_" 字段 */
+    id_?: string /**< 会话ID */
+    type_?: NIMSessionType /**< 会话类型 */
+    unread_count_?: number /**< 当前会话消息未读数 */
+    command_?: NIMSessionCommand /**< 会话修改命令 */
+    msg_id_?: string /**< 当前会话最新一条消息ID */
+    msg_sender_accid_?: string /**< 当前会话最新一条消息发送方ID */
+    msg_timetag_?: number /**< 当前会话最新一条消息时间戳（毫秒） */
+    msg_type_?: NIMMessageType /**< 当前会话最新一条消息类型 */
+    msg_content_?: string /**< 当前会话最新一条消息内容 */
+    msg_attach_?: string /**< 当前会话最新一条消息附件 */
+    msg_status_?: NIMMsgLogStatus /**< 当前会话最新一条消息状态 */
+    msg_sub_status_?: NIMMsgLogSubStatus /**< 当前会话最新一条消息子状态 */
+    last_updated_msg_?: boolean /**< (批量)消息变更或增加时是否是最后一条变更的信息 */
+    placed_on_top_?: boolean /**< 置顶标识 */
+    extend_data_?: string /**< 本地扩展字段,限制4096 */
+    is_robot_session_?: boolean /**< 是否为机器人会话, 默认为false */
+    stick_top_info_?: StickTopSessionInfo /**< 置顶信息 v7.6添加,推荐使用此字段代替 "placed_on_top_" 字段 */
 }
 
 export interface StickTopSessionInfo {
-    top_: boolean /**< 是否置顶 */
-    id_: string /**< 会话ID */
-    type_: NIMSessionType /**< 会话类型 */
-    ext_: string /**< 扩展信息 */
-    create_time_: number /**< 创建时间 */
-    update_time_: number /**< 更新时间 */
+    top_?: boolean /**< 是否置顶 */
+    id_?: string /**< 会话ID */
+    type_?: NIMSessionType /**< 会话类型 */
+    ext_?: string /**< 扩展信息 */
+    create_time_?: number /**< 创建时间 */
+    update_time_?: number /**< 更新时间 */
 }
 
 export interface SessionDataList {
-    count_: number /**< 会话列表项数量 */
-    unread_count_: number /**< 会话列表总的未读消息数 */
-    sessions_: Array<SessionData> /**< 会话列表项数据 */
+    count_?: number /**< 会话列表项数量 */
+    unread_count_?: number /**< 会话列表总的未读消息数 */
+    sessions_?: Array<SessionData> /**< 会话列表项数据 */
 }
 
 export interface StickTopSession {
-    stick_top_info_: StickTopSessionInfo /**< 置顶信息 */
-    session_data_: SessionData /**< 会话信息 */
+    stick_top_info_?: StickTopSessionInfo /**< 置顶信息 */
+    session_data_?: SessionData /**< 会话信息 */
 }
 
 export interface MultiUnreadCountZeroInfo {
-    id_: string /**< 会话ID */
-    type_: NIMSessionType /**< 会话类型 */
+    id_?: string /**< 会话ID */
+    type_?: NIMSessionType /**< 会话类型 */
 }
 
 export interface StickTopSessionList {
-    sessions_: Array<StickTopSession> /**< 置顶会话列表项数据 */
+    sessions_?: Array<StickTopSession> /**< 置顶会话列表项数据 */
 }
 
 export interface SessionMainTagInfo {
-    session_id: string
-    to_type: NIMSessionType
+    session_id?: string
+    to_type?: NIMSessionType
 }
 
 export interface SessionRoamMsgHasMoreTagInfo {
-    session_tag_info: SessionMainTagInfo
-    message_time_tag: number
-    message_server_id: number
+    session_tag_info?: SessionMainTagInfo
+    message_time_tag?: number
+    message_server_id?: number
 }
 
 export type SessionChangeCallback = (rescode: NIMResCode, result: SessionData, count: number) => void

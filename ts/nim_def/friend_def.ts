@@ -36,28 +36,28 @@ export enum NIMFriendChangeType {
 
 /** @brief 删除好有拓展选项 */
 export interface DeleteFriendOption {
-    delete_alias_: boolean
+    delete_alias_?: boolean
 }
 
 /** @brief 云信好友 */
 export interface FriendProfile {
-    accid_: string /** < 用户账号 */
-    relationship_: NIMFriendFlag /** < 主动的好友关系 */
-    passive_relationship_: NIMFriendFlag /** < 被动的好友关系 */
-    source_: NIMFriendSource /** < 好友来源 */
-    alias_: string /** < 好友别名 */
-    bits_: number /** < 扩展数据 */
-    expand_: string /** < 扩展数据 */
-    value_available_flag_: number /** < 好友数据有效性，结合好友Key使用 */
-    server_expand_: string /** < 扩展数据 */
-    create_timetag_: number /** < 好友创建时间戳（毫秒） */
-    update_timetag_: number /** < 好友更新时间戳（毫秒） */
+    accid_?: string /** < 用户账号 */
+    relationship_?: NIMFriendFlag /** < 主动的好友关系 */
+    passive_relationship_?: NIMFriendFlag /** < 被动的好友关系 */
+    source_?: NIMFriendSource /** < 好友来源 */
+    alias_?: string /** < 好友别名 */
+    bits_?: number /** < 扩展数据 */
+    expand_?: string /** < 扩展数据 */
+    value_available_flag_?: number /** < 好友数据有效性，结合好友Key使用 */
+    server_expand_?: string /** < 扩展数据 */
+    create_timetag_?: number /** < 好友创建时间戳（毫秒） */
+    update_timetag_?: number /** < 好友更新时间戳（毫秒） */
 }
 
 /** @brief 云信好友变更事件 */
 export interface FriendChangeEvent {
-    type_: NIMFriendChangeType /** < 事件类型 */
-    content_: string /** < 事件内容，根据事件类型通过提供的ParsexxxEvent接口(nim_cpp_friend.h)解析该内容 */
+    type_?: NIMFriendChangeType /** < 事件类型 */
+    content_?: string /** < 事件内容，根据事件类型通过提供的ParsexxxEvent接口(nim_cpp_friend.h)解析该内容 */
 }
 
 export type FriendChangeCallback = (result: FriendChangeEvent) => void

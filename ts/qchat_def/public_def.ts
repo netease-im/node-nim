@@ -583,253 +583,253 @@ export type QChatBaseCallback = (resp: QChatBaseResp) => void
 
 export interface NIMQChatChannelIDInfo {
     /** server id */
-    server_id: number
+    server_id?: number
     /** channel id */
-    channel_id: number
+    channel_id?: number
 }
 
 export interface QChatBaseResp {
     /** 操作结果, 参考NIMResCode */
-    res_code: NIMResCode
+    res_code?: NIMResCode
 }
 
 export interface QChatPageInfo {
     /** 是否还有更多 */
-    has_more: boolean
+    has_more?: boolean
     /** 下一次分页起始时间 */
-    next_timestamp: number
+    next_timestamp?: number
     /** 下一次分页起始游标 */
-    cursor: string
+    cursor?: string
 }
 
 export interface QChatBusinessAntiSpamInfo {
     /** 反垃圾文本业务id */
-    text_bid: string
+    text_bid?: string
     /** 反垃圾图片业务id */
-    pic_bid: string
+    pic_bid?: string
 }
 
 export interface QChatMemberInfo {
     /** server id */
-    server_id: number
+    server_id?: number
     /** 用户accid */
-    accid: string
+    accid?: string
     /** 昵称 */
-    nick: string
+    nick?: string
     /** 头像url */
-    avatar: string
+    avatar?: string
     /** 自定义字段 */
-    custom: string
+    custom?: string
     /** 用户类型，0:普通用户 1:所有者 */
-    type: number
+    type?: number
     /** 加入时间 */
-    join_time: number
+    join_time?: number
     /** 邀请人 */
-    inviter: string
+    inviter?: string
     /** 有效标记，false:无效 true:有效 */
-    valid_flag: boolean
+    valid_flag?: boolean
     /** 创建时间 */
-    create_time: number
+    create_time?: number
     /** 更新时间 */
-    update_time: number
+    update_time?: number
 }
 
 export interface QChatServerRoleInfo {
     /** 服务器ID */
-    server_id: number
+    server_id?: number
     /** 身份组id */
-    role_id: number
+    role_id?: number
     /** 身份组名称 */
-    role_name: string
+    role_name?: string
     /** 身份组图片 URL */
-    role_icon: string
+    role_icon?: string
     /** 身份组扩展字段 */
-    extension: string
+    extension?: string
     /** 身份组权限设定 */
-    permissions: QChatPermission
+    permissions?: QChatPermission
     /** 身份组类型 1 表示 Everyone，2 表示定制身份组 */
-    role_type: NIMQChatRoleType
+    role_type?: NIMQChatRoleType
     /** 身份组创建时间 */
-    create_time: number
+    create_time?: number
     /** 身份组修改时间 */
-    update_time: number
+    update_time?: number
     /** 该身份组的成员数量，Everyone 身份组数量为 -1 */
-    member_count: number
+    member_count?: number
     /** 身份组优先级，Everyone 最高为 0，数字越大优先级越低，自定义优先级区间 1~9007199254740991 */
-    priority: number
+    priority?: number
 }
 
 export interface QChatChannelRoleInfo {
     /** 服务器ID */
-    server_id: number
+    server_id?: number
     /** 身份组id */
-    role_id: number
+    role_id?: number
     /** 身份组名称 */
-    role_name: string
+    role_name?: string
     /** 身份组图片 URL */
-    role_icon: string
+    role_icon?: string
     /** 身份组扩展字段 */
-    extension: string
+    extension?: string
     /** 身份组权限设定 */
-    permissions: QChatPermission
+    permissions?: QChatPermission
     /** 身份组类型 1 表示 Everyone，2 表示定制身份组 */
-    role_type: NIMQChatRoleType
+    role_type?: NIMQChatRoleType
     /** 身份组创建时间 */
-    create_time: number
+    create_time?: number
     /** 身份组修改时间 */
-    update_time: number
+    update_time?: number
     /** 频道 ID */
-    channel_id: number
+    channel_id?: number
     /** 继承的服务器身份组 ID */
-    parent_role_id: number
+    parent_role_id?: number
 }
 
 export interface QChatChannelCategoryRoleInfo {
     /** 服务器ID */
-    server_id: number
+    server_id?: number
     /** 身份组id */
-    role_id: number
+    role_id?: number
     /** 身份组名称 */
-    role_name: string
+    role_name?: string
     /** 身份组图片 URL */
-    role_icon: string
+    role_icon?: string
     /** 身份组扩展字段 */
-    extension: string
+    extension?: string
     /** 身份组权限设定 */
-    permissions: QChatPermission
+    permissions?: QChatPermission
     /** 身份组类型 1 表示 Everyone，2 表示定制身份组 */
-    role_type: NIMQChatRoleType
+    role_type?: NIMQChatRoleType
     /** 身份组创建时间 */
-    create_time: number
+    create_time?: number
     /** 身份组修改时间 */
-    update_time: number
+    update_time?: number
     /** 频道分组 ID */
-    category_id: number
+    category_id?: number
     /** 继承的服务器身份组 ID */
-    parent_role_id: number
+    parent_role_id?: number
     /** 有效标志 */
-    valid_flag: boolean
+    valid_flag?: boolean
 }
 
 export interface QChatMemberRoleInfo {
     /** 该定制权限所在的频道 ID */
-    channel_id: number
+    channel_id?: number
     /** 该定制权限所在的身份组 ID */
-    role_id: number
+    role_id?: number
     /** 定制权限的用户信息 */
-    member_info: QChatMemberInfo
+    member_info?: QChatMemberInfo
     /** 身份组权限设定 */
-    permissions: QChatPermission
+    permissions?: QChatPermission
     /** 身份组创建时间 */
-    create_time: number
+    create_time?: number
     /** 身份组修改时间 */
-    update_time: number
+    update_time?: number
 }
 
 export interface QChatChannelCategoryMemberRoleInfo {
     /** 频道分组 ID */
-    category_id: number
+    category_id?: number
     /** 该定制权限所在的身份组 ID */
-    role_id: number
+    role_id?: number
     /** 定制权限的用户信息 */
-    member_info: QChatMemberInfo
+    member_info?: QChatMemberInfo
     /** 身份组权限设定 */
-    permissions: QChatPermission
+    permissions?: QChatPermission
     /** 身份组创建时间 */
-    create_time: number
+    create_time?: number
     /** 身份组修改时间 */
-    update_time: number
+    update_time?: number
 }
 
 export interface NIMQChatUnreadInfo {
     /** 服务器ID */
-    server_id: number
+    server_id?: number
     /** 频道ID */
-    channel_id: number
+    channel_id?: number
     /** 已读时间戳 */
-    ack_timestamp: number
+    ack_timestamp?: number
     /** 未读数 */
-    unread_count: number
+    unread_count?: number
     /** 被@未读数 */
-    mentioned_unread_count: number
+    mentioned_unread_count?: number
     /** 订阅未读数时的最大未读数 */
-    max_unread_count: number
+    max_unread_count?: number
     /** 最后一条消息时间戳 */
-    last_msg_timestamp: number
+    last_msg_timestamp?: number
 }
 
 export interface QChatRoleMemberInfo {
     /** member_info */
-    member_info: QChatMemberInfo
+    member_info?: QChatMemberInfo
     /** 所在身份组role id */
-    role_id: number
+    role_id?: number
 }
 
 export interface QChatServerInfo {
     /** server id */
-    server_id: number
+    server_id?: number
     /** 用户自定义服务器类别, 0表示无类别 */
-    server_type: number
+    server_type?: number
     /** 是否能被搜索 */
-    searchable: boolean
+    searchable?: boolean
     /** 名称 */
-    name: string
+    name?: string
     /** 图标url */
-    icon: string
+    icon?: string
     /** 自定义字段 */
-    custom: string
+    custom?: string
     /** 所有者id */
-    owner_id: string
+    owner_id?: string
     /** 成员数量 */
-    member_count: number
+    member_count?: number
     /** 邀请模式 */
-    invite_mode: NIMQChatServerInviteMode
+    invite_mode?: NIMQChatServerInviteMode
     /** 申请模式 */
-    apply_mode: NIMQChatServerApplyMode
+    apply_mode?: NIMQChatServerApplyMode
     /** 有效标记，false:无效 true:有效 */
-    valid_flag: boolean
+    valid_flag?: boolean
     /** 总频道数量 */
-    channel_count: number
+    channel_count?: number
     /** 总频道分组数量 */
-    channel_category_count: number
+    channel_category_count?: number
     /** 创建时间 */
-    create_time: number
+    create_time?: number
     /** 更新时间 */
-    update_time: number
+    update_time?: number
     /** 自定义排序权重值 */
-    reorder_weight: number
+    reorder_weight?: number
 }
 
 export interface QChatInviteUserInfo {
     /** accid */
-    accid: string
+    accid?: string
     /** 更新附言 */
-    update_postscript: string
+    update_postscript?: string
     /** 状态 */
-    status: NIMQChatInviteApplyRecordStatus
+    status?: NIMQChatInviteApplyRecordStatus
     /** 更新时间 */
-    update_time: number
+    update_time?: number
 }
 
 export interface QChatInviteApplyRecord {
     /** accid */
-    accid: string
+    accid?: string
     /** type */
-    type: NIMQChatInviteApplyRecordType
+    type?: NIMQChatInviteApplyRecordType
     /** 服务器ID */
-    server_id: number
+    server_id?: number
     /** 状态 */
-    status: NIMQChatInviteApplyRecordStatus
+    status?: NIMQChatInviteApplyRecordStatus
     /** 请求ID */
-    request_id: number
+    request_id?: number
     /** 记录ID */
-    record_id: number
+    record_id?: number
     /** 创建时间 */
-    create_time: number
+    create_time?: number
     /** 更新时间 */
-    update_time: number
+    update_time?: number
     /** 过期时间 */
-    expire_time: number
+    expire_time?: number
     /** 邀请申请信息原始Json数据 */
-    raw_data: string
+    raw_data?: string
 }

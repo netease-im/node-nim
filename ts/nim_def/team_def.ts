@@ -68,56 +68,56 @@ export enum NIMTeamQueryType {
 }
 
 export interface TeamEvent {
-    res_code_: NIMResCode /**< 错误码 */
-    notification_id_: NIMNotificationId /**< 通知类型ID */
-    team_id_: string /**< 群组ID */
-    ids_: Array<string> /**< 通知可能涉及到的群成员ID */
-    invalid_ids_: Array<string> /**< 通知可能涉及到的失效的群成员ID，比如邀请入群的成员的群数量超限导致当次邀请失败 */
-    namecards_: Array<UserNameCard> /**< 通知可能涉及到的群成员的用户名片 */
-    team_info_: TeamInfo /**< 通知可能涉及到的群信息 */
-    member_property_: TeamMemberProperty /**< 群成员属性 */
-    opt_: boolean /**< 操作 */
-    attach_: string /**< 扩展字段,目前仅kick和invite事件可选 */
-    src_data_: string /**< 未解析过的原信息，目前仅支持群消息未读数相关事件 */
+    res_code_?: NIMResCode /**< 错误码 */
+    notification_id_?: NIMNotificationId /**< 通知类型ID */
+    team_id_?: string /**< 群组ID */
+    ids_?: Array<string> /**< 通知可能涉及到的群成员ID */
+    invalid_ids_?: Array<string> /**< 通知可能涉及到的失效的群成员ID，比如邀请入群的成员的群数量超限导致当次邀请失败 */
+    namecards_?: Array<UserNameCard> /**< 通知可能涉及到的群成员的用户名片 */
+    team_info_?: TeamInfo /**< 通知可能涉及到的群信息 */
+    member_property_?: TeamMemberProperty /**< 群成员属性 */
+    opt_?: boolean /**< 操作 */
+    attach_?: string /**< 扩展字段,目前仅kick和invite事件可选 */
+    src_data_?: string /**< 未解析过的原信息，目前仅支持群消息未读数相关事件 */
 }
 
 export interface TeamInfoJsonValue {
-    tid: string
-    name: string
-    type: NIMTeamType
+    tid?: string
+    name?: string
+    type?: NIMTeamType
     readonly creator: string
-    member_max_count: number
-    prop: string
+    member_max_count?: number
+    prop?: string
     readonly valid: boolean
     readonly member_count: number
     readonly list_timetag: number
     readonly create_timetag: number
     readonly update_timetag: number
-    member_valid: number /**< 1:有效，0:无效 */
-    intro: string
-    announcement: string
-    join_mode: NIMTeamJoinMode
-    custom: string
+    member_valid?: number /**< 1:有效，0:无效 */
+    intro?: string
+    announcement?: string
+    join_mode?: NIMTeamJoinMode
+    custom?: string
     readonly server_custom: string
-    icon: string
-    be_invite_mode: NIMTeamBeInviteMode
-    invite_mode: NIMTeamInviteMode
-    update_info_mode: NIMTeamUpdateInfoMode
-    update_custom_mode: NIMTeamUpdateCustomMode
-    mute_type: NIMTeamMuteType
+    icon?: string
+    be_invite_mode?: NIMTeamBeInviteMode
+    invite_mode?: NIMTeamInviteMode
+    update_info_mode?: NIMTeamUpdateInfoMode
+    update_custom_mode?: NIMTeamUpdateCustomMode
+    mute_type?: NIMTeamMuteType
 }
 
 export interface TeamInfo {
-    team_info_json_value_: TeamInfoJsonValue // json string
+    team_info_json_value_?: TeamInfoJsonValue // json string
 }
 
 export interface TeamMemberPropertyJsonValue {
-    type: NIMTeamUserType // 群成员类型(NIMTeamUserType),默认kNIMTeamUserTypeNomal(0)
-    nick: string // 群成员昵称
-    bits: number // 群成员属性,位操作
-    custom: string // 群成员自定义扩展字段,必须为可以解析为json的非格式化的字符串
-    tid: string // 群id
-    accid: string // 群成员id
+    type?: NIMTeamUserType // 群成员类型(NIMTeamUserType),默认kNIMTeamUserTypeNomal(0)
+    nick?: string // 群成员昵称
+    bits?: number // 群成员属性,位操作
+    custom?: string // 群成员自定义扩展字段,必须为可以解析为json的非格式化的字符串
+    tid?: string // 群id
+    accid?: string // 群成员id
     readonly valid: boolean // 群成员有效性标记位,有效1,无效0
     readonly create_timetag: number // 入群时间戳(毫秒)
     readonly update_timetag: number // 群成员信息上次更新时间戳(毫秒)
@@ -126,7 +126,7 @@ export interface TeamMemberPropertyJsonValue {
 }
 
 export interface TeamMemberProperty {
-    member_info_json_value_: TeamMemberPropertyJsonValue // json string
+    member_info_json_value_?: TeamMemberPropertyJsonValue // json string
 }
 
 export type TeamEventCallback = (result: TeamEvent) => void

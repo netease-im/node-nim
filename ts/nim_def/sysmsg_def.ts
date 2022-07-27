@@ -27,33 +27,33 @@ export enum NIMSysMsgType {
 }
 
 export interface SysMessage {
-    timetag_: number /**< 通知时间戳（毫秒） */
-    type_: NIMSysMsgType /**< 通知类型 */
-    receiver_accid_: string /**< 接收者ID */
-    sender_accid_: string /**< 发送者ID */
-    content_: string /**< 只读，SDK不转发该字段 */
-    attach_: string /**< 通知附件 */
-    id_: number /**< 通知ID */
-    status_: NIMSysMsgStatus /**< 通知状态 */
-    msg_setting_: SysMessageSetting /**< 消息属性设置 */
+    timetag_?: number /**< 通知时间戳（毫秒） */
+    type_?: NIMSysMsgType /**< 通知类型 */
+    receiver_accid_?: string /**< 接收者ID */
+    sender_accid_?: string /**< 发送者ID */
+    content_?: string /**< 只读，SDK不转发该字段 */
+    attach_?: string /**< 通知附件 */
+    id_?: number /**< 通知ID */
+    status_?: NIMSysMsgStatus /**< 通知状态 */
+    msg_setting_?: SysMessageSetting /**< 消息属性设置 */
 
-    rescode_: NIMResCode /**< 通知错误码 */
-    feature_: NIMMessageFeature /**< 通知属性 */
-    total_unread_count_: number /**< 总计的通知未读数 */
-    client_msg_id_: string /**< 通知ID（客户端） */
-    callbac_ext_: string /**< v8.2.0 第三方回调返回的自定义字段 */
+    rescode_?: NIMResCode /**< 通知错误码 */
+    feature_?: NIMMessageFeature /**< 通知属性 */
+    total_unread_count_?: number /**< 总计的通知未读数 */
+    client_msg_id_?: string /**< 通知ID（客户端） */
+    callbac_ext_?: string /**< v8.2.0 第三方回调返回的自定义字段 */
 }
 
 export interface SysMessageSetting {
-    need_push_: BoolStatus /**< 是否需要推送 */
-    push_need_badge_: BoolStatus /**< 是否要做消息计数 */
-    push_need_prefix_: BoolStatus /**< 需要推送昵称 */
-    need_offline_: BoolStatus /**< 是否支持离线消息 */
-    push_payload_: object /**< 第三方自定义的推送属性，长度2048 */
-    push_content_: string /**< 自定义推送文案，长度限制200字节 */
-    anti_spam_enable_: BoolStatus /**< (功能暂时不开放)是否需要过易盾反垃圾 */
-    anti_spam_content_: string /**< (功能暂时不开放)(可选)开发者自定义的反垃圾字段 */
-    env_config_: string /**< (可选) 指向自定义抄送的配置 */
+    need_push_?: BoolStatus /**< 是否需要推送 */
+    push_need_badge_?: BoolStatus /**< 是否要做消息计数 */
+    push_need_prefix_?: BoolStatus /**< 需要推送昵称 */
+    need_offline_?: BoolStatus /**< 是否支持离线消息 */
+    push_payload_?: object /**< 第三方自定义的推送属性，长度2048 */
+    push_content_?: string /**< 自定义推送文案，长度限制200字节 */
+    anti_spam_enable_?: BoolStatus /**< (功能暂时不开放)是否需要过易盾反垃圾 */
+    anti_spam_content_?: string /**< (功能暂时不开放)(可选)开发者自定义的反垃圾字段 */
+    env_config_?: string /**< (可选) 指向自定义抄送的配置 */
 }
 
 export type SysmsgCallback = (result: SysMessage) => void

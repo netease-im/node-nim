@@ -37,18 +37,18 @@ export enum NIMDBOperation {
 }
 
 export interface CachedFileInfo {
-    file_type_: string
-    file_path_: string
-    file_count_: number
-    file_total_size_: number
+    file_type_?: string
+    file_path_?: string
+    file_count_?: number
+    file_total_size_?: number
 }
 
 export interface SDKDBErrorInfo {
-    db_name_: string
-    error_code_: number
-    operation_: NIMDBOperation
-    description_: string
-    attach_: string
+    db_name_?: string
+    error_code_?: number
+    operation_?: NIMDBOperation
+    description_?: string
+    attach_?: string
 }
 
 export type ExceptionCallback = (exception: NIMSDKException, log: string) => void

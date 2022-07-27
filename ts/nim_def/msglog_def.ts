@@ -147,190 +147,190 @@ export enum BoolStatus {
 }
 
 export interface QueryMsgOnlineAsyncParam {
-    id_: string /**< 查询id，对方的account id或者群组tid */
-    to_type_: NIMSessionType /**< enum 会话类型，双人0，群组1 (nim_msglog_def.h) */
-    limit_count_: number /**< number 本次查询的消息条数上限(最多100条) */
-    from_time_: number /**< number 起始时间点，单位：毫秒 */
-    end_time_: number /**<  number 结束时间点，单位：毫秒 */
-    end_msg_id_: number /**< number 结束查询的最后一条消息的server_msg_id(不包含在查询结果中) */
-    reverse_: boolean /**< boolean true：反向查询(按时间正序起查，正序排列)，false：按时间逆序起查，逆序排列（建议默认为false） */
-    need_save_to_local_: boolean /**< boolean 将在线查询结果保存到本地，false: 不保存 */
-    auto_download_attachment_: boolean /**< boolean 查询结果回来后，是否需要sdk自动下载消息附件。true：需要，false：不需要 */
-    msg_type_list_: Array<NIMMessageType> /**< vector 要获取或排除掉的消息类型 由 is_exclusion_type_ 参数决定 */
-    is_exclusion_type_: boolean /**< boolean true : 获取除msg_type_list_中指定的所有类型消息 ,false :只获取 msg_type_list_ 中指定的类型的消息 */
+    id_?: string /**< 查询id，对方的account id或者群组tid */
+    to_type_?: NIMSessionType /**< enum 会话类型，双人0，群组1 (nim_msglog_def.h) */
+    limit_count_?: number /**< number 本次查询的消息条数上限(最多100条) */
+    from_time_?: number /**< number 起始时间点，单位：毫秒 */
+    end_time_?: number /**<  number 结束时间点，单位：毫秒 */
+    end_msg_id_?: number /**< number 结束查询的最后一条消息的server_msg_id(不包含在查询结果中) */
+    reverse_?: boolean /**< boolean true：反向查询(按时间正序起查，正序排列)，false：按时间逆序起查，逆序排列（建议默认为false） */
+    need_save_to_local_?: boolean /**< boolean 将在线查询结果保存到本地，false: 不保存 */
+    auto_download_attachment_?: boolean /**< boolean 查询结果回来后，是否需要sdk自动下载消息附件。true：需要，false：不需要 */
+    msg_type_list_?: Array<NIMMessageType> /**< vector 要获取或排除掉的消息类型 由 is_exclusion_type_ 参数决定 */
+    is_exclusion_type_?: boolean /**< boolean true : 获取除msg_type_list_中指定的所有类型消息 ,false :只获取 msg_type_list_ 中指定的类型的消息 */
 }
 
 export interface QueryMsgByKeywordOnlineParam {
-    id_: string /**< 查询id，对方的account id或者群组tid */
-    keyword_: string /**< 要查询的关键字 */
-    to_type_: NIMSessionType /**< enum 会话类型，双人0，群组1 (nim_msglog_def.h) */
-    limit_count_: number /**< number 本次查询的消息条数上限(最多100条) */
-    from_time_: number /**< number 起始时间点，单位：毫秒 */
-    end_time_: number /**<  number 结束时间点，单位：毫秒 */
-    reverse_: boolean /**< boolean true：反向查询(按时间正序起查，正序排列)，false：按时间逆序起查，逆序排列（建议默认为false） */
+    id_?: string /**< 查询id，对方的account id或者群组tid */
+    keyword_?: string /**< 要查询的关键字 */
+    to_type_?: NIMSessionType /**< enum 会话类型，双人0，群组1 (nim_msglog_def.h) */
+    limit_count_?: number /**< number 本次查询的消息条数上限(最多100条) */
+    from_time_?: number /**< number 起始时间点，单位：毫秒 */
+    end_time_?: number /**<  number 结束时间点，单位：毫秒 */
+    reverse_?: boolean /**< boolean true：反向查询(按时间正序起查，正序排列)，false：按时间逆序起查，逆序排列（建议默认为false） */
 }
 
 export interface MessageSetting {
-    resend_flag_: BoolStatus /**< 该消息是否为重发状态 */
-    server_history_saved_: BoolStatus /**< 该消息是否存储云端历史 */
-    roaming_: BoolStatus /**< 该消息是否支持漫游 */
-    self_sync_: BoolStatus /**< 该消息是否支持发送者多端同步 */
-    need_push_: BoolStatus /**< 是否需要推送 */
-    push_need_badge_: BoolStatus /**< 是否要做消息计数 */
-    push_need_prefix_: BoolStatus /**< 需要推送昵称 */
-    routable_: BoolStatus /**< 是否要抄送 */
-    need_offline_: BoolStatus /**< 是否支持离线消息 */
-    push_payload_: object /**< 第三方自定义的推送属性，长度2048, json object */
-    push_content_: string /**< 自定义推送文案，长度限制200字节 */
-    server_ext_: object /**< 第三方扩展字段, 长度限制1024 */
-    local_ext_: string /**< 本地扩展字段, 格式不限，长度限制1024 */
-    is_force_push_: BoolStatus /**< 群组消息强推开关，强推全员设置true并强推列表为空 */
-    force_push_ids_list_: Array<string> /**< 群组消息强推列表 */
-    force_push_content_: string /**< 群组消息强推文本 */
-    anti_spam_enable_: BoolStatus /**< 是否需要过易盾反垃圾 */
-    anti_spam_content_: string /**< (可选)开发者自定义的反垃圾字段,长度限制5000 */
-    anti_apam_biz_id_: string /**< (可选)用户配置的对某些单条消息另外的反垃圾的业务ID */
-    anti_apam_using_yidun_: number /**< number,  (可选) 单条消息是否使用易盾反垃圾 0:(在开通易盾的情况下)不过易盾反垃圾而是通用反垃圾
+    resend_flag_?: BoolStatus /**< 该消息是否为重发状态 */
+    server_history_saved_?: BoolStatus /**< 该消息是否存储云端历史 */
+    roaming_?: BoolStatus /**< 该消息是否支持漫游 */
+    self_sync_?: BoolStatus /**< 该消息是否支持发送者多端同步 */
+    need_push_?: BoolStatus /**< 是否需要推送 */
+    push_need_badge_?: BoolStatus /**< 是否要做消息计数 */
+    push_need_prefix_?: BoolStatus /**< 需要推送昵称 */
+    routable_?: BoolStatus /**< 是否要抄送 */
+    need_offline_?: BoolStatus /**< 是否支持离线消息 */
+    push_payload_?: object /**< 第三方自定义的推送属性，长度2048, json object */
+    push_content_?: string /**< 自定义推送文案，长度限制200字节 */
+    server_ext_?: object /**< 第三方扩展字段, 长度限制1024 */
+    local_ext_?: string /**< 本地扩展字段, 格式不限，长度限制1024 */
+    is_force_push_?: BoolStatus /**< 群组消息强推开关，强推全员设置true并强推列表为空 */
+    force_push_ids_list_?: Array<string> /**< 群组消息强推列表 */
+    force_push_content_?: string /**< 群组消息强推文本 */
+    anti_spam_enable_?: BoolStatus /**< 是否需要过易盾反垃圾 */
+    anti_spam_content_?: string /**< (可选)开发者自定义的反垃圾字段,长度限制5000 */
+    anti_apam_biz_id_?: string /**< (可选)用户配置的对某些单条消息另外的反垃圾的业务ID */
+    anti_apam_using_yidun_?: number /**< number,  (可选) 单条消息是否使用易盾反垃圾 0:(在开通易盾的情况下)不过易盾反垃圾而是通用反垃圾
                                    其他都是按照原来的规则 */
-    client_anti_spam_hitting_: BoolStatus /**< (可选) 是否命中客户端反垃圾 */
-    team_msg_need_ack_: BoolStatus /**< 群消息是否需要已读业务，0：不需要，1：需要 */
-    team_msg_ack_sent_: BoolStatus /**< 是否已经发送群消息已读回执 */
-    team_msg_unread_count_: number /**< 群消息未读数 */
-    is_update_session_: BoolStatus /**< (可选) 消息是否需要刷新到session服务，0:否，1:是；只有消息存离线的情况下，才会判断该参数，缺省：1 */
-    yidun_anti_cheating_: string /**< (可选)String, 易盾反垃圾增强反作弊专属字段, 限制json，长度限制1024 */
-    env_config_: string /**< (可选)String, 环境变量，用于指向不同的抄送、第三方回调等配置(于8.0.0添加) */
-    anti_spam_ext: string /**< (可选)String, 易盾反垃圾扩展字段，限制 json，长度限制 1024 */
-    anti_spam_res: string /**< String, 易盾反垃圾返回的结果字段 */
+    client_anti_spam_hitting_?: BoolStatus /**< (可选) 是否命中客户端反垃圾 */
+    team_msg_need_ack_?: BoolStatus /**< 群消息是否需要已读业务，0：不需要，1：需要 */
+    team_msg_ack_sent_?: BoolStatus /**< 是否已经发送群消息已读回执 */
+    team_msg_unread_count_?: number /**< 群消息未读数 */
+    is_update_session_?: BoolStatus /**< (可选) 消息是否需要刷新到session服务，0:否，1:是；只有消息存离线的情况下，才会判断该参数，缺省：1 */
+    yidun_anti_cheating_?: string /**< (可选)String, 易盾反垃圾增强反作弊专属字段, 限制json，长度限制1024 */
+    env_config_?: string /**< (可选)String, 环境变量，用于指向不同的抄送、第三方回调等配置(于8.0.0添加) */
+    anti_spam_ext?: string /**< (可选)String, 易盾反垃圾扩展字段，限制 json，长度限制 1024 */
+    anti_spam_res?: string /**< String, 易盾反垃圾返回的结果字段 */
 }
 
 export interface IMMessageThreadInfo {
-    reply_msg_from_account_: string // 被回复消息的消息发送者
-    reply_msg_to_account_: string // 被回复消息的消息接受者，群的话是tid
-    reply_msg_time_: number // 被回复消息的消息发送时间
-    reply_msg_id_server_: number // 被回复消息的消息ID(serverId)
-    reply_msg_id_client_: string // 被回复消息的消息ID(clientId)
+    reply_msg_from_account_?: string // 被回复消息的消息发送者
+    reply_msg_to_account_?: string // 被回复消息的消息接受者，群的话是tid
+    reply_msg_time_?: number // 被回复消息的消息发送时间
+    reply_msg_id_server_?: number // 被回复消息的消息ID(serverId)
+    reply_msg_id_client_?: string // 被回复消息的消息ID(clientId)
 
-    thread_msg_from_account_: string // thread消息的消息发送者
-    thread_msg_to_account_: string // thread消息的消息接受者，群的话是tid
-    thread_msg_time_: number // thread消息的消息发送时间
-    thread_msg_id_server_: number // thread消息的消息ID(serverId)
-    thread_msg_id_client_: string // thread消息的消息ID(clientId)
-    deleted_: number // 消息是否已经被删除（可能是撤回，也可能是单向删除），查询thread消息历史时可能会有这个字段，大于0表示已经删除（目前撤回和单向删除都是1，未来可能区分）
+    thread_msg_from_account_?: string // thread消息的消息发送者
+    thread_msg_to_account_?: string // thread消息的消息接受者，群的话是tid
+    thread_msg_time_?: number // thread消息的消息发送时间
+    thread_msg_id_server_?: number // thread消息的消息ID(serverId)
+    thread_msg_id_client_?: string // thread消息的消息ID(clientId)
+    deleted_?: number // 消息是否已经被删除（可能是撤回，也可能是单向删除），查询thread消息历史时可能会有这个字段，大于0表示已经删除（目前撤回和单向删除都是1，未来可能区分）
 }
 
 export interface IMMessage {
-    rescode_: NIMResCode /**< 错误码 */
-    feature_: NIMMessageFeature /**< 消息属性 */
-    session_type_: NIMSessionType /**< 会话类型 */
-    receiver_accid_: string /**< 接收者ID */
-    sender_accid_: string /**< 发送者ID */
-    timetag_: number /**< 消息时间戳（毫秒） */
-    content_: string /**< 消息内容,长度限制10000 */
-    type_: NIMMessageType /**< 消息类型 */
-    attach_: string /**< 消息附件 ,长度限制10000 */
-    client_msg_id_: string /**< 消息ID（客户端） */
-    msg_setting_: MessageSetting /**< 消息属性设置 */
-    third_party_callback_ext_: string /**< 第三方回调回来的自定义扩展字段 v7.8添加 */
-    sub_type_: number /**< 消息的子类型，客户端定义，服务器透传 */
-    local_res_path_: string /**< 媒体文件本地绝对路径（客户端） */
-    local_talk_id_: string /**< 会话ID（客户端） */
-    local_res_id_: string /**< 媒体文件ID（客户端） */
-    status_: NIMMsgLogStatus /**< 消息状态（客户端） */
-    sub_status_: NIMMsgLogSubStatus /**< 消息子状态（客户端） */
-    thread_info_: IMMessageThreadInfo
-    readonly_sender_client_type_: NIMClientType /**< 发送者客户端类型（只读） */
-    readonly_sender_device_id_: string /**< 发送者客户端设备ID（只读） */
-    readonly_sender_nickname_: string /**< 发送者昵称（只读） */
-    readonly_server_id_: number /**< 消息ID（服务器，只读） */
+    rescode_?: NIMResCode /**< 错误码 */
+    feature_?: NIMMessageFeature /**< 消息属性 */
+    session_type_?: NIMSessionType /**< 会话类型 */
+    receiver_accid_?: string /**< 接收者ID */
+    sender_accid_?: string /**< 发送者ID */
+    timetag_?: number /**< 消息时间戳（毫秒） */
+    content_?: string /**< 消息内容,长度限制10000 */
+    type_?: NIMMessageType /**< 消息类型 */
+    attach_?: string /**< 消息附件 ,长度限制10000 */
+    client_msg_id_?: string /**< 消息ID（客户端） */
+    msg_setting_?: MessageSetting /**< 消息属性设置 */
+    third_party_callback_ext_?: string /**< 第三方回调回来的自定义扩展字段 v7.8添加 */
+    sub_type_?: number /**< 消息的子类型，客户端定义，服务器透传 */
+    local_res_path_?: string /**< 媒体文件本地绝对路径（客户端） */
+    local_talk_id_?: string /**< 会话ID（客户端） */
+    local_res_id_?: string /**< 媒体文件ID（客户端） */
+    status_?: NIMMsgLogStatus /**< 消息状态（客户端） */
+    sub_status_?: NIMMsgLogSubStatus /**< 消息子状态（客户端） */
+    thread_info_?: IMMessageThreadInfo
+    readonly_sender_client_type_?: NIMClientType /**< 发送者客户端类型（只读） */
+    readonly_sender_device_id_?: string /**< 发送者客户端设备ID（只读） */
+    readonly_sender_nickname_?: string /**< 发送者昵称（只读） */
+    readonly_server_id_?: number /**< 消息ID（服务器，只读） */
 }
 
 export interface QueryMsgAsyncParam {
-    to_type_: NIMSessionType /**< enum 会话类型，双人0，群组1,超大群5 (nim_msglog_def.h) */
-    from_account: string /**< string 消息的发送方 */
-    to_account: string /**< string 消息的接收方 */
-    server_id: number /**< number 消息的服务端id */
-    client_id: string /**< string 消息的客户端id */
-    time: number /**<  number 消息时间戳 */
+    to_type_?: NIMSessionType /**< enum 会话类型，双人0，群组1,超大群5 (nim_msglog_def.h) */
+    from_account?: string /**< string 消息的发送方 */
+    to_account?: string /**< string 消息的接收方 */
+    server_id?: number /**< number 消息的服务端id */
+    client_id?: string /**< string 消息的客户端id */
+    time?: number /**<  number 消息时间戳 */
 }
 export interface QueryThreadHistoryMsgAsyncParam {
-    from_time: number /**< number 起始时间 缺省0 */
-    to_time: number /**< number 结束时间 缺省0 */
-    exclude_msg_id: number /**< number 截至消息的服务端id，不包含在查询结果中 缺省0 */
-    limit: number /**<  number 查询条数限制 缺省100 */
-    reverse: number /**<  number 排序 缺省0 false */
+    from_time?: number /**< number 起始时间 缺省0 */
+    to_time?: number /**< number 结束时间 缺省0 */
+    exclude_msg_id?: number /**< number 截至消息的服务端id，不包含在查询结果中 缺省0 */
+    limit?: number /**<  number 查询条数限制 缺省100 */
+    reverse?: number /**<  number 排序 缺省0 false */
 }
 export interface FullTextSearchOnlineAsyncParam {
     /** 要搜索的关键字 */
-    keyword_: string
+    keyword_?: string
     /** 查询的起始时间，0 为从最开始查询 */
-    from_time_: number
+    from_time_?: number
     /** 查询的结束时间 */
-    to_time_: number
+    to_time_?: number
     /** 限制会话的返回数量 */
-    session_limit_: number
+    session_limit_?: number
     /** 限制每个会话返回的消息数量 */
-    msglog_limit_: number
+    msglog_limit_?: number
     /** 设置查找规则, 例如升序不分组: kNIMFullTextSearchOrderByAsc | kNIMFullTextSearchNoGroupBySession */
-    search_rule_: number
+    search_rule_?: number
     /** P2P 会话过滤列表 */
-    p2p_filter_list_: Array<string>
+    p2p_filter_list_?: Array<string>
     /** Team 群租会话过滤列表 */
-    team_filter_list_: Array<string>
+    team_filter_list_?: Array<string>
     /** 发送者过滤列表 */
-    sender_filter_list_: Array<string>
+    sender_filter_list_?: Array<string>
     /** 消息类型过滤 */
-    msg_type_filter_list_: Array<NIMMessageType>
+    msg_type_filter_list_?: Array<NIMMessageType>
     /** 消息子类型过滤 */
-    msg_sub_type_filter_list_: Array<number>
+    msg_sub_type_filter_list_?: Array<number>
 }
 
 export interface QueryMsglogResult {
-    count_: number /**< 消息历史数 */
-    source_: NIMMsglogQuerySource /**< 消息历史查询来源 */
-    msglogs_: Array<IMMessage> /**< 消息历史 */
+    count_?: number /**< 消息历史数 */
+    source_?: NIMMsglogQuerySource /**< 消息历史查询来源 */
+    msglogs_?: Array<IMMessage> /**< 消息历史 */
 }
 
 export interface DeleteMsglogSelfNotifyParam {
-    item_list: Array<DeleteMsglogSelfNotifyItemInfo> /**< 被删除的消息基本信息 */
+    item_list?: Array<DeleteMsglogSelfNotifyItemInfo> /**< 被删除的消息基本信息 */
 }
 
 export interface MessageStatusChangedResult {
-    rescode_: NIMResCode /**< 错误码 */
-    results_: Array<MessageStatusChanged> /**< 结果 */
+    rescode_?: NIMResCode /**< 错误码 */
+    results_?: Array<MessageStatusChanged> /**< 结果 */
 }
 
 export interface MessageStatusChanged {
-    status_: NIMMsgLogStatus /**< 变更后的状态 */
-    talk_id_: string /**< 会话ID */
-    msg_timetag_: number /**< 临界的消息的时间戳 */
+    status_?: NIMMsgLogStatus /**< 变更后的状态 */
+    talk_id_?: string /**< 会话ID */
+    msg_timetag_?: number /**< 临界的消息的时间戳 */
 }
 
 export interface LogsBackupExportInfo {
-    encrypt_key_: string
-    cloned_: boolean
+    encrypt_key_?: string
+    cloned_?: boolean
 }
 
 export interface LogsBackupImportInfo {
-    cloned_: boolean
+    cloned_?: boolean
 }
 
 export interface DeleteMsglogSelfNotifyItemInfo {
-    session_id_: string /*会话id */
-    client_id_: string /*消息ID */
-    ext_: string /*自定义字段 */
+    session_id_?: string /*会话id */
+    client_id_?: string /*消息ID */
+    ext_?: string /*自定义字段 */
 }
 
 export interface QueryMsgByOptionsAsyncParam {
-    query_range_: NIMMsgLogQueryRange /**< 消息历史的检索范围（目前暂不支持某些范围的组合检索，详见NIMMsgLogQueryRange说明） */
-    ids_: Array<string> /**< 会话id（对方的account id或者群组tid）的集合，目前暂不支持多个的组合检索，详见NIMMsgLogQueryRange说明 */
-    limit_count_: number /**< 本次查询的消息条数上限(最多100条) */
-    from_time_: number /**< 起始时间点，单位：毫秒 */
-    end_time_: number /**< 结束时间点，单位：毫秒 */
-    end_client_msg_id_: string /**< 结束查询的最后一条消息的end_client_msg_id(不包含在查询结果中) */
-    reverse_: boolean /**< true：反向查询(按时间正序起查，正序排列)，false：按时间逆序起查，逆序排列（建议默认为false） */
-    msg_type_: NIMMessageType /**< 检索的消息类型（目前只支持kNIMMessageTypeText、kNIMMessageTypeImage和kNIMMessageTypeFile这三种类型消息） */
-    msg_sub_type_: number /**< 消息的子类型 */
-    search_content_: string /**< 检索文本（目前只支持kNIMMessageTypeText和kNIMMessageTypeFile这两种类型消息的文本关键字检索，即支持文字消息和文件名的检索 */
+    query_range_?: NIMMsgLogQueryRange /**< 消息历史的检索范围（目前暂不支持某些范围的组合检索，详见NIMMsgLogQueryRange说明） */
+    ids_?: Array<string> /**< 会话id（对方的account id或者群组tid）的集合，目前暂不支持多个的组合检索，详见NIMMsgLogQueryRange说明 */
+    limit_count_?: number /**< 本次查询的消息条数上限(最多100条) */
+    from_time_?: number /**< 起始时间点，单位：毫秒 */
+    end_time_?: number /**< 结束时间点，单位：毫秒 */
+    end_client_msg_id_?: string /**< 结束查询的最后一条消息的end_client_msg_id(不包含在查询结果中) */
+    reverse_?: boolean /**< true：反向查询(按时间正序起查，正序排列)，false：按时间逆序起查，逆序排列（建议默认为false） */
+    msg_type_?: NIMMessageType /**< 检索的消息类型（目前只支持kNIMMessageTypeText、kNIMMessageTypeImage和kNIMMessageTypeFile这三种类型消息） */
+    msg_sub_type_?: number /**< 消息的子类型 */
+    search_content_?: string /**< 检索文本（目前只支持kNIMMessageTypeText和kNIMMessageTypeFile这两种类型消息的文本关键字检索，即支持文字消息和文件名的检索 */
 }
 
 export type QueryMsgCallback = (rescode: NIMResCode, id: string, to_type: NIMSessionType, result: QueryMsglogResult) => void
