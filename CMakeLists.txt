@@ -38,7 +38,7 @@ endif()
 execute_process(COMMAND ${NPM_EXUTABLE} install --nim-sdk-url=${NIM_SDK_URL}
         WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
         OUTPUT_QUIET)
-execute_process(COMMAND ${NPX_EXUTABLE} cmake-js print-configure -l error -a ${CMAKE_JS_ARCH}
+execute_process(COMMAND ${NPX_EXUTABLE} cmake-js print-configure -l error -r electron -v 8.5.5 -a ${CMAKE_JS_ARCH}
         WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
         OUTPUT_VARIABLE CMAKE_JS_CONFIGURE_OUTPUT
         RESULT_VARIABLE AA)
