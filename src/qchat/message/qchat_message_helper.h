@@ -132,6 +132,7 @@ ReflectionDefinition_O(QChatGetThreadRootMessagesMetaResp, res_code, meta_infos)
 ReflectionDefinition_O(QChatQuickCommentDetail, type, count, include_yourself, accids);
 ReflectionDefinition_O(QChatQuickCommentInfo, server_id, channel_id, msg_server_id, count, timestamp, details);
 ReflectionDefinition_O(QChatGetQuickCommentsResp, res_code, comments);
+ReflectionDefinition_O(QChatMessageSearchPageResp, res_code, page_info, messages);
 ReflectionDefinition_O(QChatSendMessageParam, cb, message);
 ReflectionDefinition_O(QChatUpdateMessageParam, cb, id_info, msg_server_id, timestamp, update_info, anti_spam_info, status, msg_body, msg_ext);
 ReflectionDefinition_O(QChatRevokeMessageParam, cb, id_info, msg_server_id, timestamp, update_info);
