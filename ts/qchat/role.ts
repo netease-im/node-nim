@@ -60,7 +60,9 @@ import {
     QChatUpdateChannelRoleResp,
     QChatUpdateMemberRoleResp,
     QChatUpdateServerRolePrioritiesResp,
-    QChatUpdateServerRoleResp
+    QChatUpdateServerRoleResp,
+    QChatCheckPermissionsParam,
+    QChatCheckPermissionsResp
 } from '../qchat_def/role_def'
 import { NIMResCode } from '../qchat_def/public_def'
 export declare interface QChatRoleEvents {}
@@ -468,6 +470,24 @@ export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
                 }
             }
             this.instance.CheckPermission(param)
+        })
+        return p
+    }
+
+    /** @fn checkPermissions(param: QChatCheckPermissionsParam)
+     * @brief 查询当前登录用户是否拥有特定权限
+     * @param param 参数见 @see QChatGetRolesByAccidParam
+     */
+    checkPermissions(param: QChatCheckPermissionsParam): Promise<QChatCheckPermissionsResp> {
+        const p = new Promise<QChatCheckPermissionsResp>((resolve, reject) => {
+            param.cb = (resp: QChatCheckPermissionsResp) => {
+                if (resp.res_code === NIMResCode.kNIMResSuccess) {
+                    resolve(resp)
+                } else {
+                    reject(resp)
+                }
+            }
+            this.instance.CheckPermissions(param)
         })
         return p
     }

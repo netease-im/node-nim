@@ -86,6 +86,11 @@ export enum NIMQChatSearchOrder {
     kNIMQChatSearchOrderDesc = 2
 }
 
+export enum NIMQChatMessageSearchSort {
+    /** 创建时间排序 */
+    kNIMQChatMessageSearchSortCreateTime = 1
+}
+
 export enum NIMQChatServerSearchSort {
     /** 自定义权重排序(详见服务器端文档) */
     kNIMQChatServerSearchSortCustom = 0,

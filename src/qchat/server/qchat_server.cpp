@@ -10,6 +10,8 @@ Napi::Object QChatServer::Init(Napi::Env env, Napi::Object exports) {
         RegApi("DeleteServer", &Server::DeleteServer),
         RegApi("UpdateServer", &Server::UpdateServer),
         RegApi("Subscribe", &Server::Subscribe),
+        RegApi("SubscribeAllChannel", &Server::SubscribeAllChannel),
+        RegApi("MarkRead", &Server::MarkRead),
         RegApi("GetServers", &Server::GetServers),
         RegApi("GetServersByPage", &Server::GetServersByPage),
         RegApi("Invite", &Server::Invite),

@@ -7,7 +7,10 @@ import {
     NIMQChatChannelIDInfo,
     NIMQChatGetReferMessageType,
     QChatBaseCallback,
-    NIMResCode
+    NIMResCode,
+    QChatPageInfo,
+    NIMQChatSearchOrder,
+    NIMQChatMessageSearchSort
 } from './public_def'
 
 /** @struct QChatMessageUpdateInfo 更新消息时需要指定的参数 */
@@ -352,6 +355,16 @@ export interface QChatGetQuickCommentsResp {
     comments?: Array<QChatQuickCommentInfo>
 }
 
+/** @interface QChatMessageSearchPageResp */
+export interface QChatMessageSearchPageResp {
+    /** 操作结果, 参考NIMResCode */
+    res_code?: NIMResCode
+    /** 分页信息 */
+    page_info?: QChatPageInfo
+    /** 消息列表 */
+    messages?: Array<QChatMessage>
+}
+
 /** 接收消息回调 */
 export type RecvMsgCallback = (resp: QChatRecvMsgResp) => void
 /** 发送消息回调 */
@@ -370,13 +383,20 @@ export type GetMessagesCacheCallback = GetMessagesCallback
 export type MarkMessageReadCallback = (resp: QChatMarkMessageReadResp) => void
 /** 回复消息回调 */
 export type ReplyMessageCallback = (resp: QChatReplyMessageResp) => void
+/** 根据消息 ID 查询消息回调 */
 export type GetMessageHistoryByIdsCallback = GetMessagesCallback
+/** 获取关联消息回调 */
 export type GetReferMessagesCallback = GetMessagesCallback
 /** 获取 thread 消息回调 */
 export type GetThreadMessagesCallback = (resp: QChatGetThreadMessagesResp) => void
+/** 查询Thread消息元信息回调 */
 export type GetThreadRootMessagesMetaCallback = (resp: QChatGetThreadRootMessagesMetaResp) => void
+/** 添加快捷回复回调 */
 export type QuickCommentCallback = QChatBaseCallback
+/** 查询快捷回复回调 */
 export type GetQuickCommentsCallback = (resp: QChatGetQuickCommentsResp) => void
+/** 消息分页搜索回调 */
+export type MessageSearchPageCallback = (resp: QChatMessageSearchPageResp) => void
 
 /** @interface QChatSendMessageParam */
 export interface QChatSendMessageParam {
@@ -559,4 +579,35 @@ export interface QChatGetQuickCommentsParam {
     channel_id?: number
     /** 要查询的服务器消息 ID 列表 */
     msg_server_id_list?: Array<number>
+}
+/** @interface QChatMessageSearchPageParam */
+export interface QChatMessageSearchPageParam {
+    /** @internal */
+    cb?: MessageSearchPageCallback
+    /** 搜索关键字 */
+    keyword?: string
+    /** 服务器 ID */
+    server_id?: number
+    /** 频道 ID */
+    channel_id?: number
+    /** 消息发送者ID */
+    from_accid?: string
+    /** 搜索的开始时间 */
+    from_time?: number
+    /** 搜索的结束时间 */
+    to_time?: number
+    /** 搜索消息类型 */
+    msg_types?: Array<NIMQChatMsgType>
+    /** 搜索消息类型 */
+    sub_types?: Array<number>
+    /** 是否包含自己的消息 */
+    include_self?: boolean
+    /** 排序顺序 */
+    order?: NIMQChatSearchOrder
+    /** 排序规则 */
+    sort?: NIMQChatMessageSearchSort
+    /** 查询条数 */
+    limit?: number
+    /** 查询游标, 查询的起始位置 */
+    cursor?: string
 }

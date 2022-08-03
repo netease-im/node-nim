@@ -37,6 +37,8 @@ import {
     QChatServerKickResp,
     QChatServerLeaveParam,
     QChatServerLeaveResp,
+    QChatServerMarkReadParam,
+    QChatServerMarkReadResp,
     QChatServerMemberSearchParam,
     QChatServerMemberSearchResp,
     QChatServerRejectApplyParam,
@@ -45,6 +47,8 @@ import {
     QChatServerRejectInviteResp,
     QChatServerSearchPageParam,
     QChatServerSearchPageResp,
+    QChatServerSubscribeAllChannelParam,
+    QChatServerSubscribeAllChannelResp,
     QChatServerSubscribeParam,
     QChatServerSubscribeResp,
     QChatServerUnbanMemberParam,
@@ -143,6 +147,44 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
                 }
             }
             this.instance.Subscribe(param)
+        })
+        return p
+    }
+
+    /** @fn subscribeAllChannel(param: QChatServerSubscribeAllChannelParam)
+     * 订阅服务器下所有频道的消息
+     * @param[in] param 接口参数
+     * @return void
+     */
+    subscribeAllChannel(param: QChatServerSubscribeAllChannelParam): Promise<QChatServerSubscribeAllChannelResp> {
+        const p = new Promise<QChatServerSubscribeAllChannelResp>((resolve, reject) => {
+            param.cb = (resp: QChatServerSubscribeAllChannelResp) => {
+                if (resp.res_code === NIMResCode.kNIMResSuccess) {
+                    resolve(resp)
+                } else {
+                    reject(resp)
+                }
+            }
+            this.instance.SubscribeAllChannel(param)
+        })
+        return p
+    }
+
+    /** @fn void MarkRead(const QChatServerMarkReadParam& param)
+     * 标记服务器下所有频道的消息为已读
+     * @param[in] param 接口参数
+     * @return void
+     */
+    markRead(param: QChatServerMarkReadParam): Promise<QChatServerMarkReadResp> {
+        const p = new Promise<QChatServerMarkReadResp>((resolve, reject) => {
+            param.cb = (resp: QChatServerMarkReadResp) => {
+                if (resp.res_code === NIMResCode.kNIMResSuccess) {
+                    resolve(resp)
+                } else {
+                    reject(resp)
+                }
+            }
+            this.instance.MarkRead(param)
         })
         return p
     }

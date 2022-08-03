@@ -32,7 +32,9 @@ import {
     QChatSendMessageResp,
     QChatUpdateMessageResp,
     QChatMsgUpdatedResp,
-    QChatRecvMsgResp
+    QChatRecvMsgResp,
+    QChatMessageSearchPageParam,
+    QChatMessageSearchPageResp
 } from '../qchat_def/message_def'
 import { NIMResCode } from '../qchat_def/public_def'
 export declare interface QChatMessageEvents {
@@ -352,6 +354,25 @@ export class QChatMessageModule extends EventEmitter<QChatMessageEvents> {
                 }
             }
             this.instance.GetQuickComments(param)
+        })
+        return p
+    }
+
+    /** @fn searchMsgByPage(param: QChatMessageSearchPageParam)
+     * @brief 分页搜索消息
+     * @since v9.4.0
+     * @param param 接口参数 @see QChatSearchMsgByPageParam
+     */
+    searchMsgByPage(param: QChatMessageSearchPageParam): Promise<QChatMessageSearchPageResp> {
+        const p = new Promise<QChatMessageSearchPageResp>((resolve, reject) => {
+            param.cb = (resp: QChatMessageSearchPageResp) => {
+                if (resp.res_code === NIMResCode.kNIMResSuccess) {
+                    resolve(resp)
+                } else {
+                    reject(resp)
+                }
+            }
+            this.instance.SearchMsgByPage(param)
         })
         return p
     }

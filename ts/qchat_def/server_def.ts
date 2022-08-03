@@ -112,6 +112,26 @@ export interface QChatServerSubscribeResp {
     failed_servers?: Array<number>
 }
 
+/** @interface QChatServerSubscribeAllChannelResp */
+export interface QChatServerSubscribeAllChannelResp {
+    /** 操作结果, 参考NIMResCode */
+    res_code?: number
+    /** 订阅失败列表 */
+    failed_servers?: Array<number>
+}
+
+/** @interface QChatServerMarkReadResp */
+export interface QChatServerMarkReadResp {
+    /** 操作结果, 参考NIMResCode */
+    res_code?: number
+    /** 订阅失败列表 */
+    failed_servers?: Array<number>
+    /** 订阅成功列表 */
+    succeeded_servers?: Array<number>
+    /** 标记已读时间戳 */
+    timestamp?: number
+}
+
 /** @interface QChatServerBanMemberResp */
 export type QChatServerBanMemberResp = QChatBaseResp
 
@@ -252,6 +272,10 @@ export type ServerJoinByInviteCodeCallback = (resp: QChatServerJoinByInviteCodeR
 export type ServerGetInviteApplyRecordOfServerCallback = (resp: QChatServerGetInviteApplyRecordOfServerResp) => void
 /** 查询自己的申请邀请记录回调 */
 export type ServerGetInviteApplyRecordOfSelfCallback = (resp: QChatServerGetInviteApplyRecordOfSelfResp) => void
+/** 服务器标记已读 */
+export type ServerMarkReadCallback = (resp: QChatServerMarkReadResp) => void
+/** 订阅所有频道 */
+export type ServerSubscribeAllChannelCallback = (resp: QChatServerSubscribeAllChannelResp) => void
 
 /** @interface QChatServerCreateParam */
 export interface QChatServerCreateParam {
@@ -570,4 +594,22 @@ export interface QChatServerGetInviteApplyRecordOfSelfParam {
     limit?: number
     /** 要排除的记录id */
     exclude_record_id?: number
+}
+
+/** @interface QChatServerMarkReadParam */
+export interface QChatServerMarkReadParam {
+    /** @internal */
+    cb?: ServerMarkReadCallback
+    /** 服务器 id 列表 */
+    server_ids?: Array<number>
+}
+
+/** @interface QChatServerSubscribeAllChannelParam */
+export interface QChatServerSubscribeAllChannelParam {
+    /** @internal */
+    cb?: ServerMarkReadCallback
+    /** 订阅类型 */
+    sub_type: NIMQChatSubscribeType
+    /** 服务器 id 列表 */
+    server_ids?: Array<number>
 }

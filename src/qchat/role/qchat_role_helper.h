@@ -26,6 +26,7 @@ ReflectionDefinition_O(QChatGetChannelCategoryMemberRolesPageResp, res_code, rol
 ReflectionDefinition_O(QChatGetExistingServerRolesByAccidsResp, res_code, roles_of_member_ids);
 ReflectionDefinition_O(QChatGetExistingAccidsOfMemberRolesResp, res_code, member_ids_result);
 ReflectionDefinition_O(QChatCheckPermissionResp, res_code, has_permission);
+ReflectionDefinition_O(QChatCheckPermissionsResp, res_code, permissions);
 ReflectionDefinition_O(QChatCreateServerRoleParam, cb, info, anti_spam_info);
 ReflectionDefinition_O(QChatUpdateServerRoleParam, cb, info, anti_spam_info);
 ReflectionDefinition_O(QChatUpdateServerRolePrioritiesParam, cb, server_id, priority_map);
@@ -48,6 +49,7 @@ ReflectionDefinition_O(QChatGetExistingChannelRolesByServerRoleIdsParam, cb, ser
 ReflectionDefinition_O(QChatGetExistingAccidsOfMemberRolesParam, cb, server_id, channel_id, accids);
 ReflectionDefinition_O(QChatGetExistingAccidsInServerRoleParam, cb, server_id, role_id, accids);
 ReflectionDefinition_O(QChatCheckPermissionParam, cb, server_id, channel_id, permission);
+ReflectionDefinition_O(QChatCheckPermissionsParam, cb, server_id, channel_id, permissions);
 ReflectionDefinition_O(QChatAddChannelCategoryRoleParam, cb, server_id, category_id, parent_role_id);
 ReflectionDefinition_O(QChatUpdateChannelCategoryRoleParam, cb, server_id, category_id, role_id, permissions);
 ReflectionDefinition_O(QChatRemoveChannelCategoryRoleParam, cb, server_id, category_id, role_id);

@@ -55,6 +55,8 @@ ReflectionDefinition_O(QChatServerApplyResp, res_code, request_id, expire_time);
 ReflectionDefinition_O(QChatServerGetMembersResp, res_code, member_list);
 ReflectionDefinition_O(QChatServerGetMembersPageResp, res_code, page_info, member_list);
 ReflectionDefinition_O(QChatServerSubscribeResp, res_code, failed_servers);
+ReflectionDefinition_O(QChatServerSubscribeAllChannelResp, res_code, failed_servers);
+ReflectionDefinition_O(QChatServerMarkReadResp, res_code, succeeded_servers, failed_servers, timestamp);
 ReflectionDefinition_O(QChatServerGetBannedMembersPageResp, res_code, page_info, ban_list);
 ReflectionDefinition_O(QChatServerUnreadResp, unread_infos);
 ReflectionDefinition_O(QChatServerGenerateInviteCodeResp, res_code, invite_code, expire_time);
@@ -76,6 +78,8 @@ ReflectionDefinition_O(QChatServerUpdateMemberInfoParam, cb, member_info, anti_s
 ReflectionDefinition_O(QChatServerGetMembersParam, cb, server_accid_list);
 ReflectionDefinition_O(QChatServerGetMembersPageParam, cb, server_id, timestamp, limit);
 ReflectionDefinition_O(QChatServerSubscribeParam, cb, ope_type, sub_type, server_ids);
+ReflectionDefinition_O(QChatServerSubscribeAllChannelParam, cb, sub_type, server_ids);
+ReflectionDefinition_O(QChatServerMarkReadParam, cb, server_ids);
 ReflectionDefinition_O(QChatServerBanMemberParam, cb, server_id, accid, custom);
 ReflectionDefinition_O(QChatServerUnbanMemberParam, cb, server_id, accid, custom);
 ReflectionDefinition_O(QChatServerGetBannedMembersPageParam, cb, server_id, timestamp, limit);

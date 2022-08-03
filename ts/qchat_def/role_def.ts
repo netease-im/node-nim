@@ -10,7 +10,8 @@ import {
     QChatBusinessAntiSpamInfo,
     QChatPermission,
     NIMQChatPermissions,
-    QChatRoleMemberInfo
+    QChatRoleMemberInfo,
+    NIMQChatPermissionsOption
 } from './public_def'
 
 /** @interface QChatCreateServerRoleResp */
@@ -170,7 +171,12 @@ export interface QChatCheckPermissionResp {
     has_permission?: boolean
 }
 
-///
+/** @interface QChatCheckPermissionsResp */
+export interface QChatCheckPermissionsResp {
+    /** 操作结果，@see NIMResCode */
+    res_code?: NIMResCode
+    permissions?: Map<NIMQChatPermissions, NIMQChatPermissionsOption>
+}
 
 // callbacks
 export type QChatCreateServerRoleCallback = (resp: QChatCreateServerRoleResp) => void
@@ -195,6 +201,7 @@ export type QChatGetExistingRolesInChannelCallback = (resp: QChatGetExistingChan
 export type QChatGetExistingAccidsOfMemberRolesCallback = (resp: QChatGetExistingAccidsOfMemberRolesResp) => void
 export type QChatGetExistingAccidsInServerRoleCallback = (resp: QChatGetExistingAccidsInServerRoleResp) => void
 export type QChatCheckPermissionCallback = (resp: QChatCheckPermissionResp) => void
+export type QChatCheckPermissionsCallback = (resp: QChatCheckPermissionsResp) => void
 export type QChatAddChannelCategoryRoleCallback = (resp: QChatAddChannelCategoryRoleResp) => void
 export type QChatUpdateChannelCategoryRoleCallback = (resp: QChatUpdateChannelCategoryRoleResp) => void
 export type QChatRemoveChannelCategoryRoleCallback = QChatBaseCallback
@@ -419,6 +426,14 @@ export interface QChatCheckPermissionParam {
     server_id?: number
     channel_id?: number
     permission?: NIMQChatPermissions
+}
+
+/** @interface QChatCheckPermissionsParam */
+export interface QChatCheckPermissionsParam {
+    cb?: QChatCheckPermissionsCallback
+    server_id?: number
+    channel_id?: number
+    permissions?: Array<NIMQChatPermissions>
 }
 
 /** @interface QChatAddChannelCategoryRoleParam */

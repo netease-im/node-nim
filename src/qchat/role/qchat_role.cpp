@@ -28,6 +28,7 @@ Napi::Object QChatRole::Init(Napi::Env env, Napi::Object exports) {
         RegApi("GetExistingAccidsOfMemberRoles", &Role::GetExistingAccidsOfMemberRoles),
         RegApi("GetExistingAccidsInServerRole", &Role::GetExistingAccidsInServerRole),
         RegApi("CheckPermission", &Role::CheckPermission),
+        RegApi("CheckPermissions", &Role::CheckPermissions),
         RegApi("AddChannelCategoryRole", &Role::AddChannelCategoryRole),
         RegApi("RemoveChannelCategoryRole", &Role::RemoveChannelCategoryRole),
         RegApi("UpdateChannelCategoryRole", &Role::UpdateChannelCategoryRole),

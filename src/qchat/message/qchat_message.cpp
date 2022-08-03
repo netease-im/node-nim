@@ -21,7 +21,8 @@ Napi::Object QChatMessage::Init(Napi::Env env, Napi::Object exports) {
         RegApi("GetThreadRootMessagesMeta", &Message::GetThreadRootMessagesMeta),
         RegApi("AddQuickComment", &Message::AddQuickComment),
         RegApi("RemoveQuickComment", &Message::RemoveQuickComment),
-        RegApi("GetQuickComments", &Message::GetQuickComments)
+        RegApi("GetQuickComments", &Message::GetQuickComments),
+        RegApi("SearchMsgByPage", &Message::SearchMsgByPage)
         });
     // clang-format on
 }

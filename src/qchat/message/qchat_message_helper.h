@@ -63,6 +63,7 @@ ReflectionDefinition_O(QChatMessageSend,
     server_id,
     channel_id,
     msg_type,
+    msg_sub_type,
     msg_body,
     msg_attach,
     msg_ext,
@@ -86,6 +87,7 @@ ReflectionDefinition_O(QChatMessage,
     server_id,
     channel_id,
     msg_type,
+    msg_sub_type,
     msg_body,
     msg_attach,
     msg_ext,
@@ -147,4 +149,20 @@ ReflectionDefinition_O(QChatAddQuickCommentParam, cb, message, type);
 ReflectionDefinition_O(QChatRemoveQuickCommentParam, cb, message, type);
 ReflectionDefinition_O(QChatGetThreadRootMessagesMetaParam, cb, server_id, channel_id, thread_root_messages);
 ReflectionDefinition_O(QChatGetQuickCommentsParam, cb, server_id, channel_id, msg_server_id_list);
+ReflectionDefinition_O(QChatMessageSearchPageParam,
+    cb,
+    keyword,
+    server_id,
+    channel_id,
+    from_accid,
+    from_time,
+    to_time,
+    msg_types,
+    sub_types,
+    include_self,
+    order,
+    sort,
+    limit,
+    cursor);
+
 #endif  // __QCHAT_MESSAGE_HELPER_H__
