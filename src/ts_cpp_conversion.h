@@ -77,7 +77,7 @@ struct NapiFunctionDesc {
     Napi::Env env;
     Napi::Function function;
 };
-extern thread_local std::queue<NapiFunctionDesc> ts_cpp_conversion_functions;
+inline thread_local std::queue<NapiFunctionDesc> ts_cpp_conversion_functions;
 static void StoreFunctionInObject(Napi::Env env, const Napi::Object& obj) {
     for (auto it = obj.begin(); it != obj.end(); ++it) {
         auto member = (*it).second.operator Napi::Value();
