@@ -70,14 +70,14 @@ struct ParamRegistrar {
     ParamRegistrar(const std::string& name) { ParamRegInfoCollector::GetInstance()->RegisterParam<TClass>(name); }
 };
 
-namespace ts_cpp_conversion {
-using ptr_int8_t = char*;
-using ptr_void_t = void*;
 struct NapiFunctionDesc {
     Napi::Env env;
     Napi::Function function;
 };
 inline thread_local std::queue<NapiFunctionDesc> ts_cpp_conversion_functions;
+namespace ts_cpp_conversion {
+using ptr_int8_t = char*;
+using ptr_void_t = void*;
 static void StoreFunctionInObject(Napi::Env env, const Napi::Object& obj) {
     for (auto it = obj.begin(); it != obj.end(); ++it) {
         auto member = (*it).second.operator Napi::Value();

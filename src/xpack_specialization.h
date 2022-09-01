@@ -43,12 +43,12 @@ struct is_xpack_xtype<std::function<TR(Args...)>> {
 
 template <class OBJ, typename TR, typename... Args>
 bool xpack_xtype_decode(OBJ& obj, const char* key, std::function<TR(Args...)>& val, const Extend* ext) {
-    if (ts_cpp_conversion::ts_cpp_conversion_functions.empty()) {
+    if (ts_cpp_conversion_functions.empty()) {
         return false;
     }
-    val = CppInvoker::ToThreadSafeCallback(ts_cpp_conversion::ts_cpp_conversion_functions.front().env,
-        ts_cpp_conversion::ts_cpp_conversion_functions.front().function, "TempMemberCallback", (std::function<TR(Args...)>*)(nullptr));
-    ts_cpp_conversion::ts_cpp_conversion_functions.pop();
+    val = CppInvoker::ToThreadSafeCallback(ts_cpp_conversion_functions.front().env, ts_cpp_conversion_functions.front().function,
+        "TempMemberCallback", (std::function<TR(Args...)>*)(nullptr));
+    ts_cpp_conversion_functions.pop();
     return true;
 }
 
