@@ -49,7 +49,6 @@ ReflectionDefinition_O(QChatFCSConfiguration,
 ReflectionDefinition_O(QChatMessageCacheConfiguration, enable_message_cache);
 ReflectionDefinition_O(QChatInitParam,
     app_data_path,
-    app_install_path,
     custom_timeout,
     auth_timeout,
     database_encrypt_key,

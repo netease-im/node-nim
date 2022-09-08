@@ -186,8 +186,6 @@ export interface QChatMessageCacheConfiguration {
 export interface QChatInitParam {
     /** APP数据存储路径，如果为空，则使用系统默认路径 */
     app_data_path?: string
-    /** APP安装路径，用于加载依赖库，如果为空，则使用当前路径 */
-    app_install_path?: string
     /** 自定义通信超时时间，单位秒, 为0使用默认值 */
     custom_timeout?: number
     /** 自定义鉴权超时时间，单位秒, 为0使用默认值 */
