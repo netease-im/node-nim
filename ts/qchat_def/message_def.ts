@@ -92,6 +92,8 @@ export interface QChatMessageSend {
     mention_all?: boolean
     /** 可选，被艾特的人的accid列表 */
     mention_accids?: Array<string>
+    /** 可选，被艾特的人的身份组id列表 */
+    mention_role_ids?: Array<number>
     /** 必填，该消息是否存储云端历史，0:不支持，1:支持 */
     history_enable?: boolean
     /** 可选，自定义的推送属性，限制json */
@@ -162,6 +164,8 @@ export interface QChatMessage {
     mention_all?: boolean
     /** 可选，被艾特的人的accid列表 */
     mention_accids?: Array<string>
+    /** 可选，被艾特的人的身份组id列表 */
+    mention_role_ids?: Array<number>
     /** 必填，该消息是否存储云端历史，0:不支持，1:支持 */
     history_enable?: boolean
     /** 可选，自定义的推送属性，限制json */
