@@ -27,7 +27,6 @@
 #include "qchat/attachment/qchat_attachment.h"
 #include "qchat/channel/qchat_channel.h"
 #include "qchat/channel_category/qchat_channel_category.h"
-#include "qchat/instance/qchat_instance.h"
 #include "qchat/message/qchat_message.h"
 #include "qchat/role/qchat_role.h"
 #include "qchat/server/qchat_server.h"
@@ -60,7 +59,6 @@ Napi::Object RegisterModule(Napi::Env env, Napi::Object exports) {
     node_nim::QChatAttachment::Init(env, exports);
     node_nim::QChatChannel::Init(env, exports);
     node_nim::QChatChannelCategory::Init(env, exports);
-    node_nim::QChatInstance::Init(env, exports);
     node_nim::QChatMessage::Init(env, exports);
     node_nim::QChatRole::Init(env, exports);
     node_nim::QChatServer::Init(env, exports);
