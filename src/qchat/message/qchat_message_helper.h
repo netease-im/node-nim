@@ -9,7 +9,7 @@
 #include "../qchat_public_helper.h"
 #include "nim_qchat_cpp_wrapper/nim_cpp_qchat_api.h"
 #include "xpack_specialization.h"
-using namespace nim_qchat;
+using namespace nim;
 inline static bool MatchAttachFileds(const nim_cpp_wrapper_util::Json::Value& value, std::vector<std::string> match_fileds) {
     for (auto& filed : match_fileds) {
         if (!value.isMember(filed.c_str())) {

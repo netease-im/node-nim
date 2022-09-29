@@ -8,7 +8,7 @@
 #define __PUBLIC_HELPER_H__
 #include "nim_qchat_cpp_wrapper/nim_cpp_qchat_api.h"
 #include "xpack_specialization.h"
-using namespace nim_qchat;
+using namespace nim;
 ReflectionDefinition_O(QChatPageInfo, has_more, next_timestamp, cursor);
 ReflectionDefinition_O(NIMQChatServerUnreadInfo, server_id, unread_count, mentioned_unread_count, max_unread_count);
 ReflectionDefinition_O(NIMQChatChannelIDInfo, server_id, channel_id);

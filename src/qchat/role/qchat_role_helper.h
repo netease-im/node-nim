@@ -9,7 +9,7 @@
 #include "../qchat_public_helper.h"
 #include "nim_qchat_cpp_wrapper/nim_cpp_qchat_api.h"
 #include "xpack_specialization.h"
-using namespace nim_qchat;
+using namespace nim;
 ReflectionDefinition_O(QChatCreateServerRoleResp, res_code, role_info);
 ReflectionDefinition_O(QChatUpdateServerRoleResp, res_code, role_info);
 ReflectionDefinition_O(QChatGetServerRolesResp, res_code, role_infos, joined_roles);

@@ -10,7 +10,7 @@
 #include "../server/qchat_server_helper.h"
 #include "nim_qchat_cpp_wrapper/nim_cpp_qchat_api.h"
 #include "xpack_specialization.h"
-using namespace nim_qchat;
+using namespace nim;
 ReflectionDefinition_O(QChatChannelSubscribeResp, res_code, failed_channels);
 ReflectionDefinition_O(QChatChannelQueryUnreadInfoResp, res_code, unread_infos);
 ReflectionDefinition_O(QChatChannelCreateResp, res_code, channel_info);
