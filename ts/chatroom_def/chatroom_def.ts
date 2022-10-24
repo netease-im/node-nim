@@ -160,6 +160,18 @@ export interface ChatRoomAnoymityEnterInfo {
     /** 登录聊天室的密码 */
     token_?: string
 }
+export interface ChatRoomConfig {
+    public_config: {
+        nego_key_neca: number
+        comm_enca: number
+        hand_shake_type: number
+    }
+    private_config: {
+        nego_key_enca_key_parta: string
+        nego_key_enca_key_partb: string
+        nego_key_enca_key_version: number
+    }
+}
 export interface ChatRoomEnterInfoValue {
     /** 设置进入聊天室后展示的昵称 */
     nick?: string
@@ -314,6 +326,21 @@ export interface ChatRoomGetMsgHistoryParameters {
     limit_?: number
     /** 是否反向查询 */
     reverse_?: boolean
+    /** 类型 */
+    msg_types_?: Array<NIMChatRoomMsgType>
+}
+
+export interface ChatRoomGetMsgHistoryByTagsParameters {
+    /** 开始时间,单位毫秒 */
+    start_timetag_?: number
+    /** 结束时间,单位毫秒 */
+    end_timetag_?: number
+    /** 本次返回的消息数量 */
+    limit_?: number
+    /** 是否反向查询 */
+    reverse_?: boolean
+    /** 标签 */
+    tags_?: Array<string>
     /** 类型 */
     msg_types_?: Array<NIMChatRoomMsgType>
 }

@@ -15,8 +15,8 @@
 
 ## Introduction
 
-node-nim is a wrapper of [NetEase IM](https://netease.im/).   
-For more detailed documentation, changelog and tech support. See https://dev.yunxin.163.com/. 
+node-nim is a wrapper of [NetEase IM](https://netease.im/).  
+For more detailed documentation, changelog and tech support. See https://dev.yunxin.163.com/.
 
 ## Installation
 
@@ -59,50 +59,46 @@ npm run coverage
 ## Sample Code
 
 ```js
-// QChat
-import * as node_nim from 'node-nim'
-const instance = new node_nim.QChatInstanceModule()
-let ret = instance.init({})
-if (!ret) {
-    console.log('init failed')
-    process.exit(1)
-}
-instance.initEventHandlers()
-let resp = await instance.login({
-    appkey: 'app_key',
-    accid: 'username',
-    auth_type: 0,
-    login_token: 'password',
-    link_address: ['link1', 'link2']
-})
-console.log(resp)
-```
-```js
 // Chatroom
 import * as node_nim from 'node-nim'
-const chatroom = new node_nim.ChatroomModule()
-let ret = chatroom.init('', '')
-if (!ret) {
+const chatroom = new node_nim.ChatRoomModule()
+if (!chatroom.init('', '')) {
     console.log('init failed')
     process.exit(1)
 }
 chatroom.initEventHandlers()
-ret = chatroom.enter('room_id', 'login_data', {}, '')
-if (!ret) {
-    console.log('enter failed')
+chatroom.on('enter', function (...resp) {
+    console.log('enter', resp)
+    if (resp[1] == 5 && resp[2] == 200) {
+        // do something
+    }
+})
+if (
+    !chatroom.independentEnter(
+        36,
+        {
+            accid_: 'accid',
+            token_: 'token',
+            app_key_: 'appkey',
+            address_: ['link_address']
+        },
+        {}
+    )
+) {
+    console.log('independentEnter failed')
     process.exit(1)
 }
 ```
+
 ```js
 // NIM
 import * as node_nim from 'node-nim'
-const client = new node_nim.NIMClient()
+const client = new node_nim.V2Client()
 const talk = new node_nim.NIMTalk()
-const result = client.init('app_key', 'app_data_dir', 'app_install_dir', {
-    db_encrypt_key: 'abcdefghijklmnopqrstuvwxyz012345'
+const result = client.init({
+    app_key: 'appkey'
 })
-
-if(!result) {
+if (result.rescode != 200) {
     console.log('init failed')
     process.exit(1)
 }
@@ -110,16 +106,14 @@ if(!result) {
 client.initEventHandlers()
 talk.initEventHandlers()
 
-let resp = await client.login(
-    'app_key',
-    'username',
-    'password',
-    null, // pass your callback function if you dont use the return Promise
-    ''
-)
-if(resp[0].res_code_ != node_nim.NIMResCode.kNIMResSuccess) {
-        console.log('login failed')
-        process.exit(1)
+let resp = await client.login({
+    accid: 'accid',
+    token: 'token'
+})
+
+if (resp[0].result.rescode != node_nim.NIMResCode.kNIMResSuccess) {
+    console.log('login failed')
+    process.exit(1)
 }
 console.log('loginResult', res)
 // login has 3 steps, step 3 succeeded
@@ -141,7 +135,6 @@ talk.sendMsg(
     },
     ''
 )
-            
 ```
 
 ## Quick Start

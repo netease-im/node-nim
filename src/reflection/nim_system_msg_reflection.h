@@ -1,5 +1,5 @@
 /**
- * @file nim_node_system_msg_helper.h
+ * @file nim_system_msg_reflection.h
  * @author NetEase Yunxin
  * @date 2022-02-21
  * @copyright (c) 2022, NetEase Inc. All rights reserved
@@ -41,6 +41,5 @@ ReflectionDefinition_O(SendMessageArc, talk_id_, msg_id_, rescode_, msg_timetag_
 CallbackSpecialization(SystemMsg::ReceiveSysmsgCallback);
 CallbackSpecialization(SystemMsg::SendCustomSysmsgCallback);
 CallbackSpecialization(SystemMsg::QueryMsgCallback);
-CallbackSpecialization(SystemMsg::NotifySysmsgResCallback);
 CallbackSpecialization(SystemMsg::NotifySingleSysmsgCallback);
 #endif

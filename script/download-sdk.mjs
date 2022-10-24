@@ -1,7 +1,10 @@
 import fetch from 'node-fetch'
 import compareVersions from 'compare-versions'
 import download from 'download'
-
+if (process.env.npm_config_ignore_download_sdk) {
+    console.log('ignore download sdk')
+    process.exit(0)
+}
 const arch = process.env.npm_config_arch || process.arch
 const platform = process.env.npm_config_platform || process.platform
 const sdk_group = 'message'

@@ -239,14 +239,16 @@ export enum NIMResCode {
     kNIMLocalResAPIErrorInitUndone = 20000,
     /** 还未登陆或登录未完成 */
     kNIMLocalResAPIErrorLoginUndone = 20001,
+    /** 已经在登陆中 */
+    kNIMLocalResAPIErrorLogining = 20002,
     /** 已经登录 */
-    kNIMLocalResAPIErrorLogined = 20002,
+    kNIMLocalResAPIErrorLogined = 20003,
     /** SDK版本不对，可能会引发其他问题 */
-    kNIMLocalResAPIErrorVersionError = 20003,
+    kNIMLocalResAPIErrorVersionError = 20004,
     /** 聊天室模式混用错误，不支持同时以登陆状态和匿名状态登陆聊天室 */
-    kNIMLocalResAPIErrorChatroomMixError = 20004,
-    /** 连接地址用完了 */
-    kNIMLocalResAPIErrorRunOutOfLinkAddress = 20005
+    kNIMLocalResAPIErrorChatroomMixError = 20005,
+    /** 登录失败，超过重试次数 */
+    kNIMLocalResAPIErrorLoginExceedRetryCount = 20006
 }
 
 export enum NIMQChatPermissions {

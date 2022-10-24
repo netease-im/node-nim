@@ -1,5 +1,5 @@
 /**
- * @file nim_node_data_sync_helper.h
+ * @file nim_data_sync_reflection.h
  * @author NetEase Yunxin
  * @date 2022-02-21
  * @copyright (c) 2022, NetEase Inc. All rights reserved

@@ -6,7 +6,7 @@
  */
 
 #include "nim_node_system_msg.h"
-#include "nim_node_system_msg_helper.h"
+#include "reflection/reflection_include.h"
 
 namespace node_nim {
 GetCurrentSDKServiceImpl(NIMSystemMsg, NIMSystemMsg, holder_service);

@@ -1,5 +1,5 @@
 /**
- * @file nim_node_msglog_helper.h
+ * @file nim_msglog_reflection.h
  * @author NetEase Yunxin
  * @date 2022-02-21
  * @copyright (c) 2022, NetEase Inc. All rights reserved
@@ -128,8 +128,6 @@ CallbackSpecialization(MsgLog::QueryMsgCallback);
 CallbackSpecialization(MsgLog::QuerySingleMsgCallback);
 CallbackSpecialization(MsgLog::ModifyMultipleMsglogCallback);
 CallbackSpecialization(MsgLog::ModifySingleMsglogCallback);
-CallbackSpecialization(MsgLog::DeleteMsglogSelfNotifyCallback);
-CallbackSpecialization(MsgLog::DBFunctionCallback);
 CallbackSpecialization(MsgLog::ImportDbPrgCallback);
 CallbackSpecialization(MsgLog::MessageStatusChangedCallback);
 CallbackSpecialization(MsgLog::DeleteHistoryOnLineAsyncExCallback);

@@ -6,7 +6,7 @@
  */
 
 #include "nim_node_online_session.h"
-#include "nim_node_online_session_helper.h"
+#include "reflection/reflection_include.h"
 
 namespace node_nim {
 GetCurrentSDKServiceImpl(NIMOnlineSession, NIMOnlineSession, holder_service);

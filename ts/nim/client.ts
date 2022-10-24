@@ -39,6 +39,11 @@ export class NIMClient extends EventEmitter<NIMClientEvents> {
         this.client = new sdk.NIMClient({ emit: this.emit.bind(this) })
     }
 
+    /** 注册全局回调 */
+    initEventHandlers(): void {
+        return this.client.InitEventHandlers()
+    }
+
     /** NIM SDK初始化
      * @param appKey 应用注册的APP KEY
      * @param appDataDir 推荐用户目录放置在系统目录AppData\Local，默认只需要传入目录名，SDK会默认在系统目录下创建该级用户目录。如果要使用其他自定义路径，需传入绝对路径路径，并确保该目录有正确的读写权限。
@@ -48,11 +53,6 @@ export class NIMClient extends EventEmitter<NIMClientEvents> {
      */
     init(appKey: string, appDataDir: string, appInstallDir: string, config: SDKConfig): boolean {
         return this.client.Init(appKey, appDataDir, appInstallDir, config)
-    }
-
-    /** 注册全局回调 */
-    initEventHandlers(): void {
-        return this.client.InitEventHandlers()
     }
 
     /** NIM客户端登录

@@ -1,5 +1,5 @@
 /**
- * @file nim_node_online_session_helper.h
+ * @file nim_online_session_reflection.h
  * @author NetEase Yunxin
  * @date 2022-02-21
  * @copyright (c) 2022, NetEase Inc. All rights reserved
@@ -16,8 +16,6 @@ ReflectionDefinition_O(SessionOnLineServiceHelper::DeleteSessionParam, delete_li
 
 // Callback
 CallbackSpecialization(SessionOnLineService::QuerySessionInfoCallback);
-CallbackSpecialization(SessionOnLineService::QuerySessionListCallabck);
-CallbackSpecialization(SessionOnLineService::UpdateSessionInfoCallback);
 CallbackSpecialization(SessionOnLineService::SessionChangedCallback);
 
 // xpack specialization

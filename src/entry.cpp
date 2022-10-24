@@ -24,6 +24,7 @@
 #include "nim/team/nim_node_team.h"
 #include "nim/tool/nim_node_tool.h"
 #include "nim/user/nim_node_user.h"
+#include "nim/v2client/nim_node_v2client.h"
 #include "qchat/channel/qchat_channel.h"
 #include "qchat/channel_category/qchat_channel_category.h"
 #include "qchat/message/qchat_message.h"
@@ -54,6 +55,7 @@ Napi::Object RegisterModule(Napi::Env env, Napi::Object exports) {
     node_nim::NIMTeam::Init(env, exports);
     node_nim::NIMTool::Init(env, exports);
     node_nim::NIMUser::Init(env, exports);
+    node_nim::NODEV2Client::Init(env, exports);
     node_nim::NIMChatRoom::Init(env, exports);
     node_nim::QChatChannel::Init(env, exports);
     node_nim::QChatChannelCategory::Init(env, exports);

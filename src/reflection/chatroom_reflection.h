@@ -1,5 +1,5 @@
 /**
- * @file chatroom_helper.h
+ * @file chatroom_reflection.h
  * @author NetEase Yunxin
  * @date 2022-07-05
  * @copyright (c) 2022, NetEase Inc. All rights reserved
@@ -29,6 +29,7 @@ ReflectionDefinition_O(ChatRoomEnterInfo, values_);
 ReflectionDefinition_O(ChatRoomGetMembersParameters, type_, timestamp_offset_, limit_);
 ReflectionDefinition_O(ChatRoomGetMembersByTagParameters, tag_, timestamp_offset_, limit_);
 ReflectionDefinition_O(ChatRoomGetMsgHistoryParameters, start_timetag_, limit_, reverse_, msg_types_);
+ReflectionDefinition_O(ChatRoomGetMsgHistoryByTagsParameters, start_timetag_, end_timetag_, limit_, reverse_, msg_types_, tags_);
 ReflectionDefinition_O(ChatRoomSetMemberAttributeParameters, account_id_, attribute_, opt_, notify_ext_);
 ReflectionDefinition_O(ChatRoomInfo, id_, name_, announcement_, broadcast_url_, creator_id_, valid_flag_, ext_, online_count_, mute_all_, queuelevel);
 ReflectionDefinition_O(ChatRoomMemberInfo,
@@ -102,5 +103,20 @@ ReflectionDefinition_O(ChatRoomNotification,
     msg_id_,
     msg_timetag_);
 ReflectionDefinition_O(ChatRoomUpdateTagsInfo, tags_, notify_target_tags_, need_notify_, ext_);
+
+// Callback
+CallbackSpecialization(ChatRoom::GetMembersCallback);
+CallbackSpecialization(ChatRoom::GetMembersCountByTagCallback);
+CallbackSpecialization(ChatRoom::GetMsgHistoryCallback);
+CallbackSpecialization(ChatRoom::SetMemberAttributeCallback);
+CallbackSpecialization(ChatRoom::GetChatRoomInfoCallback);
+CallbackSpecialization(ChatRoom::KickMemberCallback);
+CallbackSpecialization(ChatRoom::LinkConditionCallback);
+CallbackSpecialization(ChatRoom::TagsChangedCallback);
+CallbackSpecialization(ChatRoom::CustomTokenCallback);
+CallbackSpecialization(ChatRoom::QueuePollCallback);
+CallbackSpecialization(ChatRoom::QueueListCallback);
+CallbackSpecialization(ChatRoom::QueueBatchUpdateCallback);
+CallbackSpecialization(ChatRoom::SDKLogCallback);
 
 #endif  // __CHATROOM_HELPER_H__

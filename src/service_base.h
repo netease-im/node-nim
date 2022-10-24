@@ -115,14 +115,14 @@ public:
     TService* GetCurrentService(ServiceBase* obj_holder) {
         return nullptr;
     }
-
-private:
     template <typename TCallback>
     auto MakeNotifyCallback(const std::string& flag) -> TCallback {
         using CallbackType = typename std::decay<TCallback>::type;
         CallbackType* ptrCallback = nullptr;
         return _MakeNotifyCallback(flag, ptrCallback /*reinterpret_cast<TCallback*>(nullptr)*/);
     }
+
+private:
     template <typename TR, typename... TArgs>
     auto _MakeNotifyCallback(const std::string& flag, const std::function<TR(TArgs...)>* ff) -> std::function<TR(TArgs...)> {
         return [this, flag](TArgs... args) {

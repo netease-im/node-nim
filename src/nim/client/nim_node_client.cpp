@@ -6,7 +6,8 @@
  */
 
 #include "nim_node_client.h"
-#include "nim_node_client_helper.h"
+#include "reflection/reflection_include.h"
+
 namespace node_nim {
 GetCurrentSDKServiceImpl(NIMClient, NIMClient, holder_service);
 Napi::Object NIMClient::Init(Napi::Env env, Napi::Object exports) {

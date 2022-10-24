@@ -74,7 +74,7 @@ struct NapiFunctionDesc {
     Napi::Env env;
     Napi::Function function;
 };
-extern thread_local std::queue<NapiFunctionDesc> ts_cpp_conversion_functions;
+extern thread_local std::deque<NapiFunctionDesc> ts_cpp_conversion_functions;
 namespace ts_cpp_conversion {
 using ptr_int8_t = char*;
 using ptr_void_t = void*;
@@ -82,15 +82,16 @@ static void StoreFunctionInObject(Napi::Env env, const Napi::Object& obj) {
     for (auto it = obj.begin(); it != obj.end(); ++it) {
         auto member = (*it).second.operator Napi::Value();
         if (member.IsFunction()) {
-            ts_cpp_conversion_functions.push({env, member.As<Napi::Function>()});
+            ts_cpp_conversion_functions.push_front({env, member.As<Napi::Function>()});
         } else if (member.IsObject()) {
             StoreFunctionInObject(env, member.As<Napi::Object>());
         }
     }
 }
+
 template <typename T>
 static T ObjectToStruct(Napi::Env env, const Napi::Value& value) {
-    T _struct;
+    T _struct{};
     if (std::is_enum<T>::value) {
         int64_t temp = value.As<Napi::Number>().Int64Value();
         _struct = *(reinterpret_cast<T*>(&temp));
@@ -101,14 +102,18 @@ static T ObjectToStruct(Napi::Env env, const Napi::Value& value) {
         std::string _object_json_text;
         Napi::Object json = env.Global().Get("JSON").As<Napi::Object>();
         Napi::Function stringify = json.Get("stringify").As<Napi::Function>();
-        _object_json_text = stringify.Call(json, {value}).As<Napi::String>();
+        auto json_str_value = stringify.Call(json, {value});
+        if (json_str_value.IsString()) {
+            _object_json_text = json_str_value.As<Napi::String>().Utf8Value();
+        } else {
+            Napi::Error::New(env, "[node-nim] json stringify failed, get type: " + std::to_string(json_str_value.Type()))
+                .ThrowAsJavaScriptException();
+            return _struct;
+        }
         try {
             xpack::json::decode(_object_json_text, _struct);
-            // ParamRegInfoCollector::GetInstance()->UpdateParamRefValue<T>(xpack::json::encode(_struct));
-        } catch (const std::runtime_error& error) {
-            throw(std::string(error.what()));
-        } catch (const std::string& error) {
-            throw(error);
+        } catch (const std::exception& e) {
+            Napi::Error::New(env, "[node-nim] xpack json decode failed").ThrowAsJavaScriptException();
         }
     }
     return _struct;
@@ -131,7 +136,7 @@ static napi_value StructToObject(Napi::Env env, const T& value) {
 template <>
 bool ts_cpp_conversion::ObjectToStruct<bool>(Napi::Env env, const Napi::Value& value) {
     if (!value.IsBoolean()) {
-        Napi::Error::New(env, "boolean type error").ThrowAsJavaScriptException();
+        Napi::Error::New(env, "[node-nim] expected boolean, but get" + std::to_string(value.Type())).ThrowAsJavaScriptException();
         return false;
     }
     return value.As<Napi::Boolean>();
@@ -139,7 +144,7 @@ bool ts_cpp_conversion::ObjectToStruct<bool>(Napi::Env env, const Napi::Value& v
 template <>
 int8_t ts_cpp_conversion::ObjectToStruct<int8_t>(Napi::Env env, const Napi::Value& value) {
     if (!value.IsNumber()) {
-        Napi::Error::New(env, "int8_t type error").ThrowAsJavaScriptException();
+        Napi::Error::New(env, "[node-nim] expected number<int8_t>, but get" + std::to_string(value.Type())).ThrowAsJavaScriptException();
         return 0;
     }
     return value.As<Napi::Number>().Int32Value();
@@ -147,7 +152,7 @@ int8_t ts_cpp_conversion::ObjectToStruct<int8_t>(Napi::Env env, const Napi::Valu
 template <>
 uint8_t ts_cpp_conversion::ObjectToStruct<uint8_t>(Napi::Env env, const Napi::Value& value) {
     if (!value.IsNumber()) {
-        Napi::Error::New(env, "uint8_t type error").ThrowAsJavaScriptException();
+        Napi::Error::New(env, "[node-nim] expected number<uint8_t>, but get" + std::to_string(value.Type())).ThrowAsJavaScriptException();
         return 0;
     }
     return value.As<Napi::Number>().Uint32Value();
@@ -155,7 +160,7 @@ uint8_t ts_cpp_conversion::ObjectToStruct<uint8_t>(Napi::Env env, const Napi::Va
 template <>
 int16_t ts_cpp_conversion::ObjectToStruct<int16_t>(Napi::Env env, const Napi::Value& value) {
     if (!value.IsNumber()) {
-        Napi::Error::New(env, "int16_t type error").ThrowAsJavaScriptException();
+        Napi::Error::New(env, "[node-nim] expected number<int16_t>, but get" + std::to_string(value.Type())).ThrowAsJavaScriptException();
         return 0;
     }
     return value.As<Napi::Number>().Int32Value();
@@ -163,7 +168,7 @@ int16_t ts_cpp_conversion::ObjectToStruct<int16_t>(Napi::Env env, const Napi::Va
 template <>
 uint16_t ts_cpp_conversion::ObjectToStruct<uint16_t>(Napi::Env env, const Napi::Value& value) {
     if (!value.IsNumber()) {
-        Napi::Error::New(env, "uint16_t type error").ThrowAsJavaScriptException();
+        Napi::Error::New(env, "[node-nim] expected number<uint16_t>, but get" + std::to_string(value.Type())).ThrowAsJavaScriptException();
         return 0;
     }
     return value.As<Napi::Number>().Uint32Value();
@@ -171,7 +176,7 @@ uint16_t ts_cpp_conversion::ObjectToStruct<uint16_t>(Napi::Env env, const Napi::
 template <>
 int32_t ts_cpp_conversion::ObjectToStruct<int32_t>(Napi::Env env, const Napi::Value& value) {
     if (!value.IsNumber()) {
-        Napi::Error::New(env, "int32_t type error").ThrowAsJavaScriptException();
+        Napi::Error::New(env, "[node-nim] expected number<int32_t>, but get" + std::to_string(value.Type())).ThrowAsJavaScriptException();
         return 0;
     }
     return value.As<Napi::Number>().Int32Value();
@@ -179,7 +184,7 @@ int32_t ts_cpp_conversion::ObjectToStruct<int32_t>(Napi::Env env, const Napi::Va
 template <>
 uint32_t ts_cpp_conversion::ObjectToStruct<uint32_t>(Napi::Env env, const Napi::Value& value) {
     if (!value.IsNumber()) {
-        Napi::Error::New(env, "uint32_t type error").ThrowAsJavaScriptException();
+        Napi::Error::New(env, "[node-nim] expected number<uint32_t>, but get" + std::to_string(value.Type())).ThrowAsJavaScriptException();
         return 0;
     }
     return value.As<Napi::Number>().Uint32Value();
@@ -187,7 +192,7 @@ uint32_t ts_cpp_conversion::ObjectToStruct<uint32_t>(Napi::Env env, const Napi::
 template <>
 int64_t ts_cpp_conversion::ObjectToStruct<int64_t>(Napi::Env env, const Napi::Value& value) {
     if (!value.IsNumber()) {
-        Napi::Error::New(env, "int64_t type error").ThrowAsJavaScriptException();
+        Napi::Error::New(env, "[node-nim] expected number<int64_t>, but get" + std::to_string(value.Type())).ThrowAsJavaScriptException();
         return 0;
     }
     return value.As<Napi::Number>().Int64Value();
@@ -195,7 +200,7 @@ int64_t ts_cpp_conversion::ObjectToStruct<int64_t>(Napi::Env env, const Napi::Va
 template <>
 uint64_t ts_cpp_conversion::ObjectToStruct<uint64_t>(Napi::Env env, const Napi::Value& value) {
     if (!value.IsNumber()) {
-        Napi::Error::New(env, "uint64_t type error").ThrowAsJavaScriptException();
+        Napi::Error::New(env, "[node-nim] expected number<uint64_t>, but get" + std::to_string(value.Type())).ThrowAsJavaScriptException();
         return 0;
     }
     return value.As<Napi::Number>().Int64Value();
@@ -203,7 +208,7 @@ uint64_t ts_cpp_conversion::ObjectToStruct<uint64_t>(Napi::Env env, const Napi::
 template <>
 float ts_cpp_conversion::ObjectToStruct<float>(Napi::Env env, const Napi::Value& value) {
     if (!value.IsNumber()) {
-        Napi::Error::New(env, "float type error").ThrowAsJavaScriptException();
+        Napi::Error::New(env, "[node-nim] expected number<float>, but get" + std::to_string(value.Type())).ThrowAsJavaScriptException();
         return 0;
     }
     return value.As<Napi::Number>().FloatValue();
@@ -211,7 +216,7 @@ float ts_cpp_conversion::ObjectToStruct<float>(Napi::Env env, const Napi::Value&
 template <>
 double ts_cpp_conversion::ObjectToStruct<double>(Napi::Env env, const Napi::Value& value) {
     if (!value.IsNumber()) {
-        Napi::Error::New(env, "double type error").ThrowAsJavaScriptException();
+        Napi::Error::New(env, "[node-nim] expected number<double>, but get" + std::to_string(value.Type())).ThrowAsJavaScriptException();
         return 0;
     }
     return value.As<Napi::Number>().DoubleValue();
@@ -225,11 +230,41 @@ std::string ts_cpp_conversion::ObjectToStruct<std::string>(Napi::Env env, const 
     if (value.IsObject()) {
         Napi::Object json = env.Global().Get("JSON").As<Napi::Object>();
         Napi::Function stringify = json.Get("stringify").As<Napi::Function>();
-        return stringify.Call(json, {value}).As<Napi::String>();
+        auto str_value = stringify.Call(json, {value});
+        if (str_value.IsString()) {
+            return str_value.As<Napi::String>().Utf8Value();
+        } else {
+            Napi::Error::New(env, "[node-nim] ObjectToStruct<std::string> expected Object, but get" + std::to_string(value.Type()))
+                .ThrowAsJavaScriptException();
+            return "";
+        }
     } else if (value.IsString()) {
-        return value.As<Napi::String>().operator std::string();
+        return value.As<Napi::String>().Utf8Value();
     } else {
-        Napi::Error::New(env, "string type error").ThrowAsJavaScriptException();
+        Napi::Error::New(env, "[node-nim] ObjectToStruct<std::string> get" + std::to_string(value.Type())).ThrowAsJavaScriptException();
+        return "";
+    }
+}
+template <>
+char* ts_cpp_conversion::ObjectToStruct<char*>(Napi::Env env, const Napi::Value& value) {
+    static std::string str;
+    if (value.IsObject()) {
+        Napi::Object json = env.Global().Get("JSON").As<Napi::Object>();
+        Napi::Function stringify = json.Get("stringify").As<Napi::Function>();
+        auto str_value = stringify.Call(json, {value});
+        if (str_value.IsString()) {
+            str = str_value.As<Napi::String>().Utf8Value();
+            return const_cast<char*>(str.c_str());
+        } else {
+            Napi::Error::New(env, "[node-nim] ObjectToStruct<const char*> expected Object, but get" + std::to_string(value.Type()))
+                .ThrowAsJavaScriptException();
+            return "";
+        }
+    } else if (value.IsString()) {
+        str = value.As<Napi::String>().Utf8Value();
+        return const_cast<char*>(str.c_str());
+    } else {
+        Napi::Error::New(env, "[node-nim] ObjectToStruct<const char*> get" + std::to_string(value.Type())).ThrowAsJavaScriptException();
         return "";
     }
 }
@@ -309,6 +344,22 @@ napi_value ts_cpp_conversion::StructToObject<ts_cpp_conversion::ptr_void_t>(Napi
 #define ReflectionDefinitionInternal_O(Class, ...) XPACK_OUT(Class, O(__VA_ARGS__));
 
 #define ReflectionDefinition_O(Class, ...) ReflectionDefinitionInternal_O(Class, __VA_ARGS__);
+
+#define ReflectionDefinitionWithNoFiled(Class)                                                \
+    namespace xpack {                                                                         \
+    template <>                                                                               \
+    struct is_xpack_xtype<Class> {                                                            \
+        static bool const value = true;                                                       \
+    };                                                                                        \
+    template <class OBJ>                                                                      \
+    bool xpack_xtype_decode(OBJ& obj, const char* key, Class& val, const Extend* ext) {       \
+        return true;                                                                          \
+    }                                                                                         \
+    template <class OBJ>                                                                      \
+    bool xpack_xtype_encode(OBJ& obj, const char* key, const Class& val, const Extend* ext) { \
+        return true;                                                                          \
+    }                                                                                         \
+    }
 
 #define ReflectionDefinitionAndReg_O(ClassName, Class, ...) \
     ReflectionDefinitionInternal_O(Class, __VA_ARGS__);     \

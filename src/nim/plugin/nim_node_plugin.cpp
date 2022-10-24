@@ -6,14 +6,13 @@
  */
 
 #include "nim_node_plugin.h"
-#include "nim_node_plugin_helper.h"
+#include "reflection/reflection_include.h"
 
 namespace node_nim {
 GetCurrentSDKServiceImpl(NIMPluginIn, NIMPluginIn, holder_service);
 Napi::Object NIMPluginIn::Init(Napi::Env env, Napi::Object exports) {
     return InternalInit("NIMPluginIn", env, exports,
-        {RegApi("InitEventHandlers", &NIMPluginIn::InitEventHandlers), RegApi("ChatRoomRequestEnterAsync", &PluginIn::ChatRoomRequestEnterAsync),
-            RegApi("QChatRequestLinkAddress", &PluginIn::QChatRequestLinkAddress)});
+        {RegApi("InitEventHandlers", &NIMPluginIn::InitEventHandlers), RegApi("ChatRoomRequestEnterAsync", &PluginIn::ChatRoomRequestEnterAsync)});
 }
 
 void NIMPluginIn::InitEventHandlers() {}

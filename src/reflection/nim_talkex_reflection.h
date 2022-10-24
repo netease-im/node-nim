@@ -1,12 +1,11 @@
 /**
- * @file nim_node_talkex_helper.h
+ * @file nim_talkex_reflection.h
  * @author NetEase Yunxin
  * @date 2022-02-21
  * @copyright (c) 2022, NetEase Inc. All rights reserved
  */
 #ifndef NIM_NODE_TALKEX_HELPER_H
 #define NIM_NODE_TALKEX_HELPER_H
-#include "../msglog/nim_node_msglog_helper.h"
 #include "nim_cpp_wrapper/nim_cpp_api.h"
 #include "xpack_specialization.h"
 
@@ -54,7 +53,6 @@ CallbackSpecialization(TalkEx::Collect::AddCollectCallback);
 CallbackSpecialization(TalkEx::Collect::RemoveCollectsCallback);
 CallbackSpecialization(TalkEx::Collect::QueryCollectsCallback);
 CallbackSpecialization(TalkEx::QuickComment::AddQuickCommentCallback);
-CallbackSpecialization(TalkEx::QuickComment::RemoveQuickCommentCallback);
 CallbackSpecialization(TalkEx::QuickComment::QueryQuickCommentCallback);
 CallbackSpecialization(TalkEx::QuickComment::AddQuickCommentNotifyCallback);
 CallbackSpecialization(TalkEx::QuickComment::RemoveQuickCommentNotifyCallback);

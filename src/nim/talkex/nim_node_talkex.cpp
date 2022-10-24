@@ -6,7 +6,7 @@
  */
 
 #include "nim_node_talkex.h"
-#include "nim_node_talkex_helper.h"
+#include "reflection/reflection_include.h"
 
 namespace node_nim {
 GetCurrentSDKServiceImpl(NIMTalkEx, NIMTalkEx, holder_service);

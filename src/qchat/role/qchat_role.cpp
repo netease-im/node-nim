@@ -1,5 +1,5 @@
 #include "qchat_role.h"
-#include "qchat_role_helper.h"
+#include "reflection/reflection_include.h"
 namespace node_nim {
 GetCurrentSDKServiceImpl(QChatRole, QChatRole, holder_service);
 Napi::Object QChatRole::Init(Napi::Env env, Napi::Object exports) {

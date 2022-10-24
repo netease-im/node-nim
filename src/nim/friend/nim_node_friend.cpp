@@ -6,7 +6,7 @@
  */
 
 #include "nim_node_friend.h"
-#include "nim_node_friend_helper.h"
+#include "reflection/reflection_include.h"
 
 namespace node_nim {
 GetCurrentSDKServiceImpl(NIMFriend, NIMFriend, holder_service);

@@ -36,7 +36,9 @@ import {
     ChatRoomNotification,
     NIMChatRoomEnterStep,
     NIMChatRoomExitReason,
-    NIMChatRoomLinkCondition
+    NIMChatRoomLinkCondition,
+    ChatRoomGetMsgHistoryByTagsParameters,
+    ChatRoomConfig
 } from '../chatroom_def/chatroom_def'
 import { NIMResCode } from 'ts/nim_def/client_def'
 
@@ -76,12 +78,12 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
         return this.chatroom.Cleanup(json_extension)
     }
 
-    independentEnter(room_id: number, info: ChatRoomIndependentEnterInfo): boolean {
-        return this.chatroom.IndependentEnter(room_id, info)
+    independentEnter(room_id: number, info: ChatRoomIndependentEnterInfo, config: ChatRoomConfig): boolean {
+        return this.chatroom.IndependentEnter(room_id, info, config)
     }
 
-    anonymousEnter(room_id: number, anonymity_info: ChatRoomAnoymityEnterInfo, info: ChatRoomEnterInfo, json_extension: string): boolean {
-        return this.chatroom.AnonymousEnter(room_id, anonymity_info, info, json_extension)
+    anonymousEnter(room_id: number, anonymity_info: ChatRoomAnoymityEnterInfo, info: ChatRoomEnterInfo, config: ChatRoomConfig): boolean {
+        return this.chatroom.AnonymousEnter(room_id, anonymity_info, info, config)
     }
 
     enter(room_id: number, request_login_data: string, info: ChatRoomEnterInfo, json_extension: string): boolean {
@@ -175,6 +177,27 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
     ): Promise<[number, number, Array<ChatRoomMessage>]> {
         return new Promise((resolve) => {
             this.chatroom.GetMessageHistoryOnlineAsync(
+                room_id,
+                parameters,
+                (room_id: number, rescode: NIMResCode, msgs: Array<ChatRoomMessage>) => {
+                    if (cb) {
+                        cb(room_id, rescode, msgs)
+                    }
+                    resolve([room_id, rescode, msgs])
+                },
+                json_extension
+            )
+        })
+    }
+
+    getMessageHistoryByTagsOnlineAsync(
+        room_id: number,
+        parameters: ChatRoomGetMsgHistoryByTagsParameters,
+        cb: GetMsgHistoryCallback,
+        json_extension: string
+    ): Promise<[number, number, Array<ChatRoomMessage>]> {
+        return new Promise((resolve) => {
+            this.chatroom.GetMessageHistoryByTagsOnlineAsync(
                 room_id,
                 parameters,
                 (room_id: number, rescode: NIMResCode, msgs: Array<ChatRoomMessage>) => {

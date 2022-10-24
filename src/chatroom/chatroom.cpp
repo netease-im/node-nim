@@ -1,5 +1,5 @@
 #include "chatroom.h"
-#include "chatroom_helper.h"
+#include "reflection/reflection_include.h"
 
 namespace node_nim {
 GetCurrentSDKServiceImpl(NIMChatRoom, NIMChatRoom, holder_service);
@@ -9,8 +9,8 @@ Napi::Object NIMChatRoom::Init(Napi::Env env, Napi::Object exports) {
         RegApi("InitEventHandlers", &NIMChatRoom::InitEventHandlers), 
         RegApi("Init", &ChatRoom::Init),
         RegApi("Cleanup", &ChatRoom::Cleanup),
-        RegApi("IndependentEnter", &ChatRoom::IndependentEnter),
-        RegApi("AnonymousEnter", &ChatRoom::AnonymousEnter),
+        RegApi("IndependentEnter", &ChatRoom::IndependentEnter2),
+        RegApi("AnonymousEnter", &ChatRoom::AnonymousEnter2),
         RegApi("Enter", &ChatRoom::Enter),
         RegApi("Exit", &ChatRoom::Exit),
         RegApi("GetLoginState", &ChatRoom::GetLoginState),
@@ -20,6 +20,7 @@ Napi::Object NIMChatRoom::Init(Napi::Env env, Napi::Object exports) {
         RegApi("GetMembersByTagOnlineAsync", &ChatRoom::GetMembersByTagOnlineAsync),
         RegApi("GetMembersCountByTagOnlineAsync", &ChatRoom::GetMembersCountByTagOnlineAsync),
         RegApi("GetMessageHistoryOnlineAsync", &ChatRoom::GetMessageHistoryOnlineAsync),
+        RegApi("GetMessageHistoryByTagsOnlineAsync", &ChatRoom::GetMessageHistoryByTagsOnlineAsync),
         RegApi("SetMemberAttributeOnlineAsync", &ChatRoom::SetMemberAttributeOnlineAsync),
         RegApi("GetInfoAsync", &ChatRoom::GetInfoAsync),
         RegApi("GetMemberInfoByIDsAsync", &ChatRoom::GetMemberInfoByIDsAsync),

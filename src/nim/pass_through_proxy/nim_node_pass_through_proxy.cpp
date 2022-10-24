@@ -6,7 +6,7 @@
  */
 
 #include "nim_node_pass_through_proxy.h"
-#include "nim_node_pass_through_proxy_helper.h"
+#include "reflection/reflection_include.h"
 
 namespace node_nim {
 GetCurrentSDKServiceImpl(NIMPassThroughProxy, NIMPassThroughProxy, holder_service);

@@ -1,7 +1,7 @@
 #include <array>
 #include <string>
 #include "ts_cpp_conversion.h"
-thread_local std::queue<NapiFunctionDesc> ts_cpp_conversion_functions;
+thread_local std::deque<NapiFunctionDesc> ts_cpp_conversion_functions;
 namespace file_helper {
 enum utf8_states_t { S_STRT = 0, S_RJCT = 8 };
 void appendUTF8(std::string& str, uint32_t unicode) {

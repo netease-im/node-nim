@@ -1,5 +1,5 @@
 /**
- * @file nim_node_user_helper.h
+ * @file nim_user_reflection.h
  * @author NetEase Yunxin
  * @date 2022-02-21
  * @copyright (c) 2022, NetEase Inc. All rights reserved

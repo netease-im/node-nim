@@ -6,7 +6,7 @@
  */
 
 #include "nim_node_subscribe_event.h"
-#include "nim_node_subscribe_event_helper.h"
+#include "reflection/reflection_include.h"
 
 namespace node_nim {
 GetCurrentSDKServiceImpl(NIMSubscribeEvent, NIMSubscribeEvent, holder_service);

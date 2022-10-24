@@ -46,15 +46,15 @@ bool xpack_xtype_decode(OBJ& obj, const char* key, std::function<TR(Args...)>& v
     if (ts_cpp_conversion_functions.empty()) {
         return false;
     }
-    val = CppInvoker::ToThreadSafeCallback(ts_cpp_conversion_functions.front().env, ts_cpp_conversion_functions.front().function,
-        "TempMemberCallback", (std::function<TR(Args...)>*)(nullptr));
-    ts_cpp_conversion_functions.pop();
+    val = CppInvoker::ToThreadSafeCallback(ts_cpp_conversion_functions.back().env, ts_cpp_conversion_functions.back().function, "TempMemberCallback",
+        (std::function<TR(Args...)>*)(nullptr));
+    ts_cpp_conversion_functions.pop_back();
     return true;
 }
 
 template <class OBJ, typename TR, typename... Args>
 bool xpack_xtype_encode(OBJ& obj, const char* key, const std::function<TR(Args...)>& val, const Extend* ext) {
-    std::string str = "function is not supported to encode";
+    std::string str = "function encoding is not supported";
     return obj.encode(key, str, ext);
 }
 

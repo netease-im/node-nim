@@ -6,7 +6,7 @@
  */
 
 #include "nim_node_session.h"
-#include "nim_node_session_helper.h"
+#include "reflection/reflection_include.h"
 
 namespace node_nim {
 GetCurrentSDKServiceImpl(NIMSession, NIMSession, holder_service);

@@ -1,5 +1,5 @@
 /**
- * @file nim_node_tool_helper.h
+ * @file nim_tool_reflection.h
  * @author NetEase Yunxin
  * @date 2022-02-21
  * @copyright (c) 2022, NetEase Inc. All rights reserved
@@ -12,6 +12,5 @@
 using namespace nim;
 ReflectionDefinition_O(AudioInfo, mime_type_, samplerate_, url_, duration_);
 // Callback
-CallbackSpecialization(Tool::GetAudioTextCallback);
 CallbackSpecialization(Tool::FilterClientAntispamCallback);
 #endif

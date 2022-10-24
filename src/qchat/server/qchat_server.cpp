@@ -1,5 +1,5 @@
 #include "qchat_server.h"
-#include "qchat_server_helper.h"
+#include "reflection/reflection_include.h"
 namespace node_nim {
 GetCurrentSDKServiceImpl(QChatServer, QChatServer, holder_service);
 Napi::Object QChatServer::Init(Napi::Env env, Napi::Object exports) {

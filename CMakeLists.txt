@@ -3,11 +3,6 @@ cmake_minimum_required(VERSION 3.12.0)
 set(TARGET_NAME node-nim)
 project(${TARGET_NAME})
 set(CMAKE_CXX_STANDARD 17)
-# configure package.json, get NODE_NIM_VERSION from nim project
-if(NOT NODE_NIM_VERSION)
-    message(STATUS "NODE_NIM_VERSION is not set, use default version")
-    set(NODE_NIM_VERSION "0.0.0")
-endif()
 
 # platform specific settings
 if (WIN32)
@@ -43,9 +38,15 @@ elseif(CONAN_SETTINGS_ARCH STREQUAL "x86_64")
 elseif(CONAN_SETTINGS_ARCH STREQUAL "armv8")
     set(CMAKE_JS_ARCH "arm64")
 endif()
-execute_process(COMMAND ${NPM_EXUTABLE} install --nim-sdk-url=${NIM_SDK_URL}
+if(TARGET nim_cpp_wrapper)
+    execute_process(COMMAND ${NPM_EXUTABLE} install -ignore-download-sdk
+            WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+            OUTPUT_QUIET)
+else()
+    execute_process(COMMAND ${NPM_EXUTABLE} install --nim-sdk-url=${NIM_SDK_URL}
         WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
         OUTPUT_QUIET)
+endif()
 execute_process(COMMAND ${NPX_EXUTABLE} cmake-js print-configure -l error -r electron -v 8.5.5 -a ${CMAKE_JS_ARCH}
         WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
         OUTPUT_VARIABLE CMAKE_JS_CONFIGURE_OUTPUT

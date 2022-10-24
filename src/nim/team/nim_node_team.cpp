@@ -6,7 +6,7 @@
  */
 
 #include "nim_node_team.h"
-#include "nim_node_team_helper.h"
+#include "reflection/reflection_include.h"
 
 namespace node_nim {
 GetCurrentSDKServiceImpl(NIMTeam, NIMTeam, holder_service);

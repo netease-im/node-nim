@@ -6,7 +6,7 @@
  */
 
 #include "nim_node_talk.h"
-#include "nim_node_talk_helper.h"
+#include "reflection/reflection_include.h"
 
 namespace node_nim {
 GetCurrentSDKServiceImpl(NIMTalk, NIMTalk, holder_service);

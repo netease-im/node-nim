@@ -117,11 +117,13 @@ export enum NIMResCode {
     kNIMResRoomBeMuted = 13004 /**< 被禁言 */,
     kNIMResRoomAllMuted = 13006 /**< 聊天室处于整体禁言状态,只有管理员能发言 */,
     // 客户端自定义的api调用问题
-    kNIMLocalResAPIErrorInitUndone = 20000 /**< 还未初始化或初始化未正常完成 */,
-    kNIMLocalResAPIErrorLoginUndone = 20001 /**< 还未登陆或登录未完成 */,
-    kNIMLocalResAPIErrorLogined = 20002 /**< 已经登录 */,
-    kNIMLocalResAPIErrorVersionError = 20003 /**< SDK版本不对，可能会引发其他问题 */,
-    kNIMLocalResAPIErrorChatroomMixError = 20004 /**< 聊天室模式混用错误，不支持同时以登陆状态和匿名状态登陆聊天室 */
+    kNIMLocalResAPIErrorInitUndone = 20000,
+    kNIMLocalResAPIErrorLoginUndone = 20001,
+    kNIMLocalResAPIErrorLogining = 20002,
+    kNIMLocalResAPIErrorLogined = 20003,
+    kNIMLocalResAPIErrorVersionError = 20004,
+    kNIMLocalResAPIErrorChatroomMixError = 20005,
+    kNIMLocalResAPIErrorLoginExceedRetryCount = 20006
 }
 
 /** @enum NIMLoginStep 登录步骤 */

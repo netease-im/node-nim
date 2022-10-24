@@ -6,7 +6,7 @@
  */
 
 #include "nim_node_msglog.h"
-#include "nim_node_msglog_helper.h"
+#include "reflection/reflection_include.h"
 
 namespace node_nim {
 GetCurrentSDKServiceImpl(NIMMsgLog, NIMMsgLog, holder_service);

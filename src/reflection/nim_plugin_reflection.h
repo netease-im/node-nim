@@ -1,5 +1,5 @@
 /**
- * @file nim_node_plugin_helper.h
+ * @file nim_plugin_reflection.h
  * @author NetEase Yunxin
  * @date 2022-02-21
  * @copyright (c) 2022, NetEase Inc. All rights reserved
@@ -12,5 +12,4 @@
 using namespace nim;
 // Callback
 CallbackSpecialization(PluginIn::ChatRoomRequestEnterCallback);
-CallbackSpecialization(PluginIn::QChatRequestLinkAddressCallback);
 #endif

@@ -1,5 +1,5 @@
 #include "qchat_system_notification.h"
-#include "qchat_system_notification_helper.h"
+#include "reflection/reflection_include.h"
 namespace node_nim {
 GetCurrentSDKServiceImpl(QChatSystemNotification, QChatSystemNotification, holder_service);
 Napi::Object QChatSystemNotification::Init(Napi::Env env, Napi::Object exports) {

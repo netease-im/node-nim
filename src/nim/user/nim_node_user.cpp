@@ -6,7 +6,7 @@
  */
 
 #include "nim_node_user.h"
-#include "nim_node_user_helper.h"
+#include "reflection/reflection_include.h"
 
 namespace node_nim {
 GetCurrentSDKServiceImpl(NIMUser, NIMUser, holder_service);

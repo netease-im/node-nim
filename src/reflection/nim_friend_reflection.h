@@ -1,11 +1,11 @@
 /**
- * @file nim_node_data_sync_helper.h
+ * @file nim_data_sync_reflection.h
  * @author NetEase Yunxin
  * @date 2022-02-21
  * @copyright (c) 2022, NetEase Inc. All rights reserved
  */
-#ifndef NIM_NODE_DATA_SYNC_HELPER_H
-#define NIM_NODE_DATA_SYNC_HELPER_H
+#ifndef NIM_NODE_FRIEND_HELPER_H
+#define NIM_NODE_FRIEND_HELPER_H
 #include "nim_cpp_wrapper/nim_cpp_api.h"
 #include "xpack_specialization.h"
 
@@ -26,7 +26,6 @@ ReflectionDefinition_O(FriendProfile,
 ReflectionDefinition_O(FriendChangeEvent, type_, content_);
 // Callback
 CallbackSpecialization(Friend::FriendChangeCallback);
-CallbackSpecialization(Friend::FriendOptCallback);
 CallbackSpecialization(Friend::GetFriendsListCallback);
 CallbackSpecialization(Friend::GetFriendProfileCallback);
 #endif

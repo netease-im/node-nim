@@ -1,5 +1,5 @@
 /**
- * @file nim_node_global_helper.h
+ * @file nim_global_reflection.h
  * @author NetEase Yunxin
  * @date 2022-02-21
  * @copyright (c) 2022, NetEase Inc. All rights reserved
@@ -16,7 +16,5 @@ ReflectionDefinition_O(Global::SDKDBErrorInfo, db_name_, error_code_, operation_
 // Callback
 CallbackSpecialization(Global::DetectProxyCallback);
 CallbackSpecialization(Global::ExceptionCallback);
-CallbackSpecialization(Global::GetCachedFileInfoCallback);
-CallbackSpecialization(Global::DeleteCachedFileCallback);
 CallbackSpecialization(Global::SDKDBErrorCallback);
 #endif

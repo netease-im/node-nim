@@ -6,7 +6,7 @@
  */
 
 #include "nim_node_global.h"
-#include "nim_node_global_helper.h"
+#include "reflection/reflection_include.h"
 
 namespace node_nim {
 GetCurrentSDKServiceImpl(NIMGlobal, NIMGlobal, holder_service);

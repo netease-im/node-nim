@@ -1,13 +1,11 @@
 /**
- * @file qchat_channel_helper.h
+ * @file qchat_channel_reflection.h
  * @author NetEase Yunxin
  * @date 2022-07-06
  * @copyright (c) 2022, NetEase Inc. All rights reserved
  */
 #ifndef __QCHAT_CHANNEL_HELPER_H__
 #define __QCHAT_CHANNEL_HELPER_H__
-#include "../qchat_public_helper.h"
-#include "../server/qchat_server_helper.h"
 #include "nim_qchat_cpp_wrapper/nim_cpp_qchat_api.h"
 #include "xpack_specialization.h"
 using namespace nim;

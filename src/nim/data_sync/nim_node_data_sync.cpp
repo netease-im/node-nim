@@ -6,7 +6,7 @@
  */
 
 #include "nim_node_data_sync.h"
-#include "nim_node_data_sync_helper.h"
+#include "reflection/reflection_include.h"
 
 namespace node_nim {
 GetCurrentSDKServiceImpl(NIMDataSync, NIMDataSync, holder_service);

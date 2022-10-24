@@ -6,7 +6,7 @@
  */
 
 #include "nim_node_nos.h"
-#include "nim_node_nos_helper.h"
+#include "reflection/reflection_include.h"
 
 namespace node_nim {
 GetCurrentSDKServiceImpl(NIMNOS, NIMNOS, holder_service);
