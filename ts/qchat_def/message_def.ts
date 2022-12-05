@@ -34,7 +34,7 @@ export interface QChatMessageUpdateInfo {
 
 /** @interface QChatMessageAntiSpamInfo */
 export interface QChatMessageAntiSpamInfo {
-    /** 是否需要使用自定义反垃圾字段(即antiSpamContent), false:不需要, true:需要, 一般使用的情况是通用反垃圾转易盾 */
+    /** 是否需要使用自定义反垃圾字段(即antiSpamContent), false:不需要, true:需要 */
     use_custom_content?: boolean
     /** 单条消息是否使用易盾反垃圾, false:(在开通易盾的情况下)不过易盾反垃圾, 其他都是按照原来的规则 */
     anti_spam_using_yidun?: boolean

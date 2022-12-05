@@ -18,12 +18,13 @@
 #include "nim_team_reflection.h"
 #include "nim_tool_reflection.h"
 #include "nim_user_reflection.h"
-#include "v2client_reflection.h"
 
 #include "chatroom_reflection.h"
 
+#include "qchat_attachment_reflection.h"
 #include "qchat_channel_category_reflection.h"
 #include "qchat_channel_reflection.h"
+#include "qchat_instance_reflection.h"
 #include "qchat_message_reflection.h"
 #include "qchat_public_reflection.h"
 #include "qchat_role_reflection.h"

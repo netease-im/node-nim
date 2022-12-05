@@ -12,7 +12,8 @@ namespace node_nim {
 GetCurrentSDKServiceImpl(NIMPluginIn, NIMPluginIn, holder_service);
 Napi::Object NIMPluginIn::Init(Napi::Env env, Napi::Object exports) {
     return InternalInit("NIMPluginIn", env, exports,
-        {RegApi("InitEventHandlers", &NIMPluginIn::InitEventHandlers), RegApi("ChatRoomRequestEnterAsync", &PluginIn::ChatRoomRequestEnterAsync)});
+        {RegApi("InitEventHandlers", &NIMPluginIn::InitEventHandlers), RegApi("ChatRoomRequestEnterAsync", &PluginIn::ChatRoomRequestEnterAsync),
+            RegApi("QChatRequestLinkAddress", &PluginIn::QChatRequestLinkAddress)});
 }
 
 void NIMPluginIn::InitEventHandlers() {}

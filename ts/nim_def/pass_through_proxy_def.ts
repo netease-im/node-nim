@@ -20,6 +20,6 @@ export interface NIMPassThroughProxyAPI {
         headers: string,
         body: string,
         jsonExtension: string,
-        cb: SendHttpRequestCallback
+        cb: SendHttpRequestCallback | null
     ): void
 }

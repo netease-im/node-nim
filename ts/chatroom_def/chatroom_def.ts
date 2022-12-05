@@ -216,7 +216,7 @@ export interface ChatRoomMessageSetting {
     history_save_?: boolean
     /** (可选)用户配置的对某些单条消息另外的反垃圾的业务ID */
     anti_spam_bizid_?: string
-    /** (可选) 单条消息是否使用易盾反垃圾 0:(在开通易盾的情况下)不过易盾反垃圾而是通用反垃圾,其他都是按照原来的规则 */
+    /** (可选) 单条消息是否使用易盾反垃圾 0:(在开通易盾的情况下)不过易盾反垃圾 */
     anti_spam_using_yidun_?: number
     /** 高优先级消息标记,1:是; 非高优先级消息不带该字段,服务器填写,发送方不需要填写 */
     high_priority_?: number

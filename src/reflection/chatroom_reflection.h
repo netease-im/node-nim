@@ -1,5 +1,5 @@
 /**
- * @file chatroom_reflection.h
+ * @file chatroom_helper.h
  * @author NetEase Yunxin
  * @date 2022-07-05
  * @copyright (c) 2022, NetEase Inc. All rights reserved

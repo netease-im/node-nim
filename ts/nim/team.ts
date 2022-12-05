@@ -60,7 +60,7 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
         info: TeamInfo,
         ids: Array<string>,
         invitationPostscript: string,
-        cb: TeamEventCallback,
+        cb: TeamEventCallback | null,
         jsonExtension: string
     ): Promise<[TeamEvent] | null> {
         return new Promise((resolve) => {
@@ -95,7 +95,7 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
      * 803:群不存在
      * </pre>
      */
-    dismissAsync(tid: string, cb: TeamEventCallback, jsonExtension: string): Promise<[TeamEvent] | null> {
+    dismissAsync(tid: string, cb: TeamEventCallback | null, jsonExtension: string): Promise<[TeamEvent] | null> {
         return new Promise((resolve) => {
             if (
                 !this.team.DismissAsync(
@@ -137,7 +137,7 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
         ids: Array<string>,
         invitationPostscript: string,
         invitationAttachment: string,
-        cb: TeamEventCallback,
+        cb: TeamEventCallback | null,
         jsonExtension: string
     ): Promise<[TeamEvent] | null> {
         return new Promise((resolve) => {
@@ -177,7 +177,7 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
      * 804:用户不在群里面
      * </pre>
      */
-    kickAsync(tid: string, ids: Array<string>, cb: TeamEventCallback, jsonExtension: string): Promise<[TeamEvent] | null> {
+    kickAsync(tid: string, ids: Array<string>, cb: TeamEventCallback | null, jsonExtension: string): Promise<[TeamEvent] | null> {
         return new Promise((resolve) => {
             if (
                 !this.team.KickAsync(
@@ -211,7 +211,7 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
      * 804:用户不在群里
      * </pre>
      */
-    leaveAsync(tid: string, cb: TeamEventCallback, jsonExtension: string): Promise<[TeamEvent] | null> {
+    leaveAsync(tid: string, cb: TeamEventCallback | null, jsonExtension: string): Promise<[TeamEvent] | null> {
         return new Promise((resolve) => {
             if (
                 !this.team.LeaveAsync(
@@ -243,7 +243,7 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
      * 803:群不存在
      * </pre>
      */
-    updateTeamInfoAsync(tid: string, info: TeamInfo, cb: TeamEventCallback, jsonExtension: string): Promise<[TeamEvent] | null> {
+    updateTeamInfoAsync(tid: string, info: TeamInfo, cb: TeamEventCallback | null, jsonExtension: string): Promise<[TeamEvent] | null> {
         return new Promise((resolve) => {
             if (
                 !this.team.UpdateTeamInfoAsync(
@@ -280,7 +280,7 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
      * 805:群类型不对
      * </pre>
      */
-    applyJoinAsync(tid: string, reason: string, cb: TeamEventCallback, jsonExtension: string): Promise<[TeamEvent] | null> {
+    applyJoinAsync(tid: string, reason: string, cb: TeamEventCallback | null, jsonExtension: string): Promise<[TeamEvent] | null> {
         return new Promise((resolve) => {
             if (
                 !this.team.ApplyJoinAsync(
@@ -317,7 +317,7 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
      * 805:群类型不对
      * </pre>
      */
-    passJoinApplyAsync(tid: string, applicantId: string, cb: TeamEventCallback, jsonExtension: string): Promise<[TeamEvent] | null> {
+    passJoinApplyAsync(tid: string, applicantId: string, cb: TeamEventCallback | null, jsonExtension: string): Promise<[TeamEvent] | null> {
         return new Promise((resolve) => {
             if (
                 !this.team.PassJoinApplyAsync(
@@ -353,7 +353,7 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
      * 805:群类型不对
      * </pre>
      */
-    rejectJoinApplyAsync(tid: string, applicantId: string, reason: string, cb: TeamEventCallback, jsonExtension: string): Promise<[TeamEvent] | null> {
+    rejectJoinApplyAsync(tid: string, applicantId: string, reason: string, cb: TeamEventCallback | null, jsonExtension: string): Promise<[TeamEvent] | null> {
         return new Promise((resolve) => {
             if (
                 !this.team.RejectJoinApplyAsync(
@@ -388,7 +388,7 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
      * 805:群类型不对
      * </pre>
      */
-    addManagersAsync(tid: string, ids: Array<string>, cb: TeamEventCallback, jsonExtension: string): Promise<[TeamEvent] | null> {
+    addManagersAsync(tid: string, ids: Array<string>, cb: TeamEventCallback | null, jsonExtension: string): Promise<[TeamEvent] | null> {
         return new Promise((resolve) => {
             if (
                 !this.team.AddManagersAsync(
@@ -422,7 +422,7 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
      * 805:群类型不对
      * </pre>
      */
-    removeManagersAsync(tid: string, ids: Array<string>, cb: TeamEventCallback, jsonExtension: string): Promise<[TeamEvent] | null> {
+    removeManagersAsync(tid: string, ids: Array<string>, cb: TeamEventCallback | null, jsonExtension: string): Promise<[TeamEvent] | null> {
         return new Promise((resolve) => {
             if (
                 !this.team.RemoveManagersAsync(
@@ -458,7 +458,7 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
      * 806:群数量上限
      * </pre>
      */
-    transferTeamAsync(tid: string, newOwnerId: string, isLeave: boolean, cb: TeamEventCallback, jsonExtension: string): Promise<[TeamEvent] | null> {
+    transferTeamAsync(tid: string, newOwnerId: string, isLeave: boolean, cb: TeamEventCallback | null, jsonExtension: string): Promise<[TeamEvent] | null> {
         return new Promise((resolve) => {
             if (
                 !this.team.TransferTeamAsync(
@@ -492,7 +492,7 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
      * 805:群类型不对
      * </pre>
      */
-    updateMyPropertyAsync(prop: TeamMemberProperty, cb: TeamEventCallback, jsonExtension: string): Promise<[TeamEvent] | null> {
+    updateMyPropertyAsync(prop: TeamMemberProperty, cb: TeamEventCallback | null, jsonExtension: string): Promise<[TeamEvent] | null> {
         return new Promise((resolve) => {
             if (
                 !this.team.UpdateMyPropertyAsync(
@@ -525,7 +525,7 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
      * 805:群类型不对
      * </pre>
      */
-    updateOtherNickAsync(prop: TeamMemberProperty, cb: TeamEventCallback, jsonExtension: string): Promise<[TeamEvent] | null> {
+    updateOtherNickAsync(prop: TeamMemberProperty, cb: TeamEventCallback | null, jsonExtension: string): Promise<[TeamEvent] | null> {
         return new Promise((resolve) => {
             if (
                 !this.team.UpdateOtherNickAsync(
@@ -558,7 +558,7 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
      * 805:群类型不对
      * </pre>
      */
-    acceptInvitationAsync(tid: string, inviterId: string, cb: TeamEventCallback, jsonExtension: string): Promise<[TeamEvent] | null> {
+    acceptInvitationAsync(tid: string, inviterId: string, cb: TeamEventCallback | null, jsonExtension: string): Promise<[TeamEvent] | null> {
         return new Promise((resolve) => {
             if (
                 !this.team.AcceptInvitationAsync(
@@ -593,7 +593,7 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
      * 805:群类型不对
      * </pre>
      */
-    rejectInvitationAsync(tid: string, inviterId: string, reason: string, cb: TeamEventCallback, jsonExtension: string): Promise<[TeamEvent] | null> {
+    rejectInvitationAsync(tid: string, inviterId: string, reason: string, cb: TeamEventCallback | null, jsonExtension: string): Promise<[TeamEvent] | null> {
         return new Promise((resolve) => {
             if (
                 !this.team.RejectInvitationAsync(
@@ -619,7 +619,7 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
      * @param cb		查询所有群的回调函数
      * @return void 无返回值
      */
-    queryAllMyTeamsAsync(cb: QueryAllMyTeamsCallback, jsonExtension: string): Promise<[number, Array<string>]> {
+    queryAllMyTeamsAsync(cb: QueryAllMyTeamsCallback | null, jsonExtension: string): Promise<[number, Array<string>]> {
         return new Promise((resolve) => {
             this.team.QueryAllMyTeamsAsync((count, result) => {
                 if (cb) {
@@ -635,7 +635,7 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
      * @param cb		查询所有群信息的回调函数
      * @return void 无返回值
      */
-    queryAllMyTeamsInfoAsync(cb: QueryAllMyTeamsInfoCallback, jsonExtension: string): Promise<[number, Array<TeamInfo>]> {
+    queryAllMyTeamsInfoAsync(cb: QueryAllMyTeamsInfoCallback | null, jsonExtension: string): Promise<[number, Array<TeamInfo>]> {
         return new Promise((resolve) => {
             this.team.QueryAllMyTeamsInfoAsync((count, result) => {
                 if (cb) {
@@ -651,7 +651,7 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
      * @param cb		查询所有群里我的成员信息的回调函数
      * @return void 无返回值
      */
-    queryMyAllMemberInfosAsync(cb: QueryTeamMyAllMemberInfosCallback, jsonExtension: string): Promise<[number, Array<TeamMemberProperty>]> {
+    queryMyAllMemberInfosAsync(cb: QueryTeamMyAllMemberInfosCallback | null, jsonExtension: string): Promise<[number, Array<TeamMemberProperty>]> {
         return new Promise((resolve) => {
             this.team.QueryMyAllMemberInfosAsync((count, result) => {
                 if (cb) {
@@ -674,7 +674,11 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
      * 802:没有权限
      * </pre>
      */
-    queryTeamMembersAsync(tid: string, cb: QueryTeamMembersCallback, jsonExtension: string): Promise<[string, number, Array<TeamMemberProperty>] | null> {
+    queryTeamMembersAsync(
+        tid: string,
+        cb: QueryTeamMembersCallback | null,
+        jsonExtension: string
+    ): Promise<[string, number, Array<TeamMemberProperty>] | null> {
         return new Promise((resolve) => {
             if (
                 !this.team.QueryTeamMembersAsync(
@@ -700,7 +704,7 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
      * @param cb		查询群成员的回调函数
      * @return boolean 检查参数如果不符合要求则返回失败
      */
-    queryTeamMemberAsync(tid: string, id: string, cb: QueryTeamMemberCallback, jsonExtension: string): Promise<[TeamMemberProperty]> {
+    queryTeamMemberAsync(tid: string, id: string, cb: QueryTeamMemberCallback | null, jsonExtension: string): Promise<[TeamMemberProperty]> {
         return new Promise((resolve) => {
             this.team.QueryTeamMemberAsync(
                 tid,
@@ -722,7 +726,7 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
      * @param cb		查询群信息的回调函数
      * @return boolean 检查参数如果不符合要求则返回失败
      */
-    queryTeamInfoAsync(tid: string, cb: QueryTeamInfoCallback, jsonExtension: string): Promise<[string, TeamInfo] | null> {
+    queryTeamInfoAsync(tid: string, cb: QueryTeamInfoCallback | null, jsonExtension: string): Promise<[string, TeamInfo] | null> {
         return new Promise((resolve) => {
             if (
                 !this.team.QueryTeamInfoAsync(
@@ -752,7 +756,7 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
      * 803:群不存在
      * </pre>
      */
-    queryTeamInfoOnlineAsync(tid: string, cb: TeamEventCallback, jsonExtension: string): Promise<[TeamEvent] | null> {
+    queryTeamInfoOnlineAsync(tid: string, cb: TeamEventCallback | null, jsonExtension: string): Promise<[TeamEvent] | null> {
         return new Promise((resolve) => {
             if (
                 !this.team.QueryTeamInfoOnlineAsync(
@@ -787,7 +791,7 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
      * 802:没有权限
      * </pre>
      */
-    muteMemberAsync(tid: string, member_id: string, set_mute: boolean, cb: TeamEventCallback, jsonExtension: string): Promise<[TeamEvent] | null> {
+    muteMemberAsync(tid: string, member_id: string, set_mute: boolean, cb: TeamEventCallback | null, jsonExtension: string): Promise<[TeamEvent] | null> {
         return new Promise((resolve) => {
             if (
                 !this.team.MuteMemberAsync(
@@ -820,7 +824,7 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
      * 414:参数错误
      * </pre>
      */
-    muteAsync(tid: string, set_mute: boolean, cb: TeamEventCallback, jsonExtension: string): Promise<[TeamEvent] | null> {
+    muteAsync(tid: string, set_mute: boolean, cb: TeamEventCallback | null, jsonExtension: string): Promise<[TeamEvent] | null> {
         return new Promise((resolve) => {
             if (
                 !this.team.MuteAsync(
@@ -854,7 +858,7 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
      */
     queryMuteListOnlineAsync(
         tid: string,
-        cb: QueryTeamMembersOnlineCallback,
+        cb: QueryTeamMembersOnlineCallback | null,
         jsonExtension: string
     ): Promise<[NIMResCode, number, Array<TeamMemberProperty>] | null> {
         return new Promise((resolve) => {
@@ -890,7 +894,7 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
     teamMsgAckRead(
         tid: string,
         msgs: Array<IMMessage>,
-        cb: TeamMsgAckReadCallback,
+        cb: TeamMsgAckReadCallback | null,
         jsonExtension: string
     ): Promise<[string, Array<string>, Array<string>, Array<string>]> {
         return new Promise((resolve) => {
@@ -921,7 +925,7 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
      * 414:参数错误
      * </pre>
      */
-    teamMsgQueryUnreadList(tid: string, msg: IMMessage, accids: Array<string>, cb: TeamEventCallback, jsonExtension: string): Promise<[TeamEvent]> {
+    teamMsgQueryUnreadList(tid: string, msg: IMMessage, accids: Array<string>, cb: TeamEventCallback | null, jsonExtension: string): Promise<[TeamEvent]> {
         return new Promise((resolve) => {
             this.team.TeamMsgQueryUnreadList(
                 tid,
@@ -948,7 +952,11 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
      * 200:成功
      * </pre>
      */
-    queryTeamMembersInvitor(tid: string, members: Array<string>, cb: QueryTeamMembersInvitorCallback): Promise<[NIMResCode, number, Map<string, string>]> {
+    queryTeamMembersInvitor(
+        tid: string,
+        members: Array<string>,
+        cb: QueryTeamMembersInvitorCallback | null
+    ): Promise<[NIMResCode, number, Map<string, string>]> {
         return new Promise((resolve) => {
             this.team.QueryTeamMembersInvitor(tid, members, (rescode, count, result) => {
                 if (cb) {
@@ -965,7 +973,7 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @return boolean 检查参数如果不符合要求则返回失败
      */
-    queryTeamInfoByKeywordAsync(keyword: string, cb: QueryTeamsInfoCallback, jsonExtension: string): Promise<[number, Array<TeamInfo>]> {
+    queryTeamInfoByKeywordAsync(keyword: string, cb: QueryTeamsInfoCallback | null, jsonExtension: string): Promise<[number, Array<TeamInfo>]> {
         return new Promise((resolve) => {
             this.team.QueryTeamInfoByKeywordAsync(
                 keyword,
@@ -988,7 +996,7 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @return void
      */
-    updateTInfoLocal(infos: Array<TeamInfo>, cb: UpdateTInfoLocalCallback, jsonExtension: string): Promise<[Array<string>, Array<string>]> {
+    updateTInfoLocal(infos: Array<TeamInfo>, cb: UpdateTInfoLocalCallback | null, jsonExtension: string): Promise<[Array<string>, Array<string>]> {
         return new Promise((resolve) => {
             this.team.UpdateTInfoLocal(
                 infos,
@@ -1009,7 +1017,7 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @return void 无返回值
      */
-    getTeamInfoBatchTrans(cb: GetTeamInfoBatchSFTransCallback, time_tag: number, jsonExtension: string): Promise<[number, Array<TeamInfo>]> {
+    getTeamInfoBatchTrans(cb: GetTeamInfoBatchSFTransCallback | null, time_tag: number, jsonExtension: string): Promise<[number, Array<TeamInfo>]> {
         return new Promise((resolve) => {
             this.team.GetTeamInfoBatchSFTrans(
                 (count, result) => {
@@ -1035,7 +1043,7 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
      * 816:部分成功
      * </pre>
      */
-    getTeaminfoList(tids: Array<string>, cb: GetTeamInfoListCallback): Promise<[NIMResCode, Array<TeamInfo>, Array<string>]> {
+    getTeaminfoList(tids: Array<string>, cb: GetTeamInfoListCallback | null): Promise<[NIMResCode, Array<TeamInfo>, Array<string>]> {
         return new Promise((resolve) => {
             this.team.GetTeaminfoList(tids, (rescode, infos, failure_ids) => {
                 if (cb) {

@@ -37,7 +37,7 @@ export class NIMPassThroughProxy extends EventEmitter<NIMPassThroughProxyEvents>
         headers: string,
         body: string,
         jsonExtension: string,
-        cb: SendHttpRequestCallback
+        cb: SendHttpRequestCallback | null
     ): Promise<[NIMResCode, string, string, string]> {
         return new Promise((resolve) => {
             this.proxy.SendHttpRequest(host, path, method, headers, body, jsonExtension, (rescode, header, body, jsonExtension) => {

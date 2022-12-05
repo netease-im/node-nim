@@ -43,7 +43,7 @@ export class NIMFriend extends EventEmitter<NIMFriendEvents> {
      * 500:未知错误
      * </pre>
      */
-    request(accid: string, verify_type: NIMVerifyType, msg: string, cb: FriendOptCallback, jsonExtension: string): Promise<[NIMResCode] | null> {
+    request(accid: string, verify_type: NIMVerifyType, msg: string, cb: FriendOptCallback | null, jsonExtension: string): Promise<[NIMResCode] | null> {
         return new Promise((resolve) => {
             if (
                 !this.friend.Request(
@@ -76,7 +76,7 @@ export class NIMFriend extends EventEmitter<NIMFriendEvents> {
      * 500:未知错误
      * </pre>
      */
-    delete(accid: string, option: DeleteFriendOption, cb: FriendOptCallback): Promise<[NIMResCode] | null> {
+    delete(accid: string, option: DeleteFriendOption, cb: FriendOptCallback | null): Promise<[NIMResCode] | null> {
         return new Promise((resolve) => {
             if (
                 !this.friend.Delete(accid, option, (res) => {
@@ -103,7 +103,7 @@ export class NIMFriend extends EventEmitter<NIMFriendEvents> {
      * 500:未知错误
      * </pre>
      */
-    update(profile: FriendProfile, cb: FriendOptCallback, jsonExtension: string): Promise<[NIMResCode] | null> {
+    update(profile: FriendProfile, cb: FriendOptCallback | null, jsonExtension: string): Promise<[NIMResCode] | null> {
         return new Promise((resolve) => {
             if (
                 !this.friend.Update(
@@ -131,7 +131,7 @@ export class NIMFriend extends EventEmitter<NIMFriendEvents> {
      * 200:成功
      * </pre>
      */
-    getList(cb: GetFriendsListCallback, jsonExtension: string): Promise<[NIMResCode, Array<FriendProfile>]> {
+    getList(cb: GetFriendsListCallback | null, jsonExtension: string): Promise<[NIMResCode, Array<FriendProfile>]> {
         return new Promise((resolve) => {
             this.friend.GetList((res, profiles) => {
                 if (cb) {
@@ -148,7 +148,7 @@ export class NIMFriend extends EventEmitter<NIMFriendEvents> {
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @return void 无返回值
      */
-    getFriendProfile(accid: string, cb: GetFriendProfileCallback, jsonExtension: string): Promise<[string, FriendProfile]> {
+    getFriendProfile(accid: string, cb: GetFriendProfileCallback | null, jsonExtension: string): Promise<[string, FriendProfile]> {
         return new Promise((resolve) => {
             this.friend.GetFriendProfile(
                 accid,
@@ -173,7 +173,7 @@ export class NIMFriend extends EventEmitter<NIMFriendEvents> {
      * 200:成功
      * </pre>
      */
-    queryFriendListByKeyword(keyword: string, cb: GetFriendsListCallback, jsonExtension: string): Promise<[NIMResCode, Array<FriendProfile>] | null> {
+    queryFriendListByKeyword(keyword: string, cb: GetFriendsListCallback | null, jsonExtension: string): Promise<[NIMResCode, Array<FriendProfile>] | null> {
         return new Promise((resolve) => {
             if (
                 !this.friend.QueryFriendListByKeyword(

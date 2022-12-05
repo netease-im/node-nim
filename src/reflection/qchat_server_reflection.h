@@ -1,5 +1,5 @@
 /**
- * @file qchat_server_reflection.h
+ * @file qchat_server_helper.h
  * @author NetEase Yunxin
  * @date 2022-07-06
  * @copyright (c) 2022, NetEase Inc. All rights reserved

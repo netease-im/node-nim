@@ -76,7 +76,7 @@ export class NIMTalk extends EventEmitter<NIMTalkEvents> {
     recallMsg(
         msg: IMMessage,
         notify_msg: string,
-        cb: RecallMsgsCallback,
+        cb: RecallMsgsCallback | null,
         apnstext: string,
         pushpayloadconst: string,
         jsonExtension: string
@@ -121,7 +121,7 @@ export class NIMTalk extends EventEmitter<NIMTalkEvents> {
      * @param[in] json_extension json扩展参数（备用,目前不需要）
      * @return void 无返回值
      */
-    regMessageFilter(cb: MessageFilterCallback, jsonExtension: string): void {
+    regMessageFilter(cb: MessageFilterCallback | null, jsonExtension: string): void {
         return this.talk.RegMessageFilter(cb, jsonExtension)
     }
 
@@ -130,7 +130,7 @@ export class NIMTalk extends EventEmitter<NIMTalkEvents> {
      * @param[in] filter    过滤接口
      * @return void 无返回值
      */
-    regTeamNotificationFilter(cb: TeamNotificationFilterCallback, jsonExtension: string): void {
+    regTeamNotificationFilter(cb: TeamNotificationFilterCallback | null, jsonExtension: string): void {
         return this.talk.RegTeamNotificationFilter(cb, jsonExtension)
     }
 }

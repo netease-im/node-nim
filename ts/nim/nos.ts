@@ -44,7 +44,7 @@ export class NIMNOS extends EventEmitter<NIMNOSEvents> {
      * @param cb 结果回调函数
      * @return void 无返回值
      */
-    initConfig(param: InitNosConfigParam, cb: InitNosResultCallback): Promise<[InitNosResult]> {
+    initConfig(param: InitNosConfigParam, cb: InitNosResultCallback | null): Promise<[InitNosResult]> {
         return new Promise((resolve) => {
             this.nos.InitConfig(param, (result) => {
                 if (cb) {
@@ -74,10 +74,10 @@ export class NIMNOS extends EventEmitter<NIMNOSEvents> {
     fetchMedia(
         msg: IMMessage,
         jsonExtension: string,
-        res_cb: DownloadMediaCallback,
-        prg_cb: ProgressCallback,
-        speed_cb: SpeedCallback,
-        transfer_cb: TransferInfoCallback
+        res_cb: DownloadMediaCallback | null,
+        prg_cb: ProgressCallback | null,
+        speed_cb: SpeedCallback | null,
+        transfer_cb: TransferInfoCallback | null
     ): Promise<[NIMResCode, string, string, string] | null> {
         return new Promise((resolve) => {
             if (
@@ -131,10 +131,10 @@ export class NIMNOS extends EventEmitter<NIMNOSEvents> {
         local_file: string,
         tag: string,
         param: NOSParams,
-        res_cb: UploadMediaExCallback,
-        prg_cb: ProgressExCallback,
-        speed_cb: SpeedCallback,
-        transfer_cb: TransferInfoCallback
+        res_cb: UploadMediaExCallback | null,
+        prg_cb: ProgressExCallback | null,
+        speed_cb: SpeedCallback | null,
+        transfer_cb: TransferInfoCallback | null
     ): Promise<[NIMResCode, UploadMediaResult] | null> {
         return new Promise((resolve) => {
             if (
@@ -190,10 +190,10 @@ export class NIMNOS extends EventEmitter<NIMNOSEvents> {
     downloadResource(
         nosUrl: string,
         param: NOSParams,
-        res_cb: DownloadMediaExCallback,
-        prg_cb: ProgressExCallback,
-        speed_cb: SpeedCallback,
-        transfer_cb: TransferInfoCallback
+        res_cb: DownloadMediaExCallback | null,
+        prg_cb: ProgressExCallback | null,
+        speed_cb: SpeedCallback | null,
+        transfer_cb: TransferInfoCallback | null
     ): Promise<[NIMResCode, DownloadMediaResult] | null> {
         return new Promise((resolve) => {
             if (
@@ -240,7 +240,7 @@ export class NIMNOS extends EventEmitter<NIMNOSEvents> {
      * 414 不存在该短链或 safe_url 不是一个有效的短链
      * </pre>
      */
-    safeURLToOriginURL(safe_url: string, cb: SafeURLToOriginURLCallback, jsonExtension: string): Promise<[NIMResCode, string]> {
+    safeURLToOriginURL(safe_url: string, cb: SafeURLToOriginURLCallback | null, jsonExtension: string): Promise<[NIMResCode, string]> {
         return new Promise((resolve) => {
             this.nos.SafeURLToOriginURL(
                 safe_url,

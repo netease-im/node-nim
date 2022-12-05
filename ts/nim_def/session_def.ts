@@ -104,41 +104,41 @@ export type SetMultiUnreadCountZeroAsyncCallback = (res_code: NIMResCode, data_l
 export interface NIMSessionAPI {
     InitEventHandlers(): void
 
-    QueryStickTopSessionList(cb: QueryStickTopSessionListCallback): void
+    QueryStickTopSessionList(cb: QueryStickTopSessionListCallback | null): void
 
-    SetToStickTopSession(session_id: string, to_type: number, ext: string, cb: SetToStickTopSessionCallback): void
+    SetToStickTopSession(session_id: string, to_type: number, ext: string, cb: SetToStickTopSessionCallback | null): void
 
-    UpdateToStickTopSession(session_id: string, to_type: number, ext: string, cb: UpdateStickTopSessionCallback): void
+    UpdateToStickTopSession(session_id: string, to_type: number, ext: string, cb: UpdateStickTopSessionCallback | null): void
 
-    CancelToStickTopSession(session_id: string, to_type: number, cb: CancelToStickTopSessionCallback): void
+    CancelToStickTopSession(session_id: string, to_type: number, cb: CancelToStickTopSessionCallback | null): void
 
-    QueryLastFewSessionAsync(limit: number, cb: QuerySessionListCallback, jsonExtension: string): void
+    QueryLastFewSessionAsync(limit: number, cb: QuerySessionListCallback | null, jsonExtension: string): void
 
-    QueryAllRecentSessionAsync(msg_excluded_type_list: Array<NIMMessageType>, cb: QuerySessionListCallback, jsonExtension: string): void
+    QueryAllRecentSessionAsync(msg_excluded_type_list: Array<NIMMessageType>, cb: QuerySessionListCallback | null, jsonExtension: string): void
 
-    DeleteRecentSession(type: NIMSessionType, id: string, cb: SessionChangeCallback, delete_roaming: boolean): void
+    DeleteRecentSession(type: NIMSessionType, id: string, cb: SessionChangeCallback | null, delete_roaming: boolean): void
 
-    DeleteAllRecentSession(cb: SessionChangeCallback, jsonExtension: string): void
+    DeleteAllRecentSession(cb: SessionChangeCallback | null, jsonExtension: string): void
 
-    DeleteSessionRoamingMessage(to_type: number, session_id: string, cb: DeleteSessionRoamingMessageCallback, ext: string): boolean
+    DeleteSessionRoamingMessage(to_type: number, session_id: string, cb: DeleteSessionRoamingMessageCallback | null, ext: string): boolean
 
-    SetUnreadCountZeroAsync(type: NIMSessionType, id: string, cb: SessionChangeCallback, jsonExtension: string): boolean
+    SetUnreadCountZeroAsync(type: NIMSessionType, id: string, cb: SessionChangeCallback | null, jsonExtension: string): boolean
 
-    SetMultiUnreadCountZeroAsync(is_super_team: boolean, zero_list: Array<MultiUnreadCountZeroInfo>, cb: SetMultiUnreadCountZeroAsyncCallback): boolean
+    SetMultiUnreadCountZeroAsync(is_super_team: boolean, zero_list: Array<MultiUnreadCountZeroInfo>, cb: SetMultiUnreadCountZeroAsyncCallback | null): boolean
 
-    SetSessionTop(type: NIMSessionType, id: string, top: boolean, cb: SessionChangeCallback, jsonExtension: string): boolean
+    SetSessionTop(type: NIMSessionType, id: string, top: boolean, cb: SessionChangeCallback | null, jsonExtension: string): boolean
 
-    SetSessionExtendData(type: NIMSessionType, id: string, data: string, cb: SessionChangeCallback, jsonExtension: string): boolean
+    SetSessionExtendData(type: NIMSessionType, id: string, data: string, cb: SessionChangeCallback | null, jsonExtension: string): boolean
 
-    SetAllUnreadCountZeroAsync(cb: SessionChangeCallback, jsonExtension: string): boolean
+    SetAllUnreadCountZeroAsync(cb: SessionChangeCallback | null, jsonExtension: string): boolean
 
-    QuerySessionDataById(type: NIMSessionType, id: string, cb: QuerySessionDataCallback, jsonExtension: string): void
+    QuerySessionDataById(type: NIMSessionType, id: string, cb: QuerySessionDataCallback | null, jsonExtension: string): void
 
-    QueryHasmoreRoammsg(session_id: string, to_type: number, cb: QueryHasmoreRoammsgCallback): void
+    QueryHasmoreRoammsg(session_id: string, to_type: number, cb: QueryHasmoreRoammsgCallback | null): void
 
-    QueryAllHasmoreRoammsg(cb: QueryAllHasmoreRoammsgCallback): void
+    QueryAllHasmoreRoammsg(cb: QueryAllHasmoreRoammsgCallback | null): void
 
-    UpdateHasmoreRoammsg(msg: IMMessage, cb: UpdateHasmoreRoammsgCallback): void
+    UpdateHasmoreRoammsg(msg: IMMessage, cb: UpdateHasmoreRoammsgCallback | null): void
 
-    DeleteHasmoreRoammsg(session_id: string, to_type: NIMSessionType, cb: DeleteHasmoreRoammsgCallback): void
+    DeleteHasmoreRoammsg(session_id: string, to_type: NIMSessionType, cb: DeleteHasmoreRoammsgCallback | null): void
 }

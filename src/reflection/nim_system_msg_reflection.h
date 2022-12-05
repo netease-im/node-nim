@@ -1,5 +1,5 @@
 /**
- * @file nim_system_msg_reflection.h
+ * @file nim_node_system_msg_helper.h
  * @author NetEase Yunxin
  * @date 2022-02-21
  * @copyright (c) 2022, NetEase Inc. All rights reserved

@@ -22,6 +22,9 @@ async function testQChat() {
         })
         .then((resp) => {
             console.log('login', resp)
+            instance.logout({}).then((resp) => {
+                console.log('logout', resp)
+            })
         })
 }
 function testChatRoom() {
@@ -80,6 +83,7 @@ function testChatRoom() {
 async function testV2() {
     const client = new node_nim.V2Client()
     const talk = new node_nim.NIMTalk()
+    const user = new node_nim.NIMUser()
     const result = client.init({
         app_key: '2bd025c577313e81b2bdb2d2dcefcadb',
         private_setting: {
@@ -96,6 +100,7 @@ async function testV2() {
     }
     client.initEventHandlers()
     talk.initEventHandlers()
+    user.initEventHandlers()
     let resp = await client.login({
         accid: 'zvct0',
         token: 'e10adc3949ba59abbe56e057f20f883e',
@@ -132,39 +137,43 @@ async function testV2() {
 }
 function testNIM() {
     const client = new node_nim.NIMClient()
+    const plugin = new node_nim.NIMPlugin()
     const talk = new node_nim.NIMTalk()
-    var result = client.init('', 'NIM_SDK_NODE_TEST', '', {})
+    const user = new node_nim.NIMUser()
+    client.init('', 'NIM_SDK_NODE_TEST', '', {
+        use_private_server_: true,
+        lbs_address_: 'http://lbs-test.netease.im/lbs/conf.jsp',
+        nego_key_neca_key_parta_:
+            'e3afe7487e6ac9ba69654672672ceddc05d5b6d45850859f11004d30c63e3691afd55722bdd2c75232b2a3561776201f84def8e38c508870ca7692b4228b0478e104460d7800dee3b6c3d8f89746ed48ee94f268f42b9c911437083d3815624e50de3fec3c0ec8ab3e71d5bdce3f4291d20538893cacdc00da9d1390ee39440d',
+        nego_key_neca_key_partb_: '10001'
+    })
 
     client.initEventHandlers()
+    plugin.initEventHandlers()
     talk.initEventHandlers()
+    user.initEventHandlers()
 
     client.getSDKConfig()
-    client.login('45c6af3c98409b18a84451215d0bdd6e', 'zvc0', 'e10adc3949ba59abbe56e057f20f883e', null, '').then((res) => {
+    client.login('fe416640c8e8a72734219e1847ad2547', 'zvct0', 'e10adc3949ba59abbe56e057f20f883e', null, '').then((res) => {
         console.log('loginResult', res)
-        talk.sendMsg(
-            {
-                session_type_: 0, // p2p
-                receiver_accid_: 'zvc1',
-                timetag_: new Date().getTime(),
-                type_: 0, // text message
-                content_: 'Send from NIM node test.',
-                client_msg_id_: new Date().getTime().toString(), // use an uuid
-                msg_setting_: {
-                    push_payload_: { test: 'qq' }
-                }
+        plugin.chatRoomRequestEnterAsync(36, null, '').then((...res) => {
+            console.log('chatRoomRequestEnterAsync', res)
+        })
+        user.updateMyUserNameCard(
+            { accid_: 'zvc0', nickname_: 'autotest' },
+            (...res) => {
+                console.log('UpdateMyUserNameCardCallback', res)
+                user.getUserNameCard(
+                    ['zvc0'],
+                    (...res) => {
+                        console.log('GetUserNameCardCallback', res)
+                    },
+                    ''
+                )
             },
             ''
         )
     })
-    talk.on('receiveMsg', (msg) => {
-        console.log(msg)
-    })
-    talk.on('sendMsg', (msg) => {
-        console.log(msg)
-    })
-    talk.regMessageFilter((result) => {
-        return false
-    }, '')
 }
 
-testChatRoom()
+testQChat()

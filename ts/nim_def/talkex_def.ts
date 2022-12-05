@@ -114,27 +114,27 @@ export type UpdatePinMessageNotifyCallback = (session: string, to_type: number, 
 export interface NIMTalkExAPI {
     InitEventHandlers(): void
     // Collect
-    AddCollect(collect_info: CollectInfo, cb: AddCollectCallback): void
+    AddCollect(collect_info: CollectInfo, cb: AddCollectCallback | null): void
 
-    RemoveCollects(collect_list: RemoveCollectsParm, cb: RemoveCollectsCallback): void
+    RemoveCollects(collect_list: RemoveCollectsParm, cb: RemoveCollectsCallback | null): void
 
-    UpdateCollectExt(collect_match_param: MatchCollectParm, ext: string, cb: UpdateCollectCallback): void
+    UpdateCollectExt(collect_match_param: MatchCollectParm, ext: string, cb: UpdateCollectCallback | null): void
 
-    QueryCollectList(query_collect_list_param: QueryCollectsParm, cb: QueryCollectsCallback): void
+    QueryCollectList(query_collect_list_param: QueryCollectsParm, cb: QueryCollectsCallback | null): void
 
     // QuickComment
-    AddQuickComment(msg: IMMessage, info: QuickCommentInfo, cb: AddQuickCommentCallback): void
+    AddQuickComment(msg: IMMessage, info: QuickCommentInfo, cb: AddQuickCommentCallback | null): void
 
-    RemoveQuickComment(msg: IMMessage, param: RemoveQuickCommentParam, cb: RemoveQuickCommentCallback): void
+    RemoveQuickComment(msg: IMMessage, param: RemoveQuickCommentParam, cb: RemoveQuickCommentCallback | null): void
 
-    QueryQuickCommentList(query_param: QueryQuickCommentsParam, cb: QueryQuickCommentCallback): void
+    QueryQuickCommentList(query_param: QueryQuickCommentsParam, cb: QueryQuickCommentCallback | null): void
 
     // PinMsg
-    AddPinMessage(msg: IMMessage, info: PinMessageInfo, cb: PinMessageCallback): void
+    AddPinMessage(msg: IMMessage, info: PinMessageInfo, cb: PinMessageCallback | null): void
 
-    UnPinMessage(modify_param: ModifyPinMessageParam, cb: UnPinMessageCallback): void
+    UnPinMessage(modify_param: ModifyPinMessageParam, cb: UnPinMessageCallback | null): void
 
-    UpdatePinMessage(modify_param: ModifyPinMessageParam, cb: UpdatePinMessageCallback): void
+    UpdatePinMessage(modify_param: ModifyPinMessageParam, cb: UpdatePinMessageCallback | null): void
 
-    QueryAllPinMessage(session: string, to_type: number, cb: QueryPinMessageCallback): void
+    QueryAllPinMessage(session: string, to_type: number, cb: QueryPinMessageCallback | null): void
 }

@@ -1,5 +1,5 @@
 /**
- * @file nim_msglog_reflection.h
+ * @file nim_node_msglog_helper.h
  * @author NetEase Yunxin
  * @date 2022-02-21
  * @copyright (c) 2022, NetEase Inc. All rights reserved
@@ -104,6 +104,7 @@ ReflectionDefinition_O(MsgLog::FullTextSearchOnlineAsyncParam,
     msg_type_filter_list_,
     msg_sub_type_filter_list_);
 ReflectionDefinition_O(QueryMsglogResult, count_, source_, msglogs_);
+ReflectionDefinition_O(GetMessagesResult, rescode, session_id, session_type, reliable, messages);
 ReflectionDefinition_O(DeleteMsglogSelfNotifyParam, item_list);
 ReflectionDefinition_O(MessageStatusChangedResult, rescode_, results_);
 ReflectionDefinition_O(MessageStatusChanged, status_, talk_id_, msg_timetag_);
@@ -125,6 +126,7 @@ ReflectionDefinition_O(MsgLog::QueryMsgByOptionsAsyncParam,
 
 // Callback
 CallbackSpecialization(MsgLog::QueryMsgCallback);
+CallbackSpecialization(MsgLog::GetMessagesDynamicallyCallback);
 CallbackSpecialization(MsgLog::QuerySingleMsgCallback);
 CallbackSpecialization(MsgLog::ModifyMultipleMsglogCallback);
 CallbackSpecialization(MsgLog::ModifySingleMsglogCallback);

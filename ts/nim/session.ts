@@ -55,7 +55,7 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
      * 200:成功
      * </pre>
      */
-    queryStickTopSessionList(cb: QueryStickTopSessionListCallback): Promise<[NIMResCode, string]> {
+    queryStickTopSessionList(cb: QueryStickTopSessionListCallback | null): Promise<[NIMResCode, string]> {
         return new Promise((resolve) => {
             this.session.QueryStickTopSessionList((rescode, result) => {
                 if (cb) {
@@ -77,7 +77,7 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
      * 200:成功
      * </pre>
      */
-    setToStickTopSession(session_id: string, to_type: number, ext: string, cb: SetToStickTopSessionCallback): Promise<[NIMResCode, string]> {
+    setToStickTopSession(session_id: string, to_type: number, ext: string, cb: SetToStickTopSessionCallback | null): Promise<[NIMResCode, string]> {
         return new Promise((resolve) => {
             this.session.SetToStickTopSession(session_id, to_type, ext, (rescode, result) => {
                 if (cb) {
@@ -99,7 +99,7 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
      * 200:成功
      * </pre>
      */
-    updateToStickTopSession(session_id: string, to_type: number, ext: string, cb: UpdateStickTopSessionCallback): Promise<[NIMResCode, string]> {
+    updateToStickTopSession(session_id: string, to_type: number, ext: string, cb: UpdateStickTopSessionCallback | null): Promise<[NIMResCode, string]> {
         return new Promise((resolve) => {
             this.session.UpdateToStickTopSession(session_id, to_type, ext, (rescode, result) => {
                 if (cb) {
@@ -120,7 +120,7 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
      * 200:成功
      * </pre>
      */
-    cancelToStickTopSession(session_id: string, to_type: number, cb: CancelToStickTopSessionCallback): Promise<[NIMResCode, string, NIMSessionType]> {
+    cancelToStickTopSession(session_id: string, to_type: number, cb: CancelToStickTopSessionCallback | null): Promise<[NIMResCode, string, NIMSessionType]> {
         return new Promise((resolve) => {
             this.session.CancelToStickTopSession(session_id, to_type, (rescode, session_id, session_type) => {
                 if (cb) {
@@ -137,7 +137,7 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @return void 无返回值
      */
-    queryLastFewSessionAsync(limit: number, cb: QuerySessionListCallback, jsonExtension: string): Promise<[NIMResCode, SessionDataList]> {
+    queryLastFewSessionAsync(limit: number, cb: QuerySessionListCallback | null, jsonExtension: string): Promise<[NIMResCode, SessionDataList]> {
         return new Promise((resolve) => {
             this.session.QueryLastFewSessionAsync(
                 limit,
@@ -160,7 +160,7 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
      */
     queryAllRecentSessionAsync(
         msg_excluded_type_list: Array<NIMMessageType>,
-        cb: QuerySessionListCallback,
+        cb: QuerySessionListCallback | null,
         jsonExtension: string
     ): Promise<[NIMResCode, SessionDataList]> {
         return new Promise((resolve) => {
@@ -188,7 +188,12 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
      * 200:成功
      * </pre>
      */
-    deleteRecentSession(type: NIMSessionType, id: string, cb: SessionChangeCallback, delete_roaming: boolean): Promise<[NIMResCode, SessionData, number]> {
+    deleteRecentSession(
+        type: NIMSessionType,
+        id: string,
+        cb: SessionChangeCallback | null,
+        delete_roaming: boolean
+    ): Promise<[NIMResCode, SessionData, number]> {
         return new Promise((resolve) => {
             this.session.DeleteRecentSession(
                 type,
@@ -213,7 +218,7 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
      * 200:成功
      * </pre>
      */
-    deleteAllRecentSession(cb: SessionChangeCallback, jsonExtension: string): Promise<[NIMResCode, SessionData, number]> {
+    deleteAllRecentSession(cb: SessionChangeCallback | null, jsonExtension: string): Promise<[NIMResCode, SessionData, number]> {
         return new Promise((resolve) => {
             this.session.DeleteAllRecentSession((rescode, session_data, count) => {
                 if (cb) {
@@ -238,7 +243,7 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
     deleteSessionRoamingMessage(
         to_type: number,
         session_id: string,
-        cb: DeleteSessionRoamingMessageCallback,
+        cb: DeleteSessionRoamingMessageCallback | null,
         ext: string
     ): Promise<[NIMResCode, number, string]> {
         return new Promise((resolve) => {
@@ -270,7 +275,7 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
     setUnreadCountZeroAsync(
         type: NIMSessionType,
         id: string,
-        cb: SessionChangeCallback,
+        cb: SessionChangeCallback | null,
         jsonExtension: string
     ): Promise<[NIMResCode, SessionData, number] | null> {
         return new Promise((resolve) => {
@@ -305,7 +310,7 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
     setMultiUnreadCountZeroAsync(
         is_super_team: boolean,
         zero_list: Array<MultiUnreadCountZeroInfo>,
-        cb: SetMultiUnreadCountZeroAsyncCallback
+        cb: SetMultiUnreadCountZeroAsyncCallback | null
     ): Promise<[NIMResCode, Array<SessionData>, number] | null> {
         return new Promise((resolve) => {
             if (
@@ -337,7 +342,7 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
         type: NIMSessionType,
         id: string,
         top: boolean,
-        cb: SessionChangeCallback,
+        cb: SessionChangeCallback | null,
         jsonExtension: string
     ): Promise<[NIMResCode, SessionData, number] | null> {
         return new Promise((resolve) => {
@@ -376,7 +381,7 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
         type: NIMSessionType,
         id: string,
         data: string,
-        cb: SessionChangeCallback,
+        cb: SessionChangeCallback | null,
         jsonExtension: string
     ): Promise<[NIMResCode, SessionData, number] | null> {
         return new Promise((resolve) => {
@@ -408,7 +413,7 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
      * 200:成功
      * </pre>
      */
-    setAllUnreadCountZeroAsync(cb: SessionChangeCallback, jsonExtension: string): Promise<[NIMResCode, SessionData, number] | null> {
+    setAllUnreadCountZeroAsync(cb: SessionChangeCallback | null, jsonExtension: string): Promise<[NIMResCode, SessionData, number] | null> {
         return new Promise((resolve) => {
             if (
                 !this.session.SetAllUnreadCountZeroAsync((rescode, session_data, count) => {
@@ -434,7 +439,7 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
      * 200:成功
      * </pre>
      */
-    querySessionDataById(type: NIMSessionType, id: string, cb: QuerySessionDataCallback, jsonExtension: string): Promise<[NIMResCode, SessionData]> {
+    querySessionDataById(type: NIMSessionType, id: string, cb: QuerySessionDataCallback | null, jsonExtension: string): Promise<[NIMResCode, SessionData]> {
         return new Promise((resolve) => {
             this.session.QuerySessionDataById(
                 type,
@@ -460,7 +465,7 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
      * 200:成功
      * </pre>
      */
-    queryHasmoreRoammsg(session_id: string, to_type: number, cb: QueryHasmoreRoammsgCallback): Promise<[NIMResCode, SessionRoamMsgHasMoreTagInfo]> {
+    queryHasmoreRoammsg(session_id: string, to_type: number, cb: QueryHasmoreRoammsgCallback | null): Promise<[NIMResCode, SessionRoamMsgHasMoreTagInfo]> {
         return new Promise((resolve) => {
             this.session.QueryHasmoreRoammsg(session_id, to_type, (rescode, info) => {
                 if (cb) {
@@ -475,7 +480,7 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
      * @param cb	结果回调
      * @return void 无返回值
      */
-    queryAllHasmoreRoammsg(cb: QueryAllHasmoreRoammsgCallback): Promise<[NIMResCode, Array<SessionRoamMsgHasMoreTagInfo>]> {
+    queryAllHasmoreRoammsg(cb: QueryAllHasmoreRoammsgCallback | null): Promise<[NIMResCode, Array<SessionRoamMsgHasMoreTagInfo>]> {
         return new Promise((resolve) => {
             this.session.QueryAllHasmoreRoammsg((rescode, infos) => {
                 if (cb) {
@@ -491,7 +496,7 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
      * @param cb	结果回调
      * @return void 无返回值
      */
-    updateHasmoreRoammsg(msg: IMMessage, cb: UpdateHasmoreRoammsgCallback): Promise<[NIMResCode]> {
+    updateHasmoreRoammsg(msg: IMMessage, cb: UpdateHasmoreRoammsgCallback | null): Promise<[NIMResCode]> {
         return new Promise((resolve) => {
             this.session.UpdateHasmoreRoammsg(msg, (rescode) => {
                 if (cb) {
@@ -508,7 +513,7 @@ export class NIMSession extends EventEmitter<NIMSessionEvents> {
      * @param cb	结果回调
      * @return void 无返回值
      */
-    deleteHasmoreRoammsg(session_id: string, to_type: NIMSessionType, cb: DeleteHasmoreRoammsgCallback): Promise<[NIMResCode]> {
+    deleteHasmoreRoammsg(session_id: string, to_type: NIMSessionType, cb: DeleteHasmoreRoammsgCallback | null): Promise<[NIMResCode]> {
         return new Promise((resolve) => {
             this.session.DeleteHasmoreRoammsg(session_id, to_type, (rescode) => {
                 if (cb) {

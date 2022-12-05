@@ -49,7 +49,7 @@ export class NIMSubscribeEvent extends EventEmitter<NIMSubscribeEventEvents> {
      * 500:未知错误
      * </pre>
      */
-    publish(data: EventData, cb: PublishEventCallback, jsonExtension: string): Promise<[NIMResCode, number, EventData] | null> {
+    publish(data: EventData, cb: PublishEventCallback | null, jsonExtension: string): Promise<[NIMResCode, number, EventData] | null> {
         return new Promise((resolve) => {
             this.subscribeEvent.Publish(
                 data,
@@ -84,7 +84,7 @@ export class NIMSubscribeEvent extends EventEmitter<NIMSubscribeEventEvents> {
         ttl: number,
         syncType: NIMEventSubscribeSyncEventType,
         accids: Array<string>,
-        cb: SubscribeEventCallback,
+        cb: SubscribeEventCallback | null,
         jsonExtension: string
     ): Promise<[NIMResCode, number, Array<string>] | null> {
         return new Promise((resolve) => {
@@ -124,7 +124,7 @@ export class NIMSubscribeEvent extends EventEmitter<NIMSubscribeEventEvents> {
     unSubscribe(
         eventType: NIMEventType,
         accids: Array<string>,
-        cb: UnSubscribeEventCallback,
+        cb: UnSubscribeEventCallback | null,
         jsonExtension: string
     ): Promise<[NIMResCode, number, Array<string>] | null> {
         return new Promise((resolve) => {
@@ -158,7 +158,7 @@ export class NIMSubscribeEvent extends EventEmitter<NIMSubscribeEventEvents> {
      * 500:未知错误
      * </pre>
      */
-    batchUnSubscribe(eventType: NIMEventType, cb: BatchUnSubscribeEventCallback, jsonExtension: string): Promise<[NIMResCode, number] | null> {
+    batchUnSubscribe(eventType: NIMEventType, cb: BatchUnSubscribeEventCallback | null, jsonExtension: string): Promise<[NIMResCode, number] | null> {
         return new Promise((resolve) => {
             if (
                 !this.subscribeEvent.BatchUnSubscribe(
@@ -193,7 +193,7 @@ export class NIMSubscribeEvent extends EventEmitter<NIMSubscribeEventEvents> {
     querySubscribe(
         eventType: NIMEventType,
         accids: Array<string>,
-        cb: QuerySubscribeEventCallback,
+        cb: QuerySubscribeEventCallback | null,
         jsonExtension: string
     ): Promise<[NIMResCode, number, Array<EventSubscribeData>]> {
         return new Promise((resolve) => {

@@ -39,7 +39,7 @@ Build Requirements:
 -   CMake
 -   CMake supported generator(Unix Makefiles, Ninja, Visual Studio, Xcode...)
 
-Now you are all set to build, run following command in the root directory of the project:
+Now you are all set to build, run following commands in the root directory of the project:
 
 ```cmake
 cmake -S . -B build
@@ -61,31 +61,16 @@ npm run coverage
 ```js
 // Chatroom
 import * as node_nim from 'node-nim'
-const chatroom = new node_nim.ChatRoomModule()
-if (!chatroom.init('', '')) {
+const chatroom = new node_nim.ChatroomModule()
+let ret = chatroom.init('', '')
+if (!ret) {
     console.log('init failed')
     process.exit(1)
 }
 chatroom.initEventHandlers()
-chatroom.on('enter', function (...resp) {
-    console.log('enter', resp)
-    if (resp[1] == 5 && resp[2] == 200) {
-        // do something
-    }
-})
-if (
-    !chatroom.independentEnter(
-        36,
-        {
-            accid_: 'accid',
-            token_: 'token',
-            app_key_: 'appkey',
-            address_: ['link_address']
-        },
-        {}
-    )
-) {
-    console.log('independentEnter failed')
+ret = chatroom.enter('room_id', 'login_data', {}, '')
+if (!ret) {
+    console.log('enter failed')
     process.exit(1)
 }
 ```
@@ -93,12 +78,13 @@ if (
 ```js
 // NIM
 import * as node_nim from 'node-nim'
-const client = new node_nim.V2Client()
+const client = new node_nim.NIMClient()
 const talk = new node_nim.NIMTalk()
-const result = client.init({
-    app_key: 'appkey'
+const result = client.init('app_key', 'app_data_dir', 'app_install_dir', {
+    db_encrypt_key: 'abcdefghijklmnopqrstuvwxyz012345'
 })
-if (result.rescode != 200) {
+
+if (!result) {
     console.log('init failed')
     process.exit(1)
 }
@@ -106,12 +92,14 @@ if (result.rescode != 200) {
 client.initEventHandlers()
 talk.initEventHandlers()
 
-let resp = await client.login({
-    accid: 'accid',
-    token: 'token'
-})
-
-if (resp[0].result.rescode != node_nim.NIMResCode.kNIMResSuccess) {
+let resp = await client.login(
+    'app_key',
+    'username',
+    'password',
+    null, // pass your callback function if you dont use the return Promise
+    ''
+)
+if (resp[0].res_code_ != node_nim.NIMResCode.kNIMResSuccess) {
     console.log('login failed')
     process.exit(1)
 }

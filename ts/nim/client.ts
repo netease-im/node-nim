@@ -74,7 +74,7 @@ export class NIMClient extends EventEmitter<NIMClientEvents> {
      * 422:账号被禁用
      * </pre>
      */
-    login(appKey: string, account: string, password: string, cb: LoginCallback, jsonExtension: string): Promise<[LoginRes]> {
+    login(appKey: string, account: string, password: string, cb: LoginCallback | null, jsonExtension: string): Promise<[LoginRes]> {
         return new Promise((resolve) => {
             this.client.Login(
                 appKey,
@@ -104,7 +104,7 @@ export class NIMClient extends EventEmitter<NIMClientEvents> {
      * 500:未知错误
      * </pre>
      */
-    logout(logoutType: NIMLogoutType, cb: LogoutCallback, jsonExtension: string): Promise<[NIMResCode]> {
+    logout(logoutType: NIMLogoutType, cb: LogoutCallback | null, jsonExtension: string): Promise<[NIMResCode]> {
         return new Promise((resolve) => {
             this.client.Logout(
                 logoutType,
@@ -168,7 +168,7 @@ export class NIMClient extends EventEmitter<NIMClientEvents> {
      * 200:成功
      * </pre>
      */
-    setMultiportPushConfigAsync(switch_on: boolean, cb: MultiportPushConfigCallback, jsonExtension: string): Promise<[NIMResCode, boolean]> {
+    setMultiportPushConfigAsync(switch_on: boolean, cb: MultiportPushConfigCallback | null, jsonExtension: string): Promise<[NIMResCode, boolean]> {
         return new Promise((resolve) => {
             this.client.SetMultiportPushConfigAsync(
                 switch_on,
@@ -188,7 +188,7 @@ export class NIMClient extends EventEmitter<NIMClientEvents> {
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @return void
      */
-    getMultiportPushConfigAsync(cb: MultiportPushConfigCallback, jsonExtension: string): Promise<[NIMResCode, boolean]> {
+    getMultiportPushConfigAsync(cb: MultiportPushConfigCallback | null, jsonExtension: string): Promise<[NIMResCode, boolean]> {
         return new Promise((resolve) => {
             this.client.GetMultiportPushConfigAsync((res, open) => {
                 if (cb) {
@@ -217,7 +217,7 @@ export class NIMClient extends EventEmitter<NIMClientEvents> {
      * 时的方案以减少服务端的压力，并会在回调中指明返回的时间是由本地计算的。 如果返回 code != 200,同样会返回一个本地计算结果
      * </pre>
      */
-    getServerCurrentTime(cb: GetCurrentServerTimeCallback, calcLocal: boolean): Promise<[number, boolean, number]> {
+    getServerCurrentTime(cb: GetCurrentServerTimeCallback | null, calcLocal: boolean): Promise<[number, boolean, number]> {
         return new Promise((resolve) => {
             this.client.GetServerCurrentTime((rescode, calcLocal, time) => {
                 if (cb) {

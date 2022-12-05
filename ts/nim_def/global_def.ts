@@ -62,17 +62,29 @@ export type UploadSDKLogCallback = (rescode: NIMResCode) => void
 export interface NIMGlobalAPI {
     InitEventHandlers(): void
 
-    SetExceptionReportCallback(jsonExtension: string, cb: ExceptionCallback): void
+    SetExceptionReportCallback(jsonExtension: string, cb: ExceptionCallback | null): void
 
     SetProxy(type: NIMProxyType, host: string, port: number, user: string, password: string): void
 
-    DetectProxy(type: NIMProxyType, host: string, port: number, user: string, password: string, cb: DetectProxyCallback): void
+    DetectProxy(type: NIMProxyType, host: string, port: number, user: string, password: string, cb: DetectProxyCallback | null): void
 
-    GetSDKCachedFileInfoAsync(loginId: string, fileType: NIMCachedFileType, endTimestamp: number, jsonExtension: string, cb: GetCachedFileInfoCallback): void
+    GetSDKCachedFileInfoAsync(
+        loginId: string,
+        fileType: NIMCachedFileType,
+        endTimestamp: number,
+        jsonExtension: string,
+        cb: GetCachedFileInfoCallback | null
+    ): void
 
-    DeleteSDKCachedFileAsync(loginId: string, fileType: NIMCachedFileType, endTimestamp: number, jsonExtension: string, cb: DeleteCachedFileCallback): void
+    DeleteSDKCachedFileAsync(
+        loginId: string,
+        fileType: NIMCachedFileType,
+        endTimestamp: number,
+        jsonExtension: string,
+        cb: DeleteCachedFileCallback | null
+    ): void
 
-    SDKFeedbackAsync(url: string, jsonExtension: string, cb: SDKFeedbackCallback): void
+    SDKFeedbackAsync(url: string, jsonExtension: string, cb: SDKFeedbackCallback | null): void
 
-    UploadSDKLog(feedbackStr: string, cb: UploadSDKLogCallback): void
+    UploadSDKLog(feedbackStr: string, cb: UploadSDKLogCallback | null): void
 }

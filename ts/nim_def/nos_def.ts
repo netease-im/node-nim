@@ -70,15 +70,15 @@ export type SpeedCallback = (speed: number) => void
 export interface NIMNOSAPI {
     InitEventHandlers(): void
 
-    InitConfig(param: InitNosConfigParam, cb: InitNosResultCallback): void
+    InitConfig(param: InitNosConfigParam, cb: InitNosResultCallback | null): void
 
     FetchMedia(
         msg: IMMessage,
         jsonExtension: string,
-        res_cb: DownloadMediaCallback,
-        prg_cb: ProgressCallback,
-        speed_cb: SpeedCallback,
-        transfer_cb: TransferInfoCallback
+        res_cb: DownloadMediaCallback | null,
+        prg_cb: ProgressCallback | null,
+        speed_cb: SpeedCallback | null,
+        transfer_cb: TransferInfoCallback | null
     ): boolean
 
     StopFetchMedia(msg: IMMessage): boolean
@@ -87,10 +87,10 @@ export interface NIMNOSAPI {
         local_file: string,
         tag: string,
         param: NOSParams,
-        res_cb: UploadMediaExCallback,
-        prg_cb: ProgressExCallback,
-        speed_cb: SpeedCallback,
-        transfer_cb: TransferInfoCallback
+        res_cb: UploadMediaExCallback | null,
+        prg_cb: ProgressExCallback | null,
+        speed_cb: SpeedCallback | null,
+        transfer_cb: TransferInfoCallback | null
     ): boolean
 
     StopUploadResource(task_id: string, jsonExtension: string): boolean
@@ -98,15 +98,15 @@ export interface NIMNOSAPI {
     DownloadResource(
         nosUrl: string,
         param: NOSParams,
-        res_cb: DownloadMediaExCallback,
-        prg_cb: ProgressExCallback,
-        speed_cb: SpeedCallback,
-        transfer_cb: TransferInfoCallback
+        res_cb: DownloadMediaExCallback | null,
+        prg_cb: ProgressExCallback | null,
+        speed_cb: SpeedCallback | null,
+        transfer_cb: TransferInfoCallback | null
     ): boolean
 
     StopDownloadResource(task_id: string, jsonExtension: string): boolean
 
-    SafeURLToOriginURL(safe_url: string, cb: SafeURLToOriginURLCallback, jsonExtension: string): void
+    SafeURLToOriginURL(safe_url: string, cb: SafeURLToOriginURLCallback | null, jsonExtension: string): void
 
     SetSupportQuickTrans(quick: boolean): void
 }

@@ -68,15 +68,15 @@ export type GetFriendProfileCallback = (accid: string, result: FriendProfile) =>
 export interface NIMFriendAPI {
     InitEventHandlers(): void
 
-    Request(accid: string, verify_type: NIMVerifyType, msg: string, cb: FriendOptCallback, jsonExtension: string): boolean
+    Request(accid: string, verify_type: NIMVerifyType, msg: string, cb: FriendOptCallback | null, jsonExtension: string): boolean
 
-    Delete(accid: string, option: DeleteFriendOption, cb: FriendOptCallback): boolean
+    Delete(accid: string, option: DeleteFriendOption, cb: FriendOptCallback | null): boolean
 
-    Update(profile: FriendProfile, cb: FriendOptCallback, jsonExtension: string): boolean
+    Update(profile: FriendProfile, cb: FriendOptCallback | null, jsonExtension: string): boolean
 
-    GetList(cb: GetFriendsListCallback, jsonExtension: string): void
+    GetList(cb: GetFriendsListCallback | null, jsonExtension: string): void
 
-    GetFriendProfile(accid: string, cb: GetFriendProfileCallback, jsonExtension: string): void
+    GetFriendProfile(accid: string, cb: GetFriendProfileCallback | null, jsonExtension: string): void
 
-    QueryFriendListByKeyword(keyword: string, cb: GetFriendsListCallback, jsonExtension: string): boolean
+    QueryFriendListByKeyword(keyword: string, cb: GetFriendsListCallback | null, jsonExtension: string): boolean
 }

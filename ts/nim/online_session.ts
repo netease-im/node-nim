@@ -43,7 +43,7 @@ export class NIMOnlineSession extends EventEmitter<NIMOnlineSessionEvents> {
         maxTime: number,
         needLastMsg: boolean,
         limit: number,
-        cb: QueryOnlineSessionListCallback
+        cb: QueryOnlineSessionListCallback | null
     ): Promise<[QuerySessionListResult]> {
         return new Promise((resolve) => {
             this.session.QuerySessionList(minTime, maxTime, needLastMsg, limit, (result) => {
@@ -61,7 +61,7 @@ export class NIMOnlineSession extends EventEmitter<NIMOnlineSessionEvents> {
      * @param cb 结果回调  可查看NIMQuerySessionInfoCallback定义
      * @return void 无返回值
      */
-    querySession(to_type: NIMSessionType, session_id: string, cb: QueryOnlineSessionInfoCallback): Promise<[NIMResCode, SessionInfo]> {
+    querySession(to_type: NIMSessionType, session_id: string, cb: QueryOnlineSessionInfoCallback | null): Promise<[NIMResCode, SessionInfo]> {
         return new Promise((resolve) => {
             this.session.QuerySession(to_type, session_id, (rescode, info) => {
                 if (cb) {
@@ -79,7 +79,7 @@ export class NIMOnlineSession extends EventEmitter<NIMOnlineSessionEvents> {
      * @param cb 结果回调  可查看NIMUpdateSessionInfoCallback定义
      * @return void 无返回值
      */
-    updateSession(to_type: NIMSessionType, session_id: string, ext: string, cb: UpdateOnlineSessionInfoCallback): Promise<[NIMResCode]> {
+    updateSession(to_type: NIMSessionType, session_id: string, ext: string, cb: UpdateOnlineSessionInfoCallback | null): Promise<[NIMResCode]> {
         return new Promise((resolve) => {
             this.session.UpdateSession(to_type, session_id, ext, (rescode) => {
                 if (cb) {
@@ -95,7 +95,7 @@ export class NIMOnlineSession extends EventEmitter<NIMOnlineSessionEvents> {
      * @param cb 结果回调  可查看DeleteSessionInfoCallback定义
      * @return void 无返回值
      */
-    deleteSession(param: DeleteSessionParam, cb: DeleteOnlineSessionInfoCallback): Promise<[NIMResCode]> {
+    deleteSession(param: DeleteSessionParam, cb: DeleteOnlineSessionInfoCallback | null): Promise<[NIMResCode]> {
         return new Promise((resolve) => {
             this.session.DeleteSession(param, (rescode) => {
                 if (cb) {

@@ -16,6 +16,7 @@ Napi::Object NIMMsgLog::Init(Napi::Env env, Napi::Object exports) {
             RegApi("QueryMsgAsync", &MsgLog::QueryMsgAsync),
             RegAmbApi("QueryMsgOnlineAsync", &MsgLog::QueryMsgOnlineAsync,
                 bool (*)(const MsgLog::QueryMsgOnlineAsyncParam&, const MsgLog::QueryMsgCallback&)),
+            RegApi("GetMessagesDynamically", &MsgLog::GetMessagesDynamically),
             RegApi("QueryMsgByKeywordOnlineAsync", &MsgLog::QueryMsgByKeywordOnlineAsync),
             RegApi("QueryMsgOfSpecifiedTypeInASessionAsync", &MsgLog::QueryMsgOfSpecifiedTypeInASessionAsync),
             RegApi("QueryMsgByOptionsAsync", &MsgLog::QueryMsgByOptionsAsyncEx), RegApi("BatchStatusReadAsync", &MsgLog::BatchStatusReadAsync),

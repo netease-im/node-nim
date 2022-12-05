@@ -77,6 +77,7 @@ export enum NIMMessageType {
     kNIMMessageTypeFile = 6 /** < 文件类型消息*/,
     kNIMMessageTypeTips = 10 /** < 提醒类型消息,Tip内容根据格式要求填入消息结构中的kNIMMsgKeyServerExt字段*/,
     kNIMMessageTypeRobot = 11 /** < 波特机器人消息*/,
+    kNIMMessageTypeG2NetCall = 12 /** < G2话单消息*/,
     kNIMMessageTypeCustom = 100 /** < 自定义消息*/,
 
     kNIMMessageTypeUnknown = 1000 /** < 未知类型消息，本地使用，发送时勿使用，作为默认值*/
@@ -190,8 +191,7 @@ export interface MessageSetting {
     anti_spam_enable_?: BoolStatus /**< 是否需要过易盾反垃圾 */
     anti_spam_content_?: string /**< (可选)开发者自定义的反垃圾字段,长度限制5000 */
     anti_apam_biz_id_?: string /**< (可选)用户配置的对某些单条消息另外的反垃圾的业务ID */
-    anti_apam_using_yidun_?: number /**< number,  (可选) 单条消息是否使用易盾反垃圾 0:(在开通易盾的情况下)不过易盾反垃圾而是通用反垃圾
-                                   其他都是按照原来的规则 */
+    anti_apam_using_yidun_?: number /**< number,  (可选) 单条消息是否使用易盾反垃圾 0:(在开通易盾的情况下)不过易盾反垃圾 */
     client_anti_spam_hitting_?: BoolStatus /**< (可选) 是否命中客户端反垃圾 */
     team_msg_need_ack_?: BoolStatus /**< 群消息是否需要已读业务，0：不需要，1：需要 */
     team_msg_ack_sent_?: BoolStatus /**< 是否已经发送群消息已读回执 */
@@ -333,7 +333,16 @@ export interface QueryMsgByOptionsAsyncParam {
     search_content_?: string /**< 检索文本（目前只支持kNIMMessageTypeText和kNIMMessageTypeFile这两种类型消息的文本关键字检索，即支持文字消息和文件名的检索 */
 }
 
+export interface GetMessagesResult {
+    rescode_?: NIMResCode /**< 操作结果 */
+    session_id_?: string /**< 会话ID */
+    session_type_?: NIMSessionType /**< 会话类型 */
+    reliable_?: boolean /**< 结果是否可信：例如当查询范围不在可信时间段内, 但远端请求失败时, 返回的本地结果可能不完整 */
+    messages_?: Array<IMMessage> /**< 历史消息列表 */
+}
+
 export type QueryMsgCallback = (rescode: NIMResCode, id: string, to_type: NIMSessionType, result: QueryMsglogResult) => void
+export type GetMessagesDynamicallyCallback = (result: GetMessagesResult) => void
 export type QuerySingleMsgCallback = (rescode: NIMResCode, id: string, msg: IMMessage) => void
 export type ModifyMultipleMsglogCallback = (rescode: NIMResCode, uid: string, to_type: NIMSessionType) => void
 export type ModifySingleMsglogCallback = (rescode: NIMResCode, msg_id: string) => void
@@ -359,13 +368,33 @@ export type FullTextSearchOnlineAsyncCallback = (rescode: NIMResCode, result: Qu
 export interface NIMMsgLogAPI {
     InitEventHandlers(): void
 
-    QueryMsgByIDAysnc(clientMsgId: string, cb: QuerySingleMsgCallback, jsonExtension: string): boolean
+    QueryMsgByIDAysnc(clientMsgId: string, cb: QuerySingleMsgCallback | null, jsonExtension: string): boolean
 
-    QueryMsgAsync(accid: string, to_type: NIMSessionType, limit_count: number, anchor_msg_time: number, cb: QueryMsgCallback, jsonExtension: string): boolean
+    QueryMsgAsync(
+        accid: string,
+        to_type: NIMSessionType,
+        limit_count: number,
+        anchor_msg_time: number,
+        cb: QueryMsgCallback | null,
+        jsonExtension: string
+    ): boolean
 
-    QueryMsgOnlineAsync(param: QueryMsgOnlineAsyncParam, cb: QueryMsgCallback): boolean
+    GetMessagesDynamically(
+        session_id: string,
+        to_type: NIMSessionType,
+        from_time: number,
+        to_time: number,
+        limit_count: number,
+        anchor_client_msg_id: string,
+        anchor_server_msg_id: number,
+        direction: NIMMsglogSearchDirection,
+        cb: GetMessagesDynamicallyCallback | null,
+        jsonExtension: string
+    ): void
 
-    QueryMsgByKeywordOnlineAsync(param: QueryMsgByKeywordOnlineParam, cb: QueryMsgCallback): boolean
+    QueryMsgOnlineAsync(param: QueryMsgOnlineAsyncParam, cb: QueryMsgCallback | null): boolean
+
+    QueryMsgByKeywordOnlineAsync(param: QueryMsgByKeywordOnlineParam, cb: QueryMsgCallback | null): boolean
 
     QueryMsgOfSpecifiedTypeInASessionAsync(
         to_type: NIMSessionType,
@@ -376,25 +405,25 @@ export interface NIMMsgLogAPI {
         endClientMsgId: string,
         reverse: boolean,
         msgType: Array<NIMMessageType>,
-        cb: QueryMsgCallback,
+        cb: QueryMsgCallback | null,
         jsonExtension: string
     ): boolean
 
-    QueryMsgByOptionsAsync(param: QueryMsgByOptionsAsyncParam, cb: QueryMsgCallback): boolean
+    QueryMsgByOptionsAsync(param: QueryMsgByOptionsAsyncParam, cb: QueryMsgCallback | null): boolean
 
-    BatchStatusReadAsync(accid: string, to_type: NIMSessionType, cb: ModifyMultipleMsglogCallback, jsonExtension: string): boolean
+    BatchStatusReadAsync(accid: string, to_type: NIMSessionType, cb: ModifyMultipleMsglogCallback | null, jsonExtension: string): boolean
 
     BatchStatusDeleteAsync(
         accid: string,
         to_type: NIMSessionType,
         revert_by_query_online: boolean,
-        cb: ModifyMultipleMsglogCallback,
+        cb: ModifyMultipleMsglogCallback | null,
         jsonExtension: string
     ): boolean
 
-    SetStatusAsync(msg_id: string, status: NIMMsgLogStatus, cb: ModifySingleMsglogCallback, jsonExtension: string): boolean
+    SetStatusAsync(msg_id: string, status: NIMMsgLogStatus, cb: ModifySingleMsglogCallback | null, jsonExtension: string): boolean
 
-    SetSubStatusAsync(msg_id: string, status: NIMMsgLogSubStatus, cb: ModifySingleMsglogCallback, jsonExtension: string): boolean
+    SetSubStatusAsync(msg_id: string, status: NIMMsgLogSubStatus, cb: ModifySingleMsglogCallback | null, jsonExtension: string): boolean
 
     WriteMsglogToLocalAsync(
         talkId: string,
@@ -402,20 +431,20 @@ export interface NIMMsgLogAPI {
         needUpdateSession: boolean,
         composeLastMsg: boolean,
         excludeMsgType: Array<number>,
-        cb: ModifySingleMsglogCallback
+        cb: ModifySingleMsglogCallback | null
     ): boolean
 
     DeleteBySessionTypeAsync(
         delSessions: boolean,
         to_type: NIMSessionType,
         revert_by_query_online: boolean,
-        cb: ModifyMultipleMsglogCallback,
+        cb: ModifyMultipleMsglogCallback | null,
         jsonExtension: string
     ): boolean
 
-    DeleteAsync(session_id: string, to_type: NIMSessionType, msg_id: string, cb: ModifySingleMsglogCallback, jsonExtension: string): boolean
+    DeleteAsync(session_id: string, to_type: NIMSessionType, msg_id: string, cb: ModifySingleMsglogCallback | null, jsonExtension: string): boolean
 
-    DeleteAllAsync(del_session: boolean, revert_by_query_online: boolean, cb: DBFunctionCallback, jsonExtension: string): boolean
+    DeleteAllAsync(del_session: boolean, revert_by_query_online: boolean, cb: DBFunctionCallback | null, jsonExtension: string): boolean
 
     DeleteMsgByTimeAsync(
         session_id: string,
@@ -423,23 +452,23 @@ export interface NIMMsgLogAPI {
         revert_by_query_online: boolean,
         timestamp1: number,
         timestamp2: number,
-        cb: DBFunctionCallback,
+        cb: DBFunctionCallback | null,
         jsonExtension: string
     ): boolean
 
-    ExportDbAsync(dst_path: string, cb: DBFunctionCallback, jsonExtension: string): boolean
+    ExportDbAsync(dst_path: string, cb: DBFunctionCallback | null, jsonExtension: string): boolean
 
-    ImportDbAsync(src_path: string, db_cb: DBFunctionCallback, prg_cb: ImportDbPrgCallback, jsonExtension: string): boolean
+    ImportDbAsync(src_path: string, db_cb: DBFunctionCallback, prg_cb: ImportDbPrgCallback | null, jsonExtension: string): boolean
 
-    SendReceiptAsync(msg: IMMessage, cb: MessageStatusChangedCallback): void
+    SendReceiptAsync(msg: IMMessage, cb: MessageStatusChangedCallback | null): void
 
     QuerySentMessageBeReaded(msg: IMMessage): boolean
 
     QueryReceivedMsgReceiptSent(msg: IMMessage): boolean
 
-    UpdateLocalExtAsync(msg_id: string, local_ext: string, cb: ModifySingleMsglogCallback, jsonExtension: string): boolean
+    UpdateLocalExtAsync(msg_id: string, local_ext: string, cb: ModifySingleMsglogCallback | null, jsonExtension: string): boolean
 
-    ReadAllAsync(cb: DBFunctionCallback, jsonExtension: string): boolean
+    ReadAllAsync(cb: DBFunctionCallback | null, jsonExtension: string): boolean
 
     ExportBackupToRemote(export_info: LogsBackupExportInfo): boolean
 
@@ -449,17 +478,23 @@ export interface NIMMsgLogAPI {
 
     CancelExportBackupToRemote(): void
 
-    DeleteHistoryOnlineAsync(accid: string, delete_roaming: boolean, jsonExtension: string, cb: DeleteHistoryOnLineAsyncExCallback): void
+    DeleteHistoryOnlineAsync(accid: string, delete_roaming: boolean, jsonExtension: string, cb: DeleteHistoryOnLineAsyncExCallback | null): void
 
-    DeleteHistoryOnlineAsyncEx(accid: string, to_type: number, needs_notify_self: boolean, jsonExtension: string, cb: DeleteHistoryOnLineAsyncExCallback): void
+    DeleteHistoryOnlineAsyncEx(
+        accid: string,
+        to_type: number,
+        needs_notify_self: boolean,
+        jsonExtension: string,
+        cb: DeleteHistoryOnLineAsyncExCallback | null
+    ): void
 
-    DeleteMessageSelfAsync(msg: IMMessage, ext: string, cb: DeleteMessageSelfAsyncCallback): void
+    DeleteMessageSelfAsync(msg: IMMessage, ext: string, cb: DeleteMessageSelfAsyncCallback | null): void
 
-    QueryMessageIsThreadRoot(client_id: string, cb: QueryMessageIsThreadRootCallback): void
+    QueryMessageIsThreadRoot(client_id: string, cb: QueryMessageIsThreadRootCallback | null): void
 
-    QueryMessageOnline(param: QueryMsgAsyncParam, cb: QueryMessageOnlineCallback): void
+    QueryMessageOnline(param: QueryMsgAsyncParam, cb: QueryMessageOnlineCallback | null): void
 
-    QueryThreadHistoryMsg(msg: IMMessage, param: QueryThreadHistoryMsgAsyncParam, cb: QueryThreadHistoryMsgCallback): void
+    QueryThreadHistoryMsg(msg: IMMessage, param: QueryThreadHistoryMsgAsyncParam, cb: QueryThreadHistoryMsgCallback | null): void
 
-    FullTextSearchOnlineAsync(param: FullTextSearchOnlineAsyncParam, cb: FullTextSearchOnlineAsyncCallback): void
+    FullTextSearchOnlineAsync(param: FullTextSearchOnlineAsyncParam, cb: FullTextSearchOnlineAsyncCallback | null): void
 }

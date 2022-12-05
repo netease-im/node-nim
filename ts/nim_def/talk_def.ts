@@ -50,13 +50,13 @@ export interface NIMTalkAPI {
 
     StopSendMsg(clientMsgId: string, type: NIMMessageType, jsonExtension: string): void
 
-    RecallMsg(msg: IMMessage, notify_msg: string, cb: RecallMsgsCallback, apnstext: string, pushpayloadconst: string, jsonExtension: string): void
+    RecallMsg(msg: IMMessage, notify_msg: string, cb: RecallMsgsCallback | null, apnstext: string, pushpayloadconst: string, jsonExtension: string): void
 
     GetAttachmentPathFromMsg(msg: IMMessage): string
 
     ReplyMessage(msg: IMMessage, json_reply_msg: string): void
 
-    RegMessageFilter(cb: MessageFilterCallback, jsonExtension: string): void
+    RegMessageFilter(cb: MessageFilterCallback | null, jsonExtension: string): void
 
-    RegTeamNotificationFilter(cb: TeamNotificationFilterCallback, jsonExtension: string): void
+    RegTeamNotificationFilter(cb: TeamNotificationFilterCallback | null, jsonExtension: string): void
 }

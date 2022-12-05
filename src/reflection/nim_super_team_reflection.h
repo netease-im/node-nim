@@ -1,5 +1,5 @@
 /**
- * @file nim_super_team_reflection.h
+ * @file nim_node_super_team_helper.h
  * @author NetEase Yunxin
  * @date 2022-02-21
  * @copyright (c) 2022, NetEase Inc. All rights reserved
@@ -27,7 +27,6 @@ ReflectionDefinition_O(SuperTeamMemberProperty, member_info_json_value_);
 
 // Callback
 CallbackSpecialization(SuperTeam::SuperTeamEventCallback);
-CallbackSpecialization(SuperTeam::QueryAllMySuperTeamsCallback);
 CallbackSpecialization(SuperTeam::QueryAllMySuperTeamsInfoCallback);
 CallbackSpecialization(SuperTeam::QueryMyAllMemberInfosCallback);
 CallbackSpecialization(SuperTeam::QuerySuperTeamMembersCallback);

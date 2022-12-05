@@ -67,19 +67,19 @@ export interface NIMSysMsgAPI {
 
     SendCustomNotificationMsg(msg: SysMessage): void
 
-    QueryMsgAsync(limit_count: number, last_time: number, cb: QuerySysmsgCallback, jsonExtension: string): boolean
+    QueryMsgAsync(limit_count: number, last_time: number, cb: QuerySysmsgCallback | null, jsonExtension: string): boolean
 
-    QueryUnreadCount(cb: NotifySysmsgResCallback, jsonExtension: string): void
+    QueryUnreadCount(cb: NotifySysmsgResCallback | null, jsonExtension: string): void
 
-    SetStatusAsync(msg_id: number, status: NIMSysMsgStatus, cb: NotifySingleSysmsgCallback, jsonExtension: string): boolean
+    SetStatusAsync(msg_id: number, status: NIMSysMsgStatus, cb: NotifySingleSysmsgCallback | null, jsonExtension: string): boolean
 
-    ReadAllAsync(cb: NotifySysmsgResCallback, jsonExtension: string): void
+    ReadAllAsync(cb: NotifySysmsgResCallback | null, jsonExtension: string): void
 
-    DeleteAsync(msg_id: number, cb: NotifySingleSysmsgCallback, jsonExtension: string): boolean
+    DeleteAsync(msg_id: number, cb: NotifySingleSysmsgCallback | null, jsonExtension: string): boolean
 
-    DeleteAllAsync(cb: NotifySysmsgResCallback, jsonExtension: string): boolean
+    DeleteAllAsync(cb: NotifySysmsgResCallback | null, jsonExtension: string): boolean
 
-    SetStatusByTypeAsync(type: NIMSysMsgType, status: NIMSysMsgStatus, cb: NotifySysmsgResCallback, jsonExtension: string): boolean
+    SetStatusByTypeAsync(type: NIMSysMsgType, status: NIMSysMsgStatus, cb: NotifySysmsgResCallback | null, jsonExtension: string): boolean
 
-    DeleteByTypeAsync(type: NIMSysMsgType, cb: NotifySysmsgResCallback, jsonExtension: string): boolean
+    DeleteByTypeAsync(type: NIMSysMsgType, cb: NotifySysmsgResCallback | null, jsonExtension: string): boolean
 }

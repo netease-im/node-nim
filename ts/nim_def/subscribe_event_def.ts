@@ -88,20 +88,20 @@ export type QuerySubscribeEventCallback = (rescode: NIMResCode, eventType: numbe
 export interface NIMSubscribeEventAPI {
     InitEventHandlers(): void
 
-    Publish(data: EventData, cb: PublishEventCallback, jsonExtension: string): boolean
+    Publish(data: EventData, cb: PublishEventCallback | null, jsonExtension: string): boolean
 
     Subscribe(
         eventType: NIMEventType,
         ttl: number,
         syncType: NIMEventSubscribeSyncEventType,
         accids: Array<string>,
-        cb: SubscribeEventCallback,
+        cb: SubscribeEventCallback | null,
         jsonExtension: string
     ): boolean
 
-    UnSubscribe(eventType: NIMEventType, accids: Array<string>, cb: UnSubscribeEventCallback, jsonExtension: string): boolean
+    UnSubscribe(eventType: NIMEventType, accids: Array<string>, cb: UnSubscribeEventCallback | null, jsonExtension: string): boolean
 
-    BatchUnSubscribe(eventType: NIMEventType, cb: BatchUnSubscribeEventCallback, jsonExtension: string): boolean
+    BatchUnSubscribe(eventType: NIMEventType, cb: BatchUnSubscribeEventCallback | null, jsonExtension: string): boolean
 
-    QuerySubscribe(eventType: NIMEventType, accids: Array<string>, cb: QuerySubscribeEventCallback, jsonExtension: string): void
+    QuerySubscribe(eventType: NIMEventType, accids: Array<string>, cb: QuerySubscribeEventCallback | null, jsonExtension: string): void
 }

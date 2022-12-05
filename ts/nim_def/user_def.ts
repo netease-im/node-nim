@@ -56,21 +56,21 @@ export type UpdateMyUserNameCardCallback = (rescode: NIMResCode) => void
 export interface NIMUserAPI {
     InitEventHandlers(): void
 
-    SetBlack(accid: string, setBlack: boolean, cb: SetRelationCallback, jsonExtension: string): boolean
+    SetBlack(accid: string, setBlack: boolean, cb: SetRelationCallback | null, jsonExtension: string): boolean
 
-    SetMute(accid: string, set_mute: boolean, cb: SetRelationCallback, jsonExtension: string): boolean
+    SetMute(accid: string, set_mute: boolean, cb: SetRelationCallback | null, jsonExtension: string): boolean
 
-    GetMutelist(cb: GetSpecialListCallback, jsonExtension: string): void
+    GetMutelist(cb: GetSpecialListCallback | null, jsonExtension: string): void
 
-    GetBlacklist(cb: GetSpecialListCallback, jsonExtension: string): void
+    GetBlacklist(cb: GetSpecialListCallback | null, jsonExtension: string): void
 
-    GetUserNameCard(accids: Array<string>, cb: GetUserNameCardCallback, jsonExtension: string): boolean
+    GetUserNameCard(accids: Array<string>, cb: GetUserNameCardCallback | null, jsonExtension: string): boolean
 
-    GetUserNameCardOnline(accids: Array<string>, cb: GetUserNameCardCallback, jsonExtension: string): boolean
+    GetUserNameCardOnline(accids: Array<string>, cb: GetUserNameCardCallback | null, jsonExtension: string): boolean
 
-    UpdateMyUserNameCard(nameCard: UserNameCard, cb: UpdateMyUserNameCardCallback, jsonExtension: string): boolean
+    UpdateMyUserNameCard(nameCard: UserNameCard, cb: UpdateMyUserNameCardCallback | null, jsonExtension: string): boolean
 
-    QueryUserListByKeyword(keyword: string, cb: GetUserNameCardCallback, jsonExtension: string): boolean
+    QueryUserListByKeyword(keyword: string, cb: GetUserNameCardCallback | null, jsonExtension: string): boolean
 
     UpdatePushToken(cerName: string, token: string, type: NINPushType): void
 }

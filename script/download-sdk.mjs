@@ -1,15 +1,15 @@
 import fetch from 'node-fetch'
 import compareVersions from 'compare-versions'
 import download from 'download'
-if (process.env.npm_config_ignore_download_sdk) {
-    console.log('ignore download sdk')
-    process.exit(0)
-}
 const arch = process.env.npm_config_arch || process.arch
 const platform = process.env.npm_config_platform || process.platform
 const sdk_group = 'message'
 const sdk_name = 'nim'
 const sdk_path = 'sdk'
+if (process.env.npm_config_ignore_download_sdk) {
+    console.log('ignore download sdk')
+    process.exit(0)
+}
 let sdk_url = process.env.npm_config_nim_sdk_url
 let sdk_version = process.env.npm_package_version.split('-')[0]
 if (process.env.npm_config_nim_sdk_version) {

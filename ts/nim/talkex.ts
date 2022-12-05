@@ -60,7 +60,7 @@ export class NIMTalkEx extends EventEmitter<NIMTalkExEvents> {
      * @param cb		执行结果回调函数
      * @return void 无返回值
      */
-    addCollect(collect_info: CollectInfo, cb: AddCollectCallback): Promise<[NIMResCode, CollectInfo]> {
+    addCollect(collect_info: CollectInfo, cb: AddCollectCallback | null): Promise<[NIMResCode, CollectInfo]> {
         return new Promise((resolve) => {
             this.talkex.AddCollect(collect_info, (rescode, info) => {
                 if (cb) {
@@ -76,7 +76,7 @@ export class NIMTalkEx extends EventEmitter<NIMTalkExEvents> {
      * @param cb		执行结果回调函数
      * @return void 无返回值
      */
-    removeCollects(collect_list: RemoveCollectsParm, cb: RemoveCollectsCallback): Promise<[NIMResCode, number]> {
+    removeCollects(collect_list: RemoveCollectsParm, cb: RemoveCollectsCallback | null): Promise<[NIMResCode, number]> {
         return new Promise((resolve) => {
             this.talkex.RemoveCollects(collect_list, (rescode, count) => {
                 if (cb) {
@@ -93,7 +93,7 @@ export class NIMTalkEx extends EventEmitter<NIMTalkExEvents> {
      * @param cb		执行结果回调函数
      * @return void 无返回值
      */
-    updateCollectExt(collect_match_param: MatchCollectParm, ext: string, cb: UpdateCollectCallback): Promise<[NIMResCode, CollectInfo]> {
+    updateCollectExt(collect_match_param: MatchCollectParm, ext: string, cb: UpdateCollectCallback | null): Promise<[NIMResCode, CollectInfo]> {
         return new Promise((resolve) => {
             this.talkex.UpdateCollectExt(collect_match_param, ext, (rescode, info) => {
                 if (cb) {
@@ -109,7 +109,7 @@ export class NIMTalkEx extends EventEmitter<NIMTalkExEvents> {
      * @param cb		执行结果回调函数
      * @return void 无返回值
      */
-    queryCollectList(query_collect_list_param: QueryCollectsParm, cb: QueryCollectsCallback): Promise<[NIMResCode, number, CollectInfoList]> {
+    queryCollectList(query_collect_list_param: QueryCollectsParm, cb: QueryCollectsCallback | null): Promise<[NIMResCode, number, CollectInfoList]> {
         return new Promise((resolve) => {
             this.talkex.QueryCollectList(query_collect_list_param, (rescode, count, info_list) => {
                 if (cb) {
@@ -126,7 +126,7 @@ export class NIMTalkEx extends EventEmitter<NIMTalkExEvents> {
      * @param cb		执行结果回调函数
      * @return void 无返回值
      */
-    addQuickComment(msg: IMMessage, info: QuickCommentInfo, cb: AddQuickCommentCallback): Promise<[NIMResCode, QuickCommentInfo]> {
+    addQuickComment(msg: IMMessage, info: QuickCommentInfo, cb: AddQuickCommentCallback | null): Promise<[NIMResCode, QuickCommentInfo]> {
         return new Promise((resolve) => {
             this.talkex.AddQuickComment(msg, info, (rescode, info) => {
                 if (cb) {
@@ -143,7 +143,7 @@ export class NIMTalkEx extends EventEmitter<NIMTalkExEvents> {
      * @param cb		执行结果回调函数
      * @return void 无返回值
      */
-    removeQuickComment(msg: IMMessage, param: RemoveQuickCommentParam, cb: RemoveQuickCommentCallback): Promise<[NIMResCode, string]> {
+    removeQuickComment(msg: IMMessage, param: RemoveQuickCommentParam, cb: RemoveQuickCommentCallback | null): Promise<[NIMResCode, string]> {
         return new Promise((resolve) => {
             this.talkex.RemoveQuickComment(msg, param, (rescode, id) => {
                 if (cb) {
@@ -159,7 +159,7 @@ export class NIMTalkEx extends EventEmitter<NIMTalkExEvents> {
      * @param cb		执行结果回调函数
      * @return void 无返回值
      */
-    queryQuickCommentList(query_param: QueryQuickCommentsParam, cb: QueryQuickCommentCallback): Promise<[NIMResCode, QueryQuickCommentsResponse]> {
+    queryQuickCommentList(query_param: QueryQuickCommentsParam, cb: QueryQuickCommentCallback | null): Promise<[NIMResCode, QueryQuickCommentsResponse]> {
         return new Promise((resolve) => {
             this.talkex.QueryQuickCommentList(query_param, (rescode, response) => {
                 if (cb) {
@@ -177,7 +177,7 @@ export class NIMTalkEx extends EventEmitter<NIMTalkExEvents> {
      * @param cb		执行结果回调函数
      * @return void 无返回值
      */
-    addPinMessage(msg: IMMessage, info: PinMessageInfo, cb: PinMessageCallback): Promise<[NIMResCode, string, number, PinMessageInfo]> {
+    addPinMessage(msg: IMMessage, info: PinMessageInfo, cb: PinMessageCallback | null): Promise<[NIMResCode, string, number, PinMessageInfo]> {
         return new Promise((resolve) => {
             this.talkex.AddPinMessage(msg, info, (rescode, session, to_type, info) => {
                 if (cb) {
@@ -193,7 +193,7 @@ export class NIMTalkEx extends EventEmitter<NIMTalkExEvents> {
      * @param cb		执行结果回调函数
      * @return void 无返回值
      */
-    unPinMessage(modify_param: ModifyPinMessageParam, cb: UnPinMessageCallback): Promise<[NIMResCode, string, number, string]> {
+    unPinMessage(modify_param: ModifyPinMessageParam, cb: UnPinMessageCallback | null): Promise<[NIMResCode, string, number, string]> {
         return new Promise((resolve) => {
             this.talkex.UnPinMessage(modify_param, (rescode, session, to_type, id) => {
                 if (cb) {
@@ -209,7 +209,7 @@ export class NIMTalkEx extends EventEmitter<NIMTalkExEvents> {
      * @param cb		执行结果回调函数
      * @return void 无返回值
      */
-    updatePinMessage(modify_param: ModifyPinMessageParam, cb: UpdatePinMessageCallback): Promise<[NIMResCode, string, number, PinMessageInfo]> {
+    updatePinMessage(modify_param: ModifyPinMessageParam, cb: UpdatePinMessageCallback | null): Promise<[NIMResCode, string, number, PinMessageInfo]> {
         return new Promise((resolve) => {
             this.talkex.UpdatePinMessage(modify_param, (rescode, session, to_type, info) => {
                 if (cb) {
@@ -226,7 +226,11 @@ export class NIMTalkEx extends EventEmitter<NIMTalkExEvents> {
      * @param cb		执行结果回调函数
      * @return void 无返回值
      */
-    queryAllPinMessage(session: string, to_type: number, cb: QueryPinMessageCallback): Promise<[NIMResCode, string, number, QueryAllPinMessageResponse]> {
+    queryAllPinMessage(
+        session: string,
+        to_type: number,
+        cb: QueryPinMessageCallback | null
+    ): Promise<[NIMResCode, string, number, QueryAllPinMessageResponse]> {
         return new Promise((resolve) => {
             this.talkex.QueryAllPinMessage(session, to_type, (rescode, session, to_type, response) => {
                 if (cb) {

@@ -46,7 +46,12 @@ export class NIMSysMsg extends EventEmitter<NIMSysMsgEvents> {
      * @param cb			查询本地系统消息的回调函数
      * @return boolean 检查参数如果不符合要求则返回失败
      */
-    queryMsgAsync(limit_count: number, last_time: number, cb: QuerySysmsgCallback, jsonExtension: string): Promise<[number, number, Array<SysMessage>] | null> {
+    queryMsgAsync(
+        limit_count: number,
+        last_time: number,
+        cb: QuerySysmsgCallback | null,
+        jsonExtension: string
+    ): Promise<[number, number, Array<SysMessage>] | null> {
         return new Promise((resolve) => {
             if (
                 !this.sysmsg.QueryMsgAsync(
@@ -75,7 +80,7 @@ export class NIMSysMsg extends EventEmitter<NIMSysMsgEvents> {
      * 200:成功
      * </pre>
      */
-    queryUnreadCount(cb: NotifySysmsgResCallback, jsonExtension: string): Promise<[NIMResCode, number]> {
+    queryUnreadCount(cb: NotifySysmsgResCallback | null, jsonExtension: string): Promise<[NIMResCode, number]> {
         return new Promise((resolve) => {
             this.sysmsg.QueryUnreadCount((rescode, unreadCount) => {
                 if (cb) {
@@ -100,7 +105,7 @@ export class NIMSysMsg extends EventEmitter<NIMSysMsgEvents> {
     setStatusAsync(
         msg_id: number,
         status: NIMSysMsgStatus,
-        cb: NotifySingleSysmsgCallback,
+        cb: NotifySingleSysmsgCallback | null,
         jsonExtension: string
     ): Promise<[NIMResCode, number, number] | null> {
         return new Promise((resolve) => {
@@ -131,7 +136,7 @@ export class NIMSysMsg extends EventEmitter<NIMSysMsgEvents> {
      * 200:成功
      * </pre>
      */
-    readAllAsync(cb: NotifySysmsgResCallback, jsonExtension: string): Promise<[NIMResCode, number]> {
+    readAllAsync(cb: NotifySysmsgResCallback | null, jsonExtension: string): Promise<[NIMResCode, number]> {
         return new Promise((resolve) => {
             this.sysmsg.ReadAllAsync((rescode, unreadCount) => {
                 if (cb) {
@@ -152,7 +157,7 @@ export class NIMSysMsg extends EventEmitter<NIMSysMsgEvents> {
      * 200:成功
      * </pre>
      */
-    deleteAsync(msg_id: number, cb: NotifySingleSysmsgCallback, jsonExtension: string): Promise<[NIMResCode, number, number] | null> {
+    deleteAsync(msg_id: number, cb: NotifySingleSysmsgCallback | null, jsonExtension: string): Promise<[NIMResCode, number, number] | null> {
         return new Promise((resolve) => {
             if (
                 !this.sysmsg.DeleteAsync(
@@ -180,7 +185,7 @@ export class NIMSysMsg extends EventEmitter<NIMSysMsgEvents> {
      * 200:成功
      * </pre>
      */
-    deleteAllAsync(cb: NotifySysmsgResCallback, jsonExtension: string): Promise<[NIMResCode, number] | null> {
+    deleteAllAsync(cb: NotifySysmsgResCallback | null, jsonExtension: string): Promise<[NIMResCode, number] | null> {
         return new Promise((resolve) => {
             if (
                 !this.sysmsg.DeleteAllAsync((rescode, unreadCount) => {
@@ -209,7 +214,7 @@ export class NIMSysMsg extends EventEmitter<NIMSysMsgEvents> {
     setStatusByTypeAsync(
         type: NIMSysMsgType,
         status: NIMSysMsgStatus,
-        cb: NotifySysmsgResCallback,
+        cb: NotifySysmsgResCallback | null,
         jsonExtension: string
     ): Promise<[NIMResCode, number] | null> {
         return new Promise((resolve) => {
@@ -241,7 +246,7 @@ export class NIMSysMsg extends EventEmitter<NIMSysMsgEvents> {
      * 200:成功
      * </pre>
      */
-    deleteByTypeAsync(type: NIMSysMsgType, cb: NotifySysmsgResCallback, jsonExtension: string): Promise<[NIMResCode, number] | null> {
+    deleteByTypeAsync(type: NIMSysMsgType, cb: NotifySysmsgResCallback | null, jsonExtension: string): Promise<[NIMResCode, number] | null> {
         return new Promise((resolve) => {
             if (
                 !this.sysmsg.DeleteByTypeAsync(

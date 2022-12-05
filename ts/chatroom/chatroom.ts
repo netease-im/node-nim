@@ -109,7 +109,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
     getMembersOnlineAsync(
         room_id: number,
         parameters: ChatRoomGetMembersParameters,
-        cb: GetMembersCallback,
+        cb: GetMembersCallback | null,
         json_extension: string
     ): Promise<[number, number, Array<ChatRoomMemberInfo>]> {
         return new Promise((resolve) => {
@@ -130,7 +130,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
     getMembersByTagOnlineAsync(
         room_id: number,
         parameters: ChatRoomGetMembersParameters,
-        cb: GetMembersCallback,
+        cb: GetMembersCallback | null,
         json_extension: string
     ): Promise<[number, number, Array<ChatRoomMemberInfo>]> {
         return new Promise((resolve) => {
@@ -151,7 +151,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
     getMembersCountByTagOnlineAsync(
         room_id: number,
         parameters: ChatRoomGetMembersParameters,
-        cb: GetMembersCountByTagCallback,
+        cb: GetMembersCountByTagCallback | null,
         json_extension: string
     ): Promise<[number, NIMResCode, number]> {
         return new Promise((resolve) => {
@@ -172,7 +172,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
     getMessageHistoryOnlineAsync(
         room_id: number,
         parameters: ChatRoomGetMsgHistoryParameters,
-        cb: GetMsgHistoryCallback,
+        cb: GetMsgHistoryCallback | null,
         json_extension: string
     ): Promise<[number, number, Array<ChatRoomMessage>]> {
         return new Promise((resolve) => {
@@ -193,7 +193,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
     getMessageHistoryByTagsOnlineAsync(
         room_id: number,
         parameters: ChatRoomGetMsgHistoryByTagsParameters,
-        cb: GetMsgHistoryCallback,
+        cb: GetMsgHistoryCallback | null,
         json_extension: string
     ): Promise<[number, number, Array<ChatRoomMessage>]> {
         return new Promise((resolve) => {
@@ -214,7 +214,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
     setMemberAttributeOnlineAsync(
         room_id: number,
         parameters: ChatRoomSetMemberAttributeParameters,
-        cb: SetMemberAttributeCallback,
+        cb: SetMemberAttributeCallback | null,
         json_extension: string
     ): Promise<[number, NIMResCode, ChatRoomMemberInfo]> {
         return new Promise((resolve) => {
@@ -232,7 +232,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
         })
     }
 
-    getInfoAsync(room_id: number, cb: GetChatRoomInfoCallback, json_extension: string): Promise<[number, NIMResCode, ChatRoomInfo]> {
+    getInfoAsync(room_id: number, cb: GetChatRoomInfoCallback | null, json_extension: string): Promise<[number, NIMResCode, ChatRoomInfo]> {
         return new Promise((resolve) => {
             this.chatroom.GetInfoAsync(
                 room_id,
@@ -250,7 +250,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
     getMemberInfoByIDsAsync(
         room_id: number,
         ids: Array<string>,
-        cb: GetMembersCallback,
+        cb: GetMembersCallback | null,
         json_extension: string
     ): Promise<[number, NIMResCode, Array<ChatRoomMemberInfo>]> {
         return new Promise((resolve) => {
@@ -268,7 +268,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
         })
     }
 
-    kickMemberAsync(room_id: number, id: string, notify_ext: string, cb: KickMemberCallback, json_extension: string): Promise<[number, NIMResCode]> {
+    kickMemberAsync(room_id: number, id: string, notify_ext: string, cb: KickMemberCallback | null, json_extension: string): Promise<[number, NIMResCode]> {
         return new Promise((resolve) => {
             this.chatroom.KickMemberAsync(
                 room_id,
@@ -295,7 +295,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
         duration: number,
         need_notify: boolean,
         notify_ext: string,
-        cb: TempMuteMemberCallback,
+        cb: TempMuteMemberCallback | null,
         json_extension: string
     ): Promise<[number, NIMResCode, ChatRoomMemberInfo]> {
         return new Promise((resolve) => {
@@ -322,7 +322,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
         duration: number,
         need_notify: boolean,
         notify_ext: string,
-        cb: TempMuteMemberCallback,
+        cb: TempMuteMemberCallback | null,
         notify_tags: string,
         json_extension: string
     ): Promise<[number, NIMResCode, ChatRoomMemberInfo]> {
@@ -350,7 +350,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
         room_info: ChatRoomInfo,
         need_notify: boolean,
         notify_ext: string,
-        cb: UpdateRoomInfoCallback,
+        cb: UpdateRoomInfoCallback | null,
         json_extension: string
     ): Promise<[number, NIMResCode]> {
         return new Promise((resolve) => {
@@ -375,7 +375,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
         info: ChatRoomMemberInfo,
         need_notify: boolean,
         notify_ext: string,
-        cb: UpdateMyRoomRoleCallback,
+        cb: UpdateMyRoomRoleCallback | null,
         json_extension: string
     ): Promise<[number, NIMResCode]> {
         return new Promise((resolve) => {
@@ -399,7 +399,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
         room_id: number,
         element: ChatRoomQueueElement,
         option: ChatRoomQueueOfferOption,
-        cb: QueueOfferCallback,
+        cb: QueueOfferCallback | null,
         json_extension: string
     ): Promise<[number, NIMResCode, ChatRoomQueueElement]> {
         return new Promise((resolve) => {
@@ -418,7 +418,12 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
         })
     }
 
-    queuePollAsync(room_id: number, element_key: string, cb: QueuePollCallback, json_extension: string): Promise<[number, NIMResCode, ChatRoomQueueElement]> {
+    queuePollAsync(
+        room_id: number,
+        element_key: string,
+        cb: QueuePollCallback | null,
+        json_extension: string
+    ): Promise<[number, NIMResCode, ChatRoomQueueElement]> {
         return new Promise((resolve) => {
             this.chatroom.QueuePollAsync(
                 room_id,
@@ -434,7 +439,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
         })
     }
 
-    queueListAsync(room_id: number, cb: QueueListCallback, json_extension: string): Promise<[number, NIMResCode, Array<ChatRoomQueueElement>]> {
+    queueListAsync(room_id: number, cb: QueueListCallback | null, json_extension: string): Promise<[number, NIMResCode, Array<ChatRoomQueueElement>]> {
         return new Promise((resolve) => {
             this.chatroom.QueueListAsync(
                 room_id,
@@ -449,7 +454,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
         })
     }
 
-    queueHeaderAsync(room_id: number, cb: QueueHeaderCallback, json_extension: string): Promise<[number, NIMResCode, ChatRoomQueueElement]> {
+    queueHeaderAsync(room_id: number, cb: QueueHeaderCallback | null, json_extension: string): Promise<[number, NIMResCode, ChatRoomQueueElement]> {
         return new Promise((resolve) => {
             this.chatroom.QueueHeaderAsync(
                 room_id,
@@ -464,7 +469,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
         })
     }
 
-    queueDropAsync(room_id: number, cb: QueueDropCallback, json_extension: string): Promise<[number, NIMResCode]> {
+    queueDropAsync(room_id: number, cb: QueueDropCallback | null, json_extension: string): Promise<[number, NIMResCode]> {
         return new Promise((resolve) => {
             this.chatroom.QueueDropAsync(
                 room_id,
@@ -484,7 +489,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
         batch_elements: Array<ChatRoomQueueElement>,
         need_notify: boolean,
         notify_ext: string,
-        cb: QueueBatchUpdateCallback,
+        cb: QueueBatchUpdateCallback | null,
         json_extension: string
     ): Promise<[number, NIMResCode, Array<string>]> {
         return new Promise((resolve) => {
@@ -504,7 +509,12 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
         })
     }
 
-    updateLocation(room_id: number, location: NIMChatRoomLocation, cb: UpdateLocationCallback, json_extension: string): Promise<[number, NIMResCode] | null> {
+    updateLocation(
+        room_id: number,
+        location: NIMChatRoomLocation,
+        cb: UpdateLocationCallback | null,
+        json_extension: string
+    ): Promise<[number, NIMResCode] | null> {
         return new Promise((resolve) => {
             if (
                 !this.chatroom.UpdateLocation(
@@ -524,7 +534,12 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
         })
     }
 
-    updateTags(room_id: number, tags_info: ChatRoomUpdateTagsInfo, cb: UpdateTagsCallback, json_extension: string): Promise<[number, NIMResCode] | null> {
+    updateTags(
+        room_id: number,
+        tags_info: ChatRoomUpdateTagsInfo,
+        cb: UpdateTagsCallback | null,
+        json_extension: string
+    ): Promise<[number, NIMResCode] | null> {
         return new Promise((resolve) => {
             if (
                 !this.chatroom.UpdateTags(

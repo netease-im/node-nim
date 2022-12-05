@@ -34,11 +34,11 @@ export type OnlineSessionChangedCallback = (result: SessionInfo) => void
 export interface NIMOnlineSessionAPI {
     InitEventHandlers(): void
 
-    QuerySessionList(minTime: number, maxTime: number, needLastMsg: boolean, limit: number, cb: QueryOnlineSessionListCallback): void
+    QuerySessionList(minTime: number, maxTime: number, needLastMsg: boolean, limit: number, cb: QueryOnlineSessionListCallback | null): void
 
-    QuerySession(to_type: NIMSessionType, session_id: string, cb: QueryOnlineSessionInfoCallback): void
+    QuerySession(to_type: NIMSessionType, session_id: string, cb: QueryOnlineSessionInfoCallback | null): void
 
-    UpdateSession(to_type: NIMSessionType, session_id: string, ext: string, cb: UpdateOnlineSessionInfoCallback): void
+    UpdateSession(to_type: NIMSessionType, session_id: string, ext: string, cb: UpdateOnlineSessionInfoCallback | null): void
 
-    DeleteSession(param: DeleteSessionParam, cb: DeleteOnlineSessionInfoCallback): void
+    DeleteSession(param: DeleteSessionParam, cb: DeleteOnlineSessionInfoCallback | null): void
 }
