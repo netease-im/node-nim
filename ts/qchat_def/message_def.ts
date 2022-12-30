@@ -78,6 +78,8 @@ export interface QChatMessageSend {
     channel_id?: number
     /** 必填，消息类型 */
     msg_type?: NIMQChatMsgType
+    /** 可选，消息子类型 */
+    msg_sub_type?: number
     /** 可选，消息内容 */
     msg_body?: string
     /** 可选，消息附件 */
@@ -150,6 +152,8 @@ export interface QChatMessage {
     channel_id?: number
     /** 必填，消息类型 */
     msg_type?: NIMQChatMsgType
+    /** 可选，消息子类型 */
+    msg_sub_type?: number
     /** 可选，消息内容 */
     msg_body?: string
     /** 可选，消息附件 */

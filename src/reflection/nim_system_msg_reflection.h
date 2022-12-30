@@ -35,7 +35,7 @@ ReflectionDefinition_O(SysMessageSetting,
     anti_spam_enable_,
     anti_spam_content_,
     env_config_);
-ReflectionDefinition_O(SendMessageArc, talk_id_, msg_id_, rescode_, msg_timetag_, third_party_callback_ext_, anti_spam_res_);
+ReflectionDefinition_O(SendMessageArc, talk_id_, msg_id_, msg_id_server_, rescode_, msg_timetag_, third_party_callback_ext_, anti_spam_res_);
 
 // Callback
 CallbackSpecialization(SystemMsg::ReceiveSysmsgCallback);

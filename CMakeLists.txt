@@ -92,7 +92,10 @@ add_definitions(-DNIM_SDK_DLL_IMPORT)
 file(GLOB_RECURSE NIM_NODE_SOURCE ${CMAKE_CURRENT_LIST_DIR}/src/*.cpp
                                   ${CMAKE_CURRENT_LIST_DIR}/src/*.cc
                                   ${CMAKE_CURRENT_LIST_DIR}/src/*.c)
-add_library(${TARGET_NAME} SHARED ${NIM_NODE_SOURCE} ${CMAKE_JS_SRC})
+ne_add_library(${TARGET_NAME}
+                FRAMEWORK ${BUNDLED_OUTPUT} 
+                ${NIM_NODE_SOURCE} 
+                ${CMAKE_JS_SRC})
 target_include_directories(${TARGET_NAME} PRIVATE 
                            ${NODE_ADDON_API_DIR}
                            ${CMAKE_JS_INC}

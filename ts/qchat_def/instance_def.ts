@@ -237,7 +237,7 @@ export interface QChatKickParam {
 
 /** @interface QChatGetRTCTokenParam */
 export interface QChatGetRTCTokenParam {
-    /** 获取RTC频道token回调 */
+    /** @internal */
     cb?: GetRTCTokenCallback
     /** device_id */
     device_id?: string

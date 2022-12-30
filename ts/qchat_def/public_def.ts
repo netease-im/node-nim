@@ -34,6 +34,15 @@ export enum NIMQChatChannelViewMode {
     kNIMQChatChannelViewModePrivate = 1
 }
 
+export enum NIMQChatChannelVisitorMode {
+    /** 游客可见 */
+    kNIMQChatChannelVisitorModeVisible = 0,
+    /** 游客不可见 */
+    kNIMQChatChannelVisitorModeInvisible = 1,
+    /** 跟随模式, 频道公开游客可见, 频道私密游客不可见 */
+    kNIMQChatChannelVisitorModeFollow = 2
+}
+
 export enum NIMQChatChannelSyncMode {
     /** 不与频道分组同步 */
     kNIMQChatChannelSyncModeNoSync = 0,
@@ -60,7 +69,11 @@ export enum NIMQChatSubscribeType {
     /** 订阅某个server的【通知】 */
     kNIMQChatSubscribeTypeServerNotification = 4,
     /** 订阅某个channel的【正在输入事件】 */
-    kNIMQChatSubscribeTypeTypingEvent = 5
+    kNIMQChatSubscribeTypeTypingEvent = 5,
+    /** 以游客身份订阅某个channel的【消息】/【通知】 */
+    kNIMQChatSubscribeTypeVisitorMsg = 6,
+    /** 以游客身份订阅某个server的【消息】/【通知】 */
+    kNIMQChatSubscribeTypeVisitorServerNotification = 7
 }
 
 export enum NIMQChatDownloadResType {
@@ -608,6 +621,8 @@ export enum NIMQChatSystemNotificationType {
     kNIMQChatSystemNotificationTypeServerEnterLeave = 32,
     /** 用户通过邀请码加入服务器 msg_data: NIMQChatSystemNotificationDataServerJoinByInviteCode */
     kNIMQChatSystemNotificationTypeServerJoinByInviteCode = 33,
+    /** 频道对游客可见性变更 msg_data: NIMQChatSystemNotificationDataChannelGuestVisibilityChange*/
+    NIMQChatSystemNotificationTypeChannelVisitorVisibilityChange = 34,
     /** 自定义系统通知 msg_data: NULL */
     kNIMQChatSystemNotificationTypeCustom = 100
 }

@@ -213,6 +213,7 @@ export type QChatGetChannelCategoryMemberRolesPageCallback = (resp: QChatGetChan
 
 /** @interface QChatCreateServerRoleParam */
 export interface QChatCreateServerRoleParam {
+    /** @internal */
     cb?: QChatCreateServerRoleCallback
     info?: QChatServerRoleInfo
     /** 反垃圾信息 */
@@ -221,6 +222,7 @@ export interface QChatCreateServerRoleParam {
 
 /** @interface QChatUpdateServerRoleParam */
 export interface QChatUpdateServerRoleParam {
+    /** @internal */
     cb?: QChatUpdateServerRoleCallback
     info?: QChatServerRoleInfo
     /** 反垃圾信息 */
@@ -229,6 +231,7 @@ export interface QChatUpdateServerRoleParam {
 
 /** @interface QChatUpdateServerRolePrioritiesParam */
 export interface QChatUpdateServerRolePrioritiesParam {
+    /** @internal */
     cb?: QChatBatchUpdateServerRolePrioritiesCallback
     server_id?: number
     /** 要批量更新的身份组信息，key: role_id, value: priority */
@@ -237,6 +240,7 @@ export interface QChatUpdateServerRolePrioritiesParam {
 
 /** @interface QChatDeleteServerRoleParam */
 export interface QChatDeleteServerRoleParam {
+    /** @internal */
     cb?: QChatDeleteServerRoleCallback
     /** 服务器 ID */
     server_id?: number
@@ -244,6 +248,7 @@ export interface QChatDeleteServerRoleParam {
     role_id?: number
 }
 export interface QChatGetServerRolesParam {
+    /** @internal */
     cb?: QChatGetServerRolesCallback
     /** 服务器 ID */
     server_id?: number
@@ -259,6 +264,7 @@ export interface QChatGetServerRolesParam {
 
 /** @interface QChatAddMembersToServerRoleParam */
 export interface QChatAddMembersToServerRoleParam {
+    /** @internal */
     cb?: QChatAddMembersToServerRoleCallback
     /** 服务器 ID */
     server_id?: number
@@ -270,6 +276,7 @@ export interface QChatAddMembersToServerRoleParam {
 
 /** @interface QChatRemoveMembersFromServerRoleParam */
 export interface QChatRemoveMembersFromServerRoleParam {
+    /** @internal */
     cb?: QChatAddMembersToServerRoleCallback
     /** 服务器 ID */
     server_id?: number
@@ -281,6 +288,7 @@ export interface QChatRemoveMembersFromServerRoleParam {
 
 /** @interface QChatGetMembersFromServerRoleParam */
 export interface QChatGetMembersFromServerRoleParam {
+    /** @internal */
     cb?: QChatGetMembersFromServerRoleCallback
     /** 服务器 ID */
     server_id?: number
@@ -296,6 +304,7 @@ export interface QChatGetMembersFromServerRoleParam {
 
 /** @interface QChatAddChannelRoleParam */
 export interface QChatAddChannelRoleParam {
+    /** @internal */
     cb?: QChatAddChannelRoleCallback
     server_id?: number
     parent_role_id?: number
@@ -304,6 +313,7 @@ export interface QChatAddChannelRoleParam {
 
 /** @interface QChatUpdateChannelRoleParam */
 export interface QChatUpdateChannelRoleParam {
+    /** @internal */
     cb?: QChatUpdateChannelRoleCallback
     server_id?: number
     role_id?: number
@@ -313,6 +323,7 @@ export interface QChatUpdateChannelRoleParam {
 
 /** @interface QChatRemoveChannelRoleParam */
 export interface QChatRemoveChannelRoleParam {
+    /** @internal */
     cb?: QChatRemoveChannelRoleCallback
     /** 服务器 ID */
     server_id?: number
@@ -324,6 +335,7 @@ export interface QChatRemoveChannelRoleParam {
 
 /** @interface QChatGetChannelRolesParam */
 export interface QChatGetChannelRolesParam {
+    /** @internal */
     cb?: QChatGetChannelRolesCallback
     /** 服务器 ID */
     server_id?: number
@@ -337,6 +349,7 @@ export interface QChatGetChannelRolesParam {
 
 /** @interface QChatAddMemberRoleParam */
 export interface QChatAddMemberRoleParam {
+    /** @internal */
     cb?: QChatAddMemberRoleCallback
     server_id?: number
     channel_id?: number
@@ -345,6 +358,7 @@ export interface QChatAddMemberRoleParam {
 
 /** @interface QChatUpdateMemberRoleParam */
 export interface QChatUpdateMemberRoleParam {
+    /** @internal */
     cb?: QChatUpdateMemberRoleCallback
     server_id?: number
     channel_id?: number
@@ -354,6 +368,7 @@ export interface QChatUpdateMemberRoleParam {
 
 /** @interface QChatRemoveMemberRoleParam */
 export interface QChatRemoveMemberRoleParam {
+    /** @internal */
     cb?: QChatRemoveMemberRoleCallback
     /** 服务器 ID */
     server_id?: number
@@ -365,6 +380,7 @@ export interface QChatRemoveMemberRoleParam {
 
 /** @interface QChatGetMemberRolesParam */
 export interface QChatGetMemberRolesParam {
+    /** @internal */
     cb?: QChatGetMemberRoleInChannelCallback
     /** 服务器 ID */
     server_id?: number
@@ -378,6 +394,7 @@ export interface QChatGetMemberRolesParam {
 
 /** @interface QChatGetRolesByAccidParam */
 export interface QChatGetRolesByAccidParam {
+    /** @internal */
     cb?: QChatGetRolesByMemberIdCallback
     /** 服务器 ID */
     server_id?: number
@@ -391,6 +408,7 @@ export interface QChatGetRolesByAccidParam {
 
 /** @interface QChatGetExistingServerRolesByAccidsParam */
 export interface QChatGetExistingServerRolesByAccidsParam {
+    /** @internal */
     cb?: QChatGetRolesByMemberIdsCallback
     server_id?: number
     accids?: Array<string>
@@ -398,6 +416,7 @@ export interface QChatGetExistingServerRolesByAccidsParam {
 
 /** @interface QChatGetExistingChannelRolesByServerRoleIdsParam */
 export interface QChatGetExistingChannelRolesByServerRoleIdsParam {
+    /** @internal */
     cb?: QChatGetExistingRolesInChannelCallback
     server_id?: number
     channel_id?: number
@@ -406,6 +425,7 @@ export interface QChatGetExistingChannelRolesByServerRoleIdsParam {
 
 /** @interface QChatGetExistingAccidsOfMemberRolesParam */
 export interface QChatGetExistingAccidsOfMemberRolesParam {
+    /** @internal */
     cb?: QChatGetExistingAccidsOfMemberRolesCallback
     server_id?: number
     channel_id?: number
@@ -414,6 +434,7 @@ export interface QChatGetExistingAccidsOfMemberRolesParam {
 
 /** @interface QChatGetExistingAccidsInServerRoleParam */
 export interface QChatGetExistingAccidsInServerRoleParam {
+    /** @internal */
     cb?: QChatGetExistingAccidsInServerRoleCallback
     server_id?: number
     role_id?: number
@@ -422,6 +443,7 @@ export interface QChatGetExistingAccidsInServerRoleParam {
 
 /** @interface QChatCheckPermissionParam */
 export interface QChatCheckPermissionParam {
+    /** @internal */
     cb?: QChatCheckPermissionCallback
     server_id?: number
     channel_id?: number
@@ -430,6 +452,7 @@ export interface QChatCheckPermissionParam {
 
 /** @interface QChatCheckPermissionsParam */
 export interface QChatCheckPermissionsParam {
+    /** @internal */
     cb?: QChatCheckPermissionsCallback
     server_id?: number
     channel_id?: number
@@ -438,6 +461,7 @@ export interface QChatCheckPermissionsParam {
 
 /** @interface QChatAddChannelCategoryRoleParam */
 export interface QChatAddChannelCategoryRoleParam {
+    /** @internal */
     cb?: QChatAddChannelCategoryRoleCallback
     /** 服务器 ID */
     server_id?: number
@@ -449,6 +473,7 @@ export interface QChatAddChannelCategoryRoleParam {
 
 /** @interface QChatUpdateChannelCategoryRoleParam */
 export interface QChatUpdateChannelCategoryRoleParam {
+    /** @internal */
     cb?: QChatUpdateChannelCategoryRoleCallback
     /** 服务器 ID */
     server_id?: number
@@ -462,6 +487,7 @@ export interface QChatUpdateChannelCategoryRoleParam {
 
 /** @interface QChatRemoveChannelCategoryRoleParam */
 export interface QChatRemoveChannelCategoryRoleParam {
+    /** @internal */
     cb?: QChatRemoveChannelCategoryRoleCallback
     server_id?: number
     category_id?: number
@@ -470,6 +496,7 @@ export interface QChatRemoveChannelCategoryRoleParam {
 
 /** @interface QChatGetChannelCategoryRolesPageParam */
 export interface QChatGetChannelCategoryRolesPageParam {
+    /** @internal */
     cb?: QChatGetChannelCategoryRolesPageCallback
     server_id?: number
     category_id?: number
@@ -479,6 +506,7 @@ export interface QChatGetChannelCategoryRolesPageParam {
 
 /** @interface QChatAddChannelCategoryMemberRoleParam */
 export interface QChatAddChannelCategoryMemberRoleParam {
+    /** @internal */
     cb?: QChatAddChannelCategoryMemberRoleCallback
     server_id?: number
     category_id?: number
@@ -487,6 +515,7 @@ export interface QChatAddChannelCategoryMemberRoleParam {
 
 /** @interface QChatUpdateChannelCategoryMemberRoleParam */
 export interface QChatUpdateChannelCategoryMemberRoleParam {
+    /** @internal */
     cb?: QChatUpdateChannelCategoryMemberRoleCallback
     /** 服务器 ID */
     server_id?: number
@@ -500,6 +529,7 @@ export interface QChatUpdateChannelCategoryMemberRoleParam {
 
 /** @interface QChatRemoveChannelCategoryMemberRoleParam */
 export interface QChatRemoveChannelCategoryMemberRoleParam {
+    /** @internal */
     cb?: QChatRemoveChannelCategoryMemberRoleCallback
     server_id?: number
     category_id?: number
@@ -508,6 +538,7 @@ export interface QChatRemoveChannelCategoryMemberRoleParam {
 
 /** @interface QChatGetChannelCategoryMemberRolesPageParam */
 export interface QChatGetChannelCategoryMemberRolesPageParam {
+    /** @internal */
     cb?: QChatGetChannelCategoryMemberRolesPageCallback
     server_id?: number
     category_id?: number

@@ -15,7 +15,8 @@ import {
     QChatMemberInfo,
     QChatServerRoleInfo,
     NIMQChatUnreadInfo,
-    NIMResCode
+    NIMResCode,
+    NIMQChatChannelVisitorMode
 } from './public_def'
 import { QChatServerGetMembersPageResp, QChatServerGetMembersResp, ServerGetMembersCallback } from './server_def'
 
@@ -36,6 +37,8 @@ export interface QChatChannelInfo {
     owner?: string
     /** 查看模式，只有在category_id为0或sync_mode为kNIMQChatChannelSyncModeNoSync时有效 */
     view_mode?: NIMQChatChannelViewMode
+    /** 圈组频道游客访问模式 */
+    visitor_mode?: NIMQChatChannelVisitorMode
     /** 有效标记，false:无效 true:有效 */
     valid_flag?: boolean
     /** 创建时间 */
@@ -99,7 +102,14 @@ export interface QChatChannelCategoryInfo {
 export interface QChatChannelSubscribeResp {
     /** 操作结果, 参考NIMResCode */
     res_code?: NIMResCode
-    /** 订阅失败列表 */
+    /** 失败列表 */
+    failed_channels?: Array<NIMQChatChannelIDInfo>
+}
+
+export interface QChatChannelSubscribeAsVisitorResp {
+    /** 操作结果, 参考NIMResCode */
+    res_code?: NIMResCode
+    /** 失败列表 */
     failed_channels?: Array<NIMQChatChannelIDInfo>
 }
 
@@ -283,6 +293,8 @@ export type ChannelGetMembersPageCallback = (resp: QChatChannelGetMembersPageRes
 export type ChannelQueryUnreadInfoCallback = (resp: QChatChannelQueryUnreadInfoResp) => void
 /** 订阅回调 */
 export type ChannelSubscribeCallback = (resp: QChatChannelSubscribeResp) => void
+/** 订阅回调 */
+export type ChannelSubscribeAsVisitorCallback = (resp: QChatChannelSubscribeAsVisitorResp) => void
 /** 更新白/黑名单身份组回调 */
 export type UpdateWhiteBlackRoleCallback = (resp: QChatChannelUpdateWhiteBlackRoleResp) => void
 /** 更新白/黑名单成员回调 */
@@ -342,6 +354,16 @@ export interface QChatChannelSubscribeParam {
     id_infos?: Array<NIMQChatChannelIDInfo>
 }
 
+/** @interface QChatChannelSubscribeAsVisitorParam */
+export interface QChatChannelSubscribeAsVisitorParam {
+    /** @internal */
+    cb?: ChannelSubscribeAsVisitorCallback
+    /** 操作类型 */
+    ope_type?: NIMQChatSubscribeOpeType
+    /** ID 列表 */
+    id_infos?: Array<NIMQChatChannelIDInfo>
+}
+
 /** @interface QChatChannelQueryUnreadInfoParam */
 export interface QChatChannelQueryUnreadInfoParam {
     /** @internal */
@@ -382,6 +404,8 @@ export interface QChatChannelUpdateParam {
     custom?: string
     /** 查看模式 */
     view_mode?: NIMQChatChannelViewMode
+    /** 圈组频道游客访问模式 */
+    visitor_mode?: NIMQChatChannelVisitorMode
     /** 反垃圾信息 */
     anti_spam_info?: QChatBusinessAntiSpamInfo
 }

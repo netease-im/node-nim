@@ -134,16 +134,16 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     }
 
     /** 查询历史消息，基于本地可信时间段信息来动态判断获取消息的途径
-     * @param[in] session_id                会话id
-     * @param[in] to_type                   会话类型, 双人0，群组1, 超大群5
-     * @param[in] from_time                 开始时间, 包含
-     * @param[in] to_time                   结束时间, 大于from_time, 0表示当前时间; 只有在direction为kForward且anchor_client_msg_id不为空时才包含
-     * @param[in] limit_count               查询数量
-     * @param[in] anchor_client_msg_id      查询起始的客户端消息id, 查询结果不包括这条消息
-     * @param[in] anchor_server_msg_id      查询起始的服务器消息id, 查询结果不包括这条消息
-     * @param[in] direction                 查询方向
-     * @param[in] cb                        查询消息的回调函数
-     * @param[in] json_extension            json扩展参数（备用，目前不需要）
+     * @param session_id                会话id
+     * @param to_type                   会话类型, 双人0，群组1, 超大群5
+     * @param from_time                 开始时间, 包含
+     * @param to_time                   结束时间, 大于from_time, 0表示当前时间; 只有在direction为kForward且anchor_client_msg_id不为空时才包含
+     * @param limit_count               查询数量
+     * @param anchor_client_msg_id      查询起始的客户端消息id, 查询结果不包括这条消息
+     * @param anchor_server_msg_id      查询起始的服务器消息id, 查询结果不包括这条消息
+     * @param direction                 查询方向
+     * @param cb                        查询消息的回调函数
+     * @param json_extension            json扩展参数（备用，目前不需要）
      * @return void
      * @note 错误码  200:成功
      */

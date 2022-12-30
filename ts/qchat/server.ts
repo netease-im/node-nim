@@ -13,6 +13,8 @@ import {
     QChatServerCreateResp,
     QChatServerDeleteParam,
     QChatServerDeleteResp,
+    QChatServerEnterAsVisitorParam,
+    QChatServerEnterAsVisitorResp,
     QChatServerGenerateInviteCodeParam,
     QChatServerGenerateInviteCodeResp,
     QChatServerGetBannedMembersPageParam,
@@ -35,6 +37,8 @@ import {
     QChatServerJoinByInviteCodeResp,
     QChatServerKickParam,
     QChatServerKickResp,
+    QChatServerLeaveAsVisitorParam,
+    QChatServerLeaveAsVisitorResp,
     QChatServerLeaveParam,
     QChatServerLeaveResp,
     QChatServerMarkReadParam,
@@ -49,6 +53,8 @@ import {
     QChatServerSearchPageResp,
     QChatServerSubscribeAllChannelParam,
     QChatServerSubscribeAllChannelResp,
+    QChatServerSubscribeAsVisitorParam,
+    QChatServerSubscribeAsVisitorResp,
     QChatServerSubscribeParam,
     QChatServerSubscribeResp,
     QChatServerUnbanMemberParam,
@@ -132,6 +138,44 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
         return p
     }
 
+    /** @fn enterAsVisitor(param: QChatServerEnterAsVisitorParam)
+     * 以游客身份进入服务器
+     * @param[in] param 接口参数
+     * @return void
+     */
+    enterAsVisitor(param: QChatServerEnterAsVisitorParam): Promise<QChatServerEnterAsVisitorResp> {
+        const p = new Promise<QChatServerEnterAsVisitorResp>((resolve, reject) => {
+            param.cb = (resp: QChatServerEnterAsVisitorResp) => {
+                if (resp.res_code === NIMResCode.kNIMResSuccess) {
+                    resolve(resp)
+                } else {
+                    reject(resp)
+                }
+            }
+            this.instance.EnterAsVisitor(param)
+        })
+        return p
+    }
+
+    /** @fn leaveAsVisitor(param: QChatServerLeaveAsVisitorParam)
+     * 以游客身份离开服务器
+     * @param[in] param 接口参数
+     * @return void
+     */
+    leaveAsVisitor(param: QChatServerLeaveAsVisitorParam): Promise<QChatServerLeaveAsVisitorResp> {
+        const p = new Promise<QChatServerLeaveAsVisitorResp>((resolve, reject) => {
+            param.cb = (resp: QChatServerLeaveAsVisitorResp) => {
+                if (resp.res_code === NIMResCode.kNIMResSuccess) {
+                    resolve(resp)
+                } else {
+                    reject(resp)
+                }
+            }
+            this.instance.LeaveAsVisitor(param)
+        })
+        return p
+    }
+
     /** @fn subscribe(param: QChatServerSubscribeParam)
      * 订阅指定服务器下的系统通知消息
      * @param[in] param 接口参数
@@ -147,6 +191,25 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
                 }
             }
             this.instance.Subscribe(param)
+        })
+        return p
+    }
+
+    /** @fn subscribeAsVisitor(param: QChatServerSubscribeAsVisitorParam)
+     * 以游客模式订阅服务器下的系统通知消息
+     * @param[in] param 接口参数
+     * @return void
+     */
+    subscribeAsVisitor(param: QChatServerSubscribeAsVisitorParam): Promise<QChatServerSubscribeAsVisitorResp> {
+        const p = new Promise<QChatServerSubscribeAsVisitorResp>((resolve, reject) => {
+            param.cb = (resp: QChatServerSubscribeAsVisitorResp) => {
+                if (resp.res_code === NIMResCode.kNIMResSuccess) {
+                    resolve(resp)
+                } else {
+                    reject(resp)
+                }
+            }
+            this.instance.SubscribeAsVisitor(param)
         })
         return p
     }

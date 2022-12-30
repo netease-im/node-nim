@@ -44,6 +44,22 @@ export interface QChatServerGetServersPageResp {
     page_info?: QChatPageInfo
 }
 
+/** @interface QChatServerEnterAsVisitorResp */
+export interface QChatServerEnterAsVisitorResp {
+    /** 操作结果, 参考NIMResCode */
+    res_code?: number
+    /** 失败列表 */
+    failed_servers?: Array<number>
+}
+
+/** @interface QChatServerLeaveAsVisitorResp */
+export interface QChatServerLeaveAsVisitorResp {
+    /** 操作结果, 参考NIMResCode */
+    res_code?: number
+    /** 失败列表 */
+    failed_servers?: Array<number>
+}
+
 /** @interface QChatServerInviteResp */
 export interface QChatServerInviteResp {
     /** 操作结果, 参考NIMResCode */
@@ -108,7 +124,15 @@ export interface QChatServerGetMembersPageResp {
 export interface QChatServerSubscribeResp {
     /** 操作结果, 参考NIMResCode */
     res_code?: number
-    /** 订阅失败列表 */
+    /** 失败列表 */
+    failed_servers?: Array<number>
+}
+
+/** @interface QChatServerSubscribeAsVisitorResp */
+export interface QChatServerSubscribeAsVisitorResp {
+    /** 操作结果, 参考NIMResCode */
+    res_code?: number
+    /** 失败列表 */
     failed_servers?: Array<number>
 }
 
@@ -116,7 +140,7 @@ export interface QChatServerSubscribeResp {
 export interface QChatServerSubscribeAllChannelResp {
     /** 操作结果, 参考NIMResCode */
     res_code?: number
-    /** 订阅失败列表 */
+    /** 失败列表 */
     failed_servers?: Array<number>
 }
 
@@ -124,9 +148,9 @@ export interface QChatServerSubscribeAllChannelResp {
 export interface QChatServerMarkReadResp {
     /** 操作结果, 参考NIMResCode */
     res_code?: number
-    /** 订阅失败列表 */
+    /** 失败列表 */
     failed_servers?: Array<number>
-    /** 订阅成功列表 */
+    /** 成功列表 */
     succeeded_servers?: Array<number>
     /** 标记已读时间戳 */
     timestamp?: number
@@ -226,6 +250,10 @@ export type ServerCreateCallback = (resp: QChatServerCreateResp) => void
 export type ServerRemoveCallback = (resp: QChatServerDeleteResp) => void
 /** 更新服务器回调 */
 export type ServerUpdateCallback = (resp: QChatServerUpdateResp) => void
+/** 以游客身份加入服务器回调 */
+export type EnterAsVisitorCallback = (resp: QChatServerEnterAsVisitorResp) => void
+/** 以游客身份离开服务器回调 */
+export type LeaveAsVisitorCallback = (resp: QChatServerLeaveAsVisitorResp) => void
 /** 查询服务器列表回调 */
 export type GetServersCallback = (resp: QChatServerGetServersResp) => void
 /** 查询服务器列表分页回调 */
@@ -254,6 +282,8 @@ export type ServerGetMembersCallback = (resp: QChatServerGetMembersResp) => void
 export type ServerGetMembersPageCallback = (resp: QChatServerGetMembersPageResp) => void
 /** 订阅回调 */
 export type ServerSubscribeCallback = (resp: QChatServerSubscribeResp) => void
+/** 以游客身份订阅回调 */
+export type ServerSubscribeAsVisitorCallback = (resp: QChatServerSubscribeResp) => void
 /** 封禁成员回调 */
 export type ServerBanMemberCallback = (resp: QChatServerBanMemberResp) => void
 /** 解封成员回调 */
@@ -293,6 +323,22 @@ export interface QChatServerDeleteParam {
     cb?: ServerRemoveCallback
     /** 服务器ID */
     server_id?: number
+}
+
+/** @interface QChatServerEnterAsVisitorParam */
+export interface QChatServerEnterAsVisitorParam {
+    /** @internal */
+    cb?: ServerRemoveCallback
+    /** ID 列表 */
+    server_ids?: Array<number>
+}
+
+/** @interface QChatServerLeaveAsVisitorParam */
+export interface QChatServerLeaveAsVisitorParam {
+    /** @internal */
+    cb?: ServerRemoveCallback
+    /** ID 列表 */
+    server_ids?: Array<number>
 }
 
 /** @interface QChatServerUpdateParam */
@@ -464,6 +510,16 @@ export interface QChatServerSubscribeParam {
     ope_type?: NIMQChatSubscribeOpeType
     /** 订阅类型 */
     sub_type?: NIMQChatSubscribeType
+    /** ID 列表 */
+    server_ids?: Array<number>
+}
+
+/** @interface QChatServerSubscribeAsVisitorParam */
+export interface QChatServerSubscribeAsVisitorParam {
+    /** @internal */
+    cb?: ServerSubscribeCallback
+    /** 操作类型 */
+    ope_type?: NIMQChatSubscribeOpeType
     /** ID 列表 */
     server_ids?: Array<number>
 }

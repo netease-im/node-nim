@@ -61,7 +61,7 @@ npm run coverage
 ```js
 // Chatroom
 import * as node_nim from 'node-nim'
-const chatroom = new node_nim.ChatroomModule()
+const chatroom = new node_nim.ChatRoom()
 let ret = chatroom.init('', '')
 if (!ret) {
     console.log('init failed')
@@ -78,9 +78,8 @@ if (!ret) {
 ```js
 // NIM
 import * as node_nim from 'node-nim'
-const client = new node_nim.NIMClient()
-const talk = new node_nim.NIMTalk()
-const result = client.init('app_key', 'app_data_dir', 'app_install_dir', {
+const nim = new node_nim.NIM()
+const result = nim.client.init('app_key', 'app_data_dir', 'app_install_dir', {
     db_encrypt_key: 'abcdefghijklmnopqrstuvwxyz012345'
 })
 
@@ -89,10 +88,9 @@ if (!result) {
     process.exit(1)
 }
 
-client.initEventHandlers()
-talk.initEventHandlers()
+nim.initEventHandlers()
 
-let resp = await client.login(
+let resp = await nim.client.login(
     'app_key',
     'username',
     'password',
@@ -105,14 +103,14 @@ if (resp[0].res_code_ != node_nim.NIMResCode.kNIMResSuccess) {
 }
 console.log('loginResult', res)
 // login has 3 steps, step 3 succeeded
-talk.on('receiveMsg', function (result) {
+nim.talk.on('receiveMsg', function (result) {
     console.log('receiveMsg', result)
 })
-talk.on('sendMsg', (msg) => {
+nim.talk.on('sendMsg', (msg) => {
     console.log('sendMsg', msg)
 })
 
-talk.sendMsg(
+nim.talk.sendMsg(
     {
         session_type_: 0, // p2p
         receiver_accid_: 'receiver_accid',

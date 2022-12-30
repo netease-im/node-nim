@@ -41,7 +41,9 @@ import {
     QChatChannelUpdateRTCInfoResp,
     QChatChannelUpdateWhiteBlackMembersResp,
     QChatChannelUpdateWhiteBlackRoleResp,
-    QChatChannelUnreadResp
+    QChatChannelUnreadResp,
+    QChatChannelSubscribeAsVisitorParam,
+    QChatChannelSubscribeAsVisitorResp
 } from '../qchat_def/channel_def'
 import { NIMResCode } from '../qchat_def/public_def'
 export declare interface QChatChannelEvents {
@@ -150,6 +152,25 @@ export class QChatChannelModule extends EventEmitter<QChatChannelEvents> {
                 }
             }
             this.instance.Subscribe(param)
+        })
+        return p
+    }
+
+    /** @fn subscribeAsVisitor(param: QChatChannelSubscribeAsVisitorParam)
+     * 以游客模式订阅频道未读状态、未读数或未读消息、事件
+     * @param[in] param 接口参数
+     * @return void
+     */
+    subscribeAsVisitor(param: QChatChannelSubscribeAsVisitorParam): Promise<QChatChannelSubscribeAsVisitorResp> {
+        const p = new Promise<QChatChannelSubscribeAsVisitorResp>((resolve, reject) => {
+            param.cb = (resp: QChatChannelSubscribeAsVisitorResp) => {
+                if (resp.res_code === NIMResCode.kNIMResSuccess) {
+                    resolve(resp)
+                } else {
+                    reject(resp)
+                }
+            }
+            this.instance.SubscribeAsVisitor(param)
         })
         return p
     }

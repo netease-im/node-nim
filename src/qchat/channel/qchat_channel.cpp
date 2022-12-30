@@ -11,6 +11,7 @@ Napi::Object QChatChannel::Init(Napi::Env env, Napi::Object exports) {
         RegApi("UpdateChannel", &Channel::UpdateChannel),
         RegApi("UpdateCategoryInfo", &Channel::UpdateCategoryInfo),
         RegApi("Subscribe", &Channel::Subscribe),
+        RegApi("SubscribeAsVisitor", &Channel::SubscribeAsVisitor),
         RegApi("QueryUnreadInfo", &Channel::QueryUnreadInfo),
         RegApi("GetChannels", &Channel::GetChannels),
         RegApi("GetChannelsByPage", &Channel::GetChannelsByPage),

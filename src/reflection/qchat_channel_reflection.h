@@ -10,6 +10,7 @@
 #include "xpack_specialization.h"
 using namespace nim;
 ReflectionDefinition_O(QChatChannelSubscribeResp, res_code, failed_channels);
+ReflectionDefinition_O(QChatChannelSubscribeAsVisitorResp, res_code, failed_channels);
 ReflectionDefinition_O(QChatChannelQueryUnreadInfoResp, res_code, unread_infos);
 ReflectionDefinition_O(QChatChannelCreateResp, res_code, channel_info);
 ReflectionDefinition_O(QChatChannelGetChannelsResp, res_code, channel_list);
@@ -22,11 +23,12 @@ ReflectionDefinition_O(QChatChannelGetExistingWhiteBlackMembersResp, res_code, m
 ReflectionDefinition_O(QChatChannelGetRTCInfoResp, res_code, rtc_info);
 ReflectionDefinition_O(QChatChannelGetRTCOnlineMembersResp, res_code, members);
 ReflectionDefinition_O(QChatChannelSubscribeParam, cb, ope_type, sub_type, id_infos);
+ReflectionDefinition_O(QChatChannelSubscribeAsVisitorParam, cb, ope_type, id_infos);
 ReflectionDefinition_O(QChatChannelQueryUnreadInfoParam, cb, id_infos);
 ReflectionDefinition_O(QChatChannelMemberSearchResp, res_code, member_list);
 ReflectionDefinition_O(QChatChannelCreateParam, cb, channel_info, anti_spam_info);
 ReflectionDefinition_O(QChatChannelDeleteParam, cb, channel_id);
-ReflectionDefinition_O(QChatChannelUpdateParam, cb, channel_id, name, topic, custom, view_mode, anti_spam_info);
+ReflectionDefinition_O(QChatChannelUpdateParam, cb, channel_id, name, topic, custom, view_mode, anti_spam_info, visitor_mode);
 ReflectionDefinition_O(QChatChannelUpdateCategoryInfoParam, cb, channel_id, category_id, sync_mode);
 ReflectionDefinition_O(QChatChannelGetChannelsParam, cb, channel_ids);
 ReflectionDefinition_O(QChatChannelGetChannelsPageParam, cb, server_id, timestamp, limit);
