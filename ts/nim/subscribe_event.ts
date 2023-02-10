@@ -10,8 +10,6 @@ import {
     UnSubscribeEventCallback,
     BatchUnSubscribeEventCallback,
     QuerySubscribeEventCallback,
-    BatchPushEventCallback,
-    PushEventCallback,
     EventSubscribeData
 } from '../nim_def/subscribe_event_def'
 import { NIMResCode } from 'ts/nim_def/client_def'

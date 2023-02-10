@@ -47,6 +47,7 @@ ReflectionDefinition_O(QChatFCSConfiguration,
     mock_refer);
 ReflectionDefinition_O(QChatMessageCacheConfiguration, enable_message_cache);
 ReflectionDefinition_O(QChatInitParam,
+    appkey,
     app_data_path,
     custom_timeout,
     auth_timeout,
@@ -54,7 +55,7 @@ ReflectionDefinition_O(QChatInitParam,
     encryption_configuration,
     fcs_configuration,
     message_cache_configuration);
-ReflectionDefinition_O(QChatLoginParam, cb, appkey, accid, auth_type, login_token, login_ext, link_address);
+ReflectionDefinition_O(QChatLoginParam, cb, appkey, accid, auth_type, custom_client_type, login_token, login_ext, link_address);
 ReflectionDefinition_O(QChatLogoutParam, cb);
 ReflectionDefinition_O(QChatKickParam, cb, device_ids);
 namespace xpack {

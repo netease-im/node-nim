@@ -12,7 +12,7 @@ function testFriend(test_info) {
         })
         describe('#Request', function () {
             it('friend request should return 200', function (done) {
-                const result = friend.request(
+                friend.request(
                     test_info.assistUser,
                     1,
                     'Request msg',
@@ -26,7 +26,7 @@ function testFriend(test_info) {
         })
         describe('#Update', function () {
             it('update friend should return 200', function (done) {
-                const result = friend.update(
+                friend.update(
                     {
                         accid_: test_info.assistUser,
                         alias_: 'AliasTest'
@@ -82,7 +82,7 @@ function testFriend(test_info) {
         })
         describe('#Delete', function () {
             it('delete friend should return 200', function (done) {
-                const result = friend.delete(
+                friend.delete(
                     test_info.assistUser,
                     {
                         delete_alias_: true

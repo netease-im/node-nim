@@ -246,7 +246,7 @@ std::string ts_cpp_conversion::ObjectToStruct<std::string>(Napi::Env env, const 
     }
 }
 template <>
-char* ts_cpp_conversion::ObjectToStruct<char*>(Napi::Env env, const Napi::Value& value) {
+const char* ts_cpp_conversion::ObjectToStruct<const char*>(Napi::Env env, const Napi::Value& value) {
     static std::string str;
     if (value.IsObject()) {
         Napi::Object json = env.Global().Get("JSON").As<Napi::Object>();
@@ -254,7 +254,7 @@ char* ts_cpp_conversion::ObjectToStruct<char*>(Napi::Env env, const Napi::Value&
         auto str_value = stringify.Call(json, {value});
         if (str_value.IsString()) {
             str = str_value.As<Napi::String>().Utf8Value();
-            return const_cast<char*>(str.c_str());
+            return str.c_str();
         } else {
             Napi::Error::New(env, "[node-nim] ObjectToStruct<const char*> expected Object, but get" + std::to_string(value.Type()))
                 .ThrowAsJavaScriptException();
@@ -262,7 +262,7 @@ char* ts_cpp_conversion::ObjectToStruct<char*>(Napi::Env env, const Napi::Value&
         }
     } else if (value.IsString()) {
         str = value.As<Napi::String>().Utf8Value();
-        return const_cast<char*>(str.c_str());
+        return str.c_str();
     } else {
         Napi::Error::New(env, "[node-nim] ObjectToStruct<const char*> get" + std::to_string(value.Type())).ThrowAsJavaScriptException();
         return "";

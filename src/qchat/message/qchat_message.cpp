@@ -19,6 +19,8 @@ Napi::Object QChatMessage::Init(Napi::Env env, Napi::Object exports) {
         RegApi("GetReferMessages", &Message::GetReferMessages),
         RegApi("GetThreadMessages", &Message::GetThreadMessages),
         RegApi("GetThreadRootMessagesMeta", &Message::GetThreadRootMessagesMeta),
+        RegApi("GetMentionedMeMessages", &Message::GetMentionedMeMessages),
+        RegApi("AreMentionedMeMessages", &Message::AreMentionedMeMessages),
         RegApi("AddQuickComment", &Message::AddQuickComment),
         RegApi("RemoveQuickComment", &Message::RemoveQuickComment),
         RegApi("GetQuickComments", &Message::GetQuickComments),

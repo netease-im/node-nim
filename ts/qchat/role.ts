@@ -82,13 +82,9 @@ export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
      * @param param 参数见 @see QChatCreateServerRoleParam
      */
     createServerRole(param: QChatCreateServerRoleParam): Promise<QChatCreateServerRoleResp> {
-        const p = new Promise<QChatCreateServerRoleResp>((resolve, reject) => {
+        const p = new Promise<QChatCreateServerRoleResp>((resolve) => {
             param.cb = (resp: QChatCreateServerRoleResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.CreateServerRole(param)
         })
@@ -100,13 +96,9 @@ export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
      * @param param 参数见 @see QChatUpdateServerRoleParam
      */
     updateServerRole(param: QChatUpdateServerRoleParam): Promise<QChatUpdateServerRoleResp> {
-        const p = new Promise<QChatUpdateServerRoleResp>((resolve, reject) => {
+        const p = new Promise<QChatUpdateServerRoleResp>((resolve) => {
             param.cb = (resp: QChatUpdateServerRoleResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.UpdateServerRole(param)
         })
@@ -119,13 +111,9 @@ export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
      * @param param 参数见 @see QChatUpdateServerRolePrioritiesParam
      */
     updateServerRolePriorities(param: QChatUpdateServerRolePrioritiesParam): Promise<QChatUpdateServerRolePrioritiesResp> {
-        const p = new Promise<QChatUpdateServerRolePrioritiesResp>((resolve, reject) => {
+        const p = new Promise<QChatUpdateServerRolePrioritiesResp>((resolve) => {
             param.cb = (resp: QChatUpdateServerRolePrioritiesResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.UpdateServerRolePriorities(param)
         })
@@ -137,13 +125,9 @@ export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
      * @param param 参数见 @see QChatDeleteServerRoleParam
      */
     deleteServerRole(param: QChatDeleteServerRoleParam): Promise<QChatDeleteServerRoleResp> {
-        const p = new Promise<QChatDeleteServerRoleResp>((resolve, reject) => {
+        const p = new Promise<QChatDeleteServerRoleResp>((resolve) => {
             param.cb = (resp: QChatDeleteServerRoleResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.DeleteServerRole(param)
         })
@@ -155,13 +139,9 @@ export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
      * @param param 参数见 @see QChatGetServerRolesParam
      */
     getServerRoles(param: QChatGetServerRolesParam): Promise<QChatGetServerRolesResp> {
-        const p = new Promise<QChatGetServerRolesResp>((resolve, reject) => {
+        const p = new Promise<QChatGetServerRolesResp>((resolve) => {
             param.cb = (resp: QChatGetServerRolesResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetServerRoles(param)
         })
@@ -173,13 +153,9 @@ export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
      * @param param 参数见 @see QChatAddMembersToServerRoleParam
      */
     addMembersToServerRole(param: QChatAddMembersToServerRoleParam): Promise<QChatAddMembersToServerRoleResp> {
-        const p = new Promise<QChatAddMembersToServerRoleResp>((resolve, reject) => {
+        const p = new Promise<QChatAddMembersToServerRoleResp>((resolve) => {
             param.cb = (resp: QChatAddMembersToServerRoleResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.AddMembersToServerRole(param)
         })
@@ -191,13 +167,9 @@ export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
      * @param param 参数见 @see QChatRemoveMembersFromServerRoleParam
      */
     removeMembersFromServerRole(param: QChatRemoveMembersFromServerRoleParam): Promise<QChatRemoveMembersFromServerRoleResp> {
-        const p = new Promise<QChatRemoveMembersFromServerRoleResp>((resolve, reject) => {
+        const p = new Promise<QChatRemoveMembersFromServerRoleResp>((resolve) => {
             param.cb = (resp: QChatRemoveMembersFromServerRoleResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.RemoveMembersFromServerRole(param)
         })
@@ -209,13 +181,9 @@ export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
      * @param param 参数见 @see QChatGetMembersFromServerRoleParam
      */
     getMembersFromServerRole(param: QChatGetMembersFromServerRoleParam): Promise<QChatGetMembersFromServerRoleResp> {
-        const p = new Promise<QChatGetMembersFromServerRoleResp>((resolve, reject) => {
+        const p = new Promise<QChatGetMembersFromServerRoleResp>((resolve) => {
             param.cb = (resp: QChatGetMembersFromServerRoleResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetMembersFromServerRole(param)
         })
@@ -227,13 +195,9 @@ export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
      * @param param 参数见 @see QChatAddChannelRoleParam
      */
     addChannelRole(param: QChatAddChannelRoleParam): Promise<QChatAddChannelRoleResp> {
-        const p = new Promise<QChatAddChannelRoleResp>((resolve, reject) => {
+        const p = new Promise<QChatAddChannelRoleResp>((resolve) => {
             param.cb = (resp: QChatAddChannelRoleResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.AddChannelRole(param)
         })
@@ -245,13 +209,9 @@ export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
      * @param param 参数见 @see QChatUpdateChannelRoleParam
      */
     updateChannelRole(param: QChatUpdateChannelRoleParam): Promise<QChatUpdateChannelRoleResp> {
-        const p = new Promise<QChatUpdateChannelRoleResp>((resolve, reject) => {
+        const p = new Promise<QChatUpdateChannelRoleResp>((resolve) => {
             param.cb = (resp: QChatUpdateChannelRoleResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.UpdateChannelRole(param)
         })
@@ -263,13 +223,9 @@ export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
      * @param param 参数见 @see QChatRemoveChannelRoleParam
      */
     removeChannelRole(param: QChatRemoveChannelRoleParam): Promise<QChatRemoveChannelRoleResp> {
-        const p = new Promise<QChatRemoveChannelRoleResp>((resolve, reject) => {
+        const p = new Promise<QChatRemoveChannelRoleResp>((resolve) => {
             param.cb = (resp: QChatRemoveChannelRoleResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.RemoveChannelRole(param)
         })
@@ -281,13 +237,9 @@ export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
      * @param param 参数见 @see QChatGetChannelRolesParam
      */
     getChannelRoles(param: QChatGetChannelRolesParam): Promise<QChatGetChannelRolesResp> {
-        const p = new Promise<QChatGetChannelRolesResp>((resolve, reject) => {
+        const p = new Promise<QChatGetChannelRolesResp>((resolve) => {
             param.cb = (resp: QChatGetChannelRolesResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetChannelRoles(param)
         })
@@ -299,13 +251,9 @@ export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
      * @param param 参数见 @see QChatAddMemberRoleParam
      */
     addMemberRole(param: QChatAddMemberRoleParam): Promise<QChatAddMemberRoleResp> {
-        const p = new Promise<QChatAddMemberRoleResp>((resolve, reject) => {
+        const p = new Promise<QChatAddMemberRoleResp>((resolve) => {
             param.cb = (resp: QChatAddMemberRoleResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.AddMemberRole(param)
         })
@@ -317,13 +265,9 @@ export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
      * @param param 参数见 @see QChatUpdateMemberRoleParam
      */
     updateMemberRole(param: QChatUpdateMemberRoleParam): Promise<QChatUpdateMemberRoleResp> {
-        const p = new Promise<QChatUpdateMemberRoleResp>((resolve, reject) => {
+        const p = new Promise<QChatUpdateMemberRoleResp>((resolve) => {
             param.cb = (resp: QChatUpdateMemberRoleResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.UpdateMemberRole(param)
         })
@@ -335,13 +279,9 @@ export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
      * @param param 参数见 @see QChatRemoveMemberRoleParam
      */
     removeMemberRole(param: QChatRemoveMemberRoleParam): Promise<QChatRemoveMemberRoleResp> {
-        const p = new Promise<QChatRemoveMemberRoleResp>((resolve, reject) => {
+        const p = new Promise<QChatRemoveMemberRoleResp>((resolve) => {
             param.cb = (resp: QChatRemoveMemberRoleResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.RemoveMemberRole(param)
         })
@@ -353,13 +293,9 @@ export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
      * @param param 参数见 @see QChatGetMemberRolesParam
      */
     getMemberRoles(param: QChatGetMemberRolesParam): Promise<QChatGetMemberRolesResp> {
-        const p = new Promise<QChatGetMemberRolesResp>((resolve, reject) => {
+        const p = new Promise<QChatGetMemberRolesResp>((resolve) => {
             param.cb = (resp: QChatGetMemberRolesResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetMemberRoles(param)
         })
@@ -371,13 +307,9 @@ export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
      * @param param 参数见 @see QChatGetRolesByAccidParam
      */
     getRolesByAccid(param: QChatGetRolesByAccidParam): Promise<QChatGetRolesByAccidResp> {
-        const p = new Promise<QChatGetRolesByAccidResp>((resolve, reject) => {
+        const p = new Promise<QChatGetRolesByAccidResp>((resolve) => {
             param.cb = (resp: QChatGetRolesByAccidResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetRolesByAccid(param)
         })
@@ -389,13 +321,9 @@ export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
      * @param param 参数见 @see QChatGetExistingServerRolesByAccidsParam
      */
     getExistingServerRolesByAccids(param: QChatGetExistingServerRolesByAccidsParam): Promise<QChatGetExistingServerRolesByAccidsResp> {
-        const p = new Promise<QChatGetExistingServerRolesByAccidsResp>((resolve, reject) => {
+        const p = new Promise<QChatGetExistingServerRolesByAccidsResp>((resolve) => {
             param.cb = (resp: QChatGetExistingServerRolesByAccidsResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetExistingServerRolesByAccids(param)
         })
@@ -407,13 +335,9 @@ export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
      * @param param 参数见 @see QChatGetExistingChannelRolesByServerRoleIdsParam
      */
     getExistingChannelRolesByServerRoleIds(param: QChatGetExistingChannelRolesByServerRoleIdsParam): Promise<QChatGetExistingChannelRolesByServerRoleIdsResp> {
-        const p = new Promise<QChatGetExistingChannelRolesByServerRoleIdsResp>((resolve, reject) => {
+        const p = new Promise<QChatGetExistingChannelRolesByServerRoleIdsResp>((resolve) => {
             param.cb = (resp: QChatGetExistingChannelRolesByServerRoleIdsResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetExistingChannelRolesByServerRoleIds(param)
         })
@@ -425,13 +349,9 @@ export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
      * @param param 参数见 @see QChatGetExistingAccidsOfMemberRolesParam
      */
     getExistingAccidsOfMemberRoles(param: QChatGetExistingAccidsOfMemberRolesParam): Promise<QChatGetExistingAccidsOfMemberRolesResp> {
-        const p = new Promise<QChatGetExistingAccidsOfMemberRolesResp>((resolve, reject) => {
+        const p = new Promise<QChatGetExistingAccidsOfMemberRolesResp>((resolve) => {
             param.cb = (resp: QChatGetExistingAccidsOfMemberRolesResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetExistingAccidsOfMemberRoles(param)
         })
@@ -443,13 +363,9 @@ export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
      * @param param 参数见 @see QChatGetExistingAccidsInServerRoleParam
      */
     getExistingAccidsInServerRole(param: QChatGetExistingAccidsInServerRoleParam): Promise<QChatGetExistingAccidsInServerRoleResp> {
-        const p = new Promise<QChatGetExistingAccidsInServerRoleResp>((resolve, reject) => {
+        const p = new Promise<QChatGetExistingAccidsInServerRoleResp>((resolve) => {
             param.cb = (resp: QChatGetExistingAccidsInServerRoleResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetExistingAccidsInServerRole(param)
         })
@@ -461,13 +377,9 @@ export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
      * @param param 参数见 @see QChatGetRolesByAccidParam
      */
     checkPermission(param: QChatCheckPermissionParam): Promise<QChatCheckPermissionResp> {
-        const p = new Promise<QChatCheckPermissionResp>((resolve, reject) => {
+        const p = new Promise<QChatCheckPermissionResp>((resolve) => {
             param.cb = (resp: QChatCheckPermissionResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.CheckPermission(param)
         })
@@ -479,13 +391,9 @@ export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
      * @param param 参数见 @see QChatGetRolesByAccidParam
      */
     checkPermissions(param: QChatCheckPermissionsParam): Promise<QChatCheckPermissionsResp> {
-        const p = new Promise<QChatCheckPermissionsResp>((resolve, reject) => {
+        const p = new Promise<QChatCheckPermissionsResp>((resolve) => {
             param.cb = (resp: QChatCheckPermissionsResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.CheckPermissions(param)
         })
@@ -497,13 +405,9 @@ export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
      * @param param 参数见 @see QChatAddChannelCategoryRoleParam
      */
     addChannelCategoryRole(param: QChatAddChannelCategoryRoleParam): Promise<QChatAddChannelCategoryRoleResp> {
-        const p = new Promise<QChatAddChannelCategoryRoleResp>((resolve, reject) => {
+        const p = new Promise<QChatAddChannelCategoryRoleResp>((resolve) => {
             param.cb = (resp: QChatAddChannelCategoryRoleResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.AddChannelCategoryRole(param)
         })
@@ -515,13 +419,9 @@ export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
      * @param param 参数见 @see QChatRemoveChannelCategoryRoleParam
      */
     removeChannelCategoryRole(param: QChatRemoveChannelCategoryRoleParam): Promise<QChatRemoveChannelCategoryRoleResp> {
-        const p = new Promise<QChatRemoveChannelCategoryRoleResp>((resolve, reject) => {
+        const p = new Promise<QChatRemoveChannelCategoryRoleResp>((resolve) => {
             param.cb = (resp: QChatRemoveChannelCategoryRoleResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.RemoveChannelCategoryRole(param)
         })
@@ -533,13 +433,9 @@ export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
      * @param param 参数见 @see QChatUpdateChannelCategoryRoleParam
      */
     updateChannelCategoryRole(param: QChatUpdateChannelCategoryRoleParam): Promise<QChatUpdateChannelCategoryRoleResp> {
-        const p = new Promise<QChatUpdateChannelCategoryRoleResp>((resolve, reject) => {
+        const p = new Promise<QChatUpdateChannelCategoryRoleResp>((resolve) => {
             param.cb = (resp: QChatUpdateChannelCategoryRoleResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.UpdateChannelCategoryRole(param)
         })
@@ -551,13 +447,9 @@ export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
      * @param param 参数见 @see QChatGetChannelCategoryRolesPageParam
      */
     getChannelCategoryRolesPage(param: QChatGetChannelCategoryRolesPageParam): Promise<QChatGetChannelCategoryRolesPageResp> {
-        const p = new Promise<QChatGetChannelCategoryRolesPageResp>((resolve, reject) => {
+        const p = new Promise<QChatGetChannelCategoryRolesPageResp>((resolve) => {
             param.cb = (resp: QChatGetChannelCategoryRolesPageResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetChannelCategoryRolesPage(param)
         })
@@ -569,13 +461,9 @@ export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
      * @param param 参数见 @see QChatAddChannelCategoryMemberRoleParam
      */
     addChannelCategoryMemberRole(param: QChatAddChannelCategoryMemberRoleParam): Promise<QChatAddChannelCategoryMemberRoleResp> {
-        const p = new Promise<QChatAddChannelCategoryMemberRoleResp>((resolve, reject) => {
+        const p = new Promise<QChatAddChannelCategoryMemberRoleResp>((resolve) => {
             param.cb = (resp: QChatAddChannelCategoryMemberRoleResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.AddChannelCategoryMemberRole(param)
         })
@@ -587,13 +475,9 @@ export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
      * @param param 参数见 @see QChatRemoveChannelCategoryMemberRoleParam
      */
     removeChannelCategoryMemberRole(param: QChatRemoveChannelCategoryMemberRoleParam): Promise<QChatRemoveChannelCategoryMemberRoleResp> {
-        const p = new Promise<QChatRemoveChannelCategoryMemberRoleResp>((resolve, reject) => {
+        const p = new Promise<QChatRemoveChannelCategoryMemberRoleResp>((resolve) => {
             param.cb = (resp: QChatRemoveChannelCategoryMemberRoleResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.RemoveChannelCategoryMemberRole(param)
         })
@@ -605,13 +489,9 @@ export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
      * @param param 参数见 @see QChatUpdateChannelCategoryMemberRoleParam
      */
     updateChannelCategoryMemberRole(param: QChatUpdateChannelCategoryMemberRoleParam): Promise<QChatUpdateChannelCategoryMemberRoleResp> {
-        const p = new Promise<QChatUpdateChannelCategoryMemberRoleResp>((resolve, reject) => {
+        const p = new Promise<QChatUpdateChannelCategoryMemberRoleResp>((resolve) => {
             param.cb = (resp: QChatUpdateChannelCategoryMemberRoleResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.UpdateChannelCategoryMemberRole(param)
         })
@@ -623,13 +503,9 @@ export class QChatRoleModule extends EventEmitter<QChatRoleEvents> {
      * @param param 参数见 @see QChatGetChannelCategoryMemberRolesPageParam
      */
     getChannelCategoryMemberRolesPage(param: QChatGetChannelCategoryMemberRolesPageParam): Promise<QChatGetChannelCategoryMemberRolesPageResp> {
-        const p = new Promise<QChatGetChannelCategoryMemberRolesPageResp>((resolve, reject) => {
+        const p = new Promise<QChatGetChannelCategoryMemberRolesPageResp>((resolve) => {
             param.cb = (resp: QChatGetChannelCategoryMemberRolesPageResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetChannelCategoryMemberRolesPage(param)
         })

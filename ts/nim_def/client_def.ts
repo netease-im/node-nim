@@ -267,6 +267,7 @@ export interface SDKConfig {
     client_antispam_?: boolean /**< boolean 客户端反垃圾，默认为false，如需开启请提前咨询技术支持或销售 */
     team_msg_ack_?: boolean /**< boolean 群消息已读功能开关， 默认为false，如需开启请提前咨询技术支持或销售  */
     need_update_lbs_befor_relogin_?: boolean /**< boolean 在进行重新登录前是否先刷新一下lbs,对于切换网络的场景适用  */
+    custom_client_type_?: number /**< int, 自定义客户端类型字段,大于0 */
 
     /***********消息“已接收回执”发送配置 begin************/
     caching_markread_?: boolean /**< boolean 是否开启缓存式“已接收回执”发送，程序可能收到大量消息以至触发频控时可以考虑开启此开关 缺省 false 关闭 */

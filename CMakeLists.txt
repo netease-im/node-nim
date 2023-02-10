@@ -93,16 +93,16 @@ file(GLOB_RECURSE NIM_NODE_SOURCE ${CMAKE_CURRENT_LIST_DIR}/src/*.cpp
                                   ${CMAKE_CURRENT_LIST_DIR}/src/*.cc
                                   ${CMAKE_CURRENT_LIST_DIR}/src/*.c)
 ne_add_library(${TARGET_NAME}
-                FRAMEWORK ${BUNDLED_OUTPUT} 
-                ${NIM_NODE_SOURCE} 
+                FRAMEWORK OFF
+                ${NIM_NODE_SOURCE}
                 ${CMAKE_JS_SRC})
-target_include_directories(${TARGET_NAME} PRIVATE 
+target_include_directories(${TARGET_NAME} PRIVATE
                            ${NODE_ADDON_API_DIR}
                            ${CMAKE_JS_INC}
                            ${CMAKE_CURRENT_LIST_DIR}/src)
 if(TARGET nim_cpp_wrapper)
     # build as subproject of nim
-    target_include_directories(${TARGET_NAME} PRIVATE 
+    target_include_directories(${TARGET_NAME} PRIVATE
                                ${CMAKE_SOURCE_DIR}
                                ${CMAKE_SOURCE_DIR}/nim/api/
                                ${CMAKE_SOURCE_DIR}/nim/nim_defines/
@@ -114,7 +114,7 @@ if(TARGET nim_cpp_wrapper)
                                ${CMAKE_SOURCE_DIR}/wrapper)
 else()
     # build with sdk package
-    target_include_directories(${TARGET_NAME} PRIVATE 
+    target_include_directories(${TARGET_NAME} PRIVATE
                                ${CMAKE_CURRENT_LIST_DIR}/sdk/wrapper
                                ${CMAKE_CURRENT_LIST_DIR}/sdk/include)
     add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/sdk/wrapper)

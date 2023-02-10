@@ -34,7 +34,11 @@ import {
     QChatMsgUpdatedResp,
     QChatRecvMsgResp,
     QChatMessageSearchPageParam,
-    QChatMessageSearchPageResp
+    QChatMessageSearchPageResp,
+    QChatAreMentionedMeMessagesParam,
+    QChatAreMentionedMeMessagesResp,
+    QChatGetMentionedMeMessagesParam,
+    QChatGetMentionedMeMessagesResp
 } from '../qchat_def/message_def'
 import { NIMResCode } from '../qchat_def/public_def'
 export declare interface QChatMessageEvents {
@@ -60,13 +64,9 @@ export class QChatMessageModule extends EventEmitter<QChatMessageEvents> {
      * @return void
      */
     send(param: QChatSendMessageParam): Promise<QChatSendMessageResp> {
-        const p = new Promise<QChatSendMessageResp>((resolve, reject) => {
+        const p = new Promise<QChatSendMessageResp>((resolve) => {
             param.cb = (resp: QChatSendMessageResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.Send(param)
         })
@@ -78,13 +78,9 @@ export class QChatMessageModule extends EventEmitter<QChatMessageEvents> {
      * @param[in] param 接口参数 @see QChatUpdateMessageParam
      */
     update(param: QChatUpdateMessageParam): Promise<QChatUpdateMessageResp> {
-        const p = new Promise<QChatUpdateMessageResp>((resolve, reject) => {
+        const p = new Promise<QChatUpdateMessageResp>((resolve) => {
             param.cb = (resp: QChatUpdateMessageResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.Update(param)
         })
@@ -97,13 +93,9 @@ export class QChatMessageModule extends EventEmitter<QChatMessageEvents> {
      * @return void
      */
     revoke(param: QChatRevokeMessageParam): Promise<QChatUpdateMessageResp> {
-        const p = new Promise<QChatUpdateMessageResp>((resolve, reject) => {
+        const p = new Promise<QChatUpdateMessageResp>((resolve) => {
             param.cb = (resp: QChatUpdateMessageResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.Revoke(param)
         })
@@ -116,13 +108,9 @@ export class QChatMessageModule extends EventEmitter<QChatMessageEvents> {
      * @return void
      */
     delete(param: QChatDeleteMessageParam): Promise<QChatUpdateMessageResp> {
-        const p = new Promise<QChatUpdateMessageResp>((resolve, reject) => {
+        const p = new Promise<QChatUpdateMessageResp>((resolve) => {
             param.cb = (resp: QChatUpdateMessageResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.Delete(param)
         })
@@ -135,13 +123,9 @@ export class QChatMessageModule extends EventEmitter<QChatMessageEvents> {
      * @return void
      */
     getMessages(param: QChatGetMessagesParam): Promise<QChatGetMessagesResp> {
-        const p = new Promise<QChatGetMessagesResp>((resolve, reject) => {
+        const p = new Promise<QChatGetMessagesResp>((resolve) => {
             param.cb = (resp: QChatGetMessagesResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetMessages(param)
         })
@@ -155,13 +139,9 @@ export class QChatMessageModule extends EventEmitter<QChatMessageEvents> {
      * @return void
      */
     getMessagesCache(param: QChatGetMessagesCacheParam): Promise<QChatGetMessagesCacheResp> {
-        const p = new Promise<QChatGetMessagesCacheResp>((resolve, reject) => {
+        const p = new Promise<QChatGetMessagesCacheResp>((resolve) => {
             param.cb = (resp: QChatGetMessagesCacheResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetMessagesCache(param)
         })
@@ -174,13 +154,9 @@ export class QChatMessageModule extends EventEmitter<QChatMessageEvents> {
      * @return void
      */
     getLastMessages(param: QChatGetLastMessagesParam): Promise<QChatGetLastMessagesResp> {
-        const p = new Promise<QChatGetLastMessagesResp>((resolve, reject) => {
+        const p = new Promise<QChatGetLastMessagesResp>((resolve) => {
             param.cb = (resp: QChatGetLastMessagesResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetLastMessages(param)
         })
@@ -193,13 +169,9 @@ export class QChatMessageModule extends EventEmitter<QChatMessageEvents> {
      * @return void
      */
     markRead(param: QChatMarkMessageReadParam): Promise<QChatMarkMessageReadResp> {
-        const p = new Promise<QChatMarkMessageReadResp>((resolve, reject) => {
+        const p = new Promise<QChatMarkMessageReadResp>((resolve) => {
             param.cb = (resp: QChatMarkMessageReadResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.MarkRead(param)
         })
@@ -212,13 +184,9 @@ export class QChatMessageModule extends EventEmitter<QChatMessageEvents> {
      * @param[in] param 接口参数 @see QChatReplyMessageParam
      */
     reply(param: QChatReplyMessageParam): Promise<QChatReplyMessageResp> {
-        const p = new Promise<QChatReplyMessageResp>((resolve, reject) => {
+        const p = new Promise<QChatReplyMessageResp>((resolve) => {
             param.cb = (resp: QChatReplyMessageResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.Reply(param)
         })
@@ -231,13 +199,9 @@ export class QChatMessageModule extends EventEmitter<QChatMessageEvents> {
      * @param param 接口参数 @see QChatGetMessageHistoryByIdsParam
      */
     getMessageHistoryByIds(param: QChatGetMessageHistoryByIdsParam): Promise<QChatGetMessageHistoryByIdsResp> {
-        const p = new Promise<QChatGetMessageHistoryByIdsResp>((resolve, reject) => {
+        const p = new Promise<QChatGetMessageHistoryByIdsResp>((resolve) => {
             param.cb = (resp: QChatGetMessageHistoryByIdsResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetMessageHistoryByIds(param)
         })
@@ -250,13 +214,9 @@ export class QChatMessageModule extends EventEmitter<QChatMessageEvents> {
      * @param param 接口参数 @see QChatGetReferMessagesParam
      */
     getReferMessages(param: QChatGetReferMessagesParam): Promise<QChatGetReferMessagesResp> {
-        const p = new Promise<QChatGetReferMessagesResp>((resolve, reject) => {
+        const p = new Promise<QChatGetReferMessagesResp>((resolve) => {
             param.cb = (resp: QChatGetReferMessagesResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetReferMessages(param)
         })
@@ -269,13 +229,9 @@ export class QChatMessageModule extends EventEmitter<QChatMessageEvents> {
      * @param param 接口参数 @see QChatGetThreadMessagesParam
      */
     getThreadMessages(param: QChatGetThreadMessagesParam): Promise<QChatGetThreadMessagesResp> {
-        const p = new Promise<QChatGetThreadMessagesResp>((resolve, reject) => {
+        const p = new Promise<QChatGetThreadMessagesResp>((resolve) => {
             param.cb = (resp: QChatGetThreadMessagesResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetThreadMessages(param)
         })
@@ -288,15 +244,41 @@ export class QChatMessageModule extends EventEmitter<QChatMessageEvents> {
      * @param param 接口参数 @see QChatGetThreadRootMessagesMetaParam
      */
     getThreadRootMessagesMeta(param: QChatGetThreadRootMessagesMetaParam): Promise<QChatGetThreadRootMessagesMetaResp> {
-        const p = new Promise<QChatGetThreadRootMessagesMetaResp>((resolve, reject) => {
+        const p = new Promise<QChatGetThreadRootMessagesMetaResp>((resolve) => {
             param.cb = (resp: QChatGetThreadRootMessagesMetaResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetThreadRootMessagesMeta(param)
+        })
+        return p
+    }
+
+    /** @fn getMentionedMeMessages(param: QChatGetMentionedMeMessagesParam)
+     * @brief 查询未读消息中 @ 当前用户的消息
+     * @since v9.9.0
+     * @param param 接口参数 @see QChatGetMentionedMeMessagesParam
+     */
+    getMentionedMeMessages(param: QChatGetMentionedMeMessagesParam): Promise<QChatGetMentionedMeMessagesResp> {
+        const p = new Promise<QChatGetMentionedMeMessagesResp>((resolve) => {
+            param.cb = (resp: QChatGetMentionedMeMessagesResp) => {
+                resolve(resp)
+            }
+            this.instance.GetMentionedMeMessages(param)
+        })
+        return p
+    }
+
+    /** @fn areMentionedMeMessages(param: QChatAreMentionedMeMessagesParam)
+     * @brief 查询指定消息中是否有 @ 当前用户的消息
+     * @since v9.9.0
+     * @param param 接口参数 @see QChatAreMentionedMeMessagesParam
+     */
+    areMentionedMeMessages(param: QChatAreMentionedMeMessagesParam): Promise<QChatAreMentionedMeMessagesResp> {
+        const p = new Promise<QChatAreMentionedMeMessagesResp>((resolve) => {
+            param.cb = (resp: QChatAreMentionedMeMessagesResp) => {
+                resolve(resp)
+            }
+            this.instance.AreMentionedMeMessages(param)
         })
         return p
     }
@@ -307,13 +289,9 @@ export class QChatMessageModule extends EventEmitter<QChatMessageEvents> {
      * @param param 接口参数 @see QChatAddQuickCommentParam
      */
     addQuickComment(param: QChatAddQuickCommentParam): Promise<QChatAddQuickCommentResp> {
-        const p = new Promise<QChatAddQuickCommentResp>((resolve, reject) => {
+        const p = new Promise<QChatAddQuickCommentResp>((resolve) => {
             param.cb = (resp: QChatAddQuickCommentResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.AddQuickComment(param)
         })
@@ -326,13 +304,9 @@ export class QChatMessageModule extends EventEmitter<QChatMessageEvents> {
      * @param param 接口参数 @see QChatRemoveQuickComm entParam
      */
     removeQuickComment(param: QChatRemoveQuickCommentParam): Promise<QChatRemoveQuickCommentResp> {
-        const p = new Promise<QChatRemoveQuickCommentResp>((resolve, reject) => {
+        const p = new Promise<QChatRemoveQuickCommentResp>((resolve) => {
             param.cb = (resp: QChatRemoveQuickCommentResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.RemoveQuickComment(param)
         })
@@ -345,13 +319,9 @@ export class QChatMessageModule extends EventEmitter<QChatMessageEvents> {
      * @param param 接口参数 @see QChatGetQuickCommentsParam
      */
     getQuickComments(param: QChatGetQuickCommentsParam): Promise<QChatGetQuickCommentsResp> {
-        const p = new Promise<QChatGetQuickCommentsResp>((resolve, reject) => {
+        const p = new Promise<QChatGetQuickCommentsResp>((resolve) => {
             param.cb = (resp: QChatGetQuickCommentsResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetQuickComments(param)
         })
@@ -364,13 +334,9 @@ export class QChatMessageModule extends EventEmitter<QChatMessageEvents> {
      * @param param 接口参数 @see QChatSearchMsgByPageParam
      */
     searchMsgByPage(param: QChatMessageSearchPageParam): Promise<QChatMessageSearchPageResp> {
-        const p = new Promise<QChatMessageSearchPageResp>((resolve, reject) => {
+        const p = new Promise<QChatMessageSearchPageResp>((resolve) => {
             param.cb = (resp: QChatMessageSearchPageResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.SearchMsgByPage(param)
         })

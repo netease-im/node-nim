@@ -349,7 +349,9 @@ export enum NIMQChatPermissions {
     /** 服务器申请处理权限，Server */
     kPermissionServerHandleApply,
     /** 申请邀请历史查看权限，有这个权限才可以查询server级别的申请/邀请记录，Server */
-    kPermissionGetServerInviteApplyRecords
+    kPermissionGetServerInviteApplyRecords,
+    /** @ 身份组的权限，Server/Channel */
+    kPermissionMentionRole
 }
 
 export enum NIMQChatRoleType {
@@ -622,7 +624,7 @@ export enum NIMQChatSystemNotificationType {
     /** 用户通过邀请码加入服务器 msg_data: NIMQChatSystemNotificationDataServerJoinByInviteCode */
     kNIMQChatSystemNotificationTypeServerJoinByInviteCode = 33,
     /** 频道对游客可见性变更 msg_data: NIMQChatSystemNotificationDataChannelGuestVisibilityChange*/
-    NIMQChatSystemNotificationTypeChannelVisitorVisibilityChange = 34,
+    kNIMQChatSystemNotificationTypeChannelVisitorVisibilityChange = 34,
     /** 自定义系统通知 msg_data: NULL */
     kNIMQChatSystemNotificationTypeCustom = 100
 }

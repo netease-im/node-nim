@@ -56,13 +56,9 @@ export class QChatInstanceModule extends EventEmitter<QChatInstanceEvents> {
      * @return void
      */
     login(param: QChatLoginParam): Promise<QChatLoginResp> {
-        const p = new Promise<QChatLoginResp>((resolve, reject) => {
+        const p = new Promise<QChatLoginResp>((resolve) => {
             param.cb = (resp: QChatLoginResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.Login(param)
         })
@@ -75,13 +71,9 @@ export class QChatInstanceModule extends EventEmitter<QChatInstanceEvents> {
      * @return void
      */
     logout(param: QChatLogoutParam): Promise<QChatLogoutResp> {
-        const p = new Promise<QChatLogoutResp>((resolve, reject) => {
+        const p = new Promise<QChatLogoutResp>((resolve) => {
             param.cb = (resp: QChatLogoutResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.Logout(param)
         })
@@ -94,13 +86,9 @@ export class QChatInstanceModule extends EventEmitter<QChatInstanceEvents> {
      * @return void
      */
     kickOtherClients(param: QChatKickParam): Promise<QChatKickResp> {
-        const p = new Promise<QChatKickResp>((resolve, reject) => {
+        const p = new Promise<QChatKickResp>((resolve) => {
             param.cb = (resp: QChatKickResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.KickOtherClients(param)
         })

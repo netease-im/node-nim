@@ -184,6 +184,8 @@ export interface QChatMessageCacheConfiguration {
 
 /** @interface QChatInitParam */
 export interface QChatInitParam {
+    /** 云信appkey */
+    appkey?: string
     /** APP数据存储路径，如果为空，则使用系统默认路径 */
     app_data_path?: string
     /** 自定义通信超时时间，单位秒, 为0使用默认值 */
@@ -213,6 +215,8 @@ export interface QChatLoginParam {
     accid?: string
     /** 鉴权方式 */
     auth_type?: NIMQChatLoginAuthType
+    /** 自定义终端类型 */
+    custom_client_type?: number
     /** 登陆的token */
     login_token?: string
     /** 登录自定义字段 */

@@ -50,7 +50,7 @@ function testSession(test_info) {
         })
         describe('#setMultiUnreadCountZeroAsync', function () {
             it('set multi unread coung zero should return 200', function (done) {
-                const result = session.setMultiUnreadCountZeroAsync(
+                session.setMultiUnreadCountZeroAsync(
                     false,
                     [
                         {
@@ -145,7 +145,7 @@ function testSession(test_info) {
         })
         describe('#deleteSessionRoamingMessage', function () {
             it('delete roaming should return 200', function (done) {
-                const result = session.deleteSessionRoamingMessage(
+                session.deleteSessionRoamingMessage(
                     0,
                     test_info.assistUser,
                     (res_code, sessionType, sessionId) => {

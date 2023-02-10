@@ -87,13 +87,9 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
      * @return void
      */
     createServer(param: QChatServerCreateParam): Promise<QChatServerCreateResp> {
-        const p = new Promise<QChatServerCreateResp>((resolve, reject) => {
+        const p = new Promise<QChatServerCreateResp>((resolve) => {
             param.cb = (resp: QChatServerCreateResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.CreateServer(param)
         })
@@ -106,13 +102,9 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
      * @return void
      */
     deleteServer(param: QChatServerDeleteParam): Promise<QChatServerDeleteResp> {
-        const p = new Promise<QChatServerDeleteResp>((resolve, reject) => {
+        const p = new Promise<QChatServerDeleteResp>((resolve) => {
             param.cb = (resp: QChatServerDeleteResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.DeleteServer(param)
         })
@@ -125,13 +117,9 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
      * @return void
      */
     updateServer(param: QChatServerUpdateParam): Promise<QChatServerUpdateResp> {
-        const p = new Promise<QChatServerUpdateResp>((resolve, reject) => {
+        const p = new Promise<QChatServerUpdateResp>((resolve) => {
             param.cb = (resp: QChatServerUpdateResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.UpdateServer(param)
         })
@@ -144,13 +132,9 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
      * @return void
      */
     enterAsVisitor(param: QChatServerEnterAsVisitorParam): Promise<QChatServerEnterAsVisitorResp> {
-        const p = new Promise<QChatServerEnterAsVisitorResp>((resolve, reject) => {
+        const p = new Promise<QChatServerEnterAsVisitorResp>((resolve) => {
             param.cb = (resp: QChatServerEnterAsVisitorResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.EnterAsVisitor(param)
         })
@@ -163,13 +147,9 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
      * @return void
      */
     leaveAsVisitor(param: QChatServerLeaveAsVisitorParam): Promise<QChatServerLeaveAsVisitorResp> {
-        const p = new Promise<QChatServerLeaveAsVisitorResp>((resolve, reject) => {
+        const p = new Promise<QChatServerLeaveAsVisitorResp>((resolve) => {
             param.cb = (resp: QChatServerLeaveAsVisitorResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.LeaveAsVisitor(param)
         })
@@ -182,13 +162,9 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
      * @return void
      */
     subscribe(param: QChatServerSubscribeParam): Promise<QChatServerSubscribeResp> {
-        const p = new Promise<QChatServerSubscribeResp>((resolve, reject) => {
+        const p = new Promise<QChatServerSubscribeResp>((resolve) => {
             param.cb = (resp: QChatServerSubscribeResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.Subscribe(param)
         })
@@ -201,13 +177,9 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
      * @return void
      */
     subscribeAsVisitor(param: QChatServerSubscribeAsVisitorParam): Promise<QChatServerSubscribeAsVisitorResp> {
-        const p = new Promise<QChatServerSubscribeAsVisitorResp>((resolve, reject) => {
+        const p = new Promise<QChatServerSubscribeAsVisitorResp>((resolve) => {
             param.cb = (resp: QChatServerSubscribeAsVisitorResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.SubscribeAsVisitor(param)
         })
@@ -220,13 +192,9 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
      * @return void
      */
     subscribeAllChannel(param: QChatServerSubscribeAllChannelParam): Promise<QChatServerSubscribeAllChannelResp> {
-        const p = new Promise<QChatServerSubscribeAllChannelResp>((resolve, reject) => {
+        const p = new Promise<QChatServerSubscribeAllChannelResp>((resolve) => {
             param.cb = (resp: QChatServerSubscribeAllChannelResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.SubscribeAllChannel(param)
         })
@@ -239,13 +207,9 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
      * @return void
      */
     markRead(param: QChatServerMarkReadParam): Promise<QChatServerMarkReadResp> {
-        const p = new Promise<QChatServerMarkReadResp>((resolve, reject) => {
+        const p = new Promise<QChatServerMarkReadResp>((resolve) => {
             param.cb = (resp: QChatServerMarkReadResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.MarkRead(param)
         })
@@ -258,13 +222,9 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
      * @return void
      */
     getServers(param: QChatServerGetServersParam): Promise<QChatServerGetServersResp> {
-        const p = new Promise<QChatServerGetServersResp>((resolve, reject) => {
+        const p = new Promise<QChatServerGetServersResp>((resolve) => {
             param.cb = (resp: QChatServerGetServersResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetServers(param)
         })
@@ -277,13 +237,9 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
      * @return void
      */
     getServersByPage(param: QChatServerGetServersPageParam): Promise<QChatServerGetServersPageResp> {
-        const p = new Promise<QChatServerGetServersPageResp>((resolve, reject) => {
+        const p = new Promise<QChatServerGetServersPageResp>((resolve) => {
             param.cb = (resp: QChatServerGetServersPageResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetServersByPage(param)
         })
@@ -296,13 +252,9 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
      * @return void
      */
     invite(param: QChatServerInviteParam): Promise<QChatServerInviteResp> {
-        const p = new Promise<QChatServerInviteResp>((resolve, reject) => {
+        const p = new Promise<QChatServerInviteResp>((resolve) => {
             param.cb = (resp: QChatServerInviteResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.Invite(param)
         })
@@ -315,13 +267,9 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
      * @return void
      */
     acceptInvite(param: QChatServerAcceptInviteParam): Promise<QChatServerAcceptInviteResp> {
-        const p = new Promise<QChatServerAcceptInviteResp>((resolve, reject) => {
+        const p = new Promise<QChatServerAcceptInviteResp>((resolve) => {
             param.cb = (resp: QChatServerAcceptInviteResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.AcceptInvite(param)
         })
@@ -334,13 +282,9 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
      * @return void
      */
     rejectInvite(param: QChatServerRejectInviteParam): Promise<QChatServerRejectInviteResp> {
-        const p = new Promise<QChatServerRejectInviteResp>((resolve, reject) => {
+        const p = new Promise<QChatServerRejectInviteResp>((resolve) => {
             param.cb = (resp: QChatServerRejectInviteResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.RejectInvite(param)
         })
@@ -353,13 +297,9 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
      * @return void
      */
     apply(param: QChatServerApplyParam): Promise<QChatServerApplyResp> {
-        const p = new Promise<QChatServerApplyResp>((resolve, reject) => {
+        const p = new Promise<QChatServerApplyResp>((resolve) => {
             param.cb = (resp: QChatServerApplyResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.Apply(param)
         })
@@ -372,13 +312,9 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
      * @return void
      */
     acceptApply(param: QChatServerAcceptApplyParam): Promise<QChatServerAcceptApplyResp> {
-        const p = new Promise<QChatServerAcceptApplyResp>((resolve, reject) => {
+        const p = new Promise<QChatServerAcceptApplyResp>((resolve) => {
             param.cb = (resp: QChatServerAcceptApplyResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.AcceptApply(param)
         })
@@ -391,13 +327,9 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
      * @return void
      */
     rejectApply(param: QChatServerRejectApplyParam): Promise<QChatServerRejectApplyResp> {
-        const p = new Promise<QChatServerRejectApplyResp>((resolve, reject) => {
+        const p = new Promise<QChatServerRejectApplyResp>((resolve) => {
             param.cb = (resp: QChatServerRejectApplyResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.RejectApply(param)
         })
@@ -410,13 +342,9 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
      * @return void
      */
     kick(param: QChatServerKickParam): Promise<QChatServerKickResp> {
-        const p = new Promise<QChatServerKickResp>((resolve, reject) => {
+        const p = new Promise<QChatServerKickResp>((resolve) => {
             param.cb = (resp: QChatServerKickResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.Kick(param)
         })
@@ -429,13 +357,9 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
      * @return void
      */
     leave(param: QChatServerLeaveParam): Promise<QChatServerLeaveResp> {
-        const p = new Promise<QChatServerLeaveResp>((resolve, reject) => {
+        const p = new Promise<QChatServerLeaveResp>((resolve) => {
             param.cb = (resp: QChatServerLeaveResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.Leave(param)
         })
@@ -448,13 +372,9 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
      * @return void
      */
     updateMemberInfo(param: QChatServerUpdateMemberInfoParam): Promise<QChatServerUpdateMemberInfoResp> {
-        const p = new Promise<QChatServerUpdateMemberInfoResp>((resolve, reject) => {
+        const p = new Promise<QChatServerUpdateMemberInfoResp>((resolve) => {
             param.cb = (resp: QChatServerUpdateMemberInfoResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.UpdateMemberInfo(param)
         })
@@ -467,13 +387,9 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
      * @return void
      */
     getServerMembers(param: QChatServerGetMembersParam): Promise<QChatServerGetMembersResp> {
-        const p = new Promise<QChatServerGetMembersResp>((resolve, reject) => {
+        const p = new Promise<QChatServerGetMembersResp>((resolve) => {
             param.cb = (resp: QChatServerGetMembersResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetServerMembers(param)
         })
@@ -486,13 +402,9 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
      * @return void
      */
     getServerMembersByPage(param: QChatServerGetMembersPageParam): Promise<QChatServerGetMembersPageResp> {
-        const p = new Promise<QChatServerGetMembersPageResp>((resolve, reject) => {
+        const p = new Promise<QChatServerGetMembersPageResp>((resolve) => {
             param.cb = (resp: QChatServerGetMembersPageResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetServerMembersByPage(param)
         })
@@ -505,13 +417,9 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
      * @return void
      */
     banMember(param: QChatServerBanMemberParam): Promise<QChatServerBanMemberResp> {
-        const p = new Promise<QChatServerBanMemberResp>((resolve, reject) => {
+        const p = new Promise<QChatServerBanMemberResp>((resolve) => {
             param.cb = (resp: QChatServerBanMemberResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.BanMember(param)
         })
@@ -524,13 +432,9 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
      * @return void
      */
     unbanMember(param: QChatServerUnbanMemberParam): Promise<QChatServerUnbanMemberResp> {
-        const p = new Promise<QChatServerUnbanMemberResp>((resolve, reject) => {
+        const p = new Promise<QChatServerUnbanMemberResp>((resolve) => {
             param.cb = (resp: QChatServerUnbanMemberResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.UnbanMember(param)
         })
@@ -543,13 +447,9 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
      * @return void
      */
     getBannedMembersByPage(param: QChatServerGetBannedMembersPageParam): Promise<QChatServerGetBannedMembersPageResp> {
-        const p = new Promise<QChatServerGetBannedMembersPageResp>((resolve, reject) => {
+        const p = new Promise<QChatServerGetBannedMembersPageResp>((resolve) => {
             param.cb = (resp: QChatServerGetBannedMembersPageResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetBannedMembersByPage(param)
         })
@@ -562,13 +462,9 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
      * @return void
      */
     serverSearchByPage(param: QChatServerSearchPageParam): Promise<QChatServerSearchPageResp> {
-        const p = new Promise<QChatServerSearchPageResp>((resolve, reject) => {
+        const p = new Promise<QChatServerSearchPageResp>((resolve) => {
             param.cb = (resp: QChatServerSearchPageResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.ServerSearchByPage(param)
         })
@@ -581,13 +477,9 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
      * @return void
      */
     serverMemberSearch(param: QChatServerMemberSearchParam): Promise<QChatServerMemberSearchResp> {
-        const p = new Promise<QChatServerMemberSearchResp>((resolve, reject) => {
+        const p = new Promise<QChatServerMemberSearchResp>((resolve) => {
             param.cb = (resp: QChatServerMemberSearchResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.ServerMemberSearch(param)
         })
@@ -600,13 +492,9 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
      * @return void
      */
     generateInviteCode(param: QChatServerGenerateInviteCodeParam): Promise<QChatServerGenerateInviteCodeResp> {
-        const p = new Promise<QChatServerGenerateInviteCodeResp>((resolve, reject) => {
+        const p = new Promise<QChatServerGenerateInviteCodeResp>((resolve) => {
             param.cb = (resp: QChatServerGenerateInviteCodeResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GenerateInviteCode(param)
         })
@@ -619,13 +507,9 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
      * @return void
      */
     joinByInviteCode(param: QChatServerJoinByInviteCodeParam): Promise<QChatServerJoinByInviteCodeResp> {
-        const p = new Promise<QChatServerJoinByInviteCodeResp>((resolve, reject) => {
+        const p = new Promise<QChatServerJoinByInviteCodeResp>((resolve) => {
             param.cb = (resp: QChatServerJoinByInviteCodeResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.JoinByInviteCode(param)
         })
@@ -638,13 +522,9 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
      * @return void
      */
     getInviteApplyRecordOfServer(param: QChatServerGetInviteApplyRecordOfServerParam): Promise<QChatServerGetInviteApplyRecordOfServerResp> {
-        const p = new Promise<QChatServerGetInviteApplyRecordOfServerResp>((resolve, reject) => {
+        const p = new Promise<QChatServerGetInviteApplyRecordOfServerResp>((resolve) => {
             param.cb = (resp: QChatServerGetInviteApplyRecordOfServerResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetInviteApplyRecordOfServer(param)
         })
@@ -657,13 +537,9 @@ export class QChatServerModule extends EventEmitter<QChatServerEvents> {
      * @return void
      */
     getInviteApplyRecordOfSelf(param: QChatServerGetInviteApplyRecordOfSelfParam): Promise<QChatServerGetInviteApplyRecordOfSelfResp> {
-        const p = new Promise<QChatServerGetInviteApplyRecordOfSelfResp>((resolve, reject) => {
+        const p = new Promise<QChatServerGetInviteApplyRecordOfSelfResp>((resolve) => {
             param.cb = (resp: QChatServerGetInviteApplyRecordOfSelfResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetInviteApplyRecordOfSelf(param)
         })

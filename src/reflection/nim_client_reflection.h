@@ -72,7 +72,8 @@ ReflectionDefinition_O(SDKConfig,
     mock_refer_,
     mock_ua_,
     fcs_auth_type_,
-    custom_enable_fcs_);
+    custom_enable_fcs_,
+    custom_client_type_);
 ReflectionDefinition_O(LoginRes, res_code_, relogin_, login_step_, other_clients_, retrying_);
 ReflectionDefinition_O(OtherClientPres,
     app_account_,

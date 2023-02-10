@@ -1,4 +1,4 @@
-import { NIMPassThroughProxyAPI, NIMSendHttpRequestMethods, ReceivedHttpMsgCallback, SendHttpRequestCallback } from '../nim_def/pass_through_proxy_def'
+import { NIMPassThroughProxyAPI, NIMSendHttpRequestMethods, SendHttpRequestCallback } from '../nim_def/pass_through_proxy_def'
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
 import { NIMResCode } from 'ts/nim_def/client_def'

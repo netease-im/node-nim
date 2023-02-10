@@ -13,7 +13,7 @@
     },
     "scripts": {
         "coverage": "nyc mocha test/test_all.js -slow 200 -timeout 10000",
-        "build_ts": "rimraf ./js && rimraf ./types && tsc",
+        "build_ts": "rimraf ./dist && rimraf ./types && tsc",
         "build_doc": "typedoc",
         "prepublishOnly": "npm run build_ts",
         "install": "npm run download_sdk",

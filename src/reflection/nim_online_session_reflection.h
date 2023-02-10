@@ -16,6 +16,7 @@ ReflectionDefinition_O(SessionOnLineServiceHelper::DeleteSessionParam, delete_li
 
 // Callback
 CallbackSpecialization(SessionOnLineService::QuerySessionInfoCallback);
+CallbackSpecialization(SessionOnLineService::QuerySessionListCallabck);
 CallbackSpecialization(SessionOnLineService::SessionChangedCallback);
 
 // xpack specialization

@@ -7,7 +7,7 @@ function iniClient(test_info) {
     describe('********************NIM init SDK********************', function () {
         describe('NIM client Init', function () {
             it('init NIM SDK should return 1', function () {
-                const result = client.init('', 'NIM_SDK_NODE_TEST', '', {
+                client.init('', 'NIM_SDK_NODE_TEST', '', {
                     database_encrypt_key_: 'abcdefghijklmnopqrstuvwxyz012345'
                 })
             })

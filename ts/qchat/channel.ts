@@ -67,13 +67,9 @@ export class QChatChannelModule extends EventEmitter<QChatChannelEvents> {
      * @return void
      */
     createChannel(param: QChatChannelCreateParam): Promise<QChatChannelCreateResp> {
-        const p = new Promise<QChatChannelCreateResp>((resolve, reject) => {
+        const p = new Promise<QChatChannelCreateResp>((resolve) => {
             param.cb = (resp: QChatChannelCreateResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.CreateChannel(param)
         })
@@ -86,13 +82,9 @@ export class QChatChannelModule extends EventEmitter<QChatChannelEvents> {
      * @return void
      */
     deleteChannel(param: QChatChannelDeleteParam): Promise<QChatChannelDeleteResp> {
-        const p = new Promise<QChatChannelDeleteResp>((resolve, reject) => {
+        const p = new Promise<QChatChannelDeleteResp>((resolve) => {
             param.cb = (resp: QChatChannelDeleteResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.DeleteChannel(param)
         })
@@ -105,13 +97,9 @@ export class QChatChannelModule extends EventEmitter<QChatChannelEvents> {
      * @return void
      */
     updateChannel(param: QChatChannelUpdateParam): Promise<QChatChannelUpdateResp> {
-        const p = new Promise<QChatChannelUpdateResp>((resolve, reject) => {
+        const p = new Promise<QChatChannelUpdateResp>((resolve) => {
             param.cb = (resp: QChatChannelUpdateResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.UpdateChannel(param)
         })
@@ -124,13 +112,9 @@ export class QChatChannelModule extends EventEmitter<QChatChannelEvents> {
      * @return void
      */
     updateCategoryInfo(param: QChatChannelUpdateCategoryInfoParam): Promise<QChatChannelUpdateCategoryInfoResp> {
-        const p = new Promise<QChatChannelUpdateCategoryInfoResp>((resolve, reject) => {
+        const p = new Promise<QChatChannelUpdateCategoryInfoResp>((resolve) => {
             param.cb = (resp: QChatChannelUpdateCategoryInfoResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.UpdateCategoryInfo(param)
         })
@@ -143,13 +127,9 @@ export class QChatChannelModule extends EventEmitter<QChatChannelEvents> {
      * @return void
      */
     subscribe(param: QChatChannelSubscribeParam): Promise<QChatChannelSubscribeResp> {
-        const p = new Promise<QChatChannelSubscribeResp>((resolve, reject) => {
+        const p = new Promise<QChatChannelSubscribeResp>((resolve) => {
             param.cb = (resp: QChatChannelSubscribeResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.Subscribe(param)
         })
@@ -162,13 +142,9 @@ export class QChatChannelModule extends EventEmitter<QChatChannelEvents> {
      * @return void
      */
     subscribeAsVisitor(param: QChatChannelSubscribeAsVisitorParam): Promise<QChatChannelSubscribeAsVisitorResp> {
-        const p = new Promise<QChatChannelSubscribeAsVisitorResp>((resolve, reject) => {
+        const p = new Promise<QChatChannelSubscribeAsVisitorResp>((resolve) => {
             param.cb = (resp: QChatChannelSubscribeAsVisitorResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.SubscribeAsVisitor(param)
         })
@@ -181,13 +157,9 @@ export class QChatChannelModule extends EventEmitter<QChatChannelEvents> {
      * @return void
      */
     queryUnreadInfo(param: QChatChannelQueryUnreadInfoParam): Promise<QChatChannelQueryUnreadInfoResp> {
-        const p = new Promise<QChatChannelQueryUnreadInfoResp>((resolve, reject) => {
+        const p = new Promise<QChatChannelQueryUnreadInfoResp>((resolve) => {
             param.cb = (resp: QChatChannelQueryUnreadInfoResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.QueryUnreadInfo(param)
         })
@@ -200,13 +172,9 @@ export class QChatChannelModule extends EventEmitter<QChatChannelEvents> {
      * @return void
      */
     getChannels(param: QChatChannelGetChannelsParam): Promise<QChatChannelGetChannelsResp> {
-        const p = new Promise<QChatChannelGetChannelsResp>((resolve, reject) => {
+        const p = new Promise<QChatChannelGetChannelsResp>((resolve) => {
             param.cb = (resp: QChatChannelGetChannelsResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetChannels(param)
         })
@@ -219,13 +187,9 @@ export class QChatChannelModule extends EventEmitter<QChatChannelEvents> {
      * @return void
      */
     getChannelsByPage(param: QChatChannelGetChannelsPageParam): Promise<QChatChannelGetChannelsPageResp> {
-        const p = new Promise<QChatChannelGetChannelsPageResp>((resolve, reject) => {
+        const p = new Promise<QChatChannelGetChannelsPageResp>((resolve) => {
             param.cb = (resp: QChatChannelGetChannelsPageResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetChannelsByPage(param)
         })
@@ -239,13 +203,9 @@ export class QChatChannelModule extends EventEmitter<QChatChannelEvents> {
      * @return void
      */
     getMembersByPage(param: QChatChannelGetMembersPageParam): Promise<QChatChannelGetMembersPageResp> {
-        const p = new Promise<QChatChannelGetMembersPageResp>((resolve, reject) => {
+        const p = new Promise<QChatChannelGetMembersPageResp>((resolve) => {
             param.cb = (resp: QChatChannelGetMembersPageResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetMembersByPage(param)
         })
@@ -258,13 +218,9 @@ export class QChatChannelModule extends EventEmitter<QChatChannelEvents> {
      * @return void
      */
     updateWhiteBlackRole(param: QChatChannelUpdateWhiteBlackRoleParam): Promise<QChatChannelUpdateWhiteBlackRoleResp> {
-        const p = new Promise<QChatChannelUpdateWhiteBlackRoleResp>((resolve, reject) => {
+        const p = new Promise<QChatChannelUpdateWhiteBlackRoleResp>((resolve) => {
             param.cb = (resp: QChatChannelUpdateWhiteBlackRoleResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.UpdateWhiteBlackRole(param)
         })
@@ -277,13 +233,9 @@ export class QChatChannelModule extends EventEmitter<QChatChannelEvents> {
      * @return void
      */
     updateWhiteBlackMembers(param: QChatChannelUpdateWhiteBlackMembersParam): Promise<QChatChannelUpdateWhiteBlackMembersResp> {
-        const p = new Promise<QChatChannelUpdateWhiteBlackMembersResp>((resolve, reject) => {
+        const p = new Promise<QChatChannelUpdateWhiteBlackMembersResp>((resolve) => {
             param.cb = (resp: QChatChannelUpdateWhiteBlackMembersResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.UpdateWhiteBlackMembers(param)
         })
@@ -296,13 +248,9 @@ export class QChatChannelModule extends EventEmitter<QChatChannelEvents> {
      * @return void
      */
     getWhiteBlackRolesPage(param: QChatChannelGetWhiteBlackRolesPageParam): Promise<QChatChannelGetWhiteBlackRolesPageResp> {
-        const p = new Promise<QChatChannelGetWhiteBlackRolesPageResp>((resolve, reject) => {
+        const p = new Promise<QChatChannelGetWhiteBlackRolesPageResp>((resolve) => {
             param.cb = (resp: QChatChannelGetWhiteBlackRolesPageResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetWhiteBlackRolesPage(param)
         })
@@ -315,13 +263,9 @@ export class QChatChannelModule extends EventEmitter<QChatChannelEvents> {
      * @return void
      */
     getWhiteBlackMembersPage(param: QChatChannelGetWhiteBlackMembersPageParam): Promise<QChatChannelGetWhiteBlackMembersPageResp> {
-        const p = new Promise<QChatChannelGetWhiteBlackMembersPageResp>((resolve, reject) => {
+        const p = new Promise<QChatChannelGetWhiteBlackMembersPageResp>((resolve) => {
             param.cb = (resp: QChatChannelGetWhiteBlackMembersPageResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetWhiteBlackMembersPage(param)
         })
@@ -334,13 +278,9 @@ export class QChatChannelModule extends EventEmitter<QChatChannelEvents> {
      * @return void
      */
     getExistingWhiteBlackRoles(param: QChatChannelGetExistingWhiteBlackRolesParam): Promise<QChatChannelGetExistingWhiteBlackRolesResp> {
-        const p = new Promise<QChatChannelGetExistingWhiteBlackRolesResp>((resolve, reject) => {
+        const p = new Promise<QChatChannelGetExistingWhiteBlackRolesResp>((resolve) => {
             param.cb = (resp: QChatChannelGetExistingWhiteBlackRolesResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetExistingWhiteBlackRoles(param)
         })
@@ -353,13 +293,9 @@ export class QChatChannelModule extends EventEmitter<QChatChannelEvents> {
      * @return void
      */
     getExistingWhiteBlackMembers(param: QChatChannelGetExistingWhiteBlackMembersParam): Promise<QChatChannelGetExistingWhiteBlackMembersResp> {
-        const p = new Promise<QChatChannelGetExistingWhiteBlackMembersResp>((resolve, reject) => {
+        const p = new Promise<QChatChannelGetExistingWhiteBlackMembersResp>((resolve) => {
             param.cb = (resp: QChatChannelGetExistingWhiteBlackMembersResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetExistingWhiteBlackMembers(param)
         })
@@ -372,13 +308,9 @@ export class QChatChannelModule extends EventEmitter<QChatChannelEvents> {
      * @return void
      */
     channelSearchByPage(param: QChatChannelSearchPageParam): Promise<QChatChannelSearchPageResp> {
-        const p = new Promise<QChatChannelSearchPageResp>((resolve, reject) => {
+        const p = new Promise<QChatChannelSearchPageResp>((resolve) => {
             param.cb = (resp: QChatChannelSearchPageResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.ChannelSearchByPage(param)
         })
@@ -391,13 +323,9 @@ export class QChatChannelModule extends EventEmitter<QChatChannelEvents> {
      * @return void
      */
     channelMemberSearch(param: QChatChannelMemberSearchParam): Promise<QChatChannelMemberSearchResp> {
-        const p = new Promise<QChatChannelMemberSearchResp>((resolve, reject) => {
+        const p = new Promise<QChatChannelMemberSearchResp>((resolve) => {
             param.cb = (resp: QChatChannelMemberSearchResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.ChannelMemberSearch(param)
         })
@@ -410,13 +338,9 @@ export class QChatChannelModule extends EventEmitter<QChatChannelEvents> {
      * @return void
      */
     updateRTCInfo(param: QChatChannelUpdateRTCInfoParam): Promise<QChatChannelUpdateRTCInfoResp> {
-        const p = new Promise<QChatChannelUpdateRTCInfoResp>((resolve, reject) => {
+        const p = new Promise<QChatChannelUpdateRTCInfoResp>((resolve) => {
             param.cb = (resp: QChatChannelUpdateRTCInfoResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.UpdateRTCInfo(param)
         })
@@ -429,13 +353,9 @@ export class QChatChannelModule extends EventEmitter<QChatChannelEvents> {
      * @return void
      */
     getRTCInfo(param: QChatChannelGetRTCInfoParam): Promise<QChatChannelGetRTCInfoResp> {
-        const p = new Promise<QChatChannelGetRTCInfoResp>((resolve, reject) => {
+        const p = new Promise<QChatChannelGetRTCInfoResp>((resolve) => {
             param.cb = (resp: QChatChannelGetRTCInfoResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetRTCInfo(param)
         })
@@ -448,13 +368,9 @@ export class QChatChannelModule extends EventEmitter<QChatChannelEvents> {
      * @return void
      */
     getRTCOnlineMembers(param: QChatChannelGetRTCOnlineMembersParam): Promise<QChatChannelGetRTCOnlineMembersResp> {
-        const p = new Promise<QChatChannelGetRTCOnlineMembersResp>((resolve, reject) => {
+        const p = new Promise<QChatChannelGetRTCOnlineMembersResp>((resolve) => {
             param.cb = (resp: QChatChannelGetRTCOnlineMembersResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.GetRTCOnlineMembers(param)
         })

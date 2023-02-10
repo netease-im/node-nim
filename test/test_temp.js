@@ -20,6 +20,21 @@ async function testQChat() {
         link_address: ['qchatlink-yqsx23.netease.im:9092', 'qchatlink-yqsx23.netease.im:8080']
     })
     console.log('login', resp)
+    resp = await qchat.message.getMentionedMeMessages({
+        server_id: 36,
+        channel_id: 5,
+        limit: 10
+    })
+    console.log('getMentionedMeMessages', resp)
+    resp = await qchat.message.areMentionedMeMessages({
+        messages: [
+            {
+                msg_id: '111'
+            }
+        ]
+    })
+    console.log('areMentionedMeMessages', resp)
+
     resp = await qchat.server.createServer({
         server_info: {
             name: 'test'
@@ -181,8 +196,7 @@ function testNIM() {
 }
 function testInstance() {
     // NIM
-    const nim = new node_nim.NIM()
-    let result = nim.client.init('', 'NIM_SDK_NODE_TEST', '', {
+    let result = node_nim.nim.client.init('', 'NIM_SDK_NODE_TEST', '', {
         use_private_server_: true,
         lbs_address_: 'https://imtest-jd.netease.im/lbs',
         nego_key_neca_key_parta_:
@@ -194,16 +208,16 @@ function testInstance() {
         console.log('NIM init failed')
         process.exit(1)
     }
-    nim.initEventHandlers()
-    nim.client.login('fe416640c8e8a72734219e1847ad2547', 'zvct0', 'e10adc3949ba59abbe56e057f20f883e', null, '').then((res) => {
+    node_nim.nim.initEventHandlers()
+    node_nim.nim.client.login('fe416640c8e8a72734219e1847ad2547', 'zvct0', 'e10adc3949ba59abbe56e057f20f883e', null, '').then((res) => {
         console.log('loginResult', res)
-        nim.talk.on('receiveMsg', function (result) {
+        node_nim.nim.talk.on('receiveMsg', function (result) {
             console.log('receiveMsg', result)
         })
-        nim.talk.on('sendMsg', (msg) => {
+        node_nim.nim.talk.on('sendMsg', (msg) => {
             console.log('sendMsg', msg)
         })
-        nim.talk.sendMsg(
+        node_nim.nim.talk.sendMsg(
             {
                 session_type_: 0, // p2p
                 receiver_accid_: 'zvct1',
@@ -220,17 +234,16 @@ function testInstance() {
     })
 
     // QChat
-    const qchat = new node_nim.QChat()
-    result = qchat.instance.init({})
+    result = node_nim.qchat.instance.init({})
     if (!result) {
         console.log('QChat init failed')
         process.exit(1)
     }
-    qchat.initEventHandlers()
-    qchat.instance.on('loginStatus', (resp) => {
+    node_nim.qchat.initEventHandlers()
+    node_nim.qchat.instance.on('loginStatus', (resp) => {
         console.log('loginStatus', resp)
     })
-    qchat.instance
+    node_nim.qchat.instance
         .login({
             appkey: '45c6af3c98409b18a84451215d0bdd6e',
             accid: 'zvc0',
@@ -240,10 +253,10 @@ function testInstance() {
         })
         .then((resp) => {
             console.log('login', resp)
-            qchat.server.on('unread', (res) => {
+            node_nim.qchat.server.on('unread', (res) => {
                 console.log('unread', res)
             })
-            qchat.server.createServer({
+            node_nim.qchat.server.createServer({
                 server_info: {
                     name: 'test'
                 }
@@ -251,16 +264,15 @@ function testInstance() {
         })
 
     // ChatRoom
-    const chatroom = new node_nim.ChatRoom()
-    if (!chatroom.init('', '')) {
+    if (!node_nim.chatroom.init('', '')) {
         console.log('init failed')
         process.exit(1)
     }
-    chatroom.initEventHandlers()
-    chatroom.on('enter', function (...resp) {
+    node_nim.chatroom.initEventHandlers()
+    node_nim.chatroom.on('enter', function (...resp) {
         console.log('enter', resp)
         if (resp[1] == 5 && resp[2] == 200) {
-            chatroom
+            node_nim.chatroom
                 .getMessageHistoryByTagsOnlineAsync(
                     36,
                     {
@@ -276,7 +288,7 @@ function testInstance() {
         }
     })
     if (
-        !chatroom.independentEnter(
+        !node_nim.chatroom.independentEnter(
             36,
             {
                 accid_: 'zvct0',
@@ -304,4 +316,4 @@ function testInstance() {
     }
 }
 
-testQChat()
+testInstance()

@@ -13,7 +13,7 @@ function testNos(test_info) {
         })
         describe('#initConfig', function () {
             it('initConfig', function (done) {
-                const result = nos.initConfig(
+                nos.initConfig(
                     {
                         tag_list_: { test: 123 }
                     },
@@ -25,7 +25,7 @@ function testNos(test_info) {
         })
         describe('#uploadResource', function () {
             it('uploadResource should return 200', function (done) {
-                const result = nos.uploadResource(
+                nos.uploadResource(
                     __filename,
                     '',
                     {
@@ -45,12 +45,12 @@ function testNos(test_info) {
         })
         describe('#stopUploadResource', function () {
             it('stopUploadResource', function () {
-                const result = nos.stopUploadResource('123456', '')
+                nos.stopUploadResource('123456', '')
             })
         })
         describe('#downloadResource', function () {
             it('downloadResource should return 200', function (done) {
-                const result = nos.downloadResource(
+                nos.downloadResource(
                     file_url,
                     {
                         task_id: '456789'
@@ -67,7 +67,7 @@ function testNos(test_info) {
         })
         describe('#stopDownloadResource', function () {
             it('stopDownloadResource', function () {
-                const result = nos.stopDownloadResource('456789', '')
+                nos.stopDownloadResource('456789', '')
             })
         })
         describe('#safeURLToOriginURL', function () {

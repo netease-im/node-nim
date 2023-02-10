@@ -97,6 +97,8 @@ export interface QChatChannelCategoryInfo {
     create_time?: number
     /** 更新时间 */
     update_time?: number
+    /** 频道数量 */
+    channel_number?: number
 }
 
 export interface QChatChannelSubscribeResp {

@@ -140,3 +140,6 @@ export class QChat {
         this.role.initEventHandlers()
     }
 }
+export const nim = new NIM()
+export const chatroom = new ChatRoom()
+export const qchat = new QChat()

@@ -1,10 +1,6 @@
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
 import {
-    AttachmentCustomTokenCallback,
-    AttachmentUploadCallback,
-    AttachmentDownloadCallback,
-    AttachmentProgressCallback,
     QChatAttachmentUploadParam,
     QChatAttachmentStopUploadParam,
     QChatAttachmentDownloadParam,
@@ -40,13 +36,9 @@ export class QChatAttachmentModule extends EventEmitter<QChatAttachmentEvents> {
      * @return void
      */
     upload(param: QChatAttachmentUploadParam): Promise<QChatAttachmentUploadResp> {
-        const p = new Promise<QChatAttachmentUploadResp>((resolve, reject) => {
+        const p = new Promise<QChatAttachmentUploadResp>((resolve) => {
             param.cb = (resp: QChatAttachmentUploadResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.Upload(param)
         })
@@ -68,13 +60,9 @@ export class QChatAttachmentModule extends EventEmitter<QChatAttachmentEvents> {
      * @return void
      */
     download(param: QChatAttachmentDownloadParam): Promise<QChatAttachmentDownloadResp> {
-        const p = new Promise<QChatAttachmentDownloadResp>((resolve, reject) => {
+        const p = new Promise<QChatAttachmentDownloadResp>((resolve) => {
             param.cb = (resp: QChatAttachmentDownloadResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.Download(param)
         })

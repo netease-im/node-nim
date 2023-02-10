@@ -134,6 +134,7 @@ ReflectionDefinition_O(QChatQuickCommentDetail, type, count, include_yourself, a
 ReflectionDefinition_O(QChatQuickCommentInfo, server_id, channel_id, msg_server_id, count, timestamp, details);
 ReflectionDefinition_O(QChatGetQuickCommentsResp, res_code, comments);
 ReflectionDefinition_O(QChatMessageSearchPageResp, res_code, page_info, messages);
+ReflectionDefinition_O(QChatAreMentionedMeMessagesResp, res_code, result);
 ReflectionDefinition_O(QChatSendMessageParam, cb, message);
 ReflectionDefinition_O(QChatUpdateMessageParam, cb, id_info, msg_server_id, timestamp, update_info, anti_spam_info, status, msg_body, msg_ext);
 ReflectionDefinition_O(QChatRevokeMessageParam, cb, id_info, msg_server_id, timestamp, update_info);
@@ -166,5 +167,7 @@ ReflectionDefinition_O(QChatMessageSearchPageParam,
     sort,
     limit,
     cursor);
+ReflectionDefinition_O(QChatGetMentionedMeMessagesParam, cb, server_id, channel_id, timestamp, limit);
+ReflectionDefinition_O(QChatAreMentionedMeMessagesParam, cb, messages);
 
 #endif  // __QCHAT_MESSAGE_HELPER_H__

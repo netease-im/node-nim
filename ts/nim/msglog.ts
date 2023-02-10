@@ -6,7 +6,6 @@ import {
     QuerySingleMsgCallback,
     QueryMsgCallback,
     NIMMessageType,
-    NIMMsgLogQueryRange,
     ModifyMultipleMsglogCallback,
     NIMMsgLogStatus,
     ModifySingleMsglogCallback,

@@ -39,13 +39,9 @@ export class QChatSystemNotificationModule extends EventEmitter<QChatSystemNotif
      * @return void
      */
     send(param: QChatSendSystemNotificationParam): Promise<QChatSendSystemNotificationResp> {
-        const p = new Promise<QChatSendSystemNotificationResp>((resolve, reject) => {
+        const p = new Promise<QChatSendSystemNotificationResp>((resolve) => {
             param.cb = (resp: QChatSendSystemNotificationResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.Send(param)
         })
@@ -57,13 +53,9 @@ export class QChatSystemNotificationModule extends EventEmitter<QChatSystemNotif
      * @param[in] param 接口参数
      */
     update(param: QChatUpdateSystemNotificationParam): Promise<QChatUpdateSystemNotificationResp> {
-        const p = new Promise<QChatUpdateSystemNotificationResp>((resolve, reject) => {
+        const p = new Promise<QChatUpdateSystemNotificationResp>((resolve) => {
             param.cb = (resp: QChatUpdateSystemNotificationResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.Update(param)
         })
@@ -76,13 +68,9 @@ export class QChatSystemNotificationModule extends EventEmitter<QChatSystemNotif
      * @return void
      */
     markSystemNotificationsRead(param: QChatMarkSystemNotificationsReadParam): Promise<QChatMarkSystemNotificationsReadResp> {
-        const p = new Promise<QChatMarkSystemNotificationsReadResp>((resolve, reject) => {
+        const p = new Promise<QChatMarkSystemNotificationsReadResp>((resolve) => {
             param.cb = (resp: QChatMarkSystemNotificationsReadResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.MarkSystemNotificationsRead(param)
         })
@@ -95,13 +83,9 @@ export class QChatSystemNotificationModule extends EventEmitter<QChatSystemNotif
      * @return void
      */
     sendTypingEvent(param: QChatSendTypingEventParam): Promise<QChatSendTypingEventResp> {
-        const p = new Promise<QChatSendTypingEventResp>((resolve, reject) => {
+        const p = new Promise<QChatSendTypingEventResp>((resolve) => {
             param.cb = (resp: QChatSendTypingEventResp) => {
-                if (resp.res_code === NIMResCode.kNIMResSuccess) {
-                    resolve(resp)
-                } else {
-                    reject(resp)
-                }
+                resolve(resp)
             }
             this.instance.SendTypingEvent(param)
         })

@@ -139,7 +139,7 @@ export class NIMClient extends EventEmitter<NIMClientEvents> {
      * @return NIMLoginState 登录状态
      */
     getLoginState(jsonExtension: string): NIMLoginState {
-        return <NIMLoginState>this.client.GetLoginState(jsonExtension)
+        return this.client.GetLoginState(jsonExtension)
     }
 
     /** NIM客户端手动重连（注意 APP需要统一处理自动重连/手动重连的回调，因为如果处于某次自动重连的过程中调用手动重连接口，不起作用！）

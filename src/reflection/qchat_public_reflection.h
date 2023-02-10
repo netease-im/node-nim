@@ -69,7 +69,17 @@ ReflectionDefinition_O(QChatMemberBanInfo, server_id, accid, ban_time, valid_fla
 ReflectionDefinition_O(QChatChannelRTCAudioInfo, profile, scenario);
 ReflectionDefinition_O(QChatChannelRTCVideoInfo, width, height, fps);
 ReflectionDefinition_O(QChatChannelRTCInfo, limit, audio, video);
-ReflectionDefinition_O(QChatChannelCategoryInfo, category_id, name, custom, valid_flag, create_time, update_time);
+ReflectionDefinition_O(QChatChannelCategoryInfo,
+    server_id,
+    category_id,
+    name,
+    custom,
+    owner,
+    view_mode,
+    valid_flag,
+    create_time,
+    update_time,
+    channel_number);
 ReflectionDefinition_O(QChatServerRoleInfo,
     server_id,
     role_id,

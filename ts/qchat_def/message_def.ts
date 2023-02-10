@@ -13,7 +13,7 @@ import {
     NIMQChatMessageSearchSort
 } from './public_def'
 
-/** @struct QChatMessageUpdateInfo 更新消息时需要指定的参数 */
+/** @interface QChatMessageUpdateInfo 更新消息时需要指定的参数 */
 export interface QChatMessageUpdateInfo {
     /** 操作附言 */
     postscript?: string
@@ -50,7 +50,7 @@ export interface QChatMessageAntiSpamInfo {
     yidun_anti_spam_ext?: string
 }
 
-/** @struct QChatMessageThreadInfo thread 消息结构信息 */
+/** @interface QChatMessageThreadInfo thread 消息结构信息 */
 export interface QChatMessageThreadInfo {
     /** 被回复的消息所有者 ID */
     reply_from_accid?: string
@@ -70,7 +70,7 @@ export interface QChatMessageThreadInfo {
     thread_root_msg_client_id?: string
 }
 
-/** @struct QChatMessageSend 发送消息时指定的参数 */
+/** @interface QChatMessageSend 发送消息时指定的参数 */
 export interface QChatMessageSend {
     /** 必填，消息所属的server id */
     server_id?: number
@@ -373,6 +373,17 @@ export interface QChatMessageSearchPageResp {
     messages?: Array<QChatMessage>
 }
 
+/** @interface QChatGetMentionedMeMessagesResp */
+export type QChatGetMentionedMeMessagesResp = QChatMessageSearchPageResp
+
+/** @interface QChatAreMentionedMeMessagesResp */
+export interface QChatAreMentionedMeMessagesResp {
+    /** 操作结果, 参考NIMResCode */
+    res_code?: number
+    /** 消息是否 @ 当前用户列表, key: 消息 id, value: 是否 @ 当前用户 */
+    result?: Map<string, boolean>
+}
+
 /** 接收消息回调 */
 export type RecvMsgCallback = (resp: QChatRecvMsgResp) => void
 /** 发送消息回调 */
@@ -405,6 +416,10 @@ export type QuickCommentCallback = QChatBaseCallback
 export type GetQuickCommentsCallback = (resp: QChatGetQuickCommentsResp) => void
 /** 消息分页搜索回调 */
 export type MessageSearchPageCallback = (resp: QChatMessageSearchPageResp) => void
+/** 根据消息 ID 查询消息回调 */
+export type GetMentionedMeMessagesCallback = (resp: QChatGetMentionedMeMessagesResp) => void
+/** 查询消息是否 @ 当前用户回调 */
+export type AreMentionedMeMessagesCallback = (resp: QChatAreMentionedMeMessagesResp) => void
 
 /** @interface QChatSendMessageParam */
 export interface QChatSendMessageParam {
@@ -548,6 +563,28 @@ export interface QChatGetThreadMessagesParam {
     limit?: number
     /** 是否倒序, false: 否, true: 是 */
     reverse?: boolean
+}
+
+/** @interface QChatGetMentionedMeMessagesParam */
+export interface QChatGetMentionedMeMessagesParam {
+    /** 查询未读消息中 @ 当前用户的消息异步回调 */
+    cb?: GetMentionedMeMessagesCallback
+    /** 服务器ID */
+    server_id?: number
+    /** 频道ID */
+    channel_id?: number
+    /** 查询的起始时间位置, 0表示当前时间 */
+    timestamp?: number
+    /** 查询条数, 0为使用默认值 */
+    limit?: number
+}
+
+/** @interface QChatAreMentionedMeMessagesParam */
+export interface QChatAreMentionedMeMessagesParam {
+    /** 查询消息是否 @ 当前用户的异步回调 */
+    cb?: AreMentionedMeMessagesCallback
+    /** 消息列表 */
+    messages?: Array<QChatMessage>
 }
 
 export interface QChatAddQuickCommentParam {

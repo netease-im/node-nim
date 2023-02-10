@@ -76,7 +76,7 @@ function testMsglog(test_info) {
         })
         describe('#queryMsgByKeywordOnlineAsync', function () {
             it('query message by keywork should return 200 with 10 number of messages', function (done) {
-                const result = msglog.queryMsgByKeywordOnlineAsync(
+                msglog.queryMsgByKeywordOnlineAsync(
                     {
                         id_: test_info.mainUser,
                         to_type_: 0,
@@ -128,7 +128,7 @@ function testMsglog(test_info) {
         })
         describe('#queryMsgByOptionsAsync', function () {
             it('query message by option should return 200', function (done) {
-                const result = msglog.queryMsgByOptionsAsync(
+                msglog.queryMsgByOptionsAsync(
                     {
                         query_range_: 0,
                         ids: [test_info.mainUser],

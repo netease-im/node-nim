@@ -38,7 +38,8 @@ import {
     NIMChatRoomExitReason,
     NIMChatRoomLinkCondition,
     ChatRoomGetMsgHistoryByTagsParameters,
-    ChatRoomConfig
+    ChatRoomConfig,
+    ChatRoomGetMembersByTagParameters
 } from '../chatroom_def/chatroom_def'
 import { NIMResCode } from 'ts/nim_def/client_def'
 
@@ -129,7 +130,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
 
     getMembersByTagOnlineAsync(
         room_id: number,
-        parameters: ChatRoomGetMembersParameters,
+        parameters: ChatRoomGetMembersByTagParameters,
         cb: GetMembersCallback | null,
         json_extension: string
     ): Promise<[number, number, Array<ChatRoomMemberInfo>]> {
