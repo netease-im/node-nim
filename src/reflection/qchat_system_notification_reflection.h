@@ -10,6 +10,7 @@
 #include "xpack_specialization.h"
 using namespace nim;
 ReflectionDefinition_O(QChatSystemNotification,
+    to_type,
     server_id,
     channel_id,
     msg_id,

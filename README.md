@@ -4,14 +4,14 @@
 
 ## Table of Contents
 
-- [NetEase IM Node.js addon wrapper](#netease-im-nodejs-addon-wrapper)
-  - [Table of Contents](#table-of-contents)
-  - [Introduction](#introduction)
-  - [Installation](#installation)
-  - [Build From Source](#build-from-source)
-  - [Unit Test](#unit-test)
-  - [Sample Code](#sample-code)
-  - [Quick Start](#quick-start)
+-   [NetEase IM Node.js addon wrapper](#netease-im-nodejs-addon-wrapper)
+    -   [Table of Contents](#table-of-contents)
+    -   [Introduction](#introduction)
+    -   [Installation](#installation)
+    -   [Build From Source](#build-from-source)
+    -   [Unit Test](#unit-test)
+    -   [Sample Code](#sample-code)
+    -   [Quick Start](#quick-start)
 
 ## Introduction
 
@@ -22,10 +22,10 @@ For more detailed documentation, changelog and tech support. See https://dev.yun
 
 node-nim runs on Node.js and is available as a NPM package. You can specify architecture and platform by `--arch` and `--platform` flags.
 
-node-nim will download the nim SDK which has the same version, you can override the version by add `--nim-sdk-version` or `--nim-sdk-url` flag.
+node-nim will download the nim SDK which has the same version, you can override the version by add `--nimSdkVersion` or `--nimSdkUrl` flag.
 
 ```
-npm install node-nim --save-dev --arch=x64 --platform=win32 --nim-sdk-version=9.1.0
+npm install node-nim --save-dev --arch=x64 --platform=win32 --nimSdkVersion=9.1.0
 ```
 
 ## Build From Source
@@ -61,14 +61,13 @@ npm run coverage
 ```js
 // Chatroom
 import * as node_nim from 'node-nim'
-const chatroom = new node_nim.ChatRoom()
-let ret = chatroom.init('', '')
+let ret = node_nim.chatroom.init('', '')
 if (!ret) {
     console.log('init failed')
     process.exit(1)
 }
-chatroom.initEventHandlers()
-ret = chatroom.enter('room_id', 'login_data', {}, '')
+node_nim.chatroom.initEventHandlers()
+ret = node_nim.chatroom.enter('room_id', 'login_data', {}, '')
 if (!ret) {
     console.log('enter failed')
     process.exit(1)
@@ -78,8 +77,7 @@ if (!ret) {
 ```js
 // NIM
 import * as node_nim from 'node-nim'
-const nim = new node_nim.NIM()
-const result = nim.client.init('app_key', 'app_data_dir', 'app_install_dir', {
+const result = node_nim.nim.client.init('app_key', 'app_data_dir', 'app_install_dir', {
     db_encrypt_key: 'abcdefghijklmnopqrstuvwxyz012345'
 })
 
@@ -88,9 +86,9 @@ if (!result) {
     process.exit(1)
 }
 
-nim.initEventHandlers()
+node_nim.nim.initEventHandlers()
 
-let resp = await nim.client.login(
+let resp = await node_nim.nim.client.login(
     'app_key',
     'username',
     'password',
@@ -103,14 +101,14 @@ if (resp[0].res_code_ != node_nim.NIMResCode.kNIMResSuccess) {
 }
 console.log('loginResult', res)
 // login has 3 steps, step 3 succeeded
-nim.talk.on('receiveMsg', function (result) {
+node_nim.nim.talk.on('receiveMsg', function (result) {
     console.log('receiveMsg', result)
 })
-nim.talk.on('sendMsg', (msg) => {
+node_nim.nim.talk.on('sendMsg', (msg) => {
     console.log('sendMsg', msg)
 })
 
-nim.talk.sendMsg(
+node_nim.nim.talk.sendMsg(
     {
         session_type_: 0, // p2p
         receiver_accid_: 'receiver_accid',

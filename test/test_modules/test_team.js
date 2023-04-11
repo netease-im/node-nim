@@ -37,6 +37,27 @@ function testTeam(test_info) {
                 )
             })
         })
+        describe('#createTeamAsyncEx', function () {
+            it('createTeamAsyncEx', function (done) {
+                team.createTeamAsync(
+                    {
+                        team_info_json_value_: {
+                            name: 'Node_test',
+                            member_max_count: 10
+                        }
+                    },
+                    [test_info.assistUser],
+                    '',
+                    function (result) {
+                        assert.strictEqual(result.res_code_, 810)
+                        assert.strictEqual(result.team_info_['type'], 1)
+                        done()
+                        team_data = result
+                    },
+                    ''
+                )
+            })
+        })
         describe('#send message to team', function () {
             it('send message', function (done) {
                 talk.once('sendMsg', function (ack) {

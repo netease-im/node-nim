@@ -49,7 +49,7 @@ export interface QChatServerEnterAsVisitorResp {
     /** 操作结果, 参考NIMResCode */
     res_code?: number
     /** 失败列表 */
-    failed_servers?: Array<number>
+    failed_servers?: Array<string>
 }
 
 /** @interface QChatServerLeaveAsVisitorResp */
@@ -57,7 +57,7 @@ export interface QChatServerLeaveAsVisitorResp {
     /** 操作结果, 参考NIMResCode */
     res_code?: number
     /** 失败列表 */
-    failed_servers?: Array<number>
+    failed_servers?: Array<string>
 }
 
 /** @interface QChatServerInviteResp */
@@ -65,7 +65,7 @@ export interface QChatServerInviteResp {
     /** 操作结果, 参考NIMResCode */
     res_code?: number
     /** 请求ID */
-    request_id?: number
+    request_id?: string
     /** 请求失效时间戳 */
     expire_time?: number
     /** 邀请失败的成员id和失败原因 */
@@ -83,7 +83,7 @@ export interface QChatServerApplyResp {
     /** 操作结果, 参考NIMResCode */
     res_code?: number
     /** 请求ID */
-    request_id?: number
+    request_id?: string
     /** 过期时间 */
     expire_time?: number
 }
@@ -125,7 +125,7 @@ export interface QChatServerSubscribeResp {
     /** 操作结果, 参考NIMResCode */
     res_code?: number
     /** 失败列表 */
-    failed_servers?: Array<number>
+    failed_servers?: Array<string>
 }
 
 /** @interface QChatServerSubscribeAsVisitorResp */
@@ -133,7 +133,7 @@ export interface QChatServerSubscribeAsVisitorResp {
     /** 操作结果, 参考NIMResCode */
     res_code?: number
     /** 失败列表 */
-    failed_servers?: Array<number>
+    failed_servers?: Array<string>
 }
 
 /** @interface QChatServerSubscribeAllChannelResp */
@@ -141,7 +141,7 @@ export interface QChatServerSubscribeAllChannelResp {
     /** 操作结果, 参考NIMResCode */
     res_code?: number
     /** 失败列表 */
-    failed_servers?: Array<number>
+    failed_servers?: Array<string>
 }
 
 /** @interface QChatServerMarkReadResp */
@@ -149,9 +149,9 @@ export interface QChatServerMarkReadResp {
     /** 操作结果, 参考NIMResCode */
     res_code?: number
     /** 失败列表 */
-    failed_servers?: Array<number>
+    failed_servers?: Array<string>
     /** 成功列表 */
-    succeeded_servers?: Array<number>
+    succeeded_servers?: Array<string>
     /** 标记已读时间戳 */
     timestamp?: number
 }
@@ -165,7 +165,7 @@ export type QChatServerUnbanMemberResp = QChatBaseResp
 /** @interface QChatMemberBanInfo 圈组服务器成员封禁信息 */
 export interface QChatMemberBanInfo {
     /** server id */
-    server_id?: number
+    server_id?: string
     /** 用户accid */
     accid?: string
     /** 自定义字段 */
@@ -199,7 +199,7 @@ export type QChatServerMemberSearchResp = QChatServerGetMembersResp
 /** @interface NIMQChatServerUnreadInfo */
 export interface NIMQChatServerUnreadInfo {
     /** 服务器ID */
-    server_id?: number
+    server_id?: string
     /** 未读数 */
     unread_count?: number
     /** 被@未读数 */
@@ -219,9 +219,9 @@ export interface QChatServerGenerateInviteCodeResp {
     /** 操作结果, 参考NIMResCode */
     res_code?: number
     /** 服务器 id */
-    server_id?: number
+    server_id?: string
     /** 请求ID */
-    request_id?: number
+    request_id?: string
     /** 邀请码 */
     invite_code?: string
     /** 过期时间 */
@@ -322,7 +322,7 @@ export interface QChatServerDeleteParam {
     /** @internal */
     cb?: ServerRemoveCallback
     /** 服务器ID */
-    server_id?: number
+    server_id?: string
 }
 
 /** @interface QChatServerEnterAsVisitorParam */
@@ -330,7 +330,7 @@ export interface QChatServerEnterAsVisitorParam {
     /** @internal */
     cb?: ServerRemoveCallback
     /** ID 列表 */
-    server_ids?: Array<number>
+    server_ids?: Array<string>
 }
 
 /** @interface QChatServerLeaveAsVisitorParam */
@@ -338,7 +338,7 @@ export interface QChatServerLeaveAsVisitorParam {
     /** @internal */
     cb?: ServerRemoveCallback
     /** ID 列表 */
-    server_ids?: Array<number>
+    server_ids?: Array<string>
 }
 
 /** @interface QChatServerUpdateParam */
@@ -356,7 +356,7 @@ export interface QChatServerGetServersParam {
     /** @internal */
     cb?: GetServersCallback
     /** 服务器id列表 */
-    server_ids?: Array<number>
+    server_ids?: Array<string>
 }
 
 /** @interface QChatServerGetServersPageParam */
@@ -374,7 +374,7 @@ export interface QChatServerInviteParam {
     /** @internal */
     cb?: ServerInviteCallback
     /** 服务器ID */
-    server_id?: number
+    server_id?: string
     /** 受邀人id列表 */
     invite_ids?: Array<string>
     /** 请求生存时间 ms */
@@ -388,11 +388,11 @@ export interface QChatServerAcceptInviteParam {
     /** @internal */
     cb?: ServerAcceptInviteCallback
     /** 服务器ID */
-    server_id?: number
+    server_id?: string
     /** 邀请人id */
     accid?: string
     /** 请求ID */
-    request_id?: number
+    request_id?: string
 }
 
 /** @interface QChatServerRejectInviteParam */
@@ -400,13 +400,13 @@ export interface QChatServerRejectInviteParam {
     /** @internal */
     cb?: ServerRejectInviteCallback
     /** 服务器ID */
-    server_id?: number
+    server_id?: string
     /** 邀请人id */
     accid?: string
     /** 附言 */
     postscript?: string
     /** 请求ID */
-    request_id?: number
+    request_id?: string
 }
 
 /** @interface QChatServerApplyParam */
@@ -414,7 +414,7 @@ export interface QChatServerApplyParam {
     /** @internal */
     cb?: ServerApplyCallback
     /** 服务器ID */
-    server_id?: number
+    server_id?: string
     /** 请求生存时间 ms */
     ttl?: number
     /** 附言 */
@@ -426,11 +426,11 @@ export interface QChatServerAcceptApplyParam {
     /** @internal */
     cb?: ServerAcceptApplyCallback
     /** 服务器ID */
-    server_id?: number
+    server_id?: string
     /** 申请人id */
     accid?: string
     /** 请求ID */
-    request_id?: number
+    request_id?: string
 }
 
 /** @interface QChatServerRejectApplyParam */
@@ -438,13 +438,13 @@ export interface QChatServerRejectApplyParam {
     /** @internal */
     cb?: ServerRejectApplyCallback
     /** 服务器ID */
-    server_id?: number
+    server_id?: string
     /** 申请人id */
     accid?: string
     /** 附言 */
     postscript?: string
     /** 请求ID */
-    request_id?: number
+    request_id?: string
 }
 
 /** @interface QChatServerKickParam */
@@ -452,7 +452,7 @@ export interface QChatServerKickParam {
     /** @internal */
     cb?: ServerKickCallback
     /** 服务器ID */
-    server_id?: number
+    server_id?: string
     /** 被踢人id列表 */
     accids?: Array<string>
 }
@@ -462,7 +462,7 @@ export interface QChatServerLeaveParam {
     /** @internal */
     cb?: ServerLeaveCallback
     /** 服务器ID */
-    server_id?: number
+    server_id?: string
 }
 
 /** @interface QChatServerUpdateMemberInfoParam */
@@ -477,7 +477,7 @@ export interface QChatServerUpdateMemberInfoParam {
 
 export interface QChatServerAccidPair {
     /** 服务器ID */
-    server_id?: number
+    server_id?: string
     /** accid */
     accid?: string
 }
@@ -495,7 +495,7 @@ export interface QChatServerGetMembersPageParam {
     /** @internal */
     cb?: ServerGetMembersPageCallback
     /** 服务器ID */
-    server_id?: number
+    server_id?: string
     /** 时间戳 */
     timestamp?: number
     /** 查询条数 */
@@ -511,7 +511,7 @@ export interface QChatServerSubscribeParam {
     /** 订阅类型 */
     sub_type?: NIMQChatSubscribeType
     /** ID 列表 */
-    server_ids?: Array<number>
+    server_ids?: Array<string>
 }
 
 /** @interface QChatServerSubscribeAsVisitorParam */
@@ -521,7 +521,7 @@ export interface QChatServerSubscribeAsVisitorParam {
     /** 操作类型 */
     ope_type?: NIMQChatSubscribeOpeType
     /** ID 列表 */
-    server_ids?: Array<number>
+    server_ids?: Array<string>
 }
 
 /** @interface QChatServerBanMemberParam */
@@ -529,7 +529,7 @@ export interface QChatServerBanMemberParam {
     /** @internal */
     cb?: ServerBanMemberCallback
     /** 服务器ID */
-    server_id?: number
+    server_id?: string
     /** 用户id */
     accid?: string
     /** 自定义字段 */
@@ -541,7 +541,7 @@ export interface QChatServerUnbanMemberParam {
     /** @internal */
     cb?: ServerUnbanMemberCallback
     /** 服务器ID */
-    server_id?: number
+    server_id?: string
     /** 用户id */
     accid?: string
     /** 自定义字段 */
@@ -553,7 +553,7 @@ export interface QChatServerGetBannedMembersPageParam {
     /** @internal */
     cb?: ServerGetBannedMembersPageCallback
     /** 服务器ID */
-    server_id?: number
+    server_id?: string
     /** 时间戳 */
     timestamp?: number
     /** 查询条数 */
@@ -575,7 +575,7 @@ export interface QChatServerSearchPageParam {
     /** 排序条件 */
     sort?: NIMQChatServerSearchSort
     /** 搜索的服务器类型, 为空表示搜索所有类型 */
-    server_types?: Array<number>
+    server_types?: Array<string>
     /** 搜索类型 */
     search_type?: NIMQChatServerSearchType
     /** 查询条数 */
@@ -589,7 +589,7 @@ export interface QChatServerMemberSearchParam {
     /** @internal */
     cb?: ServerMemberSearchCallback
     /** 服务器 id */
-    server_id?: number
+    server_id?: string
     /** 搜索内容 */
     keyword?: string
     /** 查询条数 */
@@ -601,7 +601,7 @@ export interface QChatServerGenerateInviteCodeParam {
     /** @internal */
     cb?: ServerGenerateInviteCodeCallback
     /** 服务器 id */
-    server_id?: number
+    server_id?: string
     /** 请求生存时间 ms */
     ttl?: number
 }
@@ -611,7 +611,7 @@ export interface QChatServerJoinByInviteCodeParam {
     /** @internal */
     cb?: ServerJoinByInviteCodeCallback
     /** 服务器 id */
-    server_id?: number
+    server_id?: string
     /** 邀请码 */
     invite_code?: string
     /** 附言 */
@@ -623,7 +623,7 @@ export interface QChatServerGetInviteApplyRecordOfServerParam {
     /** @internal */
     cb?: ServerGetInviteApplyRecordOfServerCallback
     /** 服务器 id */
-    server_id?: number
+    server_id?: string
     /** 起始时间 */
     start_time?: number
     /** 结束时间 */
@@ -633,7 +633,7 @@ export interface QChatServerGetInviteApplyRecordOfServerParam {
     /** 查询条数 */
     limit?: number
     /** 要排除的记录id */
-    exclude_record_id?: number
+    exclude_record_id?: string
 }
 
 /** @interface QChatServerGetInviteApplyRecordOfSelfParam */
@@ -649,7 +649,7 @@ export interface QChatServerGetInviteApplyRecordOfSelfParam {
     /** 查询条数 */
     limit?: number
     /** 要排除的记录id */
-    exclude_record_id?: number
+    exclude_record_id?: string
 }
 
 /** @interface QChatServerMarkReadParam */
@@ -657,7 +657,7 @@ export interface QChatServerMarkReadParam {
     /** @internal */
     cb?: ServerMarkReadCallback
     /** 服务器 id 列表 */
-    server_ids?: Array<number>
+    server_ids?: Array<string>
 }
 
 /** @interface QChatServerSubscribeAllChannelParam */
@@ -667,5 +667,5 @@ export interface QChatServerSubscribeAllChannelParam {
     /** 订阅类型 */
     sub_type: NIMQChatSubscribeType
     /** 服务器 id 列表 */
-    server_ids?: Array<number>
+    server_ids?: Array<string>
 }

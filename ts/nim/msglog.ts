@@ -153,7 +153,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
         to_time: number,
         limit_count: number,
         anchor_client_msg_id: string,
-        anchor_server_msg_id: number,
+        anchor_server_msg_id: string,
         direction: NIMMsglogSearchDirection,
         cb: GetMessagesDynamicallyCallback | null,
         jsonExtension: string

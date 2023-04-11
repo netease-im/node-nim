@@ -13,8 +13,8 @@ GetCurrentSDKServiceImpl(NIMTeam, NIMTeam, holder_service);
 Napi::Object NIMTeam::Init(Napi::Env env, Napi::Object exports) {
     return InternalInit("NIMTeam", env, exports,
         {RegApi("InitEventHandlers", &NIMTeam::InitEventHandlers), RegApi("CreateTeamAsync", &Team::CreateTeamAsync),
-            RegApi("InviteAsync", &Team::InviteAsync2), RegApi("KickAsync", &Team::KickAsync), RegApi("LeaveAsync", &Team::LeaveAsync),
-            RegApi("KickAsync", &Team::KickAsync), RegApi("DismissAsync", &Team::DismissAsync),
+            RegApi("CreateTeamAsyncEx", &Team::CreateTeamAsyncEx), RegApi("InviteAsync", &Team::InviteAsync2), RegApi("KickAsync", &Team::KickAsync),
+            RegApi("LeaveAsync", &Team::LeaveAsync), RegApi("KickAsync", &Team::KickAsync), RegApi("DismissAsync", &Team::DismissAsync),
             RegApi("UpdateTeamInfoAsync", &Team::UpdateTeamInfoAsync), RegApi("ApplyJoinAsync", &Team::ApplyJoinAsync),
             RegApi("PassJoinApplyAsync", &Team::PassJoinApplyAsync), RegApi("RejectJoinApplyAsync", &Team::RejectJoinApplyAsync),
             RegApi("AddManagersAsync", &Team::AddManagersAsync), RegApi("RemoveManagersAsync", &Team::RemoveManagersAsync),

@@ -233,7 +233,7 @@ export interface QChatUpdateServerRoleParam {
 export interface QChatUpdateServerRolePrioritiesParam {
     /** @internal */
     cb?: QChatBatchUpdateServerRolePrioritiesCallback
-    server_id?: number
+    server_id?: string
     /** 要批量更新的身份组信息，key: role_id, value: priority */
     priority_map?: Map<number, number>
 }
@@ -243,23 +243,23 @@ export interface QChatDeleteServerRoleParam {
     /** @internal */
     cb?: QChatDeleteServerRoleCallback
     /** 服务器 ID */
-    server_id?: number
+    server_id?: string
     /** 身份组 ID */
-    role_id?: number
+    role_id?: string
 }
 export interface QChatGetServerRolesParam {
     /** @internal */
     cb?: QChatGetServerRolesCallback
     /** 服务器 ID */
-    server_id?: number
+    server_id?: string
     /** 限制返回数量 */
     limit?: number
     /** 分页的起始优先级，起始页为0，自定义优先级区间 1~9007199254740991 */
     priority?: number
     /** 频道 ID, 如果非空，则只需要有该channel的管理权限即可，否则需要有server的管理权限 */
-    channel_id?: number
+    channel_id?: string
     /** 频道分组 ID, 如果非空，则只需要有该channel_category的管理权限即可，否则需要有server的管理权限 */
-    channel_category_id?: number
+    channel_category_id?: string
 }
 
 /** @interface QChatAddMembersToServerRoleParam */
@@ -267,9 +267,9 @@ export interface QChatAddMembersToServerRoleParam {
     /** @internal */
     cb?: QChatAddMembersToServerRoleCallback
     /** 服务器 ID */
-    server_id?: number
+    server_id?: string
     /** 身份组 ID */
-    role_id?: number
+    role_id?: string
     /** 要添加的成员列表 */
     members_accids?: Array<string>
 }
@@ -279,9 +279,9 @@ export interface QChatRemoveMembersFromServerRoleParam {
     /** @internal */
     cb?: QChatAddMembersToServerRoleCallback
     /** 服务器 ID */
-    server_id?: number
+    server_id?: string
     /** 身份组 ID */
-    role_id?: number
+    role_id?: string
     /** 要移除的成员列表 */
     members_accids?: Array<string>
 }
@@ -291,9 +291,9 @@ export interface QChatGetMembersFromServerRoleParam {
     /** @internal */
     cb?: QChatGetMembersFromServerRoleCallback
     /** 服务器 ID */
-    server_id?: number
+    server_id?: string
     /** 身份组 ID */
-    role_id?: number
+    role_id?: string
     /** 时间戳，从最新起查使用 0 */
     timestamp?: number
     /** 限制返回数量 */
@@ -306,18 +306,18 @@ export interface QChatGetMembersFromServerRoleParam {
 export interface QChatAddChannelRoleParam {
     /** @internal */
     cb?: QChatAddChannelRoleCallback
-    server_id?: number
-    parent_role_id?: number
-    channel_id?: number
+    server_id?: string
+    parent_role_id?: string
+    channel_id?: string
 }
 
 /** @interface QChatUpdateChannelRoleParam */
 export interface QChatUpdateChannelRoleParam {
     /** @internal */
     cb?: QChatUpdateChannelRoleCallback
-    server_id?: number
-    role_id?: number
-    channel_id?: number
+    server_id?: string
+    role_id?: string
+    channel_id?: string
     permissions?: QChatPermission
 }
 
@@ -326,11 +326,11 @@ export interface QChatRemoveChannelRoleParam {
     /** @internal */
     cb?: QChatRemoveChannelRoleCallback
     /** 服务器 ID */
-    server_id?: number
+    server_id?: string
     /** 身份组 ID */
-    role_id?: number
+    role_id?: string
     /** 频道 ID */
-    channel_id?: number
+    channel_id?: string
 }
 
 /** @interface QChatGetChannelRolesParam */
@@ -338,9 +338,9 @@ export interface QChatGetChannelRolesParam {
     /** @internal */
     cb?: QChatGetChannelRolesCallback
     /** 服务器 ID */
-    server_id?: number
+    server_id?: string
     /** 频道 ID */
-    channel_id?: number
+    channel_id?: string
     /** 时间戳，查询最新指定为 0 */
     timestamp?: number
     /** 限制查询返回数量 */
@@ -351,8 +351,8 @@ export interface QChatGetChannelRolesParam {
 export interface QChatAddMemberRoleParam {
     /** @internal */
     cb?: QChatAddMemberRoleCallback
-    server_id?: number
-    channel_id?: number
+    server_id?: string
+    channel_id?: string
     accid?: string
 }
 
@@ -360,8 +360,8 @@ export interface QChatAddMemberRoleParam {
 export interface QChatUpdateMemberRoleParam {
     /** @internal */
     cb?: QChatUpdateMemberRoleCallback
-    server_id?: number
-    channel_id?: number
+    server_id?: string
+    channel_id?: string
     accid?: string
     permissions?: QChatPermission
 }
@@ -371,9 +371,9 @@ export interface QChatRemoveMemberRoleParam {
     /** @internal */
     cb?: QChatRemoveMemberRoleCallback
     /** 服务器 ID */
-    server_id?: number
+    server_id?: string
     /** 频道 ID */
-    channel_id?: number
+    channel_id?: string
     /** 用户账号列表 */
     accid?: string
 }
@@ -383,9 +383,9 @@ export interface QChatGetMemberRolesParam {
     /** @internal */
     cb?: QChatGetMemberRoleInChannelCallback
     /** 服务器 ID */
-    server_id?: number
+    server_id?: string
     /** 频道 ID */
-    channel_id?: number
+    channel_id?: string
     /** 时间戳，查询最新指定为 0 */
     timestamp?: number
     /** 限制返回数量 */
@@ -397,7 +397,7 @@ export interface QChatGetRolesByAccidParam {
     /** @internal */
     cb?: QChatGetRolesByMemberIdCallback
     /** 服务器 ID */
-    server_id?: number
+    server_id?: string
     /** 用户账号 */
     accid?: string
     /** 起查时间戳，返回最新传入 0 */
@@ -410,7 +410,7 @@ export interface QChatGetRolesByAccidParam {
 export interface QChatGetExistingServerRolesByAccidsParam {
     /** @internal */
     cb?: QChatGetRolesByMemberIdsCallback
-    server_id?: number
+    server_id?: string
     accids?: Array<string>
 }
 
@@ -418,17 +418,17 @@ export interface QChatGetExistingServerRolesByAccidsParam {
 export interface QChatGetExistingChannelRolesByServerRoleIdsParam {
     /** @internal */
     cb?: QChatGetExistingRolesInChannelCallback
-    server_id?: number
-    channel_id?: number
-    role_ids?: Array<number>
+    server_id?: string
+    channel_id?: string
+    role_ids?: Array<string>
 }
 
 /** @interface QChatGetExistingAccidsOfMemberRolesParam */
 export interface QChatGetExistingAccidsOfMemberRolesParam {
     /** @internal */
     cb?: QChatGetExistingAccidsOfMemberRolesCallback
-    server_id?: number
-    channel_id?: number
+    server_id?: string
+    channel_id?: string
     accids?: Array<string>
 }
 
@@ -436,8 +436,8 @@ export interface QChatGetExistingAccidsOfMemberRolesParam {
 export interface QChatGetExistingAccidsInServerRoleParam {
     /** @internal */
     cb?: QChatGetExistingAccidsInServerRoleCallback
-    server_id?: number
-    role_id?: number
+    server_id?: string
+    role_id?: string
     accids?: Array<string>
 }
 
@@ -445,8 +445,8 @@ export interface QChatGetExistingAccidsInServerRoleParam {
 export interface QChatCheckPermissionParam {
     /** @internal */
     cb?: QChatCheckPermissionCallback
-    server_id?: number
-    channel_id?: number
+    server_id?: string
+    channel_id?: string
     permission?: NIMQChatPermissions
 }
 
@@ -454,8 +454,8 @@ export interface QChatCheckPermissionParam {
 export interface QChatCheckPermissionsParam {
     /** @internal */
     cb?: QChatCheckPermissionsCallback
-    server_id?: number
-    channel_id?: number
+    server_id?: string
+    channel_id?: string
     permissions?: Array<NIMQChatPermissions>
 }
 
@@ -464,11 +464,11 @@ export interface QChatAddChannelCategoryRoleParam {
     /** @internal */
     cb?: QChatAddChannelCategoryRoleCallback
     /** 服务器 ID */
-    server_id?: number
+    server_id?: string
     /** 频道分组 ID */
-    category_id?: number
+    category_id?: string
     /** 服务器身份组ID */
-    parent_role_id?: number
+    parent_role_id?: string
 }
 
 /** @interface QChatUpdateChannelCategoryRoleParam */
@@ -476,11 +476,11 @@ export interface QChatUpdateChannelCategoryRoleParam {
     /** @internal */
     cb?: QChatUpdateChannelCategoryRoleCallback
     /** 服务器 ID */
-    server_id?: number
+    server_id?: string
     /** 频道分组 ID */
-    category_id?: number
+    category_id?: string
     /** 身份组 ID */
-    role_id?: number
+    role_id?: string
     /** 权限 */
     permissions?: QChatPermission
 }
@@ -489,17 +489,17 @@ export interface QChatUpdateChannelCategoryRoleParam {
 export interface QChatRemoveChannelCategoryRoleParam {
     /** @internal */
     cb?: QChatRemoveChannelCategoryRoleCallback
-    server_id?: number
-    category_id?: number
-    role_id?: number
+    server_id?: string
+    category_id?: string
+    role_id?: string
 }
 
 /** @interface QChatGetChannelCategoryRolesPageParam */
 export interface QChatGetChannelCategoryRolesPageParam {
     /** @internal */
     cb?: QChatGetChannelCategoryRolesPageCallback
-    server_id?: number
-    category_id?: number
+    server_id?: string
+    category_id?: string
     timestamp?: number
     limit?: number
 }
@@ -508,8 +508,8 @@ export interface QChatGetChannelCategoryRolesPageParam {
 export interface QChatAddChannelCategoryMemberRoleParam {
     /** @internal */
     cb?: QChatAddChannelCategoryMemberRoleCallback
-    server_id?: number
-    category_id?: number
+    server_id?: string
+    category_id?: string
     accid?: string
 }
 
@@ -518,9 +518,9 @@ export interface QChatUpdateChannelCategoryMemberRoleParam {
     /** @internal */
     cb?: QChatUpdateChannelCategoryMemberRoleCallback
     /** 服务器 ID */
-    server_id?: number
+    server_id?: string
     /** 频道分组 ID */
-    category_id?: number
+    category_id?: string
     /** 用户 ID */
     accid?: string
     /** 权限 */
@@ -531,8 +531,8 @@ export interface QChatUpdateChannelCategoryMemberRoleParam {
 export interface QChatRemoveChannelCategoryMemberRoleParam {
     /** @internal */
     cb?: QChatRemoveChannelCategoryMemberRoleCallback
-    server_id?: number
-    category_id?: number
+    server_id?: string
+    category_id?: string
     accid?: string
 }
 
@@ -540,8 +540,8 @@ export interface QChatRemoveChannelCategoryMemberRoleParam {
 export interface QChatGetChannelCategoryMemberRolesPageParam {
     /** @internal */
     cb?: QChatGetChannelCategoryMemberRolesPageCallback
-    server_id?: number
-    category_id?: number
+    server_id?: string
+    category_id?: string
     timestamp?: number
     limit?: number
 }

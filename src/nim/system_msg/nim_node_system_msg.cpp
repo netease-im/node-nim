@@ -12,7 +12,8 @@ namespace node_nim {
 GetCurrentSDKServiceImpl(NIMSystemMsg, NIMSystemMsg, holder_service);
 Napi::Object NIMSystemMsg::Init(Napi::Env env, Napi::Object exports) {
     return InternalInit("NIMSystemMsg", env, exports,
-        {RegApi("InitEventHandlers", &NIMSystemMsg::InitEventHandlers), RegApi("SendCustomNotificationMsg", &SystemMsg::SendCustomNotificationMsg),
+        {RegApi("InitEventHandlers", &NIMSystemMsg::InitEventHandlers),
+            RegAmbApi("SendCustomNotificationMsg", &SystemMsg::SendCustomNotificationMsg, void (*)(const SysMessage&)),
             RegApi("QueryMsgAsync", &SystemMsg::QueryMsgAsync), RegApi("QueryUnreadCount", &SystemMsg::QueryUnreadCount),
             RegApi("SetStatusAsync", &SystemMsg::SetStatusAsync), RegApi("ReadAllAsync", &SystemMsg::ReadAllAsync),
             RegApi("DeleteAsync", &SystemMsg::DeleteAsync), RegApi("DeleteAllAsync", &SystemMsg::DeleteAllAsync),

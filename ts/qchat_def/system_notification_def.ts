@@ -1,12 +1,14 @@
 import { QChatMessageUpdateInfo } from './message_def'
-import { NIMQChatSystemNotificationType, NIMQChatSystemNotificationStatus, QChatBaseResp } from './public_def'
+import { NIMQChatSystemNotificationType, NIMQChatSystemNotificationStatus, QChatBaseResp, NIMQChatSystemNotificationToType } from './public_def'
 
 /** @interface QChatSystemNotification */
 export interface QChatSystemNotification {
+    /** 消息通知目标 */
+    to_type: NIMQChatSystemNotificationToType
     /** 消息所属的server id */
-    server_id?: number
+    server_id?: string
     /** 消息所属的channel id */
-    channel_id?: number
+    channel_id?: string
     /** 消息id */
     msg_id?: string
     /** 系统消息类型 */
@@ -41,7 +43,7 @@ export interface QChatSystemNotification {
     /** 消息状态 */
     status?: NIMQChatSystemNotificationStatus
     /** 消息服务器端id */
-    msg_server_id?: number
+    msg_server_id?: string
     /** 消息发送者的accid */
     from_accid?: string
     /** 消息发送者的客户端类型 */
@@ -61,9 +63,9 @@ export interface QChatSystemNotification {
 /** @interface QChatTypingEvent */
 export interface QChatTypingEvent {
     /** 事件所属的server id */
-    server_id?: number
+    server_id?: string
     /** 事件所属的channel id */
-    channel_id?: number
+    channel_id?: string
     /** 事件扩展字段 */
     extension?: string
     // 以下字段仅在收到事件时有效
@@ -155,7 +157,7 @@ export interface QChatUpdateSystemNotificationParam {
     /** @internal */
     cb?: UpdateSystemNotificationCallback
     /** 系统通知服务器ID */
-    msg_server_id?: number
+    msg_server_id?: string
     /** 系统通知类型 */
     msg_type?: NIMQChatSystemNotificationType
     /** 消息状态 */
@@ -171,7 +173,7 @@ export interface QChatUpdateSystemNotificationParam {
 /** @interface NIMQChatSystemNotificationMarkReadInfo */
 export interface NIMQChatSystemNotificationMarkReadInfo {
     /** 消息服务器 id */
-    msg_server_id?: number
+    msg_server_id?: string
     /** 系统通知类型 */
     msg_type?: NIMQChatSystemNotificationType
 }

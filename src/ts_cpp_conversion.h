@@ -89,8 +89,11 @@ static void StoreFunctionInObject(Napi::Env env, const Napi::Object& obj) {
     }
 }
 
+inline const std::vector<std::string> kNapiValueTypeStrVec{
+    "Undefined", "Null", "Boolean", "Number", "String", "Symbol", "Object", "Function", "External", "Bigint"};
+
 template <typename T>
-static T ObjectToStruct(Napi::Env env, const Napi::Value& value) {
+static T ObjectToStruct(Napi::Env env, const Napi::Value& value, int32_t index) {
     T _struct{};
     if (std::is_enum<T>::value) {
         int64_t temp = value.As<Napi::Number>().Int64Value();
@@ -106,14 +109,16 @@ static T ObjectToStruct(Napi::Env env, const Napi::Value& value) {
         if (json_str_value.IsString()) {
             _object_json_text = json_str_value.As<Napi::String>().Utf8Value();
         } else {
-            Napi::Error::New(env, "[node-nim] json stringify failed, get type: " + std::to_string(json_str_value.Type()))
+            Napi::Error::New(env,
+                "[node-nim] json stringify failed at index: " + std::to_string(index) + ", get type: " + kNapiValueTypeStrVec[json_str_value.Type()])
                 .ThrowAsJavaScriptException();
             return _struct;
         }
         try {
             xpack::json::decode(_object_json_text, _struct);
         } catch (const std::exception& e) {
-            Napi::Error::New(env, "[node-nim] xpack json decode failed").ThrowAsJavaScriptException();
+            Napi::Error::New(env, "[node-nim] xpack json decode failed at index: " + std::to_string(index) + ", error: " + e.what())
+                .ThrowAsJavaScriptException();
         }
     }
     return _struct;
@@ -134,99 +139,150 @@ static napi_value StructToObject(Napi::Env env, const T& value) {
 }
 }  // namespace ts_cpp_conversion
 template <>
-bool ts_cpp_conversion::ObjectToStruct<bool>(Napi::Env env, const Napi::Value& value) {
+bool ts_cpp_conversion::ObjectToStruct<bool>(Napi::Env env, const Napi::Value& value, int32_t index) {
     if (!value.IsBoolean()) {
-        Napi::Error::New(env, "boolean type error").ThrowAsJavaScriptException();
+        Napi::Error::New(
+            env, "[node-nim] ObjectToStruct<bool> get type: " + kNapiValueTypeStrVec[value.Type()] + ", at index: " + std::to_string(index))
+            .ThrowAsJavaScriptException();
         return false;
     }
     return value.As<Napi::Boolean>();
 }
 template <>
-int8_t ts_cpp_conversion::ObjectToStruct<int8_t>(Napi::Env env, const Napi::Value& value) {
-    if (!value.IsNumber()) {
-        Napi::Error::New(env, "int8_t type error").ThrowAsJavaScriptException();
-        return 0;
+int8_t ts_cpp_conversion::ObjectToStruct<int8_t>(Napi::Env env, const Napi::Value& value, int32_t index) {
+    if (value.IsNumber()) {
+        return value.As<Napi::Number>().Int32Value();
     }
-    return value.As<Napi::Number>().Int32Value();
+    if (value.IsString()) {
+        return std::stoi(value.As<Napi::String>());
+    }
+    Napi::Error::New(
+        env, "[node-nim] ObjectToStruct<int8_t> get type: " + kNapiValueTypeStrVec[value.Type()] + ", at index: " + std::to_string(index))
+        .ThrowAsJavaScriptException();
+    return 0;
 }
 template <>
-uint8_t ts_cpp_conversion::ObjectToStruct<uint8_t>(Napi::Env env, const Napi::Value& value) {
-    if (!value.IsNumber()) {
-        Napi::Error::New(env, "uint8_t type error").ThrowAsJavaScriptException();
-        return 0;
+uint8_t ts_cpp_conversion::ObjectToStruct<uint8_t>(Napi::Env env, const Napi::Value& value, int32_t index) {
+    if (value.IsNumber()) {
+        return value.As<Napi::Number>().Uint32Value();
     }
-    return value.As<Napi::Number>().Uint32Value();
+    if (value.IsString()) {
+        return std::stoul(value.As<Napi::String>());
+    }
+    Napi::Error::New(
+        env, "[node-nim] ObjectToStruct<uint8_t> get type: " + kNapiValueTypeStrVec[value.Type()] + ", at index: " + std::to_string(index))
+        .ThrowAsJavaScriptException();
+    return 0;
 }
 template <>
-int16_t ts_cpp_conversion::ObjectToStruct<int16_t>(Napi::Env env, const Napi::Value& value) {
-    if (!value.IsNumber()) {
-        Napi::Error::New(env, "int16_t type error").ThrowAsJavaScriptException();
-        return 0;
+int16_t ts_cpp_conversion::ObjectToStruct<int16_t>(Napi::Env env, const Napi::Value& value, int32_t index) {
+    if (value.IsNumber()) {
+        return value.As<Napi::Number>().Int32Value();
     }
-    return value.As<Napi::Number>().Int32Value();
+    if (value.IsString()) {
+        return std::stoi(value.As<Napi::String>());
+    }
+    Napi::Error::New(
+        env, "[node-nim] ObjectToStruct<int16_t> get type: " + kNapiValueTypeStrVec[value.Type()] + ", at index: " + std::to_string(index))
+        .ThrowAsJavaScriptException();
+    return 0;
 }
 template <>
-uint16_t ts_cpp_conversion::ObjectToStruct<uint16_t>(Napi::Env env, const Napi::Value& value) {
-    if (!value.IsNumber()) {
-        Napi::Error::New(env, "uint16_t type error").ThrowAsJavaScriptException();
-        return 0;
+uint16_t ts_cpp_conversion::ObjectToStruct<uint16_t>(Napi::Env env, const Napi::Value& value, int32_t index) {
+    if (value.IsNumber()) {
+        return value.As<Napi::Number>().Uint32Value();
     }
-    return value.As<Napi::Number>().Uint32Value();
+    if (value.IsString()) {
+        return std::stoul(value.As<Napi::String>());
+    }
+    Napi::Error::New(
+        env, "[node-nim] ObjectToStruct<uint16_t> get type: " + kNapiValueTypeStrVec[value.Type()] + ", at index: " + std::to_string(index))
+        .ThrowAsJavaScriptException();
+    return 0;
 }
 template <>
-int32_t ts_cpp_conversion::ObjectToStruct<int32_t>(Napi::Env env, const Napi::Value& value) {
-    if (!value.IsNumber()) {
-        Napi::Error::New(env, "int32_t type error").ThrowAsJavaScriptException();
-        return 0;
+int32_t ts_cpp_conversion::ObjectToStruct<int32_t>(Napi::Env env, const Napi::Value& value, int32_t index) {
+    if (value.IsNumber()) {
+        return value.As<Napi::Number>().Int32Value();
     }
-    return value.As<Napi::Number>().Int32Value();
+    if (value.IsString()) {
+        return std::stoi(value.As<Napi::String>());
+    }
+    Napi::Error::New(
+        env, "[node-nim] ObjectToStruct<int32_t> get type: " + kNapiValueTypeStrVec[value.Type()] + ", at index: " + std::to_string(index))
+        .ThrowAsJavaScriptException();
+    return 0;
 }
 template <>
-uint32_t ts_cpp_conversion::ObjectToStruct<uint32_t>(Napi::Env env, const Napi::Value& value) {
-    if (!value.IsNumber()) {
-        Napi::Error::New(env, "uint32_t type error").ThrowAsJavaScriptException();
-        return 0;
+uint32_t ts_cpp_conversion::ObjectToStruct<uint32_t>(Napi::Env env, const Napi::Value& value, int32_t index) {
+    if (value.IsNumber()) {
+        return value.As<Napi::Number>().Uint32Value();
     }
-    return value.As<Napi::Number>().Uint32Value();
+    if (value.IsString()) {
+        return std::stoul(value.As<Napi::String>());
+    }
+    Napi::Error::New(
+        env, "[node-nim] ObjectToStruct<uint32_t> get type: " + kNapiValueTypeStrVec[value.Type()] + ", at index: " + std::to_string(index))
+        .ThrowAsJavaScriptException();
+    return 0;
 }
 template <>
-int64_t ts_cpp_conversion::ObjectToStruct<int64_t>(Napi::Env env, const Napi::Value& value) {
-    if (!value.IsNumber()) {
-        Napi::Error::New(env, "int64_t type error").ThrowAsJavaScriptException();
-        return 0;
+int64_t ts_cpp_conversion::ObjectToStruct<int64_t>(Napi::Env env, const Napi::Value& value, int32_t index) {
+    if (value.IsNumber()) {
+        return value.As<Napi::Number>().Int64Value();
     }
-    return value.As<Napi::Number>().Int64Value();
+    if (value.IsString()) {
+        return std::stoll(value.As<Napi::String>());
+    }
+    Napi::Error::New(
+        env, "[node-nim] ObjectToStruct<int64_t> get type: " + kNapiValueTypeStrVec[value.Type()] + ", at index: " + std::to_string(index))
+        .ThrowAsJavaScriptException();
+    return 0;
 }
 template <>
-uint64_t ts_cpp_conversion::ObjectToStruct<uint64_t>(Napi::Env env, const Napi::Value& value) {
-    if (!value.IsNumber()) {
-        Napi::Error::New(env, "uint64_t type error").ThrowAsJavaScriptException();
-        return 0;
+uint64_t ts_cpp_conversion::ObjectToStruct<uint64_t>(Napi::Env env, const Napi::Value& value, int32_t index) {
+    if (value.IsNumber()) {
+        return value.As<Napi::Number>().Int64Value();
     }
-    return value.As<Napi::Number>().Int64Value();
+    if (value.IsString()) {
+        return std::stoull(value.As<Napi::String>());
+    }
+    Napi::Error::New(
+        env, "[node-nim] ObjectToStruct<uint64_t> get type: " + kNapiValueTypeStrVec[value.Type()] + ", at index: " + std::to_string(index))
+        .ThrowAsJavaScriptException();
+    return 0;
 }
 template <>
-float ts_cpp_conversion::ObjectToStruct<float>(Napi::Env env, const Napi::Value& value) {
-    if (!value.IsNumber()) {
-        Napi::Error::New(env, "float type error").ThrowAsJavaScriptException();
-        return 0;
+float ts_cpp_conversion::ObjectToStruct<float>(Napi::Env env, const Napi::Value& value, int32_t index) {
+    if (value.IsNumber()) {
+        return value.As<Napi::Number>().FloatValue();
     }
-    return value.As<Napi::Number>().FloatValue();
+    if (value.IsString()) {
+        return std::stof(value.As<Napi::String>());
+    }
+    Napi::Error::New(env, "[node-nim] ObjectToStruct<float> get type: " + kNapiValueTypeStrVec[value.Type()] + ", at index: " + std::to_string(index))
+        .ThrowAsJavaScriptException();
+    return 0;
 }
 template <>
-double ts_cpp_conversion::ObjectToStruct<double>(Napi::Env env, const Napi::Value& value) {
-    if (!value.IsNumber()) {
-        Napi::Error::New(env, "double type error").ThrowAsJavaScriptException();
-        return 0;
+double ts_cpp_conversion::ObjectToStruct<double>(Napi::Env env, const Napi::Value& value, int32_t index) {
+    if (value.IsNumber()) {
+        return value.As<Napi::Number>().DoubleValue();
     }
-    return value.As<Napi::Number>().DoubleValue();
+    if (value.IsString()) {
+        return std::stod(value.As<Napi::String>());
+    }
+    Napi::Error::New(
+        env, "[node-nim] ObjectToStruct<double> get type: " + kNapiValueTypeStrVec[value.Type()] + ", at index: " + std::to_string(index))
+        .ThrowAsJavaScriptException();
+    return 0;
 }
 // template <>
-// ne_std::string ts_cpp_conversion::ObjectToStruct<ne_std::string>(Napi::Env env, const Napi::Value& value) {
+// ne_std::string ts_cpp_conversion::ObjectToStruct<ne_std::string>(Napi::Env env, const Napi::Value& value, int32_t index) {
 //     return value.As<Napi::String>().operator std::string().c_str();
 // }
 template <>
-std::string ts_cpp_conversion::ObjectToStruct<std::string>(Napi::Env env, const Napi::Value& value) {
+std::string ts_cpp_conversion::ObjectToStruct<std::string>(Napi::Env env, const Napi::Value& value, int32_t index) {
     if (value.IsObject()) {
         Napi::Object json = env.Global().Get("JSON").As<Napi::Object>();
         Napi::Function stringify = json.Get("stringify").As<Napi::Function>();
@@ -234,19 +290,22 @@ std::string ts_cpp_conversion::ObjectToStruct<std::string>(Napi::Env env, const 
         if (str_value.IsString()) {
             return str_value.As<Napi::String>().Utf8Value();
         } else {
-            Napi::Error::New(env, "[node-nim] ObjectToStruct<std::string> expected Object, but get" + std::to_string(value.Type()))
+            Napi::Error::New(env, "[node-nim] ObjectToStruct<std::string> stringify fail, get type: " + kNapiValueTypeStrVec[value.Type()] +
+                                      ", at index: " + std::to_string(index))
                 .ThrowAsJavaScriptException();
             return "";
         }
     } else if (value.IsString()) {
         return value.As<Napi::String>().Utf8Value();
     } else {
-        Napi::Error::New(env, "[node-nim] ObjectToStruct<std::string> get" + std::to_string(value.Type())).ThrowAsJavaScriptException();
+        Napi::Error::New(
+            env, "[node-nim] ObjectToStruct<std::string> get type: " + kNapiValueTypeStrVec[value.Type()] + ", at index: " + std::to_string(index))
+            .ThrowAsJavaScriptException();
         return "";
     }
 }
 template <>
-const char* ts_cpp_conversion::ObjectToStruct<const char*>(Napi::Env env, const Napi::Value& value) {
+const char* ts_cpp_conversion::ObjectToStruct<const char*>(Napi::Env env, const Napi::Value& value, int32_t index) {
     static std::string str;
     if (value.IsObject()) {
         Napi::Object json = env.Global().Get("JSON").As<Napi::Object>();
@@ -256,7 +315,8 @@ const char* ts_cpp_conversion::ObjectToStruct<const char*>(Napi::Env env, const 
             str = str_value.As<Napi::String>().Utf8Value();
             return str.c_str();
         } else {
-            Napi::Error::New(env, "[node-nim] ObjectToStruct<const char*> expected Object, but get" + std::to_string(value.Type()))
+            Napi::Error::New(env, "[node-nim] ObjectToStruct<const char*> stringify fail, get type: " + kNapiValueTypeStrVec[value.Type()] +
+                                      ", at index: " + std::to_string(index))
                 .ThrowAsJavaScriptException();
             return "";
         }
@@ -264,7 +324,9 @@ const char* ts_cpp_conversion::ObjectToStruct<const char*>(Napi::Env env, const 
         str = value.As<Napi::String>().Utf8Value();
         return str.c_str();
     } else {
-        Napi::Error::New(env, "[node-nim] ObjectToStruct<const char*> get" + std::to_string(value.Type())).ThrowAsJavaScriptException();
+        Napi::Error::New(
+            env, "[node-nim] ObjectToStruct<const char*> get type: " + kNapiValueTypeStrVec[value.Type()] + ", at index: " + std::to_string(index))
+            .ThrowAsJavaScriptException();
         return "";
     }
 }
@@ -298,11 +360,11 @@ napi_value ts_cpp_conversion::StructToObject<uint32_t>(Napi::Env env, const uint
 }
 template <>
 napi_value ts_cpp_conversion::StructToObject<int64_t>(Napi::Env env, const int64_t& value) {
-    return Napi::Number::New(env, static_cast<double>(value));
+    return Napi::String::New(env, std::to_string(value));
 }
 template <>
 napi_value ts_cpp_conversion::StructToObject<uint64_t>(Napi::Env env, const uint64_t& value) {
-    return Napi::Number::New(env, static_cast<double>(value));
+    return Napi::String::New(env, std::to_string(value));
 }
 template <>
 napi_value ts_cpp_conversion::StructToObject<float>(Napi::Env env, const float& value) {

@@ -22,9 +22,9 @@ import { QChatServerGetMembersPageResp, QChatServerGetMembersResp, ServerGetMemb
 
 export interface QChatChannelInfo {
     /** server id */
-    server_id?: number
+    server_id?: string
     /** channel id */
-    channel_id?: number
+    channel_id?: string
     /** 名称 */
     name?: string
     /** 主题 */
@@ -46,7 +46,7 @@ export interface QChatChannelInfo {
     /** 更新时间 */
     update_time?: number
     /** 频道分组ID */
-    category_id?: number
+    category_id?: string
     /** 频道分组同步模式 */
     sync_mode?: NIMQChatChannelSyncMode
     /** 自定义排序权重值 */
@@ -80,9 +80,9 @@ export interface QChatChannelRTCInfo {
 
 export interface QChatChannelCategoryInfo {
     /** server id */
-    server_id?: number
+    server_id?: string
     /** category id */
-    category_id?: number
+    category_id?: string
     /** 名称 */
     name?: string
     /** 自定义字段 */
@@ -389,7 +389,7 @@ export interface QChatChannelDeleteParam {
     /** @internal */
     cb?: ChannelDeleteCallback
     /** 频道ID */
-    channel_id?: number
+    channel_id?: string
 }
 
 /** @interface QChatChannelUpdateParam */
@@ -397,7 +397,7 @@ export interface QChatChannelUpdateParam {
     /** @internal */
     cb?: ChannelUpdateCallback
     /** 频道ID */
-    channel_id?: number
+    channel_id?: string
     /** 名称 */
     name?: string
     /** 主题 */
@@ -417,9 +417,9 @@ export interface QChatChannelUpdateCategoryInfoParam {
     /** @internal */
     cb?: ChannelUpdateCategoryInfoCallback
     /** 频道ID */
-    channel_id?: number
+    channel_id?: string
     /** 频道分组ID */
-    category_id?: number
+    category_id?: string
     /** 频道分组同步模式 */
     sync_mode?: NIMQChatChannelSyncMode
 }
@@ -429,7 +429,7 @@ export interface QChatChannelGetChannelsParam {
     /** @internal */
     cb?: GetChannelsCallback
     /** 频道id列表 */
-    channel_ids?: Array<number>
+    channel_ids?: Array<string>
 }
 
 /** @interface QChatChannelGetChannelsPageParam */
@@ -437,7 +437,7 @@ export interface QChatChannelGetChannelsPageParam {
     /** @internal */
     cb?: GetChannelsPageCallback
     /** 服务器ID */
-    server_id?: number
+    server_id?: string
     /** 时间戳 */
     timestamp?: number
     /** 查询条数 */
@@ -449,9 +449,9 @@ export interface QChatChannelGetMembersPageParam {
     /** @internal */
     cb?: ChannelGetMembersPageCallback
     /** 服务器ID */
-    server_id?: number
+    server_id?: string
     /** 频道ID */
-    channel_id?: number
+    channel_id?: string
     /** 时间戳 */
     timestamp?: number
     /** 查询条数 */
@@ -463,11 +463,11 @@ export interface QChatChannelUpdateWhiteBlackRoleParam {
     /** @internal */
     cb?: UpdateWhiteBlackRoleCallback
     /** 服务器ID */
-    server_id?: number
+    server_id?: string
     /** 频道ID */
-    channel_id?: number
+    channel_id?: string
     /** 身份组id */
-    role_id?: number
+    role_id?: string
     /** 白/黑名单类型 */
     type?: NIMQChatChannelWhiteBlackType
     /** 操作类型 */
@@ -479,9 +479,9 @@ export interface QChatChannelUpdateWhiteBlackMembersParam {
     /** @internal */
     cb?: UpdateWhiteBlackMembersCallback
     /** 服务器ID */
-    server_id?: number
+    server_id?: string
     /** 频道ID */
-    channel_id?: number
+    channel_id?: string
     /** 用户accid列表 */
     accids?: Array<string>
     /** 白/黑名单类型 */
@@ -495,9 +495,9 @@ export interface QChatChannelGetWhiteBlackRolesPageParam {
     /** @internal */
     cb?: GetWhiteBlackRolesPageCallback
     /** 服务器ID */
-    server_id?: number
+    server_id?: string
     /** 频道ID */
-    channel_id?: number
+    channel_id?: string
     /** 白/黑名单类型 */
     type?: NIMQChatChannelWhiteBlackType
     /** 时间戳 */
@@ -511,9 +511,9 @@ export interface QChatChannelGetWhiteBlackMembersPageParam {
     /** @internal */
     cb?: GetWhiteBlackMembersPageCallback
     /** 服务器ID */
-    server_id?: number
+    server_id?: string
     /** 频道ID */
-    channel_id?: number
+    channel_id?: string
     /** 白/黑名单类型 */
     type?: NIMQChatChannelWhiteBlackType
     /** 时间戳 */
@@ -527,13 +527,13 @@ export interface QChatChannelGetExistingWhiteBlackRolesParam {
     /** @internal */
     cb?: GetExistingWhiteBlackRolesCallback
     /** 服务器ID */
-    server_id?: number
+    server_id?: string
     /** 频道ID */
-    channel_id?: number
+    channel_id?: string
     /** 白/黑名单类型 */
     type?: NIMQChatChannelWhiteBlackType
     /** 身份组id列表 */
-    role_ids?: Array<number>
+    role_ids?: Array<string>
 }
 
 /** @interface QChatChannelGetExistingWhiteBlackMembersParam */
@@ -541,9 +541,9 @@ export interface QChatChannelGetExistingWhiteBlackMembersParam {
     /** @internal */
     cb?: GetExistingWhiteBlackMembersCallback
     /** 服务器ID */
-    server_id?: number
+    server_id?: string
     /** 频道ID */
-    channel_id?: number
+    channel_id?: string
     /** 白/黑名单类型 */
     type?: NIMQChatChannelWhiteBlackType
     /** 用户accid列表 */
@@ -555,7 +555,7 @@ export interface QChatChannelSearchPageParam {
     /** @internal */
     cb?: ChannelSearchPageCallback
     /** 服务器 id, 若为空则表示在所有服务器下可见频道中搜索 */
-    server_id?: number
+    server_id?: string
     /** 搜索内容 */
     keyword?: string
     /** 起始时间 */
@@ -577,9 +577,9 @@ export interface QChatChannelMemberSearchParam {
     /** @internal */
     cb?: ChannelMemberSearchCallback
     /** 服务器 id */
-    server_id?: number
+    server_id?: string
     /** 频道 id */
-    channel_id?: number
+    channel_id?: string
     /** 搜索内容 */
     keyword?: string
     /** 查询条数 */
@@ -591,7 +591,7 @@ export interface QChatChannelCategoryCreateParam {
     /** @internal */
     cb?: ChannelCategoryCreateCallback
     /** 服务器 id */
-    server_id?: number
+    server_id?: string
     /** 名称 */
     name?: string
     /** 自定义字段 */
@@ -605,7 +605,7 @@ export interface QChatChannelCategoryRemoveParam {
     /** @internal */
     cb?: ChannelCategoryRemoveCallback
     /** 频道分组 ID */
-    category_id?: number
+    category_id?: string
 }
 
 /** @interface QChatChannelCategoryUpdateParam */
@@ -613,7 +613,7 @@ export interface QChatChannelCategoryUpdateParam {
     /** @internal */
     cb?: ChannelCategoryUpdateCallback
     /** 分组 id */
-    category_id?: number
+    category_id?: string
     /** 名称 */
     name?: string
     /** 自定义字段 */
@@ -627,7 +627,7 @@ export interface QChatChannelGetCategoriesByIDParam {
     /** @internal */
     cb?: ChannelGetCategoriesByIDCallback
     /** 分组ID列表 */
-    category_ids?: Array<number>
+    category_ids?: Array<string>
 }
 
 /** @interface QChatChannelGetCategoriesPageParam */
@@ -635,7 +635,7 @@ export interface QChatChannelGetCategoriesPageParam {
     /** @internal */
     cb?: ChannelGetCategoriesPageCallback
     /** 服务器 id */
-    server_id?: number
+    server_id?: string
     /** 时间戳 */
     timestamp?: number
     /** 查询条数 */
@@ -647,9 +647,9 @@ export interface QChatChannelGetCategoryChannelsPageParam {
     /** @internal */
     cb?: ChannelGetCategoryChannelsPageCallback
     /** 服务器 id */
-    server_id?: number
+    server_id?: string
     /** 分组 id */
-    category_id?: number
+    category_id?: string
     /** 时间戳 */
     timestamp?: number
     /** 查询条数 */
@@ -661,11 +661,11 @@ export interface QChatChannelCategoryUpdateWhiteBlackRoleParam {
     /** @internal */
     cb?: ChannelCategoryUpdateWhiteBlackRoleCallback
     /** 服务器 id */
-    server_id?: number
+    server_id?: string
     /** 分组 id */
-    category_id?: number
+    category_id?: string
     /** 身份组 id */
-    role_id?: number
+    role_id?: string
     /** 白/黑名单类型 */
     type?: NIMQChatChannelWhiteBlackType
     /** 操作类型 */
@@ -677,9 +677,9 @@ export interface QChatChannelCategoryGetWhiteBlackRolesPageParam {
     /** 获取频道分组白/黑名单身份组回调 */
     cb?: ChannelCategoryGetWhiteBlackRolesPageCallback
     /** 服务器 ID */
-    server_id?: number
+    server_id?: string
     /** 分组ID */
-    category_id?: number
+    category_id?: string
     /** 白/黑名单类型 */
     type?: NIMQChatChannelWhiteBlackType
     /** 时间戳 */
@@ -693,13 +693,13 @@ export interface QChatChannelCategoryGetExistingWhiteBlackRolesParam {
     /** 获取频道分组白/黑名单身份组回调 */
     cb?: ChannelCategoryGetExistingWhiteBlackRolesCallback
     /** 服务器 ID */
-    server_id?: number
+    server_id?: string
     /** 分组ID */
-    category_id?: number
+    category_id?: string
     /** 白/黑名单类型 */
     type?: NIMQChatChannelWhiteBlackType
     /** 身份组ID列表 */
-    role_ids?: Array<number>
+    role_ids?: Array<string>
 }
 
 /** @interface QChatChannelCategoryUpdateWhiteBlackMembersParam */
@@ -707,9 +707,9 @@ export interface QChatChannelCategoryUpdateWhiteBlackMembersParam {
     /** 更新频道分组白/黑名单成员回调 */
     cb?: ChannelCategoryUpdateWhiteBlackMembersCallback
     /** 服务器 ID */
-    server_id?: number
+    server_id?: string
     /** 分组ID */
-    category_id?: number
+    category_id?: string
     /** 成员ID列表 */
     accids?: Array<string>
     /** 白/黑名单类型 */
@@ -723,9 +723,9 @@ export interface QChatChannelCategoryGetWhiteBlackMembersPageParam {
     /** 获取频道分组白/黑名单成员回调 */
     cb?: ChannelCategoryGetWhiteBlackMembersPageCallback
     /** 服务器 ID */
-    server_id?: number
+    server_id?: string
     /** 分组ID */
-    category_id?: number
+    category_id?: string
     /** 白/黑名单类型 */
     type?: NIMQChatChannelWhiteBlackType
     /** 时间戳 */
@@ -739,9 +739,9 @@ export interface QChatChannelCategoryGetExistingWhiteBlackMembersParam {
     /** 获取频道分组白/黑名单成员回调 */
     cb?: ChannelCategoryGetExistingWhiteBlackMembersCallback
     /** 服务器 ID */
-    server_id?: number
+    server_id?: string
     /** 分组ID */
-    category_id?: number
+    category_id?: string
     /** 白/黑名单类型 */
     type?: NIMQChatChannelWhiteBlackType
     /** 成员ID列表 */
@@ -753,9 +753,9 @@ export interface QChatChannelUpdateRTCInfoParam {
     /** 修改RTC频道参数回调 */
     cb?: ChannelUpdateRTCInfoCallback
     /** 服务器 ID */
-    server_id?: number
+    server_id?: string
     /** 频道 ID */
-    channel_id?: number
+    channel_id?: string
     /** RTC频道参数 */
     rtc_info?: QChatChannelRTCInfo
 }
@@ -765,9 +765,9 @@ export interface QChatChannelGetRTCInfoParam {
     /** 查询RTC频道参数回调 */
     cb?: ChannelGetRTCInfoCallback
     /** 服务器 ID */
-    server_id?: number
+    server_id?: string
     /** 频道 ID */
-    channel_id?: number
+    channel_id?: string
 }
 
 /** @interface QChatChannelGetRTCOnlineMembersParam */
@@ -775,7 +775,7 @@ export interface QChatChannelGetRTCOnlineMembersParam {
     /** 获取RTC在线成员列表回调 */
     cb?: ChannelGetRTCOnlineMembersCallback
     /** 服务器 ID */
-    server_id?: number
+    server_id?: string
     /** 频道 ID */
-    channel_id?: number
+    channel_id?: string
 }

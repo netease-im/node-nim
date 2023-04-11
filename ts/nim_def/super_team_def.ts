@@ -100,11 +100,15 @@ export interface SuperTeamInfo {
 
 export interface SuperTeamMemberPropertyJsonValue {
     tid?: string
+    accid?: string
     type?: NIMSuperTeamUserType
     nick?: string
     bits?: number
-    mute?: number
     custom?: string
+    readonly valid?: boolean
+    readonly create_timetag?: number
+    readonly update_timetag?: number
+    readonly mute?: number
 }
 
 export interface SuperTeamMemberProperty {
@@ -115,7 +119,7 @@ export type SuperTeamEventCallback = (result: SuperTeamEvent) => void
 export type QueryAllMySuperTeamsCallback = (count: number, result: Array<string>) => void
 export type QueryAllMySuperTeamsInfoCallback = (count: number, result: Array<SuperTeamInfo>) => void
 export type QuerySuperTeamMyAllMemberInfosCallback = (count: number, result: Array<SuperTeamMemberProperty>) => void
-export type QuerySuperTeamMembersCallback = (tid: string, count: number, result: Array<SuperTeamMemberProperty>) => void
+export type QuerySuperTeamMembersCallback = (rescode: NIMResCode, tid: string, count: number, result: Array<SuperTeamMemberProperty>) => void
 export type QuerySuperTeamMemberCallback = (result: SuperTeamMemberProperty) => void
 export type QuerySuperTeamInfoCallback = (tid: string, result: SuperTeamInfo) => void
 export type QuerySuperTeamMembersOnlineCallback = (rescode: NIMResCode, count: number, result: Array<SuperTeamMemberProperty>) => void

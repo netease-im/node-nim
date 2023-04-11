@@ -39,7 +39,8 @@ import {
     NIMChatRoomLinkCondition,
     ChatRoomGetMsgHistoryByTagsParameters,
     ChatRoomConfig,
-    ChatRoomGetMembersByTagParameters
+    ChatRoomGetMembersByTagParameters,
+    ChatRoomBatchMembers
 } from '../chatroom_def/chatroom_def'
 import { NIMResCode } from 'ts/nim_def/client_def'
 
@@ -487,7 +488,7 @@ export class ChatRoomModule extends EventEmitter<ChatRoomEvents> {
 
     queueBatchUpdateAsync(
         room_id: number,
-        batch_elements: Array<ChatRoomQueueElement>,
+        batch_elements: ChatRoomBatchMembers,
         need_notify: boolean,
         notify_ext: string,
         cb: QueueBatchUpdateCallback | null,

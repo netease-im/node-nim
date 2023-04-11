@@ -144,7 +144,7 @@ private:
         std::future<TR> future = promise.get_future();
         auto callback = [this, flag, &promise, args...](const ApiEnv& env, const ApiFunction& js_callback, const void* value) {
             ApiValue res = emitter_.Call({Napi::String::New(env, flag), ts_cpp_conversion::StructToObject(env, args)...});
-            promise.set_value(ts_cpp_conversion::ObjectToStruct<TR>(env, res));
+            promise.set_value(ts_cpp_conversion::ObjectToStruct<TR>(env, res, -1));
         };
         tsfn_.NonBlockingCall(reinterpret_cast<void*>(0), callback);
         return future.get();

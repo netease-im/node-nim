@@ -16,5 +16,6 @@ ReflectionDefinition_O(Global::SDKDBErrorInfo, db_name_, error_code_, operation_
 // Callback
 CallbackSpecialization(Global::DetectProxyCallback);
 CallbackSpecialization(Global::ExceptionCallback);
+CallbackSpecialization(Global::GetCachedFileInfoCallback);
 CallbackSpecialization(Global::SDKDBErrorCallback);
 #endif

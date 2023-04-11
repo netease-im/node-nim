@@ -554,6 +554,15 @@ export enum NIMQChatInviteApplyRecordStatus {
     kNIMQChatInviteApplyRecordStatusExpired = 6
 }
 
+export enum NIMQChatSystemNotificationToType {
+    kNIMQChatSystemNotificationToTypeUnknown /**< 默认值，需要由用户修改，否则报错 10414 参数错误 */,
+    kNIMQChatSystemNotificationToTypeServer /**< 发送到 Server，server_id 必填 */,
+    kNIMQChatSystemNotificationToTypeChannel /**< 发送到 Channel，server_id 和 channel_id 必填 */,
+    kNIMQChatSystemNotificationToTypeServerAccids /**< 发送到 Server 中的指定用户，server_id 和 to_accids 必填 */,
+    kNIMQChatSystemNotificationToTypeChannelAccids /**<发送到 Channel 中的指定用户，server_id、channel_id 和 to_accids 必填 */,
+    kNIMQChatSystemNotificationToTypeAccids /**< 发送给指定用户，to_accids 必填 */
+}
+
 export enum NIMQChatSystemNotificationType {
     /** 未知类型系统通知 */
     kNIMQChatSystemNotificationTypeUnkonwn = 0,
@@ -623,8 +632,10 @@ export enum NIMQChatSystemNotificationType {
     kNIMQChatSystemNotificationTypeServerEnterLeave = 32,
     /** 用户通过邀请码加入服务器 msg_data: NIMQChatSystemNotificationDataServerJoinByInviteCode */
     kNIMQChatSystemNotificationTypeServerJoinByInviteCode = 33,
-    /** 频道对游客可见性变更 msg_data: NIMQChatSystemNotificationDataChannelGuestVisibilityChange*/
+    /** 频道对游客可见性变更 msg_data: NIMQChatSystemNotificationDataChannelGuestVisibilityChange */
     kNIMQChatSystemNotificationTypeChannelVisitorVisibilityChange = 34,
+    /** 当前用户服务器成员信息对IM资料的联动变更 msg_data: NIMQChatSystemNotificationDataMyMemberInfoUpdated */
+    kNIMQChatSystemNotificationTypeMyMemberInfoUpdated = 35,
     /** 自定义系统通知 msg_data: NULL */
     kNIMQChatSystemNotificationTypeCustom = 100
 }
@@ -640,9 +651,9 @@ export type QChatBaseCallback = (resp: QChatBaseResp) => void
 
 export interface NIMQChatChannelIDInfo {
     /** server id */
-    server_id?: number
+    server_id?: string
     /** channel id */
-    channel_id?: number
+    channel_id?: string
 }
 
 export interface QChatBaseResp {
@@ -668,7 +679,7 @@ export interface QChatBusinessAntiSpamInfo {
 
 export interface QChatMemberInfo {
     /** server id */
-    server_id?: number
+    server_id?: string
     /** 用户accid */
     accid?: string
     /** 昵称 */
@@ -693,9 +704,9 @@ export interface QChatMemberInfo {
 
 export interface QChatServerRoleInfo {
     /** 服务器ID */
-    server_id?: number
+    server_id?: string
     /** 身份组id */
-    role_id?: number
+    role_id?: string
     /** 身份组名称 */
     role_name?: string
     /** 身份组图片 URL */
@@ -718,9 +729,9 @@ export interface QChatServerRoleInfo {
 
 export interface QChatChannelRoleInfo {
     /** 服务器ID */
-    server_id?: number
+    server_id?: string
     /** 身份组id */
-    role_id?: number
+    role_id?: string
     /** 身份组名称 */
     role_name?: string
     /** 身份组图片 URL */
@@ -736,16 +747,16 @@ export interface QChatChannelRoleInfo {
     /** 身份组修改时间 */
     update_time?: number
     /** 频道 ID */
-    channel_id?: number
+    channel_id?: string
     /** 继承的服务器身份组 ID */
-    parent_role_id?: number
+    parent_role_id?: string
 }
 
 export interface QChatChannelCategoryRoleInfo {
     /** 服务器ID */
-    server_id?: number
+    server_id?: string
     /** 身份组id */
-    role_id?: number
+    role_id?: string
     /** 身份组名称 */
     role_name?: string
     /** 身份组图片 URL */
@@ -761,18 +772,18 @@ export interface QChatChannelCategoryRoleInfo {
     /** 身份组修改时间 */
     update_time?: number
     /** 频道分组 ID */
-    category_id?: number
+    category_id?: string
     /** 继承的服务器身份组 ID */
-    parent_role_id?: number
+    parent_role_id?: string
     /** 有效标志 */
     valid_flag?: boolean
 }
 
 export interface QChatMemberRoleInfo {
     /** 该定制权限所在的频道 ID */
-    channel_id?: number
+    channel_id?: string
     /** 该定制权限所在的身份组 ID */
-    role_id?: number
+    role_id?: string
     /** 定制权限的用户信息 */
     member_info?: QChatMemberInfo
     /** 身份组权限设定 */
@@ -785,9 +796,9 @@ export interface QChatMemberRoleInfo {
 
 export interface QChatChannelCategoryMemberRoleInfo {
     /** 频道分组 ID */
-    category_id?: number
+    category_id?: string
     /** 该定制权限所在的身份组 ID */
-    role_id?: number
+    role_id?: string
     /** 定制权限的用户信息 */
     member_info?: QChatMemberInfo
     /** 身份组权限设定 */
@@ -800,9 +811,9 @@ export interface QChatChannelCategoryMemberRoleInfo {
 
 export interface NIMQChatUnreadInfo {
     /** 服务器ID */
-    server_id?: number
+    server_id?: string
     /** 频道ID */
-    channel_id?: number
+    channel_id?: string
     /** 已读时间戳 */
     ack_timestamp?: number
     /** 未读数 */
@@ -819,12 +830,12 @@ export interface QChatRoleMemberInfo {
     /** member_info */
     member_info?: QChatMemberInfo
     /** 所在身份组role id */
-    role_id?: number
+    role_id?: string
 }
 
 export interface QChatServerInfo {
     /** server id */
-    server_id?: number
+    server_id?: string
     /** 用户自定义服务器类别, 0表示无类别 */
     server_type?: number
     /** 是否能被搜索 */
@@ -874,13 +885,13 @@ export interface QChatInviteApplyRecord {
     /** type */
     type?: NIMQChatInviteApplyRecordType
     /** 服务器ID */
-    server_id?: number
+    server_id?: string
     /** 状态 */
     status?: NIMQChatInviteApplyRecordStatus
     /** 请求ID */
-    request_id?: number
+    request_id?: string
     /** 记录ID */
-    record_id?: number
+    record_id?: string
     /** 创建时间 */
     create_time?: number
     /** 更新时间 */

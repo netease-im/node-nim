@@ -80,7 +80,7 @@ export interface SessionMainTagInfo {
 export interface SessionRoamMsgHasMoreTagInfo {
     session_tag_info?: SessionMainTagInfo
     message_time_tag?: number
-    message_server_id?: number
+    message_server_id?: string
 }
 
 export type SessionChangeCallback = (rescode: NIMResCode, result: SessionData, count: number) => void

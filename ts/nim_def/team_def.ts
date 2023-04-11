@@ -149,6 +149,8 @@ export interface NIMTeamAPI {
 
     CreateTeamAsync(info: TeamInfo, ids: Array<string>, invitationPostscript: string, cb: TeamEventCallback | null, jsonExtension: string): boolean
 
+    CreateTeamAsyncEx(info: TeamInfo, ids: Array<string>, invitationPostscript: string, cb: TeamEventCallback | null, jsonExtension: string): boolean
+
     InviteAsync(
         tid: string,
         ids: Array<string>,

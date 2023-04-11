@@ -23,7 +23,7 @@ public:
         if (info.Length() <= index) {
             return T();
         }
-        return ts_cpp_conversion::ObjectToStruct<clean_ext_t<T>>(info.Env(), info[index]);
+        return ts_cpp_conversion::ObjectToStruct<clean_ext_t<T>>(info.Env(), info[index], index);
     }
     template <typename... Args, std::size_t... Is>
     static auto NapiCallback2TupleImpl(const Napi::CallbackInfo& info, const std::index_sequence<Is...>) {
@@ -106,7 +106,7 @@ public:
     template <typename TReturn, typename TClass, typename TArg>
     static TReturn Invoke(const Napi::CallbackInfo& info, TReturn (TClass::*fun)(TArg), TClass* obj) {
         try {
-            return (obj->*fun)(ts_cpp_conversion::ObjectToStruct<clean_ext_t<TArg>>(info.Env(), info[0]));
+            return (obj->*fun)(ts_cpp_conversion::ObjectToStruct<clean_ext_t<TArg>>(info.Env(), info[0], 0));
         } catch (const std::string& error) {
             Napi::Error::New(info.Env(), error).ThrowAsJavaScriptException();
         }
@@ -140,7 +140,7 @@ public:
             auto tsfn_cb = [tup, &promise](const Napi::Env& env, const Napi::Function& js_callback, const void* value) -> Napi::Value {
                 auto&& args = TupleToCbArgs(env, tup);
                 auto return_value = js_callback.Call(args);
-                promise.set_value(ts_cpp_conversion::ObjectToStruct<TReturn>(env, return_value));
+                promise.set_value(ts_cpp_conversion::ObjectToStruct<TReturn>(env, return_value, -1));
                 return env.Null();
             };
             tsfn.NonBlockingCall((void*)0, tsfn_cb);
@@ -173,13 +173,13 @@ public:
 
 #define CallbackSpecialization(Callback)                                                                                       \
     template <>                                                                                                                \
-    Callback ts_cpp_conversion::ObjectToStruct<Callback>(Napi::Env env, const Napi::Value& function) {                         \
+    Callback ts_cpp_conversion::ObjectToStruct<Callback>(Napi::Env env, const Napi::Value& function, int32_t index) {          \
         return CppInvoker::ToThreadSafeCallback(env, function.As<Napi::Function>(), #Callback, CallbackDescription(Callback)); \
     }
 
 #define CallbackPointerSpecialization(Callback)                                                                              \
     template <>                                                                                                              \
-    Callback* ts_cpp_conversion::ObjectToStruct<Callback*>(Napi::Env env, const Napi::Value& function) {                     \
+    Callback* ts_cpp_conversion::ObjectToStruct<Callback*>(Napi::Env env, const Napi::Value& function, int32_t index) {      \
         static std::shared_ptr<Callback> cb{};                                                                               \
         cb = std::make_shared<Callback>(                                                                                     \
             CppInvoker::ToThreadSafeCallback(env, function.As<Napi::Function>(), #Callback, CallbackDescription(Callback))); \

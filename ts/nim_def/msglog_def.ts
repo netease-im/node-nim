@@ -153,7 +153,7 @@ export interface QueryMsgOnlineAsyncParam {
     limit_count_?: number /**< number 本次查询的消息条数上限(最多100条) */
     from_time_?: number /**< number 起始时间点，单位：毫秒 */
     end_time_?: number /**<  number 结束时间点，单位：毫秒 */
-    end_msg_id_?: number /**< number 结束查询的最后一条消息的server_msg_id(不包含在查询结果中) */
+    end_msg_id_?: string /**< number 结束查询的最后一条消息的server_msg_id(不包含在查询结果中) */
     reverse_?: boolean /**< boolean true：反向查询(按时间正序起查，正序排列)，false：按时间逆序起查，逆序排列（建议默认为false） */
     need_save_to_local_?: boolean /**< boolean 将在线查询结果保存到本地，false: 不保存 */
     auto_download_attachment_?: boolean /**< boolean 查询结果回来后，是否需要sdk自动下载消息附件。true：需要，false：不需要 */
@@ -180,6 +180,7 @@ export interface MessageSetting {
     push_need_badge_?: BoolStatus /**< 是否要做消息计数 */
     push_need_prefix_?: BoolStatus /**< 需要推送昵称 */
     routable_?: BoolStatus /**< 是否要抄送 */
+    is_blacklisted_?: BoolStatus /**< 是否被拉黑 */
     need_offline_?: BoolStatus /**< 是否支持离线消息 */
     push_payload_?: object /**< 第三方自定义的推送属性，长度2048, json object */
     push_content_?: string /**< 自定义推送文案，长度限制200字节 */
@@ -207,13 +208,13 @@ export interface IMMessageThreadInfo {
     reply_msg_from_account_?: string // 被回复消息的消息发送者
     reply_msg_to_account_?: string // 被回复消息的消息接受者，群的话是tid
     reply_msg_time_?: number // 被回复消息的消息发送时间
-    reply_msg_id_server_?: number // 被回复消息的消息ID(serverId)
+    reply_msg_id_server_?: string // 被回复消息的消息ID(serverId)
     reply_msg_id_client_?: string // 被回复消息的消息ID(clientId)
 
     thread_msg_from_account_?: string // thread消息的消息发送者
     thread_msg_to_account_?: string // thread消息的消息接受者，群的话是tid
     thread_msg_time_?: number // thread消息的消息发送时间
-    thread_msg_id_server_?: number // thread消息的消息ID(serverId)
+    thread_msg_id_server_?: string // thread消息的消息ID(serverId)
     thread_msg_id_client_?: string // thread消息的消息ID(clientId)
     deleted_?: number // 消息是否已经被删除（可能是撤回，也可能是单向删除），查询thread消息历史时可能会有这个字段，大于0表示已经删除（目前撤回和单向删除都是1，未来可能区分）
 }
@@ -241,23 +242,28 @@ export interface IMMessage {
     readonly_sender_client_type_?: NIMClientType /**< 发送者客户端类型（只读） */
     readonly_sender_device_id_?: string /**< 发送者客户端设备ID（只读） */
     readonly_sender_nickname_?: string /**< 发送者昵称（只读） */
-    readonly_server_id_?: number /**< 消息ID（服务器，只读） */
+    readonly_server_id_?: string /**< 消息ID（服务器，只读） */
 }
 
 export interface QueryMsgAsyncParam {
     to_type_?: NIMSessionType /**< enum 会话类型，双人0，群组1,超大群5 (nim_msglog_def.h) */
     from_account?: string /**< string 消息的发送方 */
     to_account?: string /**< string 消息的接收方 */
-    server_id?: number /**< number 消息的服务端id */
+    server_id?: string /**< number 消息的服务端id */
     client_id?: string /**< string 消息的客户端id */
     time?: number /**<  number 消息时间戳 */
 }
 export interface QueryThreadHistoryMsgAsyncParam {
     from_time?: number /**< number 起始时间 缺省0 */
     to_time?: number /**< number 结束时间 缺省0 */
-    exclude_msg_id?: number /**< number 截至消息的服务端id，不包含在查询结果中 缺省0 */
+    exclude_msg_id?: string /**< string 截至消息的服务端id，不包含在查询结果中 缺省0 */
     limit?: number /**<  number 查询条数限制 缺省100 */
     reverse?: number /**<  number 排序 缺省0 false */
+}
+export enum NIMFullTextSearchRule {
+    kNIMFullTextSearchOrderByAsc = 1,
+    kNIMFullTextSearchOrderByDesc = 2,
+    kNIMFullTextSearchNoGroupBySession = 4
 }
 export interface FullTextSearchOnlineAsyncParam {
     /** 要搜索的关键字 */
@@ -270,7 +276,7 @@ export interface FullTextSearchOnlineAsyncParam {
     session_limit_?: number
     /** 限制每个会话返回的消息数量 */
     msglog_limit_?: number
-    /** 设置查找规则, 例如升序不分组: kNIMFullTextSearchOrderByAsc | kNIMFullTextSearchNoGroupBySession */
+    /** 设置查找规则, 见NIMFullTextSearchRule 例如升序不分组: kNIMFullTextSearchOrderByAsc | kNIMFullTextSearchNoGroupBySession */
     search_rule_?: number
     /** P2P 会话过滤列表 */
     p2p_filter_list_?: Array<string>
@@ -386,7 +392,7 @@ export interface NIMMsgLogAPI {
         to_time: number,
         limit_count: number,
         anchor_client_msg_id: string,
-        anchor_server_msg_id: number,
+        anchor_server_msg_id: string,
         direction: NIMMsglogSearchDirection,
         cb: GetMessagesDynamicallyCallback | null,
         jsonExtension: string

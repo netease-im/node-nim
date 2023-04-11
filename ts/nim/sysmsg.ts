@@ -103,7 +103,7 @@ export class NIMSysMsg extends EventEmitter<NIMSysMsgEvents> {
      * </pre>
      */
     setStatusAsync(
-        msg_id: number,
+        msg_id: string,
         status: NIMSysMsgStatus,
         cb: NotifySingleSysmsgCallback | null,
         jsonExtension: string
@@ -157,7 +157,7 @@ export class NIMSysMsg extends EventEmitter<NIMSysMsgEvents> {
      * 200:成功
      * </pre>
      */
-    deleteAsync(msg_id: number, cb: NotifySingleSysmsgCallback | null, jsonExtension: string): Promise<[NIMResCode, number, number] | null> {
+    deleteAsync(msg_id: string, cb: NotifySingleSysmsgCallback | null, jsonExtension: string): Promise<[NIMResCode, number, number] | null> {
         return new Promise((resolve) => {
             if (
                 !this.sysmsg.DeleteAsync(

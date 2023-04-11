@@ -47,6 +47,7 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @param cb		群通知的回调函数
      * @return boolean 检查参数如果不符合要求则返回失败
+     * @deprecated 该接口已过时，请使用 createTeamAsyncEx 创建群组
      * @note
      * <pre>
      * 200:成功
@@ -66,6 +67,49 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
         return new Promise((resolve) => {
             if (
                 !this.team.CreateTeamAsync(
+                    info,
+                    ids,
+                    invitationPostscript,
+                    (event) => {
+                        if (cb) {
+                            cb(event)
+                        }
+                        resolve([event])
+                    },
+                    jsonExtension
+                )
+            ) {
+                resolve(null)
+            }
+        })
+    }
+
+    /** 创建群组
+     * @param team_info 群组信息
+     * @param ids		邀请对象id
+     * @param invitation_postscript 邀请附言
+     * @param jsonExtension json扩展参数（备用，目前不需要）
+     * @param cb		群通知的回调函数
+     * @return boolean 检查参数如果不符合要求则返回失败
+     * @note
+     * <pre>
+     * 200:成功
+     * 810:如果创建的是高级群，返回810表示邀请成功并带上tinfo
+     * 414:成员不足
+     * 801:成员数超限制
+     * 404:成员中有非法用户
+     * </pre>
+     */
+    createTeamAsyncEx(
+        info: TeamInfo,
+        ids: Array<string>,
+        invitationPostscript: string,
+        cb: TeamEventCallback | null,
+        jsonExtension: string
+    ): Promise<[TeamEvent] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.team.CreateTeamAsyncEx(
                     info,
                     ids,
                     invitationPostscript,

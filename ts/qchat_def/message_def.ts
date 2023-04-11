@@ -57,7 +57,7 @@ export interface QChatMessageThreadInfo {
     /** 被回复消息得创建时间 */
     reply_msg_timestamp?: number
     /** 被回复消息得服务器消息 ID */
-    reply_msg_server_id?: number
+    reply_msg_server_id?: string
     /** 被回复消息得客户端消息 ID */
     reply_msg_client_id?: string
     /** thread 根消息的所有者 ID */
@@ -65,7 +65,7 @@ export interface QChatMessageThreadInfo {
     /** thread 根消息的创建时间 */
     thread_root_msg_timestamp?: number
     /** thread 根消息的服务器消息 ID */
-    thread_root_msg_server_id?: number
+    thread_root_msg_server_id?: string
     /** thread 根消息的客户端消息 ID */
     thread_root_msg_client_id?: string
 }
@@ -73,9 +73,9 @@ export interface QChatMessageThreadInfo {
 /** @interface QChatMessageSend 发送消息时指定的参数 */
 export interface QChatMessageSend {
     /** 必填，消息所属的server id */
-    server_id?: number
+    server_id?: string
     /** 必填，消息所属的channel id */
-    channel_id?: number
+    channel_id?: string
     /** 必填，消息类型 */
     msg_type?: NIMQChatMsgType
     /** 可选，消息子类型 */
@@ -95,7 +95,7 @@ export interface QChatMessageSend {
     /** 可选，被艾特的人的accid列表 */
     mention_accids?: Array<string>
     /** 可选，被艾特的人的身份组id列表 */
-    mention_role_ids?: Array<number>
+    mention_role_ids?: Array<string>
     /** 必填，该消息是否存储云端历史，0:不支持，1:支持 */
     history_enable?: boolean
     /** 可选，自定义的推送属性，限制json */
@@ -147,9 +147,9 @@ export interface QChatMessageUpdateOpeInfo {
 /** @interface QChatMessage 接收到的完整消息体 */
 export interface QChatMessage {
     /** 必填，消息所属的server id */
-    server_id?: number
+    server_id?: string
     /** 必填，消息所属的channel id */
-    channel_id?: number
+    channel_id?: string
     /** 必填，消息类型 */
     msg_type?: NIMQChatMsgType
     /** 可选，消息子类型 */
@@ -169,7 +169,7 @@ export interface QChatMessage {
     /** 可选，被艾特的人的accid列表 */
     mention_accids?: Array<string>
     /** 可选，被艾特的人的身份组id列表 */
-    mention_role_ids?: Array<number>
+    mention_role_ids?: Array<string>
     /** 必填，该消息是否存储云端历史，0:不支持，1:支持 */
     history_enable?: boolean
     /** 可选，自定义的推送属性，限制json */
@@ -194,7 +194,7 @@ export interface QChatMessage {
     /** 消息状态 */
     status?: NIMQChatMessageStatus
     /** 更新消息时必填，消息服务器端id */
-    msg_server_id?: number
+    msg_server_id?: string
     /** 消息发送者的accid */
     from_accid?: string
     /** 消息发送者的客户端类型 */
@@ -296,7 +296,7 @@ export interface NIMQChatThreadMessageMetaInfo {
     /** 最后一条消息时间戳 */
     timestamp?: number
     /** thread 消息服务器 ID */
-    thread_msg_server_id?: number
+    thread_msg_server_id?: string
     /** thread 消息时间戳 */
     thread_msg_timestamp?: number
 }
@@ -342,11 +342,11 @@ export interface QChatQuickCommentDetail {
 /** @interface QChatQuickCommentInfo */
 export interface QChatQuickCommentInfo {
     /** 评论所在服务器 */
-    server_id?: number
+    server_id?: string
     /** 评论所在频道 */
-    channel_id?: number
+    channel_id?: string
     /** 评论所属的消息服务器 ID */
-    msg_server_id?: number
+    msg_server_id?: string
     /** 总的评论数量 */
     count?: number
     /** 最后一次操作的时间 */
@@ -434,7 +434,7 @@ export interface QChatUpdateMessageParam {
     /** @internal */
     cb?: UpdateMsgCallback
     id_info?: NIMQChatChannelIDInfo
-    msg_server_id?: number
+    msg_server_id?: string
     timestamp?: number
     update_info?: QChatMessageUpdateInfo
     anti_spam_info?: QChatMessageAntiSpamInfo
@@ -449,7 +449,7 @@ export interface QChatRevokeMessageParam {
     /** @internal */
     cb?: UpdateMsgCallback
     id_info?: NIMQChatChannelIDInfo
-    msg_server_id?: number
+    msg_server_id?: string
     timestamp?: number
     update_info?: QChatMessageUpdateInfo
 }
@@ -459,7 +459,7 @@ export interface QChatDeleteMessageParam {
     /** @internal */
     cb?: UpdateMsgCallback
     id_info?: NIMQChatChannelIDInfo
-    msg_server_id?: number
+    msg_server_id?: string
     timestamp?: number
     update_info?: QChatMessageUpdateInfo
 }
@@ -469,15 +469,15 @@ export interface QChatGetMessagesParam {
     /** @internal */
     cb?: GetMessagesCallback
     /** 服务器ID */
-    server_id?: number
+    server_id?: string
     /** 频道ID */
-    channel_id?: number
+    channel_id?: string
     /** 查询开始时间 */
     from_time?: number
     /** 查询结束时间 */
     to_time?: number
     /** 排除某条消息 */
-    exclude_msg_server_id?: number
+    exclude_msg_server_id?: string
     /** 查询条数 */
     limit?: number
     /** 是否倒序, false: 否, true: 是 */
@@ -489,9 +489,9 @@ export interface QChatGetLastMessagesParam {
     /** @internal */
     cb?: GetLastMessagesCallback
     /** 服务器ID */
-    server_id?: number
+    server_id?: string
     /** 频道ID列表 */
-    channel_ids?: Array<number>
+    channel_ids?: Array<string>
 }
 
 /** @interface QChatGetMessagesCacheParam */
@@ -499,9 +499,9 @@ export interface QChatGetMessagesCacheParam {
     /** @internal */
     cb?: GetMessagesCacheCallback
     /** 服务器 ID */
-    server_id?: number
+    server_id?: string
     /** 频道 ID */
-    channel_id?: number
+    channel_id?: string
 }
 
 /** @interface QChatMarkMessageReadParam */
@@ -527,7 +527,7 @@ export interface QChatReplyMessageParam {
 /** @interface NIMQChatGetMessageColumns */
 export interface NIMQChatGetMessageColumns {
     /** 消息服务器 ID */
-    msg_server_id?: number
+    msg_server_id?: string
     /** 消息发送时间戳 */
     timestamp?: number
 }
@@ -535,8 +535,8 @@ export interface NIMQChatGetMessageColumns {
 /** @interface QChatGetMessageHistoryByIdsParam */
 export interface QChatGetMessageHistoryByIdsParam {
     cb?: GetMessageHistoryByIdsCallback
-    server_id?: number
-    channel_id?: number
+    server_id?: string
+    channel_id?: string
     columns?: Array<NIMQChatGetMessageColumns>
 }
 
@@ -558,7 +558,7 @@ export interface QChatGetThreadMessagesParam {
     /** 查询结束时间 */
     to_time?: number
     /** 排除的消息 ID */
-    exclude_msg_server_id?: number
+    exclude_msg_server_id?: string
     /** 查询条数 */
     limit?: number
     /** 是否倒序, false: 否, true: 是 */
@@ -570,9 +570,9 @@ export interface QChatGetMentionedMeMessagesParam {
     /** 查询未读消息中 @ 当前用户的消息异步回调 */
     cb?: GetMentionedMeMessagesCallback
     /** 服务器ID */
-    server_id?: number
+    server_id?: string
     /** 频道ID */
-    channel_id?: number
+    channel_id?: string
     /** 查询的起始时间位置, 0表示当前时间 */
     timestamp?: number
     /** 查询条数, 0为使用默认值 */
@@ -609,8 +609,8 @@ export interface QChatRemoveQuickCommentParam {
 export interface QChatGetThreadRootMessagesMetaParam {
     /** @internal */
     cb?: GetThreadRootMessagesMetaCallback
-    server_id?: number
-    channel_id?: number
+    server_id?: string
+    channel_id?: string
     thread_root_messages?: Array<QChatMessage>
 }
 
@@ -619,11 +619,11 @@ export interface QChatGetQuickCommentsParam {
     /** @internal */
     cb?: GetQuickCommentsCallback
     /** 服务器 ID */
-    server_id?: number
+    server_id?: string
     /** 频道 ID */
-    channel_id?: number
+    channel_id?: string
     /** 要查询的服务器消息 ID 列表 */
-    msg_server_id_list?: Array<number>
+    msg_server_id_list?: Array<string>
 }
 /** @interface QChatMessageSearchPageParam */
 export interface QChatMessageSearchPageParam {
@@ -632,9 +632,9 @@ export interface QChatMessageSearchPageParam {
     /** 搜索关键字 */
     keyword?: string
     /** 服务器 ID */
-    server_id?: number
+    server_id?: string
     /** 频道 ID */
-    channel_id?: number
+    channel_id?: string
     /** 消息发送者ID */
     from_accid?: string
     /** 搜索的开始时间 */

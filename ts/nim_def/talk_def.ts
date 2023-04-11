@@ -5,7 +5,7 @@ import { NIMSessionType } from './session_def'
 export interface SendMessageArc {
     talk_id_?: string /**< 会话ID */
     msg_id_?: string /**< 消息ID */
-    msg_id_server_?: number /**< 服务器端消息ID */
+    msg_id_server_?: string /**< 服务器端消息ID */
     rescode_?: NIMResCode /**< 错误码 */
     msg_timetag_?: number /**< 消息时间戳 */
     third_party_callback_ext_?: string /**< 第三方回调回来的自定义扩展字段 */
@@ -15,7 +15,7 @@ export interface SendMessageArc {
 export interface BroadcastMessage {
     body_?: string
     time_?: number
-    id_?: number
+    id_?: string
     from_id_?: string
 }
 

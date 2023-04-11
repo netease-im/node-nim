@@ -31,7 +31,7 @@ export interface NOSParams {
 }
 
 export interface InitNosConfigParam {
-    tag_list_?: Array<Record<string, number>> /**< Map<string, number> 场景标签信息列表 */
+    tag_list_?: Map<string, number> /**< Map<string, number> 场景标签信息列表 */
 }
 
 export interface InitNosResult {

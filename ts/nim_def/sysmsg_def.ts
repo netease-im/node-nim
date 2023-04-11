@@ -33,7 +33,7 @@ export interface SysMessage {
     sender_accid_?: string /**< 发送者ID */
     content_?: string /**< 只读，SDK不转发该字段 */
     attach_?: string /**< 通知附件 */
-    id_?: number /**< 通知ID */
+    id_?: string /**< 通知ID */
     status_?: NIMSysMsgStatus /**< 通知状态 */
     msg_setting_?: SysMessageSetting /**< 消息属性设置 */
 
@@ -71,11 +71,11 @@ export interface NIMSysMsgAPI {
 
     QueryUnreadCount(cb: NotifySysmsgResCallback | null, jsonExtension: string): void
 
-    SetStatusAsync(msg_id: number, status: NIMSysMsgStatus, cb: NotifySingleSysmsgCallback | null, jsonExtension: string): boolean
+    SetStatusAsync(msg_id: string, status: NIMSysMsgStatus, cb: NotifySingleSysmsgCallback | null, jsonExtension: string): boolean
 
     ReadAllAsync(cb: NotifySysmsgResCallback | null, jsonExtension: string): void
 
-    DeleteAsync(msg_id: number, cb: NotifySingleSysmsgCallback | null, jsonExtension: string): boolean
+    DeleteAsync(msg_id: string, cb: NotifySingleSysmsgCallback | null, jsonExtension: string): boolean
 
     DeleteAllAsync(cb: NotifySysmsgResCallback | null, jsonExtension: string): boolean
 

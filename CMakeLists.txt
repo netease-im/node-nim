@@ -39,11 +39,14 @@ elseif(CONAN_SETTINGS_ARCH STREQUAL "armv8")
     set(CMAKE_JS_ARCH "arm64")
 endif()
 if(TARGET nim_cpp_wrapper)
-    execute_process(COMMAND ${NPM_EXUTABLE} install --ignore-download-sdk
+    execute_process(COMMAND ${NPM_EXUTABLE} install --ignoreDownloadSdk
             WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
             OUTPUT_QUIET)
 else()
-    execute_process(COMMAND ${NPM_EXUTABLE} install --nim-sdk-url=${NIM_SDK_URL}
+    list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/.cmake/")
+    include(PlatformSettings)
+    include(GetGitRevisionDescription)
+    execute_process(COMMAND ${NPM_EXUTABLE} install --nimSdkUrl=${NIM_SDK_URL}
         WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
         OUTPUT_QUIET)
 endif()
@@ -94,6 +97,7 @@ file(GLOB_RECURSE NIM_NODE_SOURCE ${CMAKE_CURRENT_LIST_DIR}/src/*.cpp
                                   ${CMAKE_CURRENT_LIST_DIR}/src/*.c)
 ne_add_library(${TARGET_NAME}
                 FRAMEWORK OFF
+                NO_SYMLINKS ON
                 ${NIM_NODE_SOURCE}
                 ${CMAKE_JS_SRC})
 target_include_directories(${TARGET_NAME} PRIVATE

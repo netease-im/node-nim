@@ -14,6 +14,6 @@ ReflectionDefinition_O(QChatAttachmentDownloadResp, res_code, res_type, task_id,
 ReflectionDefinition_O(QChatAttachmentProgressResp, res_code, task_id, total_size, cur_size);
 ReflectionDefinition_O(QChatAttachmentUploadParam, cb, progress_cb, task_id, file_path);
 ReflectionDefinition_O(QChatAttachmentStopUploadParam, task_id);
-ReflectionDefinition_O(QChatAttachmentDownloadParam, cb, progress_cb, task_id, file_path);
+ReflectionDefinition_O(QChatAttachmentDownloadParam, cb, progress_cb, task_id, url, file_path);
 ReflectionDefinition_O(QChatAttachmentStopDownloadParam, task_id);
 #endif  // __QCHAT_ATTACHMENT_HELPER_H__

@@ -402,6 +402,10 @@ export interface ChatRoomQueueElement {
     value_?: string
 }
 
+export interface ChatRoomBatchMembers {
+    members_values_?: Map<string, string>
+}
+
 export interface ChatRoomQueueOfferOption {
     /** true 表示当提交这个新元素的用户从聊天室掉线或退出的时候，需要删除这个元素；默认 false 表示不删除 */
     transient_?: boolean
