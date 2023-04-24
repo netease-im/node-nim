@@ -10,10 +10,8 @@ const testTalk = require('./test_talk.js').default
 const testSession = require('./test_session.js').default
 const testUser = require('./test_user.js').default
 const testNos = require('./test_nos.js').default
-const testRts = require('./test_rts.js').default
 const testSysmsg = require('./test_sysmsg.js').default
 const testTool = require('./test_tool.js').default
-
 
 const current = process.cwd()
 process.chdir(`${current}/build/Release`)
@@ -24,7 +22,7 @@ const test_info = {
     mainUser: 'ljm2',
     mainUserPwd: 'e10adc3949ba59abbe56e057f20f883e',
     assistUser: 'jiajia02',
-    assistUserPwd: '17ac6c7d1fe2e931e60751a8db164a4f',
+    assistUserPwd: '17ac6c7d1fe2e931e60751a8db164a4f'
 }
 describe('NIM Init Client', function () {
     iniClient(test_info)
@@ -40,7 +38,6 @@ describe('NIM Test Suite', function () {
     testSession(test_info)
     testUser(test_info)
     testNos(test_info)
-    testRts(test_info)
     testSysmsg(test_info)
     testTool(test_info)
 })

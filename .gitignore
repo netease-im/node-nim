@@ -128,3 +128,5 @@ temporary/
 packages/
 types/
 .vscode/
+doc
+sdk
