@@ -14,7 +14,6 @@ module.exports = ({
     const temporaryPath = path.join(sourcePath, `build_${platform}_${arch}`)
     const cmakeGenerate = [`cmake ${wrapperSource}`]
     cmakeGenerate.push(`-B${temporaryPath}`)
-    cmakeGenerate.push('-T"v141_xp"')
     cmakeGenerate.push(`-DCMAKE_INSTALL_PREFIX=${sourcePath}`)
     if (platform === 'win32') {
       cmakeGenerate.push('-DBUILD_SHARED_LIBS=ON')
