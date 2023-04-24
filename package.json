@@ -1,6 +1,6 @@
 {
     "name": "node-nim",
-    "version": "7.8.13-rc.3",
+    "version": "7.8.13-rc.4",
     "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
     "main": "js/nim.js",
     "types": "types/nim.d.ts",
@@ -45,6 +45,7 @@
         "js",
         "scripts",
         "just-task.js",
-        "binding.gyp"
+        "binding.gyp",
+        "src"
     ]
 }
