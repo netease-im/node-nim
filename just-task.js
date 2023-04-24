@@ -107,20 +107,21 @@ task('install', () => {
         logger.info('[install] Skip downlaod prebuilt libraries.')
         return
     }
-    let target = '5.0.8'
-    let runtime = 'electron'
+    let target = process.env.npm_config_target
+    let runtime = process.env.npm_config_runtime
     const targetPlatform = process.env.npm_config_target_platform || process.platform
     const targetArch = process.env.npm_config_target_arch || process.arch
-    const downloadUrl = process.env.npm_config_download_url
     const curPkgMeta = require(path.join(__dirname, 'package.json'))
     const rootPkgMeta = require(path.join(process.env.INIT_CWD, 'package.json'))
     logger.info('------------------ just install --------------------')
-    if (rootPkgMeta.devDependencies && rootPkgMeta.devDependencies.electron) {
-        // v13.1.2 => 13.1.2, remove prefix 'v'
-        target = rootPkgMeta.devDependencies.electron.replace(/^.*?(\d+.+\d).*/, '$1')
-    } else {
-        target = process.version.match(/^v(\d+\.\d+)/)[1]
-        runtime = 'node'
+    if (!target && !runtime) {
+        if (rootPkgMeta.devDependencies && rootPkgMeta.devDependencies.electron) {
+            // v13.1.2 => 13.1.2, remove prefix 'v'
+            target = rootPkgMeta.devDependencies.electron.replace(/^.*?(\d+.+\d).*/, '$1')
+        } else {
+            target = process.version.match(/^v(\d+\.\d+)/)[1]
+            runtime = 'node'
+        }
     }
     // 13.1.2 => 13.1, match major.minor only
     const nodeAbi = `${runtime}-v${target.replace(/^(\d+.+?\d+).*/, '$1')}`
@@ -147,12 +148,16 @@ task('install', () => {
                 const cachePath = path.join(__dirname, 'nim_sdk')
                 const temporaryPath = path.join(__dirname, 'temporary')
                 fetchWrapper({
+                    platform: targetPlatform,
+                    arch: targetArch,
                     fetchUrl: nativeUrl,
                     temporaryPath,
                     extractPath: cachePath
                 })
                     .then(() => {
                         return buildWrapper({
+                            platform: targetPlatform,
+                            arch: targetArch,
                             sourcePath: cachePath
                         })
                     })
