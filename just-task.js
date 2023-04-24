@@ -129,7 +129,9 @@ task('install', () => {
         const remotePath = 'package'
         const packageName = `${curPkgMeta.name}-v${curPkgMeta.version}-${nodeAbi}-${targetPlatform}-${targetArch}.tar.gz`
         const localPath = 'build/Release'
-        fs.rmSync(path.join(__dirname, localPath), { recursive: true })
+        if (fs.existsSync(path.join(__dirname, localPath, packageName))) {
+            fs.rmSync(path.join(__dirname, localPath), { recursive: true })
+        }
         fs.mkdirSync(path.join(__dirname, localPath), { recursive: true })
         download(`${host}/${remotePath}/${packageName}`, path.join(__dirname, localPath), {
             strip: 1,

@@ -1,49 +1,49 @@
 {
-  "name": "node-nim",
-  "version": "7.8.13",
-  "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
-  "main": "js/nim.js",
-  "types": "types/nim.d.ts",
-  "author": "Dylan",
-  "license": "ISC",
-  "scripts": {
-    "test": "mocha test -slow 200 -timeout 5000",
-    "install": "just install",
-    "build:ts": "rimraf ./js && rimraf ./types && tsc",
-    "prepare": "npm run build:ts"
-  },
-  "dependencies": {
-    "bindings": "^1.5.0",
-    "download": "^8.0.0",
-    "extract-zip": "^2.0.1",
-    "just-task": "^1.4.1",
-    "node-gyp": "^8.1.0",
-    "shelljs": "^0.8.4",
-    "tar": "^6.1.0"
-  },
-  "devDependencies": {
-    "eslint": "^7.31.0",
-    "eslint-config-standard": "^16.0.3",
-    "eslint-plugin-import": "^2.23.4",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^5.1.0",
-    "eslint-plugin-standard": "^5.0.0",
-    "mocha": "^8.4.0",
-    "typescript": "^4.3.5",
-    "typescript-eslint": "0.0.1-alpha.0"
-  },
-  "keywords": [
-    "netease",
-    "nim",
-    "chatroom",
-    "im sdk",
-    "nim sdk",
-    "nim node",
-    "nim electron"
-  ],
-  "files": [
-    "js",
-    "scripts",
-    "just-task.js"
-  ]
+    "name": "node-nim",
+    "version": "7.8.13-rc.2",
+    "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
+    "main": "js/nim.js",
+    "types": "types/nim.d.ts",
+    "author": "Dylan",
+    "license": "ISC",
+    "scripts": {
+        "test": "mocha test -slow 200 -timeout 5000",
+        "install": "just install",
+        "build:ts": "rimraf ./js && rimraf ./types && tsc",
+        "prepare": "npm run build:ts"
+    },
+    "dependencies": {
+        "bindings": "^1.5.0",
+        "download": "^8.0.0",
+        "extract-zip": "^2.0.1",
+        "just-task": "^1.4.1",
+        "node-gyp": "^8.1.0",
+        "shelljs": "^0.8.4",
+        "tar": "^6.1.0"
+    },
+    "devDependencies": {
+        "eslint": "^7.31.0",
+        "eslint-config-standard": "^16.0.3",
+        "eslint-plugin-import": "^2.23.4",
+        "eslint-plugin-node": "^11.1.0",
+        "eslint-plugin-promise": "^5.1.0",
+        "eslint-plugin-standard": "^5.0.0",
+        "mocha": "^8.4.0",
+        "typescript": "^4.3.5",
+        "typescript-eslint": "0.0.1-alpha.0"
+    },
+    "keywords": [
+        "netease",
+        "nim",
+        "chatroom",
+        "im sdk",
+        "nim sdk",
+        "nim node",
+        "nim electron"
+    ],
+    "files": [
+        "js",
+        "scripts",
+        "just-task.js"
+    ]
 }
