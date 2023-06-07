@@ -130,7 +130,7 @@ ReflectionDefinition_O(QChatMarkMessageReadResp, res_code, unread_info);
 ReflectionDefinition_O(NIMQChatThreadMessageMetaInfo, total, timestamp, thread_msg_server_id, thread_msg_timestamp);
 ReflectionDefinition_O(QChatGetThreadMessagesResp, res_code, meta_info, root_message, messages);
 ReflectionDefinition_O(QChatGetThreadRootMessagesMetaResp, res_code, meta_infos);
-ReflectionDefinition_O(QChatQuickCommentDetail, type, count, include_yourself, accids);
+ReflectionDefinition_O(QChatQuickCommentDetail, type, count, create_time, include_yourself, accids);
 ReflectionDefinition_O(QChatQuickCommentInfo, server_id, channel_id, msg_server_id, count, timestamp, details);
 ReflectionDefinition_O(QChatGetQuickCommentsResp, res_code, comments);
 ReflectionDefinition_O(QChatMessageSearchPageResp, res_code, page_info, messages);

@@ -11,7 +11,7 @@ import {
     SessionInfo,
     UpdateOnlineSessionInfoCallback
 } from '../nim_def/online_session_def'
-import { NIMResCode } from 'ts/nim_def/client_def'
+import { NIMResCode } from '../nim_def/client_def'
 
 export declare interface NIMOnlineSessionEvents {
     /** 会话变更 */

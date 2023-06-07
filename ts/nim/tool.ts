@@ -1,7 +1,7 @@
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
 import { NIMToolAPI, NIMAppDataType, AudioInfo, GetAudioTextCallback, FilterClientAntispamCallback } from '../nim_def/tool_def'
-import { NIMResCode } from 'ts/nim_def/client_def'
+import { NIMResCode } from '../nim_def/client_def'
 
 export declare interface NIMToolEvents {}
 

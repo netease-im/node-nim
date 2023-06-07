@@ -42,7 +42,7 @@ import {
     ChatRoomGetMembersByTagParameters,
     ChatRoomBatchMembers
 } from '../chatroom_def/chatroom_def'
-import { NIMResCode } from 'ts/nim_def/client_def'
+import { NIMResCode } from '../nim_def/client_def'
 
 export declare interface ChatRoomEvents {
     /** 登录 */

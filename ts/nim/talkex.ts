@@ -27,7 +27,7 @@ import {
     QueryAllPinMessageResponse
 } from '../nim_def/talkex_def'
 import { IMMessage } from '../nim_def/msglog_def'
-import { NIMResCode } from 'ts/nim_def/client_def'
+import { NIMResCode } from '../nim_def/client_def'
 
 export declare interface NIMTalkExEvents {
     /** 添加快捷回复 */

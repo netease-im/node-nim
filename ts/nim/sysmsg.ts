@@ -10,7 +10,7 @@ import {
     QuerySysmsgCallback
 } from '../nim_def/sysmsg_def'
 import { SendMessageArc } from '../nim_def/talk_def'
-import { NIMResCode } from 'ts/nim_def/client_def'
+import { NIMResCode } from '../nim_def/client_def'
 
 export declare interface NIMSysMsgEvents {
     /** 系统通知 */

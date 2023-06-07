@@ -1,4 +1,4 @@
-import { NIMResCode } from 'ts/nim_def/client_def'
+import { NIMResCode } from '../nim_def/client_def'
 
 export enum NIMChatRoomLoginState {
     kNIMChatRoomLoginStateLogin = 1 /**< 登录状态 */,

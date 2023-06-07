@@ -287,7 +287,7 @@ export interface SDKConfig {
     /***********地址族相关设置 end************/
 
     dedicated_cluste_flag_?: boolean /**< boolean 是否为专属集群 {true,false} def:false */
-    hand_shake_type_?: number /**< int 登录时使用的握手协议类型 0:支持配置多种对称与非对称加密算法,1:只支持RAS + RC4，缺省 1 */
+    hand_shake_type_?: number /**< int 登录时使用的握手协议类型 0:支持配置多种对称与非对称加密算法,1:只支持RAS + RC4，缺省 0 */
     nego_key_neca_?: number /**< int  "交换密钥"协议加密算法 {1(RSA),2(SM2)}, def:1(RSA) 非对称加密 */
     comm_neca_?: number /**< int 通信加密算法 {1(RC4),2(AES128),4(SM4)} def:1(RC4) 对称加密 */
     server_conf_file_path_?: string /**< string 私有云服务器相关地址配置文件本地绝对路径，如果不填默认执行文件目录下的server_conf.txt */

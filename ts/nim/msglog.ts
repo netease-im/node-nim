@@ -37,7 +37,7 @@ import {
     GetMessagesDynamicallyCallback,
     GetMessagesResult
 } from '../nim_def/msglog_def'
-import { NIMResCode } from 'ts/nim_def/client_def'
+import { NIMResCode } from '../nim_def/client_def'
 
 export declare interface NIMMsgLogEvents {
     /** 单向删除消息记录通知 */

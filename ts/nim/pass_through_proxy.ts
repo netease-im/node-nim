@@ -1,7 +1,7 @@
 import { NIMPassThroughProxyAPI, NIMSendHttpRequestMethods, SendHttpRequestCallback } from '../nim_def/pass_through_proxy_def'
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
-import { NIMResCode } from 'ts/nim_def/client_def'
+import { NIMResCode } from '../nim_def/client_def'
 
 export declare interface NIMPassThroughProxyEvents {
     /** 接受到 HTTP 透传消息 */

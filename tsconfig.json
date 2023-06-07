@@ -8,17 +8,26 @@
         "esModuleInterop": true,
         "allowJs": true,
         "moduleResolution": "node",
-        "lib": ["es6", "dom"],
+        "lib": [
+            "es6",
+            "dom"
+        ],
         "declaration": true,
         "declarationDir": "types",
         "sourceMap": true,
         "stripInternal": true
     },
     "typedocOptions": {
-        "entryPoints": ["ts/node-nim.ts", "ts/chatroom", "ts/chatroom_def", "ts/nim", "ts/nim_def", "ts/qchat", "ts/qchat_def"],
+        "entryPoints": [
+            "ts/node-nim.ts",
+            "ts/chatroom",
+            "ts/chatroom_def",
+            "ts/nim",
+            "ts/nim_def",
+            "ts/qchat",
+            "ts/qchat_def"
+        ],
         "entryPointStrategy": "expand",
-        "plugin": ["typedoc-plugin-markdown", "typedoc-github-wiki-theme"],
-        "theme": "github-wiki",
         "readme": "none",
         "out": "doc",
         "sort": "source-order",
@@ -26,5 +35,7 @@
         "hideGenerator": "true",
         "excludeInternal": "true"
     },
-    "include": ["ts/**/*"]
+    "include": [
+        "ts/**/*"
+    ]
 }

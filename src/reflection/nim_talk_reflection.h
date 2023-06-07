@@ -33,5 +33,4 @@ CallbackPointerSpecialization(Talk::FileUpPrgCallback);
 CallbackSpecialization(Talk::RecallMsgsCallback);
 CallbackSpecialization(Talk::ReceiveBroadcastMsgCallback);
 CallbackSpecialization(Talk::ReceiveBroadcastMsgsCallback);
-CallbackSpecialization(Talk::AntiCheatingFieldFillCallback);
 #endif

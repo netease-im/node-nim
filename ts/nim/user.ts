@@ -11,7 +11,7 @@ import {
     SpecialRelationshipChangeEvent,
     BlackMuteListInfo
 } from '../nim_def/user_def'
-import { NIMResCode } from 'ts/nim_def/client_def'
+import { NIMResCode } from '../nim_def/client_def'
 
 export declare interface NIMUserEvents {
     /** 用户属性变更 */

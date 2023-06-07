@@ -21,7 +21,7 @@ import {
     TeamMemberProperty,
     TeamEvent
 } from '../nim_def/team_def'
-import { NIMResCode } from 'ts/nim_def/client_def'
+import { NIMResCode } from '../nim_def/client_def'
 
 export declare interface NIMTeamEvents {
     /** 群事件 */

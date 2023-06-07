@@ -219,6 +219,13 @@ export interface IMMessageThreadInfo {
     deleted_?: number // 消息是否已经被删除（可能是撤回，也可能是单向删除），查询thread消息历史时可能会有这个字段，大于0表示已经删除（目前撤回和单向删除都是1，未来可能区分）
 }
 
+export interface IMMessageRobotInfo {
+    function_?: string // 机器人 function
+    topic_?: string // 机器人 topic
+    custom_content_?: string // 机器人 custom_content
+    account_?: string // 机器人 account
+}
+
 export interface IMMessage {
     rescode_?: NIMResCode /**< 错误码 */
     feature_?: NIMMessageFeature /**< 消息属性 */
@@ -238,7 +245,8 @@ export interface IMMessage {
     local_res_id_?: string /**< 媒体文件ID（客户端） */
     status_?: NIMMsgLogStatus /**< 消息状态（客户端） */
     sub_status_?: NIMMsgLogSubStatus /**< 消息子状态（客户端） */
-    thread_info_?: IMMessageThreadInfo
+    thread_info_?: IMMessageThreadInfo /**< thread消息信息 */
+    robot_info_?: IMMessageRobotInfo /**< 机器人消息信息 */
     readonly_sender_client_type_?: NIMClientType /**< 发送者客户端类型（只读） */
     readonly_sender_device_id_?: string /**< 发送者客户端设备ID（只读） */
     readonly_sender_nickname_?: string /**< 发送者昵称（只读） */

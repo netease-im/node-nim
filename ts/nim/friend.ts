@@ -10,7 +10,7 @@ import {
     NIMVerifyType,
     FriendChangeEvent
 } from '../nim_def/friend_def'
-import { NIMResCode } from 'ts/nim_def/client_def'
+import { NIMResCode } from '../nim_def/client_def'
 
 export declare interface NIMFriendEvents {
     /** 好友变更通知 */

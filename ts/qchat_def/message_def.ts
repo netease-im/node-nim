@@ -333,6 +333,8 @@ export interface QChatQuickCommentDetail {
     type?: number
     /** 表示这个评论的数量 */
     count?: number
+    /** 创建时间 */
+    create_time: number
     /** 表示自己是否添加过这个标签 */
     include_yourself?: boolean
     /** 若干个添加过表情的 account ID */

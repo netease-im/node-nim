@@ -525,19 +525,37 @@ inline bool Writer<StringBuffer>::WriteUint(unsigned u) {
     return true;
 }
 
-template<>
+template <>
 inline bool Writer<StringBuffer>::WriteInt64(int64_t i64) {
-    char *buffer = os_->Push(21);
-    const char* end = internal::i64toa(i64, buffer);
-    os_->Pop(static_cast<size_t>(21 - (end - buffer)));
+    if (i64 > INT32_MAX) {
+        char* buffer = os_->Push(23);
+        *buffer++ = '"';
+        char* end = internal::i64toa(i64, buffer);
+        *end++ = '"';
+        *end++ = '\0';
+        os_->Pop(static_cast<size_t>(23 - (end - buffer)));
+    } else {
+        char* buffer = os_->Push(21);
+        char* end = internal::i64toa(i64, buffer);
+        os_->Pop(static_cast<size_t>(21 - (end - buffer)));
+    }
     return true;
 }
 
-template<>
+template <>
 inline bool Writer<StringBuffer>::WriteUint64(uint64_t u) {
-    char *buffer = os_->Push(20);
-    const char* end = internal::u64toa(u, buffer);
-    os_->Pop(static_cast<size_t>(20 - (end - buffer)));
+    if (u > UINT32_MAX) {
+        char* buffer = os_->Push(22);
+        *buffer++ = '"';
+        char* end = internal::u64toa(u, buffer);
+        *end++ = '"';
+        *end++ = '\0';
+        os_->Pop(static_cast<size_t>(22 - (end - buffer)));
+    } else {
+        char* buffer = os_->Push(20);
+        char* end = internal::u64toa(u, buffer);
+        os_->Pop(static_cast<size_t>(20 - (end - buffer)));
+    }
     return true;
 }
 

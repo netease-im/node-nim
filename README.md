@@ -1,37 +1,106 @@
-# NetEase IM Node.js addon wrapper
+# NetEase Electron IM SDK
 
-[![codecov](https://codecov.io/gh/netease-im/node-nim/branch/master/graph/badge.svg?token=YUP8T7ZG6U)](https://codecov.io/gh/netease-im/node-nim) [![GitHub all releases](https://img.shields.io/github/downloads/netease-im/node-nim/total)](https://github.com/netease-im/node-nim/releases)
+[![codecov](https://codecov.io/gh/netease-im/node-nim/branch/master/graph/badge.svg?token=YUP8T7ZG6U)](https://codecov.io/gh/netease-im/node-nim) [![GitHub all releases](https://img.shields.io/github/downloads/netease-im/node-nim/total)](https://github.com/netease-im/node-nim/releases)  
+[中文](README_CN.md)  
+[API Document](https://github.com/netease-im/node-nim/wiki)
 
 ## Table of Contents
 
--   [NetEase IM Node.js addon wrapper](#netease-im-nodejs-addon-wrapper)
+-   [NetEase Electron IM SDK](#netease-electron-im-sdk)
     -   [Table of Contents](#table-of-contents)
     -   [Introduction](#introduction)
+    -   [Runtime Requirements](#runtime-requirements)
+    -   [System Requirements](#system-requirements)
+    -   [Supported Platforms](#supported-platforms)
     -   [Installation](#installation)
     -   [Build From Source](#build-from-source)
-    -   [Unit Test](#unit-test)
-    -   [Sample Code](#sample-code)
     -   [Quick Start](#quick-start)
+        -   [Initialize SDK](#initialize-sdk)
+        -   [Login](#login)
+        -   [Send Message](#send-message)
 
 ## Introduction
 
-node-nim is a wrapper of [NetEase IM](https://netease.im/).  
-For more detailed documentation, changelog and tech support. See https://dev.yunxin.163.com/.
+`node-nim` is a Node.js wrapper for the [NetEase IM PC SDK](https://doc.yunxin.163.com/messaging/docs/home-page?platform=pc), enabling you to utilize all of its features in your preferred frontend framework with native platform performance.  
+For comprehensive documentation, changelog, and technical support, please visit https://dev.yunxin.163.com/.
+
+## Runtime Requirements
+
+| Runtime  | Version     |
+| -------- | ----------- |
+| Electron | >= v8.5.5   |
+| Node.js  | >= v12.13.0 |
+
+## System Requirements
+
+| System  | Requirements  |
+| ------- | ------------- |
+| Windows | >= Windows 7  |
+| macOS   | >= 10.14.0    |
+| Linux   | glibc >= 2.23 |
+
+## Supported Platforms
+
+| Platform | Architecture |
+| -------- | ------------ |
+| Windows  | x64          |
+| Windows  | ia32         |
+| macOS    | x64          |
+| macOS    | arm64        |
+| Linux    | x64          |
+| Linux    | arm64        |
 
 ## Installation
 
-node-nim runs on Node.js and is available as a NPM package. You can specify architecture and platform by `--arch` and `--platform` flags.
+`node-nim` is an NPM package that can be installed using the `npm install` command.  
+It will automatically download the prebuilt binary file that fits your current platform.
 
-node-nim will download the nim SDK which has the same version, you can override the version by add `--nimSdkVersion` or `--nimSdkUrl` flag.
-
+```bash
+npm install node-nim --save-dev
 ```
-npm install node-nim --save-dev --arch=x64 --platform=win32 --nimSdkVersion=9.1.0
+
+Maybe you need to build ia32 app on x64 platform or something like that, you can use `--arch` and `--platform` to specify the platform you want to build.
+
+-   Windows x64
+
+```bash
+npm install node-nim --save-dev --arch=x64 --platform=win32
+```
+
+-   Windows x86
+
+```bash
+npm install node-nim --save-dev --arch=ia32 --platform=win32
+```
+
+-   macOS x64
+
+```bash
+npm install node-nim --save-dev --arch=x64 --platform=darwin
+```
+
+-   macOS arm64
+
+```bash
+npm install node-nim --save-dev --arch=arm64 --platform=darwin
+```
+
+-   Linux x64
+
+```bash
+npm install node-nim --save-dev --arch=x64 --platform=linux
+```
+
+-   Linux arm64
+
+```bash
+npm install node-nim --save-dev --arch=arm64 --platform=linux
 ```
 
 ## Build From Source
 
-Technically, nim sdk is shipped with a prebuilt node-nim.node binary file, so you don't need to build it yourself.  
-But if you want to add some personal features or you just want to do so, feel free to build it!  
+Technically, native nim sdk is shipped with a prebuilt node-nim.node binary file, so `there is no need to build it yourself.`.  
+But if you want to add personal features or simply prefer to do so, feel free to build it!  
 Build Requirements:
 
 -   Node.js
@@ -48,79 +117,53 @@ cmake --build build --config Release
 
 And voilà, you now have your own node-nim binary file in the `build` directory.
 
-## Unit Test
+## Quick Start
 
-Execute following script to run unit test, [check this](./test/test_all.js), and you can also get an coverage report under 'coverage'.
-
-```
-npm run coverage
-```
-
-## Sample Code
-
-```js
-// Chatroom
+```ts
 import * as node_nim from 'node-nim'
-let ret = node_nim.chatroom.init('', '')
-if (!ret) {
-    console.log('init failed')
-    process.exit(1)
-}
-node_nim.chatroom.initEventHandlers()
-ret = node_nim.chatroom.enter('room_id', 'login_data', {}, '')
-if (!ret) {
-    console.log('enter failed')
-    process.exit(1)
-}
 ```
 
-```js
-// NIM
-import * as node_nim from 'node-nim'
-const result = node_nim.nim.client.init('app_key', 'app_data_dir', 'app_install_dir', {
-    db_encrypt_key: 'abcdefghijklmnopqrstuvwxyz012345'
+### Initialize SDK
+
+```ts
+const result = node_nim.nim.client.init('appkey', '', '', {
+    database_encrypt_key_: 'abcdefghijklmnopqrstuvwxyz012345'
 })
-
-if (!result) {
-    console.log('init failed')
-    process.exit(1)
+if (result) {
+    node_nim.nim.initEventHandlers() // init event handlers
+    node_nim.nim.talk.on('receiveMsg', (result) => {
+        console.log('receiveMsg', result)
+    })
+    node_nim.nim.talk.on('sendMsg', (message: node_nim.IMMessage) => {
+        console.log('sendMsg: ', message)
+    })
+    // add more event handlers here
+    // ...
 }
+return result
+```
 
-node_nim.nim.initEventHandlers()
+### Login
 
-let resp = await node_nim.nim.client.login(
-    'app_key',
-    'username',
-    'password',
-    null, // pass your callback function if you dont use the return Promise
-    ''
-)
-if (resp[0].res_code_ != node_nim.NIMResCode.kNIMResSuccess) {
+```ts
+let [loginResult] = await node_nim.nim.client.login('appkey', 'account', 'password', null, '')
+if (loginResult.res_code_ == node_nim.NIMResCode.kNIMResSuccess) {
+    console.log('login succeeded')
+} else {
     console.log('login failed')
-    process.exit(1)
 }
-console.log('loginResult', res)
-// login has 3 steps, step 3 succeeded
-node_nim.nim.talk.on('receiveMsg', function (result) {
-    console.log('receiveMsg', result)
-})
-node_nim.nim.talk.on('sendMsg', (msg) => {
-    console.log('sendMsg', msg)
-})
+```
 
+### Send Message
+
+```ts
 node_nim.nim.talk.sendMsg(
     {
-        session_type_: 0, // p2p
-        receiver_accid_: 'receiver_accid',
-        timetag_: new Date().getTime(),
-        type_: 0, // text message
-        content_: 'Send from NIM node quick start.',
-        client_msg_id_: new Date().getTime().toString() // use an uuid
+        session_type_: node_nim.NIMSessionType.kNIMSessionTypeP2P,
+        receiver_accid_: 'receiver',
+        type_: node_nim.NIMMessageType.kNIMMessageTypeText,
+        content_: 'Send from NIM node quick start.'
     },
     ''
 )
 ```
-
-## Quick Start
-
-Check out this [quick start project](https://github.com/netease-im/node-nim-quick-start) and try out NIM's outstanding features!

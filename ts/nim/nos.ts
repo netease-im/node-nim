@@ -18,7 +18,7 @@ import {
     UploadMediaResult
 } from '../nim_def/nos_def'
 import { IMMessage } from '../nim_def/msglog_def'
-import { NIMResCode } from 'ts/nim_def/client_def'
+import { NIMResCode } from '../nim_def/client_def'
 
 export declare interface NIMNOSEvents {
     /** 下载回调 */

@@ -22,7 +22,7 @@ import {
     UpdateHasmoreRoammsgCallback,
     UpdateStickTopSessionCallback
 } from '../nim_def/session_def'
-import { NIMResCode } from 'ts/nim_def/client_def'
+import { NIMResCode } from '../nim_def/client_def'
 
 export declare interface NIMSessionEvents {
     /** 会话变更 */

@@ -15,7 +15,7 @@ import {
     SDKFeedbackCallback,
     UploadSDKLogCallback
 } from '../nim_def/global_def'
-import { NIMResCode } from 'ts/nim_def/client_def'
+import { NIMResCode } from '../nim_def/client_def'
 
 export declare interface NIMGlobalEvents {
     /** SDK DB操作出错 */
