@@ -194,6 +194,8 @@ export interface QChatInitParam {
     auth_timeout?: number
     /** 数据库加密密钥，如果为空，则使用默认值 */
     database_encrypt_key?: string
+    /** 自动订阅 */
+    auto_subscribe?: boolean
     /** 加密配置 */
     encryption_configuration?: QChatEncryptionConfiguration
     /** FCS配置 */

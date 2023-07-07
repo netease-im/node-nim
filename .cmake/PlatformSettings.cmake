@@ -197,12 +197,8 @@ function(ne_add_library target)
                 XCODE_ATTRIBUTE_STRIP_STYLE "non-global"
                 XCODE_ATTRIBUTE_GCC_GENERATE_DEBUGGING_SYMBOLS YES
                 XCODE_ATTRIBUTE_DEBUG_INFORMATION_FORMAT "dwarf-with-dsym"
-                # -fvisibility-inlines-hidden
                 XCODE_ATTRIBUTE_GCC_INLINES_ARE_PRIVATE_EXTERN YES
-                # -fvisibility=hidden
                 XCODE_ATTRIBUTE_GCC_SYMBOLS_PRIVATE_EXTERN YES
-                # Xcode enabled default, just add option -fembed-bitcode-marker
-                # XCODE_ATTRIBUTE_ENABLE_BITCODE YES
             )
         endif ()
     elseif (UNIX)

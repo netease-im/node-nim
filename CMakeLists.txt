@@ -148,4 +148,4 @@ install(
 )
 if (MSVC)
     install(FILES $<TARGET_PDB_FILE:${TARGET_NAME}> DESTINATION pdb OPTIONAL)
-endif ()
+endif()

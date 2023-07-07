@@ -52,6 +52,7 @@ ReflectionDefinition_O(QChatInitParam,
     custom_timeout,
     auth_timeout,
     database_encrypt_key,
+    auto_subscribe,
     encryption_configuration,
     fcs_configuration,
     message_cache_configuration);
