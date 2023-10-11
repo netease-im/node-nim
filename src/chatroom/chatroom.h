@@ -4,9 +4,6 @@
 #include "service_base.h"
 
 namespace node_nim {
-class NIMChatRoom;
-template <>
-NIMChatRoom* node_nim::ServiceBase::GetCurrentService<NIMChatRoom>(node_nim::ServiceBase* obj_holder);
 class NIMChatRoom : public BizService<NIMChatRoom> {
 public:
     static Napi::Object Init(Napi::Env env, Napi::Object exports);

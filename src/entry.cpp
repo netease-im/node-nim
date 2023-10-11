@@ -33,6 +33,8 @@
 #include "qchat/server/qchat_server.h"
 #include "qchat/system_notification/qchat_system_notification.h"
 #include "ts_cpp_conversion.h"
+#include "v2/v2_node_nim_instance.h"
+#include "v2/v2_node_nim_login_service.h"
 
 namespace {
 
@@ -65,6 +67,9 @@ Napi::Object RegisterModule(Napi::Env env, Napi::Object exports) {
     node_nim::QChatRole::Init(env, exports);
     node_nim::QChatServer::Init(env, exports);
     node_nim::QChatSystemNotification::Init(env, exports);
+    node_nim::V2NodeNIMInstance::Init(env, exports);
+    node_nim::V2NodeNIMLoginService::Init(env, exports);
+    node_nim::V2NodeNIMLoginDetail::Init(env, exports);
     return exports;
 }
 

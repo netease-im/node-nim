@@ -9,7 +9,6 @@
 #include "reflection/reflection_include.h"
 
 namespace node_nim {
-GetCurrentSDKServiceImpl(NIMDataSync, NIMDataSync, holder_service);
 Napi::Object NIMDataSync::Init(Napi::Env env, Napi::Object exports) {
     return InternalInit("NIMDataSync", env, exports, {RegApi("InitEventHandlers", &NIMDataSync::InitEventHandlers)});
 }
@@ -19,6 +18,8 @@ void NIMDataSync::InitEventHandlers() {
 }
 
 NIMDataSync::NIMDataSync(const Napi::CallbackInfo& info)
-    : BizService("NIMDataSync", info) {}
+    : BizService("NIMDataSync", info) {
+    service_instance_ = this;
+}
 
 }  // namespace node_nim

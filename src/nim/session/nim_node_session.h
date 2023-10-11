@@ -10,9 +10,6 @@
 #include "service_base.h"
 
 namespace node_nim {
-class NIMSession;
-template <>
-NIMSession* node_nim::ServiceBase::GetCurrentService<NIMSession>(node_nim::ServiceBase* obj_holder);
 class NIMSession : public BizService<NIMSession> {
 public:
     static Napi::Object Init(Napi::Env env, Napi::Object exports);

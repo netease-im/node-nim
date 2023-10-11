@@ -12,6 +12,7 @@
 
 #include <napi.h>
 #include <tuple>
+#include "ne_stl.h"
 #include "ts_cpp_conversion.h"
 
 struct CppInvoker {
@@ -83,107 +84,118 @@ public:
     }
 
 public:
-    template <typename TReturn,
-        typename... TArgs,
-        typename = typename std::enable_if<!std::is_member_function_pointer<TReturn (*)(TArgs...)>::value>::type>
+    template <typename TReturn, typename... TArgs>
     static TReturn Invoke(const Napi::CallbackInfo& info, TReturn (*fun)(TArgs...)) {
-        try {
-            return TupleCall(fun, NapiCallback2Tuple<clean_ext_t<TArgs>...>(info));
-        } catch (const std::string& error) {
-            Napi::Error::New(info.Env(), error).ThrowAsJavaScriptException();
+        if constexpr (std::is_void<TReturn>::value) {
+            try {
+                TupleCall(fun, NapiCallback2Tuple<clean_ext_t<TArgs>...>(info));
+            } catch (const std::string& error) {
+                Napi::Error::New(info.Env(), error).ThrowAsJavaScriptException();
+            }
+        } else {
+            try {
+                return TupleCall(fun, NapiCallback2Tuple<clean_ext_t<TArgs>...>(info));
+            } catch (const std::string& error) {
+                Napi::Error::New(info.Env(), error).ThrowAsJavaScriptException();
+            }
+            return TReturn();
         }
-        return TReturn();
     }
     template <typename TReturn, typename TClass, typename... TArgs>
     static TReturn Invoke(const Napi::CallbackInfo& info, TReturn (TClass::*fun)(TArgs...), TClass* obj) {
-        try {
-            return TupleCall(fun, obj, NapiCallback2Tuple<clean_ext_t<TArgs>...>(info));
-        } catch (const std::string& error) {
-            Napi::Error::New(info.Env(), error).ThrowAsJavaScriptException();
+        if constexpr (std::is_void<TReturn>::value) {
+            try {
+                TupleCall(fun, obj, NapiCallback2Tuple<clean_ext_t<TArgs>...>(info));
+            } catch (const std::string& error) {
+                Napi::Error::New(info.Env(), error).ThrowAsJavaScriptException();
+            }
+        } else {
+            try {
+                return TupleCall(fun, obj, NapiCallback2Tuple<clean_ext_t<TArgs>...>(info));
+            } catch (const std::string& error) {
+                Napi::Error::New(info.Env(), error).ThrowAsJavaScriptException();
+            }
+            return TReturn();
         }
-        return TReturn();
-    }
-    template <typename TReturn, typename TClass, typename TArg>
-    static TReturn Invoke(const Napi::CallbackInfo& info, TReturn (TClass::*fun)(TArg), TClass* obj) {
-        try {
-            return (obj->*fun)(ts_cpp_conversion::ObjectToStruct<clean_ext_t<TArg>>(info.Env(), info[0], 0));
-        } catch (const std::string& error) {
-            Napi::Error::New(info.Env(), error).ThrowAsJavaScriptException();
-        }
-        return TReturn();
-    }
-    template <typename TReturn, typename TClass>
-    static TReturn Invoke(const Napi::CallbackInfo& info, TReturn (TClass::*fun)(), TClass* obj) {
-        try {
-            return (obj->*fun)();
-        } catch (const std::string& error) {
-            Napi::Error::New(info.Env(), error).ThrowAsJavaScriptException();
-        }
-        return TReturn();
     }
 
-#define CallbackDescription(Callback) ((Callback*)(nullptr))
-#define DefCallbackType(TReturn, ...) std::function<TReturn(__VA_ARGS__)>
-
-    template <typename TReturn, typename... TArgs, typename std::enable_if<!std::is_void<TReturn>::value, std::nullptr_t>::type = nullptr>
-    static DefCallbackType(TReturn, TArgs...) ToThreadSafeCallback(Napi::Env env,
+    template <typename TReturn, typename... TArgs>
+    static std::function<TReturn(TArgs...)> ToThreadSafeCallback(Napi::Env env,
         const Napi::Function& fun,
         const std::string& fun_location_name,
-        const DefCallbackType(TReturn, TArgs...) * realcb,
-        std::size_t maxQueueSize = 0,
-        std::size_t initialThreadCount = 1) {
-        auto tsfn = Napi::ThreadSafeFunction::New(env, fun, fun_location_name, maxQueueSize, initialThreadCount);
+        const std::function<TReturn(TArgs...)>* realcb) {
+        auto tsfn = Napi::ThreadSafeFunction::New(env, fun, fun_location_name, 0, 1);
         auto callback = [tsfn](TArgs... param) -> TReturn {
             auto tup = std::make_tuple(std::forward<TArgs>(param)...);
-            std::promise<TReturn> promise;
-            auto future = promise.get_future();
-            auto tsfn_cb = [tup, &promise](const Napi::Env& env, const Napi::Function& js_callback, const void* value) -> Napi::Value {
-                auto&& args = TupleToCbArgs(env, tup);
-                auto return_value = js_callback.Call(args);
-                promise.set_value(ts_cpp_conversion::ObjectToStruct<TReturn>(env, return_value, -1));
-                return env.Null();
-            };
-            tsfn.NonBlockingCall((void*)0, tsfn_cb);
-            return future.get();
+            if constexpr (!std::is_void<TReturn>::value) {
+                std::promise<TReturn> promise;
+                auto future = promise.get_future();
+                auto tsfn_cb = [tup, &promise](const Napi::Env& env, const Napi::Function& js_callback, const void* value) -> Napi::Value {
+                    auto&& args = TupleToCbArgs(env, tup);
+                    auto return_value = js_callback.Call(args);
+                    promise.set_value(ts_cpp_conversion::ObjectToStruct<TReturn>(env, return_value, -1));
+                    return env.Null();
+                };
+                tsfn.NonBlockingCall((void*)0, tsfn_cb);
+                return future.get();
+            } else {
+                auto tsfn_cb = [tup](const Napi::Env& env, const Napi::Function& js_callback, const void* value) -> Napi::Value {
+                    auto&& args = TupleToCbArgs(env, tup);
+                    js_callback.Call(args);
+                    return env.Null();
+                };
+                tsfn.NonBlockingCall((void*)0, tsfn_cb);
+                return TReturn();
+            }
         };
         return callback;
     }
 
-    template <typename TReturn, typename... TArgs, typename std::enable_if<std::is_void<TReturn>::value, std::nullptr_t>::type = nullptr>
-    static DefCallbackType(TReturn, TArgs...) ToThreadSafeCallback(Napi::Env env,
+    template <typename TReturn, typename... TArgs>
+    static ne_std::function<TReturn(TArgs...)> ToThreadSafeCallback(Napi::Env env,
         const Napi::Function& fun,
         const std::string& fun_location_name,
-        const DefCallbackType(TReturn, TArgs...) * realcb,
-        std::size_t maxQueueSize = 0,
-        std::size_t initialThreadCount = 1) {
-        auto tsfn = Napi::ThreadSafeFunction::New(env, fun, fun_location_name, maxQueueSize, initialThreadCount);
+        const ne_std::function<TReturn(TArgs...)>* realcb) {
+        auto tsfn = Napi::ThreadSafeFunction::New(env, fun, fun_location_name, 0, 1);
         auto callback = [tsfn](TArgs... param) -> TReturn {
             auto tup = std::make_tuple(std::forward<TArgs>(param)...);
-            auto tsfn_cb = [tup](const Napi::Env& env, const Napi::Function& js_callback, const void* value) -> Napi::Value {
-                auto&& args = TupleToCbArgs(env, tup);
-                js_callback.Call(args);
-                return env.Null();
-            };
-            tsfn.NonBlockingCall((void*)0, tsfn_cb);
-            return TReturn();
+            if constexpr (!std::is_void<TReturn>::value) {
+                std::promise<TReturn> promise;
+                auto future = promise.get_future();
+                auto tsfn_cb = [tup, &promise](const Napi::Env& env, const Napi::Function& js_callback, const void* value) -> Napi::Value {
+                    auto&& args = TupleToCbArgs(env, tup);
+                    auto return_value = js_callback.Call(args);
+                    promise.set_value(ts_cpp_conversion::ObjectToStruct<TReturn>(env, return_value, -1));
+                    return env.Null();
+                };
+                tsfn.NonBlockingCall((void*)0, tsfn_cb);
+                return future.get();
+            } else {
+                auto tsfn_cb = [tup](const Napi::Env& env, const Napi::Function& js_callback, const void* value) -> Napi::Value {
+                    auto&& args = TupleToCbArgs(env, tup);
+                    js_callback.Call(args);
+                    return env.Null();
+                };
+                tsfn.NonBlockingCall((void*)0, tsfn_cb);
+                return TReturn();
+            }
         };
         return callback;
     }
 };
 
-#define CallbackSpecialization(Callback)                                                                                       \
-    template <>                                                                                                                \
-    Callback ts_cpp_conversion::ObjectToStruct<Callback>(Napi::Env env, const Napi::Value& function, int32_t index) {          \
-        return CppInvoker::ToThreadSafeCallback(env, function.As<Napi::Function>(), #Callback, CallbackDescription(Callback)); \
+#define CallbackSpecialization(Callback)                                                                              \
+    template <>                                                                                                       \
+    Callback ts_cpp_conversion::ObjectToStruct<Callback>(Napi::Env env, const Napi::Value& function, int32_t index) { \
+        return CppInvoker::ToThreadSafeCallback(env, function.As<Napi::Function>(), #Callback, (Callback*)(nullptr)); \
     }
 
-#define CallbackPointerSpecialization(Callback)                                                                              \
-    template <>                                                                                                              \
-    Callback* ts_cpp_conversion::ObjectToStruct<Callback*>(Napi::Env env, const Napi::Value& function, int32_t index) {      \
-        static std::shared_ptr<Callback> cb{};                                                                               \
-        cb = std::make_shared<Callback>(                                                                                     \
-            CppInvoker::ToThreadSafeCallback(env, function.As<Napi::Function>(), #Callback, CallbackDescription(Callback))); \
-        return cb.get();                                                                                                     \
+#define CallbackPointerSpecialization(Callback)                                                                                                 \
+    template <>                                                                                                                                 \
+    Callback* ts_cpp_conversion::ObjectToStruct<Callback*>(Napi::Env env, const Napi::Value& function, int32_t index) {                         \
+        static std::shared_ptr<Callback> cb{};                                                                                                  \
+        cb = std::make_shared<Callback>(CppInvoker::ToThreadSafeCallback(env, function.As<Napi::Function>(), #Callback, (Callback*)(nullptr))); \
+        return cb.get();                                                                                                                        \
     }
 
 #endif  // SRC_CPP_INVOKER_H_

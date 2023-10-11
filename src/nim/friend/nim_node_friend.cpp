@@ -9,7 +9,6 @@
 #include "reflection/reflection_include.h"
 
 namespace node_nim {
-GetCurrentSDKServiceImpl(NIMFriend, NIMFriend, holder_service);
 Napi::Object NIMFriend::Init(Napi::Env env, Napi::Object exports) {
     return InternalInit("NIMFriend", env, exports,
         {RegApi("InitEventHandlers", &NIMFriend::InitEventHandlers), RegApi("Request", &Friend::Request), RegApi("Delete", &Friend::DeleteEx),
@@ -22,6 +21,8 @@ void NIMFriend::InitEventHandlers() {
 }
 
 NIMFriend::NIMFriend(const Napi::CallbackInfo& info)
-    : BizService("NIMFriend", info) {}
+    : BizService("NIMFriend", info) {
+    service_instance_ = this;
+}
 
 }  // namespace node_nim

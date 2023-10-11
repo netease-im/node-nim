@@ -9,7 +9,6 @@
 #include "reflection/reflection_include.h"
 
 namespace node_nim {
-GetCurrentSDKServiceImpl(NIMGlobal, NIMGlobal, holder_service);
 Napi::Object NIMGlobal::Init(Napi::Env env, Napi::Object exports) {
     return InternalInit("NIMGlobal", env, exports,
         {RegApi("InitEventHandlers", &NIMGlobal::InitEventHandlers), RegApi("SetProxy", &Global::SetProxy),
@@ -24,6 +23,8 @@ void NIMGlobal::InitEventHandlers() {
 }
 
 NIMGlobal::NIMGlobal(const Napi::CallbackInfo& info)
-    : BizService("NIMGlobal", info) {}
+    : BizService("NIMGlobal", info) {
+    service_instance_ = this;
+}
 
 }  // namespace node_nim

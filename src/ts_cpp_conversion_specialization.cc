@@ -1,7 +1,7 @@
 #include <array>
 #include <string>
 #include "ts_cpp_conversion.h"
-thread_local std::deque<NapiFunctionDesc> ts_cpp_conversion_functions;
+thread_local std::deque<FunctionDesc> ts_cpp_conversion_functions;
 namespace file_helper {
 enum utf8_states_t { S_STRT = 0, S_RJCT = 8 };
 void appendUTF8(std::string& str, uint32_t unicode) {
@@ -205,59 +205,3 @@ std::size_t ReadFile(const std::string& file_name, std::string& data) {
     return 0;
 }
 }  // namespace file_helper
-
-void ParamRegInfoCollector::SetCacheFile(const std::string cache_file) {
-    std::lock_guard<std::recursive_mutex> auto_lock(lock_);
-    cache_file_ = cache_file;
-    MergWithCache();
-    FlushCacheFile();
-}
-std::string ParamRegInfoCollector::GetParamRefValue(const std::string& name) {
-    std::lock_guard<std::recursive_mutex> auto_lock(lock_);
-    std::string ret;
-    auto param_it = param_ref_list_.find(name);
-    if (param_it != param_ref_list_.end())
-        ret = param_it->second.ref_value;
-    else
-        ret = "{\"key\":\"value\"}";
-    return ret;
-}
-void ParamRegInfoCollector::MergWithCache() {
-    std::lock_guard<std::recursive_mutex> auto_lock(lock_);
-    std::string data;
-    file_helper::ReadFileToString(cache_file_, data, true);
-    if (!data.empty()) {
-        rapidjson::Document _doc;
-        _doc.Parse(data);
-        auto _doc_obj = _doc.GetObject();
-        auto params_it = _doc_obj.FindMember("params");
-        if (params_it != _doc_obj.MemberEnd()) {
-            auto _array = params_it->value.GetArray();
-            for (auto& it : _array) {
-                app_name_type_name_map_[it["app_name"].GetString()] = it["typeid_name"].GetString();
-                type_name_app_name_map_[it["typeid_name"].GetString()] = it["app_name"].GetString();
-                param_ref_list_[it["app_name"].GetString()] = {it["typeid_name"].GetString(), it["data"].GetString()};
-            }
-        }
-    }
-}
-void ParamRegInfoCollector::FlushCacheFile() {
-    std::lock_guard<std::recursive_mutex> auto_lock(lock_);
-    rapidjson::Document _doc;
-    _doc.SetObject();
-    rapidjson::Value _array(rapidjson::kArrayType);
-    rapidjson::Document::AllocatorType& allocator = _doc.GetAllocator();
-    for (auto it : param_ref_list_) {
-        rapidjson::Value object(rapidjson::kObjectType);
-        object.AddMember("app_name", it.first, allocator);
-        object.AddMember("typeid_name", it.second.typeid_name, allocator);
-        object.AddMember("data", it.second.ref_value, allocator);
-        _array.PushBack(object, allocator);
-    }
-    _doc.AddMember("params", _array, allocator);
-    rapidjson::StringBuffer buffer;
-    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-    _doc.Accept(writer);
-    std::string str = buffer.GetString();
-    file_helper::WriteFile(cache_file_, str.data(), "w");
-}

@@ -9,7 +9,6 @@
 #include "reflection/reflection_include.h"
 
 namespace node_nim {
-GetCurrentSDKServiceImpl(NIMPassThroughProxy, NIMPassThroughProxy, holder_service);
 Napi::Object NIMPassThroughProxy::Init(Napi::Env env, Napi::Object exports) {
     return InternalInit("NIMPassThroughProxy", env, exports,
         {RegApi("InitEventHandlers", &NIMPassThroughProxy::InitEventHandlers), RegApi("SendHttpRequest", &PassThroughProxy::SendHttpRequest)});
@@ -20,6 +19,8 @@ void NIMPassThroughProxy::InitEventHandlers() {
 }
 
 NIMPassThroughProxy::NIMPassThroughProxy(const Napi::CallbackInfo& info)
-    : BizService("NIMPassThroughProxy", info) {}
+    : BizService("NIMPassThroughProxy", info) {
+    service_instance_ = this;
+}
 
 }  // namespace node_nim

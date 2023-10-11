@@ -10,9 +10,6 @@
 #include "service_base.h"
 
 namespace node_nim {
-class NIMTalkEx;
-template <>
-NIMTalkEx* node_nim::ServiceBase::GetCurrentService<NIMTalkEx>(node_nim::ServiceBase* obj_holder);
 class NIMTalkEx : public BizService<NIMTalkEx> {
 public:
     static Napi::Object Init(Napi::Env env, Napi::Object exports);

@@ -1,30 +1,3 @@
-export { NIMClient } from './nim/client'
-export { NIMDataSync } from './nim/data_sync'
-export { NIMFriend } from './nim/friend'
-export { NIMGlobal } from './nim/global'
-export { NIMMsgLog } from './nim/msglog'
-export { NIMNOS } from './nim/nos'
-export { NIMOnlineSession } from './nim/online_session'
-export { NIMPassThroughProxy } from './nim/pass_through_proxy'
-export { NIMSession } from './nim/session'
-export { NIMSubscribeEvent } from './nim/subscribe_event'
-export { NIMSuperTeam } from './nim/super_team'
-export { NIMSysMsg } from './nim/sysmsg'
-export { NIMTalk } from './nim/talk'
-export { NIMTeam } from './nim/team'
-export { NIMTool } from './nim/tool'
-export { NIMUser } from './nim/user'
-export { NIMPlugin } from './nim/plugin'
-export { NIMTalkEx } from './nim/talkex'
-export { ChatRoomModule } from './chatroom/chatroom'
-export { QChatInstanceModule } from './qchat/instance'
-export { QChatServerModule } from './qchat/server'
-export { QChatChannelModule } from './qchat/channel'
-export { QChatChannelCategoryModule } from './qchat/channel_category'
-export { QChatMessageModule } from './qchat/message'
-export { QChatSystemNotificationModule } from './qchat/system_notification'
-export { QChatAttachmentModule } from './qchat/attachment'
-export { QChatRoleModule } from './qchat/role'
 import { NIMClient } from './nim/client'
 import { NIMDataSync } from './nim/data_sync'
 import { NIMFriend } from './nim/friend'
@@ -52,6 +25,36 @@ import { QChatMessageModule } from './qchat/message'
 import { QChatSystemNotificationModule } from './qchat/system_notification'
 import { QChatAttachmentModule } from './qchat/attachment'
 import { QChatRoleModule } from './qchat/role'
+import { V2NIMInstance } from './v2/v2_nim_instance'
+export {
+    NIMClient,
+    NIMDataSync,
+    NIMFriend,
+    NIMGlobal,
+    NIMMsgLog,
+    NIMNOS,
+    NIMOnlineSession,
+    NIMPassThroughProxy,
+    NIMSession,
+    NIMSubscribeEvent,
+    NIMSuperTeam,
+    NIMSysMsg,
+    NIMTalk,
+    NIMTeam,
+    NIMTool,
+    NIMUser,
+    NIMPlugin,
+    NIMTalkEx,
+    ChatRoomModule,
+    QChatInstanceModule,
+    QChatServerModule,
+    QChatChannelModule,
+    QChatChannelCategoryModule,
+    QChatMessageModule,
+    QChatSystemNotificationModule,
+    QChatAttachmentModule,
+    QChatRoleModule
+}
 export * from './nim_def/client_def'
 export * from './nim_def/data_sync_def'
 export * from './nim_def/friend_def'
@@ -143,3 +146,4 @@ export class QChat {
 export const nim = new NIM()
 export const chatroom = new ChatRoom()
 export const qchat = new QChat()
+export const v2 = new V2NIMInstance()

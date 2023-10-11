@@ -9,7 +9,6 @@
 #include "reflection/reflection_include.h"
 
 namespace node_nim {
-GetCurrentSDKServiceImpl(NIMSystemMsg, NIMSystemMsg, holder_service);
 Napi::Object NIMSystemMsg::Init(Napi::Env env, Napi::Object exports) {
     return InternalInit("NIMSystemMsg", env, exports,
         {RegApi("InitEventHandlers", &NIMSystemMsg::InitEventHandlers),
@@ -26,6 +25,8 @@ void NIMSystemMsg::InitEventHandlers() {
 }
 
 NIMSystemMsg::NIMSystemMsg(const Napi::CallbackInfo& info)
-    : BizService("NIMSystemMsg", info) {}
+    : BizService("NIMSystemMsg", info) {
+    service_instance_ = this;
+}
 
 }  // namespace node_nim

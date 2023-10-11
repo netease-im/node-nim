@@ -10,9 +10,6 @@
 #include "service_base.h"
 
 namespace node_nim {
-class NIMDataSync;
-template <>
-NIMDataSync* node_nim::ServiceBase::GetCurrentService<NIMDataSync>(node_nim::ServiceBase* obj_holder);
 class NIMDataSync : public BizService<NIMDataSync> {
 public:
     static Napi::Object Init(Napi::Env env, Napi::Object exports);

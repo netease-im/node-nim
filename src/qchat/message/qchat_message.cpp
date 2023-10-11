@@ -1,7 +1,6 @@
 #include "qchat_message.h"
 #include "reflection/reflection_include.h"
 namespace node_nim {
-GetCurrentSDKServiceImpl(QChatMessage, QChatMessage, holder_service);
 Napi::Object QChatMessage::Init(Napi::Env env, Napi::Object exports) {
     // clang-format off
     return InternalInit("QChatMessage", env, exports, {
@@ -35,5 +34,7 @@ void QChatMessage::InitEventHandlers() {
 }
 
 QChatMessage::QChatMessage(const Napi::CallbackInfo& info)
-    : BizService("QChatMessage", info) {}
+    : BizService("QChatMessage", info) {
+    service_instance_ = this;
+}
 }  // namespace node_nim

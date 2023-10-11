@@ -1,7 +1,6 @@
 #include "qchat_role.h"
 #include "reflection/reflection_include.h"
 namespace node_nim {
-GetCurrentSDKServiceImpl(QChatRole, QChatRole, holder_service);
 Napi::Object QChatRole::Init(Napi::Env env, Napi::Object exports) {
     // clang-format off
     return InternalInit("QChatRole", env, exports, {
@@ -44,5 +43,7 @@ Napi::Object QChatRole::Init(Napi::Env env, Napi::Object exports) {
 void QChatRole::InitEventHandlers() {}
 
 QChatRole::QChatRole(const Napi::CallbackInfo& info)
-    : BizService("QChatRole", info) {}
+    : BizService("QChatRole", info) {
+    service_instance_ = this;
+}
 }  // namespace node_nim

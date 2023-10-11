@@ -1,7 +1,6 @@
 #include "qchat_channel_category.h"
 #include "reflection/reflection_include.h"
 namespace node_nim {
-GetCurrentSDKServiceImpl(QChatChannelCategory, QChatChannelCategory, holder_service);
 Napi::Object QChatChannelCategory::Init(Napi::Env env, Napi::Object exports) {
     // clang-format off
     return InternalInit("QChatChannelCategory", env, exports, {
@@ -25,5 +24,7 @@ Napi::Object QChatChannelCategory::Init(Napi::Env env, Napi::Object exports) {
 void QChatChannelCategory::InitEventHandlers() {}
 
 QChatChannelCategory::QChatChannelCategory(const Napi::CallbackInfo& info)
-    : BizService("QChatChannelCategory", info) {}
+    : BizService("QChatChannelCategory", info) {
+    service_instance_ = this;
+}
 }  // namespace node_nim

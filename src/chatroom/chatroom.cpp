@@ -2,7 +2,6 @@
 #include "reflection/reflection_include.h"
 
 namespace node_nim {
-GetCurrentSDKServiceImpl(NIMChatRoom, NIMChatRoom, holder_service);
 Napi::Object NIMChatRoom::Init(Napi::Env env, Napi::Object exports) {
     // clang-format off
     return InternalInit("NIMChatRoom", env, exports, {
@@ -53,6 +52,8 @@ void NIMChatRoom::InitEventHandlers() {
 }
 
 NIMChatRoom::NIMChatRoom(const Napi::CallbackInfo& info)
-    : BizService("NIMChatRoom", info) {}
+    : BizService("NIMChatRoom", info) {
+    service_instance_ = this;
+}
 
 }  // namespace node_nim

@@ -17,64 +17,11 @@
 #include <string>
 #include "third_party/xpack/json.h"
 
-class ParamRegInfoCollector {
-private:
-    template <typename TClass>
-    friend struct ParamRegistrar;
-    struct ParamRefInfo {
-        std::string typeid_name;
-        std::string ref_value;
-    };
-
-private:
-    ParamRegInfoCollector() = default;
-
-public:
-    static ParamRegInfoCollector* GetInstance() {
-        static ParamRegInfoCollector _instance{};
-        return &_instance;
-    }
-    void SetCacheFile(const std::string cache_file);
-    std::string GetParamRefValue(const std::string& name);
-    template <typename TParam>
-    void UpdateParamRefValue(const std::string& value) {
-        std::lock_guard<std::recursive_mutex> auto_lock(lock_);
-        auto it = type_name_app_name_map_.find(std::string(typeid(TParam).name()));
-        if (it == type_name_app_name_map_.end())
-            return;
-        param_ref_list_[it->second] = {it->first, value};
-        FlushCacheFile();
-    }
-
-private:
-    template <typename TParam>
-    void RegisterParam(const std::string& name) {
-        std::lock_guard<std::recursive_mutex> auto_lock(lock_);
-        app_name_type_name_map_[name] = std::string(typeid(TParam).name());
-        type_name_app_name_map_[std::string(typeid(TParam).name())] = name;
-        param_ref_list_[name] = {std::string(typeid(TParam).name()), xpack::json::encode(TParam())};
-    }
-    void MergWithCache();
-    void FlushCacheFile();
-
-private:
-    std::recursive_mutex lock_;
-    std::map<std::string, ParamRefInfo> param_ref_list_;
-    std::map<std::string, std::string> type_name_app_name_map_;
-    std::map<std::string, std::string> app_name_type_name_map_;
-    std::string cache_file_;
-};
-
-template <typename TClass>
-struct ParamRegistrar {
-    ParamRegistrar(const std::string& name) { ParamRegInfoCollector::GetInstance()->RegisterParam<TClass>(name); }
-};
-
-struct NapiFunctionDesc {
+struct FunctionDesc {
     Napi::Env env;
     Napi::Function function;
 };
-extern thread_local std::deque<NapiFunctionDesc> ts_cpp_conversion_functions;
+extern thread_local std::deque<FunctionDesc> ts_cpp_conversion_functions;
 namespace ts_cpp_conversion {
 using ptr_int8_t = char*;
 using ptr_void_t = void*;
@@ -102,12 +49,12 @@ static T ObjectToStruct(Napi::Env env, const Napi::Value& value, int32_t index) 
         if (value.IsObject()) {
             StoreFunctionInObject(env, value.As<Napi::Object>());
         }
-        std::string _object_json_text;
+        std::string json_text;
         Napi::Object json = env.Global().Get("JSON").As<Napi::Object>();
         Napi::Function stringify = json.Get("stringify").As<Napi::Function>();
         auto json_str_value = stringify.Call(json, {value});
         if (json_str_value.IsString()) {
-            _object_json_text = json_str_value.As<Napi::String>().Utf8Value();
+            json_text = json_str_value.As<Napi::String>().Utf8Value();
         } else {
             Napi::Error::New(env,
                 "[node-nim] json stringify failed at index: " + std::to_string(index) + ", get type: " + kNapiValueTypeStrVec[json_str_value.Type()])
@@ -115,7 +62,7 @@ static T ObjectToStruct(Napi::Env env, const Napi::Value& value, int32_t index) 
             return _struct;
         }
         try {
-            xpack::json::decode(_object_json_text, _struct);
+            xpack::json::decode(json_text, _struct);
         } catch (const std::exception& e) {
             Napi::Error::New(env, "[node-nim] xpack json decode failed at index: " + std::to_string(index) + ", error: " + e.what())
                 .ThrowAsJavaScriptException();
@@ -131,11 +78,13 @@ static napi_value StructToObject(Napi::Env env, const T& value) {
 
 template <typename T, typename std::enable_if<!std::is_enum<T>::value, std::nullptr_t>::type = nullptr>
 static napi_value StructToObject(Napi::Env env, const T& value) {
-    std::string _struct_json_text = xpack::json::encode(value);
+    std::string json_text = xpack::json::encode(value);
+    if (json_text.empty()) {
+        return env.Null();
+    }
     Napi::Object json = env.Global().Get("JSON").As<Napi::Object>();
     Napi::Function parse = json.Get("parse").As<Napi::Function>();
-    auto obj = parse.Call(json, {Napi::String::New(env, _struct_json_text)}).As<Napi::Object>();
-    return obj;
+    return parse.Call(json, {Napi::String::New(env, json_text)}).As<Napi::Object>();
 }
 }  // namespace ts_cpp_conversion
 template <>

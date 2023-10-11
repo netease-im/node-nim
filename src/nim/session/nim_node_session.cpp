@@ -9,7 +9,6 @@
 #include "reflection/reflection_include.h"
 
 namespace node_nim {
-GetCurrentSDKServiceImpl(NIMSession, NIMSession, holder_service);
 Napi::Object NIMSession::Init(Napi::Env env, Napi::Object exports) {
     return InternalInit("NIMSession", env, exports,
         {RegApi("InitEventHandlers", &NIMSession::InitEventHandlers), RegApi("QueryLastFewSessionAsync", &Session::QueryLastFewSessionAsync),
@@ -35,6 +34,8 @@ void NIMSession::InitEventHandlers() {
 }
 
 NIMSession::NIMSession(const Napi::CallbackInfo& info)
-    : BizService("NIMSession", info) {}
+    : BizService("NIMSession", info) {
+    service_instance_ = this;
+}
 
 }  // namespace node_nim

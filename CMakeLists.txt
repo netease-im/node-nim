@@ -110,17 +110,18 @@ if(TARGET nim_cpp_wrapper)
                                ${CMAKE_SOURCE_DIR}
                                ${CMAKE_SOURCE_DIR}/nim/api/
                                ${CMAKE_SOURCE_DIR}/nim/nim_defines/
+                               ${CMAKE_SOURCE_DIR}/nim/nim_qchat_defines/
                                ${CMAKE_SOURCE_DIR}/nim_chatroom/api/
                                ${CMAKE_SOURCE_DIR}/nim_chatroom/nim_chatroom_defines/
-                               ${CMAKE_SOURCE_DIR}/nim_qchat/api/
-                               ${CMAKE_SOURCE_DIR}/nim_qchat/nim_qchat_defines/
                                ${CMAKE_SOURCE_DIR}/public_defines/
+                               ${CMAKE_SOURCE_DIR}/v2
                                ${CMAKE_SOURCE_DIR}/wrapper)
 else()
     # build with sdk package
     target_include_directories(${TARGET_NAME} PRIVATE
                                ${CMAKE_CURRENT_LIST_DIR}/sdk/wrapper
-                               ${CMAKE_CURRENT_LIST_DIR}/sdk/include)
+                               ${CMAKE_CURRENT_LIST_DIR}/sdk/include
+                               ${CMAKE_CURRENT_LIST_DIR}/sdk/v2)
     add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/sdk/wrapper)
 endif()
 target_link_libraries(${TARGET_NAME}

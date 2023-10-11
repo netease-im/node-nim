@@ -9,7 +9,6 @@
 #include "reflection/reflection_include.h"
 
 namespace node_nim {
-GetCurrentSDKServiceImpl(NIMPluginIn, NIMPluginIn, holder_service);
 Napi::Object NIMPluginIn::Init(Napi::Env env, Napi::Object exports) {
     return InternalInit("NIMPluginIn", env, exports,
         {RegApi("InitEventHandlers", &NIMPluginIn::InitEventHandlers), RegApi("ChatRoomRequestEnterAsync", &PluginIn::ChatRoomRequestEnterAsync),
@@ -19,6 +18,8 @@ Napi::Object NIMPluginIn::Init(Napi::Env env, Napi::Object exports) {
 void NIMPluginIn::InitEventHandlers() {}
 
 NIMPluginIn::NIMPluginIn(const Napi::CallbackInfo& info)
-    : BizService("NIMPluginIn", info) {}
+    : BizService("NIMPluginIn", info) {
+    service_instance_ = this;
+}
 
 }  // namespace node_nim

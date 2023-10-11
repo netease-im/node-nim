@@ -9,7 +9,6 @@
 #include "reflection/reflection_include.h"
 
 namespace node_nim {
-GetCurrentSDKServiceImpl(NIMUser, NIMUser, holder_service);
 Napi::Object NIMUser::Init(Napi::Env env, Napi::Object exports) {
     return InternalInit("NIMUser", env, exports,
         {RegApi("InitEventHandlers", &NIMUser::InitEventHandlers), RegApi("SetBlack", &User::SetBlack), RegApi("SetMute", &User::SetMute),
@@ -24,6 +23,8 @@ void NIMUser::InitEventHandlers() {
 }
 
 NIMUser::NIMUser(const Napi::CallbackInfo& info)
-    : BizService("NIMUser", info) {}
+    : BizService("NIMUser", info) {
+    service_instance_ = this;
+}
 
 }  // namespace node_nim

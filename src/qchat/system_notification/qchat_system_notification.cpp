@@ -1,7 +1,6 @@
 #include "qchat_system_notification.h"
 #include "reflection/reflection_include.h"
 namespace node_nim {
-GetCurrentSDKServiceImpl(QChatSystemNotification, QChatSystemNotification, holder_service);
 Napi::Object QChatSystemNotification::Init(Napi::Env env, Napi::Object exports) {
     // clang-format off
     return InternalInit("QChatSystemNotification", env, exports, {
@@ -21,5 +20,7 @@ void QChatSystemNotification::InitEventHandlers() {
 }
 
 QChatSystemNotification::QChatSystemNotification(const Napi::CallbackInfo& info)
-    : BizService("QChatSystemNotification", info) {}
+    : BizService("QChatSystemNotification", info) {
+    service_instance_ = this;
+}
 }  // namespace node_nim

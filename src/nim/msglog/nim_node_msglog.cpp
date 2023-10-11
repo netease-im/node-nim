@@ -9,7 +9,6 @@
 #include "reflection/reflection_include.h"
 
 namespace node_nim {
-GetCurrentSDKServiceImpl(NIMMsgLog, NIMMsgLog, holder_service);
 Napi::Object NIMMsgLog::Init(Napi::Env env, Napi::Object exports) {
     return InternalInit("NIMMsgLog", env, exports,
         {RegApi("InitEventHandlers", &NIMMsgLog::InitEventHandlers), RegApi("QueryMsgByIDAysnc", &MsgLog::QueryMsgByIDAysnc),
@@ -50,6 +49,8 @@ void NIMMsgLog::InitEventHandlers() {
 }
 
 NIMMsgLog::NIMMsgLog(const Napi::CallbackInfo& info)
-    : BizService("NIMMsgLog", info) {}
+    : BizService("NIMMsgLog", info) {
+    service_instance_ = this;
+}
 
 }  // namespace node_nim

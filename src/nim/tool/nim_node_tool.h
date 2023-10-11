@@ -10,9 +10,6 @@
 #include "service_base.h"
 
 namespace node_nim {
-class NIMTool;
-template <>
-NIMTool* node_nim::ServiceBase::GetCurrentService<NIMTool>(node_nim::ServiceBase* obj_holder);
 class NIMTool : public BizService<NIMTool> {
 public:
     static Napi::Object Init(Napi::Env env, Napi::Object exports);

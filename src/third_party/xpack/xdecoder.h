@@ -248,7 +248,7 @@ public:
         return decode_map<QMap<QString,T>, QString, T>(key, val, ext, strToStr<QString>);
     }
     #endif
-protected:
+
     // vector
     template <class Vector>
     bool decode_vector(const char*key, Vector &val, const Extend *ext) {

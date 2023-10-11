@@ -10,9 +10,6 @@
 #include "service_base.h"
 
 namespace node_nim {
-class NIMPluginIn;
-template <>
-NIMPluginIn* node_nim::ServiceBase::GetCurrentService<NIMPluginIn>(node_nim::ServiceBase* obj_holder);
 class NIMPluginIn : public BizService<NIMPluginIn> {
 public:
     static Napi::Object Init(Napi::Env env, Napi::Object exports);

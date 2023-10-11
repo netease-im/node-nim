@@ -10,9 +10,6 @@
 #include "service_base.h"
 
 namespace node_nim {
-class NIMMsgLog;
-template <>
-NIMMsgLog* node_nim::ServiceBase::GetCurrentService<NIMMsgLog>(node_nim::ServiceBase* obj_holder);
 class NIMMsgLog : public BizService<NIMMsgLog> {
 public:
     static Napi::Object Init(Napi::Env env, Napi::Object exports);

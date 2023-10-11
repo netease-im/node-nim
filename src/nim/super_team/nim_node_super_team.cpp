@@ -9,7 +9,6 @@
 #include "reflection/reflection_include.h"
 
 namespace node_nim {
-GetCurrentSDKServiceImpl(NIMSuperTeam, NIMSuperTeam, holder_service);
 Napi::Object NIMSuperTeam::Init(Napi::Env env, Napi::Object exports) {
     return InternalInit("NIMSuperTeam", env, exports,
         {RegApi("InitEventHandlers", &NIMSuperTeam::InitEventHandlers), RegApi("InviteAsync", &SuperTeam::InviteAsync2),
@@ -36,6 +35,8 @@ void NIMSuperTeam::InitEventHandlers() {
 }
 
 NIMSuperTeam::NIMSuperTeam(const Napi::CallbackInfo& info)
-    : BizService("NIMSuperTeam", info) {}
+    : BizService("NIMSuperTeam", info) {
+    service_instance_ = this;
+}
 
 }  // namespace node_nim

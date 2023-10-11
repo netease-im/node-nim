@@ -9,7 +9,6 @@
 #include "reflection/reflection_include.h"
 
 namespace node_nim {
-GetCurrentSDKServiceImpl(NIMNOS, NIMNOS, holder_service);
 Napi::Object NIMNOS::Init(Napi::Env env, Napi::Object exports) {
     return InternalInit("NIMNOS", env, exports,
         {RegApi("InitEventHandlers", &NIMNOS::InitEventHandlers), RegApi("InitConfig", &NOS::InitConfig), RegApi("FetchMedia", &NOS::FetchMediaEx),
@@ -25,6 +24,8 @@ void NIMNOS::InitEventHandlers() {
 }
 
 NIMNOS::NIMNOS(const Napi::CallbackInfo& info)
-    : BizService("NIMNOS", info) {}
+    : BizService("NIMNOS", info) {
+    service_instance_ = this;
+}
 
 }  // namespace node_nim

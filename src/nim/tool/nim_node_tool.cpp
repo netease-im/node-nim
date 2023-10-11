@@ -9,7 +9,6 @@
 #include "reflection/reflection_include.h"
 
 namespace node_nim {
-GetCurrentSDKServiceImpl(NIMTool, NIMTool, holder_service);
 Napi::Object NIMTool::Init(Napi::Env env, Napi::Object exports) {
     return InternalInit("NIMTool", env, exports,
         {RegApi("InitEventHandlers", &NIMTool::InitEventHandlers), RegApi("GetUserAppdataDir", &Tool::GetUserAppdataDir),
@@ -22,6 +21,8 @@ Napi::Object NIMTool::Init(Napi::Env env, Napi::Object exports) {
 void NIMTool::InitEventHandlers() {}
 
 NIMTool::NIMTool(const Napi::CallbackInfo& info)
-    : BizService("NIMTool", info) {}
+    : BizService("NIMTool", info) {
+    service_instance_ = this;
+}
 
 }  // namespace node_nim

@@ -9,9 +9,6 @@
 #include <napi.h>
 #include "service_base.h"
 namespace node_nim {
-class QChatSystemNotification;
-template <>
-QChatSystemNotification* node_nim::ServiceBase::GetCurrentService<QChatSystemNotification>(node_nim::ServiceBase* obj_holder);
 class QChatSystemNotification : public BizService<QChatSystemNotification> {
 public:
     static Napi::Object Init(Napi::Env env, Napi::Object exports);

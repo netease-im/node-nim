@@ -10,9 +10,6 @@
 #include "service_base.h"
 
 namespace node_nim {
-class NIMFriend;
-template <>
-NIMFriend* node_nim::ServiceBase::GetCurrentService<NIMFriend>(node_nim::ServiceBase* obj_holder);
 class NIMFriend : public BizService<NIMFriend> {
 public:
     static Napi::Object Init(Napi::Env env, Napi::Object exports);
