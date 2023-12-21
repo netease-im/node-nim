@@ -41,17 +41,16 @@ export interface DeleteFriendOption {
 
 /** @brief 云信好友 */
 export interface FriendProfile {
-    accid_?: string /** < 用户账号 */
-    relationship_?: NIMFriendFlag /** < 主动的好友关系 */
-    passive_relationship_?: NIMFriendFlag /** < 被动的好友关系 */
-    source_?: NIMFriendSource /** < 好友来源 */
-    alias_?: string /** < 好友别名 */
-    bits_?: number /** < 扩展数据 */
-    expand_?: string /** < 扩展数据 */
-    value_available_flag_?: number /** < 好友数据有效性，结合好友Key使用 */
-    server_expand_?: string /** < 扩展数据 */
-    create_timetag_?: number /** < 好友创建时间戳（毫秒） */
-    update_timetag_?: number /** < 好友更新时间戳（毫秒） */
+    accid?: string /** < 用户账号 */
+    flag?: NIMFriendFlag /** < 主动的好友关系 */
+    beflag?: NIMFriendFlag /** < 被动的好友关系 */
+    source?: NIMFriendSource /** < 好友来源 */
+    alias?: string /** < 好友别名 */
+    bits?: number /** < 扩展数据 */
+    ex?: string /** < 扩展数据 */
+    server_ex?: string /** < 扩展数据 */
+    create_timetag?: number /** < 好友创建时间戳（毫秒） */
+    update_timetag?: number /** < 好友更新时间戳（毫秒） */
 }
 
 /** @brief 云信好友变更事件 */

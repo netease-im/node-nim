@@ -1,8 +1,14 @@
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
-import { IMMessage, NIMMessageType } from '../nim_def/msglog_def'
+import { IMMessage, MessageSetting, NIMMessageType } from '../nim_def/msglog_def'
 import {
     BroadcastMessage,
+    FileUpPrgCallback,
+    IMAudio,
+    IMFile,
+    IMImage,
+    IMLocation,
+    IMVideo,
     MessageFilterCallback,
     NIMTalkAPI,
     RecallMsgNotify,
@@ -11,6 +17,7 @@ import {
     TeamNotificationFilterCallback
 } from '../nim_def/talk_def'
 import { NIMResCode } from '../nim_def/client_def'
+import { NIMSessionType } from 'ts/node-nim'
 
 export declare interface NIMTalkEvents {
     /** 发送消息回调 */
@@ -45,8 +52,8 @@ export class NIMTalk extends EventEmitter<NIMTalkEvents> {
      * @param pcb		上传进度的回调函数, 如果发送的消息里包含了文件资源,则通过此回调函数通知上传进度
      * @return void 无返回值
      */
-    sendMsg(msg: IMMessage, jsonExtension: string): void {
-        return this.talk.SendMsg(msg, jsonExtension)
+    sendMsg(msg: IMMessage, jsonExtension: string, progressCb: FileUpPrgCallback): void {
+        return this.talk.SendMsg(msg, jsonExtension, progressCb)
     }
 
     /** 停止正在发送中的消息（目前只支持发送文件消息时的终止）
@@ -96,6 +103,196 @@ export class NIMTalk extends EventEmitter<NIMTalkEvents> {
                 jsonExtension
             )
         })
+    }
+
+    /** 创建文本消息 */
+    createTextMessage(
+        receiver_id: string,
+        session_type: NIMSessionType,
+        client_msg_id: string,
+        content: string,
+        msg_setting: MessageSetting,
+        timetag: number,
+        sub_type: number
+    ): IMMessage {
+        return {
+            receiver_accid_: receiver_id,
+            session_type_: session_type,
+            client_msg_id_: client_msg_id,
+            content_: content,
+            msg_setting_: msg_setting,
+            timetag_: timetag,
+            sub_type_: sub_type,
+            type_: NIMMessageType.kNIMMessageTypeText
+        }
+    }
+
+    /** 创建文件消息 */
+    createFileMessage(
+        receiver_id: string,
+        session_type: NIMSessionType,
+        client_msg_id: string,
+        file: IMFile,
+        file_path: string,
+        msg_setting: MessageSetting,
+        timetag: number,
+        sub_type: number
+    ): IMMessage {
+        return {
+            receiver_accid_: receiver_id,
+            session_type_: session_type,
+            client_msg_id_: client_msg_id,
+            attach_: JSON.stringify(file),
+            local_res_path_: file_path,
+            msg_setting_: msg_setting,
+            timetag_: timetag,
+            sub_type_: sub_type,
+            type_: NIMMessageType.kNIMMessageTypeFile
+        }
+    }
+
+    /** 创建图片消息 */
+    createImageMessage(
+        receiver_id: string,
+        session_type: NIMSessionType,
+        client_msg_id: string,
+        image: IMImage,
+        file_path: string,
+        msg_setting: MessageSetting,
+        timetag: number,
+        sub_type: number
+    ): IMMessage {
+        return {
+            receiver_accid_: receiver_id,
+            session_type_: session_type,
+            client_msg_id_: client_msg_id,
+            attach_: JSON.stringify(image),
+            local_res_path_: file_path,
+            msg_setting_: msg_setting,
+            timetag_: timetag,
+            sub_type_: sub_type,
+            type_: NIMMessageType.kNIMMessageTypeImage
+        }
+    }
+
+    /** 创建语音消息 */
+    createAudioMessage(
+        receiver_id: string,
+        session_type: NIMSessionType,
+        client_msg_id: string,
+        audio: IMAudio,
+        file_path: string,
+        msg_setting: MessageSetting,
+        timetag: number,
+        sub_type: number
+    ): IMMessage {
+        return {
+            receiver_accid_: receiver_id,
+            session_type_: session_type,
+            client_msg_id_: client_msg_id,
+            attach_: JSON.stringify(audio),
+            local_res_path_: file_path,
+            msg_setting_: msg_setting,
+            timetag_: timetag,
+            sub_type_: sub_type,
+            type_: NIMMessageType.kNIMMessageTypeAudio
+        }
+    }
+
+    /** 创建视频消息 */
+    createVideoMessage(
+        receiver_id: string,
+        session_type: NIMSessionType,
+        client_msg_id: string,
+        video: IMVideo,
+        file_path: string,
+        msg_setting: MessageSetting,
+        timetag: number,
+        sub_type: number
+    ): IMMessage {
+        return {
+            receiver_accid_: receiver_id,
+            session_type_: session_type,
+            client_msg_id_: client_msg_id,
+            attach_: JSON.stringify(video),
+            local_res_path_: file_path,
+            msg_setting_: msg_setting,
+            timetag_: timetag,
+            sub_type_: sub_type,
+            type_: NIMMessageType.kNIMMessageTypeVideo
+        }
+    }
+
+    /** 创建位置消息 */
+    createLocationMessage(
+        receiver_id: string,
+        session_type: NIMSessionType,
+        client_msg_id: string,
+        location: IMLocation,
+        msg_setting: MessageSetting,
+        timetag: number,
+        sub_type: number
+    ): IMMessage {
+        return {
+            receiver_accid_: receiver_id,
+            session_type_: session_type,
+            client_msg_id_: client_msg_id,
+            attach_: JSON.stringify(location),
+            msg_setting_: msg_setting,
+            timetag_: timetag,
+            sub_type_: sub_type,
+            type_: NIMMessageType.kNIMMessageTypeLocation
+        }
+    }
+
+    /** 创建提醒消息 */
+    createTipMessage(
+        receiver_id: string,
+        session_type: NIMSessionType,
+        client_msg_id: string,
+        tip: string,
+        msg_setting: MessageSetting,
+        timetag: number,
+        sub_type: number
+    ): IMMessage {
+        return {
+            receiver_accid_: receiver_id,
+            session_type_: session_type,
+            client_msg_id_: client_msg_id,
+            content_: tip,
+            msg_setting_: msg_setting,
+            timetag_: timetag,
+            sub_type_: sub_type,
+            type_: NIMMessageType.kNIMMessageTypeTips
+        }
+    }
+
+    /** 创建转发消息 */
+    createRetweetMessage(
+        sourceMessage: IMMessage,
+        client_msg_id: string,
+        session_type: NIMSessionType,
+        receiver_id: string,
+        msg_setting: MessageSetting,
+        timetag: number
+    ): IMMessage {
+        let attachStr = ''
+        if (sourceMessage.attach_) {
+            let attach = JSON.parse(sourceMessage.attach_)
+            attach['retweeted_msg_id'] = sourceMessage.client_msg_id_
+            attachStr = JSON.stringify(attach)
+        }
+        return {
+            receiver_accid_: receiver_id,
+            session_type_: session_type,
+            client_msg_id_: client_msg_id,
+            content_: sourceMessage.content_,
+            msg_setting_: msg_setting,
+            timetag_: timetag,
+            sub_type_: sourceMessage.sub_type_,
+            type_: sourceMessage.type_,
+            attach_: attachStr
+        }
     }
 
     /** 从消息体中获取附件（图片、语音、视频等）的本地路径

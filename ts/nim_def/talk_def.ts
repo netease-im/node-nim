@@ -1,5 +1,5 @@
 import { NIMResCode } from './client_def'
-import { IMMessage, NIMMessageFeature, NIMMessageType } from './msglog_def'
+import { IMMessage, NIMMessageFeature, NIMMessageType, MessageSetting } from './msglog_def'
 import { NIMSessionType } from './session_def'
 
 export interface SendMessageArc {
@@ -35,6 +35,55 @@ export interface RecallMsgNotify {
     callback_ext_?: string /**< v8.2.0 第三方回调返回的字定义字段 */
 }
 
+export interface IMFile {
+    md5_?: string
+    size_?: number
+    url_?: string
+    display_name_?: string
+    file_extension_?: string
+    msg_attachment_tag_?: string
+}
+
+export interface IMImage {
+    md5?: string
+    size?: number
+    url_?: string
+    name?: string
+    ext?: string
+    upload_tag?: string
+    w?: number
+    h?: number
+}
+
+export interface IMAudio {
+    md5?: string
+    size?: number
+    url_?: string
+    name?: string
+    ext?: string
+    upload_tag?: string
+    dur?: number
+}
+
+export interface IMVideo {
+    md5?: string
+    size?: number
+    url_?: string
+    name?: string
+    ext?: string
+    upload_tag?: string
+    w?: number
+    h?: number
+    dur?: number
+}
+
+export interface IMLocation {
+    title?: string
+    lat?: number
+    lng?: number
+}
+
+export type FileUpPrgCallback = (uplaodedSize: number, totalSize: number) => void
 export type SendMsgAckCallback = (result: SendMessageArc) => void
 export type ReceiveMsgCallback = (result: IMMessage) => void
 export type ReceiveMsgsCallback = (result: Array<IMMessage>) => void
@@ -47,7 +96,7 @@ export type MessageFilterCallback = (result: IMMessage) => boolean
 export interface NIMTalkAPI {
     InitEventHandlers(): void
 
-    SendMsg(msg: IMMessage, jsonExtension: string): void
+    SendMsg(msg: IMMessage, jsonExtension: string, progressCb: FileUpPrgCallback): void
 
     StopSendMsg(clientMsgId: string, type: NIMMessageType, jsonExtension: string): void
 
@@ -60,4 +109,14 @@ export interface NIMTalkAPI {
     RegMessageFilter(cb: MessageFilterCallback | null, jsonExtension: string): void
 
     RegTeamNotificationFilter(cb: TeamNotificationFilterCallback | null, jsonExtension: string): void
+
+    CreateTextMessage(
+        receiver_id: string,
+        session_type: NIMSessionType,
+        client_msg_id: string,
+        content: string,
+        msg_setting: MessageSetting,
+        timetag: number,
+        sub_type: number
+    ): string
 }

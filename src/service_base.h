@@ -67,24 +67,34 @@ public:
             Napi::Error::New(info.Env(), "[node-nim] InvokeMemberApi: service_instance_ is nullptr").ThrowAsJavaScriptException();
             return info.Env().Undefined();
         }
-        if constexpr (std::is_void<R>::value) {
-            CppInvoker::Invoke(info, f, static_cast<C*>(service_instance_));
-            return info.This();
-        } else {
-            auto _value = CppInvoker::Invoke(info, f, static_cast<C*>(service_instance_));
-            return Napi::Value::From(info.Env(), ts_cpp_conversion::StructToObject(info.Env(), _value));
+        try {
+            if constexpr (std::is_void<R>::value) {
+                CppInvoker::Invoke(info, f, static_cast<C*>(service_instance_));
+                return info.This();
+            } else {
+                auto _value = CppInvoker::Invoke(info, f, static_cast<C*>(service_instance_));
+                return Napi::Value::From(info.Env(), ts_cpp_conversion::StructToObject(info.Env(), _value));
+            }
+        } catch (const std::exception& error) {
+            Napi::Error::New(info.Env(), error.what()).ThrowAsJavaScriptException();
+            return info.Env().Undefined();
         }
     }
 
     template <typename R, typename... Args>
     static Napi::Value InvokeStaticApi(const Napi::CallbackInfo& info, R (*f)(Args...)) {
-        auto _tuple = CppInvoker::NapiCallback2Tuple<Args...>(info);
-        if constexpr (std::is_void<R>::value) {
-            CppInvoker::TupleCall(f, _tuple);
-            return info.This();
-        } else {
-            auto _value = CppInvoker::TupleCall(f, _tuple);
-            return Napi::Value::From(info.Env(), ts_cpp_conversion::StructToObject(info.Env(), _value));
+        try {
+            auto _tuple = CppInvoker::NapiCallback2Tuple<Args...>(info);
+            if constexpr (std::is_void<R>::value) {
+                CppInvoker::TupleCall(f, _tuple);
+                return info.This();
+            } else {
+                auto _value = CppInvoker::TupleCall(f, _tuple);
+                return Napi::Value::From(info.Env(), ts_cpp_conversion::StructToObject(info.Env(), _value));
+            }
+        } catch (const std::exception& error) {
+            Napi::Error::New(info.Env(), error.what()).ThrowAsJavaScriptException();
+            return info.Env().Undefined();
         }
     }
 
@@ -153,7 +163,11 @@ private:
     template <typename TR, typename... Args, typename std::enable_if<std::is_void<TR>::value, std::nullptr_t>::type = nullptr>
     TR NotifyCallback(const std::string& flag, Args... args) {
         auto callback = [this, flag, args...](const Napi::Env& env, const Napi::Function& js_callback, const void* value) {
-            Napi::Value res = emitter_.Call({Napi::String::New(env, flag), ts_cpp_conversion::StructToObject(env, args)...});
+            try {
+                Napi::Value res = emitter_.Call({Napi::String::New(env, flag), ts_cpp_conversion::StructToObject(env, args)...});
+            } catch (const std::exception& error) {
+                Napi::Error::New(env, error.what()).ThrowAsJavaScriptException();
+            }
         };
         tsfn_.NonBlockingCall(reinterpret_cast<void*>(0), callback);
     }
@@ -163,8 +177,12 @@ private:
         std::promise<TR> promise;
         std::future<TR> future = promise.get_future();
         auto callback = [this, flag, &promise, args...](const Napi::Env& env, const Napi::Function& js_callback, const void* value) {
-            Napi::Value res = emitter_.Call({Napi::String::New(env, flag), ts_cpp_conversion::StructToObject(env, args)...});
-            promise.set_value(ts_cpp_conversion::ObjectToStruct<TR>(env, res, -1));
+            try {
+                Napi::Value res = emitter_.Call({Napi::String::New(env, flag), ts_cpp_conversion::StructToObject(env, args)...});
+                promise.set_value(ts_cpp_conversion::ObjectToStruct<TR>(env, res, -1));
+            } catch (const std::exception& error) {
+                Napi::Error::New(env, error.what()).ThrowAsJavaScriptException();
+            }
         };
         tsfn_.NonBlockingCall(reinterpret_cast<void*>(0), callback);
         return future.get();

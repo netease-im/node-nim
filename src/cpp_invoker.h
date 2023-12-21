@@ -87,35 +87,17 @@ public:
     template <typename TReturn, typename... TArgs>
     static TReturn Invoke(const Napi::CallbackInfo& info, TReturn (*fun)(TArgs...)) {
         if constexpr (std::is_void<TReturn>::value) {
-            try {
-                TupleCall(fun, NapiCallback2Tuple<clean_ext_t<TArgs>...>(info));
-            } catch (const std::string& error) {
-                Napi::Error::New(info.Env(), error).ThrowAsJavaScriptException();
-            }
+            TupleCall(fun, NapiCallback2Tuple<clean_ext_t<TArgs>...>(info));
         } else {
-            try {
-                return TupleCall(fun, NapiCallback2Tuple<clean_ext_t<TArgs>...>(info));
-            } catch (const std::string& error) {
-                Napi::Error::New(info.Env(), error).ThrowAsJavaScriptException();
-            }
-            return TReturn();
+            return TupleCall(fun, NapiCallback2Tuple<clean_ext_t<TArgs>...>(info));
         }
     }
     template <typename TReturn, typename TClass, typename... TArgs>
     static TReturn Invoke(const Napi::CallbackInfo& info, TReturn (TClass::*fun)(TArgs...), TClass* obj) {
         if constexpr (std::is_void<TReturn>::value) {
-            try {
-                TupleCall(fun, obj, NapiCallback2Tuple<clean_ext_t<TArgs>...>(info));
-            } catch (const std::string& error) {
-                Napi::Error::New(info.Env(), error).ThrowAsJavaScriptException();
-            }
+            TupleCall(fun, obj, NapiCallback2Tuple<clean_ext_t<TArgs>...>(info));
         } else {
-            try {
-                return TupleCall(fun, obj, NapiCallback2Tuple<clean_ext_t<TArgs>...>(info));
-            } catch (const std::string& error) {
-                Napi::Error::New(info.Env(), error).ThrowAsJavaScriptException();
-            }
-            return TReturn();
+            return TupleCall(fun, obj, NapiCallback2Tuple<clean_ext_t<TArgs>...>(info));
         }
     }
 
@@ -124,6 +106,9 @@ public:
         const Napi::Function& fun,
         const std::string& fun_location_name,
         const std::function<TReturn(TArgs...)>* realcb) {
+        if (fun.IsNull() || fun.IsUndefined()) {
+            return nullptr;
+        }
         auto tsfn = Napi::ThreadSafeFunction::New(env, fun, fun_location_name, 0, 1);
         auto callback = [tsfn](TArgs... param) -> TReturn {
             auto tup = std::make_tuple(std::forward<TArgs>(param)...);
@@ -131,17 +116,25 @@ public:
                 std::promise<TReturn> promise;
                 auto future = promise.get_future();
                 auto tsfn_cb = [tup, &promise](const Napi::Env& env, const Napi::Function& js_callback, const void* value) -> Napi::Value {
-                    auto&& args = TupleToCbArgs(env, tup);
-                    auto return_value = js_callback.Call(args);
-                    promise.set_value(ts_cpp_conversion::ObjectToStruct<TReturn>(env, return_value, -1));
+                    try {
+                        auto&& args = TupleToCbArgs(env, tup);
+                        auto return_value = js_callback.Call(args);
+                        promise.set_value(ts_cpp_conversion::ObjectToStruct<TReturn>(env, return_value, -1));
+                    } catch (const std::exception& e) {
+                        Napi::Error::New(env, e.what()).ThrowAsJavaScriptException();
+                    }
                     return env.Null();
                 };
                 tsfn.NonBlockingCall((void*)0, tsfn_cb);
                 return future.get();
             } else {
                 auto tsfn_cb = [tup](const Napi::Env& env, const Napi::Function& js_callback, const void* value) -> Napi::Value {
-                    auto&& args = TupleToCbArgs(env, tup);
-                    js_callback.Call(args);
+                    try {
+                        auto&& args = TupleToCbArgs(env, tup);
+                        js_callback.Call(args);
+                    } catch (const std::exception& e) {
+                        Napi::Error::New(env, e.what()).ThrowAsJavaScriptException();
+                    }
                     return env.Null();
                 };
                 tsfn.NonBlockingCall((void*)0, tsfn_cb);
@@ -163,17 +156,25 @@ public:
                 std::promise<TReturn> promise;
                 auto future = promise.get_future();
                 auto tsfn_cb = [tup, &promise](const Napi::Env& env, const Napi::Function& js_callback, const void* value) -> Napi::Value {
-                    auto&& args = TupleToCbArgs(env, tup);
-                    auto return_value = js_callback.Call(args);
-                    promise.set_value(ts_cpp_conversion::ObjectToStruct<TReturn>(env, return_value, -1));
+                    try {
+                        auto&& args = TupleToCbArgs(env, tup);
+                        auto return_value = js_callback.Call(args);
+                        promise.set_value(ts_cpp_conversion::ObjectToStruct<TReturn>(env, return_value, -1));
+                    } catch (const std::exception& e) {
+                        Napi::Error::New(env, e.what()).ThrowAsJavaScriptException();
+                    }
                     return env.Null();
                 };
                 tsfn.NonBlockingCall((void*)0, tsfn_cb);
                 return future.get();
             } else {
                 auto tsfn_cb = [tup](const Napi::Env& env, const Napi::Function& js_callback, const void* value) -> Napi::Value {
-                    auto&& args = TupleToCbArgs(env, tup);
-                    js_callback.Call(args);
+                    try {
+                        auto&& args = TupleToCbArgs(env, tup);
+                        js_callback.Call(args);
+                    } catch (const std::exception& e) {
+                        Napi::Error::New(env, e.what()).ThrowAsJavaScriptException();
+                    }
                     return env.Null();
                 };
                 tsfn.NonBlockingCall((void*)0, tsfn_cb);

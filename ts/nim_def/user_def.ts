@@ -28,17 +28,17 @@ export interface BlackMuteListInfo {
 }
 
 export interface UserNameCard {
-    accid_?: string /**< 用户ID */
-    nickname_?: string /**< 用户昵称 */
-    icon_url_?: string /**< 用户头像下载地址 */
-    signature_?: string /**< 用户签名 */
-    gender_?: number /**< 用户性别 */
-    email_?: string /**< 用户邮箱 */
-    birth_?: string /**< 用户生日 */
-    mobile_?: string /**< 用户电话 */
-    expand_?: string /**< 用户扩展数据 */
-    create_timetag_?: number /**< 用户档案创建时间戳(毫秒) */
-    update_timetag_?: number /**< 用户档案更新时间戳(毫秒) */
+    accid?: string /**< 用户ID */
+    name?: string /**< 用户昵称 */
+    icon?: string /**< 用户头像下载地址 */
+    sign?: string /**< 用户签名 */
+    gender?: number /**< 用户性别 */
+    email?: string /**< 用户邮箱 */
+    birth?: string /**< 用户生日 */
+    mobile?: string /**< 用户电话 */
+    ex?: string /**< 用户扩展数据 */
+    create_timetag?: number /**< 用户档案创建时间戳(毫秒) */
+    update_timetag?: number /**< 用户档案更新时间戳(毫秒) */
 }
 
 export interface SpecialRelationshipChangeEvent {

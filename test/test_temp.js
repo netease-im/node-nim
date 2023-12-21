@@ -14,21 +14,13 @@ async function testNIM() {
         process.exit(1)
     }
     node_nim.nim.initEventHandlers()
+    node_nim.nim.talk.on('sendMsg', (res) => {
+        console.log('sendMsg ack', res)
+    })
     result = await node_nim.nim.client.login('fe416640c8e8a72734219e1847ad2547', 'zvct0', 'e10adc3949ba59abbe56e057f20f883e', null, '')
     console.log('loginResult', result)
-    result = await node_nim.nim.session.queryAllRecentSessionAsync([], null, '')
-    console.log('queryAllRecentSessionAsync', result)
-    result = await node_nim.nim.session.setMultiUnreadCountZeroAsync(
-        false,
-        [
-            { id_: 'zvct1', type_: 0 },
-            { id_: 'zvct2', type_: 0 }
-        ],
-        null
-    )
-    console.log('setMultiUnreadCountZeroAsync', result)
-    result = await node_nim.nim.session.queryAllRecentSessionAsync([], null, '')
-    console.log('queryAllRecentSessionAsync', result)
+    let message = node_nim.nim.talk.createTextMessage('zvct1', 0, node_nim.nim.tool.getUuid(), '', {}, 0, 0)
+    node_nim.nim.talk.sendMsg(message, '')
 }
 
 async function testQChat() {
@@ -187,4 +179,4 @@ async function testV2() {
     }
 }
 
-testV2()
+testNIM()
