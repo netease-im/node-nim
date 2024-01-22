@@ -14,8 +14,14 @@ async function testNIM() {
         process.exit(1)
     }
     node_nim.nim.initEventHandlers()
-    node_nim.nim.talk.on('sendMsg', (res) => {
+    node_nim.nim.talk.on('sendMsg', async (res) => {
         console.log('sendMsg ack', res)
+        let [rescode, id, msg] = await node_nim.nim.msgLog.queryMsgByIDAysnc(res.msg_id_, null, '')
+        console.log('queryMsgByIDAysnc', rescode, id, msg)
+        let message = node_nim.nim.talk.createFileMessage('zvct1', 0, node_nim.nim.tool.getUuid(), {}, 'C:/Users/Zvicii/Downloads/cloudprint_163.exe', {}, 0, 0)
+        node_nim.nim.talk.replyMessage(msg, message, (...resp) => {
+            console.log('replyMessage progress', resp)
+        })
     })
     result = await node_nim.nim.client.login('fe416640c8e8a72734219e1847ad2547', 'zvct0', 'e10adc3949ba59abbe56e057f20f883e', null, '')
     console.log('loginResult', result)

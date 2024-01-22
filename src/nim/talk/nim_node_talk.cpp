@@ -14,7 +14,8 @@ Napi::Object NIMTalk::Init(Napi::Env env, Napi::Object exports) {
         {RegApi("InitEventHandlers", &NIMTalk::InitEventHandlers),
             RegAmbApi("SendMsg", &Talk::SendMsg, void (*)(const nim::IMMessage&, const std::string&, Talk::FileUpPrgCallback)),
             RegApi("StopSendMsg", &Talk::StopSendMsg), RegApi("RecallMsg", &Talk::RecallMsg2),
-            RegApi("GetAttachmentPathFromMsg", &Talk::GetAttachmentPathFromMsg), RegApi("ReplyMessage", &Talk::ReplyMessage),
+            RegApi("GetAttachmentPathFromMsg", &Talk::GetAttachmentPathFromMsg),
+            RegAmbApi("ReplyMessage", &Talk::ReplyMessage, void (*)(const IMMessage&, const IMMessage&, Talk::FileUpPrgCallback*)),
             RegApi("RegMessageFilter", &Talk::RegMessageFilter), RegApi("RegTeamNotificationFilter", &Talk::RegTeamNotificationFilter)});
 }
 

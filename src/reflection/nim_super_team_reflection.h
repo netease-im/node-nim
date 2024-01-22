@@ -24,6 +24,9 @@ ReflectionDefinition_O(SuperTeamEvent,
     src_data_);
 ReflectionDefinition_O(SuperTeamInfo, team_info_json_value_);
 ReflectionDefinition_O(SuperTeamMemberProperty, member_info_json_value_);
+ReflectionDefinition_O(SuperTeamMemberSerachResult, team_member_propertys_, offset_, finished_);
+ReflectionDefinition_O(SuperTeamMemberKeywordSearchOption, team_id_, keyword_, offset_, order_, limit_);
+ReflectionDefinition_O(SuperTeamMemberRoleTypeSearchOption, role_types_, offset_, order_, limit_);
 
 // Callback
 CallbackSpecialization(SuperTeam::SuperTeamEventCallback);
@@ -33,4 +36,5 @@ CallbackSpecialization(SuperTeam::QuerySuperTeamMembersCallback);
 CallbackSpecialization(SuperTeam::QuerySuperTeamMemberCallback);
 CallbackSpecialization(SuperTeam::QuerySuperTeamInfoCallback);
 CallbackSpecialization(SuperTeam::QuerySuperTeamMembersOnlineCallback);
+CallbackSpecialization(SuperTeam::SuperTeamMemberSearchCallback);
 #endif

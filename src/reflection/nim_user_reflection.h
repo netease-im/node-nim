@@ -57,41 +57,41 @@ template <class OBJ>
 bool xpack_xtype_decode(OBJ& obj, const char* key, UserNameCard& val, const Extend* ext) {
     xpack::JsonData data;
     data.xpack_decode(obj, key, ext);
-    if (data["accid_"].Type() == kStringType) {
-        val.SetAccId(data["accid_"].GetString());
+    if (data["accid"].Type() == kStringType) {
+        val.SetAccId(data["accid"].GetString());
     }
-    if (data["nickname_"].Type() == kStringType) {
-        val.SetName(data["nickname_"].GetString());
+    if (data["name"].Type() == kStringType) {
+        val.SetName(data["name"].GetString());
     }
-    if (data["icon_url_"].Type() == kStringType) {
-        val.SetIconUrl(data["icon_url_"].GetString());
+    if (data["icon"].Type() == kStringType) {
+        val.SetIconUrl(data["icon"].GetString());
     }
-    if (data["signature_"].Type() == kStringType) {
-        val.SetSignature(data["signature_"].GetString());
+    if (data["sign"].Type() == kStringType) {
+        val.SetSignature(data["sign"].GetString());
     }
-    if (data["gender_"].Type() == kNumberType) {
-        val.SetGender(data["gender_"].GetInt());
+    if (data["gender"].Type() == kNumberType) {
+        val.SetGender(data["gender"].GetInt());
     }
-    if (data["email_"].Type() == kStringType) {
-        val.SetEmail(data["email_"].GetString());
+    if (data["email"].Type() == kStringType) {
+        val.SetEmail(data["email"].GetString());
     }
-    if (data["birth_"].Type() == kStringType) {
-        val.SetBirth(data["birth_"].GetString());
+    if (data["birth"].Type() == kStringType) {
+        val.SetBirth(data["birth"].GetString());
     }
-    if (data["mobile_"].Type() == kStringType) {
-        val.SetMobile(data["mobile_"].GetString());
+    if (data["mobile"].Type() == kStringType) {
+        val.SetMobile(data["mobile"].GetString());
     }
-    if (data["expand_"].Type() == kStringType) {
+    if (data["ex"].Type() == kStringType) {
         nim_cpp_wrapper_util::Json::Value value;
-        if (nim::ParseJsonValue(data["expand_"].GetString(), value)) {
+        if (nim::ParseJsonValue(data["ex"].GetString(), value)) {
             val.SetExpand(value);
         }
     }
-    if (data["create_timetag_"].Type() == kNumberType) {
-        val.SetCreateTimetag(data["create_timetag_"].GetUint64());
+    if (data["create_timetag"].Type() == kNumberType) {
+        val.SetCreateTimetag(data["create_timetag"].GetUint64());
     }
-    if (data["update_timetag_"].Type() == kNumberType) {
-        val.SetUpdateTimetag(data["update_timetag_"].GetUint64());
+    if (data["update_timetag"].Type() == kNumberType) {
+        val.SetUpdateTimetag(data["update_timetag"].GetUint64());
     }
     return true;
 }

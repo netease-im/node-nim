@@ -28,38 +28,38 @@ template <class OBJ>
 bool xpack_xtype_decode(OBJ& obj, const char* key, FriendProfile& val, const Extend* ext) {
     xpack::JsonData data;
     data.xpack_decode(obj, key, ext);
-    if (data["accid_"].Type() == kStringType) {
-        val.SetAccId(data["accid_"].GetString());
+    if (data["accid"].Type() == kStringType) {
+        val.SetAccId(data["accid"].GetString());
     }
-    if (data["relationship_"].Type() == kNumberType) {
-        val.SetRelationship((NIMFriendFlag)data["relationship_"].GetInt());
+    if (data["flag"].Type() == kNumberType) {
+        val.SetRelationship((NIMFriendFlag)data["flag"].GetInt());
     }
-    if (data["passive_relationship_"].Type() == kNumberType) {
-        val.SetPassiveRelationship((NIMFriendFlag)data["passive_relationship_"].GetInt());
+    if (data["beflag"].Type() == kNumberType) {
+        val.SetPassiveRelationship((NIMFriendFlag)data["beflag"].GetInt());
     }
-    if (data["source_"].Type() == kNumberType) {
-        val.SetSource((NIMFriendSource)data["source_"].GetInt());
+    if (data["source"].Type() == kNumberType) {
+        val.SetSource((NIMFriendSource)data["source"].GetInt());
     }
-    if (data["alias_"].Type() == kStringType) {
-        val.SetAlias(data["alias_"].GetString());
+    if (data["alias"].Type() == kStringType) {
+        val.SetAlias(data["alias"].GetString());
     }
-    if (data["bits_"].Type() == kNumberType) {
-        val.SetBits(data["bits_"].GetInt());
+    if (data["bits"].Type() == kNumberType) {
+        val.SetBits(data["bits"].GetInt());
     }
-    if (data["expand_"].Type() == kStringType) {
+    if (data["ex"].Type() == kStringType) {
         nim_cpp_wrapper_util::Json::Value value;
-        if (nim::ParseJsonValue(data["expand_"].GetString(), value)) {
+        if (nim::ParseJsonValue(data["ex"].GetString(), value)) {
             val.SetEx(value);
         }
     }
-    if (data["server_expand_"].Type() == kStringType) {
-        val.SetServerEx(data["server_expand_"].GetString());
+    if (data["server_ex"].Type() == kStringType) {
+        val.SetServerEx(data["server_ex"].GetString());
     }
-    if (data["create_timetag_"].Type() == kNumberType) {
-        val.SetCreateTimetag(data["create_timetag_"].GetInt64());
+    if (data["create_timetag"].Type() == kNumberType) {
+        val.SetCreateTimetag(data["create_timetag"].GetInt64());
     }
-    if (data["update_timetag_"].Type() == kNumberType) {
-        val.SetUpdateTimetag(data["update_timetag_"].GetInt64());
+    if (data["update_timetag"].Type() == kNumberType) {
+        val.SetUpdateTimetag(data["update_timetag"].GetInt64());
     }
     return true;
 }

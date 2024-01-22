@@ -24,6 +24,8 @@ ReflectionDefinition_O(TeamEvent,
     src_data_);
 ReflectionDefinition_O(TeamInfo, team_info_json_value_);
 ReflectionDefinition_O(TeamMemberProperty, member_info_json_value_);
+ReflectionDefinition_O(TeamMemberSerachResult, team_member_propertys_, offset_, finished_);
+ReflectionDefinition_O(TeamMemberRoleTypeSearchOption, role_types_, offset_, order_, limit_);
 // Callback
 CallbackSpecialization(Team::TeamEventCallback);
 CallbackSpecialization(Team::QueryAllMyTeamsInfoCallback);
@@ -36,4 +38,5 @@ CallbackSpecialization(Team::QueryTeamMembersInvitorCallback);
 CallbackSpecialization(Team::UpdateTInfoLocalCallback);
 CallbackSpecialization(Team::TeamMsgAckReadCallback);
 CallbackSpecialization(Team::GetTeamInfoListCallback);
+CallbackSpecialization(Team::TeamMemberSearchCallback);
 #endif

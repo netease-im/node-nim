@@ -104,7 +104,7 @@ export interface NIMTalkAPI {
 
     GetAttachmentPathFromMsg(msg: IMMessage): string
 
-    ReplyMessage(msg: IMMessage, json_reply_msg: string): void
+    ReplyMessage(formerMsg: IMMessage, replyMsg: IMMessage, progressCb: FileUpPrgCallback): void
 
     RegMessageFilter(cb: MessageFilterCallback | null, jsonExtension: string): void
 
