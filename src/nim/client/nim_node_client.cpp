@@ -6,7 +6,6 @@
  */
 
 #include "nim_node_client.h"
-#include "reflection/reflection_include.h"
 
 namespace node_nim {
 Napi::Object NIMClient::Init(Napi::Env env, Napi::Object exports) {

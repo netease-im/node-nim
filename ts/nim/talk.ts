@@ -52,7 +52,7 @@ export class NIMTalk extends EventEmitter<NIMTalkEvents> {
      * @param pcb		上传进度的回调函数, 如果发送的消息里包含了文件资源,则通过此回调函数通知上传进度
      * @return void 无返回值
      */
-    sendMsg(msg: IMMessage, jsonExtension: string, progressCb: FileUpPrgCallback): void {
+    sendMsg(msg: IMMessage, jsonExtension: string, progressCb: FileUpPrgCallback | null): void {
         return this.talk.SendMsg(msg, jsonExtension, progressCb)
     }
 
@@ -304,13 +304,13 @@ export class NIMTalk extends EventEmitter<NIMTalkEvents> {
     }
 
     /** 回复消息thread 聊天场景
-     * @param formerMsg	    被回复消息的消息体
-     * @param replyMsg	    回复消息的消息体,可通过各种createxxxmessage接口创建
-     * @param progressCb		传进度的回调函数, 如果发送的消息里包含了文件资源,则通过此回调函数通知上传进度
+     * @param msg	被回复消息的消息体
+     * @param json_reply_msg	回复消息的消息体,可通过各种createxxxmessage接口创建
+     * @param prg_cb		传进度的回调函数, 如果发送的消息里包含了文件资源,则通过此回调函数通知上传进度
      * @return void 无返回值
      */
-    replyMessage(formerMsg: IMMessage, replyMsg: IMMessage, progressCb: FileUpPrgCallback): void {
-        return this.talk.ReplyMessage(formerMsg, replyMsg, progressCb)
+    replyMessage(msg: IMMessage, json_reply_msg: string): void {
+        return this.talk.ReplyMessage(msg, json_reply_msg)
     }
 
     /** (全局回调)注册消息过滤接口 （堵塞线程，谨慎使用，避免耗时行为）

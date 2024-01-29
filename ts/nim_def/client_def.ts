@@ -153,7 +153,7 @@ export enum NIMResCode {
     kNIMLocalResMsgAccessDenied = 10403,
     /// 本地资源不存在
     kNIMLocalResMsgFileNotExist = 10404,
-    /// 本地错误码，参数错误，(收到消息，资源下载地址无效，无法下载)
+    /// 本地错误码，参数错误
     kNIMLocalResParameterError = 10414,
     /// 本地错误码，操作太过频繁
     kNIMLocalResFrequently = 10416,
@@ -388,7 +388,7 @@ export interface NIMClientAPI {
 
     InitEventHandlers(): void
 
-    Login(appKey: string, account: string, password: string, cb: LoginCallback | null, jsonExtension: string): boolean
+    Login(appKey: string, accountId: string, password: string, cb: LoginCallback | null, jsonExtension: string): boolean
 
     Logout(logoutType: NIMLogoutType, cb: LogoutCallback | null, jsonExtension: string): void
 

@@ -16,7 +16,6 @@ import { NIMTool } from './nim/tool'
 import { NIMUser } from './nim/user'
 import { NIMPlugin } from './nim/plugin'
 import { NIMTalkEx } from './nim/talkex'
-import { ChatRoomModule } from './chatroom/chatroom'
 import { QChatInstanceModule } from './qchat/instance'
 import { QChatServerModule } from './qchat/server'
 import { QChatChannelModule } from './qchat/channel'
@@ -25,7 +24,9 @@ import { QChatMessageModule } from './qchat/message'
 import { QChatSystemNotificationModule } from './qchat/system_notification'
 import { QChatAttachmentModule } from './qchat/attachment'
 import { QChatRoleModule } from './qchat/role'
-import { V2NIMInstance } from './v2/v2_nim_instance'
+import { V2NIMClient } from './v2/v2_nim_client'
+import { V2NIMChatroomClient } from './v2/v2_nim_chatroom_client'
+import { V2NIMMessageCreator, V2NIMClientAntispamUtil, V2NIMChatroomMessageCreator, V2NIMConversationIdUtil } from './v2/v2_nim_utilities'
 export {
     NIMClient,
     NIMDataSync,
@@ -45,7 +46,6 @@ export {
     NIMUser,
     NIMPlugin,
     NIMTalkEx,
-    ChatRoomModule,
     QChatInstanceModule,
     QChatServerModule,
     QChatChannelModule,
@@ -53,7 +53,12 @@ export {
     QChatMessageModule,
     QChatSystemNotificationModule,
     QChatAttachmentModule,
-    QChatRoleModule
+    QChatRoleModule,
+    V2NIMChatroomClient,
+    V2NIMMessageCreator,
+    V2NIMClientAntispamUtil,
+    V2NIMChatroomMessageCreator,
+    V2NIMConversationIdUtil
 }
 export * from './nim_def/client_def'
 export * from './nim_def/data_sync_def'
@@ -73,7 +78,6 @@ export * from './nim_def/tool_def'
 export * from './nim_def/user_def'
 export * from './nim_def/plugin_def'
 export * from './nim_def/talkex_def'
-export * from './chatroom_def/chatroom_def'
 export * from './qchat_def/instance_def'
 export * from './qchat_def/server_def'
 export * from './qchat_def/channel_def'
@@ -122,7 +126,6 @@ export class NIM {
         this.talkEx.initEventHandlers()
     }
 }
-export class ChatRoom extends ChatRoomModule {}
 export class QChat {
     instance: QChatInstanceModule = new QChatInstanceModule()
     server: QChatServerModule = new QChatServerModule()
@@ -144,6 +147,5 @@ export class QChat {
     }
 }
 export const nim = new NIM()
-export const chatroom = new ChatRoom()
 export const qchat = new QChat()
-export const v2 = new V2NIMInstance()
+export const v2 = new V2NIMClient()

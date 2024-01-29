@@ -6,7 +6,6 @@
  */
 
 #include "nim_node_system_msg.h"
-#include "reflection/reflection_include.h"
 
 namespace node_nim {
 Napi::Object NIMSystemMsg::Init(Napi::Env env, Napi::Object exports) {

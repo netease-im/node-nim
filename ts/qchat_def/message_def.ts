@@ -337,7 +337,7 @@ export interface QChatQuickCommentDetail {
     create_time: number
     /** 表示自己是否添加过这个标签 */
     include_yourself?: boolean
-    /** 若干个添加过表情的 account ID */
+    /** 若干个添加过表情的 accountId ID */
     accids?: Array<string>
 }
 

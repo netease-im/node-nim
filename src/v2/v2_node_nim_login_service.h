@@ -10,12 +10,5 @@ public:
     explicit V2NodeNIMLoginService(const Napi::CallbackInfo& info);
     void initEventHandler();
 };
-
-class V2NodeNIMLoginDetail : public BizService<V2NodeNIMLoginDetail> {
-public:
-    static Napi::Object Init(Napi::Env env, Napi::Object exports);
-    explicit V2NodeNIMLoginDetail(const Napi::CallbackInfo& info);
-    void initEventHandler();
-};
 }  // namespace node_nim
 #endif

@@ -60,6 +60,12 @@
 npm install node-nim --save-dev
 ```
 
+默认情况下，`npm install` 安装 latest tag 下最新的版本，如果您期望使用目前 beta 阶段的 v10 版本 SDK，您需要指定使用 `beta` tag:
+
+```bash
+npm install node-nim@beta --save-dev
+```
+
 也许您需要在 x64 平台上构建 ia32 应用程序或类似的操作，您可以使用 `--arch` 和 `--platform` 来指定要构建的平台。
 
 -   Windows x64
@@ -150,7 +156,7 @@ return result
 ### 登陆
 
 ```ts
-let [loginResult] = await node_nim.nim.client.login('appkey', 'account', 'password', null, '')
+let [loginResult] = await node_nim.nim.client.login('appkey', 'accountId', 'password', null, '')
 if (loginResult.res_code_ == node_nim.NIMResCode.kNIMResSuccess) {
     console.log('login succeeded')
 } else {

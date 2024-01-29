@@ -5,34 +5,40 @@ import { V2NIMReconnectDelayProvider } from 'ts/v2_def/v2_nim_callback_def'
 
 export declare interface V2NIMLoginServiceEvents {
     /** 登录状态变更回调 */
-    onLoginStatus: [V2NIMLoginStatus]
+    loginStatus: [V2NIMLoginStatus]
     /** 登录失败回调 */
-    onLoginFailed: [V2NIMError]
+    loginFailed: [V2NIMError]
     /** 被踢下线回调 */
-    onKickedOffline: [V2NIMKickedOfflineDetail]
+    kickedOffline: [V2NIMKickedOfflineDetail]
     /** 登录客户端变更回调 */
-    onLoginClientChanged: [V2NIMLoginClientChange, V2NIMLoginClient[]]
+    loginClientChanged: [V2NIMLoginClientChange, V2NIMLoginClient[]]
+    /** 连接状态变更回调 */
+    connectStatus: [V2NIMConnectStatus]
+    /** 连接断开回调 */
+    disconnected: [V2NIMError | null]
+    /** 连接失败回调 */
+    connectFailed: [V2NIMError]
+    /** 数据同步回调 */
+    dataSync: [V2NIMDataSyncType, V2NIMDataSyncState, V2NIMError | null]
 }
 
 export class V2NIMLoginService extends EventEmitter<V2NIMLoginServiceEvents> {
     instance: any
-    loginDetail: V2NIMLoginDetail
     constructor() {
         super()
         this.instance = new sdk.V2NIMLoginService({ emit: this.emit.bind(this) })
-        this.loginDetail = new V2NIMLoginDetail()
     }
     /**
      * 登录接口
-     * @param account 账号
+     * @param accountId 账号
      * @param token 密码
      * @param option 登录选项
      * @returns Promise<void>
      */
-    login(account: string, token: string, option: V2NIMLoginOption): Promise<void> {
+    login(accountId: string, token: string, option: V2NIMLoginOption): Promise<void> {
         return new Promise((resolve, reject) => {
             this.instance.login(
-                account,
+                accountId,
                 token,
                 option,
                 () => {
@@ -113,39 +119,7 @@ export class V2NIMLoginService extends EventEmitter<V2NIMLoginServiceEvents> {
         return this.instance.getKickedOfflineDetail()
     }
 
-    /**
-     * 获取登录详情信息
-     * @returns V2NIMLoginDetail 登录详情信息
-     */
-    getLoginDetail(): V2NIMLoginDetail {
-        return this.loginDetail
-    }
-}
-
-export declare interface V2NIMLoginDetailEvents {
-    /** 连接状态变更回调 */
-    onConnectStatus: [V2NIMConnectStatus]
-    /** 连接断开回调 */
-    onDisconnected: [V2NIMError | null]
-    /** 连接成功回调 */
-    onConnectSuccess: []
-    /** 连接失败回调 */
-    onConnectFailed: [V2NIMError]
-    /** 连接中回调 */
-    onConnecting: []
-    /** 数据同步回调 */
-    onDataSync: [V2NIMDataSyncType, V2NIMDataSyncState, V2NIMError | null]
-}
-
-export class V2NIMLoginDetail extends EventEmitter<V2NIMLoginDetailEvents> {
-    instance: any
-    constructor() {
-        super()
-        this.instance = new sdk.V2NIMLoginDetail({ emit: this.emit.bind(this) })
-    }
-
-    /**
-     * 获取连接状态
+    /* 获取连接状态
      * @returns V2NIMConnectStatus 连接状态
      */
     getConnectStatus(): V2NIMConnectStatus {
@@ -158,6 +132,23 @@ export class V2NIMLoginDetail extends EventEmitter<V2NIMLoginDetailEvents> {
      */
     getDataSync(): V2NIMDataSyncDetail[] {
         return this.instance.getDataSync()
+    }
+
+    /** @brief 获取聊天室 link 地址 */
+    /** @param roomId 聊天室 ID */
+    /** @return void */
+    getChatroomLinkAddress(roomId: string): Promise<Array<string>> {
+        return new Promise((resolve, reject) => {
+            this.instance.getChatroomLinkAddress(
+                roomId,
+                (linkAddresses: Array<string>) => {
+                    resolve(linkAddresses)
+                },
+                (error: V2NIMError) => {
+                    reject(error)
+                }
+            )
+        })
     }
 
     /**

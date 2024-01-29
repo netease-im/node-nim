@@ -67,13 +67,6 @@ export enum NIMTeamQueryType {
     kNIMTeamQueryByTeamName = 2 /** < 仅匹配群组名称 */
 }
 
-export enum TeamQueryOrder {
-    /// 按时间降序排列
-    kTeamQueryOrderDesc = 0,
-    /// 按时间升序排列
-    kTeamQueryOrderAsc = 1
-}
-
 export interface TeamEvent {
     res_code_?: NIMResCode /**< 错误码 */
     notification_id_?: NIMNotificationId /**< 通知类型ID */
@@ -136,19 +129,6 @@ export interface TeamMemberProperty {
     member_info_json_value_?: TeamMemberPropertyJsonValue // json string
 }
 
-export interface TeamMemberSerachResult {
-    team_member_propertys_?: Array<TeamMemberProperty>
-    offset_?: number
-    finished_?: boolean
-}
-
-export interface TeamMemberRoleTypeSearchOption {
-    role_types_?: Array<NIMTeamUserType>
-    offset_?: number
-    order_?: TeamQueryOrder
-    limit_?: number
-}
-
 export type TeamEventCallback = (result: TeamEvent) => void
 export type QueryAllMyTeamsCallback = (count: number, result: Array<string>) => void
 export type QueryAllMyTeamsInfoCallback = (count: number, result: Array<TeamInfo>) => void
@@ -163,7 +143,6 @@ export type TeamMsgAckReadCallback = (tid: string, success_ids: Array<string>, f
 export type UpdateTInfoLocalCallback = (success_ids: Array<string>, failure_ids: Array<string>) => void
 export type GetTeamInfoBatchSFTransCallback = (count: number, infos: Array<TeamInfo>) => void
 export type GetTeamInfoListCallback = (rescode: NIMResCode, infos: Array<TeamInfo>, failure_ids: Array<string>) => void
-export type TeamGetMemberListCallback = (result: TeamMemberSerachResult) => void
 
 export interface NIMTeamAPI {
     InitEventHandlers(): void
@@ -242,6 +221,4 @@ export interface NIMTeamAPI {
     GetTeamInfoBatchSFTrans(cb: GetTeamInfoBatchSFTransCallback | null, time_tag: number, jsonExtension: string): void
 
     GetTeaminfoList(tids: Array<string>, cb: GetTeamInfoListCallback | null): void
-
-    GetTeamMemberList(tid: string, option: TeamMemberRoleTypeSearchOption, cb: TeamGetMemberListCallback | null): void
 }

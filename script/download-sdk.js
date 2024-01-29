@@ -4,7 +4,7 @@ const compareVersions = require('compare-versions')
 const download = require('download')
 const arch = process.env.npm_config_arch || process.arch
 const platform = process.env.npm_config_platform || process.platform
-const sdk_group = 'message'
+const sdk_group = 'messagebeta'
 const sdk_name = 'nim'
 const sdk_path = `${__dirname}/../sdk`
 if (process.env.npm_config_ignoredownloadsdk) {
@@ -60,7 +60,7 @@ async function downloadSDK(custom_sdk_url) {
     console.info(`[node-nim] Downloading prebuilt sdk from ${sdk_url} to ${sdk_path}`)
     // remove sdk_path
     if (fs.existsSync(sdk_path)) {
-        fs.rmSync(sdk_path, { recursive: true, force: true })
+        fs.rmdirSync(sdk_path, { recursive: true })
     }
     // download sdk
     try {

@@ -46,14 +46,13 @@ endif ()
 if (APPLE)
     # target system is macOS, iOS, tvOS or watchOS
     add_compile_options(-Wno-deprecated-declarations)
-    add_compile_options($<$<CONFIG:RELEASE>:-fembed-bitcode>)
 endif ()
 
 if (IOS)
     # target system is iOS
     message(STATUS "Yunxin: Configure for [iOS]")
     if (NOT CMAKE_OSX_DEPLOYMENT_TARGET)
-        set(CMAKE_OSX_DEPLOYMENT_TARGET 9.3 CACHE STRING "Minimum iOS deployment version" FORCE)
+        set(CMAKE_OSX_DEPLOYMENT_TARGET 10.0 CACHE STRING "Minimum iOS deployment version" FORCE)
     endif ()
     if (CMAKE_OSX_ARCHITECTURES STREQUAL "armv7")
         add_compile_options(-fno-aligned-allocation)
@@ -92,7 +91,7 @@ endif ()
 
 # pre-commit hooks
 macro(ne_install_pre_commit_hooks)
-    if (NOT EXISTS ${CMAKE_CURRENT_LIST_DIR}/.git/hooks/pre-commit AND "CMAKE_BUILD_TYPE" STREQUAL "Debug")
+    if (NOT EXISTS ${CMAKE_CURRENT_LIST_DIR}/.git/hooks/pre-commit)
         find_package(Python3 COMPONENTS Interpreter Development)
 
         if (POLICY CMP0094) # https://cmake.org/cmake/help/latest/policy/CMP0094.html
@@ -112,7 +111,7 @@ macro(ne_install_pre_commit_hooks)
         find_package(Python REQUIRED COMPONENTS Interpreter)
         message(STATUS "Python executable: ${Python_EXECUTABLE}")
         execute_process(COMMAND ${Python_EXECUTABLE} -m pip install pre-commit)
-        execute_process(COMMAND pre-commit install WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
+        execute_process(COMMAND pre-commit install --hook-type commit-msg WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
     endif ()
 endmacro()
 
@@ -122,12 +121,12 @@ macro(ne_install_conan_packages)
         execute_process(COMMAND conan config set general.revisions_enabled=True)
         include(${CMAKE_SOURCE_DIR}/.cmake/conan.cmake)
         if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
-            set(CONAN_ENV_CFLAGS "CFLAGS=-fvisibility=hidden -fvisibility-inlines-hidden")
-            set(CONAN_ENV_CXXFLAGS "CXXFLAGS=-fvisibility=hidden -fvisibility-inlines-hidden")
+            set(CONAN_ENV_CFLAGS "CFLAGS=-fvisibility=hidden -fvisibility-inlines-hidden -Wno-error=deprecated-declarations -g3 -DUV_EXTERN=")
+            set(CONAN_ENV_CXXFLAGS "CXXFLAGS=-fvisibility=hidden -fvisibility-inlines-hidden -Wno-error=deprecated-declarations -g3")
         elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
-            set(CONAN_ENV_CFLAGS "CFLAGS=-fembed-bitcode -fvisibility=hidden -fvisibility-inlines-hidden -Wno-error=deprecated-declarations")
-            set(CONAN_ENV_CXXFLAGS "CXXFLAGS=-fembed-bitcode -fvisibility=hidden -fvisibility-inlines-hidden -Wno-error=deprecated-declarations")
-            set(CONAN_ENV_OBJCFLAGS "OBJCFLAGS=-fembed-bitcode -fvisibility=hidden -fvisibility-inlines-hidden -Wno-error=deprecated-declarations")
+            set(CONAN_ENV_CFLAGS "CFLAGS=-fvisibility=hidden -fvisibility-inlines-hidden -Wno-error=deprecated-declarations -g3 -DUV_EXTERN=")
+            set(CONAN_ENV_CXXFLAGS "CXXFLAGS=-fvisibility=hidden -fvisibility-inlines-hidden -Wno-error=deprecated-declarations -g3")
+            set(CONAN_ENV_OBJCFLAGS "OBJCFLAGS=-fvisibility=hidden -fvisibility-inlines-hidden -Wno-error=deprecated-declarations")
         endif()
         if (CONAN_PROFILE_BUILD AND CONAN_PROFILE_HOST)
             conan_cmake_install(PATH_OR_REFERENCE .. BUILD missing
@@ -142,7 +141,9 @@ macro(ne_install_conan_packages)
         endif ()
     endif ()
     include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-    include(${CMAKE_BINARY_DIR}/conan_paths.cmake)
+    if(EXISTS ${CMAKE_BINARY_DIR}/conan_paths.cmake)
+        include(${CMAKE_BINARY_DIR}/conan_paths.cmake)
+    endif()
     conan_basic_setup(${PROJECT_NAME} KEEP_RPATHS)
 endmacro()
 
@@ -186,7 +187,13 @@ function(ne_add_library target)
             FRAMEWORK_VERSION A
             MACOSX_FRAMEWORK_IDENTIFIER ${arg_MACOSX_FRAMEWORK_IDENTIFIER}
             MACHO_CURRENT_VERSION ${GIT_VERSION}
+            XCODE_ATTRIBUTE_ENABLE_BITCODE NO
         )
+        if (NOT DEFINED arg_NO_SYMLINKS)
+            set_target_properties(${target} PROPERTIES
+                VERSION ${GIT_VERSION}
+            )
+        endif ()
         if (CMAKE_BUILD_TYPE MATCHES "Release")
             set_target_properties(${target} PROPERTIES
                 XCODE_ATTRIBUTE_DEPLOYMENT_POSTPROCESSING YES
@@ -198,15 +205,12 @@ function(ne_add_library target)
             )
         endif ()
     elseif (UNIX)
-        if (arg_NO_SYMLINKS)
+        set_target_properties(${target} PROPERTIES
+            BUILD_WITH_INSTALL_RPATH 1
+            INSTALL_RPATH "$ORIGIN"
+        )
+        if (NOT DEFINED arg_NO_SYMLINKS)
             set_target_properties(${target} PROPERTIES
-                BUILD_WITH_INSTALL_RPATH 1
-                INSTALL_RPATH "$ORIGIN"
-            )
-        else ()
-            set_target_properties(${target} PROPERTIES
-                BUILD_WITH_INSTALL_RPATH 1
-                INSTALL_RPATH "$ORIGIN"
                 VERSION ${GIT_VERSION}
             )
         endif ()
@@ -226,39 +230,15 @@ function(ne_target_link_libraries target)
 endfunction()
 
 function(_ne_target_install target)
-    if (ANDROID)
-        install(
-            TARGETS ${target}
-            ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_ANDROID_ARCH_ABI}
-            RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_ANDROID_ARCH_ABI}
-            LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_ANDROID_ARCH_ABI}
-            PUBLIC_HEADER DESTINATION include
-        )
-    elseif (APPLE)
-        install(
-            TARGETS ${target}
-            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            PUBLIC_HEADER DESTINATION include
-        )
-    elseif (MSVC)
-        install(
-            TARGETS ${target}
-            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            PUBLIC_HEADER DESTINATION include
-        )
+    install(
+        TARGETS ${target}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        PUBLIC_HEADER DESTINATION include
+    )
+    if (MSVC)
         install(FILES $<TARGET_PDB_FILE:${target}> DESTINATION pdb OPTIONAL)
-    elseif (UNIX)
-        install(
-            TARGETS ${target}
-            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            PUBLIC_HEADER DESTINATION include
-        )
     endif ()
 endfunction()

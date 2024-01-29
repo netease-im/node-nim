@@ -10,6 +10,7 @@ import {
     NIMNOSAPI,
     NOSParams,
     ProgressCallback,
+    ProgressData,
     ProgressExCallback,
     SafeURLToOriginURLCallback,
     SpeedCallback,
@@ -90,9 +91,21 @@ export class NIMNOS extends EventEmitter<NIMNOSEvents> {
                         }
                         resolve([code, file_url, file_size, file_md5])
                     },
-                    prg_cb,
-                    speed_cb,
-                    transfer_cb
+                    (completedSize: number, fileSize: number) => {
+                        if (prg_cb) {
+                            prg_cb(completedSize, fileSize)
+                        }
+                    },
+                    (speed: number) => {
+                        if (speed_cb) {
+                            speed_cb(speed)
+                        }
+                    },
+                    (actualSize: number, speed: number) => {
+                        if (transfer_cb) {
+                            transfer_cb(actualSize, speed)
+                        }
+                    }
                 )
             ) {
                 resolve(null)
@@ -148,9 +161,21 @@ export class NIMNOS extends EventEmitter<NIMNOSEvents> {
                         }
                         resolve([code, result])
                     },
-                    prg_cb,
-                    speed_cb,
-                    transfer_cb
+                    (completedSize: number, fileSize: number, result: ProgressData) => {
+                        if (prg_cb) {
+                            prg_cb(completedSize, fileSize, result)
+                        }
+                    },
+                    (speed: number) => {
+                        if (speed_cb) {
+                            speed_cb(speed)
+                        }
+                    },
+                    (actualSize: number, speed: number) => {
+                        if (transfer_cb) {
+                            transfer_cb(actualSize, speed)
+                        }
+                    }
                 )
             ) {
                 resolve(null)
@@ -206,9 +231,21 @@ export class NIMNOS extends EventEmitter<NIMNOSEvents> {
                         }
                         resolve([code, result])
                     },
-                    prg_cb,
-                    speed_cb,
-                    transfer_cb
+                    (completedSize: number, fileSize: number, result: ProgressData) => {
+                        if (prg_cb) {
+                            prg_cb(completedSize, fileSize, result)
+                        }
+                    },
+                    (speed: number) => {
+                        if (speed_cb) {
+                            speed_cb(speed)
+                        }
+                    },
+                    (actualSize: number, speed: number) => {
+                        if (transfer_cb) {
+                            transfer_cb(actualSize, speed)
+                        }
+                    }
                 )
             ) {
                 resolve(null)

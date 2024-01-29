@@ -96,7 +96,7 @@ export type MessageFilterCallback = (result: IMMessage) => boolean
 export interface NIMTalkAPI {
     InitEventHandlers(): void
 
-    SendMsg(msg: IMMessage, jsonExtension: string, progressCb: FileUpPrgCallback): void
+    SendMsg(msg: IMMessage, jsonExtension: string, progressCb: FileUpPrgCallback | null): void
 
     StopSendMsg(clientMsgId: string, type: NIMMessageType, jsonExtension: string): void
 
@@ -104,7 +104,7 @@ export interface NIMTalkAPI {
 
     GetAttachmentPathFromMsg(msg: IMMessage): string
 
-    ReplyMessage(formerMsg: IMMessage, replyMsg: IMMessage, progressCb: FileUpPrgCallback): void
+    ReplyMessage(msg: IMMessage, json_reply_msg: string): void
 
     RegMessageFilter(cb: MessageFilterCallback | null, jsonExtension: string): void
 

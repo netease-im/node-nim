@@ -8,6 +8,7 @@ namespace node_nim {
 class V2NodeNIMInstance : public BizService<V2NodeNIMInstance> {
 public:
     static Napi::Object Init(Napi::Env env, Napi::Object exports);
+
     explicit V2NodeNIMInstance(const Napi::CallbackInfo& info);
 };
 }  // namespace node_nim

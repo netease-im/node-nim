@@ -6,7 +6,6 @@
  */
 
 #include "nim_node_team.h"
-#include "reflection/reflection_include.h"
 
 namespace node_nim {
 Napi::Object NIMTeam::Init(Napi::Env env, Napi::Object exports) {
@@ -31,8 +30,7 @@ Napi::Object NIMTeam::Init(Napi::Env env, Napi::Object exports) {
                     const std::string& tid, const IMMessage&, const std::list<std::string>&, const Team::TeamEventCallback&, const std::string&)),
             RegApi("QueryTeamMembersInvitor", &Team::QueryTeamMembersInvitor), RegApi("UpdateTInfoLocal", &Team::UpdateTInfoLocal),
             RegApi("GetTeamInfoBatchSFTrans", &Team::GetTeamInfoBatchSFTrans),
-            RegApi("QueryTeamInfoByKeywordAsync", &Team::QueryTeamInfoByKeywordAsync), RegApi("GetTeaminfoList", &Team::GetTeaminfoList),
-            RegApi("GetTeamMemberList", &Team::GetTeamMemberList)});
+            RegApi("QueryTeamInfoByKeywordAsync", &Team::QueryTeamInfoByKeywordAsync), RegApi("GetTeaminfoList", &Team::GetTeaminfoList)});
 }
 
 void NIMTeam::InitEventHandlers() {

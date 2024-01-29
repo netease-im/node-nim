@@ -22,7 +22,8 @@ if (version === '') {
     // remove characters after '-' in branch name
     version = version.replace(/-.*/, '')
 }
-version = version + '-alpha.' + gitCommitCount
+let npmTag = version
+version = version + '-beta'
 console.log(`[node-nim] version: ${version}`)
 process.execSync(`npm version ${version} --no-git-tag-version`)
-process.execSync(`npm publish --registry=http://npm.netease.im/`)
+process.execSync(`npm publish --registry=http://npm.netease.im/ --tag=beta`)

@@ -8,25 +8,14 @@
         "esModuleInterop": true,
         "allowJs": true,
         "moduleResolution": "node",
-        "lib": [
-            "es6",
-            "dom"
-        ],
+        "lib": ["es6", "dom"],
         "declaration": true,
         "declarationDir": "types",
         "sourceMap": true,
         "stripInternal": true
     },
     "typedocOptions": {
-        "entryPoints": [
-            "ts/node-nim.ts",
-            "ts/chatroom",
-            "ts/chatroom_def",
-            "ts/nim",
-            "ts/nim_def",
-            "ts/qchat",
-            "ts/qchat_def"
-        ],
+        "entryPoints": ["ts/node-nim.ts", "ts/nim", "ts/nim_def", "ts/qchat", "ts/qchat_def", "ts/v2", "ts/v2_def"],
         "entryPointStrategy": "expand",
         "readme": "none",
         "out": "doc",
@@ -35,7 +24,5 @@
         "hideGenerator": "true",
         "excludeInternal": "true"
     },
-    "include": [
-        "ts/**/*"
-    ]
+    "include": ["ts/**/*"]
 }

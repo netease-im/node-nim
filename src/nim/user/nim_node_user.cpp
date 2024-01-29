@@ -6,7 +6,6 @@
  */
 
 #include "nim_node_user.h"
-#include "reflection/reflection_include.h"
 
 namespace node_nim {
 Napi::Object NIMUser::Init(Napi::Env env, Napi::Object exports) {

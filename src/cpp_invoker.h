@@ -11,6 +11,7 @@
 #define SRC_CPP_INVOKER_H_
 
 #include <napi.h>
+#include <thread>
 #include <tuple>
 #include "ne_stl.h"
 #include "ts_cpp_conversion.h"
@@ -109,10 +110,17 @@ public:
         if (fun.IsNull() || fun.IsUndefined()) {
             return nullptr;
         }
+        auto thread_id = std::this_thread::get_id();
         auto tsfn = Napi::ThreadSafeFunction::New(env, fun, fun_location_name, 0, 1);
-        auto callback = [tsfn](TArgs... param) -> TReturn {
+        auto callback = [=](TArgs... param) -> TReturn {
             auto tup = std::make_tuple(std::forward<TArgs>(param)...);
             if constexpr (!std::is_void<TReturn>::value) {
+                if (std::this_thread::get_id() == thread_id) {
+                    // nodejs thread, call directly
+                    auto&& args = TupleToCbArgs(env, tup);
+                    auto return_value = fun.Call(args);
+                    return ts_cpp_conversion::ObjectToStruct<TReturn>(env, return_value, -1);
+                }
                 std::promise<TReturn> promise;
                 auto future = promise.get_future();
                 auto tsfn_cb = [tup, &promise](const Napi::Env& env, const Napi::Function& js_callback, const void* value) -> Napi::Value {
@@ -128,6 +136,12 @@ public:
                 tsfn.NonBlockingCall((void*)0, tsfn_cb);
                 return future.get();
             } else {
+                if (std::this_thread::get_id() == thread_id) {
+                    // nodejs thread, call directly
+                    auto&& args = TupleToCbArgs(env, tup);
+                    fun.Call(args);
+                    return;
+                }
                 auto tsfn_cb = [tup](const Napi::Env& env, const Napi::Function& js_callback, const void* value) -> Napi::Value {
                     try {
                         auto&& args = TupleToCbArgs(env, tup);
@@ -138,21 +152,30 @@ public:
                     return env.Null();
                 };
                 tsfn.NonBlockingCall((void*)0, tsfn_cb);
-                return TReturn();
             }
         };
         return callback;
     }
 
     template <typename TReturn, typename... TArgs>
-    static ne_std::function<TReturn(TArgs...)> ToThreadSafeCallback(Napi::Env env,
+    static nstd::function<TReturn(TArgs...)> ToThreadSafeCallback(Napi::Env env,
         const Napi::Function& fun,
         const std::string& fun_location_name,
-        const ne_std::function<TReturn(TArgs...)>* realcb) {
+        const nstd::function<TReturn(TArgs...)>* realcb) {
+        if (fun.IsNull() || fun.IsUndefined()) {
+            return nullptr;
+        }
+        auto thread_id = std::this_thread::get_id();
         auto tsfn = Napi::ThreadSafeFunction::New(env, fun, fun_location_name, 0, 1);
-        auto callback = [tsfn](TArgs... param) -> TReturn {
+        auto callback = [=](TArgs... param) -> TReturn {
             auto tup = std::make_tuple(std::forward<TArgs>(param)...);
             if constexpr (!std::is_void<TReturn>::value) {
+                if (std::this_thread::get_id() == thread_id) {
+                    // nodejs thread, call directly
+                    auto&& args = TupleToCbArgs(env, tup);
+                    auto return_value = fun.Call(args);
+                    return ts_cpp_conversion::ObjectToStruct<TReturn>(env, return_value, -1);
+                }
                 std::promise<TReturn> promise;
                 auto future = promise.get_future();
                 auto tsfn_cb = [tup, &promise](const Napi::Env& env, const Napi::Function& js_callback, const void* value) -> Napi::Value {
@@ -168,6 +191,12 @@ public:
                 tsfn.NonBlockingCall((void*)0, tsfn_cb);
                 return future.get();
             } else {
+                if (std::this_thread::get_id() == thread_id) {
+                    // nodejs thread, call directly
+                    auto&& args = TupleToCbArgs(env, tup);
+                    fun.Call(args);
+                    return;
+                }
                 auto tsfn_cb = [tup](const Napi::Env& env, const Napi::Function& js_callback, const void* value) -> Napi::Value {
                     try {
                         auto&& args = TupleToCbArgs(env, tup);
@@ -178,7 +207,6 @@ public:
                     return env.Null();
                 };
                 tsfn.NonBlockingCall((void*)0, tsfn_cb);
-                return TReturn();
             }
         };
         return callback;

@@ -6,7 +6,6 @@
  */
 
 #include "nim_node_super_team.h"
-#include "reflection/reflection_include.h"
 
 namespace node_nim {
 Napi::Object NIMSuperTeam::Init(Napi::Env env, Napi::Object exports) {
@@ -27,8 +26,7 @@ Napi::Object NIMSuperTeam::Init(Napi::Env env, Napi::Object exports) {
             RegApi("QuerySuperTeamMembersAsync", &SuperTeam::QuerySuperTeamMembersAsync),
             RegApi("QuerySuperTeamMemberAsync", &SuperTeam::QuerySuperTeamMemberAsync),
             RegApi("QuerySuperTeamInfoAsync", &SuperTeam::QuerySuperTeamInfoAsync),
-            RegApi("QuerySuperTeamInfoOnlineAsync", &SuperTeam::QuerySuperTeamInfoOnlineAsync),
-            RegApi("SearchTeamMembers", &SuperTeam::SearchTeamMembers), RegApi("GetTeamMemberList", &SuperTeam::GetTeamMemberList)});
+            RegApi("QuerySuperTeamInfoOnlineAsync", &SuperTeam::QuerySuperTeamInfoOnlineAsync)});
 }
 
 void NIMSuperTeam::InitEventHandlers() {

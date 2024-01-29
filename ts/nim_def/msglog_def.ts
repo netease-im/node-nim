@@ -223,7 +223,7 @@ export interface IMMessageRobotInfo {
     function_?: string // 机器人 function
     topic_?: string // 机器人 topic
     custom_content_?: string // 机器人 custom_content
-    account_?: string // 机器人 account
+    account_?: string // 机器人 accountId
 }
 
 export interface IMMessage {

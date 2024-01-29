@@ -6,7 +6,6 @@
  */
 
 #include "nim_node_nos.h"
-#include "reflection/reflection_include.h"
 
 namespace node_nim {
 Napi::Object NIMNOS::Init(Napi::Env env, Napi::Object exports) {

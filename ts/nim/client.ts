@@ -57,7 +57,7 @@ export class NIMClient extends EventEmitter<NIMClientEvents> {
 
     /** NIM客户端登录
      * @param appKey
-     * @param account 帐号
+     * @param accountId 帐号
      * @param password 密码
      * @param cb 登录流程的回调函数
      * @param jsonExtension json扩展参数（v5.7.0 项目增加自定义参数字段）
@@ -74,11 +74,11 @@ export class NIMClient extends EventEmitter<NIMClientEvents> {
      * 422:账号被禁用
      * </pre>
      */
-    login(appKey: string, account: string, password: string, cb: LoginCallback | null, jsonExtension: string): Promise<[LoginRes]> {
+    login(appKey: string, accountId: string, password: string, cb: LoginCallback | null, jsonExtension: string): Promise<[LoginRes]> {
         return new Promise((resolve) => {
             this.client.Login(
                 appKey,
-                account,
+                accountId,
                 password,
                 (res) => {
                     if (cb) {

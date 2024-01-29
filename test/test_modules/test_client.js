@@ -123,9 +123,9 @@ function testClient(test_info) {
             })
         })
         describe('#getCurrentUserAccount', function () {
-            it('get current user account should return ljm2', function () {
-                const account = client.getCurrentUserAccount()
-                assert.notStrictEqual(account, '')
+            it('get current user accountId should return ljm2', function () {
+                const accountId = client.getCurrentUserAccount()
+                assert.notStrictEqual(accountId, '')
             })
         })
     })

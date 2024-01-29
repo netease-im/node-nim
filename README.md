@@ -59,6 +59,12 @@ It will automatically download the prebuilt binary file that fits your current p
 npm install node-nim --save-dev
 ```
 
+By default, `npm install` installs the latest version under the "latest" tag. If you want to use the v10 beta version SDK, you need to specify the use of the "beta" tag:
+
+```bash
+npm install node-nim@beta --save-dev
+```
+
 Maybe you need to build ia32 app on x64 platform or something like that, you can use `--arch` and `--platform` to specify the platform you want to build.
 
 -   Windows x64
@@ -146,7 +152,7 @@ return result
 ### Login
 
 ```ts
-let [loginResult] = await node_nim.nim.client.login('appkey', 'account', 'password', null, '')
+let [loginResult] = await node_nim.nim.client.login('appkey', 'accountId', 'password', null, '')
 if (loginResult.res_code_ == node_nim.NIMResCode.kNIMResSuccess) {
     console.log('login succeeded')
 } else {

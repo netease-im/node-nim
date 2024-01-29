@@ -1,5 +1,4 @@
 #include "qchat_channel_category.h"
-#include "reflection/reflection_include.h"
 namespace node_nim {
 Napi::Object QChatChannelCategory::Init(Napi::Env env, Napi::Object exports) {
     // clang-format off

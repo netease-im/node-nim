@@ -91,7 +91,7 @@ string(REPLACE "\"" "" NODE_ADDON_API_DIR ${NODE_ADDON_API_DIR})
 message(STATUS "NODE_ADDON_API_DIR ${NODE_ADDON_API_DIR}")
 
 # configure project
-add_definitions(-DNIM_SDK_DLL_IMPORT)
+add_definitions(-DNIM_SDK_DLL_IMPORT -DENABLE_NIM_V1)
 file(GLOB_RECURSE NIM_NODE_SOURCE ${CMAKE_CURRENT_LIST_DIR}/src/*.cpp
                                   ${CMAKE_CURRENT_LIST_DIR}/src/*.cc
                                   ${CMAKE_CURRENT_LIST_DIR}/src/*.c)
@@ -111,8 +111,6 @@ if(TARGET nim_cpp_wrapper)
                                ${CMAKE_SOURCE_DIR}/nim/api/
                                ${CMAKE_SOURCE_DIR}/nim/nim_defines/
                                ${CMAKE_SOURCE_DIR}/nim/nim_qchat_defines/
-                               ${CMAKE_SOURCE_DIR}/nim_chatroom/api/
-                               ${CMAKE_SOURCE_DIR}/nim_chatroom/nim_chatroom_defines/
                                ${CMAKE_SOURCE_DIR}/public_defines/
                                ${CMAKE_SOURCE_DIR}/v2
                                ${CMAKE_SOURCE_DIR}/wrapper)
@@ -127,7 +125,6 @@ endif()
 target_link_libraries(${TARGET_NAME}
                       ${CMAKE_JS_LIB}
                       nim_cpp_wrapper
-                      nim_chatroom_cpp_wrapper
                       nim_tools_cpp_wrapper
                       nim_qchat_cpp_wrapper
                       nim_wrapper_util)

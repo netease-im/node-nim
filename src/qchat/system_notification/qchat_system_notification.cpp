@@ -1,5 +1,4 @@
 #include "qchat_system_notification.h"
-#include "reflection/reflection_include.h"
 namespace node_nim {
 Napi::Object QChatSystemNotification::Init(Napi::Env env, Napi::Object exports) {
     // clang-format off
