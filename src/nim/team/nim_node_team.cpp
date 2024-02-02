@@ -32,7 +32,8 @@ Napi::Object NIMTeam::Init(Napi::Env env, Napi::Object exports) {
             RegApi("QueryTeamMembersInvitor", &Team::QueryTeamMembersInvitor), RegApi("UpdateTInfoLocal", &Team::UpdateTInfoLocal),
             RegApi("GetTeamInfoBatchSFTrans", &Team::GetTeamInfoBatchSFTrans),
             RegApi("QueryTeamInfoByKeywordAsync", &Team::QueryTeamInfoByKeywordAsync), RegApi("GetTeaminfoList", &Team::GetTeaminfoList),
-            RegApi("GetTeamMemberList", &Team::GetTeamMemberList)});
+            RegApi("GetTeamMemberList", &Team::GetTeamMemberList), RegApi("AddTeamMembersFollow", &Team::AddTeamMembersFollow),
+            RegApi("RemoveTeamMembersFollow", &Team::RemoveTeamMembersFollow)});
 }
 
 void NIMTeam::InitEventHandlers() {

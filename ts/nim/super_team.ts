@@ -442,6 +442,48 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
         })
     }
 
+    /** @fn boolean addTeamMembersFollow(tid: string, account_ids: Array<string>, cb: SuperTeamEventCallback)
+     * 添加群成员特别通知
+     * @param[in] tid    群组id
+     * @param[in] account_ids    群成员id
+     * @param[in] cb        添加群成员特别通知的回调函数
+     */
+    addTeamMembersFollow(tid: string, account_ids: Array<string>, cb: SuperTeamEventCallback): Promise<[SuperTeamEvent] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.team.AddTeamMembersFollow(tid, account_ids, (event) => {
+                    if (cb) {
+                        cb(event)
+                    }
+                    resolve([event])
+                })
+            ) {
+                resolve(null)
+            }
+        })
+    }
+
+    /** @fn boolean removeTeamMembersFollow(tid: string, account_ids: Array<string>, SuperTeamEventCallback
+     * cb) 移除群成员特别通知
+     * @param[in] tid    群组id
+     * @param[in] account_ids    群成员id
+     * @param[in] cb        移除群成员特别通知的回调函数
+     */
+    removeTeamMembersFollow(tid: string, account_ids: Array<string>, cb: SuperTeamEventCallback): Promise<[SuperTeamEvent] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.team.RemoveTeamMembersFollow(tid, account_ids, (event) => {
+                    if (cb) {
+                        cb(event)
+                    }
+                    resolve([event])
+                })
+            ) {
+                resolve(null)
+            }
+        })
+    }
+
     /** 修改别人的群昵称
      * @param prop	群成员属性
      * @param jsonExtension json扩展参数（备用，目前不需要）

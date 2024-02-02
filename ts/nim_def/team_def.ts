@@ -244,4 +244,8 @@ export interface NIMTeamAPI {
     GetTeaminfoList(tids: Array<string>, cb: GetTeamInfoListCallback | null): void
 
     GetTeamMemberList(tid: string, option: TeamMemberRoleTypeSearchOption, cb: TeamGetMemberListCallback | null): void
+
+    AddTeamMembersFollow(tid: string, account_ids: Array<string>, cb: TeamEventCallback | null): boolean
+
+    RemoveTeamMembersFollow(tid: string, account_ids: Array<string>, cb: TeamEventCallback | null): boolean
 }
