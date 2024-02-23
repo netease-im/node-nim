@@ -39,6 +39,7 @@ Napi::Object NIMMsgLog::Init(Napi::Env env, Napi::Object exports) {
                 void (*)(const IMMessage&, const std::string, const MsgLog::DeleteMsglogSelfCallback&)),
             RegApi("QueryMessageIsThreadRoot", &MsgLog::QueryMessageIsThreadRoot), RegApi("QueryMessageOnline", &MsgLog::QueryMessageOnline),
             RegApi("QueryThreadHistoryMsg", &MsgLog::QueryThreadHistoryMsg),
+            RegApi("QueryLocalThreadHistoryMsg", &MsgLog::QueryLocalThreadHistoryMsg),
             RegApi("FullTextSearchOnlineAsync", &MsgLog::FullTextSearchOnlineAsync)});
 }
 

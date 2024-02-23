@@ -139,7 +139,16 @@ ReflectionDefinition_O(QChatSendMessageParam, cb, message);
 ReflectionDefinition_O(QChatUpdateMessageParam, cb, id_info, msg_server_id, timestamp, update_info, anti_spam_info, status, msg_body, msg_ext);
 ReflectionDefinition_O(QChatRevokeMessageParam, cb, id_info, msg_server_id, timestamp, update_info);
 ReflectionDefinition_O(QChatDeleteMessageParam, cb, id_info, msg_server_id, timestamp, update_info);
-ReflectionDefinition_O(QChatGetMessagesParam, cb, server_id, channel_id, from_time, to_time, exclude_msg_server_id, limit, reverse);
+ReflectionDefinition_O(QChatGetMessagesParam,
+    cb,
+    server_id,
+    channel_id,
+    from_time,
+    to_time,
+    exclude_msg_server_id,
+    limit,
+    reverse,
+    include_local_messages);
 ReflectionDefinition_O(QChatGetLastMessagesParam, cb, server_id, channel_ids);
 ReflectionDefinition_O(QChatGetMessagesCacheParam, cb, server_id, channel_id);
 ReflectionDefinition_O(QChatMarkMessageReadParam, cb, id_info, timestamp);
@@ -169,5 +178,9 @@ ReflectionDefinition_O(QChatMessageSearchPageParam,
     cursor);
 ReflectionDefinition_O(QChatGetMentionedMeMessagesParam, cb, server_id, channel_id, timestamp, limit);
 ReflectionDefinition_O(QChatAreMentionedMeMessagesParam, cb, messages);
+ReflectionDefinition_O(QChatInsertOrReplaceTextCacheParam, cb, server_id, channel_id, value);
+ReflectionDefinition_O(QChatDeleteTextCacheParam, cb, server_id, channel_id);
+ReflectionDefinition_O(QChatGetTextCacheResp, res_code, value);
+ReflectionDefinition_O(QChatGetTextCacheParam, cb, server_id, channel_id);
 
 #endif  // __QCHAT_MESSAGE_HELPER_H__

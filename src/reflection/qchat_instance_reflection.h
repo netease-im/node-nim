@@ -45,7 +45,7 @@ ReflectionDefinition_O(QChatFCSConfiguration,
     fcs_auth_type,
     mock_ua,
     mock_refer);
-ReflectionDefinition_O(QChatMessageCacheConfiguration, enable_message_cache);
+ReflectionDefinition_O(QChatMessageCacheConfiguration, enable_message_cache, max_cache_channel_count, max_cache_message_count);
 ReflectionDefinition_O(QChatInitParam,
     appkey,
     app_data_path,

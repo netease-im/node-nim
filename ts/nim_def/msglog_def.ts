@@ -368,7 +368,7 @@ export type MessageStatusChangedCallback = (result: MessageStatusChangedResult) 
 export type ImportDbPrgCallback = (importedCount: number, totalCount: number) => void
 export type DeleteHistoryOnLineAsyncCallback = (rescode: NIMResCode, accid: string) => void
 export type DeleteHistoryOnLineAsyncExCallback = (rescode: NIMResCode, accid: string, to_type: number, timestamp: number, jsonExtension: string) => void
-export type QueryMessageIsThreadRootCallback = (rescode: NIMResCode, client_id: string, is_root: boolean) => void
+export type QueryMessageIsThreadRootCallback = (rescode: NIMResCode, client_id: string, is_root: boolean, reply_count: number) => void
 export type QueryMessageOnlineCallback = (rescode: NIMResCode, client_id: string, msg: IMMessage) => void
 export type QueryThreadHistoryMsgCallback = (
     rescode: NIMResCode,
@@ -509,6 +509,8 @@ export interface NIMMsgLogAPI {
     QueryMessageOnline(param: QueryMsgAsyncParam, cb: QueryMessageOnlineCallback | null): void
 
     QueryThreadHistoryMsg(msg: IMMessage, param: QueryThreadHistoryMsgAsyncParam, cb: QueryThreadHistoryMsgCallback | null): void
+
+    QueryLocalThreadHistoryMsg(msg: IMMessage, cb: QueryMsgCallback | null): void
 
     FullTextSearchOnlineAsync(param: FullTextSearchOnlineAsyncParam, cb: FullTextSearchOnlineAsyncCallback | null): void
 }

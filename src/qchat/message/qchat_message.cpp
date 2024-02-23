@@ -23,7 +23,10 @@ Napi::Object QChatMessage::Init(Napi::Env env, Napi::Object exports) {
         RegApi("AddQuickComment", &Message::AddQuickComment),
         RegApi("RemoveQuickComment", &Message::RemoveQuickComment),
         RegApi("GetQuickComments", &Message::GetQuickComments),
-        RegApi("SearchMsgByPage", &Message::SearchMsgByPage)
+        RegApi("SearchMsgByPage", &Message::SearchMsgByPage),
+        RegApi("InsertOrReplaceTextCache", &Message::InsertOrReplaceTextCache),
+        RegApi("DeleteTextCache", &Message::DeleteTextCache),
+        RegApi("GetTextCache", &Message::GetTextCache)
         });
     // clang-format on
 }

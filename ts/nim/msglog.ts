@@ -235,17 +235,17 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     }
 
     /** 根据指定条件在一个会话中查询指定单个或多个类型的本地消息
-     * @param to_type			会话类型，双人0，群组1 (nim_msglog_def.h)
-     * @param id				查询id，对方的account id或者群组tid。
-     * @param limit_count	本次查询的消息条数上限(最多100条)
-     * @param fromTime		起始时间点，单位：毫秒
-     * @param endTime		结束时间点，单位：毫秒
-     * @param endClientMsgId		结束查询的最后一条消息的end_client_msg_id(不包含在查询结果中)
-     * @param reverse		true：反向查询(按时间正序起查，正序排列)，false：按时间逆序起查，逆序排列（建议默认为false）
-     * @param msgType		检索的消息类型
-     * @param jsonExtension	json扩展参数（备用，目前不需要）
-     * @param cb				在线查询消息的回调函数
-     * @return boolean 检查参数如果不符合要求则返回失败
+     * @param to_type               会话类型，双人0，群组1 (nim_msglog_def.h)
+     * @param id                    查询id，对方的account id或者群组tid。
+     * @param limit_count           本次查询的消息条数上限(最多100条)
+     * @param from_time             起始时间点，单位：毫秒，当为 0 时将不作为过滤条件
+     * @param end_time              结束时间点，单位：毫秒，当为 0 时将不作为过滤条件
+     * @param end_client_msg_id     作为查询结果的过滤条件，无论正向、反向查询，当遇到此消息 ID 时均跳过后续的消息，且不将该 ID 对应的消息包含在查询结果中
+     * @param reverse               查询方向，为 true 时对时间段内的消息从新到旧查询，查询结果按消息时间降序排列，为 false 时对时间段内的消息从旧到新查询，查询结果按消息时间升序排列
+     * @param msg_type              检索的消息类型
+     * @param json_extension        json 扩展参数（备用，目前不需要）
+     * @param cb                    在线查询消息的回调函数
+     * @return bool 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
      * 200:成功
@@ -907,13 +907,13 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
      * 200:成功
      * </pre>
      */
-    queryMessageIsThreadRoot(client_id: string, cb: QueryMessageIsThreadRootCallback | null): Promise<[NIMResCode, string, boolean]> {
+    queryMessageIsThreadRoot(client_id: string, cb: QueryMessageIsThreadRootCallback | null): Promise<[NIMResCode, string, boolean, number]> {
         return new Promise((resolve) => {
-            this.msglog.QueryMessageIsThreadRoot(client_id, (rescode, client_id, is_thread_root) => {
+            this.msglog.QueryMessageIsThreadRoot(client_id, (rescode, client_id, is_thread_root, reply_count) => {
                 if (cb) {
-                    cb(rescode, client_id, is_thread_root)
+                    cb(rescode, client_id, is_thread_root, reply_count)
                 }
-                resolve([rescode, client_id, is_thread_root])
+                resolve([rescode, client_id, is_thread_root, reply_count])
             })
         })
     }
@@ -959,6 +959,30 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
                     cb(rescode, root_msg, total, last_msg_time, msg_array)
                 }
                 resolve([rescode, root_msg, total, last_msg_time, msg_array])
+            })
+        })
+    }
+
+    /** 查询本地 thread talk 消息历史
+     * @param msg 根消息消息体
+     * @param cb 查询结果的回调函数
+     * @return void 无返回值
+     * @note
+     * <pre>
+     *     200:成功
+     *     414:参数错误
+     * </pre>
+     */
+    queryLocalThreadHistoryMsg(
+        msg: IMMessage,
+        cb: QueryMsgCallback | null
+    ): Promise<[NIMResCode, string, NIMSessionType, QueryMsglogResult]> {
+        return new Promise((resolve) => {
+            this.msglog.QueryLocalThreadHistoryMsg(msg, (rescode, id, type, result) => {
+                if (cb) {
+                    cb(rescode, id, type, result)
+                }
+                resolve([rescode, id, type, result])
             })
         })
     }

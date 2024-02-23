@@ -1,6 +1,6 @@
 {
     "name": "node-nim",
-    "version": "9.14.4",
+    "version": "9.15.0",
     "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
     "main": "dist/node-nim.js",
     "bin": {
@@ -29,6 +29,9 @@
         "reporter": [
             "lcov"
         ]
+    },
+    "mocha": {
+        "require": "test/hooks.js"
     },
     "dependencies": {
         "compare-versions": "^4.1.4",
