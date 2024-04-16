@@ -46,7 +46,8 @@ export enum NIMChatRoomClientType {
     kNIMChatRoomClientTypeWindowsPhone = 8 /**< WindowsPhone */,
     kNIMChatRoomClientTypeWeb = 16 /**< Web */,
     kNIMChatRoomClientTypeRestAPI = 32 /**< RestAPI */,
-    kNIMChatRoomClientTypeMacOS = 64 /**< Mac */
+    kNIMChatRoomClientTypeMacOS = 64 /**< Mac */,
+    kNIMChatRoomClientTypeHarmonyOS = 128 /**< HarmonyOS */,
 }
 export enum NIMChatRoomProxyType {
     kNIMChatRoomProxyNone = 0 /**< 不使用代理 */,

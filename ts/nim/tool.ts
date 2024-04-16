@@ -136,4 +136,8 @@ export class NIMTool extends EventEmitter<NIMToolEvents> {
             })
         })
     }
+
+    parseStringToJsonObject(jsonString: string): object {
+        return JSON.parse(jsonString)
+    }
 }

@@ -30,6 +30,4 @@
 #include "qchat_role_reflection.h"
 #include "qchat_server_reflection.h"
 #include "qchat_system_notification_reflection.h"
-
-#include "v2_nim_def_reflection.h"
 #endif  // __REFLECTION_INCLUDE_H__

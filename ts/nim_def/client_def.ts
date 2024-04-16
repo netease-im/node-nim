@@ -28,7 +28,8 @@ export enum NIMClientType {
     kNIMClientTypePCWindows = 4 /** < PC Windows*/,
     kNIMClientTypeWeb = 16 /** < Web*/,
     kNIMClientTypeRestAPI = 32 /** < RestAPI*/,
-    kNIMClientTypeMacOS = 64 /** < Mac*/
+    kNIMClientTypeMacOS = 64 /** < Mac*/,
+    kNIMClientTypeHarmonyOS = 128 /** < HarmonyOS*/
 }
 
 /** @enum NIMResCode 返回的错误号（只定义需要客户端处理的） */

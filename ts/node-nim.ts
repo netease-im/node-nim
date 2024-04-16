@@ -25,7 +25,6 @@ import { QChatMessageModule } from './qchat/message'
 import { QChatSystemNotificationModule } from './qchat/system_notification'
 import { QChatAttachmentModule } from './qchat/attachment'
 import { QChatRoleModule } from './qchat/role'
-import { V2NIMInstance } from './v2/v2_nim_instance'
 export {
     NIMClient,
     NIMDataSync,
@@ -146,4 +145,3 @@ export class QChat {
 export const nim = new NIM()
 export const chatroom = new ChatRoom()
 export const qchat = new QChat()
-export const v2 = new V2NIMInstance()

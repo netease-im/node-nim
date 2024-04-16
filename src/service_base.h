@@ -153,13 +153,6 @@ private:
         };
     }
 
-    template <typename TR, typename... TArgs>
-    auto _MakeNotifyCallback(const std::string& flag, const ne_std::function<TR(TArgs...)>* ff) -> std::function<TR(TArgs...)> {
-        return [this, flag](TArgs... args) {
-            return NotifyCallback<TR, std::decay_t<TArgs>...>(flag, std::forward<TArgs>(args)...);
-        };
-    }
-
     template <typename TR, typename... Args, typename std::enable_if<std::is_void<TR>::value, std::nullptr_t>::type = nullptr>
     TR NotifyCallback(const std::string& flag, Args... args) {
         auto callback = [this, flag, args...](const Napi::Env& env, const Napi::Function& js_callback, const void* value) {
