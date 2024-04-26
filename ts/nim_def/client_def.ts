@@ -268,6 +268,7 @@ export interface SDKConfig {
     client_antispam_?: boolean /**< boolean 客户端反垃圾，默认为false，如需开启请提前咨询技术支持或销售 */
     team_msg_ack_?: boolean /**< boolean 群消息已读功能开关， 默认为false，如需开启请提前咨询技术支持或销售  */
     team_query_tinfo_override_by_local_?: boolean /**< boolean 在线查询群组信息时是否使用本地数据对 member_valid 字段进行覆盖 */
+    team_sync_tlist_limit_?: number /**< int 同步群列表数量限制，范围 100-2000，默认 2000 */
     need_update_lbs_befor_relogin_?: boolean /**< boolean 在进行重新登录前是否先刷新一下lbs,对于切换网络的场景适用  */
     custom_client_type_?: number /**< int, 自定义客户端类型字段,大于0 */
 
