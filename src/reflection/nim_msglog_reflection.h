@@ -126,6 +126,17 @@ ReflectionDefinition_O(MsgLog::QueryMsgByOptionsAsyncParam,
     msg_type_,
     msg_sub_type_,
     search_content_);
+ReflectionDefinition_O(MsgLog::QueryMsgByKeywordParam,
+    keyword_,
+    account_id_,
+    to_type_,
+    type_,
+    limit_count_,
+    from_time_,
+    end_time_,
+    direction_,
+    segment_engine_,
+    enable_pinyin_);
 
 // Callback
 CallbackSpecialization(MsgLog::QueryMsgCallback);
@@ -140,6 +151,9 @@ CallbackSpecialization(MsgLog::DeleteHistoryOnLineNotifyCallback);
 CallbackSpecialization(MsgLog::QueryMessageIsThreadRootAsyncCallback);
 CallbackSpecialization(MsgLog::QueryThreadHistoryMsgCallback);
 CallbackSpecialization(MsgLog::FullTextSearchOnlineAsyncCallback);
+CallbackSpecialization(MsgLog::IsMessageIndexEstablishedCallback);
+CallbackSpecialization(MsgLog::BuildMsglogIndexesProgress);
+CallbackSpecialization(MsgLog::BuildMsglogIndexesComplete);
 
 // xpack specialization
 namespace xpack {

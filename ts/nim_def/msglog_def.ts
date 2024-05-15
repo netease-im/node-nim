@@ -135,6 +135,36 @@ export enum NIMMsglogSearchDirection {
     kBackward = 1 /** < 以时间点为准向后搜索 */
 }
 
+export enum NIMMsglogSearchSegmentEngine {
+    /// 不使用分词逻辑
+    kSegmentEngineDefault,
+    /// 单字分词逻辑，默认
+    kSegmentEngineSimple,
+    /// Jieba 分词，使用 HMM 模型
+    kSegmentEngineJiebaCutWithHMM,
+    /// Jieba 分词，不使用 HMM 模型
+    kSegmentEngineJiebaCutWithoutHMM,
+    /// Jieba 分词，使用全模式
+    kSegmentEngineJiebaCutAll,
+    /// Jieba 分词，搜索引擎模式
+    kSegmentEngineJiebaCutForSearch,
+    /// Jieba 分词，使用 HMM 模型
+    kSegmentEngineJiebaCutHMM,
+}
+
+export enum NIMBuildingMsglogIndexesCompleteReason {
+    /// 构建消息索引表完成
+    kBuildingMsglogIndexesCompleted,
+    /// 用户取消
+    kBuildingMsglogIndexesCanceled,
+    /// 构建失败
+    kBuildingMsglogIndexesError,
+    /// 磁盘空间不足
+    kBuildingMsglogIndexesFullDisk,
+    /// 当前正在构建中，请勿频繁操作
+    kBuildingMsglogIndexesInProgress,
+}
+
 /** @enum NIMMsglogQuerySource 消息历史查询来源 */
 export enum NIMMsglogQuerySource {
     kNIMMsglogQuerySourceLocal = 0 /** < 本地查询*/,
@@ -355,6 +385,18 @@ export interface GetMessagesResult {
     messages_?: Array<IMMessage> /**< 历史消息列表 */
 }
 
+export interface QueryMsgByKeywordParam {
+    keyword_: string /**< 要查询的关键字 */
+    account_id_?: string /**< 查询id，对方的account id或者群组tid */
+    to_type_?: NIMSessionType /**< enum 会话类型，双人0，群组1 (nim_msglog_def.h) */
+    type_: Array<NIMMessageType> /**< array 要获取的消息类型，默认只有文本类消息，可自行扩充其他类型消息，除通知类消息不受支持外，其他类型消息（包括自定义消息）均可检索 */
+    limit_count_?: number /**< number 本次查询的消息条数上限 */
+    from_time_?: number /**< number 起始时间点，单位：毫秒 */
+    end_time_?: number /**< number 结束时间点，单位：毫秒 */
+    direction_?: NIMMsglogSearchDirection /**< enum 查询方向 */
+    segment_engine_?: NIMMsglogSearchSegmentEngine /**< enum 分段引擎 */
+}
+
 export type QueryMsgCallback = (rescode: NIMResCode, id: string, to_type: NIMSessionType, result: QueryMsglogResult) => void
 export type GetMessagesDynamicallyCallback = (result: GetMessagesResult) => void
 export type QuerySingleMsgCallback = (rescode: NIMResCode, id: string, msg: IMMessage) => void
@@ -378,6 +420,9 @@ export type QueryThreadHistoryMsgCallback = (
     msg_array: Array<IMMessage>
 ) => void
 export type FullTextSearchOnlineAsyncCallback = (rescode: NIMResCode, result: QueryMsglogResult) => void
+export type IsMessageIndexEstablishedCallback = (is_established: boolean) => void
+export type BuildMsglogIndexesProgress = (total: number, built_count: number) => void
+export type BuildMsglogIndexesComplete = (reason: NIMBuildingMsglogIndexesCompleteReason, message: string) => void
 
 export interface NIMMsgLogAPI {
     InitEventHandlers(): void
@@ -513,4 +558,12 @@ export interface NIMMsgLogAPI {
     QueryLocalThreadHistoryMsg(msg: IMMessage, cb: QueryMsgCallback | null): void
 
     FullTextSearchOnlineAsync(param: FullTextSearchOnlineAsyncParam, cb: FullTextSearchOnlineAsyncCallback | null): void
+
+    QueryMessagesByKeywordAsync(param: QueryMsgByKeywordParam, cb: QueryMsgCallback | null): void
+
+    IsMessageIndexEstablished(cb: IsMessageIndexEstablishedCallback | null): void
+
+    BuildMsglogIndexes(page_size: number, progress: BuildMsglogIndexesProgress | null, complete: BuildMsglogIndexesComplete | null): void
+
+    CancelMsglogIndexesBuilding(): void
 }

@@ -1,7 +1,8 @@
-const NIM = require('../../dist/node-nim')
+const NIM = require('../dist/node-nim')
 const assert = require('assert')
 
 const msglog = new NIM.NIMMsgLog()
+const talk = new NIM.NIMTalk()
 
 describe('********************Msglog********************', function () {
   let signalMsgId = ''
@@ -489,6 +490,71 @@ describe('******************** Msglog thread ********************', function () 
       let [code, id, isRoot, replyCount] = await NIM.nim.msgLog.queryMessageIsThreadRoot(rootMessageId, null)
       assert.strictEqual(code, 200)
       assert.ok(replyCount > 0)
+    })
+  })
+  describe('#queryMessagesByKeywordAsync', () => {
+  it('Query messages by keyword should return with query keyword', async () => {
+      const result = await NIM.nim.msgLog.queryMessagesByKeywordAsync({
+          keyword_: '测试',
+          type_: [0],
+          limit_count_: 1000,
+      })
+      assert.strictEqual(result[3].msglogs_.length, 1000)
+  })
+  it('Query messages by option with content should return with query keyword', async () => {
+    const result = await NIM.nim.msgLog.queryMsgByOptionsAsync({
+      query_range_: 100,
+      ids: [],
+      from_time_: 0,
+      end_time_: 0,
+      limit_count_: 1000,
+      msg_sub_type_: 0,
+      msg_type_: 0,
+      reverse_: true,
+      search_content_: '测试',
+    })
+    assert.strictEqual(result[3].msglogs_.length, 1000)
+  })
+  });
+  describe('#queryMessagesByKeywordAsync', () => {
+    before(async function () {
+      for (let i = 0; i < 10; i++) {
+        let obj = {
+          session_type_: 0, // p2p
+          receiver_accid_: 'jiajia02',
+          timetag_: new Date().getTime(),
+          type_: 0, // text message
+          content_: `Test message sent by node-nim, message index ${i}`,
+          client_msg_id_: new Date().getTime().toString() // use an uuid
+        }
+        await talk.sendMsg(obj, '')
+      }
+    })
+    it('Query messages by keyword result should return with Test message', async function () {
+      const result = await NIM.nim.msgLog.queryMessagesByKeywordAsync({
+        keyword_: 'Test message',
+        type_: [0],
+        limit_count_: 10
+      })
+      assert.strictEqual(result[3].msglogs_.length, 10)
+      result[3].msglogs_.map((message) => {
+        assert.strictEqual(message.content_.includes('Test message'), true)
+      })
+    })
+  });
+  describe('#buildMsglogIndexes', () => {
+    it('buildMsglogIndexes should return with complete', async function () {
+      const [reason, message] = await NIM.nim.msgLog.buildMsglogIndexes(5000, (total, built) => {
+          console.log(`Total: ${total}, Built: ${built}`)
+      })
+      console.log('reason', reason, message)
+      assert.strictEqual(reason, 0)
+    })
+  })
+  describe('#isMsglogIndexesEstablished', () => {
+    it('isMsglogIndexesEstablished should return with true', async function () {
+      const established = await NIM.nim.msgLog.isMessageIndexEstablished()
+      assert.strictEqual(established, true)
     })
   })
 })

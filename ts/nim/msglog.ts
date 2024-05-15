@@ -1,6 +1,6 @@
 import sdk from '../loader'
-import { EventEmitter } from 'eventemitter3'
-import { NIMSessionType } from '../nim_def/session_def'
+import {EventEmitter} from 'eventemitter3'
+import {NIMSessionType} from '../nim_def/session_def'
 import {
     NIMMsgLogAPI,
     QuerySingleMsgCallback,
@@ -35,9 +35,15 @@ import {
     QueryMsglogResult,
     NIMMsglogSearchDirection,
     GetMessagesDynamicallyCallback,
-    GetMessagesResult
+    GetMessagesResult,
+    NIMMsglogSearchSegmentEngine,
+    NIMBuildingMsglogIndexesCompleteReason,
+    QueryMsgByKeywordParam,
+    IsMessageIndexEstablishedCallback,
+    BuildMsglogIndexesProgress,
+    BuildMsglogIndexesComplete
 } from '../nim_def/msglog_def'
-import { NIMResCode } from '../nim_def/client_def'
+import {NIMResCode} from '../nim_def/client_def'
 
 export declare interface NIMMsgLogEvents {
     /** 单向删除消息记录通知 */
@@ -50,9 +56,10 @@ export declare interface NIMMsgLogEvents {
 
 export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     msglog: NIMMsgLogAPI
+
     constructor() {
         super()
-        this.msglog = new sdk.NIMMsgLog({ emit: this.emit.bind(this) })
+        this.msglog = new sdk.NIMMsgLog({emit: this.emit.bind(this)})
     }
 
     /** 注册全局回调 */
@@ -61,9 +68,9 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     }
 
     /** 根据消息ID查询本地（单条）消息
-     * @param clientMsgId		客户端消息ID
-     * @param jsonExtension	json扩展参数（备用，目前不需要）
-     * @param cb				查询本地消息的回调函数
+     * @param clientMsgId        客户端消息ID
+     * @param jsonExtension    json扩展参数（备用，目前不需要）
+     * @param cb                查询本地消息的回调函数
      * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
@@ -90,13 +97,13 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     }
 
     /** 查询本地消息
-     * @param accid	查询id，account_id/uid或者tid
-     * @param to_type	    会话类型，双人0，群组1 (见nim_msglog_def.h)
-     * @param limit_count	一次查询数量，建议20
+     * @param accid    查询id，account_id/uid或者tid
+     * @param to_type        会话类型，双人0，群组1 (见nim_msglog_def.h)
+     * @param limit_count    一次查询数量，建议20
      * @param anchor_msg_time
      * 作为此次查询的定位点的消息历史的消息时间戳（上次查询最后一条消息的时间戳，按指定的时间的顺序起查，默认为逆序，2.4.0之前命名为last_name）
      * @param jsonExtension json扩展参数（备用，目前不需要）
-     * @param cb			查询本地消息的回调函数
+     * @param cb            查询本地消息的回调函数
      * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
@@ -180,8 +187,8 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     }
 
     /** 在线查询消息（不包括系统消息）
-     * @param param			查询参数
-     * @param cb				在线查询消息的回调函数
+     * @param param            查询参数
+     * @param cb                在线查询消息的回调函数
      * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
@@ -206,8 +213,8 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     }
 
     /** 在线查询消息（不包括系统消息）
-     * @param param			查询参数
-     * @param cb				在线查询消息的回调函数
+     * @param param            查询参数
+     * @param cb                在线查询消息的回调函数
      * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
@@ -290,7 +297,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
 
     /** 根据指定条件查询本地消息,使用此接口可以完成全局搜索等功能,具体请参阅开发手册
      * @param param  查询参数
-     * @param cb	 在线查询消息的回调函数
+     * @param cb     在线查询消息的回调函数
      * @return boolean  检查参数如果不符合要求则返回失败
      * @note
      * <pre>
@@ -316,10 +323,10 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     }
 
     /** 批量设置已读状态
-     * @param accid	查询id，account_id/uid或者tid
-     * @param to_type	    会话类型，双人0，群组1 (见nim_msglog_def.h)
+     * @param accid    查询id，account_id/uid或者tid
+     * @param to_type        会话类型，双人0，群组1 (见nim_msglog_def.h)
      * @param jsonExtension json扩展参数（备用，目前不需要）
-     * @param cb			操作结果的回调函数
+     * @param cb            操作结果的回调函数
      * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
@@ -352,10 +359,10 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     }
 
     /** 删除某个会话的全部聊天记录
-     * @param accid	要删除会话的id，account_id/uid或者tid
-     * @param to_type	    会话类型，双人0，群组1 (见nim_msglog_def.h)
-     * @param revert_by_query_online	是否可以通过服务端查询消息记录(含入库选项)进行恢复,true:是,false:否
-     * @param cb			操作结果的回调函数
+     * @param accid    要删除会话的id，account_id/uid或者tid
+     * @param to_type        会话类型，双人0，群组1 (见nim_msglog_def.h)
+     * @param revert_by_query_online    是否可以通过服务端查询消息记录(含入库选项)进行恢复,true:是,false:否
+     * @param cb            操作结果的回调函数
      * @param jsonExtension json扩展参数（备用，目前不需要）
      * @return boolean 检查参数如果不符合要求则返回失败
      * @note
@@ -391,10 +398,10 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     }
 
     /** 设置消息状态
-     * @param msg_id		消息id
+     * @param msg_id        消息id
      * @param status 消息状态枚举值
      * @param jsonExtension json扩展参数（备用，目前不需要）
-     * @param cb			操作结果的回调函数
+     * @param cb            操作结果的回调函数
      * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
@@ -427,10 +434,10 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     }
 
     /** 设置消息子状态
-     * @param msg_id		消息id
+     * @param msg_id        消息id
      * @param status 消息子状态枚举值
      * @param jsonExtension json扩展参数（备用，目前不需要）
-     * @param cb			操作结果的回调函数
+     * @param cb            操作结果的回调函数
      * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
@@ -498,11 +505,11 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     }
 
     /** 删除指定会话类型的所有消息
-     * @param delSessions	    是否删除会话
-     * @param to_type	    会话类型
-     * @param revert_by_query_online	是否可以通过服务端查询消息记录(含入库选项)进行恢复,true:是,false:否
+     * @param delSessions        是否删除会话
+     * @param to_type        会话类型
+     * @param revert_by_query_online    是否可以通过服务端查询消息记录(含入库选项)进行恢复,true:是,false:否
      * @param jsonExtension json扩展参数（备用，目前不需要）
-     * @param cb			操作结果的回调函数
+     * @param cb            操作结果的回调函数
      * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
@@ -537,11 +544,11 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     }
 
     /** 删除指定一条消息
-     * @param session_id	会话id，对方的account id或者群组tid
-     * @param to_type	    会话类型
-     * @param msg_id		消息id
+     * @param session_id    会话id，对方的account id或者群组tid
+     * @param to_type        会话类型
+     * @param msg_id        消息id
      * @param jsonExtension json扩展参数（备用，目前不需要）
-     * @param cb			操作结果的回调函数
+     * @param cb            操作结果的回调函数
      * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
@@ -576,19 +583,19 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     }
 
     /** 删除全部消息历史
-       * @param del_session 是否删除所有会话列表项（即全部最近联系人）。
-         ture则删除，并通过nim_session_reg_change_cb注册的回调通知上层kNIMSessionCommandRemoveAll事件（不会触发每个会话项的kNIMSessionCommandRemove事件）；
-         false则不删除，并将所有会话项的最后一条消息的状态kNIMSessionMsgStatus设置为已删除状态，并通过nim_session_reg_change_cb注册的回调通知上层kNIMSession
-           CommandAllMsgDeleted事件（不会触发每个会话项的kNIMSessionCommandUpdate事件，避免频繁通知上层）。
-       * @param revert_by_query_online	是否可以通过服务端查询消息记录(含入库选项)进行恢复,true:是,false:否
-       * @param jsonExtension json扩展参数（备用，目前不需要）
-       * @param cb			操作结果的回调函数
-       * @return boolean 检查参数如果不符合要求则返回失败
-       * @note
-       * <pre>
-       * 200:成功
-       * </pre>
-       */
+     * @param del_session 是否删除所有会话列表项（即全部最近联系人）。
+     ture则删除，并通过nim_session_reg_change_cb注册的回调通知上层kNIMSessionCommandRemoveAll事件（不会触发每个会话项的kNIMSessionCommandRemove事件）；
+     false则不删除，并将所有会话项的最后一条消息的状态kNIMSessionMsgStatus设置为已删除状态，并通过nim_session_reg_change_cb注册的回调通知上层kNIMSession
+     CommandAllMsgDeleted事件（不会触发每个会话项的kNIMSessionCommandUpdate事件，避免频繁通知上层）。
+     * @param revert_by_query_online    是否可以通过服务端查询消息记录(含入库选项)进行恢复,true:是,false:否
+     * @param jsonExtension json扩展参数（备用，目前不需要）
+     * @param cb            操作结果的回调函数
+     * @return boolean 检查参数如果不符合要求则返回失败
+     * @note
+     * <pre>
+     * 200:成功
+     * </pre>
+     */
     deleteAllAsync(del_session: boolean, revert_by_query_online: boolean, cb: DBFunctionCallback | null, jsonExtension: string): Promise<[NIMResCode] | null> {
         return new Promise((resolve) => {
             if (
@@ -610,13 +617,13 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     }
 
     /** 根据时间段删除部分会话的历史消息
-     * @param session_id	要删除消息的会话ID
-     * @param to_type	要删除消息的会话类型
-     * @param revert_by_query_online	是否可以通过服务端查询消息记录(含入库选项)进行恢复,true:是,false:否
+     * @param session_id    要删除消息的会话ID
+     * @param to_type    要删除消息的会话类型
+     * @param revert_by_query_online    是否可以通过服务端查询消息记录(含入库选项)进行恢复,true:是,false:否
      * @param timestamp1 单位ms timestamp1	与 timestamp2 组成一个时间段，SDK 内部会判断大小调整入参顺序
      * @param timestamp2 单位ms timestamp2	与 timestamp1 组成一个时间段，SDK 内部会判断大小调整入参顺序
      * @param jsonExtension json扩展参数（备用，目前不需要）
-     * @param cb			操作结果的回调函数
+     * @param cb            操作结果的回调函数
      * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
@@ -655,9 +662,9 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     }
 
     /** 导出整个消息历史DB文件（不包括系统消息历史）
-     * @param dst_path		导出时保存的目标全路径（UTF-8编码）。
+     * @param dst_path        导出时保存的目标全路径（UTF-8编码）。
      * @param jsonExtension json扩展参数（备用，目前不需要）
-     * @param cb			操作结果的回调函数
+     * @param cb            操作结果的回调函数
      * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
@@ -680,10 +687,10 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     }
 
     /** 导入消息历史DB文件（不包括系统消息历史）。先验证是否自己的消息历史文件和DB加密密钥(见nim_client_def.h里的kNIMDataBaseEncryptKey），如果验证不通过，则不导入。
-     * @param src_path			导入源文件的全路径（UTF-8编码）。
-     * @param jsonExtension	json扩展参数（备用，目前不需要）
-     * @param cb			操作结果的回调函数
-     * @param prg_cb			导入进度的回调函数
+     * @param src_path            导入源文件的全路径（UTF-8编码）。
+     * @param jsonExtension    json扩展参数（备用，目前不需要）
+     * @param cb            操作结果的回调函数
+     * @param prg_cb            导入进度的回调函数
      * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
@@ -709,8 +716,8 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     }
 
     /** 发送消息已读回执
-     * @param msg			已读消息
-     * @param cb			操作结果的回调函数
+     * @param msg            已读消息
+     * @param cb            操作结果的回调函数
      * @return void 无返回值
      * @note
      * <pre>
@@ -732,7 +739,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     }
 
     /** 查询自己发送的消息是否被对方已读
-     * @param msg			消息。
+     * @param msg            消息。
      * @return boolean 是否被已读
      */
     querySentMessageBeReaded(msg: IMMessage): boolean {
@@ -740,7 +747,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     }
 
     /** 查询收到的消息是否已经发送过已读回执
-     * @param msg			消息。
+     * @param msg            消息。
      * @return boolean 是否已发送过
      */
     queryReceivedMsgReceiptSent(msg: IMMessage): boolean {
@@ -748,10 +755,10 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     }
 
     /** 更新本地消息扩展字段内容
-     * @param msg_id		消息id
+     * @param msg_id        消息id
      * @param local_ext  本地扩展字段内容
      * @param jsonExtension json扩展参数（备用，目前不需要）
-     * @param cb			操作结果的回调函数
+     * @param cb            操作结果的回调函数
      * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
@@ -776,7 +783,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
 
     /** 全部未读消息历史标记为已读
      * @param jsonExtension json扩展参数（备用，目前不需要）
-     * @param cb			操作结果的回调函数
+     * @param cb            操作结果的回调函数
      * @return boolean 检查参数如果不符合要求则返回失败
      * @note
      * <pre>
@@ -828,7 +835,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
      * @param accid 对方的accid
      * @param del_remote 是否同时删除所有的漫游消息 true : 是 false : 否
      * @param jsonExtension json扩展参数（备用，目前不需要）
-     * @param cb	 操作结果的回调函数
+     * @param cb     操作结果的回调函数
      * @return void
      * @note
      * <pre>
@@ -856,7 +863,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
      * @param to_type 会话类型，双人0，群组1 (见nim_msglog_def.h)
      * @param needs_notify_self 是否通知其它终端
      * @param jsonExtension 扩展字段
-     * @param cb	 操作结果的回调函数
+     * @param cb     操作结果的回调函数
      * @return void
      * @note 错误码	200:成功
      */
@@ -880,7 +887,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     /** 单向删除某条消息记录(同时删除本地与云端)
      * @param msg 要删除的消息
      * @param exts 用户自定义扩展字段
-     * @param cb	操作结果的回调函数
+     * @param cb    操作结果的回调函数
      * @return void 无返回值
      * @note
      * <pre>
@@ -900,7 +907,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
 
     /** 查询某条消息是否为thread聊天的根消息
      * @param client_id 要查询的消息的客户端ID
-     * @param cb			操作结果的回调函数
+     * @param cb            操作结果的回调函数
      * @return void 无返回值
      * @note
      * <pre>
@@ -920,7 +927,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
 
     /** 查询某条消息的具体内容一般用在thread talk 场景中
      * @param param 要查询的消息的相关参数，可以在msglog.threadinfo中得到
-     * @param cb			查询结果的回调函数
+     * @param cb            查询结果的回调函数
      * @return void 无返回值
      * @note
      * <pre>
@@ -941,7 +948,7 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
     /** 分页查询thread talk消息历史
      * @param msg 要查询的消息
      * @param param 要查询的消息的相关参数，可以在msglog.threadinfo中得到
-     * @param cb			查询结果的回调函数
+     * @param cb            查询结果的回调函数
      * @return void 无返回值
      * @note
      * <pre>
@@ -1005,5 +1012,69 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
                 resolve([rescode, result])
             })
         })
+    }
+
+    /**
+     * @brief 根据关键字在本地查询关联消息的内容，与其他关键字查询接口不同，本接口使用全文检索引擎进行查询
+     * 如果您有历史数据，请先调用 IsMessageIndexEstablished 判断是否已经同步完成所有旧消息索引
+     * 如果尚未同步完成，可使用 BuildingMsglogIndexes 来构建历史消息索引，以提供全文检索接口快速查询内容
+     * @param param 查询参数 @see QueryMsgByKeywordParam
+     * @param cb 查询消息的回调函数
+     * @return bool 检查参数如果不符合要求则返回失败
+     * @note
+     * <pre>
+     *     200:成功
+     *     414:参数错误
+ *     </pre>
+     */
+    queryMessagesByKeywordAsync(param: QueryMsgByKeywordParam, cb: QueryMsgCallback | null): Promise<[NIMResCode, string, NIMSessionType, QueryMsglogResult]> {
+        return new Promise((resolve) => {
+            this.msglog.QueryMessagesByKeywordAsync(param, (rescode: NIMResCode, id: string, to_type: NIMSessionType, result: QueryMsglogResult) => {
+                if (cb) {
+                    cb(rescode, id, to_type, result)
+                }
+                resolve([rescode, id, to_type, result])
+            })
+        })
+    }
+
+    /**
+     * @brief 判断消息索引是否已经建立完成，如果已经建立完成，则可以使用 QueryMessagesByKeywordAsync 接口通过关键字全文检索
+     * @param cb 是否已经建立完成的回调函数
+     * @return void
+     */
+    isMessageIndexEstablished(cb: IsMessageIndexEstablishedCallback): Promise<boolean> {
+        return new Promise((resolve) => {
+            this.msglog.IsMessageIndexEstablished((res) => {
+                if (cb) {
+                    cb(res)
+                }
+                resolve(res)
+            })
+        })
+    }
+
+    /**
+     * @brief 对旧的历史消息构建消息索引表
+     * @param page_size 每页同步多少条消息，建议最小不低于 1000，最大不超过 5000
+     * @param progress 构建消息索引表进度回调 @see BuildMsglogIndexesProgress
+     * @param completion 构建消息索引表完成回调 @see BuildMsglogIndexesComplete
+     * @return void
+     */
+    buildMsglogIndexes(page_size: number, progress: BuildMsglogIndexesProgress | null, complete: BuildMsglogIndexesComplete | null):
+        Promise<[NIMBuildingMsglogIndexesCompleteReason, string]> {
+        return new Promise((resolve) => {
+            this.msglog.BuildMsglogIndexes(page_size, progress, (reason: NIMBuildingMsglogIndexesCompleteReason, message: string) => {
+                resolve([reason, message])
+            })
+        })
+    }
+
+    /**
+     * @brief 取消构建消息索引表
+     * @return void
+     */
+    cancelMsglogIndexesBuilding(): void {
+        this.msglog.CancelMsglogIndexesBuilding()
     }
 }

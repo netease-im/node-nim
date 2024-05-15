@@ -40,7 +40,10 @@ Napi::Object NIMMsgLog::Init(Napi::Env env, Napi::Object exports) {
             RegApi("QueryMessageIsThreadRoot", &MsgLog::QueryMessageIsThreadRoot), RegApi("QueryMessageOnline", &MsgLog::QueryMessageOnline),
             RegApi("QueryThreadHistoryMsg", &MsgLog::QueryThreadHistoryMsg),
             RegApi("QueryLocalThreadHistoryMsg", &MsgLog::QueryLocalThreadHistoryMsg),
-            RegApi("FullTextSearchOnlineAsync", &MsgLog::FullTextSearchOnlineAsync)});
+            RegApi("FullTextSearchOnlineAsync", &MsgLog::FullTextSearchOnlineAsync),
+            RegApi("QueryMessagesByKeywordAsync", &MsgLog::QueryMessagesByKeywordAsync),
+            RegApi("IsMessageIndexEstablished", &MsgLog::IsMessageIndexEstablished), RegApi("BuildMsglogIndexes", &MsgLog::BuildMsglogIndexes),
+            RegApi("CancelMsglogIndexesBuilding", &MsgLog::CancelMsglogIndexesBuilding)});
 }
 
 void NIMMsgLog::InitEventHandlers() {
