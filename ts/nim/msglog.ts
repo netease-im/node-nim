@@ -1065,6 +1065,9 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
         Promise<[NIMBuildingMsglogIndexesCompleteReason, string]> {
         return new Promise((resolve) => {
             this.msglog.BuildMsglogIndexes(page_size, progress, (reason: NIMBuildingMsglogIndexesCompleteReason, message: string) => {
+                if (complete) {
+                    complete(reason, message)
+                }
                 resolve([reason, message])
             })
         })
