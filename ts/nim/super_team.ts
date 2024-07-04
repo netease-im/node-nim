@@ -11,7 +11,10 @@ import {
     QuerySuperTeamMembersCallback,
     QuerySuperTeamMemberCallback,
     QuerySuperTeamInfoCallback,
-    SuperTeamEvent
+    SuperTeamEvent,
+    SuperTeamMemberKeywordSearchOption,
+    SuperTeamMemberSerachResult,
+    SuperTeamMemberRoleTypeSearchOption
 } from '../nim_def/super_team_def'
 
 export declare interface NIMSuperTeamEvents {
@@ -439,6 +442,48 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
         })
     }
 
+    /** @fn boolean addTeamMembersFollow(tid: string, account_ids: Array<string>, cb: SuperTeamEventCallback)
+     * 添加群成员特别通知
+     * @param[in] tid    群组id
+     * @param[in] account_ids    群成员id
+     * @param[in] cb        添加群成员特别通知的回调函数
+     */
+    addTeamMembersFollow(tid: string, account_ids: Array<string>, cb: SuperTeamEventCallback): Promise<[SuperTeamEvent] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.team.AddTeamMembersFollow(tid, account_ids, (event) => {
+                    if (cb) {
+                        cb(event)
+                    }
+                    resolve([event])
+                })
+            ) {
+                resolve(null)
+            }
+        })
+    }
+
+    /** @fn boolean removeTeamMembersFollow(tid: string, account_ids: Array<string>, SuperTeamEventCallback
+     * cb) 移除群成员特别通知
+     * @param[in] tid    群组id
+     * @param[in] account_ids    群成员id
+     * @param[in] cb        移除群成员特别通知的回调函数
+     */
+    removeTeamMembersFollow(tid: string, account_ids: Array<string>, cb: SuperTeamEventCallback): Promise<[SuperTeamEvent] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.team.RemoveTeamMembersFollow(tid, account_ids, (event) => {
+                    if (cb) {
+                        cb(event)
+                    }
+                    resolve([event])
+                })
+            ) {
+                resolve(null)
+            }
+        })
+    }
+
     /** 修改别人的群昵称
      * @param prop	群成员属性
      * @param jsonExtension json扩展参数（备用，目前不需要）
@@ -806,6 +851,31 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
                 },
                 jsonExtension
             )
+        })
+    }
+
+    /** 搜索群成员
+     * @param option 搜索群成员选项
+     * @return boolean 检查参数如果不符合要求则返回失败
+     */
+    searchTeamMembers(option: SuperTeamMemberKeywordSearchOption): Promise<[SuperTeamMemberSerachResult]> {
+        return new Promise((resolve) => {
+            this.team.SearchTeamMembers(option, (result) => {
+                resolve([result])
+            })
+        })
+    }
+
+    /** 根据成员类型获取群成员
+     * @param tid		群组id
+     * @param option 获取群成员选项
+     * @return boolean 检查参数如果不符合要求则返回失败
+     */
+    getTeamMemberList(tid: string, option: SuperTeamMemberRoleTypeSearchOption): Promise<[SuperTeamMemberSerachResult]> {
+        return new Promise((resolve) => {
+            this.team.GetTeamMemberList(tid, option, (result) => {
+                resolve([result])
+            })
         })
     }
 }

@@ -26,7 +26,7 @@ import { QChatAttachmentModule } from './qchat/attachment'
 import { QChatRoleModule } from './qchat/role'
 import { V2NIMClient } from './v2/v2_nim_client'
 import { V2NIMChatroomClient } from './v2/v2_nim_chatroom_client'
-import { V2NIMMessageCreator, V2NIMClientAntispamUtil, V2NIMChatroomMessageCreator, V2NIMConversationIdUtil } from './v2/v2_nim_utilities'
+import { V2NIMMessageCreator, V2NIMMessageConverter, V2NIMClientAntispamUtil, V2NIMChatroomMessageCreator, V2NIMConversationIdUtil, V2NIMStorageUtil } from './v2/v2_nim_utilities'
 export {
     NIMClient,
     NIMDataSync,
@@ -56,9 +56,11 @@ export {
     QChatRoleModule,
     V2NIMChatroomClient,
     V2NIMMessageCreator,
+    V2NIMMessageConverter,
     V2NIMClientAntispamUtil,
     V2NIMChatroomMessageCreator,
-    V2NIMConversationIdUtil
+    V2NIMConversationIdUtil,
+    V2NIMStorageUtil
 }
 export * from './nim_def/client_def'
 export * from './nim_def/data_sync_def'

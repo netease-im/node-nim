@@ -290,7 +290,7 @@ napi_value ts_cpp_conversion::StructToObject<double>(Napi::Env env, const double
 }
 // template <>
 // napi_value ts_cpp_conversion::StructToObject<nstd::string>(Napi::Env env, const nstd::string& value) {
-//     return Napi::String::New(env, value);
+//     return Napi::String::New(env, value.c_str());
 // }
 template <>
 napi_value ts_cpp_conversion::StructToObject<std::string>(Napi::Env env, const std::string& value) {

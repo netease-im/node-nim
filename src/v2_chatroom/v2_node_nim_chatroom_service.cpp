@@ -1,6 +1,8 @@
 #include "v2_node_nim_chatroom_service.h"
 #include "v2_nim_api.hpp"
+
 namespace node_nim {
+
 Napi::Object node_nim::V2NodeNIMChatroomService::Init(Napi::Env env, Napi::Object exports) {
     return InternalInit("V2NIMChatroomService", env, exports,
         {RegApi("sendMessage", &V2NIMChatroomService::sendMessage), RegApi("getMemberListByOption", &V2NIMChatroomService::getMemberListByOption),
@@ -42,6 +44,7 @@ node_nim::V2NodeNIMChatroomService::V2NodeNIMChatroomService(const Napi::Callbac
     listener.onMessageRevokedNotification =
         MakeNotifyCallback<nstd::function<void(nstd::string messageClientId, uint64_t messageTime)>>("messageRevokedNotification");
     listener.onChatroomTagsUpdated = MakeNotifyCallback<nstd::function<void(nstd::vector<nstd::string> tags)>>("chatroomTagsUpdated");
+    listener.onSendMessage = MakeNotifyCallback<nstd::function<void(const V2NIMChatroomMessage& message)>>("sendMessage");
     auto& chatroom_service = instance->getChatroomService();
     chatroom_service.addChatroomListener(listener);
     service_instance_ = &chatroom_service;

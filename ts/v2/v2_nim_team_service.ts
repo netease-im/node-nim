@@ -11,7 +11,8 @@ import {
     V2NIMTeamMember,
     V2NIMTeamJoinActionInfo,
     V2NIMTeamJoinActionInfoResult,
-    V2NIMTeamJoinActionInfoQueryOption
+    V2NIMTeamJoinActionInfoQueryOption,
+    V2NIMTeamMemberSearchOption
 } from 'ts/v2_def/v2_nim_struct_def'
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
@@ -559,6 +560,40 @@ export class V2NIMTeamService extends EventEmitter<V2NIMTeamServiceEvents> {
             this.instance.getTeamJoinActionInfoList(
                 option,
                 (result: V2NIMTeamJoinActionInfoResult) => {
+                    resolve(result)
+                },
+                (error: V2NIMError) => {
+                    reject(error)
+                }
+            )
+        })
+    }
+
+    /** @brief 根据关键字搜索群组，混合搜索高级群和超大群，使用 LIKE 方式匹配，只搜索群名称 */
+    /** @param keyword 关键字 */
+    /** @return Promise<Array<V2NIMTeam>> */
+    searchTeamByKeyword(keyword: string): Promise<Array<V2NIMTeam>> {
+        return new Promise((resolve, reject) => {
+            this.instance.searchTeamByKeyword(
+                keyword,
+                (teams: Array<V2NIMTeam>) => {
+                    resolve(teams)
+                },
+                (error: V2NIMError) => {
+                    reject(error)
+                }
+            )
+        })
+    }
+
+    /** @brief 根据关键字搜索群组成员 */
+    /** @param option 搜索选项 */
+    /** @return Promise<V2NIMTeamMemberListResult> */
+    searchTeamMembers(option: V2NIMTeamMemberSearchOption): Promise<V2NIMTeamMemberListResult> {
+        return new Promise((resolve, reject) => {
+            this.instance.searchTeamMembers(
+                option,
+                (result: V2NIMTeamMemberListResult) => {
                     resolve(result)
                 },
                 (error: V2NIMError) => {

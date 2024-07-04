@@ -1,4 +1,11 @@
-import { V2NIMMessage, V2NIMMessageAttachment, V2NIMClientAntispamResult, V2NIMError, V2NIMChatroomMessage } from 'ts/v2_def/v2_nim_struct_def'
+import {
+    V2NIMMessage,
+    V2NIMMessageAttachment,
+    V2NIMClientAntispamResult,
+    V2NIMError,
+    V2NIMChatroomMessage,
+    V2NIMMessageCallDuration
+} from 'ts/v2_def/v2_nim_struct_def'
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
 let utilities: any = new sdk.V2NIMUtilities()
@@ -109,6 +116,41 @@ export class V2NIMMessageCreator {
     }
     createForwardMessage(message: V2NIMMessage): V2NIMMessage | null {
         return utilities.createForwardMessage(message)
+    }
+
+    /** @brief 创建话单类消息 */
+    /** @param callType 话单类型，业务自定义，内容不校验 */
+    /** @param channelId 话单频道 ID，内容不校验 */
+    /** @param status 通话状态，业务自定义状态，内容不校验 */
+    /** @param durations 通话成员时长列表，内容不校验 */
+    /** @param text 话单描述 */
+    static createCallMessage(callType: number, channelId: string, status: number, durations: Array<V2NIMMessageCallDuration>, text: string): V2NIMMessage | null {
+        return utilities.createCallMessage(callType, channelId, status, durations, text)
+    }
+
+    createCallMessage(callType: number, channelId: string, status: number, durations: Array<V2NIMMessageCallDuration>, text: string): V2NIMMessage {
+        return utilities.createCallMessage(callType, channelId, status, durations, text)
+    }
+}
+
+/** @brief 消息序列化工具 */
+export class V2NIMMessageConverter {
+    /**
+     * @brief 将消息序列化为 Json 字符串
+     * @param message V2NIMMessage 消息对象
+     * @return string
+     */
+    messageSerialization(message: V2NIMMessage): string | null {
+        return utilities.messageSerialization(message)
+    }
+
+    /**
+     * @brief 将 Json 字符串反序列化为消息对象
+     * @param message Json 字符串
+     * @return V2NIMMessage
+     */
+    messageDeserialization(message: string): V2NIMMessage | null {
+        return utilities.messageDeserialization(message)
     }
 }
 
@@ -292,5 +334,25 @@ export class V2NIMChatroomMessageCreator extends EventEmitter {
     }
     createForwardMessage(message: V2NIMChatroomMessage): V2NIMChatroomMessage | null {
         return utilities.chatroomCreateForwardMessage(message)
+    }
+}
+
+export class V2NIMStorageUtil {
+    /** @brief 生成图片缩略图链接 */
+    /** @param uri 图片原始链接 */
+    /** @param thumbSize 缩放的尺寸，如指定为 150，则取 150*150 */
+    /** @return string 图片缩略图链接 */
+    imageThumbUrl(uri: string, thumbSize: Number): string {
+        return utilities.imageThumUrl(uri, thumbSize)
+    }
+
+    /** @brief 生成视频封面链接 */
+    /** @param uri 视频原始链接 */
+    /** @param offset 截图时间点，单位：秒 */
+    /** @param thumbSize 缩放的尺寸，如指定为 150，则取 150*150 */
+    /** @param type 截图类型，如：png、jpeg */
+    /** @return string 视频封面链接 */
+    videoCoverUrl(uri: string, offset: Number, thumbSize: Number, type: string): string {
+        return utilities.videoCoverUrl(uri, offset, thumbSize, type)
     }
 }

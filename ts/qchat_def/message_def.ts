@@ -386,6 +386,14 @@ export interface QChatAreMentionedMeMessagesResp {
     result?: Map<string, boolean>
 }
 
+/** @interface 获取圈组草稿内容回调内容 */
+export interface QChatGetTextCacheResp {
+    /** 操作结果, 参考NIMResCode */
+    res_code: number
+    /** 缓存的内容 */
+    value: string
+}
+
 /** 接收消息回调 */
 export type RecvMsgCallback = (resp: QChatRecvMsgResp) => void
 /** 发送消息回调 */
@@ -422,6 +430,8 @@ export type MessageSearchPageCallback = (resp: QChatMessageSearchPageResp) => vo
 export type GetMentionedMeMessagesCallback = (resp: QChatGetMentionedMeMessagesResp) => void
 /** 查询消息是否 @ 当前用户回调 */
 export type AreMentionedMeMessagesCallback = (resp: QChatAreMentionedMeMessagesResp) => void
+/** 获取圈组草稿内容回调 */
+export type GetTextCacheCallback = (resp: QChatGetTextCacheResp) => void
 
 /** @interface QChatSendMessageParam */
 export interface QChatSendMessageParam {
@@ -484,6 +494,8 @@ export interface QChatGetMessagesParam {
     limit?: number
     /** 是否倒序, false: 否, true: 是 */
     reverse?: boolean
+    /** 是否包含本地消息 */
+    include_local_messsages?: boolean
 }
 
 /** @interface QChatGetLastMessagesParam */
@@ -657,4 +669,40 @@ export interface QChatMessageSearchPageParam {
     limit?: number
     /** 查询游标, 查询的起始位置 */
     cursor?: string
+}
+
+/** @interface 圈组插入或替换草稿内容参数 */
+export interface QChatInsertOrReplaceTextCacheParam {
+    /** @internal */
+    cb?: QChatBaseCallback
+    /** 服务器ID */
+    server_id: string
+    /** 频道ID */
+    channel_id: string
+    /** 缓存的内容 */
+    value: string
+}
+
+export type QChatInsertOrReplaceTextCacheResp = QChatBaseResp
+
+/** @interface 圈组删除草稿内容参数 */
+export interface QChatDeleteTextCacheParam {
+    /** @internal */
+    cb?: QChatBaseCallback
+    /** 服务器ID */
+    server_id: string
+    /** 频道ID */
+    channel_id: string
+}
+
+export type QChatDeleteTextCacheResp = QChatBaseResp
+
+/** @interface 圈组获取草稿内容参数 */
+export interface QChatGetTextCacheParam {
+    /** @internal */
+    cb?: GetTextCacheCallback
+    /** 服务器ID */
+    server_id: string
+    /** 频道ID */
+    channel_id: string
 }

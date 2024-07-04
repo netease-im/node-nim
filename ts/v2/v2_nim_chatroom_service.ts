@@ -45,6 +45,8 @@ export declare interface V2NIMChatroomServiceEvents {
     messageRevokedNotification: [string, number]
     /** 角色标签更新 */
     chatroomTagsUpdated: [string[]]
+    /** 本端发送消息状态回调 */
+    sendMessage: [V2NIMChatroomMessage]
 }
 
 /** @brief 聊天室服务 */

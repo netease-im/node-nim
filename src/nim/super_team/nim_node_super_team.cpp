@@ -26,7 +26,10 @@ Napi::Object NIMSuperTeam::Init(Napi::Env env, Napi::Object exports) {
             RegApi("QuerySuperTeamMembersAsync", &SuperTeam::QuerySuperTeamMembersAsync),
             RegApi("QuerySuperTeamMemberAsync", &SuperTeam::QuerySuperTeamMemberAsync),
             RegApi("QuerySuperTeamInfoAsync", &SuperTeam::QuerySuperTeamInfoAsync),
-            RegApi("QuerySuperTeamInfoOnlineAsync", &SuperTeam::QuerySuperTeamInfoOnlineAsync)});
+            RegApi("QuerySuperTeamInfoOnlineAsync", &SuperTeam::QuerySuperTeamInfoOnlineAsync),
+            RegApi("SearchTeamMembers", &SuperTeam::SearchTeamMembers), RegApi("GetTeamMemberList", &SuperTeam::GetTeamMemberList),
+            RegApi("AddTeamMembersFollow", &SuperTeam::AddTeamMembersFollow),
+            RegApi("RemoveTeamMembersFollow", &SuperTeam::RemoveTeamMembersFollow)});
 }
 
 void NIMSuperTeam::InitEventHandlers() {

@@ -7,6 +7,13 @@ export interface V2NIMError {
     detail?: Map<string, string>
 }
 
+export interface V2NIMSize {
+    /** 宽度 */
+    width: number
+    /** 高度 */
+    height: number
+}
+
 export interface V2NIMLinkOption {
     /** 连接超时, 单位毫秒 */
     linkTimeout?: number
@@ -114,6 +121,14 @@ export interface V2NIMStorageScene {
     expireTime?: number
 }
 
+/** @brief 话单消息通话时长描述信息 */
+export interface V2NIMMessageCallDuration {
+    /** 话单对应成员的账号 ID */
+    accountId: string
+    /** 通话时长, 单位秒 */
+    duration: number
+}
+
 // noreflection
 export interface V2NIMMessageAttachment {
     /** 附件内容 */
@@ -174,6 +189,19 @@ export interface V2NIMMessageLocationAttachment extends V2NIMMessageAttachment {
     address?: string
 }
 
+export interface V2NIMMessageCallAttachment extends V2NIMMessageAttachment {
+    /** 话单类型， 业务自定义 */
+    type: number
+    /** 话单频道 ID  */
+    channelId: string
+    /** 通话状态，业务自定义状态 */
+    status: number
+    /** 通话成员时长列表 */
+    durations: Array<V2NIMMessageCallDuration>
+    /** 话单描述 */
+    text: string
+}
+
 // noreflection
 export interface V2NIMMessageTeamNotificationAttachment extends V2NIMMessageAttachment {
     /** 通知类型 */
@@ -184,6 +212,8 @@ export interface V2NIMMessageTeamNotificationAttachment extends V2NIMMessageAtta
     targetIds?: Array<string>
     /** 群成员是否被禁言 */
     chatBanned?: boolean
+    /** 群信息更新字段，有相应字段信息，则表示对应字段被修改 */
+    updatedTeamInfo?: V2NIMUpdatedTeamInfo
 }
 
 // noreflection
@@ -333,6 +363,13 @@ export interface V2NIMNotificationRouteConfig {
     routeEnvironment?: string
 }
 
+export interface V2NIMMessageStatus {
+    /** 消息发送失败后的错误码信息 */
+    errorCode?: number,
+    /** 群消息开启已读回执配置，当 V2NIMMessageConfig::readReceiptEnabled 为 true 时，其他端收到消息后需要发送已读回执请求，该字段记录是否已经发送过已读回执请求，避免重复发送 */
+    readReceiptSent?: boolean
+}
+
 export interface V2NIMMessageConfig {
     /** 是否需要消息已读回执信息 */
     readReceiptEnabled?: boolean
@@ -374,6 +411,32 @@ export interface V2NIMMessageRefer {
     createTime?: number
 }
 
+export interface V2NIMTheadMessageListOption {
+    /** 需要查询的消息引用，如果该消息为根消息，则参数为当前消息 */
+    messageRefer?: V2NIMMessageRefer
+    /** 查询开始时间，小于等于 endTime */
+    begin?: number
+    /** 查询结束时间 */
+    end?: number
+    /** 锚点消息ServerId，该消息必须处于端点，暨消息时间必须等于 beginTime 或 endTime */
+    excludeMessageServerId?: string
+    /** 每次查询条数，默认50 */
+    limit?: number
+    /** 消息查询方向，如果其它参数都不填 */
+    direction?: V2NIMQueryDirection
+}
+
+export interface V2NIMThreadMessageListResult {
+    /** 根消息 */
+    message?: V2NIMMessage
+    /** thread 聊天里最后一条消息的时间戳 */
+    timestamp?: number
+    /** 获取 thread 聊天里的总回复数 */
+    replyCount?: number
+    /** 消息回复列表 */
+    replyList?: Array<V2NIMMessage>
+}
+
 export interface V2NIMMessageQueryTime {
     /** 起始时间 */
     begin?: number
@@ -383,6 +446,70 @@ export interface V2NIMMessageQueryTime {
     includeBegin?: boolean
     /** 包含结束时间 */
     includeEnd?: boolean
+}
+
+export interface V2NIMAIModelConfig {
+    /** 具体大模型版本模型名 */
+    model?: string
+    /** 提示词 */
+    prompt?: string
+    /** 模型最大tokens数量 */
+    maxTokens?: number
+    /** 取值范围（0，1），生成时，核采样方法的概率阈值。 */
+    topP?: number
+    /** 取值范围(0,2)，用于控制随机性和多样性的程度。 */
+    temperature?: number
+}
+
+export interface V2NIMAIUser extends V2NIMUser {
+    /** 模型选择 */
+    modelType?: V2NIMAIModelType
+    /** 模型相关配置文件 */
+    modelConfig?: V2NIMAIModelConfig
+}
+
+export interface V2NIMAIModelCallContent {
+    /** 请求/响应的文本内容 */
+    msg?: string
+    /** 类型, 暂时只有 0, 代表文本，预留扩展能力 */
+    type?: number
+}
+
+export interface V2NIMAIModelConfigParams {
+    /** 提示词 */
+    prompt?: string
+    /** 模型最大tokens数量 */
+    maxTokens?: number
+    /** 取值范围（0，1），生成时，核采样方法的概率阈值。 */
+    topP?: number
+    /** 取值范围(0,2)，用于控制随机性和多样性的程度。 */
+    temperature?: number
+}
+
+export interface V2NIMAIModelCallResponse {
+    /** AI 响应的状态码 */
+    code?: number
+    /** 数字人的账户 ID */
+    accountId?: string
+    /** 本次响应的标识 */
+    requestId?: string
+    /** 请求 AI 的回复 */
+    content?: V2NIMAIModelCallContent
+}
+
+export interface V2NIMProxyAIModelCallParams {
+    /** 机器人账号 ID */
+    accountId?: string
+    /** 请求 ID */
+    requestId?: string
+    /** 请求大模型的内容 */
+    content?: V2NIMAIModelCallContent
+    /** 上下文内容 */
+    messages?: Array<V2NIMMessage>
+    /** 提示词变量占位符替换, 如果 V2NIMAIUser 中的 modelConfig.prompt 定义了变量，则必填. 端测不校验 */
+    promptVariables?: string
+    /** 请求接口模型相关参数配置， 如果参数不为空，则默认覆盖控制相关配置 */
+    modelConfigParams?: V2NIMAIModelConfigParams
 }
 
 export interface V2NIMMessage {
@@ -418,6 +545,8 @@ export interface V2NIMMessage {
     sendingState?: V2NIMMessageSendingState
     /** 附件上传状态 */
     attachmentUploadState?: V2NIMMessageAttachmentUploadState
+    /** 消息状态 */
+    messageStatus?: V2NIMMessageStatus
     /** 消息相关配置 */
     messageConfig?: V2NIMMessageConfig
     /** 推送相关配置 */
@@ -434,6 +563,8 @@ export interface V2NIMMessage {
     threadReply?: V2NIMMessageRefer
     /** 消息发送者是否是自己 */
     isSelf?: boolean
+    /** AI 数字人相关信息 */
+    aiConfig?: V2NIMAIModelConfig
 }
 
 export interface V2NIMCustomNotification {
@@ -819,6 +950,8 @@ export interface V2NIMLastMessage {
     revokeAccountId?: string
     /** 消息撤回类型 */
     revokeType?: V2NIMMessageRevokeType
+    /** 消息发送者 */
+    senderName?: string
     /** 扩展信息 */
     serverExtension?: string
     /** 第三方扩展字段 */
@@ -1118,6 +1251,10 @@ export interface V2NIMUpdateTeamInfoParams {
     updateExtensionMode?: V2NIMTeamUpdateExtensionMode
 }
 
+export interface V2NIMUpdatedTeamInfo extends V2NIMUpdateTeamInfoParams {
+    chatBannedMode?: V2NIMTeamChatBannedMode
+}
+
 export interface V2NIMCreateTeamResult {
     /** 被创建的群组信息 */
     team?: V2NIMTeam
@@ -1207,6 +1344,17 @@ export interface V2NIMUserUpdateParams {
     serverExtension?: string
 }
 
+export interface V2NIMUserSearchOption {
+    /** 搜索关键字 */
+    keyword?: string
+    /** 是否搜索用户昵称，默认为 true */
+    searchName?: boolean
+    /** 是否搜索用户账号 */
+    searchAccountId?: boolean
+    /** 是否搜索手机号 */
+    searchMobile?: boolean
+}
+
 export interface V2NIMFriend {
     /** 好友账号 */
     accountId?: string
@@ -1220,6 +1368,8 @@ export interface V2NIMFriend {
     createTime?: number
     /** 更新时间 */
     updateTime?: number
+    /** 好友对应的用户信息 */
+    userProfile: V2NIMUser
 }
 
 export interface V2NIMFriendAddParams {
@@ -1230,6 +1380,10 @@ export interface V2NIMFriendAddParams {
 }
 
 export interface V2NIMFriendAddApplication {
+    /// 申请者账号
+    applicantAccountId: string
+    /// 被申请者账号
+    recipientAccountId: string
     /** 操作者账号 */
     operatorAccountId?: string
     /** 附言 */
@@ -1238,6 +1392,8 @@ export interface V2NIMFriendAddApplication {
     status?: V2NIMFriendAddApplicationStatus
     /** 时间 */
     timestamp?: number
+    /// 是否已读
+    read?: boolean;
 }
 
 export interface V2NIMFriendDeleteParams {
@@ -1245,20 +1401,20 @@ export interface V2NIMFriendDeleteParams {
     deleteAlias?: boolean
 }
 
-export interface V2NIMFriendAddRejection {
-    /** 申请者账号 */
-    operatorAccountId?: string
-    /** 申请添加好友的附言 */
-    postscript?: string
-    /** 时间 */
-    timestamp?: number
-}
-
 export interface V2NIMFriendSetParams {
     /** 别名 */
     alias?: string
     /** 扩展字段 */
     serverExtension?: string
+}
+
+export interface V2NIMFriendSearchOption {
+    /** 搜索关键字，默认搜索好友备注，可以指定是否同时搜索用户账号 */
+    keyword?: string
+    /** 是否搜索好友备注，默认为 true */
+    searchAlias?: boolean
+    /** 查询账号，默认为 false */
+    searchAccountId?: boolean
 }
 
 export interface V2NIMTeamJoinActionInfoQueryOption {
@@ -1281,6 +1437,21 @@ export interface V2NIMTeamJoinActionInfoResult {
     finished?: boolean
 }
 
+export interface V2NIMTeamMemberSearchOption {
+    /** 搜索关键词，不为空 */
+    keyword: string
+    /** 群组类型 */
+    teamType: V2NIMTeamType
+    /** 群组ID，如果不传则检索所有群，如果需要检索特定的群，则需要同时传入 teamId + teamType */
+    teamId?: string
+    // 起始位置，首次传空， 后续传上次返回的 nextToken
+    nextToken: string
+    /** 按照 joinTime 排序，默认时间降序排列 */
+    order: V2NIMSortOrder
+    /** 查询成员的个数，默认 10 */
+    limit: number
+}
+
 export interface V2NIMFriendAddApplicationQueryOption {
     /** 分页偏移 */
     offset?: number
@@ -1301,6 +1472,7 @@ export interface V2NIMFriendAddApplicationResult {
 
 export interface V2NIMChatroomLoginOption {
     [x: string]: any
+
     /** 认证模式 */
     authType?: V2NIMLoginAuthType
     /** token 获取回调 */
@@ -1334,6 +1506,7 @@ export interface V2NIMChatroomLocationConfig {
 
 export interface V2NIMChatroomEnterParams {
     [x: string]: any
+
     /** 账号 ID */
     accountId?: string
     /** 静态 token */
@@ -1693,6 +1866,7 @@ export interface V2NIMChatroomQueueOfferParams {
     /** 元素属于的账号 */
     elementOwnerAccountId?: string
 }
+
 export interface V2NIMUploadFileParams {
     /** 文件地址 */
     filePath?: string
@@ -1705,4 +1879,19 @@ export interface V2NIMUploadFileTask {
     taskId?: string
     /** 上传任务参数 */
     uploadParams?: V2NIMUploadFileParams
+}
+
+export interface V2NIMDownloadMessageAttachmentParams {
+    attachment: V2NIMMessageAttachment
+    type: V2NIMDownloadAttachmentType
+    thumbSize?: V2NIMSize
+    messageClientId?: string
+    saveAs?: string
+}
+
+export interface V2NIMGetMediaResourceInfoResult {
+    /// 附件资源完整下载地址
+    url: string
+    /// 下载该资源所需的鉴权信息，当列表为空时则代表不需要鉴权，若不为空则需要将该列表添加到请求时的 Header 中
+    authHeaders: Array<object>
 }

@@ -20,6 +20,8 @@ Napi::Object node_nim::V2NodeNIMConversationService::Init(Napi::Env env, Napi::O
             RegApi("clearUnreadCountByIds", &V2NIMConversationService::clearUnreadCountByIds),
             RegApi("clearUnreadCountByTypes", &V2NIMConversationService::clearUnreadCountByTypes),
             RegApi("clearUnreadCountByGroupId", &V2NIMConversationService::clearUnreadCountByGroupId),
+            RegApi("markConversationRead", &V2NIMConversationService::markConversationRead),
+            RegApi("getConversationReadTime", &V2NIMConversationService::getConversationReadTime),
             RegApi("subscribeUnreadCountByFilter", &V2NIMConversationService::subscribeUnreadCountByFilter),
             RegApi("unsubscribeUnreadCountByFilter", &V2NIMConversationService::unsubscribeUnreadCountByFilter)});
 }
@@ -42,6 +44,8 @@ void V2NodeNIMConversationService::initEventHandler() {
     conversation_listener.onTotalUnreadCountChanged = MakeNotifyCallback<nstd::function<void(uint32_t)>>("totalUnreadCountChanged");
     conversation_listener.onUnreadCountChangedByFilter =
         MakeNotifyCallback<nstd::function<void(V2NIMConversationFilter, uint32_t)>>("unreadCountChangedByFilter");
+    conversation_listener.onConversationReadTimeUpdated =
+        MakeNotifyCallback<nstd::function<void(const nstd::string&, time_t)>>("conversationReadTimeUpdated");
     conversation_service.addConversationListener(conversation_listener);
 }
 }  // namespace node_nim

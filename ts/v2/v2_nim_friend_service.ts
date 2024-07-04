@@ -2,12 +2,12 @@ import {
     V2NIMError,
     V2NIMFriend,
     V2NIMFriendAddApplication,
-    V2NIMFriendAddRejection,
     V2NIMFriendAddParams,
     V2NIMFriendDeleteParams,
     V2NIMFriendSetParams,
     V2NIMFriendAddApplicationQueryOption,
-    V2NIMFriendAddApplicationResult
+    V2NIMFriendAddApplicationResult,
+    V2NIMFriendSearchOption,
 } from 'ts/v2_def/v2_nim_struct_def'
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
@@ -20,7 +20,7 @@ export declare interface V2NIMFriendServiceEvents {
     /** 添加好友申请 */
     friendAddApplication: [V2NIMFriendAddApplication]
     /** 添加好友申请被拒绝 */
-    friendAddRejected: [V2NIMFriendAddRejection]
+    friendAddRejected: [V2NIMFriendAddApplication]
     /** 更新好友信息 */
     friendInfoChanged: [V2NIMFriend]
 }
@@ -182,6 +182,60 @@ export class V2NIMFriendService extends EventEmitter<V2NIMFriendServiceEvents> {
             this.instance.getAddApplicationList(
                 option,
                 (result: V2NIMFriendAddApplicationResult) => {
+                    resolve(result)
+                },
+                (error: V2NIMError) => {
+                    reject(error)
+                }
+            )
+        })
+    }
+
+    /** @brief 获取申请添加好友未读数量 */
+    /** @return void */
+    getAddApplicationUnreadCount(): Promise<number> {
+        return new Promise((resolve, reject) => {
+            this.instance.getAddApplicationUnreadCount(
+                (result: number) => {
+                    resolve(result)
+                },
+                (error: V2NIMError) => {
+                    reject(error)
+                }
+            )
+        })
+    }
+
+    /** @brief 设置申请添加好友已读 */
+    /** @return void */
+    setAddApplicationRead(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.instance.setAddApplicationRead(
+                () => {
+                    resolve()
+                },
+                (error: V2NIMError) => {
+                    reject(error)
+                }
+            )
+        })
+    }
+
+    /**
+     * 根据关键字搜索用户信息
+     * @param option 搜索选项 @see V2NIMFriendSearchOption
+     * @return Promise<Array<V2NIMFriend>>
+     */
+    searchFriendByOption(option: V2NIMFriendSearchOption): Promise<Array<V2NIMFriend>> {
+        return new Promise((resolve, reject) => {
+            let defaultOption = {
+                searchAlias: true,
+                searchAccountId: false
+            }
+            let mergedOption = Object.assign({}, defaultOption, option)
+            this.instance.searchFriendByOption(
+                mergedOption,
+                (result: Array<V2NIMFriend>) => {
                     resolve(result)
                 },
                 (error: V2NIMError) => {

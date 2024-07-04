@@ -21,7 +21,9 @@ Napi::Object node_nim::V2NodeNIMTeamService::Init(Napi::Env env, Napi::Object ex
             {RegApi("getTeamMemberList", &V2NIMTeamService::getTeamMemberList)},
             {RegApi("getTeamMemberListByIds", &V2NIMTeamService::getTeamMemberListByIds)},
             {RegApi("getTeamMemberInvitor", &V2NIMTeamService::getTeamMemberInvitor)},
-            {RegApi("getTeamJoinActionInfoList", &V2NIMTeamService::getTeamJoinActionInfoList)}});
+            {RegApi("getTeamJoinActionInfoList", &V2NIMTeamService::getTeamJoinActionInfoList)},
+            {RegApi("searchTeamByKeyword", &V2NIMTeamService::searchTeamByKeyword)},
+            {RegApi("searchTeamMembers", &V2NIMTeamService::searchTeamMembers)}});
 }
 
 node_nim::V2NodeNIMTeamService::V2NodeNIMTeamService(const Napi::CallbackInfo& info)

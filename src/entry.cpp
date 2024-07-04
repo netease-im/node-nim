@@ -32,6 +32,7 @@
 #include "qchat/server/qchat_server.h"
 #include "qchat/system_notification/qchat_system_notification.h"
 #include "ts_cpp_conversion.h"
+#include "v2/v2_node_nim_ai_service.h"
 #include "v2/v2_node_nim_conversation_group_service.h"
 #include "v2/v2_node_nim_conversation_service.h"
 #include "v2/v2_node_nim_friend_service.h"
@@ -47,6 +48,7 @@
 #include "v2_chatroom/v2_node_nim_chatroom_client.h"
 #include "v2_chatroom/v2_node_nim_chatroom_sdk.h"
 #include "v2_chatroom/v2_node_nim_chatroom_service.h"
+
 namespace {
 
 Napi::Object RegisterModule(Napi::Env env, Napi::Object exports) {
@@ -89,6 +91,7 @@ Napi::Object RegisterModule(Napi::Env env, Napi::Object exports) {
     node_nim::V2NodeNIMSettingService::Init(env, exports);
     node_nim::V2NodeNIMUserService::Init(env, exports);
     node_nim::V2NodeNIMFriendService::Init(env, exports);
+    node_nim::V2NodeNIMAIService::Init(env, exports);
     node_nim::V2NodeNIMChatroomSdk::Init(env, exports);
     node_nim::V2NodeNIMChatroomClient::Init(env, exports);
     node_nim::V2NodeNIMChatroomService::Init(env, exports);

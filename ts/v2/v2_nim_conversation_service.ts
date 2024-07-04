@@ -27,6 +27,8 @@ export declare interface V2NIMConversationServiceEvents {
     totalUnreadCountChanged: [number]
     /** 根据过滤条件订阅的会话未读数变更通知 */
     unreadCountChangedByFilter: [V2NIMConversationFilter, number]
+    /** 同账号多端标记会话 ACK 通知时间戳变更 */
+    conversationReadTimeUpdated: [string, number]
 }
 
 export class V2NIMConversationService extends EventEmitter<V2NIMConversationServiceEvents> {
@@ -322,6 +324,40 @@ export class V2NIMConversationService extends EventEmitter<V2NIMConversationServ
                 groupId,
                 () => {
                     resolve()
+                },
+                (error: V2NIMError) => {
+                    reject(error)
+                }
+            )
+        })
+    }
+
+    /** @brief 标记会话已读时间戳 */
+    /** @param conversationId 要标记的会话 ID */
+    /** @return void */
+    markConversationRead(conversationId: string): Promise<number> {
+        return new Promise((resolve, reject) => {
+            this.instance.markConversationRead(
+                conversationId,
+                (ackTime: number) => {
+                    resolve(ackTime)
+                },
+                (error: V2NIMError) => {
+                    reject(error)
+                }
+            )
+        })
+    }
+
+    /** 获取会话已读时间戳 */
+    /** @param conversationId 会话 ID */
+    /** @return Promise<number> 时间戳 */
+    getConversationReadTime(conversationId: string): Promise<number> {
+        return new Promise((resolve, reject) => {
+            this.instance.getConversationReadTime(
+                conversationId,
+                (time: number) => {
+                    resolve(time)
                 },
                 (error: V2NIMError) => {
                     reject(error)

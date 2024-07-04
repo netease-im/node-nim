@@ -37,6 +37,9 @@ CallbackSpecialization(MsgLog::DeleteHistoryOnLineNotifyCallback);
 CallbackSpecialization(MsgLog::QueryMessageIsThreadRootAsyncCallback);
 CallbackSpecialization(MsgLog::QueryThreadHistoryMsgCallback);
 CallbackSpecialization(MsgLog::FullTextSearchOnlineAsyncCallback);
+CallbackSpecialization(MsgLog::IsMessageIndexEstablishedCallback);
+CallbackSpecialization(MsgLog::BuildMsglogIndexesProgress);
+CallbackSpecialization(MsgLog::BuildMsglogIndexesComplete);
 
 CallbackSpecialization(NOS::InitNosResultCallback);
 CallbackSpecialization(NOS::DownloadMediaCallback);
@@ -138,6 +141,7 @@ CallbackSpecialization(V2NIMSuccessCallback<nstd::vector<V2NIMConversationOperat
 CallbackSpecialization(V2NIMSuccessCallback<V2NIMConversationResult>);
 CallbackSpecialization(V2NIMSuccessCallback<nstd::vector<V2NIMConversation>>);
 CallbackSpecialization(V2NIMSuccessCallback<nstd::string>);
+CallbackSpecialization(V2NIMSuccessCallback<const nstd::string&>);
 CallbackSpecialization(V2NIMSuccessCallback<uint32_t>);
 CallbackSpecialization(V2NIMSuccessCallback<uint64_t>);
 CallbackSpecialization(V2NIMSuccessCallback<V2NIMConversationGroupResult>);
@@ -176,6 +180,11 @@ CallbackSpecialization(V2NIMSuccessCallback<V2NIMSendChatroomMessageResult>);
 CallbackSpecialization(V2NIMSuccessCallback<V2NIMChatroomMemberListResult>);
 CallbackSpecialization(V2NIMSuccessCallback<nstd::vector<V2NIMChatroomMessage>>);
 CallbackSpecialization(V2NIMSuccessCallback<nstd::vector<V2NIMChatroomMember>>);
+CallbackSpecialization(V2NIMSuccessCallback<nstd::vector<nstd::shared_ptr<V2NIMAIUser>>>);
+CallbackSpecialization(V2NIMSuccessCallback<V2NIMThreadMessageListResult>);
+CallbackSpecialization(V2NIMSuccessCallback<const V2NIMGetMediaResourceInfoResult&>);
+CallbackSpecialization(V2NIMSuccessCallback<time_t>);
+
 namespace xpack {
 // std::function
 template <typename TR, typename... Args>

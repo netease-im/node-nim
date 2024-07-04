@@ -18,17 +18,17 @@ import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
 
 export declare interface NIMClientEvents {
-    /** NIM客户端掉线 */
+    /** NIM 客户端掉线 */
     disconnect: []
-    /** NIM客户端多点登录通知 */
+    /** NIM 客户端多点登录通知 */
     multispotLogin: [MultiSpotLoginRes]
     /** 多端推送开关同步 */
     syncMultiportPushConfig: [number, boolean]
-    /** NIM客户端被踢 */
+    /** NIM 客户端将本帐号的其他端踢下线结果回调 */
     kickOtherClient: [KickOtherRes]
-    /** NIM客户端将本帐号的其他端踢下线结果 */
+    /** NIM 客户端被踢回调 */
     kickout: [KickoutRes]
-    /** NIM客户端自动重连 */
+    /** NIM 客户端自动重连 */
     relogin: [LoginRes]
 }
 

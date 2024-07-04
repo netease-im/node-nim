@@ -63,6 +63,13 @@ export enum NIMSuperTeamMuteType {
     kNIMSuperTeamMuteTypeAllMute = 3 /**< 全部禁言 */
 }
 
+export enum SuperTeamQueryOrder {
+    /// 按时间降序排列
+    kSuperTeamQueryOrderDesc = 0,
+    /// 按时间升序排列
+    kSuperTeamQueryOrderAsc = 1
+}
+
 export interface SuperTeamEvent {
     res_code_?: NIMResCode /**< 错误码 */
     notification_id_?: NIMNotificationId /**< 通知类型ID */
@@ -122,6 +129,27 @@ export interface SuperTeamMemberProperty {
     member_info_json_value_?: SuperTeamMemberPropertyJsonValue
 }
 
+export interface SuperTeamMemberSerachResult {
+    team_member_propertys_?: Array<SuperTeamMemberProperty>
+    offset_?: number
+    finished_?: boolean
+}
+
+export interface SuperTeamMemberKeywordSearchOption {
+    team_id_?: string
+    keyword_?: string
+    offset_?: number
+    order_?: SuperTeamQueryOrder
+    limit_?: number
+}
+
+export interface SuperTeamMemberRoleTypeSearchOption {
+    role_types_?: Array<NIMSuperTeamUserType>
+    offset_?: number
+    order_?: SuperTeamQueryOrder
+    limit_?: number
+}
+
 export type SuperTeamEventCallback = (result: SuperTeamEvent) => void
 export type QueryAllMySuperTeamsCallback = (count: number, result: Array<string>) => void
 export type QueryAllMySuperTeamsInfoCallback = (count: number, result: Array<SuperTeamInfo>) => void
@@ -130,6 +158,8 @@ export type QuerySuperTeamMembersCallback = (rescode: NIMResCode, tid: string, c
 export type QuerySuperTeamMemberCallback = (result: SuperTeamMemberProperty) => void
 export type QuerySuperTeamInfoCallback = (tid: string, result: SuperTeamInfo) => void
 export type QuerySuperTeamMembersOnlineCallback = (rescode: NIMResCode, count: number, result: Array<SuperTeamMemberProperty>) => void
+export type SuperTeamMemberSerachCallback = (result: SuperTeamMemberSerachResult) => void
+export type SuperTeamGetMemberListCallback = (result: SuperTeamMemberSerachResult) => void
 
 export interface NIMSuperTeamAPI {
     InitEventHandlers(): void
@@ -188,4 +218,12 @@ export interface NIMSuperTeamAPI {
     MuteAsync(tid: string, set_mute: boolean, cb: SuperTeamEventCallback | null, jsonExtension: string): boolean
 
     QuerySuperTeamsInfoByKeywordAsync(keyword: string, cb: QueryAllMySuperTeamsInfoCallback | null, jsonExtension: string): void
+
+    SearchTeamMembers(option: SuperTeamMemberKeywordSearchOption, cb: SuperTeamMemberSerachCallback | null): void
+
+    GetTeamMemberList(tid: string, option: SuperTeamMemberRoleTypeSearchOption, cb: SuperTeamGetMemberListCallback | null): void
+
+    AddTeamMembersFollow(tid: string, account_ids: Array<string>, cb: SuperTeamEventCallback | null): boolean
+
+    RemoveTeamMembersFollow(tid: string, account_ids: Array<string>, cb: SuperTeamEventCallback | null): boolean
 }

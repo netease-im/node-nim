@@ -2,10 +2,18 @@
 #include "v2_nim_api.hpp"
 namespace node_nim {
 Napi::Object node_nim::V2NodeNIMUserService::Init(Napi::Env env, Napi::Object exports) {
+    // clang-format off
     return InternalInit("V2NIMUserService", env, exports,
-        {RegApi("getUserList", &V2NIMUserService::getUserList), RegApi("updateSelfUserProfile", &V2NIMUserService::updateSelfUserProfile),
+        {
+            RegApi("getUserList", &V2NIMUserService::getUserList),
+            RegApi("updateSelfUserProfile", &V2NIMUserService::updateSelfUserProfile),
             RegApi("addUserToBlockList", &V2NIMUserService::addUserToBlockList),
-            RegApi("removeUserFromBlockList", &V2NIMUserService::removeUserFromBlockList), RegApi("getBlockList", &V2NIMUserService::getBlockList)});
+            RegApi("getUserListFromCloud", &V2NIMUserService::getUserListFromCloud),
+            RegApi("removeUserFromBlockList", &V2NIMUserService::removeUserFromBlockList),
+            RegApi("getBlockList", &V2NIMUserService::getBlockList),
+            RegApi("searchUserByOption", &V2NIMUserService::searchUserByOption),
+        });
+    // clang-format on
 }
 
 node_nim::V2NodeNIMUserService::V2NodeNIMUserService(const Napi::CallbackInfo& info)

@@ -13,7 +13,6 @@
 #include <napi.h>
 #include <thread>
 #include <tuple>
-#include "ne_stl.h"
 #include "ts_cpp_conversion.h"
 
 struct CppInvoker {

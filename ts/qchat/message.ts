@@ -38,7 +38,13 @@ import {
     QChatAreMentionedMeMessagesParam,
     QChatAreMentionedMeMessagesResp,
     QChatGetMentionedMeMessagesParam,
-    QChatGetMentionedMeMessagesResp
+    QChatGetMentionedMeMessagesResp,
+    QChatInsertOrReplaceTextCacheParam,
+    QChatInsertOrReplaceTextCacheResp,
+    QChatDeleteTextCacheParam,
+    QChatDeleteTextCacheResp,
+    QChatGetTextCacheParam,
+    QChatGetTextCacheResp
 } from '../qchat_def/message_def'
 import { NIMResCode } from '../qchat_def/public_def'
 export declare interface QChatMessageEvents {
@@ -339,6 +345,48 @@ export class QChatMessageModule extends EventEmitter<QChatMessageEvents> {
                 resolve(resp)
             }
             this.instance.SearchMsgByPage(param)
+        })
+        return p
+    }
+
+    /** @fn void insertOrReplaceTextCache(const QChatInsertOrReplaceTextCacheParam& param)
+     * @brief 插入或更新自定义文本缓存
+     * @param param 接口参数 @see QChatInsertOrReplaceTextCacheParam
+     */
+    insertOrReplaceTextCache(param: QChatInsertOrReplaceTextCacheParam): Promise<QChatInsertOrReplaceTextCacheResp> {
+        const p = new Promise<QChatInsertOrReplaceTextCacheResp>((resolve) => {
+            param.cb = (resp: QChatInsertOrReplaceTextCacheResp) => {
+                resolve(resp)
+            }
+            this.instance.InsertOrReplaceTextCache(param)
+        })
+        return p
+    }
+
+    /** @fn void deleteTextCache(const QChatDeleteTextCacheParam& param)
+     * @brief 删除自定义文本缓存
+     * @param param 接口参数 @see QChatDeleteTextCacheParam
+     */
+    deleteTextCache(param: QChatDeleteTextCacheParam): Promise<QChatDeleteTextCacheResp> {
+        const p = new Promise<QChatDeleteTextCacheResp>((resolve) => {
+            param.cb = (resp: QChatDeleteTextCacheResp) => {
+                resolve(resp)
+            }
+            this.instance.DeleteTextCache(param)
+        })
+        return p
+    }
+
+    /** @fn void getTextCache(const QChatGetTextCacheParam& param)
+     * @brief 获取自定义文本缓存
+     * @param param 接口参数 @see QChatGetTextCacheParam
+     */
+    getTextCache(param: QChatGetTextCacheParam): Promise<QChatGetTextCacheResp> {
+        const p = new Promise<QChatGetTextCacheResp>((resolve) => {
+            param.cb = (resp: QChatGetTextCacheResp) => {
+                resolve(resp)
+            }
+            this.instance.GetTextCache(param)
         })
         return p
     }

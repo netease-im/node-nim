@@ -19,7 +19,9 @@ import {
     GetTeamInfoBatchSFTransCallback,
     GetTeamInfoListCallback,
     TeamMemberProperty,
-    TeamEvent
+    TeamEvent,
+    TeamMemberRoleTypeSearchOption,
+    TeamMemberSerachResult
 } from '../nim_def/team_def'
 import { NIMResCode } from '../nim_def/client_def'
 
@@ -549,6 +551,48 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
                     },
                     jsonExtension
                 )
+            ) {
+                resolve(null)
+            }
+        })
+    }
+
+    /** @fn boolean addTeamMembersFollow(tid: string, account_ids: Array<string>, cb: TeamEventCallback)
+     * 添加群成员特别通知
+     * @param[in] tid    群组id
+     * @param[in] account_ids    群成员id
+     * @param[in] cb        添加群成员特别通知的回调函数
+     */
+    addTeamMembersFollow(tid: string, account_ids: Array<string>, cb: TeamEventCallback): Promise<[TeamEvent] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.team.AddTeamMembersFollow(tid, account_ids, (event) => {
+                    if (cb) {
+                        cb(event)
+                    }
+                    resolve([event])
+                })
+            ) {
+                resolve(null)
+            }
+        })
+    }
+
+    /** @fn boolean removeTeamMembersFollow(tid: string, account_ids: Array<string>, TeamEventCallback
+     * cb) 移除群成员特别通知
+     * @param[in] tid    群组id
+     * @param[in] account_ids    群成员id
+     * @param[in] cb        移除群成员特别通知的回调函数
+     */
+    removeTeamMembersFollow(tid: string, account_ids: Array<string>, cb: TeamEventCallback): Promise<[TeamEvent] | null> {
+        return new Promise((resolve) => {
+            if (
+                !this.team.RemoveTeamMembersFollow(tid, account_ids, (event) => {
+                    if (cb) {
+                        cb(event)
+                    }
+                    resolve([event])
+                })
             ) {
                 resolve(null)
             }
@@ -1094,6 +1138,19 @@ export class NIMTeam extends EventEmitter<NIMTeamEvents> {
                     cb(rescode, infos, failure_ids)
                 }
                 resolve([rescode, infos, failure_ids])
+            })
+        })
+    }
+
+    /** 根据成员类型获取群成员
+     * @param tid		群组id
+     * @param option 获取群成员选项
+     * @return boolean 检查参数如果不符合要求则返回失败
+     */
+    getTeamMemberList(tid: string, option: TeamMemberRoleTypeSearchOption): Promise<[TeamMemberSerachResult]> {
+        return new Promise((resolve) => {
+            this.team.GetTeamMemberList(tid, option, (result) => {
+                resolve([result])
             })
         })
     }

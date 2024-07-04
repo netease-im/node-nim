@@ -1,12 +1,16 @@
 #include "v2_node_nim_message_service.h"
 #include "v2_nim_api.hpp"
+
 namespace node_nim {
+
 Napi::Object node_nim::V2NodeNIMMessageService::Init(Napi::Env env, Napi::Object exports) {
     return InternalInit("V2NIMMessageService", env, exports,
         {RegApi("sendMessage", &V2NIMMessageService::sendMessage), RegApi("replyMessage", &V2NIMMessageService::replyMessage),
             RegApi("revokeMessage", &V2NIMMessageService::revokeMessage), RegApi("getMessageList", &V2NIMMessageService::getMessageList),
             RegApi("getMessageListByIds", &V2NIMMessageService::getMessageListByIds),
             RegApi("getMessageListByRefers", &V2NIMMessageService::getMessageListByRefers),
+            RegApi("getThreadMessageList", &V2NIMMessageService::getThreadMessageList),
+            RegApi("getLocalThreadMessageList", &V2NIMMessageService::getLocalThreadMessageList),
             RegApi("deleteMessage", &V2NIMMessageService::deleteMessage), RegApi("deleteMessages", &V2NIMMessageService::deleteMessages),
             RegApi("clearHistoryMessage", &V2NIMMessageService::clearHistoryMessage),
             RegApi("updateMessageLocalExtension", &V2NIMMessageService::updateMessageLocalExtension),
@@ -51,6 +55,8 @@ void V2NodeNIMMessageService::initEventHandler() {
         MakeNotifyCallback<nstd::function<void(nstd::vector<V2NIMMessageDeletedNotification>)>>("messageDeletedNotifications");
     listener.onClearHistoryNotifications =
         MakeNotifyCallback<nstd::function<void(nstd::vector<V2NIMClearHistoryNotification>)>>("clearHistoryNotifications");
+    listener.onSendMessage = MakeNotifyCallback<nstd::function<void(const V2NIMMessage& message)>>("sendMessage");
     message_service.addMessageListener(listener);
 }
+
 }  // namespace node_nim
