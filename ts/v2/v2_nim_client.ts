@@ -19,6 +19,7 @@ import { V2NIMSettingService } from './v2_nim_setting_service'
 import { V2NIMFriendService } from './v2_nim_friend_service'
 import { V2NIMUserService } from './v2_nim_user_service'
 import { V2NIMAIService } from "./v2_nim_ai_service"
+import { V2NIMSignallingService } from "./v2_nim_signalling_service"
 
 export declare interface V2NIMClientEvents {}
 
@@ -40,6 +41,7 @@ export class V2NIMClient extends EventEmitter<V2NIMClientEvents> {
     userService: V2NIMUserService | null
     friendService: V2NIMFriendService | null
     aiService: V2NIMAIService | null
+    signallingService: V2NIMSignallingService | null
     constructor() {
         super()
         try {
@@ -63,6 +65,7 @@ export class V2NIMClient extends EventEmitter<V2NIMClientEvents> {
         this.userService = null
         this.friendService = null
         this.aiService = null
+        this.signallingService = null
     }
 
     /**
@@ -92,6 +95,7 @@ export class V2NIMClient extends EventEmitter<V2NIMClientEvents> {
         this.userService = new V2NIMUserService()
         this.friendService = new V2NIMFriendService()
         this.aiService = new V2NIMAIService()
+        this.signallingService = new V2NIMSignallingService()
         return null
     }
 
@@ -113,6 +117,7 @@ export class V2NIMClient extends EventEmitter<V2NIMClientEvents> {
         this.userService = null
         this.friendService = null
         this.aiService = null
+        this.signallingService = null
         return this.instance.uninit()
     }
 
@@ -177,5 +182,13 @@ export class V2NIMClient extends EventEmitter<V2NIMClientEvents> {
      */
     getSettingService(): V2NIMSettingService | null {
         return this.settingService
+    }
+
+    /**
+     * @brief 获取独立信令服务
+     * @return V2NIMSignallingService
+     */
+    getSignallingService(): V2NIMSignallingService | null {
+        return this.signallingService
     }
 }

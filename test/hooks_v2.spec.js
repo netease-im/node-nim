@@ -1,5 +1,6 @@
 import { v2 } from '../dist/node-nim'
 import * as GlobalVariables from './test_variables'
+import {accountPassword, assistantAccounts, mainAccount} from "./test_variables";
 
 const testEnv = true
 export const mochaHooks = {
@@ -19,8 +20,8 @@ export const mochaHooks = {
     }
     v2.init(initOptions)
     await v2.loginService.login(
-      GlobalVariables.testAccount,
-      GlobalVariables.testAccountPassword,
+      GlobalVariables.mainAccount,
+      GlobalVariables.accountPassword,
       {}
     )
   },

@@ -1,6 +1,6 @@
 {
     "name": "node-nim",
-    "version": "10.3.0-beta.1",
+    "version": "10.3.1-beta.1",
     "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
     "main": "dist/node-nim.js",
     "bin": {

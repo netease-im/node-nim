@@ -490,7 +490,35 @@ enum V2NIMErrorCode {
     /** 客户端反垃圾 / client anti-spam */
     V2NIM_ERROR_CODE_CLIENT_ANTISPAM = 195001,
     /** 云端反垃圾 / server anti-spam */
-    V2NIM_ERROR_CODE_SERVER_ANTISPAM = 195002
+    V2NIM_ERROR_CODE_SERVER_ANTISPAM = 195002,
+
+    // 信令
+    /** 信令房间已存在 */
+    V2NIM_ERROR_CODE_SIGNALLING_ROOM_EXIST = 118301,
+    /** 邀请已经被接受 */
+    V2NIM_ERROR_CODE_SIGNALLING_INVITE_ACCEPTED = 118302,
+    /** 信令成员不存在 */
+    V2NIM_ERROR_CODE_SIGNALLING_MEMBER_NOT_EXIST = 118303,
+    /** 信令成员已存在 */
+    V2NIM_ERROR_CODE_SIGNALLING_MEMBER_ALREADY_EXIST = 118304,
+    /** 信令成员已存在且设备 ID 不一致 */
+    V2NIM_ERROR_CODE_SIGNALLING_MEMBER_ALREADY_EXIST_AND_DEVICE_ID_NOT_UNIQUE = 118305,
+    /** UID 不唯一 */
+    V2NIM_ERROR_CODE_SIGNALLING_UID_NOT_UNIQUE = 118306,
+    /** 邀请已经被拒绝 */
+    V2NIM_ERROR_CODE_SIGNALLING_INVITE_REJECTED = 118307,
+    /** 信令成员不在线，但推送可达 */
+    V2NIM_ERROR_CODE_SIGNALLING_MEMBER_OFFLINE_BUT_PUSH_REACHABLE = 118308,
+    /** 信令成员不在线，且推送不可达 */
+    V2NIM_ERROR_CODE_SIGNALLING_MEMBER_OFFLINE_AND_PUSH_NOT_REACHABLE = 118309,
+    /** 邀请不存在 */
+    V2NIM_ERROR_CODE_SIGNALLING_INVITE_NOT_EXIST = 118310,
+    /** 房间不存在 */
+    V2NIM_ERROR_CODE_SIGNALLING_ROOM_NOT_EXIST = 118404,
+    /** 房间成员数量超限 */
+    V2NIM_ERROR_CODE_SIGNALLING_ROOM_MEMBER_LIMIT = 118437,
+    /** 信令服务未开通 */
+    V2NIM_ERROR_CODE_SIGNALLING_SERVICE_DISABLED = 118410
 }
 
 enum V2NIMIPProtocolVersion {
@@ -641,27 +669,27 @@ enum V2NIMMessageNotificationType {
     V2NIM_MESSAGE_NOTIFICATION_TYPE_TEAM_INVITE_ACCEPT = 9,
     /** 禁言群成员 */
     V2NIM_MESSAGE_NOTIFICATION_TYPE_TEAM_BANNED_TEAM_MEMBER = 10,
-    /// 超大群群拉人
+    /** 超大群群拉人 */
     V2NIM_MESSAGE_NOTIFICATION_TYPE_SUPER_TEAM_INVITE = 401,
-    /// 超大群 V2NIM_M 群踢人
+    /** 超大群 V2NIM_M 群踢人 */
     SSAGE_NOTIFICATION_TYPE_SUPER_TEAM_KICK = 402,
-    /// 超大群退出群
+    /** 超大群退出群 */
     V2NIM_MESSAGE_NOTIFICATION_TYPE_SUPER_TEAM_LAVE = 403,
-    /// 超大群更新群信息
+    /** 超大群更新群信息 */
     V2NIM_MESSAGE_NOTIFICATION_TYPE_SUPER_TEAM_UPDATE_TINFO = 404,
-    /// 超大群群解散
+    /** 超大群群解散 */
     V2NIM_MESSAGE_NOTIFICATION_TYPE_SUPER_TEAM_DISMISS = 405,
-    /// 超大群移交群主
+    /** 超大群移交群主 */
     V2NIM_MESSAGE_NOTIFICATION_TYPE_SUPER_TEAM_OWNER_TRANSFER = 406,
-    /// 超大群添加管理员
+    /** 超大群添加管理员 */
     V2NIM_MESSAGE_NOTIFICATION_TYPE_SUPER_TEAM_ADD_MANAGER = 407,
-    /// 超大群移除管理员
+    /** 超大群移除管理员 */
     V2NIM_MESSAGE_NOTIFICATION_TYPE_SUPER_TEAM_REMOVE_MANAGER = 408,
-    /// 超大群禁言群成员
+    /** 超大群禁言群成员 */
     V2NIM_MESSAGE_NOTIFICATION_TYPE_SUPER_TEAM_BANNED_TEAM_MEMBER = 409,
-    /// 超大群群申请加入通过
+    /** 超大群群申请加入通过 */
     V2NIM_MESSAGE_NOTIFICATION_TYPE_SUPER_TEAM_APPLY_PASS = 410,
-    /// 超大群接受邀请进群
+    /** 超大群接受邀请进群 */
     V2NIM_MESSAGE_NOTIFICATION_TYPE_SUPER_TEAM_INVITE_ACCEPT = 411
 }
 
@@ -1163,4 +1191,37 @@ enum V2NIMDownloadAttachmentType {
     V2NIM_DOWNLOAD_ATTACHMENT_TYPE_THUMBNAIL,
     /** 视频封面，仅支持视频类附件 */
     V2NIM_DOWNLOAD_ATTACHMENT_TYPE_VIDEO_COVER,
+};
+
+enum V2NIMSignallingChannelType {
+    /** 未知频道类型 */
+    V2NIM_SIGNALLING_CHANNEL_TYPE_UNKNOWN = 0,
+    /** 音频频道 */
+    V2NIM_SIGNALLING_CHANNEL_TYPE_AUDIO = 1,
+    /** 视频频道 */
+    V2NIM_SIGNALLING_CHANNEL_TYPE_VIDEO,
+    /** 自定义频道 */
+    V2NIM_SIGNALLING_CHANNEL_TYPE_CUSTOM
+};
+
+/** @brief 信令频道事件类型 */
+enum V2NIMSignallingEventType {
+    /** 未知 */
+    V2NIM_SIGNALLING_EVENT_TYPE_UNKNOWN,
+    /** 关闭信令频道房间 */
+    V2NIM_SIGNALLING_EVENT_TYPE_CLOSE,
+    /** 加入信令频道房间 */
+    V2NIM_SIGNALLING_EVENT_TYPE_JOIN,
+    /** 邀请加入信令频道房间 */
+    V2NIM_SIGNALLING_EVENT_TYPE_INVITE,
+    /** 取消邀请加入信令频道房间 */
+    V2NIM_SIGNALLING_EVENT_TYPE_CANCEL_INVITE,
+    /** 拒绝邀请 */
+    V2NIM_SIGNALLING_EVENT_TYPE_REJECT,
+    /** 接受邀请 */
+    V2NIM_SIGNALLING_EVENT_TYPE_ACCEPT,
+    /** 离开信令频道房间 */
+    V2NIM_SIGNALLING_EVENT_TYPE_LEAVE,
+    /** 自定义控制命令 */
+    V2NIM_SIGNALLING_EVENT_TYPE_CONTROL
 };

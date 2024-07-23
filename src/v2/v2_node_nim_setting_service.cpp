@@ -8,7 +8,8 @@ Napi::Object node_nim::V2NodeNIMSettingService::Init(Napi::Env env, Napi::Object
             RegApi("getTeamMessageMuteMode", &V2NIMSettingService::getTeamMessageMuteMode),
             RegApi("setP2PMessageMuteMode", &V2NIMSettingService::setP2PMessageMuteMode),
             RegApi("getP2PMessageMuteMode", &V2NIMSettingService::getP2PMessageMuteMode),
-            RegApi("getP2PMessageMuteList", &V2NIMSettingService::getP2PMessageMuteList),
+            RegApi("getP2PMessageMuteList", &V2NIMSettingService::getP2PMessageMuteList), RegApi("setDndConfig", &V2NIMSettingService::setDndConfig),
+            RegApi("getDndConfig", &V2NIMSettingService::getDndConfig),
             RegApi("setPushMobileOnDesktopOnline", &V2NIMSettingService::setPushMobileOnDesktopOnline)});
 }
 

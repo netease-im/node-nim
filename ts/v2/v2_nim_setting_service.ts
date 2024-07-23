@@ -1,4 +1,4 @@
-import { V2NIMError } from 'ts/v2_def/v2_nim_struct_def'
+import {V2NIMDndConfig, V2NIMError} from 'ts/v2_def/v2_nim_struct_def'
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
 
@@ -108,5 +108,30 @@ export class V2NIMSettingService extends EventEmitter<V2NIMSettingServiceEvents>
                 }
             )
         })
+    }
+
+    /** @brief 设置免打扰与详情显示 */
+    /** @param config 是否需要推送 */
+    /** @return void */
+    setDndConfig(config: V2NIMDndConfig): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.instance.setDndConfig(
+                config,
+                () => {
+                    resolve()
+                },
+                (error: V2NIMError) => {
+                    reject(error)
+                }
+            )
+        })
+    }
+
+    /**
+     * 读取免打扰与详情显示接口
+     * @returns V2NIMDndConfig 设置免打扰配置
+     */
+    getDndConfig(): V2NIMDndConfig {
+        return this.instance.getDndConfig();
     }
 }

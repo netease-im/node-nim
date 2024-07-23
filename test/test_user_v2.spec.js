@@ -1,5 +1,6 @@
 import { v2 } from '../dist/node-nim'
 import assert from 'assert'
+import {assistantAccounts} from "./test_variables";
 
 describe('******************** User v2 ********************', function () {
   describe('#searchUserByOption', function () {
@@ -33,6 +34,14 @@ describe('******************** User v2 ********************', function () {
       for (let user of result) {
         assert.strictEqual(user.name.includes('new nick'), true)
       }
+    })
+  })
+  describe('#getUserListFromCloud', function () {
+    it('Search user list by cloud should return a non-empty list.', async function () {
+      const result = await v2.userService.getUserListFromCloud({
+          accountIds: assistantAccounts
+      })
+      assert.strictEqual(result.length , 3)
     })
   })
 })

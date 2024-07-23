@@ -184,6 +184,10 @@ CallbackSpecialization(V2NIMSuccessCallback<nstd::vector<nstd::shared_ptr<V2NIMA
 CallbackSpecialization(V2NIMSuccessCallback<V2NIMThreadMessageListResult>);
 CallbackSpecialization(V2NIMSuccessCallback<const V2NIMGetMediaResourceInfoResult&>);
 CallbackSpecialization(V2NIMSuccessCallback<time_t>);
+CallbackSpecialization(V2NIMSuccessCallback<const V2NIMSignallingCallResult&>);
+CallbackSpecialization(V2NIMSuccessCallback<V2NIMSignallingCallSetupResult>);
+CallbackSpecialization(V2NIMSuccessCallback<const V2NIMSignallingChannelInfo&>);
+CallbackSpecialization(V2NIMSuccessCallback<const V2NIMSignallingRoomInfo&>);
 
 namespace xpack {
 // std::function

@@ -66,7 +66,7 @@ describe('******************** Messages ********************', function () {
 
     before(async function () {
       const message = v2.messageCreator.createTextMessage('how are you?')
-      let result = await v2.messageService.sendMessage(message, GlobalVariables.testToP2PConversationId)
+      let result = await v2.messageService.sendMessage(message, GlobalVariables.toP2PConversationId)
       messageClientId = result.message.messageClientId
       senderId = result.message.senderId
       receiverId = result.message.receiverId
@@ -105,7 +105,7 @@ describe('******************** Messages ********************', function () {
 
     before(async function () {
       const message = v2.messageCreator.createTextMessage('how are you?')
-      let result = await v2.messageService.sendMessage(message, GlobalVariables.testToP2PConversationId)
+      let result = await v2.messageService.sendMessage(message, GlobalVariables.toP2PConversationId)
       messageClientId = result.message.messageClientId
       senderId = result.message.senderId
       receiverId = result.message.receiverId
@@ -138,6 +138,3 @@ describe('******************** Messages ********************', function () {
     })
   })
 })
-
-
-

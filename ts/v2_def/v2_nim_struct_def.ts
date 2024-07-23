@@ -1380,9 +1380,9 @@ export interface V2NIMFriendAddParams {
 }
 
 export interface V2NIMFriendAddApplication {
-    /// 申请者账号
+    /** 申请者账号 */
     applicantAccountId: string
-    /// 被申请者账号
+    /** 被申请者账号 */
     recipientAccountId: string
     /** 操作者账号 */
     operatorAccountId?: string
@@ -1392,7 +1392,7 @@ export interface V2NIMFriendAddApplication {
     status?: V2NIMFriendAddApplicationStatus
     /** 时间 */
     timestamp?: number
-    /// 是否已读
+    /** 是否已读 */
     read?: boolean;
 }
 
@@ -1882,16 +1882,255 @@ export interface V2NIMUploadFileTask {
 }
 
 export interface V2NIMDownloadMessageAttachmentParams {
+    /** 消息附件信息 */
     attachment: V2NIMMessageAttachment
+    /** 要下载附件的类型 */
     type: V2NIMDownloadAttachmentType
+    /** 如果下载的是缩略图或者视频封面，通过该参数指定缩略图大小或视频封面大小 */
     thumbSize?: V2NIMSize
+    /** 消息客户端 ID，如果指定了该参数将下载完成后的本地附件保存路径更新到消息数据库中，下一次查询时将直接返回对应的路径 */
     messageClientId?: string
+    /** 附件保存路径，如未指定 SDK 将下载到登录用户缓存目录，如指定该参数则以指定的路径为准 */
     saveAs?: string
 }
 
 export interface V2NIMGetMediaResourceInfoResult {
-    /// 附件资源完整下载地址
+    /** 附件资源完整下载地址 */
     url: string
-    /// 下载该资源所需的鉴权信息，当列表为空时则代表不需要鉴权，若不为空则需要将该列表添加到请求时的 Header 中
+    /** 下载该资源所需的鉴权信息，当列表为空时则代表不需要鉴权，若不为空则需要将该列表添加到请求时的 Header 中 */
     authHeaders: Array<object>
+}
+
+export interface V2NIMDndConfig {
+    /** 是否显示详情 */
+    showDetail: boolean
+    /** 免打扰是否开启 */
+    dndOn: boolean
+    /** 如果开启免打扰，开始小时数 (Integer) */
+    fromH: number
+    /** 如果开启免打扰，开始分钟数 (Integer) */
+    fromM: number
+    /** 如果开启免打扰，截止小时数 (Integer) */
+    toH: number
+    /** 如果开启免打扰，截止分钟数 (Integer) */
+    toM: number
+}
+
+export interface V2NIMSignallingConfig {
+    /** 是否需要存离线消息 */
+    offlineEnabled?: boolean
+    /** 是否需要计未读 */
+    unreadEnabled?: boolean
+    /** 用户 UID */
+    selfUid?: number
+}
+
+export interface V2NIMSignallingPushConfig {
+    /** 是否需要推送 */
+    pushEnabled?: boolean
+    /** 推送标题 */
+    pushTitle?: string
+    /** 推送文案 */
+    pushContent?: string
+    /** 推送数据 */
+    pushPayload?: string
+}
+
+export interface V2NIMSignallingRtcConfig {
+    /** 云信音视频房间频道名称 */
+    rtcChannelName?: string
+    /** 音视频房间 token 过期时间 */
+    rtcTokenTtl?: number
+    /** JSON 格式字符串，音视频 SDK 相关参数，IM 信令仅透传相关参数 */
+    rtcParams?: string
+}
+
+export interface V2NIMSignallingCallParams {
+    /** 被呼叫者账号 ID */
+    calleeAccountId: string
+    /** 请求 ID，可以用 UUID 实现 */
+    requestId: string
+    /** 频道类型 */
+    channelType: V2NIMSignallingChannelType
+    /** 频道名称，建议使用与业务有相关场景的名称，便于页面显示 */
+    channelName?: string
+    /** 频道相关扩展字段，长度限制 4096，跟频道绑定，JSON 格式 */
+    channelExtension?: string
+    /** 服务器扩展字段，长度限制 4096，JSON 格式 */
+    serverExtension?: string
+    /** 信令相关配置 */
+    signallingConfig?: V2NIMSignallingConfig
+    /** 推送相关配置 */
+    pushConfig?: V2NIMSignallingPushConfig
+    /** 音视频相关参数配置 */
+    rtcConfig?: V2NIMSignallingRtcConfig
+}
+
+export interface V2NIMSignallingChannelInfo {
+    /** 信令频道 ID，唯一标识了该频道房间，后续主要以该字段作为请求标识 */
+    channelId: string
+    /** 频道类型 */
+    channelType: V2NIMSignallingChannelType
+    /** 信令频道名称，如果请求时不传，则该字段为空 */
+    channelName?: string
+    /** 频道相关扩展字段，长度限制 4096，JSON 格式 */
+    channelExtension?: string
+    /** 频道房间创建时间 */
+    createTime: number
+    /** 频道房间过期时间 */
+    expireTime: number
+    /** 创建者账号 ID */
+    creatorAccountId: string
+}
+
+export interface V2NIMSignallingMember {
+    /** 成员账号 ID */
+    accountId: string
+    /** 成员 UID */
+    uid: number
+    /** 用户加入信令频道房间时间 */
+    joinTime: number
+    /** 用户信令频道房间过期时间 */
+    expireTime: number
+    /** 成员操作的设备 ID */
+    deviceId: string
+}
+
+export interface V2NIMSignallingRoomInfo {
+    /** 频道房间相关信息 */
+    channelInfo: V2NIMSignallingChannelInfo
+    /** 成员列表信息 */
+    members: Array<V2NIMSignallingMember>
+}
+
+export interface V2NIMSignallingRtcInfo {
+    /** 进入音视频对应的 token */
+    rtcToken?: string
+    /** 音视频房间 token 过期时间 */
+    rtcTokenTtl?: number
+    /** JSON 格式字符串，音视频SDK相关参数，IM 信令仅透传相关参数 */
+    rtcParams?: string
+}
+
+export interface V2NIMSignallingCallResult {
+    /** 频道房间相关信息 */
+    roomInfo: V2NIMSignallingRoomInfo
+    /** 音视频房间相关信息 */
+    rtcInfo?: V2NIMSignallingRtcInfo
+    /** 呼叫状态 */
+    callStatus: number
+}
+
+export interface V2NIMSignallingCallSetupParams {
+    /** 信令频道 ID，唯一标识了该频道房间 */
+    channelId: string
+    /** 接受的呼叫者账号 ID */
+    callerAccountId: string
+    /** 请求 ID，可以用 UUID 实现 */
+    requestId: string
+    /** 服务器扩展字段，长度限制 4096，JSON 格式 */
+    serverExtension?: string
+    /** 信令相关配置 */
+    signallingConfig?: V2NIMSignallingConfig
+    /** 音视频相关参数配置 */
+    rtcConfig?: V2NIMSignallingRtcConfig
+}
+
+export interface V2NIMSignallingCallSetupResult {
+    /** 频道房间相关信息 */
+    roomInfo: V2NIMSignallingRoomInfo
+    /** 音视频房间相关信息 */
+    rtcInfo?: V2NIMSignallingRtcInfo
+    /** 呼叫状态 */
+    callStatus?: number
+}
+
+export interface V2NIMSignallingJoinParams {
+    /** 信令频道 ID，唯一标识了该频道房间 */
+    channelId: string
+    /** 服务器扩展字段，长度限制 4096 */
+    serverExtension?: string
+    /** 信令相关配置 */
+    signallingConfig?: V2NIMSignallingConfig
+    /** 音视频相关参数配置 */
+    rtcConfig?: V2NIMSignallingRtcConfig
+}
+
+export interface V2NIMSignallingInviteParams {
+    /** 信令频道 ID，唯一标识了该频道房间 */
+    channelId: string
+    /** 被邀请者账号 ID */
+    inviteeAccountId: string
+    /** 请求 ID，可以用 UUID 实现 */
+    requestId: string
+    /** 服务器扩展字段，长度限制 4096，JSON 格式 */
+    serverExtension?: string
+    /** 信令相关配置 */
+    signallingConfig?: V2NIMSignallingConfig
+    /** 推送相关配置 */
+    pushConfig?: V2NIMSignallingPushConfig
+}
+
+export interface V2NIMSignallingCancelInviteParams {
+    /** 信令频道 ID，唯一标识了该频道房间 */
+    channelId: string
+    /** 被邀请者账号 ID */
+    inviteeAccountId: string
+    /** 请求 ID，可以用 UUID 实现 */
+    requestId: string
+    /** 服务器扩展字段，长度限制 4096 */
+    serverExtension?: string
+    /** 是否存离线，true 表示存离线，false 表示不存离线 */
+    offlineEnabled?: boolean
+}
+
+export interface V2NIMSignallingRejectInviteParams {
+    /** 信令频道 ID，唯一标识了该频道房间 */
+    channelId: string
+    /** 邀请者账号 ID */
+    inviterAccountId: string
+    /** 请求 ID，可以用 UUID 实现 */
+    requestId: string
+    /** 服务器扩展字段，长度限制 4096 */
+    serverExtension?: string
+    /** 是否存离线，true 表示存离线，false 表示不存离线 */
+    offlineEnabled?: boolean
+}
+
+export interface V2NIMSignallingAcceptInviteParams {
+    /** 信令频道 ID，唯一标识了该频道房间 */
+    channelId: string
+    /** 邀请者账号 ID */
+    inviterAccountId: string
+    /** 请求 ID，可以用 UUID 实现 */
+    requestId: string
+    /** 服务器扩展字段，长度限制 4096 */
+    serverExtension?: string
+    /** 是否存离线，true 表示存离线，false 表示不存离线 */
+    offlineEnabled?: boolean
+}
+
+export interface V2NIMSignallingEvent {
+    /** 信令频道事件类型 */
+    eventType: V2NIMSignallingEventType
+    /** 信令频道房间相关信息 */
+    channelInfo: V2NIMSignallingChannelInfo
+    /** 操作者 ID */
+    operatorAccountId: string
+    /** 服务器扩展字段，长度限制 4096 */
+    serverExtension?: string
+    /** 操作的时间点 */
+    time: number
+    /** 被邀请者账号 ID，以下场景包含该字段 */
+    inviteeAccountId?: string
+    /** 邀请者账号 ID，以下场景包含该字段 */
+    inviterAccountId?: string
+    /** 本次请求发起产生的请求 ID, 以下场景包含该字段 */
+    requestId: string
+    /** 推送相关配置，以下场景包含该字段，可能为空，依赖于发起方 */
+    pushConfig?: V2NIMSignallingPushConfig
+    /** 是否需要计未读 */
+    unreadEnabled?: boolean
+    /** 成员信息 */
+    member?: V2NIMSignallingMember
 }
