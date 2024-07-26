@@ -186,6 +186,7 @@ export interface QueryMsgOnlineAsyncParam {
     end_msg_id_?: string /**< number 结束查询的最后一条消息的server_msg_id(不包含在查询结果中) */
     reverse_?: boolean /**< boolean true：反向查询(按时间正序起查，正序排列)，false：按时间逆序起查，逆序排列（建议默认为false） */
     need_save_to_local_?: boolean /**< boolean 将在线查询结果保存到本地，false: 不保存 */
+    replace_local_message_?: boolean /**< boolean 查询结果回来后，如果 need_save_to_local_ 为 true 是否要替换本地已经存在的消息 */
     auto_download_attachment_?: boolean /**< boolean 查询结果回来后，是否需要sdk自动下载消息附件。true：需要，false：不需要 */
     msg_type_list_?: Array<NIMMessageType> /**< vector 要获取或排除掉的消息类型 由 is_exclusion_type_ 参数决定 */
     is_exclusion_type_?: boolean /**< boolean true : 获取除msg_type_list_中指定的所有类型消息 ,false :只获取 msg_type_list_ 中指定的类型的消息 */

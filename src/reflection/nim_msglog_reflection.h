@@ -19,6 +19,7 @@ ReflectionDefinition_O(MsgLog::QueryMsgOnlineAsyncParam,
     end_msg_id_,
     reverse_,
     need_save_to_local_,
+    replace_local_message_,
     auto_download_attachment_,
     msg_type_list_,
     is_exclusion_type_);
