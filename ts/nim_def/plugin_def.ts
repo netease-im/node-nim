@@ -4,9 +4,9 @@ export type ChatRoomRequestEnterCallback = (rescode: NIMResCode, result: string)
 export type QChatRequestLinkAddressCallback = (rescode: NIMResCode, result: Array<string>) => void
 
 export interface NIMPluginAPI {
-    InitEventHandlers(): void
+  InitEventHandlers (): void
 
-    ChatRoomRequestEnterAsync(room_id: number, cb: ChatRoomRequestEnterCallback | null, ext: string): void
+  ChatRoomRequestEnterAsync (room_id: number, cb: ChatRoomRequestEnterCallback | null, ext: string): void
 
-    QChatRequestLinkAddress(ip_version: number, cb: QChatRequestLinkAddressCallback | null, ext: string): void
+  QChatRequestLinkAddress (ip_version: number, cb: QChatRequestLinkAddressCallback | null, ext: string): void
 }

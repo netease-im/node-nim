@@ -28,7 +28,7 @@
             "ts/qchat_def"
         ],
         "entryPointStrategy": "expand",
-        "readme": "none",
+        "readme": "README.md",
         "out": "doc",
         "sort": "source-order",
         "excludeProtected": "true",

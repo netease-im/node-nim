@@ -1,132 +1,132 @@
 import {
-    NIMQChatChannelType,
-    NIMQChatChannelViewMode,
-    NIMQChatChannelSyncMode,
-    NIMQChatChannelIDInfo,
-    NIMQChatSubscribeType,
-    NIMQChatSubscribeOpeType,
-    NIMQChatChannelWhiteBlackType,
-    NIMQChatChannelWhiteBlackOpeType,
-    NIMQChatSearchOrder,
-    NIMQChatChannelSearchSort,
-    QChatBaseResp,
-    QChatBusinessAntiSpamInfo,
-    QChatPageInfo,
-    QChatMemberInfo,
-    QChatServerRoleInfo,
-    NIMQChatUnreadInfo,
-    NIMResCode,
-    NIMQChatChannelVisitorMode
+  NIMQChatChannelType,
+  NIMQChatChannelViewMode,
+  NIMQChatChannelSyncMode,
+  NIMQChatChannelIDInfo,
+  NIMQChatSubscribeType,
+  NIMQChatSubscribeOpeType,
+  NIMQChatChannelWhiteBlackType,
+  NIMQChatChannelWhiteBlackOpeType,
+  NIMQChatSearchOrder,
+  NIMQChatChannelSearchSort,
+  QChatBaseResp,
+  QChatBusinessAntiSpamInfo,
+  QChatPageInfo,
+  QChatMemberInfo,
+  QChatServerRoleInfo,
+  NIMQChatUnreadInfo,
+  NIMResCode,
+  NIMQChatChannelVisitorMode
 } from './public_def'
 import { QChatServerGetMembersPageResp, QChatServerGetMembersResp, ServerGetMembersCallback } from './server_def'
 
 export interface QChatChannelInfo {
-    /** server id */
-    server_id?: string
-    /** channel id */
-    channel_id?: string
-    /** 名称 */
-    name?: string
-    /** 主题 */
-    topic?: string
-    /** 自定义字段 */
-    custom?: string
-    /** 频道类型，0:消息频道 */
-    type?: NIMQChatChannelType
-    /** 拥有者 */
-    owner?: string
-    /** 查看模式，只有在category_id为0或sync_mode为kNIMQChatChannelSyncModeNoSync时有效 */
-    view_mode?: NIMQChatChannelViewMode
-    /** 圈组频道游客访问模式 */
-    visitor_mode?: NIMQChatChannelVisitorMode
-    /** 有效标记，false:无效 true:有效 */
-    valid_flag?: boolean
-    /** 创建时间 */
-    create_time?: number
-    /** 更新时间 */
-    update_time?: number
-    /** 频道分组ID */
-    category_id?: string
-    /** 频道分组同步模式 */
-    sync_mode?: NIMQChatChannelSyncMode
-    /** 自定义排序权重值 */
-    reorder_weight?: number
+  /** server id */
+  server_id?: string
+  /** channel id */
+  channel_id?: string
+  /** 名称 */
+  name?: string
+  /** 主题 */
+  topic?: string
+  /** 自定义字段 */
+  custom?: string
+  /** 频道类型，0:消息频道 */
+  type?: NIMQChatChannelType
+  /** 拥有者 */
+  owner?: string
+  /** 查看模式，只有在category_id为0或sync_mode为kNIMQChatChannelSyncModeNoSync时有效 */
+  view_mode?: NIMQChatChannelViewMode
+  /** 圈组频道游客访问模式 */
+  visitor_mode?: NIMQChatChannelVisitorMode
+  /** 有效标记，false:无效 true:有效 */
+  valid_flag?: boolean
+  /** 创建时间 */
+  create_time?: number
+  /** 更新时间 */
+  update_time?: number
+  /** 频道分组ID */
+  category_id?: string
+  /** 频道分组同步模式 */
+  sync_mode?: NIMQChatChannelSyncMode
+  /** 自定义排序权重值 */
+  reorder_weight?: number
 }
 
 export interface QChatChannelRTCAudioInfo {
-    /** 音频属性 ["HIGH_QUALITY_STEREO","HIGH_QUALITY","STANDARD_EXTEND"] */
-    profile?: string
-    /** 音频应用场景 ["DEFAULT","SPEECH","MUSIC", "CHATROOM"] */
-    scenario?: string
+  /** 音频属性 ["HIGH_QUALITY_STEREO","HIGH_QUALITY","STANDARD_EXTEND"] */
+  profile?: string
+  /** 音频应用场景 ["DEFAULT","SPEECH","MUSIC", "CHATROOM"] */
+  scenario?: string
 }
 
 export interface QChatChannelRTCVideoInfo {
-    /** 分辨率宽 */
-    width?: number
-    /** 分辨率高 */
-    height?: number
-    /** 帧率 */
-    fps?: number
+  /** 分辨率宽 */
+  width?: number
+  /** 分辨率高 */
+  height?: number
+  /** 帧率 */
+  fps?: number
 }
 
 export interface QChatChannelRTCInfo {
-    /** 在线人数限制 */
-    limit?: number
-    /** 音频配置 */
-    audio?: QChatChannelRTCAudioInfo
-    /** 视频配置 */
-    video?: QChatChannelRTCVideoInfo
+  /** 在线人数限制 */
+  limit?: number
+  /** 音频配置 */
+  audio?: QChatChannelRTCAudioInfo
+  /** 视频配置 */
+  video?: QChatChannelRTCVideoInfo
 }
 
 export interface QChatChannelCategoryInfo {
-    /** server id */
-    server_id?: string
-    /** category id */
-    category_id?: string
-    /** 名称 */
-    name?: string
-    /** 自定义字段 */
-    custom?: string
-    /** 拥有者 */
-    owner?: string
-    /** 查看模式 */
-    view_mode?: NIMQChatChannelViewMode
-    /** 有效标记，false:无效 true:有效 */
-    valid_flag?: boolean
-    /** 创建时间 */
-    create_time?: number
-    /** 更新时间 */
-    update_time?: number
-    /** 频道数量 */
-    channel_number?: number
+  /** server id */
+  server_id?: string
+  /** category id */
+  category_id?: string
+  /** 名称 */
+  name?: string
+  /** 自定义字段 */
+  custom?: string
+  /** 拥有者 */
+  owner?: string
+  /** 查看模式 */
+  view_mode?: NIMQChatChannelViewMode
+  /** 有效标记，false:无效 true:有效 */
+  valid_flag?: boolean
+  /** 创建时间 */
+  create_time?: number
+  /** 更新时间 */
+  update_time?: number
+  /** 频道数量 */
+  channel_number?: number
 }
 
 export interface QChatChannelSubscribeResp {
-    /** 操作结果, 参考NIMResCode */
-    res_code?: NIMResCode
-    /** 失败列表 */
-    failed_channels?: Array<NIMQChatChannelIDInfo>
+  /** 操作结果, 参考NIMResCode */
+  res_code?: NIMResCode
+  /** 失败列表 */
+  failed_channels?: Array<NIMQChatChannelIDInfo>
 }
 
 export interface QChatChannelSubscribeAsVisitorResp {
-    /** 操作结果, 参考NIMResCode */
-    res_code?: NIMResCode
-    /** 失败列表 */
-    failed_channels?: Array<NIMQChatChannelIDInfo>
+  /** 操作结果, 参考NIMResCode */
+  res_code?: NIMResCode
+  /** 失败列表 */
+  failed_channels?: Array<NIMQChatChannelIDInfo>
 }
 
 export interface QChatChannelQueryUnreadInfoResp {
-    /** 操作结果, 参考NIMResCode */
-    res_code?: NIMResCode
-    /** 未读信息列表 */
-    unread_infos?: Array<NIMQChatUnreadInfo>
+  /** 操作结果, 参考NIMResCode */
+  res_code?: NIMResCode
+  /** 未读信息列表 */
+  unread_infos?: Array<NIMQChatUnreadInfo>
 }
 
 export interface QChatChannelCreateResp {
-    /** 操作结果, 参考NIMResCode */
-    res_code?: NIMResCode
-    /** 频道信息 */
-    channel_info?: QChatChannelInfo
+  /** 操作结果, 参考NIMResCode */
+  res_code?: NIMResCode
+  /** 频道信息 */
+  channel_info?: QChatChannelInfo
 }
 
 export type QChatChannelDeleteResp = QChatBaseResp
@@ -136,69 +136,70 @@ export type QChatChannelUpdateResp = QChatChannelCreateResp
 export type QChatChannelUpdateCategoryInfoResp = QChatChannelCreateResp
 
 export interface QChatChannelGetChannelsResp {
-    /** 操作结果, 参考NIMResCode */
-    res_code?: NIMResCode
-    /** 频道列表 */
-    channel_list?: Array<QChatChannelInfo>
+  /** 操作结果, 参考NIMResCode */
+  res_code?: NIMResCode
+  /** 频道列表 */
+  channel_list?: Array<QChatChannelInfo>
 }
 
 export interface QChatChannelGetChannelsPageResp {
-    /** 操作结果, 参考NIMResCode */
-    res_code?: NIMResCode
-    /** 分页信息 */
-    page_info?: QChatPageInfo
-    /** 频道列表 */
-    channel_list?: Array<QChatChannelInfo>
+  /** 操作结果, 参考NIMResCode */
+  res_code?: NIMResCode
+  /** 分页信息 */
+  page_info?: QChatPageInfo
+  /** 频道列表 */
+  channel_list?: Array<QChatChannelInfo>
 }
 
 export interface QChatChannelUnreadResp {
-    /** 未读数信息 */
-    unread_infos?: Array<NIMQChatUnreadInfo>
+  /** 未读数信息 */
+  unread_infos?: Array<NIMQChatUnreadInfo>
 }
 
 export type QChatChannelUpdateWhiteBlackRoleResp = QChatBaseResp
 export type QChatChannelUpdateWhiteBlackMembersResp = QChatBaseResp
 
 export interface QChatChannelGetWhiteBlackRolesPageResp {
-    /** 操作结果, 参考NIMResCode */
-    res_code?: NIMResCode
-    /** 分页信息 */
-    page_info?: QChatPageInfo
-    /** 身份组列表 */
-    roles?: Array<QChatServerRoleInfo>
+  /** 操作结果, 参考NIMResCode */
+  res_code?: NIMResCode
+  /** 分页信息 */
+  page_info?: QChatPageInfo
+  /** 身份组列表 */
+  roles?: Array<QChatServerRoleInfo>
 }
 
 export interface QChatChannelGetWhiteBlackMembersPageResp {
-    /** 操作结果, 参考NIMResCode */
-    res_code?: NIMResCode
-    /** 分页信息 */
-    page_info?: QChatPageInfo
-    /** 身份组列表 */
-    members?: Array<QChatMemberInfo>
+  /** 操作结果, 参考NIMResCode */
+  res_code?: NIMResCode
+  /** 分页信息 */
+  page_info?: QChatPageInfo
+  /** 身份组列表 */
+  members?: Array<QChatMemberInfo>
 }
 
 export interface QChatChannelGetExistingWhiteBlackRolesResp {
-    /** 操作结果, 参考NIMResCode */
-    res_code?: NIMResCode
-    /** 身份组列表 */
-    roles?: Array<QChatServerRoleInfo>
+  /** 操作结果, 参考NIMResCode */
+  res_code?: NIMResCode
+  /** 身份组列表 */
+  roles?: Array<QChatServerRoleInfo>
 }
 
 export interface QChatChannelGetExistingWhiteBlackMembersResp {
-    /** 操作结果, 参考NIMResCode */
-    res_code?: NIMResCode
-    /** 身份组列表，结果中不包含成员有效属性 vaild_flag */
-    members?: Array<QChatMemberInfo>
+  /** 操作结果, 参考NIMResCode */
+  res_code?: NIMResCode
+  /** 身份组列表，结果中不包含成员有效属性 vaild_flag */
+  members?: Array<QChatMemberInfo>
 }
+
 export type QChatChannelGetMembersPageResp = QChatServerGetMembersPageResp
 export type QChatChannelSearchPageResp = QChatChannelGetChannelsPageResp
 export type QChatChannelMemberSearchResp = QChatServerGetMembersResp
 
 export interface QChatChannelCategoryCreateResp {
-    /** 操作结果, 参考NIMResCode */
-    res_code?: NIMResCode
-    /** 分类信息 */
-    category_info?: QChatChannelCategoryInfo
+  /** 操作结果, 参考NIMResCode */
+  res_code?: NIMResCode
+  /** 分类信息 */
+  category_info?: QChatChannelCategoryInfo
 }
 
 export type QChatChannelCategoryRemoveResp = QChatBaseResp
@@ -206,19 +207,19 @@ export type QChatChannelCategoryRemoveResp = QChatBaseResp
 export type QChatChannelCategoryUpdateResp = QChatChannelCategoryCreateResp
 
 export interface QChatChannelGetCategoriesByIDResp {
-    /** 操作结果, 参考NIMResCode */
-    res_code?: NIMResCode
-    /** 频道分组信息列表 */
-    categories?: Array<QChatChannelCategoryInfo>
+  /** 操作结果, 参考NIMResCode */
+  res_code?: NIMResCode
+  /** 频道分组信息列表 */
+  categories?: Array<QChatChannelCategoryInfo>
 }
 
 export interface QChatChannelGetCategoriesPageResp {
-    /** 操作结果, 参考NIMResCode */
-    res_code?: NIMResCode
-    /** 分页信息 */
-    page_info?: QChatPageInfo
-    /** 分类信息 */
-    categories?: Array<QChatChannelCategoryInfo>
+  /** 操作结果, 参考NIMResCode */
+  res_code?: NIMResCode
+  /** 分页信息 */
+  page_info?: QChatPageInfo
+  /** 分类信息 */
+  categories?: Array<QChatChannelCategoryInfo>
 }
 
 export type QChatChannelGetCategoryChannelsPageResp = QChatChannelGetChannelsPageResp
@@ -226,53 +227,53 @@ export type QChatChannelGetCategoryChannelsPageResp = QChatChannelGetChannelsPag
 export type QChatChannelCategoryUpdateWhiteBlackRoleResp = QChatBaseResp
 
 export interface QChatChannelCategoryGetWhiteBlackRolesPageResp {
-    /** 操作结果, 参考NIMResCode */
-    res_code?: NIMResCode
-    /** 分页信息 */
-    page_info?: QChatPageInfo
-    /** 身份组列表 */
-    roles?: Array<QChatServerRoleInfo>
+  /** 操作结果, 参考NIMResCode */
+  res_code?: NIMResCode
+  /** 分页信息 */
+  page_info?: QChatPageInfo
+  /** 身份组列表 */
+  roles?: Array<QChatServerRoleInfo>
 }
 
 export interface QChatChannelCategoryGetExistingWhiteBlackRolesResp {
-    /** 操作结果, 参考NIMResCode */
-    res_code?: NIMResCode
-    /** 身份组列表 */
-    roles?: Array<QChatServerRoleInfo>
+  /** 操作结果, 参考NIMResCode */
+  res_code?: NIMResCode
+  /** 身份组列表 */
+  roles?: Array<QChatServerRoleInfo>
 }
 
 export type QChatChannelCategoryUpdateWhiteBlackMembersResp = QChatBaseResp
 
 export interface QChatChannelCategoryGetWhiteBlackMembersPageResp {
-    /** 操作结果, 参考NIMResCode */
-    res_code?: NIMResCode
-    /** 分页信息 */
-    page_info?: QChatPageInfo
-    /** 成员列表 */
-    members?: Array<QChatMemberInfo>
+  /** 操作结果, 参考NIMResCode */
+  res_code?: NIMResCode
+  /** 分页信息 */
+  page_info?: QChatPageInfo
+  /** 成员列表 */
+  members?: Array<QChatMemberInfo>
 }
 
 export interface QChatChannelCategoryGetExistingWhiteBlackMembersResp {
-    /** 操作结果, 参考NIMResCode */
-    res_code?: NIMResCode
-    /** 成员列表 */
-    members?: Array<QChatMemberInfo>
+  /** 操作结果, 参考NIMResCode */
+  res_code?: NIMResCode
+  /** 成员列表 */
+  members?: Array<QChatMemberInfo>
 }
 
 export type QChatChannelUpdateRTCInfoResp = QChatBaseResp
 
 export interface QChatChannelGetRTCInfoResp {
-    /** 操作结果, 参考NIMResCode */
-    res_code?: NIMResCode
-    /** RTC信息 */
-    rtc_info?: QChatChannelRTCInfo
+  /** 操作结果, 参考NIMResCode */
+  res_code?: NIMResCode
+  /** RTC信息 */
+  rtc_info?: QChatChannelRTCInfo
 }
 
 export interface QChatChannelGetRTCOnlineMembersResp {
-    /** 操作结果, 参考NIMResCode */
-    res_code?: NIMResCode
-    /** 成员列表 */
-    members?: Array<QChatMemberInfo>
+  /** 操作结果, 参考NIMResCode */
+  res_code?: NIMResCode
+  /** 成员列表 */
+  members?: Array<QChatMemberInfo>
 }
 
 /** 未读信息回调 */
@@ -346,436 +347,436 @@ export type ChannelGetRTCOnlineMembersCallback = (resp: QChatChannelGetRTCOnline
 
 /** @interface QChatChannelSubscribeParam */
 export interface QChatChannelSubscribeParam {
-    /** @internal */
-    cb?: ChannelSubscribeCallback
-    /** 操作类型 */
-    ope_type?: NIMQChatSubscribeOpeType
-    /** 订阅类型 */
-    sub_type?: NIMQChatSubscribeType
-    /** ID 列表 */
-    id_infos?: Array<NIMQChatChannelIDInfo>
+  /** @internal */
+  cb?: ChannelSubscribeCallback
+  /** 操作类型 */
+  ope_type?: NIMQChatSubscribeOpeType
+  /** 订阅类型 */
+  sub_type?: NIMQChatSubscribeType
+  /** ID 列表 */
+  id_infos?: Array<NIMQChatChannelIDInfo>
 }
 
 /** @interface QChatChannelSubscribeAsVisitorParam */
 export interface QChatChannelSubscribeAsVisitorParam {
-    /** @internal */
-    cb?: ChannelSubscribeAsVisitorCallback
-    /** 操作类型 */
-    ope_type?: NIMQChatSubscribeOpeType
-    /** ID 列表 */
-    id_infos?: Array<NIMQChatChannelIDInfo>
+  /** @internal */
+  cb?: ChannelSubscribeAsVisitorCallback
+  /** 操作类型 */
+  ope_type?: NIMQChatSubscribeOpeType
+  /** ID 列表 */
+  id_infos?: Array<NIMQChatChannelIDInfo>
 }
 
 /** @interface QChatChannelQueryUnreadInfoParam */
 export interface QChatChannelQueryUnreadInfoParam {
-    /** @internal */
-    cb?: ChannelQueryUnreadInfoCallback
-    /** 待查询的ID列表 */
-    id_infos?: Array<NIMQChatChannelIDInfo>
+  /** @internal */
+  cb?: ChannelQueryUnreadInfoCallback
+  /** 待查询的ID列表 */
+  id_infos?: Array<NIMQChatChannelIDInfo>
 }
 
 /** @interface QChatChannelCreateParam */
 export interface QChatChannelCreateParam {
-    /** @internal */
-    cb?: ChannelCreateCallback
-    /** 频道信息 */
-    channel_info?: QChatChannelInfo
-    /** 反垃圾信息 */
-    anti_spam_info?: QChatBusinessAntiSpamInfo
+  /** @internal */
+  cb?: ChannelCreateCallback
+  /** 频道信息 */
+  channel_info?: QChatChannelInfo
+  /** 反垃圾信息 */
+  anti_spam_info?: QChatBusinessAntiSpamInfo
 }
 
 /** @interface QChatChannelDeleteParam */
 export interface QChatChannelDeleteParam {
-    /** @internal */
-    cb?: ChannelDeleteCallback
-    /** 频道ID */
-    channel_id?: string
+  /** @internal */
+  cb?: ChannelDeleteCallback
+  /** 频道ID */
+  channel_id?: string
 }
 
 /** @interface QChatChannelUpdateParam */
 export interface QChatChannelUpdateParam {
-    /** @internal */
-    cb?: ChannelUpdateCallback
-    /** 频道ID */
-    channel_id?: string
-    /** 名称 */
-    name?: string
-    /** 主题 */
-    topic?: string
-    /** 自定义字段 */
-    custom?: string
-    /** 查看模式 */
-    view_mode?: NIMQChatChannelViewMode
-    /** 圈组频道游客访问模式 */
-    visitor_mode?: NIMQChatChannelVisitorMode
-    /** 反垃圾信息 */
-    anti_spam_info?: QChatBusinessAntiSpamInfo
+  /** @internal */
+  cb?: ChannelUpdateCallback
+  /** 频道ID */
+  channel_id?: string
+  /** 名称 */
+  name?: string
+  /** 主题 */
+  topic?: string
+  /** 自定义字段 */
+  custom?: string
+  /** 查看模式 */
+  view_mode?: NIMQChatChannelViewMode
+  /** 圈组频道游客访问模式 */
+  visitor_mode?: NIMQChatChannelVisitorMode
+  /** 反垃圾信息 */
+  anti_spam_info?: QChatBusinessAntiSpamInfo
 }
 
 /** @interface QChatChannelUpdateCategoryInfoParam */
 export interface QChatChannelUpdateCategoryInfoParam {
-    /** @internal */
-    cb?: ChannelUpdateCategoryInfoCallback
-    /** 频道ID */
-    channel_id?: string
-    /** 频道分组ID */
-    category_id?: string
-    /** 频道分组同步模式 */
-    sync_mode?: NIMQChatChannelSyncMode
+  /** @internal */
+  cb?: ChannelUpdateCategoryInfoCallback
+  /** 频道ID */
+  channel_id?: string
+  /** 频道分组ID */
+  category_id?: string
+  /** 频道分组同步模式 */
+  sync_mode?: NIMQChatChannelSyncMode
 }
 
 /** @interface QChatChannelGetChannelsParam */
 export interface QChatChannelGetChannelsParam {
-    /** @internal */
-    cb?: GetChannelsCallback
-    /** 频道id列表 */
-    channel_ids?: Array<string>
+  /** @internal */
+  cb?: GetChannelsCallback
+  /** 频道id列表 */
+  channel_ids?: Array<string>
 }
 
 /** @interface QChatChannelGetChannelsPageParam */
 export interface QChatChannelGetChannelsPageParam {
-    /** @internal */
-    cb?: GetChannelsPageCallback
-    /** 服务器ID */
-    server_id?: string
-    /** 时间戳 */
-    timestamp?: number
-    /** 查询条数 */
-    limit?: number
+  /** @internal */
+  cb?: GetChannelsPageCallback
+  /** 服务器ID */
+  server_id?: string
+  /** 时间戳 */
+  timestamp?: number
+  /** 查询条数 */
+  limit?: number
 }
 
 /** @interface QChatChannelGetMembersPageParam */
 export interface QChatChannelGetMembersPageParam {
-    /** @internal */
-    cb?: ChannelGetMembersPageCallback
-    /** 服务器ID */
-    server_id?: string
-    /** 频道ID */
-    channel_id?: string
-    /** 时间戳 */
-    timestamp?: number
-    /** 查询条数 */
-    limit?: number
+  /** @internal */
+  cb?: ChannelGetMembersPageCallback
+  /** 服务器ID */
+  server_id?: string
+  /** 频道ID */
+  channel_id?: string
+  /** 时间戳 */
+  timestamp?: number
+  /** 查询条数 */
+  limit?: number
 }
 
 /** @interface QChatChannelUpdateWhiteBlackRoleParam */
 export interface QChatChannelUpdateWhiteBlackRoleParam {
-    /** @internal */
-    cb?: UpdateWhiteBlackRoleCallback
-    /** 服务器ID */
-    server_id?: string
-    /** 频道ID */
-    channel_id?: string
-    /** 身份组id */
-    role_id?: string
-    /** 白/黑名单类型 */
-    type?: NIMQChatChannelWhiteBlackType
-    /** 操作类型 */
-    ope_type?: NIMQChatChannelWhiteBlackOpeType
+  /** @internal */
+  cb?: UpdateWhiteBlackRoleCallback
+  /** 服务器ID */
+  server_id?: string
+  /** 频道ID */
+  channel_id?: string
+  /** 身份组id */
+  role_id?: string
+  /** 白/黑名单类型 */
+  type?: NIMQChatChannelWhiteBlackType
+  /** 操作类型 */
+  ope_type?: NIMQChatChannelWhiteBlackOpeType
 }
 
 /** @interface QChatChannelUpdateWhiteBlackMembersParam */
 export interface QChatChannelUpdateWhiteBlackMembersParam {
-    /** @internal */
-    cb?: UpdateWhiteBlackMembersCallback
-    /** 服务器ID */
-    server_id?: string
-    /** 频道ID */
-    channel_id?: string
-    /** 用户accid列表 */
-    accids?: Array<string>
-    /** 白/黑名单类型 */
-    type?: NIMQChatChannelWhiteBlackType
-    /** 操作类型 */
-    ope_type?: NIMQChatChannelWhiteBlackOpeType
+  /** @internal */
+  cb?: UpdateWhiteBlackMembersCallback
+  /** 服务器ID */
+  server_id?: string
+  /** 频道ID */
+  channel_id?: string
+  /** 用户accid列表 */
+  accids?: Array<string>
+  /** 白/黑名单类型 */
+  type?: NIMQChatChannelWhiteBlackType
+  /** 操作类型 */
+  ope_type?: NIMQChatChannelWhiteBlackOpeType
 }
 
 /** @interface QChatChannelGetWhiteBlackRolesPageParam */
 export interface QChatChannelGetWhiteBlackRolesPageParam {
-    /** @internal */
-    cb?: GetWhiteBlackRolesPageCallback
-    /** 服务器ID */
-    server_id?: string
-    /** 频道ID */
-    channel_id?: string
-    /** 白/黑名单类型 */
-    type?: NIMQChatChannelWhiteBlackType
-    /** 时间戳 */
-    timestamp?: number
-    /** 查询条数 */
-    limit?: number
+  /** @internal */
+  cb?: GetWhiteBlackRolesPageCallback
+  /** 服务器ID */
+  server_id?: string
+  /** 频道ID */
+  channel_id?: string
+  /** 白/黑名单类型 */
+  type?: NIMQChatChannelWhiteBlackType
+  /** 时间戳 */
+  timestamp?: number
+  /** 查询条数 */
+  limit?: number
 }
 
 /** @interface QChatChannelGetWhiteBlackMembersPageParam */
 export interface QChatChannelGetWhiteBlackMembersPageParam {
-    /** @internal */
-    cb?: GetWhiteBlackMembersPageCallback
-    /** 服务器ID */
-    server_id?: string
-    /** 频道ID */
-    channel_id?: string
-    /** 白/黑名单类型 */
-    type?: NIMQChatChannelWhiteBlackType
-    /** 时间戳 */
-    timestamp?: number
-    /** 查询条数 */
-    limit?: number
+  /** @internal */
+  cb?: GetWhiteBlackMembersPageCallback
+  /** 服务器ID */
+  server_id?: string
+  /** 频道ID */
+  channel_id?: string
+  /** 白/黑名单类型 */
+  type?: NIMQChatChannelWhiteBlackType
+  /** 时间戳 */
+  timestamp?: number
+  /** 查询条数 */
+  limit?: number
 }
 
 /** @interface QChatChannelGetExistingWhiteBlackRolesParam */
 export interface QChatChannelGetExistingWhiteBlackRolesParam {
-    /** @internal */
-    cb?: GetExistingWhiteBlackRolesCallback
-    /** 服务器ID */
-    server_id?: string
-    /** 频道ID */
-    channel_id?: string
-    /** 白/黑名单类型 */
-    type?: NIMQChatChannelWhiteBlackType
-    /** 身份组id列表 */
-    role_ids?: Array<string>
+  /** @internal */
+  cb?: GetExistingWhiteBlackRolesCallback
+  /** 服务器ID */
+  server_id?: string
+  /** 频道ID */
+  channel_id?: string
+  /** 白/黑名单类型 */
+  type?: NIMQChatChannelWhiteBlackType
+  /** 身份组id列表 */
+  role_ids?: Array<string>
 }
 
 /** @interface QChatChannelGetExistingWhiteBlackMembersParam */
 export interface QChatChannelGetExistingWhiteBlackMembersParam {
-    /** @internal */
-    cb?: GetExistingWhiteBlackMembersCallback
-    /** 服务器ID */
-    server_id?: string
-    /** 频道ID */
-    channel_id?: string
-    /** 白/黑名单类型 */
-    type?: NIMQChatChannelWhiteBlackType
-    /** 用户accid列表 */
-    accids?: Array<string>
+  /** @internal */
+  cb?: GetExistingWhiteBlackMembersCallback
+  /** 服务器ID */
+  server_id?: string
+  /** 频道ID */
+  channel_id?: string
+  /** 白/黑名单类型 */
+  type?: NIMQChatChannelWhiteBlackType
+  /** 用户accid列表 */
+  accids?: Array<string>
 }
 
 /** @interface QChatChannelSearchPageParam */
 export interface QChatChannelSearchPageParam {
-    /** @internal */
-    cb?: ChannelSearchPageCallback
-    /** 服务器 id, 若为空则表示在所有服务器下可见频道中搜索 */
-    server_id?: string
-    /** 搜索内容 */
-    keyword?: string
-    /** 起始时间 */
-    start_time?: number
-    /** 结束时间 */
-    end_time?: number
-    /** 排序规则 */
-    order?: NIMQChatSearchOrder
-    /** 排序条件 */
-    sort?: NIMQChatChannelSearchSort
-    /** 查询条数 */
-    limit?: number
-    /** 查询游标, 查询的起始位置 */
-    cursor?: string
+  /** @internal */
+  cb?: ChannelSearchPageCallback
+  /** 服务器 id, 若为空则表示在所有服务器下可见频道中搜索 */
+  server_id?: string
+  /** 搜索内容 */
+  keyword?: string
+  /** 起始时间 */
+  start_time?: number
+  /** 结束时间 */
+  end_time?: number
+  /** 排序规则 */
+  order?: NIMQChatSearchOrder
+  /** 排序条件 */
+  sort?: NIMQChatChannelSearchSort
+  /** 查询条数 */
+  limit?: number
+  /** 查询游标, 查询的起始位置 */
+  cursor?: string
 }
 
 /** @interface QChatChannelMemberSearchParam */
 export interface QChatChannelMemberSearchParam {
-    /** @internal */
-    cb?: ChannelMemberSearchCallback
-    /** 服务器 id */
-    server_id?: string
-    /** 频道 id */
-    channel_id?: string
-    /** 搜索内容 */
-    keyword?: string
-    /** 查询条数 */
-    limit?: number
+  /** @internal */
+  cb?: ChannelMemberSearchCallback
+  /** 服务器 id */
+  server_id?: string
+  /** 频道 id */
+  channel_id?: string
+  /** 搜索内容 */
+  keyword?: string
+  /** 查询条数 */
+  limit?: number
 }
 
 /** @interface QChatChannelCategoryCreateParam */
 export interface QChatChannelCategoryCreateParam {
-    /** @internal */
-    cb?: ChannelCategoryCreateCallback
-    /** 服务器 id */
-    server_id?: string
-    /** 名称 */
-    name?: string
-    /** 自定义字段 */
-    custom?: string
-    /** 查看模式 */
-    view_mode?: NIMQChatChannelViewMode
+  /** @internal */
+  cb?: ChannelCategoryCreateCallback
+  /** 服务器 id */
+  server_id?: string
+  /** 名称 */
+  name?: string
+  /** 自定义字段 */
+  custom?: string
+  /** 查看模式 */
+  view_mode?: NIMQChatChannelViewMode
 }
 
 /** @interface QChatChannelCategoryRemoveParam */
 export interface QChatChannelCategoryRemoveParam {
-    /** @internal */
-    cb?: ChannelCategoryRemoveCallback
-    /** 频道分组 ID */
-    category_id?: string
+  /** @internal */
+  cb?: ChannelCategoryRemoveCallback
+  /** 频道分组 ID */
+  category_id?: string
 }
 
 /** @interface QChatChannelCategoryUpdateParam */
 export interface QChatChannelCategoryUpdateParam {
-    /** @internal */
-    cb?: ChannelCategoryUpdateCallback
-    /** 分组 id */
-    category_id?: string
-    /** 名称 */
-    name?: string
-    /** 自定义字段 */
-    custom?: string
-    /** 查看模式 */
-    view_mode?: NIMQChatChannelViewMode
+  /** @internal */
+  cb?: ChannelCategoryUpdateCallback
+  /** 分组 id */
+  category_id?: string
+  /** 名称 */
+  name?: string
+  /** 自定义字段 */
+  custom?: string
+  /** 查看模式 */
+  view_mode?: NIMQChatChannelViewMode
 }
 
 /** @interface QChatChannelGetCategoriesByIDParam */
 export interface QChatChannelGetCategoriesByIDParam {
-    /** @internal */
-    cb?: ChannelGetCategoriesByIDCallback
-    /** 分组ID列表 */
-    category_ids?: Array<string>
+  /** @internal */
+  cb?: ChannelGetCategoriesByIDCallback
+  /** 分组ID列表 */
+  category_ids?: Array<string>
 }
 
 /** @interface QChatChannelGetCategoriesPageParam */
 export interface QChatChannelGetCategoriesPageParam {
-    /** @internal */
-    cb?: ChannelGetCategoriesPageCallback
-    /** 服务器 id */
-    server_id?: string
-    /** 时间戳 */
-    timestamp?: number
-    /** 查询条数 */
-    limit?: number
+  /** @internal */
+  cb?: ChannelGetCategoriesPageCallback
+  /** 服务器 id */
+  server_id?: string
+  /** 时间戳 */
+  timestamp?: number
+  /** 查询条数 */
+  limit?: number
 }
 
 /** @interface QChatChannelGetCategoryChannelsPageParam */
 export interface QChatChannelGetCategoryChannelsPageParam {
-    /** @internal */
-    cb?: ChannelGetCategoryChannelsPageCallback
-    /** 服务器 id */
-    server_id?: string
-    /** 分组 id */
-    category_id?: string
-    /** 时间戳 */
-    timestamp?: number
-    /** 查询条数 */
-    limit?: number
+  /** @internal */
+  cb?: ChannelGetCategoryChannelsPageCallback
+  /** 服务器 id */
+  server_id?: string
+  /** 分组 id */
+  category_id?: string
+  /** 时间戳 */
+  timestamp?: number
+  /** 查询条数 */
+  limit?: number
 }
 
 /** @interface QChatChannelCategoryUpdateWhiteBlackRoleParam */
 export interface QChatChannelCategoryUpdateWhiteBlackRoleParam {
-    /** @internal */
-    cb?: ChannelCategoryUpdateWhiteBlackRoleCallback
-    /** 服务器 id */
-    server_id?: string
-    /** 分组 id */
-    category_id?: string
-    /** 身份组 id */
-    role_id?: string
-    /** 白/黑名单类型 */
-    type?: NIMQChatChannelWhiteBlackType
-    /** 操作类型 */
-    ope_type?: NIMQChatChannelWhiteBlackOpeType
+  /** @internal */
+  cb?: ChannelCategoryUpdateWhiteBlackRoleCallback
+  /** 服务器 id */
+  server_id?: string
+  /** 分组 id */
+  category_id?: string
+  /** 身份组 id */
+  role_id?: string
+  /** 白/黑名单类型 */
+  type?: NIMQChatChannelWhiteBlackType
+  /** 操作类型 */
+  ope_type?: NIMQChatChannelWhiteBlackOpeType
 }
 
 /** @interface QChatChannelCategoryGetWhiteBlackRolesPageParam */
 export interface QChatChannelCategoryGetWhiteBlackRolesPageParam {
-    /** 获取频道分组白/黑名单身份组回调 */
-    cb?: ChannelCategoryGetWhiteBlackRolesPageCallback
-    /** 服务器 ID */
-    server_id?: string
-    /** 分组ID */
-    category_id?: string
-    /** 白/黑名单类型 */
-    type?: NIMQChatChannelWhiteBlackType
-    /** 时间戳 */
-    timestamp?: number
-    /** 查询条数 */
-    limit?: number
+  /** 获取频道分组白/黑名单身份组回调 */
+  cb?: ChannelCategoryGetWhiteBlackRolesPageCallback
+  /** 服务器 ID */
+  server_id?: string
+  /** 分组ID */
+  category_id?: string
+  /** 白/黑名单类型 */
+  type?: NIMQChatChannelWhiteBlackType
+  /** 时间戳 */
+  timestamp?: number
+  /** 查询条数 */
+  limit?: number
 }
 
 /** @interface QChatChannelCategoryGetExistingWhiteBlackRolesParam */
 export interface QChatChannelCategoryGetExistingWhiteBlackRolesParam {
-    /** 获取频道分组白/黑名单身份组回调 */
-    cb?: ChannelCategoryGetExistingWhiteBlackRolesCallback
-    /** 服务器 ID */
-    server_id?: string
-    /** 分组ID */
-    category_id?: string
-    /** 白/黑名单类型 */
-    type?: NIMQChatChannelWhiteBlackType
-    /** 身份组ID列表 */
-    role_ids?: Array<string>
+  /** 获取频道分组白/黑名单身份组回调 */
+  cb?: ChannelCategoryGetExistingWhiteBlackRolesCallback
+  /** 服务器 ID */
+  server_id?: string
+  /** 分组ID */
+  category_id?: string
+  /** 白/黑名单类型 */
+  type?: NIMQChatChannelWhiteBlackType
+  /** 身份组ID列表 */
+  role_ids?: Array<string>
 }
 
 /** @interface QChatChannelCategoryUpdateWhiteBlackMembersParam */
 export interface QChatChannelCategoryUpdateWhiteBlackMembersParam {
-    /** 更新频道分组白/黑名单成员回调 */
-    cb?: ChannelCategoryUpdateWhiteBlackMembersCallback
-    /** 服务器 ID */
-    server_id?: string
-    /** 分组ID */
-    category_id?: string
-    /** 成员ID列表 */
-    accids?: Array<string>
-    /** 白/黑名单类型 */
-    type?: NIMQChatChannelWhiteBlackType
-    /** 操作类型 */
-    ope_type?: NIMQChatChannelWhiteBlackOpeType
+  /** 更新频道分组白/黑名单成员回调 */
+  cb?: ChannelCategoryUpdateWhiteBlackMembersCallback
+  /** 服务器 ID */
+  server_id?: string
+  /** 分组ID */
+  category_id?: string
+  /** 成员ID列表 */
+  accids?: Array<string>
+  /** 白/黑名单类型 */
+  type?: NIMQChatChannelWhiteBlackType
+  /** 操作类型 */
+  ope_type?: NIMQChatChannelWhiteBlackOpeType
 }
 
 /** @interface QChatChannelCategoryGetWhiteBlackMembersPageParam */
 export interface QChatChannelCategoryGetWhiteBlackMembersPageParam {
-    /** 获取频道分组白/黑名单成员回调 */
-    cb?: ChannelCategoryGetWhiteBlackMembersPageCallback
-    /** 服务器 ID */
-    server_id?: string
-    /** 分组ID */
-    category_id?: string
-    /** 白/黑名单类型 */
-    type?: NIMQChatChannelWhiteBlackType
-    /** 时间戳 */
-    timestamp?: number
-    /** 查询条数 */
-    limit?: number
+  /** 获取频道分组白/黑名单成员回调 */
+  cb?: ChannelCategoryGetWhiteBlackMembersPageCallback
+  /** 服务器 ID */
+  server_id?: string
+  /** 分组ID */
+  category_id?: string
+  /** 白/黑名单类型 */
+  type?: NIMQChatChannelWhiteBlackType
+  /** 时间戳 */
+  timestamp?: number
+  /** 查询条数 */
+  limit?: number
 }
 
 /** @interface QChatChannelCategoryGetExistingWhiteBlackMembersParam */
 export interface QChatChannelCategoryGetExistingWhiteBlackMembersParam {
-    /** 获取频道分组白/黑名单成员回调 */
-    cb?: ChannelCategoryGetExistingWhiteBlackMembersCallback
-    /** 服务器 ID */
-    server_id?: string
-    /** 分组ID */
-    category_id?: string
-    /** 白/黑名单类型 */
-    type?: NIMQChatChannelWhiteBlackType
-    /** 成员ID列表 */
-    accids?: Array<string>
+  /** 获取频道分组白/黑名单成员回调 */
+  cb?: ChannelCategoryGetExistingWhiteBlackMembersCallback
+  /** 服务器 ID */
+  server_id?: string
+  /** 分组ID */
+  category_id?: string
+  /** 白/黑名单类型 */
+  type?: NIMQChatChannelWhiteBlackType
+  /** 成员ID列表 */
+  accids?: Array<string>
 }
 
 /** @interface QChatChannelUpdateRTCInfoParam */
 export interface QChatChannelUpdateRTCInfoParam {
-    /** 修改RTC频道参数回调 */
-    cb?: ChannelUpdateRTCInfoCallback
-    /** 服务器 ID */
-    server_id?: string
-    /** 频道 ID */
-    channel_id?: string
-    /** RTC频道参数 */
-    rtc_info?: QChatChannelRTCInfo
+  /** 修改RTC频道参数回调 */
+  cb?: ChannelUpdateRTCInfoCallback
+  /** 服务器 ID */
+  server_id?: string
+  /** 频道 ID */
+  channel_id?: string
+  /** RTC频道参数 */
+  rtc_info?: QChatChannelRTCInfo
 }
 
 /** @interface QChatChannelGetRTCInfoParam */
 export interface QChatChannelGetRTCInfoParam {
-    /** 查询RTC频道参数回调 */
-    cb?: ChannelGetRTCInfoCallback
-    /** 服务器 ID */
-    server_id?: string
-    /** 频道 ID */
-    channel_id?: string
+  /** 查询RTC频道参数回调 */
+  cb?: ChannelGetRTCInfoCallback
+  /** 服务器 ID */
+  server_id?: string
+  /** 频道 ID */
+  channel_id?: string
 }
 
 /** @interface QChatChannelGetRTCOnlineMembersParam */
 export interface QChatChannelGetRTCOnlineMembersParam {
-    /** 获取RTC在线成员列表回调 */
-    cb?: ChannelGetRTCOnlineMembersCallback
-    /** 服务器 ID */
-    server_id?: string
-    /** 频道 ID */
-    channel_id?: string
+  /** 获取RTC在线成员列表回调 */
+  cb?: ChannelGetRTCOnlineMembersCallback
+  /** 服务器 ID */
+  server_id?: string
+  /** 频道 ID */
+  channel_id?: string
 }

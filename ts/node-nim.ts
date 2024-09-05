@@ -25,34 +25,35 @@ import { QChatMessageModule } from './qchat/message'
 import { QChatSystemNotificationModule } from './qchat/system_notification'
 import { QChatAttachmentModule } from './qchat/attachment'
 import { QChatRoleModule } from './qchat/role'
+
 export {
-    NIMClient,
-    NIMDataSync,
-    NIMFriend,
-    NIMGlobal,
-    NIMMsgLog,
-    NIMNOS,
-    NIMOnlineSession,
-    NIMPassThroughProxy,
-    NIMSession,
-    NIMSubscribeEvent,
-    NIMSuperTeam,
-    NIMSysMsg,
-    NIMTalk,
-    NIMTeam,
-    NIMTool,
-    NIMUser,
-    NIMPlugin,
-    NIMTalkEx,
-    ChatRoomModule,
-    QChatInstanceModule,
-    QChatServerModule,
-    QChatChannelModule,
-    QChatChannelCategoryModule,
-    QChatMessageModule,
-    QChatSystemNotificationModule,
-    QChatAttachmentModule,
-    QChatRoleModule
+  NIMClient,
+  NIMDataSync,
+  NIMFriend,
+  NIMGlobal,
+  NIMMsgLog,
+  NIMNOS,
+  NIMOnlineSession,
+  NIMPassThroughProxy,
+  NIMSession,
+  NIMSubscribeEvent,
+  NIMSuperTeam,
+  NIMSysMsg,
+  NIMTalk,
+  NIMTeam,
+  NIMTool,
+  NIMUser,
+  NIMPlugin,
+  NIMTalkEx,
+  ChatRoomModule,
+  QChatInstanceModule,
+  QChatServerModule,
+  QChatChannelModule,
+  QChatChannelCategoryModule,
+  QChatMessageModule,
+  QChatSystemNotificationModule,
+  QChatAttachmentModule,
+  QChatRoleModule
 }
 export * from './nim_def/client_def'
 export * from './nim_def/data_sync_def'
@@ -82,66 +83,90 @@ export * from './qchat_def/attachment_def'
 export * from './qchat_def/role_def'
 
 export class NIM {
-    client: NIMClient = new NIMClient()
-    dataSync: NIMDataSync = new NIMDataSync()
-    friend: NIMFriend = new NIMFriend()
-    global: NIMGlobal = new NIMGlobal()
-    msgLog: NIMMsgLog = new NIMMsgLog()
-    nos: NIMNOS = new NIMNOS()
-    onlineSession: NIMOnlineSession = new NIMOnlineSession()
-    passThroughProxy: NIMPassThroughProxy = new NIMPassThroughProxy()
-    session: NIMSession = new NIMSession()
-    subscribeEvent: NIMSubscribeEvent = new NIMSubscribeEvent()
-    superTeam: NIMSuperTeam = new NIMSuperTeam()
-    sysMsg: NIMSysMsg = new NIMSysMsg()
-    talk: NIMTalk = new NIMTalk()
-    team: NIMTeam = new NIMTeam()
-    tool: NIMTool = new NIMTool()
-    user: NIMUser = new NIMUser()
-    plugin: NIMPlugin = new NIMPlugin()
-    talkEx: NIMTalkEx = new NIMTalkEx()
-    initEventHandlers(): void {
-        this.client.initEventHandlers()
-        this.dataSync.initEventHandlers()
-        this.friend.initEventHandlers()
-        this.global.initEventHandlers()
-        this.msgLog.initEventHandlers()
-        this.nos.initEventHandlers()
-        this.onlineSession.initEventHandlers()
-        this.passThroughProxy.initEventHandlers()
-        this.session.initEventHandlers()
-        this.subscribeEvent.initEventHandlers()
-        this.superTeam.initEventHandlers()
-        this.sysMsg.initEventHandlers()
-        this.talk.initEventHandlers()
-        this.team.initEventHandlers()
-        this.tool.initEventHandlers()
-        this.user.initEventHandlers()
-        this.plugin.initEventHandlers()
-        this.talkEx.initEventHandlers()
-    }
+  /** 客户端模块 */
+  client: NIMClient = new NIMClient()
+  /** 数据同步模块 */
+  dataSync: NIMDataSync = new NIMDataSync()
+  /** 好友模块 */
+  friend: NIMFriend = new NIMFriend()
+  /** 全局模块 */
+  global: NIMGlobal = new NIMGlobal()
+  /** 消息历史模块 */
+  msgLog: NIMMsgLog = new NIMMsgLog()
+  /** 云存储模块 */
+  nos: NIMNOS = new NIMNOS()
+  /** 云端会话模块 */
+  onlineSession: NIMOnlineSession = new NIMOnlineSession()
+  /** 透传代理模块 */
+  passThroughProxy: NIMPassThroughProxy = new NIMPassThroughProxy()
+  /** 本地会话模块 */
+  session: NIMSession = new NIMSession()
+  /** 订阅事件模块 */
+  subscribeEvent: NIMSubscribeEvent = new NIMSubscribeEvent()
+  /** 超大群模块 */
+  superTeam: NIMSuperTeam = new NIMSuperTeam()
+  /** 系统通知模块 */
+  sysMsg: NIMSysMsg = new NIMSysMsg()
+  /** 聊天模块 */
+  talk: NIMTalk = new NIMTalk()
+  /** 群组模块 */
+  team: NIMTeam = new NIMTeam()
+  /** 工具模块 */
+  tool: NIMTool = new NIMTool()
+  /** 用户模块 */
+  user: NIMUser = new NIMUser()
+  /** 插件模块 */
+  plugin: NIMPlugin = new NIMPlugin()
+  /** 聊天扩展模块 */
+  talkEx: NIMTalkEx = new NIMTalkEx()
+
+  /** 初始化事件处理 */
+  initEventHandlers (): void {
+    this.client.initEventHandlers()
+    this.dataSync.initEventHandlers()
+    this.friend.initEventHandlers()
+    this.global.initEventHandlers()
+    this.msgLog.initEventHandlers()
+    this.nos.initEventHandlers()
+    this.onlineSession.initEventHandlers()
+    this.passThroughProxy.initEventHandlers()
+    this.session.initEventHandlers()
+    this.subscribeEvent.initEventHandlers()
+    this.superTeam.initEventHandlers()
+    this.sysMsg.initEventHandlers()
+    this.talk.initEventHandlers()
+    this.team.initEventHandlers()
+    this.tool.initEventHandlers()
+    this.user.initEventHandlers()
+    this.plugin.initEventHandlers()
+    this.talkEx.initEventHandlers()
+  }
 }
+
 export class ChatRoom extends ChatRoomModule {}
+
 export class QChat {
-    instance: QChatInstanceModule = new QChatInstanceModule()
-    server: QChatServerModule = new QChatServerModule()
-    channel: QChatChannelModule = new QChatChannelModule()
-    channelCategory: QChatChannelCategoryModule = new QChatChannelCategoryModule()
-    message: QChatMessageModule = new QChatMessageModule()
-    systemNotification: QChatSystemNotificationModule = new QChatSystemNotificationModule()
-    attachment: QChatAttachmentModule = new QChatAttachmentModule()
-    role: QChatRoleModule = new QChatRoleModule()
-    initEventHandlers(): void {
-        this.instance.initEventHandlers()
-        this.server.initEventHandlers()
-        this.channel.initEventHandlers()
-        this.channelCategory.initEventHandlers()
-        this.message.initEventHandlers()
-        this.systemNotification.initEventHandlers()
-        this.attachment.initEventHandlers()
-        this.role.initEventHandlers()
-    }
+  instance: QChatInstanceModule = new QChatInstanceModule()
+  server: QChatServerModule = new QChatServerModule()
+  channel: QChatChannelModule = new QChatChannelModule()
+  channelCategory: QChatChannelCategoryModule = new QChatChannelCategoryModule()
+  message: QChatMessageModule = new QChatMessageModule()
+  systemNotification: QChatSystemNotificationModule = new QChatSystemNotificationModule()
+  attachment: QChatAttachmentModule = new QChatAttachmentModule()
+  role: QChatRoleModule = new QChatRoleModule()
+
+  initEventHandlers (): void {
+    this.instance.initEventHandlers()
+    this.server.initEventHandlers()
+    this.channel.initEventHandlers()
+    this.channelCategory.initEventHandlers()
+    this.message.initEventHandlers()
+    this.systemNotification.initEventHandlers()
+    this.attachment.initEventHandlers()
+    this.role.initEventHandlers()
+  }
 }
+
 export const nim = new NIM()
 export const chatroom = new ChatRoom()
 export const qchat = new QChat()

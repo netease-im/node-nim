@@ -113,7 +113,7 @@ npm install node-nim --save-dev --arch=arm64 --platform=linux
 
 ```cmake
 
-cmake -S . -B build
+cmake -Bbuild
 
 cmake --build build --config Release
 
@@ -123,51 +123,66 @@ cmake --build build --config Release
 
 ## 快速开始
 
-```ts
-import * as node_nim from 'node-nim'
-```
-
-### 初始化 SDK
+首先您需要导入 `node-nim` 模块：
 
 ```ts
-const result = node_nim.nim.client.init('appkey', '', '', {
-    database_encrypt_key_: 'abcdefghijklmnopqrstuvwxyz012345'
-})
-if (result) {
-    node_nim.nim.initEventHandlers() // init event handlers
-    node_nim.nim.talk.on('receiveMsg', (result) => {
-        console.log('receiveMsg', result)
-    })
-    node_nim.nim.talk.on('sendMsg', (message: node_nim.IMMessage) => {
-        console.log('sendMsg: ', message)
-    })
-    // add more event handlers here
-    // ...
-}
-return result
+// ES6 Module
+import * as NIM from 'node-nim'
+// CommonJS
+const NIM = require('node-nim')
 ```
 
-### 登陆
+导入模块后，您可以直接使用我们已经帮您实例化好的三类对象，如即时通讯、聊天室、圈组，示例代码如下：
 
-```ts
-let [loginResult] = await node_nim.nim.client.login('appkey', 'account', 'password', null, '')
-if (loginResult.res_code_ == node_nim.NIMResCode.kNIMResSuccess) {
-    console.log('login succeeded')
-} else {
-    console.log('login failed')
-}
+```javascript
+// IM 相关功能
+NIM.nim.client.init('', '', '', {})
+NIM.nim.client.cleanup('')
+
+// 聊天室相关功能
+NIM.chatroom.init('', '')
+NIM.chatroom.cleanup()
+
+// 圈组相关功能
+NIM.qchat.instance.init({ appkey: 'your appkey', app_data_path: 'qchat' })
+NIM.qchat.instance.cleanup({})
 ```
 
-### 发送消息
+其中 `NIM.nim` 可直接访问的对象有：
 
-```ts
-node_nim.nim.talk.sendMsg(
-    {
-        session_type_: node_nim.NIMSessionType.kNIMSessionTypeP2P,
-        receiver_accid_: 'receiver',
-        type_: node_nim.NIMMessageType.kNIMMessageTypeText,
-        content_: 'Send from NIM node quick start.'
-    },
-    ''
-)
-```
+| 对象名              | 说明                    |
+|------------------|-----------------------|
+| client           | 客户端模块                 |
+| dataSync         | 数据同步模块                |
+| friend           | 好友模块                  |
+| global           | 全局模块                  |
+| msglog           | 消息记录模块                |
+| nos              | NOS 模块                |
+| onlineSession    | 在线会话模块                |
+| passThroughProxy | 透传代理模块                |
+| session          | 会话模块                  |
+| subscribeEvent   | 事件订阅模块                |
+| superTeam        | 超级群模块                 |
+| sysMsg           | 系统消息模块                |
+| talk             | 会话模块                  |
+| team             | 群组模块                  |
+| tool             | 工具模块                  |
+| user             | 用户模块                  |
+| plugin           | 插件模块                  |
+| talkEx           | 消息扩展模块，PIN 消息、快捷评论、收藏 |
+
+可通过 `NIM.chatroom` 直接访问的对象对应 `ChatRoomModule`，您可以直接访问该对象下的成员函数。
+
+可通过 `NIM.qchat` 直接访问的对象有：
+
+| 对象名                | 说明       |
+|--------------------|----------|
+| instance           | 圈组实例模块   |
+| server             | 圈组服务器模块  |
+| channel            | 圈组频道模块   |
+| channelCategory    | 圈组频道分类模块 |
+| message            | 圈组消息模块   |
+| systemNotification | 圈组系统通知模块 |
+| attachment         | 圈组附件模块   |
+| role               | 圈组身份组模块  |
+

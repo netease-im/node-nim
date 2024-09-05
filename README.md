@@ -34,9 +34,9 @@ For comprehensive documentation, changelog, and technical support, please visit 
 ## System Requirements
 
 | System  | Requirements  |
-| ------- | ------------- |
+| ------- |---------------|
 | Windows | >= Windows 7  |
-| macOS   | >= 10.14.0    |
+| macOS   | >= 10.13.0    |
 | Linux   | glibc >= 2.23 |
 
 ## Supported Platforms
@@ -111,59 +111,73 @@ Build Requirements:
 Now you are all set to build, run following commands in the root directory of the project:
 
 ```cmake
-cmake -S . -B build
+cmake -Bbuild
 cmake --build build --config Release
 ```
 
-And voilà, you now have your own node-nim binary file in the `build` directory.
+Now, you have your own node-nim binary file in the `build` directory.
 
 ## Quick Start
 
-```ts
-import * as node_nim from 'node-nim'
-```
-
-### Initialize SDK
+First, you need to import the `node-nim` module:
 
 ```ts
-const result = node_nim.nim.client.init('appkey', '', '', {
-    database_encrypt_key_: 'abcdefghijklmnopqrstuvwxyz012345'
-})
-if (result) {
-    node_nim.nim.initEventHandlers() // init event handlers
-    node_nim.nim.talk.on('receiveMsg', (result) => {
-        console.log('receiveMsg', result)
-    })
-    node_nim.nim.talk.on('sendMsg', (message: node_nim.IMMessage) => {
-        console.log('sendMsg: ', message)
-    })
-    // add more event handlers here
-    // ...
-}
-return result
+// ES6 Module
+import * as NIM from 'node-nim'
+// CommonJS
+const NIM = require('node-nim')
 ```
 
-### Login
+After importing the module, you can directly use the three types of objects we have instantiated for you, such as IM, chatroom, and qchat. Here is an example:
 
-```ts
-let [loginResult] = await node_nim.nim.client.login('appkey', 'account', 'password', null, '')
-if (loginResult.res_code_ == node_nim.NIMResCode.kNIMResSuccess) {
-    console.log('login succeeded')
-} else {
-    console.log('login failed')
-}
+```javascript
+// IM related functions
+NIM.nim.client.init('', '', '', {})
+NIM.nim.client.cleanup('')
+
+// Chatroom related functions
+NIM.chatroom.init('', '')
+NIM.chatroom.cleanup()
+
+// QChat related functions
+NIM.qchat.instance.init({ appkey: 'your appkey', app_data_path: 'qchat' })
+NIM.qchat.instance.cleanup({})
 ```
 
-### Send Message
+The objects that can be directly accessed through `NIM.nim` are:
 
-```ts
-node_nim.nim.talk.sendMsg(
-    {
-        session_type_: node_nim.NIMSessionType.kNIMSessionTypeP2P,
-        receiver_accid_: 'receiver',
-        type_: node_nim.NIMMessageType.kNIMMessageTypeText,
-        content_: 'Send from NIM node quick start.'
-    },
-    ''
-)
-```
+| Object Name        | Description                                                         |
+|--------------------|---------------------------------------------------------------------|
+| `client`           | Client module                                                       |
+| `dataSync`         | Data sync module                                                    |
+| `friend`           | Friend module                                                       |
+| `global`           | Global module                                                       |
+| `msglog`           | Message log module                                                  |
+| `nos`              | Object storage module                                               |
+| `onlineSession`    | Online session module                                               |
+| `passThroughProxy` | Pass-through proxy module                                           |
+| `session`          | Local session module                                                |
+| `subscribeEvent`   | Event subscription module                                           |
+| `superTeam`        | Super team module                                                   |
+| `sysMsg`           | System message module                                               |
+| `talk`             | Talk module                                                         |
+| `team`             | Team module                                                         |
+| `tool`             | Tool module                                                         |
+| `user`             | User module                                                         |
+| `plugin`           | Plugin module                                                       |
+| `talkEx`           | Message extension module, PIN messages, quick comments, collections |
+
+The object that can be directly accessed through `NIM.chatroom` corresponds to `ChatRoomModule`, and you can directly access the member functions under this object.
+
+The objects that can be directly accessed through `NIM.qchat` are:
+
+| Object Name          | Description                      |
+|----------------------|----------------------------------|
+| `instance`           | QChat instance module            |
+| `server`             | QChat server module              |
+| `channel`            | QChat channel module             |
+| `channelCategory`    | QChat channel category module    |
+| `message`            | QChat message module             |
+| `systemNotification` | QChat system notification module |
+| `attachment`         | QChat attachment module          |
+| `role`               | QChat role module                |

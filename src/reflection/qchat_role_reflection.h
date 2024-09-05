@@ -43,7 +43,7 @@ ReflectionDefinition_O(QChatUpdateMemberRoleParam, cb, server_id, channel_id, ac
 ReflectionDefinition_O(QChatRemoveMemberRoleParam, cb, server_id, channel_id, accid);
 ReflectionDefinition_O(QChatGetMemberRolesParam, cb, server_id, channel_id, timestamp, limit);
 ReflectionDefinition_O(QChatGetRolesByAccidParam, cb, server_id, accid, timestamp, limit);
-ReflectionDefinition_O(QChatGetExistingServerRolesByAccidsParam, cb, server_id, accids);
+ReflectionDefinition_O(QChatGetExistingServerRolesByAccidsParam, cb, server_id, accids, sort_type, search_order);
 ReflectionDefinition_O(QChatGetExistingChannelRolesByServerRoleIdsParam, cb, server_id, channel_id, role_ids);
 ReflectionDefinition_O(QChatGetExistingAccidsOfMemberRolesParam, cb, server_id, channel_id, accids);
 ReflectionDefinition_O(QChatGetExistingAccidsInServerRoleParam, cb, server_id, role_id, accids);
