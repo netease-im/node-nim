@@ -242,6 +242,16 @@ export enum BoolStatus {
   BS_TRUE = 1
 }
 
+/** @brief AI 数字人消息状态 */
+export enum NIMAIMessageStatus {
+  /** 默认 */
+  kNIMMessageAIStatusUnknown = 0,
+  /** 表示是一个艾特数字人的消息 */
+  kNIMMessageAIStatusAt = 1,
+   /** 表示是数字人响应艾特的消息 */
+  kNIMMessageAIStatusResponse = 2,
+}
+
 export interface QueryMsgOnlineAsyncParam {
   /** 查询id，对方的account id或者群组tid */
   id_?: string
@@ -385,6 +395,14 @@ export interface IMMessageRobotInfo {
   account_?: string
 }
 
+/** @brief AI 数字人消息信息 */
+export interface IMMessageAIConfig {
+  /// 数字人账号信息，发送消息时指定该字段代表要 @ AI 数字人
+  account_id_: string
+  /// 数字人消息状态
+  ai_status_: NIMAIMessageStatus
+}
+
 export interface IMMessage {
   /** 错误码 */
   rescode_?: NIMResCode
@@ -426,6 +444,8 @@ export interface IMMessage {
   thread_info_?: IMMessageThreadInfo
   /** 机器人消息信息 */
   robot_info_?: IMMessageRobotInfo
+  /** AI 数字人消息相关信息 */
+  ai_config_?: IMMessageAIConfig
   /** 发送者客户端类型（只读） */
   readonly_sender_client_type_?: NIMClientType
   /** 发送者客户端设备ID（只读） */

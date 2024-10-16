@@ -60,7 +60,7 @@ async function downloadSDK(custom_sdk_url) {
     console.info(`[node-nim] Downloading prebuilt sdk from ${sdk_url} to ${sdk_path}`)
     // remove sdk_path
     if (fs.existsSync(sdk_path)) {
-        fs.rmSync(sdk_path, { recursive: true, force: true })
+        fs.rmdirSync(sdk_path, { recursive: true })
     }
     // download sdk
     try {

@@ -6,7 +6,6 @@
  */
 
 #include "nim_node_super_team.h"
-#include "reflection/reflection_include.h"
 
 namespace node_nim {
 Napi::Object NIMSuperTeam::Init(Napi::Env env, Napi::Object exports) {

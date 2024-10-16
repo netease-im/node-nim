@@ -1,6 +1,7 @@
 import { NIMResCode } from './client_def'
 import { IMMessage, NIMMessageFeature, NIMMessageType, MessageSetting } from './msglog_def'
 import { NIMSessionType } from './session_def'
+import { NIMAIModelCallBase } from './ai_def'
 
 export interface SendMessageArc {
   /** 会话ID */
@@ -140,6 +141,12 @@ export interface IMLocation {
   lng?: number
 }
 
+export interface IMMessageAIConfigParam extends NIMAIModelCallBase {}
+
+export interface IMMessageSendOption {
+  ai_config_: IMMessageAIConfigParam
+}
+
 export type FileUpPrgCallback = (uplaodedSize: number, totalSize: number) => void
 export type SendMsgAckCallback = (result: SendMessageArc) => void
 export type ReceiveMsgCallback = (result: IMMessage) => void
@@ -153,7 +160,9 @@ export type MessageFilterCallback = (result: IMMessage) => boolean
 export interface NIMTalkAPI {
   InitEventHandlers (): void
 
-  SendMsg (msg: IMMessage, jsonExtension: string, progressCb: FileUpPrgCallback): void
+  SendMsg (msg: IMMessage, jsonExtension: string, progressCb: FileUpPrgCallback | null): void
+
+  SendMessageWithOption(msg: IMMessage, option: IMMessageSendOption, progressCb: FileUpPrgCallback | null): void
 
   StopSendMsg (clientMsgId: string, type: NIMMessageType, jsonExtension: string): void
 
@@ -162,6 +171,8 @@ export interface NIMTalkAPI {
   GetAttachmentPathFromMsg (msg: IMMessage): string
 
   ReplyMessage (formerMsg: IMMessage, replyMsg: IMMessage, progressCb: FileUpPrgCallback): void
+
+  ReplyMessageWithOption (formerMsg: IMMessage, replyMsg: IMMessage, option: IMMessageSendOption, progressCb: FileUpPrgCallback): void
 
   RegMessageFilter (cb: MessageFilterCallback | null, jsonExtension: string): void
 

@@ -6,7 +6,6 @@
  */
 
 #include "nim_node_plugin.h"
-#include "reflection/reflection_include.h"
 
 namespace node_nim {
 Napi::Object NIMPluginIn::Init(Napi::Env env, Napi::Object exports) {

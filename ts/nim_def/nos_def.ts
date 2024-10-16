@@ -94,7 +94,7 @@ export type DownloadMediaCallback = (rescode: NIMResCode, filePath: string, call
 export type UploadMediaExCallback = (rescode: NIMResCode, result: UploadMediaResult) => void
 export type ProgressCallback = (completedSize: number, fileSize: number) => void
 export type TransferInfoCallback = (actualSize: number, speed: number) => void
-export type ProgressExCallback = (completeSsize: number, fileSize: number, result: ProgressData) => void
+export type ProgressExCallback = (completedSize: number, fileSize: number, result: ProgressData) => void
 export type DownloadMediaExCallback = (rescode: NIMResCode, result: DownloadMediaResult) => void
 export type SafeURLToOriginURLCallback = (rescode: NIMResCode, originalUrl: string) => void
 export type SpeedCallback = (speed: number) => void

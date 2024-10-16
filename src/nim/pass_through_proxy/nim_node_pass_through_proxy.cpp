@@ -6,7 +6,6 @@
  */
 
 #include "nim_node_pass_through_proxy.h"
-#include "reflection/reflection_include.h"
 
 namespace node_nim {
 Napi::Object NIMPassThroughProxy::Init(Napi::Env env, Napi::Object exports) {

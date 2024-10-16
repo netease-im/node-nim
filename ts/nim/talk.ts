@@ -7,7 +7,7 @@ import {
   IMAudio,
   IMFile,
   IMImage,
-  IMLocation,
+  IMLocation, IMMessageSendOption,
   IMVideo,
   MessageFilterCallback,
   NIMTalkAPI,
@@ -53,8 +53,19 @@ export class NIMTalk extends EventEmitter<NIMTalkEvents> {
    * @param pcb    上传进度的回调函数, 如果发送的消息里包含了文件资源,则通过此回调函数通知上传进度
    * @return void 无返回值
    */
-  sendMsg (msg: IMMessage, jsonExtension: string, progressCb: FileUpPrgCallback): void {
+  sendMsg (msg: IMMessage, jsonExtension: string, progressCb: FileUpPrgCallback | null): void {
     return this.talk.SendMsg(msg, jsonExtension, progressCb)
+  }
+
+  /**
+   * 携带配置参数发送消息
+   * @param msg 消息体
+   * @param option 配置参数
+   * @param progressCb 上传进度的回调函数
+   * @return void 无返回值
+   */
+  sendMessageWithOption (msg: IMMessage, option: IMMessageSendOption, progressCb: FileUpPrgCallback | null): void {
+    return this.talk.SendMessageWithOption(msg, option, progressCb)
   }
 
   /** 停止正在发送中的消息（目前只支持发送文件消息时的终止）
@@ -104,6 +115,18 @@ export class NIMTalk extends EventEmitter<NIMTalkEvents> {
         jsonExtension
       )
     })
+  }
+
+  /**
+   * @brief 回复消息 thread 聊天场景，携带指定配置
+   * @param formerMsg 被回复消息的消息体
+   * @param replyMsg 回复消息的消息体,可通过各种 createxxxmessage 接口创建
+   * @param option 配置参数
+   * @param progressCb 传进度的回调函数, 如果发送的消息里包含了文件资源,则通过此回调函数通知上传进度
+   * @return void 无返回值
+   */
+  replyMessageWithOption (formerMsg: IMMessage, replyMsg: IMMessage, option: IMMessageSendOption, progressCb: FileUpPrgCallback): void {
+    return this.talk.ReplyMessageWithOption(formerMsg, replyMsg, option, progressCb)
   }
 
   /** 创建文本消息 */

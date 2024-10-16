@@ -403,7 +403,7 @@ export enum NIMQChatClientType {
   /** macOS */
   kQChatClientTypeMacOS = 64,
   /** HarmonyOS */
-  kQChatClientTypeHarmonyOS = 128,
+  kQChatClientTypeHarmonyOS = 65,
 }
 
 export enum NIMQChatLoginStep {

@@ -5,7 +5,7 @@ namespace node_nim {
 Napi::Object NIMChatRoom::Init(Napi::Env env, Napi::Object exports) {
     // clang-format off
     return InternalInit("NIMChatRoom", env, exports, {
-        RegApi("InitEventHandlers", &NIMChatRoom::InitEventHandlers), 
+        RegApi("InitEventHandlers", &NIMChatRoom::InitEventHandlers),
         RegApi("Init", &ChatRoom::Init),
         RegApi("Cleanup", &ChatRoom::Cleanup),
         RegApi("IndependentEnter", &ChatRoom::IndependentEnter2),

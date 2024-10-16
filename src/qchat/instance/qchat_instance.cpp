@@ -1,5 +1,4 @@
 #include "qchat_instance.h"
-#include "reflection/reflection_include.h"
 namespace node_nim {
 Napi::Object QChatInstance::Init(Napi::Env env, Napi::Object exports) {
     // clang-format off

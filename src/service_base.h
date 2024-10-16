@@ -15,7 +15,10 @@
 #include <string>
 #include <utility>
 #include <vector>
-#include "xpack_specialization.h"
+// clang-format off
+#include "reflection/reflection_include.h"
+#include "callback_specialization.h"
+// clang-format on
 namespace {
 namespace traits {
 template <class T>
@@ -52,6 +55,7 @@ static const char* kInstanceKey = "instance";
 
 class ServiceBase {
 public:
+    virtual ~ServiceBase() { service_instance_ = nullptr; }
     template <typename TApi, TApi api>
     Napi::Value InvokeApi(const Napi::CallbackInfo& info) {
         if constexpr (std::is_member_function_pointer<TApi>::value) {
@@ -99,7 +103,7 @@ public:
     }
 
 protected:
-    void* service_instance_;
+    void* service_instance_{nullptr};
 };
 
 template <typename TSubClass>
@@ -108,6 +112,9 @@ public:
     BizService(std::string service_name, const Napi::CallbackInfo& info)
         : Napi::ObjectWrap<TSubClass>(info)
         , service_name_(std::move(service_name)) {
+        if (info.Length() == 0) {
+            return;
+        }
         auto temp_ = info[0].As<Napi::Object>();
         if (temp_.Has(kEmitFuncKey)) {
             emitter_ = Napi::Reference<Napi::Function>::New(temp_.Get(kEmitFuncKey).As<Napi::Function>(), 1);
@@ -148,6 +155,13 @@ public:
 private:
     template <typename TR, typename... TArgs>
     auto _MakeNotifyCallback(const std::string& flag, const std::function<TR(TArgs...)>* ff) -> std::function<TR(TArgs...)> {
+        return [this, flag](TArgs... args) {
+            return NotifyCallback<TR, std::decay_t<TArgs>...>(flag, std::forward<TArgs>(args)...);
+        };
+    }
+
+    template <typename TR, typename... TArgs>
+    auto _MakeNotifyCallback(const std::string& flag, const nstd::function<TR(TArgs...)>* ff) -> std::function<TR(TArgs...)> {
         return [this, flag](TArgs... args) {
             return NotifyCallback<TR, std::decay_t<TArgs>...>(flag, std::forward<TArgs>(args)...);
         };

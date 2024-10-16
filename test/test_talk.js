@@ -1,6 +1,9 @@
-const NIM = require('../../dist/node-nim')
+import { aiAssistantAccounts } from './test_variables'
+
+const NIM = require('../dist/node-nim')
 const assert = require('assert')
-const {stringify} = require('querystring')
+const { stringify } = require('querystring')
+import * as GlobalVariables from './test_variables'
 
 const talk = new NIM.NIMTalk()
 const talkex = new NIM.NIMTalkEx()
@@ -75,6 +78,91 @@ describe('********************Talk********************', function () {
         '',
         ''
       )
+    })
+  })
+  describe('#sendMessageWithOption', function () {
+    it('sendMessageWithOption should return 200', function (done) {
+      talk.initEventHandlers()
+      talk.sendMessageWithOption({
+        session_type_: 0,
+        receiver_accid_: GlobalVariables.aiAssistantAccounts[0],
+        timetag_: new Date().getTime(),
+        type_: 0,
+        content_: 'Send from NIM node test.',
+        client_msg_id_: new Date().getTime().toString()
+      }, {
+        ai_config_: {
+          account_id_: GlobalVariables.aiAssistantAccounts[0],
+          content_: {
+            msg_: '中国的首都是哪里',
+            type_: 0
+          }
+        }
+      }, (uploadedSize, totalSize) => {
+        console.log(uploadedSize, totalSize)
+      })
+      talk.on('receiveMsg', function (message) {
+        assert.strictEqual(message.rescode_, 200)
+        assert.notStrictEqual(message.ai_config_.account_id_, '')
+        assert.strictEqual(message.ai_config_.ai_status_, 2)
+        assert.strictEqual(message.thread_info_.thread_msg_from_account_, GlobalVariables.mainAccount)
+        assert.strictEqual(message.thread_info_.thread_msg_to_account_, GlobalVariables.aiAssistantAccounts[0])
+        assert.strictEqual(message.thread_info_.reply_msg_from_account_, GlobalVariables.mainAccount)
+        assert.strictEqual(message.thread_info_.reply_msg_to_account_, GlobalVariables.aiAssistantAccounts[0])
+        done()
+      })
+    })
+  })
+  describe('#replyMessageWithOption', () => {
+    let formerMsg
+    before(function (done) {
+      talk.initEventHandlers()
+      talk.sendMessageWithOption({
+        session_type_: 0,
+        receiver_accid_: GlobalVariables.aiAssistantAccounts[0],
+        timetag_: new Date().getTime(),
+        type_: 0,
+        content_: 'Send from NIM node test.',
+        client_msg_id_: new Date().getTime().toString()
+      }, {
+        ai_config_: {
+          account_id_: GlobalVariables.aiAssistantAccounts[0],
+          content_: {
+            msg_: '中国的首都是哪里',
+            type_: 0
+          }
+        }
+      }, (uploadedSize, totalSize) => {
+        console.log(uploadedSize, totalSize)
+      })
+      talk.once('receiveMsg', function (newMessage) {
+        formerMsg = newMessage
+        done()
+      })
+    })
+    it('replyMessageWithOption should return 200', function (done) {
+      talk.once('receiveMsg', function (message) {
+        console.log(message)
+        done()
+      })
+      talk.replyMessageWithOption(formerMsg, {
+        session_type_: 0,
+        receiver_accid_: GlobalVariables.aiAssistantAccounts[0],
+        timetag_: new Date().getTime(),
+        type_: 0,
+        content_: 'Reply message by node nim.',
+        client_msg_id_: new Date().getTime().toString()
+      }, {
+        ai_config_: {
+          account_id_: GlobalVariables.aiAssistantAccounts[0],
+          content_: {
+            msg_: '中国的首都是哪里',
+            type_: 0
+          }
+        }
+      }, (uploadedSize, totalSize) => {
+        console.log(uploadedSize, totalSize)
+      })
     })
   })
 })
@@ -174,7 +262,7 @@ describe('********************TalkEx********************', function () {
   })
   describe('#queryQuickCommentList', function () {
     it('queryQuickCommentList should return 200', function (done) {
-      talkex.queryQuickCommentList({message_list: [immessage]}, function (res_code, response) {
+      talkex.queryQuickCommentList({ message_list: [immessage] }, function (res_code, response) {
         assert.strictEqual(res_code, 200)
         done()
       })

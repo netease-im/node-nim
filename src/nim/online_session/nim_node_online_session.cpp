@@ -6,7 +6,6 @@
  */
 
 #include "nim_node_online_session.h"
-#include "reflection/reflection_include.h"
 
 namespace node_nim {
 Napi::Object NIMOnlineSession::Init(Napi::Env env, Napi::Object exports) {
@@ -21,8 +20,6 @@ void NIMOnlineSession::InitEventHandlers() {
 }
 
 NIMOnlineSession::NIMOnlineSession(const Napi::CallbackInfo& info)
-    : BizService("NIMOnlineSession", info) {
-    service_instance_ = this;
-}
+    : BizService("NIMOnlineSession", info) { service_instance_ = this;}
 
 }  // namespace node_nim

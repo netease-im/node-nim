@@ -1,0 +1,12 @@
+{
+  "timeout": 5000,
+  "bail": true,
+  "recursive": true,
+  "require": [
+    "@babel/register",
+    "test/hooks_v2.spec.js"
+  ],
+  "spec": [
+    "test/**/*.spec.js"
+  ]
+}

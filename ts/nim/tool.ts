@@ -25,7 +25,7 @@ export class NIMTool extends EventEmitter<NIMToolEvents> {
   }
 
   /** 获取SDK里app account对应的app data目录（各个帐号拥有独立的目录，其父目录相同）
-   * @param app_account APP account。如果传入空字符串，则将获取到各个帐号目录的父目录（谨慎删除！）
+   * @param app_account APP accountId。如果传入空字符串，则将获取到各个帐号目录的父目录（谨慎删除！）
    * @return std::string 返回的目录路径(UTF8)
    */
   getUserAppdataDir (appAccount: string): string {

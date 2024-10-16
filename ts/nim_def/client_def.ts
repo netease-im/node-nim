@@ -49,7 +49,7 @@ export enum NIMClientType {
   /** Mac*/
   kNIMClientTypeMacOS = 64,
   /** HarmonyOS*/
-  kNIMClientTypeHarmonyOS = 128
+  kNIMClientTypeHarmonyOS = 65
 }
 
 /** @enum NIMResCode 返回的错误号（只定义需要客户端处理的） */

@@ -16,7 +16,8 @@ import { NIMTool } from './nim/tool'
 import { NIMUser } from './nim/user'
 import { NIMPlugin } from './nim/plugin'
 import { NIMTalkEx } from './nim/talkex'
-import { ChatRoomModule } from './chatroom/chatroom'
+import { NIMAI } from './nim/ai'
+import { ChatRoomModule} from './chatroom/chatroom'
 import { QChatInstanceModule } from './qchat/instance'
 import { QChatServerModule } from './qchat/server'
 import { QChatChannelModule } from './qchat/channel'
@@ -25,6 +26,17 @@ import { QChatMessageModule } from './qchat/message'
 import { QChatSystemNotificationModule } from './qchat/system_notification'
 import { QChatAttachmentModule } from './qchat/attachment'
 import { QChatRoleModule } from './qchat/role'
+import { V2NIMClient } from './v2/v2_nim_client'
+import { V2NIMChatroomClient } from './v2/v2_nim_chatroom_client'
+import {
+  V2NIMMessageCreator,
+  V2NIMMessageConverter,
+  V2NIMClientAntispamUtil,
+  V2NIMChatroomMessageCreator,
+  V2NIMConversationIdUtil,
+  V2NIMStorageUtil,
+  V2NIMMessageAttachmentCreator
+} from './v2/v2_nim_utilities'
 
 export {
   NIMClient,
@@ -53,7 +65,15 @@ export {
   QChatMessageModule,
   QChatSystemNotificationModule,
   QChatAttachmentModule,
-  QChatRoleModule
+  QChatRoleModule,
+  V2NIMChatroomClient,
+  V2NIMMessageCreator,
+  V2NIMMessageConverter,
+  V2NIMClientAntispamUtil,
+  V2NIMChatroomMessageCreator,
+  V2NIMConversationIdUtil,
+  V2NIMStorageUtil,
+  V2NIMMessageAttachmentCreator
 }
 export * from './nim_def/client_def'
 export * from './nim_def/data_sync_def'
@@ -119,6 +139,8 @@ export class NIM {
   plugin: NIMPlugin = new NIMPlugin()
   /** 聊天扩展模块 */
   talkEx: NIMTalkEx = new NIMTalkEx()
+  /** AI 数字人模块 */
+  ai: NIMAI = new NIMAI()
 
   /** 初始化事件处理 */
   initEventHandlers (): void {
@@ -140,6 +162,7 @@ export class NIM {
     this.user.initEventHandlers()
     this.plugin.initEventHandlers()
     this.talkEx.initEventHandlers()
+    this.ai.initEventHandlers()
   }
 }
 
@@ -170,3 +193,4 @@ export class QChat {
 export const nim = new NIM()
 export const chatroom = new ChatRoom()
 export const qchat = new QChat()
+export const v2 = new V2NIMClient()

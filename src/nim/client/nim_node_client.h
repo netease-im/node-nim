@@ -6,6 +6,7 @@
  */
 #ifndef NIM_NODE_CLIENT_H
 #define NIM_NODE_CLIENT_H
+
 #include <napi.h>
 #include "service_base.h"
 

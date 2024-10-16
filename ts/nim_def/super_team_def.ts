@@ -123,8 +123,15 @@ export interface SuperTeamEvent {
 export interface SuperTeamInfoJsonValue {
   tid?: string
   name?: string
+  readonly creator: string
   member_max_count?: number
   prop?: string
+  readonly valid: boolean
+  readonly member_count: number
+  readonly list_timetag: number
+  readonly create_timetag: number
+  readonly update_timetag: number
+  member_valid?: number
   intro?: string
   announcement?: string
   join_mode?: NIMSuperTeamJoinMode

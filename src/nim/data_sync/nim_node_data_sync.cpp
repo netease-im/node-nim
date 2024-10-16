@@ -6,7 +6,6 @@
  */
 
 #include "nim_node_data_sync.h"
-#include "reflection/reflection_include.h"
 
 namespace node_nim {
 Napi::Object NIMDataSync::Init(Napi::Env env, Napi::Object exports) {

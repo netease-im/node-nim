@@ -6,7 +6,6 @@
  */
 
 #include "nim_node_msglog.h"
-#include "reflection/reflection_include.h"
 
 namespace node_nim {
 Napi::Object NIMMsgLog::Init(Napi::Env env, Napi::Object exports) {

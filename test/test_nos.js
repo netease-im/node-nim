@@ -14,7 +14,7 @@ describe('********************Nos********************', function () {
     it('initConfig', function (done) {
       nos.initConfig(
         {
-          tag_list_: {test: 123}
+          tag_list_: { test: 123 }
         },
         function (result) {
           done()
