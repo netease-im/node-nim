@@ -9,6 +9,7 @@ import {
 } from 'ts/v2_def/v2_nim_struct_def'
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
+import { V2NIMConversationType } from 'ts/v2_def/v2_nim_enum_def'
 let utilities: any = new sdk.V2NIMUtilities()
 /** @brief 消息创建器 */
 export class V2NIMMessageCreator {

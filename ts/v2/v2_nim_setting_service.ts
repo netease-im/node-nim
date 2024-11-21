@@ -1,6 +1,7 @@
 import {V2NIMDndConfig, V2NIMError} from 'ts/v2_def/v2_nim_struct_def'
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
+import { V2NIMP2PMessageMuteMode, V2NIMTeamMessageMuteMode, V2NIMTeamType } from 'ts/v2_def/v2_nim_enum_def'
 
 export declare interface V2NIMSettingServiceEvents {
     /** 群组消息免打扰回调 */

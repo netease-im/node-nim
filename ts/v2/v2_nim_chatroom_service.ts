@@ -21,6 +21,7 @@ import {
     V2NIMChatroomTagMessageOption
 } from 'ts/v2_def/v2_nim_struct_def'
 import sdk from '../loader'
+import { V2NIMChatroomMemberRole } from 'ts/v2_def/v2_nim_enum_def'
 
 export declare interface V2NIMChatroomServiceEvents {
     /** 收到新消息 */

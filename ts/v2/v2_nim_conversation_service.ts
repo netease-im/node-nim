@@ -9,6 +9,7 @@ import {
 } from 'ts/v2_def/v2_nim_struct_def'
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
+import { V2NIMConversationType } from 'ts/v2_def/v2_nim_enum_def'
 
 export declare interface V2NIMConversationServiceEvents {
     /** 会话同步开始通知 */

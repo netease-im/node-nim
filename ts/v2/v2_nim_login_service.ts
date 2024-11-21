@@ -2,6 +2,7 @@ import { V2NIMDataSyncDetail, V2NIMError, V2NIMKickedOfflineDetail, V2NIMLoginCl
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
 import { V2NIMReconnectDelayProvider } from 'ts/v2_def/v2_nim_callback_def'
+import { V2NIMConnectStatus, V2NIMDataSyncState, V2NIMDataSyncType, V2NIMLoginClientChange, V2NIMLoginStatus } from 'ts/v2_def/v2_nim_enum_def'
 
 export declare interface V2NIMLoginServiceEvents {
     /** 登录状态变更回调 */

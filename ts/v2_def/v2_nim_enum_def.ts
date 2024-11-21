@@ -26,7 +26,7 @@
 /** | 93 | 数据库 | */
 /** | 94 | 文件 | */
 /** | 95 | 反垃圾 | */
-enum V2NIMErrorCode {
+export enum V2NIMErrorCode {
     /** 未知错误 / unknown error */
     V2NIM_ERROR_CODE_UNKNOWN = 0,
     /** 请求成功 / success */
@@ -521,7 +521,7 @@ enum V2NIMErrorCode {
     V2NIM_ERROR_CODE_SIGNALLING_SERVICE_DISABLED = 118410
 }
 
-enum V2NIMIPProtocolVersion {
+export enum V2NIMIPProtocolVersion {
     /** 未指定, 自动判断 */
     V2NIM_IP_PROTOCOL_VERSION_UNSPECIFIED = 0,
     /** IPv4 */
@@ -530,14 +530,14 @@ enum V2NIMIPProtocolVersion {
     V2NIM_IP_PROTOCOL_VERSION_IPV6 = 2
 }
 
-enum V2NIMAsymmetricEncryptionAlgorithm {
+export enum V2NIMAsymmetricEncryptionAlgorithm {
     /** RSA */
     V2NIM_ASYMMETRIC_ENCRYPTION_ALGORITHM_RSA = 1,
     /** SM2 */
     V2NIM_ASYMMETRIC_ENCRYPTION_ALGORITHM_SM2 = 2
 }
 
-enum V2NIMSymmetricEncryptionAlgorithm {
+export enum V2NIMSymmetricEncryptionAlgorithm {
     /** RC4 */
     V2NIM_SYMMETRIC_ENCRYPTION_ALGORITHM_RC4 = 1,
     /** AES128 */
@@ -546,14 +546,14 @@ enum V2NIMSymmetricEncryptionAlgorithm {
     V2NIM_SYMMETRIC_ENCRYPTION_ALGORITHM_SM4 = 4
 }
 
-enum V2NIMSQLCipherVersion {
+export enum V2NIMSQLCipherVersion {
     /** SQLCipher 3 */
     V2NIM_SQLCIPHER_VERSION_3 = 3,
     /** SQLCipher 4 */
     V2NIM_SQLCIPHER_VERSION_4 = 4
 }
 
-enum V2NIMSDKLogLevel {
+export enum V2NIMSDKLogLevel {
     /** 致命 */
     V2NIM_SDK_LOG_LEVEL_FATAL = 1,
     /** 错误 */
@@ -566,7 +566,7 @@ enum V2NIMSDKLogLevel {
     V2NIM_SDK_LOG_LEVEL_PRO = 6
 }
 
-enum V2NIMFCSAuthType {
+export enum V2NIMFCSAuthType {
     /** 无鉴权 */
     V2NIM_FCS_AUTH_TYPE_NONE = 0,
     /** refer 鉴权 */
@@ -579,7 +579,7 @@ enum V2NIMFCSAuthType {
     V2NIM_FCS_AUTH_TYPE_CUSTOM = 4
 }
 
-enum V2NIMConversationType {
+export enum V2NIMConversationType {
     /** 未知 */
     V2NIM_CONVERSATION_TYPE_UNKNOWN = 0,
     /** 单聊 */
@@ -590,7 +590,7 @@ enum V2NIMConversationType {
     V2NIM_CONVERSATION_TYPE_SUPER_TEAM = 3
 }
 
-enum V2NIMMessageType {
+export enum V2NIMMessageType {
     /** 文本 */
     V2NIM_MESSAGE_TYPE_TEXT = 0,
     /** 图片 */
@@ -615,7 +615,7 @@ enum V2NIMMessageType {
     V2NIM_MESSAGE_TYPE_CUSTOM = 100
 }
 
-enum V2NIMMessageSendingState {
+export enum V2NIMMessageSendingState {
     /** 未知, 如果消息不是从这个端发送的 */
     V2NIM_MESSAGE_SENDING_STATE_UNKNOWN = 0,
     /** 已发送 */
@@ -626,7 +626,7 @@ enum V2NIMMessageSendingState {
     V2NIM_MESSAGE_SENDING_STATE_SENDING = 3
 }
 
-enum V2NIMLastMessageState {
+export enum V2NIMLastMessageState {
     /** 默认 */
     V2NIM_MESSAGE_STATE_DEFAULT = 0,
     /** 已撤回 */
@@ -635,7 +635,7 @@ enum V2NIMLastMessageState {
     V2NIM_MESSAGE_STATE_CLIENTFILL = 2
 }
 
-enum V2NIMMessageAttachmentUploadState {
+export enum V2NIMMessageAttachmentUploadState {
     /** 未知, 不存在附件或不需要上传的附件 */
     V2NIM_MESSAGE_ATTACHMENT_UPLOAD_STATE_UNKNOWN = 0,
     /** 上传成功, 存在存储地址 */
@@ -646,7 +646,7 @@ enum V2NIMMessageAttachmentUploadState {
     V2NIM_MESSAGE_ATTACHMENT_UPLOAD_STATE_UPLOADING = 3
 }
 
-enum V2NIMMessageNotificationType {
+export enum V2NIMMessageNotificationType {
     /** 群拉人 */
     V2NIM_MESSAGE_NOTIFICATION_TYPE_TEAM_INVITE = 0,
     /** 群踢人 */
@@ -693,7 +693,7 @@ enum V2NIMMessageNotificationType {
     V2NIM_MESSAGE_NOTIFICATION_TYPE_SUPER_TEAM_INVITE_ACCEPT = 411
 }
 
-enum V2NIMChatroomMessageNotificationType {
+export enum V2NIMChatroomMessageNotificationType {
     /** 成员进入聊天室 */
     V2NIM_CHATROOM_MESSAGE_NOTIFICATION_TYPE_MEMBER_ENTER = 0,
     /** 成员退出聊天室 */
@@ -734,7 +734,7 @@ enum V2NIMChatroomMessageNotificationType {
     V2NIM_CHATROOM_MESSAGE_NOTIFICATION_TYPE_MEMBER_ROLE_UPDATE = 18
 }
 
-enum V2NIMChatroomQueueChangeType {
+export enum V2NIMChatroomQueueChangeType {
     /** 未知 */
     V2NIM_CHATROOM_QUEUE_CHANGE_TYPE_UNKNOWN = 0,
     /** 新增队列元素 */
@@ -751,7 +751,7 @@ enum V2NIMChatroomQueueChangeType {
     V2NIM_CHATROOM_QUEUE_CHANGE_TYPE_BATCH_OFFER = 6
 }
 
-enum V2NIMMessagePinState {
+export enum V2NIMMessagePinState {
     /** 未 pin */
     V2NIM_MESSAGE_PIN_STEATE_NOT_PINNED = 0,
     /** 已 PIN */
@@ -760,28 +760,28 @@ enum V2NIMMessagePinState {
     V2NIM_MESSAGE_PIN_STEATE_UPDATED = 2
 }
 
-enum V2NIMQueryDirection {
+export enum V2NIMQueryDirection {
     /** 按时间降序查询 */
     V2NIM_QUERY_DIRECTION_DESC = 0,
     /** 按时间升序查询 */
     V2NIM_QUERY_DIRECTION_ASC = 1
 }
 
-enum V2NIMMessageQuickCommentType {
+export enum V2NIMMessageQuickCommentType {
     /** 添加快捷评论 */
     V2NIM_MESSAGE_QUICK_COMMENT_TYPE_ADD = 1,
     /** 删除快捷评论 */
     V2NIM_MESSAGE_QUICK_COMMENT_TYPE_REMOVE = 2
 }
 
-enum V2NIMSortOrder {
+export enum V2NIMSortOrder {
     /** 按时间降序排序 */
     V2NIM_SORT_ORDER_DESC = 0,
     /** 按时间升序排序 */
     V2NIM_SORT_ORDER_ASC = 1
 }
 
-enum V2NIMMessageRevokeType {
+export enum V2NIMMessageRevokeType {
     /** 未定义 */
     V2NIM_MESSAGE_REVOKE_TYPE_UNDEFINED = 0,
     /** 点对点双向撤回 */
@@ -796,7 +796,7 @@ enum V2NIMMessageRevokeType {
     V2NIM_MESSAGE_REVOKE_TYPE_TEAM_ONEWAY = 5
 }
 
-enum V2NIMMessageClientAntispamOperatorType {
+export enum V2NIMMessageClientAntispamOperatorType {
     /** 无操作 */
     V2NIM_MESSAGE_CLIENT_ANTISPAM_OPERATOR_NONE = 0,
     /** 命中后, 本地替换 */
@@ -807,7 +807,7 @@ enum V2NIMMessageClientAntispamOperatorType {
     V2NIM_MESSAGE_CLIENT_ANTISPAM_OPERATOR_SERVER_SHIELD
 }
 
-enum V2NIMLoginAuthType {
+export enum V2NIMLoginAuthType {
     /** 默认 */
     V2NIM_LOGIN_AUTH_TYPE_DEFAULT = 0,
     /** 动态token */
@@ -816,7 +816,7 @@ enum V2NIMLoginAuthType {
     V2NIM_LOGIN_AUTH_TYPE_THIRD_PARTY = 2
 }
 
-enum V2NIMLoginClientType {
+export enum V2NIMLoginClientType {
     /** 未知类型 */
     V2NIM_LOGIN_CLIENT_TYPE_UNKNOWN = 0,
     /** Android */
@@ -837,7 +837,7 @@ enum V2NIMLoginClientType {
     V2NIM_LOGIN_CLIENT_TYPE_HARMONY_OS = 65
 }
 
-enum V2NIMLoginStatus {
+export enum V2NIMLoginStatus {
     /** 未登录 */
     V2NIM_LOGIN_STATUS_LOGOUT = 0,
     /** 已登录 */
@@ -846,7 +846,7 @@ enum V2NIMLoginStatus {
     V2NIM_LOGIN_STATUS_LOGINING = 2
 }
 
-enum V2NIMKickedOfflineReason {
+export enum V2NIMKickedOfflineReason {
     /** 多端登录互踢 */
     V2NIM_KICKED_OFFLINE_REASON_CLIENT_EXCLUSIVE = 1,
     /** 被服务器踢下线 */
@@ -855,7 +855,7 @@ enum V2NIMKickedOfflineReason {
     V2NIM_KICKED_OFFLINE_REASON_CLIENT = 3
 }
 
-enum V2NIMLoginClientChange {
+export enum V2NIMLoginClientChange {
     /** 端列表刷新 */
     V2NIM_LOGIN_CLIENT_CHANGE_LIST = 1,
     /** 端登录 */
@@ -864,7 +864,7 @@ enum V2NIMLoginClientChange {
     V2NIM_LOGIN_CLIENT_CHANGE_LOGOUT = 3
 }
 
-enum V2NIMConnectStatus {
+export enum V2NIMConnectStatus {
     /** 未连接 */
     V2NIM_CONNECT_STATUS_DISCONNECTED = 0,
     /** 已连接 */
@@ -875,14 +875,14 @@ enum V2NIMConnectStatus {
     V2NIM_CONNECT_STATUS_WAITING = 3
 }
 
-enum V2NIMDataSyncLevel {
+export enum V2NIMDataSyncLevel {
     /** 完全同步 */
     V2NIM_DATA_SYNC_LEVEL_FULL = 0,
     /** 只同步基础数据 */
     V2NIM_DATA_SYNC_LEVEL_BASIC = 1
 }
 
-enum V2NIMDataSyncType {
+export enum V2NIMDataSyncType {
     /** 同步主数据 */
     V2NIM_DATA_SYNC_MAIN = 1,
     /** 同步群组成员 */
@@ -891,7 +891,7 @@ enum V2NIMDataSyncType {
     V2NIM_DATA_SYNC_SUPER_TEAM_MEMBER = 3
 }
 
-enum V2NIMDataSyncState {
+export enum V2NIMDataSyncState {
     /** 等待同步 */
     V2NIM_DATA_SYNC_STATE_WAITING = 1,
     /** 开始同步 */
@@ -900,7 +900,7 @@ enum V2NIMDataSyncState {
     V2NIM_DATA_SYNC_STATE_COMPLETED = 3
 }
 
-enum V2NIMLoginType {
+export enum V2NIMLoginType {
     /** IM 业务登录 */
     V2NIM_LOGIN_TYPE_IM = 1,
     /** QChat 业务登录 */
@@ -909,7 +909,7 @@ enum V2NIMLoginType {
     V2NIM_LOGIN_TYPE_IM_AND_QCHAT = 3
 }
 
-enum V2NIMClientAntispamOperateType {
+export enum V2NIMClientAntispamOperateType {
     /** 无操作 */
     V2NIM_CLIENT_ANTISPAM_OPERATE_NONE = 0,
     /** 本地替换 */
@@ -920,12 +920,12 @@ enum V2NIMClientAntispamOperateType {
     V2NIM_CLIENT_ANTISPAM_OPERATE_SERVER_SHIELD = 3
 }
 
-enum V2NIMClientAntispamThesaurusMatchType {
+export enum V2NIMClientAntispamThesaurusMatchType {
     V2NIM_CLIENT_ANTISPAM_THESAURUS_MATCH_TYPE_WORD = 1,
     V2NIM_CLIENT_ANTISPAM_THESAURUS_MATCH_TYPE_REGEX = 2
 }
 
-enum V2NIMTeamType {
+export enum V2NIMTeamType {
     /** 无效 */
     V2NIM_TEAM_TYPE_INVALID = 0,
     /** 高级群 */
@@ -934,7 +934,7 @@ enum V2NIMTeamType {
     V2NIM_TEAM_TYPE_SUPER = 2
 }
 
-enum V2NIMTeamJoinMode {
+export enum V2NIMTeamJoinMode {
     /** 自由加入, 无须验证 */
     V2NIM_TEAM_JOIN_MODE_FREE = 0,
     /** 需申请, 群主或管理同意后加入 */
@@ -943,28 +943,28 @@ enum V2NIMTeamJoinMode {
     V2NIM_TEAM_JOIN_MODE_PRIVATE = 2
 }
 
-enum V2NIMTeamAgreeMode {
+export enum V2NIMTeamAgreeMode {
     /** 需要被邀请人同意 */
     V2NIM_TEAM_AGREE_MODE_AUTH = 0,
     /** 不需要被邀请人同意 */
     V2NIM_TEAM_AGREE_MODE_NO_AUTH = 1
 }
 
-enum V2NIMTeamInviteMode {
+export enum V2NIMTeamInviteMode {
     /** 群主, 管理员可以邀请其他人入群 */
     V2NIM_TEAM_INVITE_MODE_MANAGER = 0,
     /** 所有人都可以邀请其他人入群 */
     V2NIM_TEAM_INVITE_MODE_ALL = 1
 }
 
-enum V2NIMTeamUpdateInfoMode {
+export enum V2NIMTeamUpdateInfoMode {
     /** 群主/管理员可以修改群组资料 */
     V2NIM_TEAM_UPDATE_INFO_MODE_MANAGER = 0,
     /** 所有人都可以修改群组资料 */
     V2NIM_TEAM_UPDATE_INFO_MODE_ALL = 1
 }
 
-enum V2NIMTeamChatBannedMode {
+export enum V2NIMTeamChatBannedMode {
     /** 不禁言, 群组成员可以自由发言 */
     V2NIM_TEAM_CHAT_BANNED_MODE_NONE = 0,
     /** 普通成员禁言, 不包括管理员，群主 */
@@ -973,14 +973,14 @@ enum V2NIMTeamChatBannedMode {
     V2NIM_TEAM_CHAT_BANNED_MODE_BANNED_ALL = 2
 }
 
-enum V2NIMTeamUpdateExtensionMode {
+export enum V2NIMTeamUpdateExtensionMode {
     /** 群主/管理员可以修改群组扩展字段 */
     V2NIM_TEAM_UPDATE_EXTENSION_MODE_MANAGER = 0,
     /** 所有人均可以修改群组扩展字段 */
     V2NIM_TEAM_UPDATE_EXTENSION_MODE_ALL = 1
 }
 
-enum V2NIMTeamMemberRole {
+export enum V2NIMTeamMemberRole {
     /** 普通成员 */
     V2NIM_TEAM_MEMBER_ROLE_NORMAL = 0,
     /** 群组拥有者 */
@@ -989,7 +989,7 @@ enum V2NIMTeamMemberRole {
     V2NIM_TEAM_MEMBER_ROLE_MANAGER = 2
 }
 
-enum V2NIMTeamMemberRoleQueryType {
+export enum V2NIMTeamMemberRoleQueryType {
     /** 所有成员 */
     V2NIM_TEAM_MEMBER_ROLE_QUERY_TYPE_ALL = 0,
     /** 群组管理员(包括群主) */
@@ -998,7 +998,7 @@ enum V2NIMTeamMemberRoleQueryType {
     V2NIM_TEAM_MEMBER_ROLE_QUERY_TYPE_NORMAL = 2
 }
 
-enum V2NIMTeamJoinActionType {
+export enum V2NIMTeamJoinActionType {
     /** 申请入群 */
     V2NIM_TEAM_JOIN_ACTION_TYPE_APPLICATION = 0,
     /** 管理拒绝申请入群 */
@@ -1009,7 +1009,7 @@ enum V2NIMTeamJoinActionType {
     V2NIM_TEAM_JOIN_ACTION_TYPE_REJECT_INVITATION = 3
 }
 
-enum V2NIMTeamMessageMuteMode {
+export enum V2NIMTeamMessageMuteMode {
     /** 群消息免打扰关闭 */
     V2NIM_TEAM_MESSAGE_MUTE_MODE_OFF = 0,
     /** 群消息免打扰开启 */
@@ -1018,21 +1018,21 @@ enum V2NIMTeamMessageMuteMode {
     V2NIM_TEAM_MESSAGE_MUTE_MODE_NORMAL_ON = 2
 }
 
-enum V2NIMP2PMessageMuteMode {
+export enum V2NIMP2PMessageMuteMode {
     /** 点对点消息免打扰关闭 */
     V2NIM_P2P_MESSAGE_MUTE_MODE_OFF = 0,
     /** 点对点消息免打扰开启 */
     V2NIM_P2P_MESSAGE_MUTE_MODE_ON = 1
 }
 
-enum V2NIMFriendAddMode {
+export enum V2NIMFriendAddMode {
     /** 直接添加对方为好友 */
     V2NIM_FRIEND_MODE_TYPE_ADD = 1,
     /** 请求添加对方为好友, 对方需要验证 */
     V2NIM_FRIEND_MODE_TYPE_APPLY = 2
 }
 
-enum V2NIMTeamJoinActionStatus {
+export enum V2NIMTeamJoinActionStatus {
     /** 未处理 */
     V2NIM_TEAM_JOIN_ACTION_STATUS_INIT = 0,
     /** 已同意 */
@@ -1043,7 +1043,7 @@ enum V2NIMTeamJoinActionStatus {
     V2NIM_TEAM_JOIN_ACTION_STATUS_EXPIRED = 3
 }
 
-enum V2NIMFriendAddApplicationStatus {
+export enum V2NIMFriendAddApplicationStatus {
     /** 未处理 */
     V2NIM_FRIEND_ADD_APPLICATION_STATUS_INIT = 0,
     /** 已同意 */
@@ -1056,21 +1056,21 @@ enum V2NIMFriendAddApplicationStatus {
     V2NIM_FRIEND_ADD_APPLICATION_STATUS_DIRECT_ADD = 4
 }
 
-enum V2NIMFriendDeletionType {
+export enum V2NIMFriendDeletionType {
     /** 自己删除好友 */
     V2NIM_FRIEND_DELETION_TYPE_BY_SELF = 1,
     /** 对方删除好友 */
     V2NIM_FRIEND_DELETION_TYPE_BY_PEER = 2
 }
 
-enum V2NIMChatroomQueueLevelMode {
+export enum V2NIMChatroomQueueLevelMode {
     /** 所有人都有权限操作 */
     V2NIM_CHATROOM_QUEUE_LEVEL_MODE_ANY = 0,
     /** 只有创建者/管理员才能操作 */
     V2NIM_CHATROOM_QUEUE_LEVEL_MODE_MANAGER = 1
 }
 
-enum V2NIMChatroomMemberRole {
+export enum V2NIMChatroomMemberRole {
     /** 普通成员 */
     V2NIM_CHATROOM_MEMBER_ROLE_NORMAL = 0,
     /** 创建者 */
@@ -1085,7 +1085,7 @@ enum V2NIMChatroomMemberRole {
     V2NIM_CHATROOM_MEMBER_ROLE_VIRTUAL = 5
 }
 
-enum V2NIMChatroomKickedReason {
+export enum V2NIMChatroomKickedReason {
     /** 未知 */
     V2NIM_CHATROOM_KICKED_REASON_UNKNOWN = -1,
     /** 聊天室解散 */
@@ -1100,7 +1100,7 @@ enum V2NIMChatroomKickedReason {
     V2NIM_CHATROOM_KICKED_REASON_BE_BLOCKED = 5
 }
 
-enum V2NIMChatroomAsymmetricType {
+export enum V2NIMChatroomAsymmetricType {
     /** RSA */
     V2NIM_CHATROOM_ASYMMETRIC_TYPE_RSA = 1,
     /** SM2 */
@@ -1111,7 +1111,7 @@ enum V2NIMChatroomAsymmetricType {
     V2NIM_CHATROOM_ASYMMETRIC_TYPE_RSA_OAEP_256 = 8
 }
 
-enum V2NIMChatroomSymmetricType {
+export enum V2NIMChatroomSymmetricType {
     /** RC4 */
     V2NIM_CHATROOM_SYMMETRIC_TYPE_RC4 = 1,
     /** AES */
@@ -1120,7 +1120,7 @@ enum V2NIMChatroomSymmetricType {
     V2NIM_CHATROOM_SYMMETRIC_TYPE_SM4 = 4
 }
 
-enum V2NIMChatroomStatus {
+export enum V2NIMChatroomStatus {
     /** 聊天室断开连接 */
     V2NIM_CHATROOM_STATUS_DISCONNECTED = 0,
     /** 聊天室等待重连 */
@@ -1137,7 +1137,7 @@ enum V2NIMChatroomStatus {
     V2NIM_CHATROOM_STATUS_EXITED = 6
 }
 
-enum V2NIMMessageAttachmentType {
+export enum V2NIMMessageAttachmentType {
     /** 通用 */
     V2NIM_MESSAGE_ATTACHMENT_TYPE_UNIVERSAL = 0,
     /** 图片 */
@@ -1164,7 +1164,7 @@ enum V2NIMMessageAttachmentType {
     V2NIM_MESSAGE_ATTACHMENT_TYPE_CHATROOM_MEMBER_ENTER_NOTIFICATION = 11
 }
 
-enum V2NIMAIModelRoleType {
+export enum V2NIMAIModelRoleType {
     /** 系统 */
     V2NIM_AI_MODEL_ROLE_TYPE_SYSTEM,
     /** 用户 */
@@ -1173,7 +1173,7 @@ enum V2NIMAIModelRoleType {
     V2NIM_AI_MODEL_ROLE_TYPE_ASSISTANT,
 }
 
-enum V2NIMAIModelType {
+export enum V2NIMAIModelType {
     /** 未知 */
     V2NIM_AI_MODEL_TYPE_UNKNOW = 0,
     /** 通义千问大模型 */
@@ -1184,7 +1184,7 @@ enum V2NIMAIModelType {
     V2NIM_AI_MODEL_TYPE_PRIVATE = 3,
 }
 
-enum V2NIMDownloadAttachmentType {
+export enum V2NIMDownloadAttachmentType {
     /** 原始资源，支持全部有附件的类型 */
     V2NIM_DOWNLOAD_ATTACHMENT_TYPE_SOURCE,
     /** 图片缩略图，仅支持图片类附件 */
@@ -1193,7 +1193,7 @@ enum V2NIMDownloadAttachmentType {
     V2NIM_DOWNLOAD_ATTACHMENT_TYPE_VIDEO_COVER,
 }
 
-enum V2NIMSignallingChannelType {
+export enum V2NIMSignallingChannelType {
     /** 未知频道类型 */
     V2NIM_SIGNALLING_CHANNEL_TYPE_UNKNOWN = 0,
     /** 音频频道 */
@@ -1205,7 +1205,7 @@ enum V2NIMSignallingChannelType {
 }
 
 /** @brief 信令频道事件类型 */
-enum V2NIMSignallingEventType {
+export enum V2NIMSignallingEventType {
     /** 未知 */
     V2NIM_SIGNALLING_EVENT_TYPE_UNKNOWN,
     /** 关闭信令频道房间 */
@@ -1226,7 +1226,7 @@ enum V2NIMSignallingEventType {
     V2NIM_SIGNALLING_EVENT_TYPE_CONTROL
 }
 
-enum V2NIMUserStatusType {
+export enum V2NIMUserStatusType {
     /** 未知 */
     V2NIM_USER_STATUS_TYPE_UNKNOWN,
     /** 登录 */
