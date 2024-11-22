@@ -9,7 +9,7 @@
 
 namespace node_nim {
 
-Napi::Object V2NodeSubscriptionService::Init(Napi::Env env, Napi::Object exports) {
+Napi::Object V2NodeNIMSubscriptionService::Init(Napi::Env env, Napi::Object exports) {
     return InternalInit("V2NIMSubscriptionService", env, exports,
         {
             RegApi("subscribeUserStatus", &V2NIMSubscriptionService::subscribeUserStatus),
@@ -19,13 +19,13 @@ Napi::Object V2NodeSubscriptionService::Init(Napi::Env env, Napi::Object exports
         });
 }
 
-V2NodeSubscriptionService::V2NodeSubscriptionService(const Napi::CallbackInfo& info)
+V2NodeNIMSubscriptionService::V2NodeNIMSubscriptionService(const Napi::CallbackInfo& info)
     : BizService("V2NIMSubscriptionService", info) {
     service_instance_ = &v2::V2NIMClient::get().getSubscriptionService();
     initEventHandler();
 }
 
-void V2NodeSubscriptionService::initEventHandler() {
+void V2NodeNIMSubscriptionService::initEventHandler() {
     auto& subscription_service = v2::V2NIMClient::get().getSubscriptionService();
     V2NIMSubscribeListener listener;
     listener.onUserStatusChanged = MakeNotifyCallback<nstd::function<void(const nstd::vector<V2NIMUserStatus>& status)>>("userStatusChanged");

@@ -45,6 +45,20 @@ describe('******************** Chatroom ********************', function () {
       assert.strictEqual(instanceId, 0)
     })
   })
+  describe('#queueOffer', function () {
+    it('Offer queue should return with 0', async function () {
+      const queueService = chatroomInstance.getChatroomQueueService()
+      const spy = sinon.spy()
+      queueService.on('chatroomQueueOffered', spy)
+      await queueService.queueOffer({
+        elementKey: 'test',
+        elementValue: 'test'
+      })
+      // 延迟 5s
+      await new Promise(resolve => setTimeout(resolve, 5000))
+      assert.strictEqual(spy.calledOnce, true)
+    })
+  })
   describe('#sendMessage', () => {
     it('Send message should trigger onSendMessage event', async function () {
       const spy = sinon.spy()

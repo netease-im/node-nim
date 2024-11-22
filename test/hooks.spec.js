@@ -3,7 +3,9 @@ import assert from 'assert'
 
 exports.mochaHooks = {
   beforeAll: function (done) {
-    nim.client.init('', '', '', {})
+    nim.client.init('', '', '', {
+      sdk_log_level_: 6,
+    })
     nim.client.login(
       '45c6af3c98409b18a84451215d0bdd6e',
       'jiajia01',

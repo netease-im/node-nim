@@ -441,6 +441,25 @@ describe('********************Msglog********************', function () {
       })
     })
   })
+  describe('#regHistoryMessageFilterCb', async function () {
+    it('regHistoryMessageFilterCb should return with 200', async function () {
+      NIM.nim.msgLog.regHistoryMessageFilterCb((message) => {
+        console.log('message filter running, messageID: ', message.client_msg_id_)
+        return message.client_msg_id_ === '9f9beab8-4486-7217-81ce-075716038eeb'
+      })
+      const [code, account, toType, result] = await NIM.nim.msgLog.queryMsgOnlineAsync({
+        id_: 'jiajia02',
+        to_type_: 0,
+        limit_count_: 10,
+        from_time_: 0,
+        end_time_: new Date().getTime(),
+        reverse_: false,
+        need_save_to_local_: true,
+        auto_download_attachment_: false
+      })
+      console.log(result)
+    })
+  })
 })
 
 describe('******************** Msglog thread ********************', function () {

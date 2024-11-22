@@ -13,10 +13,10 @@
 
 namespace node_nim {
 
-class V2NodeSubscriptionService : public BizService<V2NodeSubscriptionService> {
+class V2NodeNIMSubscriptionService : public BizService<V2NodeNIMSubscriptionService> {
 public:
     static Napi::Object Init(Napi::Env env, Napi::Object exports);
-    explicit V2NodeSubscriptionService(const Napi::CallbackInfo& info);
+    explicit V2NodeNIMSubscriptionService(const Napi::CallbackInfo& info);
     void initEventHandler();
 };
 

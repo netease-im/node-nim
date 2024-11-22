@@ -211,6 +211,9 @@ CallbackSpecialization(V2NIMSuccessCallback<const V2NIMSignallingRoomInfo&>);
 CallbackSpecialization(V2NIMSuccessCallback<const nstd::vector<nstd::string>&>);
 CallbackSpecialization(V2NIMSuccessCallback<const V2NIMCustomUserStatusPublishResult&>);
 CallbackSpecialization(V2NIMSuccessCallback<const nstd::vector<V2NIMUserStatusSubscribeResult>&>);
+CallbackSpecialization(V2NIMSuccessCallback<const V2NIMChatroomQueueElement&>);
+CallbackSpecialization(V2NIMSuccessCallback<const nstd::vector<V2NIMChatroomQueueElement>&>);
+CallbackSpecialization(V2NIMSuccessCallback<const V2NIMProxyResponse&>);
 
 namespace xpack {
 // std::function

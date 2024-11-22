@@ -41,7 +41,8 @@ import {
   QueryMsgByKeywordParam,
   IsMessageIndexEstablishedCallback,
   BuildMsglogIndexesProgress,
-  BuildMsglogIndexesComplete
+  BuildMsglogIndexesComplete,
+  HistoryMessageFilter
 } from '../nim_def/msglog_def'
 import { NIMResCode } from '../nim_def/client_def'
 
@@ -1079,5 +1080,14 @@ export class NIMMsgLog extends EventEmitter<NIMMsgLogEvents> {
    */
   cancelMsglogIndexesBuilding (): void {
     this.msglog.CancelMsglogIndexesBuilding()
+  }
+
+  /**
+   * @brief 注册云端历史消息拉取过滤器（堵塞线程，谨慎使用，避免耗时行为）
+   * @param filter 云端历史消息拉取过滤器
+   * @return void
+   */
+  regHistoryMessageFilterCb (filter: HistoryMessageFilter | null): void {
+    this.msglog.RegHistoryMessageFilterCb(filter)
   }
 }

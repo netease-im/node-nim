@@ -653,6 +653,7 @@ export type FullTextSearchOnlineAsyncCallback = (rescode: NIMResCode, result: Qu
 export type IsMessageIndexEstablishedCallback = (is_established: boolean) => void
 export type BuildMsglogIndexesProgress = (total: number, built_count: number) => void
 export type BuildMsglogIndexesComplete = (reason: NIMBuildingMsglogIndexesCompleteReason, message: string) => void
+export type HistoryMessageFilter = (result: IMMessage) => boolean
 
 export interface NIMMsgLogAPI {
   InitEventHandlers (): void
@@ -796,4 +797,6 @@ export interface NIMMsgLogAPI {
   BuildMsglogIndexes (page_size: number, progress: BuildMsglogIndexesProgress | null, complete: BuildMsglogIndexesComplete | null): void
 
   CancelMsglogIndexesBuilding (): void
+
+  RegHistoryMessageFilterCb (cb: HistoryMessageFilter | null): void
 }

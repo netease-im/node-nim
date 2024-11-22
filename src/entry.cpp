@@ -42,6 +42,7 @@
 #include "v2/v2_node_nim_login_service.h"
 #include "v2/v2_node_nim_message_service.h"
 #include "v2/v2_node_nim_notification_service.h"
+#include "v2/v2_node_nim_passthrough_service.h"
 #include "v2/v2_node_nim_setting_service.h"
 #include "v2/v2_node_nim_signalling_service.h"
 #include "v2/v2_node_nim_storage_service.h"
@@ -50,6 +51,7 @@
 #include "v2/v2_node_nim_user_service.h"
 #include "v2/v2_node_nim_utilities.h"
 #include "v2_chatroom/v2_node_nim_chatroom_client.h"
+#include "v2_chatroom/v2_node_nim_chatroom_queue_service.h"
 #include "v2_chatroom/v2_node_nim_chatroom_sdk.h"
 #include "v2_chatroom/v2_node_nim_chatroom_service.h"
 
@@ -102,7 +104,9 @@ Napi::Object RegisterModule(Napi::Env env, Napi::Object exports) {
     node_nim::V2NodeNIMChatroomSdk::Init(env, exports);
     node_nim::V2NodeNIMChatroomClient::Init(env, exports);
     node_nim::V2NodeNIMChatroomService::Init(env, exports);
-    node_nim::V2NodeSubscriptionService::Init(env, exports);
+    node_nim::V2NodeNIMChatroomQueueService::Init(env, exports);
+    node_nim::V2NodeNIMSubscriptionService::Init(env, exports);
+    node_nim::V2NodeNIMPassthroughService::Init(env, exports);
     return exports;
 }
 
