@@ -1,6 +1,6 @@
 {
     "name": "node-nim",
-    "version": "10.6.0",
+    "version": "10.6.1",
     "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
     "main": "dist/node-nim.js",
     "bin": {
@@ -19,8 +19,6 @@
         "build": "npm run build_ts",
         "build_ts": "rimraf ./dist && rimraf ./types && tsc",
         "build_html_doc": "typedoc --plugin typedoc-github-theme",
-        "build_wiki_doc": "typedoc --plugin typedoc-plugin-markdown --plugin typedoc-github-wiki-theme --out wiki_doc",
-        "build_markdown_doc": "typedoc --plugin typedoc-plugin-markdown --out markdown_doc",
         "prepublishOnly": "npm run build_ts",
         "install": "npm run download_sdk",
         "download_sdk": "node -e \"require('./script/download-sdk.js').downloadSDK()\"",
