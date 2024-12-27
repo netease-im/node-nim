@@ -1248,3 +1248,11 @@ export enum V2NIMProxyRequestMethod {
   /** DELETE 请求 */
   V2NIM_PROXY_REQUEST_METHOD_DELETE
 }
+
+/** @brief 搜索关键字匹配条件 @since v10.7.0 */
+export enum V2NIMSearchKeywordMathType {
+  /** 或 */
+  V2NIM_SEARCH_KEYWORD_MATH_TYPE_OR,
+ /** 与 */
+  V2NIM_SEARCH_KEYWORD_MATH_TYPE_AND
+}

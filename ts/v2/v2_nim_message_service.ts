@@ -15,6 +15,7 @@ import {
   V2NIMAddCollectionParams,
   V2NIMCollection,
   V2NIMCollectionOption,
+  V2NIMCollectionListResult,
   V2NIMP2PMessageReadReceipt,
   V2NIMTeamMessageReadReceipt,
   V2NIMTeamMessageReadReceiptDetail,
@@ -26,7 +27,9 @@ import {
   V2NIMMessageQuickCommentNotification,
   V2NIMMessageRevokeNotification,
   V2NIMModifyMessageParams,
-  V2NIMModifyMessageResult
+  V2NIMModifyMessageResult,
+  V2NIMMessageSearchExParams,
+  V2NIMMessageSearchResult,
 } from 'ts/v2_def/v2_nim_struct_def'
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
@@ -712,6 +715,29 @@ export class V2NIMMessageService extends EventEmitter<V2NIMMessageListener> {
   }
 
   /**
+   * @brief 分页获取收藏列表
+   * @param option 获取收藏列表查询参数
+   * @returns V2NIMCollectionListResult
+   * @example
+   * ```javascript
+   * const result = await v2.messageService.getCollectionListExByOption(option)
+   * ```
+   */
+  getCollectionListExByOption(option: V2NIMCollectionOption): Promise<V2NIMCollectionListResult> {
+    return new Promise((resolve, reject) => {
+      this.instance.getCollectionListExByOption(
+        option,
+        (result: V2NIMCollectionListResult) => {
+          resolve(result)
+        },
+        (error: V2NIMError) => {
+          reject(error)
+        }
+      )
+    })
+  }
+
+  /**
    * @brief 发送 P2P 消息已读回执
    * @param message 要发送已读回执的消息
    * @returns void
@@ -901,6 +927,31 @@ export class V2NIMMessageService extends EventEmitter<V2NIMMessageListener> {
       this.instance.searchCloudMessages(
         params,
         (result: Array<V2NIMMessage>) => {
+          resolve(result)
+        },
+        (error: V2NIMError) => {
+          reject(error)
+        }
+      )
+    })
+  }
+
+  /**
+   * @brief 搜索本地消息
+   * @param params 消息检索参数
+   * @returns V2NIMMessageSearchResult
+   * @example
+   * ```javascript
+   * const result = await v2.messageService.searchLocalMessages({
+   *    keywordList: ['keyword1', 'keyword2'],
+   * })
+   * ```
+   */
+  searchLocalMessages (params: V2NIMMessageSearchExParams): Promise<V2NIMMessageSearchResult> {
+    return new Promise((resolve, reject) => {
+      this.instance.searchLocalMessages(
+        params,
+        (result: V2NIMMessageSearchResult) => {
           resolve(result)
         },
         (error: V2NIMError) => {

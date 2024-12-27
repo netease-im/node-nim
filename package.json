@@ -1,6 +1,6 @@
 {
     "name": "node-nim",
-    "version": "10.6.1",
+    "version": "10.7.0",
     "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
     "main": "dist/node-nim.js",
     "bin": {
@@ -61,9 +61,6 @@
         "sinon": "^18.0.0",
         "typedoc": "^0.26.6",
         "typedoc-github-theme": "^0.1.2",
-        "typedoc-github-wiki-theme": "^2.0.0",
-        "typedoc-material-theme": "^1.1.0",
-        "typedoc-plugin-markdown": "^4.2.6",
         "typescript": "^4.9.5"
     },
     "keywords": [

@@ -42,7 +42,8 @@ import {
   V2NIMTeamMemberRoleQueryType,
   V2NIMTeamType,
   V2NIMTeamUpdateExtensionMode,
-  V2NIMTeamUpdateInfoMode
+  V2NIMTeamUpdateInfoMode,
+  V2NIMSearchKeywordMathType
 } from './v2_nim_enum_def'
 
 export interface V2NIMError {
@@ -443,6 +444,8 @@ export interface V2NIMNotificationConfig {
   offlineEnabled?: boolean
   /** 是否需要计未读 */
   unreadEnabled?: boolean
+  /** 外部输入标识字段，建议输入时每次串唯一，长度不超过 32 个字符 */
+  clientNotificationId?: string
 }
 
 export interface V2NIMMessageRefer {
@@ -844,6 +847,8 @@ export interface V2NIMMessageListOption {
   direction?: V2NIMQueryDirection
   /** 严格模式, 无法确定消息完整性则返回错误 */
   strictMode?: boolean
+  /** 是否只查询本地消息 */
+  onlyQueryLocal?: boolean
 }
 
 export interface V2NIMClearHistoryMessageOption {
@@ -949,6 +954,13 @@ export interface V2NIMCollectionOption {
   limit?: number
   /** 收藏类型 */
   collectionType?: number
+}
+
+export interface V2NIMCollectionListResult {
+  /** 总收藏条数 */
+  totalCount: number
+  /** 本次分页查询返回的收藏列表 */
+  collectionList: Array<V2NIMCollection>
 }
 
 /** @brief 动态 token 获取回调 */
@@ -2347,4 +2359,53 @@ export interface V2NIMProxyNotify {
   body: string
   /** 发送时间，毫秒 */
   time: number
+}
+
+/** @brief 消息检索参数 @since v10.7.0 */
+export interface V2NIMMessageSearchExParams {
+  /** 要查询的会话 ID，不指定则查询所有会话 */
+  conversationId?: string
+  /** 要查询的关键字列表，为空则按发送者或消息类型查询，最多支持 5 个。当消息发送者以及消息类型均未指定时，必须设置关键字列表 */
+  keywordList?: Array<string>
+  /** 指定关键字列表匹配类型，见 {@link V2NIMSearchKeywordMathType}，默认为 V2NIM_SEARCH_KEYWORD_MATH_TYPE_OR */
+  keywordMatchType: V2NIMSearchKeywordMathType
+  /** 匹配消息发送者，最多支持 5 个，为空则匹配所有发送者 */
+  senderAccountIds?: Array<string>
+  /** 匹配消息类型，为空则匹配所有类型 */
+  messageTypes?: Array<V2NIMMessageType>
+  /** 搜索的起始时间点，默认为 0（从现在开始搜索）。UTC 时间戳，单位：毫秒 */
+  searchStartTime: number
+  /** 从起始时间点开始的过去时间范围，默认为 0（不限制时间范围）。24 x 60 x 60 x 1000 代表过去一天，单位：毫秒 */
+  searchTimePeriod: number
+  /** 搜索的数量限制，默认为 20，最大为 100 */
+  limit: number
+  /** 下一页的 token，用于分页查询 */
+  pageToken?: string
+}
+
+/** @brief 查询消息返回的结果项 @since v10.7.0 */
+export interface V2NIMMessageSearchItem {
+  /// 会话 ID
+  conversationId: string
+  /// 返回的消息列表
+  messages: Array<V2NIMMessage>
+  /// 单个会话命中的数量
+  count: number
+}
+
+/** @brief 查询消息返回的结果 @since v10.7.0 */
+export interface V2NIMMessageSearchResult {
+  /** 满足检索条件的所有消息数量 */
+  count: number
+  /**
+   * - 单个会话的返回结果
+   *   - 如果查询会话 ID 不会空，则返回 items 会对应会话按指定条数检索出来的消息
+   *   - 如果会话 ID 为空，则为每一个会话检索出来的内容
+   *   - 单个 items 查出的消息按从新到旧排序
+   * - 多个会话的返回结果
+   *   - 按每个会话的最新消息从新到旧排序
+   */
+  items: Array<V2NIMMessageSearchItem>
+  /** 下次请求的 token，两次查询参数必须一致 */
+  nextPageToken: string
 }
