@@ -1,8 +1,7 @@
 # 网易云信 Electron IM SDK
 
 [![codecov](https://codecov.io/gh/netease-im/node-nim/branch/master/graph/badge.svg?token=YUP8T7ZG6U)](https://codecov.io/gh/netease-im/node-nim) [![GitHub all releases](https://img.shields.io/github/downloads/netease-im/node-nim/total)](https://github.com/netease-im/node-nim/releases)  
-[English](README.md)  
-[API 文档](https://github.com/netease-im/node-nim/wiki)
+[English](README.md) | [API 文档](https://doc.yunxin.163.com/messaging2/client-apis?platform=client)
 
 ## 目录
 
@@ -156,7 +155,7 @@ NIM.qchat.instance.cleanup({})
 | dataSync         | 数据同步模块                |
 | friend           | 好友模块                  |
 | global           | 全局模块                  |
-| msglog           | 消息记录模块                |
+| msgLog           | 消息记录模块                |
 | nos              | NOS 模块                |
 | onlineSession    | 在线会话模块                |
 | passThroughProxy | 透传代理模块                |
@@ -185,4 +184,3 @@ NIM.qchat.instance.cleanup({})
 | systemNotification | 圈组系统通知模块 |
 | attachment         | 圈组附件模块   |
 | role               | 圈组身份组模块  |
-

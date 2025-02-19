@@ -1,6 +1,6 @@
 {
     "name": "node-nim",
-    "version": "10.7.0",
+    "version": "10.8.0",
     "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
     "main": "dist/node-nim.js",
     "bin": {
@@ -22,7 +22,8 @@
         "prepublishOnly": "npm run build_ts",
         "install": "npm run download_sdk",
         "download_sdk": "node -e \"require('./script/download-sdk.js').downloadSDK()\"",
-        "publish_to_netease_npm": "node script/publish-to-netease-npm.js",
+        "publish_to_netease_npm": "node script/publish-to-netease-npm.js http://npm.netease.im/",
+        "publish_to_npmjs": "node script/publish-to-netease-npm.js https://registry.npmjs.org",
         "test": "npx cross-env BABEL_ENV=test mocha"
     },
     "nyc": {

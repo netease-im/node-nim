@@ -43,7 +43,7 @@ import {
   V2NIMTeamType,
   V2NIMTeamUpdateExtensionMode,
   V2NIMTeamUpdateInfoMode,
-  V2NIMSearchKeywordMathType
+  V2NIMSearchKeywordMathType, V2NIMClearHistoryMode
 } from './v2_nim_enum_def'
 
 export interface V2NIMError {
@@ -145,6 +145,10 @@ export interface V2NIMBasicOption {
   disableAppNap?: boolean
   /** 云信指南针数据上报开关 */
   enableCompass?: boolean
+  /** 群通知消息是否计入本地会话未读 */
+  teamNotificationBadge?: boolean
+  /** 收到撤回消息通知时是否减少指定会话的未读计数 */
+  reduceUnreadOnMessageRecall?: boolean
   /** 云信指南针数据上报地址，为空则使用默认地址 */
   compassDataEndpoint?: string
 }
@@ -575,6 +579,8 @@ export interface V2NIMMessage {
   createTime?: number
   /** 消息发送者账号 */
   senderId?: string
+  /** 消息发送者发送该消息时那一刻的昵称 */
+  senderName?: string
   /** 消息接收者账号 */
   receiverId?: string
   /** 消息所属会话类型 */
@@ -858,8 +864,10 @@ export interface V2NIMClearHistoryMessageOption {
   deleteRoam?: boolean
   /** 是否多端同步, 默认不同步 */
   onlineSync?: boolean
-  /**  扩展字段, 多端同步时会同步到其它端 */
+  /** 扩展字段, 多端同步时会同步到其它端 */
   serverExtension?: string
+  /** 清理消息方式，默认为 V2NIM_CLEAR_HISTORY_MODE_ALL，表示删除云端和本地 */
+  clearMode: V2NIMClearHistoryMode
 }
 
 export interface V2NIMMessageQuickCommentPushConfig {
@@ -2110,6 +2118,8 @@ export interface V2NIMSignallingChannelInfo {
   expireTime: number
   /** 创建者账号 ID */
   creatorAccountId: string
+  /** 频道是否有效 */
+  channelValid: boolean
 }
 
 export interface V2NIMSignallingMember {
@@ -2139,6 +2149,14 @@ export interface V2NIMSignallingRtcInfo {
   rtcTokenTtl?: number
   /** JSON 格式字符串，音视频SDK相关参数，IM 信令仅透传相关参数 */
   rtcParams?: string
+}
+
+/** @brief 加入信令房间结果 */
+export interface V2NIMSignallingJoinResult {
+  /** 信令房间相关信息 */
+  roomInfo: V2NIMSignallingRoomInfo;
+  /** 音视频房间相关信息 */
+  rtcInfo?: V2NIMSignallingRtcInfo;
 }
 
 export interface V2NIMSignallingCallResult {
@@ -2351,7 +2369,7 @@ export interface V2NIMProxyResponse {
   body: string
 }
 
-/// @brief 代理请求回调
+/** @brief 代理请求回调 */
 export interface V2NIMProxyNotify {
   /** 发送方账号 */
   fromAccountId: string
@@ -2408,4 +2426,87 @@ export interface V2NIMMessageSearchResult {
   items: Array<V2NIMMessageSearchItem>
   /** 下次请求的 token，两次查询参数必须一致 */
   nextPageToken: string
+}
+
+/** @brief 本地会话信息 @since v10.8.0 */
+export interface V2NIMLocalConversation {
+  /** 会话 ID */
+  conversationId: string
+  /** 会话类型 */
+  type: V2NIMConversationType;
+  /**
+   * 会话名称，根据不同的会话类型显示相应的名称
+   *  - P2P：显示对方的用户名
+   *  - Team：显示群名
+   *  - SuperTeam：显示群名
+   */
+  name?: string;
+  /**
+   * 会话头像名称，根据不同的会话类型显示相应的名称
+   *  - P2P：显示对方的用户名
+   *    - 好友备注 -> 用户名称 -> 用户ID
+   *  - Team：显示群名
+   *    - 群名称 -> 群ID
+   *  - SuperTeam：显示群名
+   *    - 群名称 -> 群ID
+   */
+  avatar?: string;
+  /**
+   * 会话静音状态，根据不同的会话类型显示相应的状态
+   *  - P2P：获取或者设置对方的静音状态
+   *  - Team：获取或者设置群对的静音状态
+   *  - SuperTeam：获取或者设置群对的静音状态
+   */
+  mute: boolean;
+  /**  会话置顶状态 */
+  stickTop: boolean;
+  /** 会话本地扩展字段，不会多端同步 */
+  localExtension?: string;
+  /** 会话所属的最近一条消息 */
+  lastMessage?: V2NIMLastMessage;
+  /** 会话未读消息计数 */
+  unreadCount: number;
+  /**
+   * 会话排序字段
+   *  - 置顶默认排最前，多条置顶内按默认会话创建时间排序
+   */
+  sortOrder: number;
+  /** 会话创建时间戳 */
+  createTime: number;
+  /** 会话更新时间戳 */
+  updateTime: number;
+}
+
+/** @brief 本地会话查询结果 @since v10.8.0 */
+export interface V2NIMLocalConversationResult {
+  /** 下一次偏移量 */
+  offset: number;
+  /** 数据是否拉取完毕，true 表示拉取完毕，false 表示还有数据 */
+  finished: boolean;
+  /** 本地会话列表 */
+  conversationList: Array<V2NIMLocalConversation>;
+}
+
+/** @brief 本地会话查询选项 @since v10.8.0 */
+export interface V2NIMLocalConversationOption {
+  /** 查询指定会话类型，留空表示不限制会话类型 */
+  conversationTypes?: Array<V2NIMConversationType>;
+  /** 是否仅返回有未读消息的会话，true 表示只返回有未读消息的会话，false 表示返回所有会话 */
+  onlyUnread: boolean;
+}
+
+/** @brief 本地会话过滤条件 @since v10.8.0 */
+export interface V2NIMLocalConversationFilter {
+  /** 过滤指定会话类型，留空表示不限制会话类型 */
+  conversationTypes?: Array<V2NIMConversationType>;
+  /** 是否过滤免打扰的会话类型，true 表示过滤免打扰的会话，false 表示不过滤 */
+  ignoreMuted: boolean;
+}
+
+/** @brief 本地会话操作结果 @since v10.8.0 */
+export interface V2NIMLocalConversationOperationResult {
+  /** 会话标识 */
+  conversationId?: string
+  /** 错误 */
+  error?: V2NIMError
 }

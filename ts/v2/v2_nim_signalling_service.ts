@@ -11,8 +11,10 @@ import {
   V2NIMSignallingRejectInviteParams,
   V2NIMSignallingAcceptInviteParams,
   V2NIMSignallingEvent,
-  V2NIMError
+  V2NIMSignallingJoinResult,
+  V2NIMError,
 } from 'ts/v2_def/v2_nim_struct_def'
+import { V2NIMSignallingChannelType } from 'ts/v2_def/v2_nim_enum_def'
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
 
@@ -112,7 +114,7 @@ export class V2NIMSignallingService extends EventEmitter<V2NIMSignallingListener
    * const result = await v2.signallingService.createRoom(channelType, channelName, channelExtension)
    * ```
    */
-  createRoom (channelType: number, channelName: string, channelExtension: string): Promise<V2NIMSignallingChannelInfo> {
+  createRoom (channelType: V2NIMSignallingChannelType, channelName: string, channelExtension: string): Promise<V2NIMSignallingChannelInfo> {
     return new Promise((resolve, reject) => {
       this.instance.createRoom(
         channelType,
@@ -173,11 +175,11 @@ export class V2NIMSignallingService extends EventEmitter<V2NIMSignallingListener
    * })
    * ```
    */
-  joinRoom (params: V2NIMSignallingJoinParams): Promise<V2NIMSignallingRoomInfo> {
+  joinRoom (params: V2NIMSignallingJoinParams): Promise<V2NIMSignallingJoinResult> {
     return new Promise((resolve, reject) => {
       this.instance.joinRoom(
         params,
-        (result: V2NIMSignallingRoomInfo) => {
+        (result: V2NIMSignallingJoinResult) => {
           resolve(result)
         },
         (error: V2NIMError) => {

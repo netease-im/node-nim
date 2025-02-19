@@ -322,6 +322,10 @@ export enum V2NIMErrorCode {
   V2NIM_ERROR_CODE_CONVERSATION_STICK_TOP_LIMIT = 110303,
   /** 会话所属会话分组数量超限 / conversation belonged group limit */
   V2NIM_ERROR_CODE_CONVERSATION_BELONGED_GROUP_LIMIT = 110304,
+  /** 当前会话未置顶 / conversation not stick top */
+  V2NIM_ERROR_CODE_CONVERSATION_IS_NOT_STICK_TOP = 110305,
+  /** 置顶功能未开通 / stick top function disabled */
+  V2NIM_ERROR_CODE_STICK_TOP_DISABLED = 110306,
   /** 会话不存在 / conversation not exist */
   V2NIM_ERROR_CODE_CONVERSATION_NOT_EXIST = 110404,
   /** 会话请求需要重试 / conversation operation need retry */
@@ -673,9 +677,9 @@ export enum V2NIMMessageNotificationType {
   /** 超大群群拉人 */
   V2NIM_MESSAGE_NOTIFICATION_TYPE_SUPER_TEAM_INVITE = 401,
   /** 超大群 V2NIM_M 群踢人 */
-  SSAGE_NOTIFICATION_TYPE_SUPER_TEAM_KICK = 402,
+  V2NIM_MESSAGE_NOTIFICATION_TYPE_SUPER_TEAM_KICK = 402,
   /** 超大群退出群 */
-  V2NIM_MESSAGE_NOTIFICATION_TYPE_SUPER_TEAM_LAVE = 403,
+  V2NIM_MESSAGE_NOTIFICATION_TYPE_SUPER_TEAM_LEAVE = 403,
   /** 超大群更新群信息 */
   V2NIM_MESSAGE_NOTIFICATION_TYPE_SUPER_TEAM_UPDATE_TINFO = 404,
   /** 超大群群解散 */
@@ -1253,6 +1257,14 @@ export enum V2NIMProxyRequestMethod {
 export enum V2NIMSearchKeywordMathType {
   /** 或 */
   V2NIM_SEARCH_KEYWORD_MATH_TYPE_OR,
- /** 与 */
+  /** 与 */
   V2NIM_SEARCH_KEYWORD_MATH_TYPE_AND
+}
+
+/** @brief 删除消息模式 @since v10.8.0 */
+export enum V2NIMClearHistoryMode {
+  /** 同时删除云端和本地 */
+  V2NIM_CLEAR_HISTORY_MODE_ALL,
+  /** 仅删除本地, 云端拉取可以恢复 */
+  V2NIM_CLEAR_HISTORY_MODE_LOCAL
 }

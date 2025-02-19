@@ -101,6 +101,7 @@ export * from './qchat_def/message_def'
 export * from './qchat_def/system_notification_def'
 export * from './qchat_def/attachment_def'
 export * from './qchat_def/role_def'
+export * from './v2_def/v2_nim_enum_def'
 
 export class NIM {
   /** 客户端模块 */

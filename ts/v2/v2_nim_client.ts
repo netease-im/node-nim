@@ -4,6 +4,7 @@ import { EventEmitter } from 'eventemitter3'
 import { V2NIMLoginService } from './v2_nim_login_service'
 import { V2NIMConversationGroupService } from './v2_nim_conversation_group_service'
 import { V2NIMConversationService } from './v2_nim_conversation_service'
+import { V2NIMLocalConversationService } from './v2_nim_local_conversation_service'
 import { V2NIMMessageService } from './v2_nim_message_service'
 import { V2NIMNotificationService } from './v2_nim_notification_service'
 import { V2NIMStorageService } from './v2_nim_storage_service'
@@ -36,6 +37,7 @@ export class V2NIMClient extends EventEmitter<V2NIMClientListener> {
   storageUtil: V2NIMStorageUtil | null
   loginService: V2NIMLoginService | null
   conversationService: V2NIMConversationService | null
+  localConversationService: V2NIMLocalConversationService | null
   conversationGroupService: V2NIMConversationGroupService | null
   messageService: V2NIMMessageService | null
   notificationService: V2NIMNotificationService | null
@@ -64,6 +66,7 @@ export class V2NIMClient extends EventEmitter<V2NIMClientListener> {
     this.storageUtil = null
     this.loginService = null
     this.conversationService = null
+    this.localConversationService = null
     this.conversationGroupService = null
     this.messageService = null
     this.notificationService = null
@@ -105,6 +108,7 @@ export class V2NIMClient extends EventEmitter<V2NIMClientListener> {
     this.storageUtil = new V2NIMStorageUtil()
     this.loginService = new V2NIMLoginService()
     this.conversationService = new V2NIMConversationService()
+    this.localConversationService = new V2NIMLocalConversationService()
     this.conversationGroupService = new V2NIMConversationGroupService()
     this.messageService = new V2NIMMessageService()
     this.notificationService = new V2NIMNotificationService()
@@ -134,10 +138,13 @@ export class V2NIMClient extends EventEmitter<V2NIMClientListener> {
   uninit (): V2NIMError | null {
     this.conversationIdUtil = null
     this.messageCreator = null
+    this.messageConverter = null
     this.messageAttachmentCreator = null
     this.clientAntispamUtil = null
+    this.storageUtil = null
     this.loginService = null
     this.conversationService = null
+    this.localConversationService = null
     this.conversationGroupService = null
     this.messageService = null
     this.notificationService = null
@@ -191,6 +198,19 @@ export class V2NIMClient extends EventEmitter<V2NIMClientListener> {
    */
   getConversationService (): V2NIMConversationService | null {
     return this.conversationService
+  }
+
+  /**
+   * @brief 获取本地会话服务
+   * @returns V2NIMLocalConversationService
+   * @since v10.8.0
+   * @example
+   * ```javascript
+   * const localConversationService = client.getLocalConversationService()
+   * ```
+   */
+  getLocalConversationService (): V2NIMLocalConversationService | null {
+    return this.localConversationService
   }
 
   /**

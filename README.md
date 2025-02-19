@@ -1,8 +1,7 @@
 # NetEase Electron IM SDK
 
 [![codecov](https://codecov.io/gh/netease-im/node-nim/branch/master/graph/badge.svg?token=YUP8T7ZG6U)](https://codecov.io/gh/netease-im/node-nim) [![GitHub all releases](https://img.shields.io/github/downloads/netease-im/node-nim/total)](https://github.com/netease-im/node-nim/releases)  
-[中文](README_CN.md)  
-[API Document](https://github.com/netease-im/node-nim/wiki)
+[中文](README_CN.md) | [API Document](https://doc.yunxin.163.com/messaging2/client-apis?platform=client)
 
 ## Table of Contents
 
@@ -152,7 +151,7 @@ The objects that can be directly accessed through `NIM.nim` are:
 | `dataSync`         | Data sync module                                                    |
 | `friend`           | Friend module                                                       |
 | `global`           | Global module                                                       |
-| `msglog`           | Message log module                                                  |
+| `msgLog`           | Message log module                                                  |
 | `nos`              | Object storage module                                               |
 | `onlineSession`    | Online session module                                               |
 | `passThroughProxy` | Pass-through proxy module                                           |

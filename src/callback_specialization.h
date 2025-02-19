@@ -171,7 +171,7 @@ CallbackSpecialization(V2NIMSuccessCallback<nstd::vector<V2NIMMessageQuickCommen
 CallbackSpecialization(V2NIMSuccessCallback<nstd::vector<V2NIMCollection>>);
 CallbackSpecialization(V2NIMSuccessCallback<nstd::vector<V2NIMTeamMessageReadReceipt>>);
 CallbackSpecialization(V2NIMSuccessCallback<V2NIMMessage>);
-CallbackSpecialization(V2NIMSuccessCallback<V2NIMTeamMessageReadReceiptDetail>);
+CallbackSpecialization(V2NIMSuccessCallback<const V2NIMTeamMessageReadReceiptDetail&>);
 CallbackSpecialization(V2NIMSuccessCallback<V2NIMP2PMessageReadReceipt>);
 CallbackSpecialization(V2NIMSuccessCallback<V2NIMCollection>);
 CallbackSpecialization(V2NIMSuccessCallback<V2NIMSendMessageResult>);
@@ -182,14 +182,14 @@ CallbackSpecialization(V2NIMSuccessCallback<nstd::vector<nstd::string>>);
 CallbackSpecialization(V2NIMSuccessCallback<nstd::vector<V2NIMTeam>>);
 CallbackSpecialization(V2NIMSuccessCallback<nstd::vector<V2NIMTeamMember>>);
 using V2NIMCallbackSpecializationTempType0 = nstd::map<V2NIMTeamType, uint32_t>;
-CallbackSpecialization(V2NIMSuccessCallback<V2NIMCallbackSpecializationTempType0>);
+CallbackSpecialization(V2NIMSuccessCallback<const V2NIMCallbackSpecializationTempType0&>);
 using V2NIMCallbackSpecializationTempType1 = nstd::map<nstd::string, nstd::string>;
-CallbackSpecialization(V2NIMSuccessCallback<V2NIMCallbackSpecializationTempType1>);
+CallbackSpecialization(V2NIMSuccessCallback<const V2NIMCallbackSpecializationTempType1&>);
 using V2NIMCallbackSpecializationTempType2 = nstd::map<nstd::string, nstd::vector<V2NIMMessageQuickComment>>;
-CallbackSpecialization(V2NIMSuccessCallback<V2NIMCallbackSpecializationTempType2>);
+CallbackSpecialization(V2NIMSuccessCallback<const V2NIMCallbackSpecializationTempType2&>);
 CallbackSpecialization(V2NIMSuccessCallback<nstd::vector<V2NIMFriend>>);
 using V2NIMCallbackSpecializationTempType3 = nstd::map<nstd::string, bool>;
-CallbackSpecialization(V2NIMSuccessCallback<V2NIMCallbackSpecializationTempType3>);
+CallbackSpecialization(V2NIMSuccessCallback<const V2NIMCallbackSpecializationTempType3&>);
 CallbackSpecialization(V2NIMSuccessCallback<V2NIMFriendAddApplicationResult>);
 CallbackSpecialization(V2NIMSuccessCallback<nstd::vector<V2NIMUser>>);
 CallbackSpecialization(V2NIMSuccessCallback<V2NIMTeamJoinActionInfoResult>);
@@ -203,11 +203,11 @@ CallbackSpecialization(V2NIMSuccessCallback<V2NIMThreadMessageListResult>);
 CallbackSpecialization(V2NIMSuccessCallback<const V2NIMGetMediaResourceInfoResult&>);
 CallbackSpecialization(V2NIMSuccessCallback<time_t>);
 CallbackSpecialization(V2NIMSuccessCallback<const V2NIMModifyMessageResult&>);
+CallbackSpecialization(V2NIMSuccessCallback<const V2NIMSignallingJoinResult&>);
 CallbackSpecialization(V2NIMSuccessCallback<const V2NIMSignallingCallResult&>);
 CallbackSpecialization(V2NIMSuccessCallback<V2NIMSignallingCallSetupResult>);
 CallbackSpecialization(V2NIMSuccessCallback<const V2NIMSignallingChannelInfo&>);
 CallbackSpecialization(V2NIMSuccessCallback<const V2NIMSignallingRoomInfo&>);
-
 CallbackSpecialization(V2NIMSuccessCallback<const nstd::vector<nstd::string>&>);
 CallbackSpecialization(V2NIMSuccessCallback<const V2NIMCustomUserStatusPublishResult&>);
 CallbackSpecialization(V2NIMSuccessCallback<const nstd::vector<V2NIMUserStatusSubscribeResult>&>);
@@ -216,6 +216,10 @@ CallbackSpecialization(V2NIMSuccessCallback<const nstd::vector<V2NIMChatroomQueu
 CallbackSpecialization(V2NIMSuccessCallback<const V2NIMProxyResponse&>);
 CallbackSpecialization(V2NIMSuccessCallback<const V2NIMCollectionListResult&>);
 CallbackSpecialization(V2NIMSuccessCallback<const V2NIMMessageSearchResult&>);
+CallbackSpecialization(V2NIMSuccessCallback<const V2NIMLocalConversationResult&>);
+CallbackSpecialization(V2NIMSuccessCallback<const nstd::vector<V2NIMLocalConversation>&>);
+CallbackSpecialization(V2NIMSuccessCallback<const V2NIMLocalConversation&>);
+CallbackSpecialization(V2NIMSuccessCallback<const nstd::vector<V2NIMLocalConversationOperationResult>&>);
 
 namespace xpack {
 // std::function

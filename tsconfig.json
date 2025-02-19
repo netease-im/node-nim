@@ -17,7 +17,7 @@
     "typedocOptions": {
         "entryPoints": ["ts/node-nim.ts", "ts/nim", "ts/nim_def", "ts/qchat", "ts/qchat_def", "ts/v2", "ts/v2_def"],
         "entryPointStrategy": "expand",
-        "readme": "README.md",
+        "readme": "README_CN.md",
         "out": "doc",
         "sort": "source-order",
         "excludeProtected": "true",

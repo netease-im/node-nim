@@ -39,6 +39,7 @@
 #include "v2/v2_node_nim_conversation_service.h"
 #include "v2/v2_node_nim_friend_service.h"
 #include "v2/v2_node_nim_instance.h"
+#include "v2/v2_node_nim_local_conversation_service.h"
 #include "v2/v2_node_nim_login_service.h"
 #include "v2/v2_node_nim_message_service.h"
 #include "v2/v2_node_nim_notification_service.h"
@@ -91,6 +92,7 @@ Napi::Object RegisterModule(Napi::Env env, Napi::Object exports) {
     node_nim::V2NodeNIMUtilities::Init(env, exports);
     node_nim::V2NodeNIMLoginService::Init(env, exports);
     node_nim::V2NodeNIMConversationService::Init(env, exports);
+    node_nim::V2NodeNIMLocalConversationService::Init(env, exports);
     node_nim::V2NodeNIMMessageService::Init(env, exports);
     node_nim::V2NodeNIMConversationGroupService::Init(env, exports);
     node_nim::V2NodeNIMNotificationService::Init(env, exports);

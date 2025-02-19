@@ -1,6 +1,8 @@
 #include "v2_node_nim_conversation_service.h"
 #include "v2_nim_api.hpp"
+
 namespace node_nim {
+
 Napi::Object node_nim::V2NodeNIMConversationService::Init(Napi::Env env, Napi::Object exports) {
     return InternalInit("V2NIMConversationService", env, exports,
         {RegApi("createConversation", &V2NIMConversationService::createConversation),
@@ -48,4 +50,5 @@ void V2NodeNIMConversationService::initEventHandler() {
         MakeNotifyCallback<nstd::function<void(const nstd::string&, time_t)>>("conversationReadTimeUpdated");
     conversation_service.addConversationListener(conversation_listener);
 }
+
 }  // namespace node_nim
