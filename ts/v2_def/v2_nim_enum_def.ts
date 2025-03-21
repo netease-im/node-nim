@@ -975,7 +975,7 @@ export enum V2NIMTeamChatBannedMode {
   /** 普通成员禁言, 不包括管理员，群主 */
   V2NIM_TEAM_CHAT_BANNED_MODE_BANNED_NORMAL = 1,
   /** 全员禁言, 群组所有成员都被禁言,该状态只能 OpenApi 发起 */
-  V2NIM_TEAM_CHAT_BANNED_MODE_BANNED_ALL = 2
+  V2NIM_TEAM_CHAT_BANNED_MODE_BANNED_ALL = 3
 }
 
 export enum V2NIMTeamUpdateExtensionMode {

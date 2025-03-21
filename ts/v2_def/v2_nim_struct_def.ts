@@ -43,7 +43,9 @@ import {
   V2NIMTeamType,
   V2NIMTeamUpdateExtensionMode,
   V2NIMTeamUpdateInfoMode,
-  V2NIMSearchKeywordMathType, V2NIMClearHistoryMode
+  V2NIMSearchKeywordMathType,
+  V2NIMClearHistoryMode,
+  V2NIMAIModelRoleType
 } from './v2_nim_enum_def'
 
 export interface V2NIMError {
@@ -133,6 +135,8 @@ export interface V2NIMBasicOption {
   useHttps?: boolean
   /** 是否使用 httpdns */
   useHttpdns?: boolean
+  /** 是否使用云端会话和会话分组服务 */
+  enableCloudConversation?: boolean
   /** 自定义客户端类型 */
   customClientType?: number
   /** 登录自定义信息, 最大 32 个字符 */
@@ -544,7 +548,7 @@ export interface V2NIMAIModelConfigParams {
   temperature?: number
 }
 
-export interface V2NIMAIModelCallResponse {
+export interface V2NIMAIModelCallResult {
   /** AI 响应的状态码 */
   code?: number
   /** 数字人的账户 ID */
@@ -702,6 +706,28 @@ export interface V2NIMMessageTargetConfig {
   newMemberVisible?: boolean
 }
 
+export interface V2NIMAIModelCallMessage {
+  /// 上下文内容的角色
+  role: V2NIMAIModelRoleType
+  /// 上下文的内容
+  msg: string
+  /// 类型, 暂时只有 0, 代表文本, 预留扩展能力
+  type: number
+}
+
+export interface V2NIMMessageAIConfigParams {
+  /** 数字人账号信息 */
+  accountId: string
+  /** 请求大模型的内容 */
+  content?: V2NIMAIModelCallContent
+  /** 上下文内容 */
+  messages?: Array<V2NIMAIModelCallMessage>
+  /** 提示词变量占位符替换 */
+  promptVariables?: string
+  /** 请求接口模型相关参数配置, 如果参数不为空, 则默认覆盖控制相关配置 */
+  modelConfigParams?: V2NIMAIModelConfigParams
+}
+
 export interface V2NIMSendMessageParams {
   /** 消息相关配置 */
   messageConfig?: V2NIMMessageConfig
@@ -713,6 +739,8 @@ export interface V2NIMSendMessageParams {
   antispamConfig?: V2NIMMessageAntispamConfig
   /** 机器人相关配置 */
   robotConfig?: V2NIMMessageRobotConfig
+  /** 请求大模型的相关参数 */
+  aiConfig?: V2NIMMessageAIConfigParams;
   /** 用以控制在发送群组消息时，消息是否发送给指定的群组成员 */
   targetConfig?: V2NIMMessageTargetConfig
   /** 是否启用本地反垃圾 */
@@ -1402,6 +1430,16 @@ export interface V2NIMTeamMemberListResult {
   memberList?: Array<V2NIMTeamMember>
 }
 
+
+export interface V2NIMTeamInviteParams {
+  /** 被邀请加入群的成员账号列表, 为 Null || size 为 0, 返回参数错误 */
+  inviteeAccountIds?: Array<string>
+  /** 邀请入群的附言 */
+  postscript?: string
+  /** 邀请入群的扩展字段, 512 个字符, 目前仅支持高级群, 超大群暂不支持 */
+  serverExtension?: string
+}
+
 export interface V2NIMTeamJoinActionInfo {
   /** 入群操作类型 */
   actionType?: V2NIMTeamJoinActionType
@@ -1417,6 +1455,8 @@ export interface V2NIMTeamJoinActionInfo {
   timestamp?: number
   /** 操作状态 */
   actionStatus?: V2NIMTeamJoinActionStatus
+  /** 邀请入群的扩展字段 */
+  serverExtension?: string
 }
 
 export interface V2NIMAntispamConfig {

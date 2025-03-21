@@ -107,9 +107,7 @@ export class V2NIMClient extends EventEmitter<V2NIMClientListener> {
     this.clientAntispamUtil = new V2NIMClientAntispamUtil()
     this.storageUtil = new V2NIMStorageUtil()
     this.loginService = new V2NIMLoginService()
-    this.conversationService = new V2NIMConversationService()
     this.localConversationService = new V2NIMLocalConversationService()
-    this.conversationGroupService = new V2NIMConversationGroupService()
     this.messageService = new V2NIMMessageService()
     this.notificationService = new V2NIMNotificationService()
     this.storageService = new V2NIMStorageService()
@@ -121,6 +119,10 @@ export class V2NIMClient extends EventEmitter<V2NIMClientListener> {
     this.signallingService = new V2NIMSignallingService()
     this.subscriptionService = new V2NIMSubscriptionService()
     this.passthroughService = new V2NIMPassthroughService()
+    try {
+      this.conversationService = new V2NIMConversationService()
+      this.conversationGroupService = new V2NIMConversationGroupService()
+    } catch (e) {}
     return null
   }
 

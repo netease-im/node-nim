@@ -30,8 +30,12 @@ Napi::Object node_nim::V2NodeNIMConversationService::Init(Napi::Env env, Napi::O
 
 node_nim::V2NodeNIMConversationService::V2NodeNIMConversationService(const Napi::CallbackInfo& info)
     : BizService("V2NIMConversationService", info) {
-    service_instance_ = &v2::V2NIMClient::get().getConversationService();
-    initEventHandler();
+    try {
+        service_instance_ = &v2::V2NIMClient::get().getConversationService();
+        initEventHandler();
+    } catch (const std::exception& e) {
+        Napi::Error::New(info.Env(), e.what()).ThrowAsJavaScriptException();
+    }
 }
 
 void V2NodeNIMConversationService::initEventHandler() {

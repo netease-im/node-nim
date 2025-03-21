@@ -1,6 +1,6 @@
 import {
   V2NIMAIUser,
-  V2NIMAIModelCallResponse,
+  V2NIMAIModelCallResult,
   V2NIMProxyAIModelCallParams,
   V2NIMError
 } from 'ts/v2_def/v2_nim_struct_def'
@@ -9,7 +9,7 @@ import sdk from '../loader'
 
 export declare interface V2NIMAIListener {
   /** 数字人请求回调 */
-  proxyAIModelCall: [V2NIMAIModelCallResponse]
+  proxyAIModelCall: [V2NIMAIModelCallResult]
 }
 
 export class V2NIMAIService extends EventEmitter<V2NIMAIListener> {

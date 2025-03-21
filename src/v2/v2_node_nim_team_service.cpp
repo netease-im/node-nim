@@ -11,6 +11,7 @@ Napi::Object node_nim::V2NodeNIMTeamService::Init(Napi::Env env, Napi::Object ex
             {RegApi("getTeamInfoByIds", &V2NIMTeamService::getTeamInfoByIds)},
             {RegApi("dismissTeam", &V2NIMTeamService::dismissTeam)},
             {RegApi("inviteMember", &V2NIMTeamService::inviteMember)},
+            {RegApi("inviteMemberEx", &V2NIMTeamService::inviteMemberEx)},
             {RegApi("acceptInvitation", &V2NIMTeamService::acceptInvitation)},
             {RegApi("rejectInvitation", &V2NIMTeamService::rejectInvitation)},
             {RegApi("kickMember", &V2NIMTeamService::kickMember)},

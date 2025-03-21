@@ -9,6 +9,7 @@ import {
   V2NIMTeamMemberQueryOption,
   V2NIMTeamMemberListResult,
   V2NIMTeamMember,
+  V2NIMTeamInviteParams,
   V2NIMTeamJoinActionInfo,
   V2NIMTeamJoinActionInfoResult,
   V2NIMTeamJoinActionInfoQueryOption,
@@ -254,6 +255,33 @@ export class V2NIMTeamService extends EventEmitter<V2NIMTeamListener> {
         (error: V2NIMError) => {
           reject(error)
         }
+      )
+    })
+  }
+
+  /**
+   * @brief 邀请成员加入群组
+   * @param teamId 群组 id
+   * @param teamType 群组类型
+   * @param inviteeParams 被邀请加入群的参数
+   * @returns Promise<Array<string>>
+   * @example
+   * ```javascript
+   * const accountIds = await v2.teamService.inviteMemberEx(teamId, teamType, inviteeParams)
+   * ```
+   */
+  inviteMemberEx (teamId: string, teamType: V2NIMTeamType, inviteeParams: V2NIMTeamInviteParams): Promise<Array<string>> {
+    return new Promise((resolve, reject) => {
+      this.instance.inviteMemberEx(
+          teamId,
+          teamType,
+          inviteeParams,
+          (accountIds: Array<string>) => {
+            resolve(accountIds)
+          },
+          (error: V2NIMError) => {
+            reject(error)
+          }
       )
     })
   }
