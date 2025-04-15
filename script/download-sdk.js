@@ -93,7 +93,7 @@ async function downloadSDK(custom_sdk_url) {
         })
         // remove temporary download folder
         fs.rmSync(savePath, { recursive: true })
-        console.info(`[node-nim] Downloading prebuilt sdk complete`)
+        console.info(`[node-nim] Downloading prebuilt SDK complete`)
     } catch (err) {
         console.error(`[node-nim] Failed to download, error: ${err}`)
     }

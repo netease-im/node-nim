@@ -428,6 +428,14 @@ export enum V2NIMErrorCode {
   V2NIM_ERROR_CODE_CLIENT_ANTISPAM_FILE_NO_CHANGE = 189303,
   /**  客户端反垃圾文件大小超限 / client antispam file size limit exceeded */
   V2NIM_ERROR_CODE_CLIENT_ANTISPAM_FILE_SIZE_LIMIT = 189304,
+  /**  流式输出已停止 / Streaming text response stopped. @since v10.8.30 */
+  V2NIM_ERROR_CODE_STREAM_OUTPUT_STOPPED = 189318,
+  /**  流式输出已完成 / Streaming text response generated. @since v10.8.30 */
+  V2NIM_ERROR_CODE_STREAM_OUTPUT_GENERATED = 189319,
+  /**  流式输出异常中断 / Streaming text response aborted due to exception. @since v10.8.30 */
+  V2NIM_ERROR_CODE_STREAM_OUTPUT_ABORTED = 189320,
+  /**  非流式消息无法中断 / Non-streaming messages cannot be interrupted. @since v10.8.30 */
+  V2NIM_ERROR_CODE_INTERRUPTION_REJECTED = 189321,
 
   // 通用
   /** 内部错误 / internal error */
@@ -533,6 +541,13 @@ export enum V2NIMIPProtocolVersion {
   V2NIM_IP_PROTOCOL_VERSION_IPV4 = 1,
   /** IPv6 */
   V2NIM_IP_PROTOCOL_VERSION_IPV6 = 2
+}
+
+export enum V2NIMHandShakeType {
+  /** 支持配置多种对称与非对称加密算法 @since v10.8.30 */
+  V2NIM_HANDSHAKE_TYPE_DEFAULT = 0,
+  /** 仅支持 RSA + RC4 @since v10.8.30 */
+  V2NIM_HANDSHAKE_TYPE_RSA_RC4_ONLY = 1
 }
 
 export enum V2NIMAsymmetricEncryptionAlgorithm {
@@ -1189,6 +1204,15 @@ export enum V2NIMAIModelType {
   V2NIM_AI_MODEL_TYPE_PRIVATE = 3,
 }
 
+export enum V2NIMMessageAIStatus {
+  /** 未知 */
+  V2NIM_MESSAGE_AI_STATUS_UNKNOWN = 0,
+  /** 表示是一个艾特数字人的消息 */
+  V2NIM_MESSAGE_AI_STATUS_AT,
+  /** 表示是数字人响应艾特的消息 */
+  V2NIM_MESSAGE_AI_STATUS_RESPONSE,
+}
+
 export enum V2NIMDownloadAttachmentType {
   /** 原始资源，支持全部有附件的类型 */
   V2NIM_DOWNLOAD_ATTACHMENT_TYPE_SOURCE,
@@ -1267,4 +1291,52 @@ export enum V2NIMClearHistoryMode {
   V2NIM_CLEAR_HISTORY_MODE_ALL,
   /** 仅删除本地, 云端拉取可以恢复 */
   V2NIM_CLEAR_HISTORY_MODE_LOCAL
+}
+
+/** @brief AI 流式消息状态 @since v10.8.30 */
+export enum V2NIMMessageAIStreamStatus {
+  /** 流式过程中（本地状态，其他为服务器状态） */
+  V2NIM_MESSAGE_AI_STREAM_STATUS_STREAMING = -1,
+  /** 非流式状态 */
+  V2NIM_MESSAGE_AI_STREAM_STATUS_NONE,
+  /** 占位 */
+  V2NIM_MESSAGE_AI_STREAM_STATUS_PLACEHOLDER,
+  /** 停止输出 */
+  V2NIM_MESSAGE_AI_STREAM_STATUS_CANCEL,
+  /** 停止并更新 */
+  V2NIM_MESSAGE_AI_STREAM_STATUS_UPDATE,
+  /** 输出完成 */
+  V2NIM_MESSAGE_AI_STREAM_STATUS_COMPLETE,
+  /** 服务器异常终止 */
+  V2NIM_MESSAGE_AI_STREAM_STATUS_EXCEPTION
+}
+
+/** @brief AI 流式消息停止操作类型 @since v10.8.30 */
+export enum V2NIMMessageAIStreamStopOpType {
+  /** 停止输出保持现状 */
+  V2NIM_MESSAGE_AI_STREAM_STOP_OP_DEFAULT,
+  /** 停止并撤回消息 */
+  V2NIM_MESSAGE_AI_STREAM_STOP_OP_REVOKE,
+  /** 停止并更新消息内容 */
+  V2NIM_MESSAGE_AI_STREAM_STOP_OP_UPDATE
+}
+
+/** @brief AI 消息重生操作类型 @since v10.8.30 */
+export enum V2NIMMessageAIRegenOpType {
+  /** 更新消息，不会生成新消息，基于原有消息更新 */
+  V2NIM_MESSAGE_AI_REGEN_OP_UPDATE,
+  /** 生成一条新消息 */
+  V2NIM_MESSAGE_AI_REGEN_OP_NEW
+}
+
+/** @brief AI 流式消息状态 @since v10.8.30 */
+export enum V2NIMAIModelStreamCallStatus {
+  /** 非流式状态 */
+  V2NIM_AI_MODEL_STREAM_CALL_STATUS_NONE,
+  /** 停止输出 */
+  V2NIM_AI_MODEL_STREAM_CALL_STATUS_STOPPED,
+  /** 输出完成 */
+  V2NIM_AI_MODEL_STREAM_CALL_STATUS_GENERATED,
+  /** 服务器异常终止 */
+  V2NIM_AI_MODEL_STREAM_CALL_STATUS_ABORTED
 }

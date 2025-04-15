@@ -3,7 +3,7 @@
 
 namespace node_nim {
 
-Napi::Object node_nim::V2NodeNIMMessageService::Init(Napi::Env env, Napi::Object exports) {
+Napi::Object V2NodeNIMMessageService::Init(Napi::Env env, Napi::Object exports) {
     return InternalInit("V2NIMMessageService", env, exports,
         {
             RegApi("sendMessage", &V2NIMMessageService::sendMessage),
@@ -41,11 +41,14 @@ Napi::Object node_nim::V2NodeNIMMessageService::Init(Napi::Env env, Napi::Object
             RegApi("voiceToText", &V2NIMMessageService::voiceToText),
             RegApi("cancelMessageAttachmentUpload", &V2NIMMessageService::cancelMessageAttachmentUpload),
             RegApi("searchCloudMessages", &V2NIMMessageService::searchCloudMessages),
+            RegApi("searchCloudMessagesEx", &V2NIMMessageService::searchCloudMessagesEx),
             RegApi("searchLocalMessages", &V2NIMMessageService::searchLocalMessages),
+            RegApi("stopAIStreamMessage", &V2NIMMessageService::stopAIStreamMessage),
+            RegApi("regenAIMessage", &V2NIMMessageService::regenAIMessage),
         });
 }
 
-node_nim::V2NodeNIMMessageService::V2NodeNIMMessageService(const Napi::CallbackInfo& info)
+V2NodeNIMMessageService::V2NodeNIMMessageService(const Napi::CallbackInfo& info)
     : BizService("V2NIMMessageService", info) {
     service_instance_ = &v2::V2NIMClient::get().getMessageService();
     initEventHandler();
@@ -71,5 +74,6 @@ void V2NodeNIMMessageService::initEventHandler() {
     listener.onSendMessage = MakeNotifyCallback<nstd::function<void(const V2NIMMessage& message)>>("sendMessage");
     listener.onReceiveMessagesModified = MakeNotifyCallback<nstd::function<void(nstd::vector<V2NIMMessage>)>>("receiveMessagesModified");
     message_service.addMessageListener(listener);
-}  // namespace node_nim
+}
+
 }  // namespace node_nim

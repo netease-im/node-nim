@@ -141,10 +141,39 @@ export interface IMLocation {
   lng?: number
 }
 
+/** @brief 停止流式消息操作类型，@since v10.8.30 */
+export enum NIMStopStreamingMessageOptType {
+  /** 停止输出保持现状 */
+  kNIMStopStreamingMessageOptTypeDefault,
+  /** 停止输出并撤回 */
+  kNIMStopStreamingMessageOptTypeRecall,
+  /** 停止输出并更新 */
+  kNIMStopStreamingMessageOptTypeUpdate
+}
+
+/** @brief 重新生成数字人消息操作类型，@since v10.8.3 */
+export enum NIMRedoAIMessageOptType {
+  /** 更新消息 */
+  kNIMRedoAIMessageOptTypeUpdate = 1,
+  /** 生成一条新消息 */
+  kNIMRedoAIMessageOptTypeNew
+}
+
 export interface IMMessageAIConfigParam extends NIMAIModelCallBase {}
 
 export interface IMMessageSendOption {
   ai_config_: IMMessageAIConfigParam
+}
+
+export interface StopStreamingMessageParam {
+  /** 操作类型 */
+  operation_type_: NIMStopStreamingMessageOptType
+  /** 更新的消息内容，仅 operation_type_ == kNIMStopStreamingMessageOptTypeUpdate 时有效 */
+  update_content_: string
+}
+
+export interface RedoAIMessageParam {
+  operation_type_: NIMRedoAIMessageOptType
 }
 
 export type FileUpPrgCallback = (uplaodedSize: number, totalSize: number) => void
@@ -156,6 +185,8 @@ export type ReceiveBroadcastMsgCallback = (result: BroadcastMessage) => void
 export type ReceiveBroadcastMsgsCallback = (result: Array<BroadcastMessage>) => void
 export type TeamNotificationFilterCallback = (result: IMMessage) => boolean
 export type MessageFilterCallback = (result: IMMessage) => boolean
+export type StopStreamingMessageCallback = (resultCode: NIMResCode) => void
+export type RedoAIMessageCallback = (resultCode: NIMResCode) => void
 
 export interface NIMTalkAPI {
   InitEventHandlers (): void
@@ -187,4 +218,8 @@ export interface NIMTalkAPI {
     timetag: number,
     sub_type: number
   ): string
+
+  StopStreamingMessage (message: IMMessage, parameter: StopStreamingMessageParam, cb: StopStreamingMessageCallback): void
+
+  RedoAIMessage(message: IMMessage, parameter: RedoAIMessageParam, cb: RedoAIMessageCallback): void
 }

@@ -1,15 +1,17 @@
 import {
   NIMAIAPI,
   NIMProxyAIModelCallParams,
-  NIMAIModelCallResult, AIUserNameCard
+  NIMAIModelCallResult, AIUserNameCard, NIMAIModelStreamingCallResult, NIMStopProxyAIModelStreamingCallParams
 } from '../nim_def/ai_def'
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
 import { NIMResCode } from '../nim_def/client_def'
 
 export declare interface NIMAIEvents {
-  /** NIM客户端掉线 */
+  /** AI 透传消息通知 */
   proxyAIModelCall: [NIMResCode, NIMAIModelCallResult]
+  /** AI 流式消息通知 @since v10.8.30 */
+  proxyAIModelStreamingCall: [NIMResCode, NIMAIModelStreamingCallResult]
 }
 
 export class NIMAI extends EventEmitter<NIMAIEvents> {
@@ -46,6 +48,20 @@ export class NIMAI extends EventEmitter<NIMAIEvents> {
   proxyAIModelCall (params: NIMProxyAIModelCallParams): Promise<NIMResCode> {
     return new Promise<NIMResCode>((resolve) => {
       this.ai.ProxyAIModelCall(params, (code: NIMResCode) => {
+        resolve(code)
+      })
+    })
+  }
+
+  /**
+   * AI 数字人流式消息请求代理接口
+   * @param params 停止参数，@see NIMStopProxyAIModelStreamingCallParams
+   * @since v10.8.30
+   * @returns Promise<NIMResCode>
+   */
+  stopProxyAIModelStreamCall (params: NIMStopProxyAIModelStreamingCallParams): Promise<NIMResCode> {
+    return new Promise<NIMResCode>((resolve) => {
+      this.ai.StopProxyAIModelStreamingCall(params, (code: NIMResCode) => {
         resolve(code)
       })
     })

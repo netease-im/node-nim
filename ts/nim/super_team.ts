@@ -798,6 +798,40 @@ export class NIMSuperTeam extends EventEmitter<NIMSuperTeamEvents> {
     })
   }
 
+  /**
+   * 查询群禁言列表
+   * @param tid   群组 ID
+   * @param cb    查询群禁言列表的回调函数
+   * @param jsonExtension json 扩展参数（备用，目前不需要）
+   * @return boolean 检查参数如果不符合要求则返回失败
+   * @note
+   * <pre>
+   *   200:成功
+   *   414:参数错误
+   *   403:没有超大群功能
+   *   802:没有权限
+   *   803:群不存在
+   *   804:不在群里
+   * </pre>
+   */
+  queryMuteListAsync (tid: string, cb: QuerySuperTeamMembersCallback | null, jsonExtension: string): Promise<[number, string, number, Array<SuperTeamMemberProperty>] | null> {
+    return new Promise((resolve) => {
+      if (!this.team.QueryMuteListAsync(
+          tid,
+          (rescode, tid, count, result) => {
+            if (cb) {
+              cb(rescode, tid, count, result)
+            }
+            resolve([rescode, tid, count, result])
+          },
+          jsonExtension
+        )
+      ) {
+        resolve(null)
+      }
+    })
+  }
+
   /** 群禁言/解除群禁言
    * @param tid    群组id
    * @param set_mute  禁言/解除禁言

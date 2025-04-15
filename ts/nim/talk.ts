@@ -7,14 +7,19 @@ import {
   IMAudio,
   IMFile,
   IMImage,
-  IMLocation, IMMessageSendOption,
+  IMLocation,
+  IMMessageSendOption,
   IMVideo,
   MessageFilterCallback,
   NIMTalkAPI,
   RecallMsgNotify,
   RecallMsgsCallback,
   SendMessageArc,
-  TeamNotificationFilterCallback
+  TeamNotificationFilterCallback,
+  StopStreamingMessageParam,
+  StopStreamingMessageCallback,
+  RedoAIMessageParam,
+  RedoAIMessageCallback
 } from '../nim_def/talk_def'
 import { NIMResCode } from '../nim_def/client_def'
 import { NIMSessionType } from 'ts/node-nim'
@@ -32,6 +37,8 @@ export declare interface NIMTalkEvents {
   receiveBroadcastMsg: [BroadcastMessage]
   /** 批量接收广播消息 */
   receiveBroadcastMsgs: [Array<BroadcastMessage>]
+  /** 消息变更通知 */
+  messageChanged: [IMMessage]
 }
 
 export class NIMTalk extends EventEmitter<NIMTalkEvents> {
@@ -353,5 +360,35 @@ export class NIMTalk extends EventEmitter<NIMTalkEvents> {
    */
   regTeamNotificationFilter (cb: TeamNotificationFilterCallback | null, jsonExtension: string): void {
     return this.talk.RegTeamNotificationFilter(cb, jsonExtension)
+  }
+
+  /**
+   * @brief 停止流式消息输出
+   * @param message 要停止的消息体
+   * @param parameter 停止参数，@see StopStreamingMessageParam
+   * @return Promise<NIMResCode>
+   * @since v10.8.30
+   */
+  stopStreamingMessage (message: IMMessage, parameter: StopStreamingMessageParam): Promise<NIMResCode> {
+    return new Promise<NIMResCode>((resolve) => {
+      this.talk.StopStreamingMessage(message, parameter, (resultCode: NIMResCode) => {
+        resolve(resultCode)
+      })
+    })
+  }
+
+  /**
+   * @brief 重发流式消息
+   * @param message 要重发的消息体
+   * @param parameter 重发参数，@see RedoAIMessageParam
+   * @return Promise<NIMResCode>
+   * @since v10.8.30
+   */
+  redoAIMessage (message: IMMessage, parameter: RedoAIMessageParam): Promise<NIMResCode> {
+    return new Promise<NIMResCode>((resolve) => {
+      this.talk.RedoAIMessage(message, parameter, (resultCode: NIMResCode) => {
+        resolve(resultCode)
+      })
+    })
   }
 }

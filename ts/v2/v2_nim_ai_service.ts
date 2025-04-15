@@ -2,7 +2,7 @@ import {
   V2NIMAIUser,
   V2NIMAIModelCallResult,
   V2NIMProxyAIModelCallParams,
-  V2NIMError
+  V2NIMError, V2NIMAIModelStreamCallStopParams, V2NIMAIModelStreamCallResult
 } from 'ts/v2_def/v2_nim_struct_def'
 import { EventEmitter } from 'eventemitter3'
 import sdk from '../loader'
@@ -10,6 +10,8 @@ import sdk from '../loader'
 export declare interface V2NIMAIListener {
   /** 数字人请求回调 */
   proxyAIModelCall: [V2NIMAIModelCallResult]
+  /** 数字人流式输出回调 @since v10.8.30 */
+  proxyAIModelStreamCall: [V2NIMAIModelStreamCallResult]
 }
 
 export class V2NIMAIService extends EventEmitter<V2NIMAIListener> {
@@ -53,4 +55,30 @@ export class V2NIMAIService extends EventEmitter<V2NIMAIListener> {
     })
   }
 
+  /**
+   * 停止流式输出
+   * @param params 停止流式输出参数
+   * @returns Promise<void>
+   * @since v10.8.30
+   * @example
+   * ```javascript
+   * const message = v2.aiService.stopAIModelStreamCall({
+   *    accountId: 'AI user account ID',
+   *    requestId: 'Request ID'
+   * })
+   * ```
+   */
+  stopAIModelStreamCall(params: V2NIMAIModelStreamCallStopParams): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.instance.stopAIModelStreamCall(
+        params,
+        () => {
+          resolve()
+        },
+        (error: V2NIMError) => {
+          reject(error)
+        }
+      )
+    })
+  }
 }
