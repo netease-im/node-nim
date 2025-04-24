@@ -57,6 +57,7 @@ export {
   NIMUser,
   NIMPlugin,
   NIMTalkEx,
+  NIMAI,
   ChatRoomModule,
   QChatInstanceModule,
   QChatServerModule,

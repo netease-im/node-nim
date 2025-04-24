@@ -56,7 +56,7 @@
 它会自动下载适合您当前平台的预构建二进制文件。
 
 ```bash
-npm install node-nim --save-dev
+npm install node-nim
 ```
 
 也许您需要在 x64 平台上构建 ia32 应用程序或类似的操作，您可以使用 `--arch` 和 `--platform` 来指定要构建的平台。
@@ -64,42 +64,42 @@ npm install node-nim --save-dev
 -   Windows x64
 
 ```bash
-npm install node-nim --save-dev --arch=x64 --platform=win32
+npm install node-nim --arch=x64 --platform=win32
 ```
 
 -   Windows x86
 
 ```bash
-npm install node-nim --save-dev --arch=ia32 --platform=win32
+npm install node-nim --arch=ia32 --platform=win32
 ```
 
 -   macOS x64
 
 ```bash
-npm install node-nim --save-dev --arch=x64 --platform=darwin
+npm install node-nim --arch=x64 --platform=darwin
 ```
 
 -   macOS arm64
 
 ```bash
-npm install node-nim --save-dev --arch=arm64 --platform=darwin
+npm install node-nim --arch=arm64 --platform=darwin
 ```
 
 -   Linux x64
 
 ```bash
-npm install node-nim --save-dev --arch=x64 --platform=linux
+npm install node-nim --arch=x64 --platform=linux
 ```
 
 -   Linux arm64
 
 ```bash
-npm install node-nim --save-dev --arch=arm64 --platform=linux
+npm install node-nim --arch=arm64 --platform=linux
 ```
 
 ## 构建
 
-从技术上讲，原生的 nim sdk 附带了一个预编译的 `node-nim.node` 二进制文件，而 `npm install` 的时候会自动安装, 所以正常使用是`无需构建`的。  
+从技术上讲，原生的 NIM SDK 附带了一个预编译的 `node-nim.node` 二进制文件，而 `npm install` 的时候会自动安装, 所以正常使用是`无需构建`的。  
 但是如果您想添加个性功能或仅仅是想试一下，请随意构建！
 
 构建要求：

@@ -1,5 +1,6 @@
 import {
   V2NIMAIModelType,
+  V2NIMMessageAIStatus,
   V2NIMAsymmetricEncryptionAlgorithm,
   V2NIMChatroomKickedReason,
   V2NIMChatroomMemberRole,
@@ -31,6 +32,7 @@ import {
   V2NIMSignallingEventType,
   V2NIMSortOrder,
   V2NIMSQLCipherVersion,
+  V2NIMHandShakeType,
   V2NIMSymmetricEncryptionAlgorithm,
   V2NIMTeamAgreeMode,
   V2NIMTeamChatBannedMode,
@@ -45,7 +47,11 @@ import {
   V2NIMTeamUpdateInfoMode,
   V2NIMSearchKeywordMathType,
   V2NIMClearHistoryMode,
-  V2NIMAIModelRoleType
+  V2NIMAIModelRoleType,
+  V2NIMMessageAIStreamStatus,
+  V2NIMAIModelStreamCallStatus,
+  V2NIMMessageAIStreamStopOpType,
+  V2NIMMessageAIRegenOpType
 } from './v2_nim_enum_def'
 
 export interface V2NIMError {
@@ -69,6 +75,8 @@ export interface V2NIMLinkOption {
   linkTimeout?: number
   /** 协议超时, 单位毫秒 */
   protocolTimeout?: number
+  /** 握手协议版本，默认使用最新版本 */
+  handShakeType?: V2NIMHandShakeType
   /** 非对称加密"交换密钥"协议加密算法 */
   asymmetricEncryptionAlgorithm?: V2NIMAsymmetricEncryptionAlgorithm
   /** 对称加密通信加密算法 */
@@ -548,6 +556,22 @@ export interface V2NIMAIModelConfigParams {
   temperature?: number
 }
 
+/** @brief 消息 AI RAG 信息 @since v10.8.30 */
+export interface V2NIMAIRAGInfo {
+  /** 引用资源的名称 */
+  name: string
+  /** 引用资源的描述 */
+  description: string
+  /** 引用资源的图标 */
+  icon: string
+  /** 引用资源的链接 */
+  url: string
+  /** 引用资源的标题 */
+  title: string
+  /** 引用资源的时间 */
+  time: number
+}
+
 export interface V2NIMAIModelCallResult {
   /** AI 响应的状态码 */
   code?: number
@@ -557,6 +581,14 @@ export interface V2NIMAIModelCallResult {
   requestId?: string
   /** 请求 AI 的回复 */
   content?: V2NIMAIModelCallContent
+  /** 数字人回复内容的引用资源列表 @since v10.8.30 */
+  aiRAGs?: Array<V2NIMAIRAGInfo>;
+  /** 回复的时间戳 @since v10.8.30 */
+  timestamp: number;
+  /** 是否是流式响应，默认 false @since v10.8.30 */
+  aiStream: boolean;
+  /** 数字人流式响应状态 @since v10.8.30 */
+  aiStreamStatus: V2NIMAIModelStreamCallStatus;
 }
 
 export interface V2NIMProxyAIModelCallParams {
@@ -572,6 +604,21 @@ export interface V2NIMProxyAIModelCallParams {
   promptVariables?: string
   /** 请求接口模型相关参数配置， 如果参数不为空，则默认覆盖控制相关配置 */
   modelConfigParams?: V2NIMAIModelConfigParams
+}
+
+export interface V2NIMMessageAIConfig {
+  /** 数字人账号信息 */
+  accountId?: string
+  /** 缺省表示普通消息 */
+  aiStatus?: V2NIMMessageAIStatus
+  /** 是否是流式消息 @since v10.8.30 */
+  aiStream: boolean
+  /** 流式消息状态 @since v10.8.30 */
+  aiStreamStatus: V2NIMMessageAIStreamStatus
+  /** AI RAG(Retrieval-Augmented Generation) 信息 @since v10.8.30 */
+  aiRAGs?: Array<V2NIMAIRAGInfo>
+  /** 流式消息的分片信息 @since v10.8.30 */
+  aiStreamLastChunk?: V2NIMMessageAIStreamChunk;
 }
 
 export interface V2NIMMessage {
@@ -627,8 +674,10 @@ export interface V2NIMMessage {
   threadReply?: V2NIMMessageRefer
   /** 消息发送者是否是自己 */
   isSelf?: boolean
+  /** 消息是否已经被删除 @since v10.8.30 */
+  isDeleted?: boolean
   /** AI 数字人相关信息 */
-  aiConfig?: V2NIMAIModelConfig
+  aiConfig?: V2NIMMessageAIConfig
   /** 消息更新时间 */
   modifyTime?: number
   /** 消息更新者账号 */
@@ -707,17 +756,19 @@ export interface V2NIMMessageTargetConfig {
 }
 
 export interface V2NIMAIModelCallMessage {
-  /// 上下文内容的角色
+  /** 上下文内容的角色 */
   role: V2NIMAIModelRoleType
-  /// 上下文的内容
+  /** 上下文的内容 */
   msg: string
-  /// 类型, 暂时只有 0, 代表文本, 预留扩展能力
+  /** 类型, 暂时只有 0, 代表文本, 预留扩展能力 */
   type: number
 }
 
 export interface V2NIMMessageAIConfigParams {
   /** 数字人账号信息 */
   accountId: string
+  /** 是否是流式响应，默认 false @since v10.8.30 */
+  aiStream: boolean
   /** 请求大模型的内容 */
   content?: V2NIMAIModelCallContent
   /** 上下文内容 */
@@ -1028,6 +1079,11 @@ export type V2NIMChatroomLoginExtensionProvider = (roomId: string, account: stri
 /** @param account 账号 */
 /** @return link */
 export type V2NIMChatroomLinkProvider = (roomId: string, account: string) => Array<string>
+
+/** @brief 消息过滤器函数实现模板 */
+/** @param message 消息体 */
+/** @return true: 该消息需要被过滤掉, false: 该消息不需要被过滤 */
+export type V2NIMMessageFilterProvider = (message: V2NIMMessage) => boolean
 
 export interface V2NIMLoginOption {
   /** 重试次数 */
@@ -2358,7 +2414,7 @@ export interface V2NIMCustomUserStatusPublishResult {
   publishTime: number
 }
 
-/// @brief 用户状态订阅结果
+/** @brief 用户状态订阅结果 */
 export interface V2NIMUserStatusSubscribeResult {
   /** 查询的用户账号 */
   accountId: string
@@ -2431,6 +2487,8 @@ export interface V2NIMMessageSearchExParams {
   senderAccountIds?: Array<string>
   /** 匹配消息类型，为空则匹配所有类型 */
   messageTypes?: Array<V2NIMMessageType>
+  /** 匹配消息子类型，为空则匹配所有子类型 @since v10.8.10 */
+  messageSubtypes?: Array<number>
   /** 搜索的起始时间点，默认为 0（从现在开始搜索）。UTC 时间戳，单位：毫秒 */
   searchStartTime: number
   /** 从起始时间点开始的过去时间范围，默认为 0（不限制时间范围）。24 x 60 x 60 x 1000 代表过去一天，单位：毫秒 */
@@ -2443,11 +2501,11 @@ export interface V2NIMMessageSearchExParams {
 
 /** @brief 查询消息返回的结果项 @since v10.7.0 */
 export interface V2NIMMessageSearchItem {
-  /// 会话 ID
+  /** 会话 ID */
   conversationId: string
-  /// 返回的消息列表
+  /** 返回的消息列表 */
   messages: Array<V2NIMMessage>
-  /// 单个会话命中的数量
+  /** 单个会话命中的数量 */
   count: number
 }
 
@@ -2549,4 +2607,83 @@ export interface V2NIMLocalConversationOperationResult {
   conversationId?: string
   /** 错误 */
   error?: V2NIMError
+}
+
+/** @brief 消息 AI 流式消息分片信息 @since v10.8.30 */
+export interface V2NIMMessageAIStreamChunk {
+  /** 流式消息回复分片文本 */
+  content: string
+  /** 流式消息时间，即占位消息时间 */
+  messageTime: number
+  /** 流式消息当前分片时间，chunkTime >= messageTime */
+  chunkTime: number
+  /** 类型，当前仅支持 0 表示文本 */
+  type: number
+  /** 分片序号，从 0 开始 */
+  index: number
+}
+
+/** @brief 停止数字人流式输出配置参数 @since v10.8.30 */
+export interface V2NIMMessageAIStreamStopParams {
+  /** 停止流式消息的操作类型 */
+  operationType: V2NIMMessageAIStreamStopOpType
+  /** 更新的消息内容，仅当 operationType == V2NIM_MESSAGE_AI_STREAM_STOP_OP_UPDATE 有效 */
+  updateContent?: string
+}
+
+/** @brief 重新生成 AI 回复消息参数 @since v10.8.30 */
+export interface V2NIMMessageAIRegenParams {
+  /** 重新输出数字人消息操作类型 */
+  operationType: V2NIMMessageAIRegenOpType
+}
+
+/** @brief 透传协议流式分片信息 @since v10.8.30 */
+export interface V2NIMAIModelStreamCallChunk {
+  /** 数字人流式回复分片文本 */
+  content: string
+  /** 数字人流式回复当前分片时间 */
+  chunkTime: number
+  /** 类型，当前仅支持 0 表示文本 */
+  type: number
+  /** 分片序号，从 0 开始 */
+  index: number
+}
+
+/** @brief 流式回复内容 @since v10.8.30 */
+export interface V2NIMAIModelStreamCallContent {
+  /** 数字人流式回复分片组装好后的文本 */
+  msg: string
+  /** 类型，当前仅支持 0 表示文本 */
+  type: number
+  /** 数字人流式回复最近一个分片 */
+  lastChunk: V2NIMAIModelStreamCallChunk
+}
+
+/** @brief 发送透传的 AI 流式消息响应内容 @since v10.8.30 */
+export interface V2NIMAIModelStreamCallResult {
+  /** AI 响应的状态码 */
+  code: number
+  /** 数字人的账号 ID */
+  accountId: string
+  /** 本次响应的标识 */
+  requestId: string
+  /** 请求 AI 的回复内容 */
+  content?: V2NIMAIModelStreamCallContent
+  /** 数字人回复内容的引用资源列表 */
+  aiRAGs?: Array<V2NIMAIRAGInfo>
+  /** 分片的时间戳 */
+  timestamp: number
+}
+
+/** @brief 停止透传接口的 AI 流式回复 @since v10.8.30 */
+export interface V2NIMAIModelStreamCallStopParams {
+  /** 数字人账号 ID */
+  accountId: string
+  /** 请求 ID */
+  requestId: string
+}
+
+/** @brief 消息过滤器对象 @since v10.8.30 */
+export interface V2NIMMessageFilter {
+  shouldIgnore: V2NIMMessageFilterProvider
 }

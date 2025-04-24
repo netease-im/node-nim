@@ -20,7 +20,9 @@ Napi::Object NIMTalk::Init(Napi::Env env, Napi::Object exports) {
         RegAmbApi("ReplyMessage", &Talk::ReplyMessage, void (*)(const IMMessage&, const IMMessage&, Talk::FileUpPrgCallback*)),
         RegApi("ReplyMessageWithOption", &Talk::ReplyMessageWithOption),
         RegApi("RegMessageFilter", &Talk::RegMessageFilter),
-        RegApi("RegTeamNotificationFilter", &Talk::RegTeamNotificationFilter)
+        RegApi("RegTeamNotificationFilter", &Talk::RegTeamNotificationFilter),
+        RegApi("StopStreamingMessage", &Talk::StopStreamingMessage),
+        RegApi("RedoAIMessage", &Talk::RedoAIMessage),
     });
     // clang-format on
 }
@@ -33,6 +35,7 @@ void NIMTalk::InitEventHandlers() {
     RegisterSDKNotifyCallback("recallMsgs", &nim::Talk::RegRecallMsgsCallback);
     RegisterSDKNotifyCallback("receiveBroadcastMsg", &nim::Talk::RegReceiveBroadcastMsgCb);
     RegisterSDKNotifyCallback("receiveBroadcastMsgs", &nim::Talk::RegReceiveBroadcastMsgsCb);
+    RegisterSDKNotifyCallback("messageChanged", &nim::Talk::RegMessageChangedCb);
 }
 
 NIMTalk::NIMTalk(const Napi::CallbackInfo& info)

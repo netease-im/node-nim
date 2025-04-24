@@ -30,6 +30,9 @@ import {
   V2NIMModifyMessageResult,
   V2NIMMessageSearchExParams,
   V2NIMMessageSearchResult,
+  V2NIMMessageAIStreamStopParams,
+  V2NIMMessageAIRegenParams,
+  V2NIMMessageFilter
 } from 'ts/v2_def/v2_nim_struct_def'
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
@@ -937,6 +940,35 @@ export class V2NIMMessageService extends EventEmitter<V2NIMMessageListener> {
   }
 
   /**
+   * @brief 搜索云端消息，支持多个关键字、消息子类型查询
+   * @param params 消息检索参数
+   * @returns Promise<V2NIMMessageSearchResult>
+   * @since v10.8.30
+   * @example
+   * ```javascript
+   * const result = await v2.messageService.searchCloudMessagesEx({
+   *    keywordList: ['keyword1', 'keyword2'],
+   *    messageTypes: [0, 1, 2],
+   *    messageSubtypes: [1, 2],
+   *    limit: 10
+   * })
+   * ```
+   */
+  searchCloudMessagesEx (params: V2NIMMessageSearchExParams): Promise<V2NIMMessageSearchResult> {
+    return new Promise((resolve, reject) => {
+      this.instance.searchCloudMessagesEx(
+        params,
+        (result: V2NIMMessageSearchResult) => {
+          resolve(result)
+        },
+        (error: V2NIMError) => {
+          reject(error)
+        }
+      )
+    })
+  }
+
+  /**
    * @brief 搜索本地消息
    * @param params 消息检索参数
    * @returns V2NIMMessageSearchResult
@@ -959,5 +991,78 @@ export class V2NIMMessageService extends EventEmitter<V2NIMMessageListener> {
         }
       )
     })
+  }
+
+  /**
+   * @brief 停止 AI 消息流
+   * @param message 要停止的消息
+   * @param params 停止参数
+   * @return void
+   * @since v10.8.30
+   * @example
+   * ```javascript
+   * await v2.messageService.stopAIStreamMessage(message, {
+   *    operationType: 0
+   * })
+   * ```
+   */
+  stopAIStreamMessage(message: V2NIMMessage, params: V2NIMMessageAIStreamStopParams): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.instance.stopAIStreamMessage(
+        message,
+        params,
+        () => {
+          resolve()
+        },
+        (error: V2NIMError) => {
+          reject(error)
+        }
+      )
+    })
+  }
+
+  /**
+   * @brief 重新生成 AI 消息
+   * @param message 要重新生成的消息
+   * @param params 重新生成参数
+   * @return void
+   * @since v10.8.30
+   * @example
+   * ```javascript
+   * await v2.messageService.regenAIMessage(message, {
+   *   operationType: 0
+   * })
+   * ```
+   */
+  regenAIMessage(message: V2NIMMessage, params: V2NIMMessageAIRegenParams): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.instance.regenAIMessage(
+        message,
+        params,
+        () => {
+          resolve()
+        },
+        (error: V2NIMError) => {
+          reject(error)
+        }
+      )
+    })
+  }
+
+  /**
+   * @brief 安装消息过滤器，全局唯一，只能注册一个。一旦注册该过滤器，所有消息均经过该过滤器，返回 true 表示将消息过滤，返回 false 表示不过滤消息
+   * @param filter 消息过滤器
+   * @returns void
+   * @since v10.8.30
+   * @example
+   * ```javascript
+   * v2.messageService.installMessageFilter({
+   *    shouldIgnore: (message) => {
+   *        // 过滤消息
+   *    }
+   * })
+   */
+  setMessageFilter(filter: V2NIMMessageFilter): void {
+    this.instance.setMessageFilter(filter)
   }
 }

@@ -149,12 +149,12 @@ export class V2NIMChatroomQueueService extends EventEmitter<V2NIMChatroomQueueLi
    * @example
    * ```javascript
    * const elementKeys = await chatroomQueueService.queueBatchUpdate([{
-   *     elementKey: 'your element key',
-   *     elementValue: 'your element value'
+   *     key: 'your element key',
+   *     value: 'your element value'
    * }], true, 'your notification extension')
    * ```
    */
-  queueBatchUpdate (elements: any[], notificationEnabled: boolean, notificationExtension: string): Promise<string[]> {
+  queueBatchUpdate (elements: Array<V2NIMChatroomQueueElement>, notificationEnabled: boolean, notificationExtension: string): Promise<string[]> {
     return new Promise((resolve, reject) => {
       this.instance.queueBatchUpdate(elements, notificationEnabled, notificationExtension, (elementKeys: string[]) => {
         resolve(elementKeys)

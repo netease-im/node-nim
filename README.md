@@ -55,7 +55,7 @@ For comprehensive documentation, changelog, and technical support, please visit 
 It will automatically download the prebuilt binary file that fits your current platform.
 
 ```bash
-npm install node-nim --save-dev
+npm install node-nim
 ```
 
 Maybe you need to build ia32 app on x64 platform or something like that, you can use `--arch` and `--platform` to specify the platform you want to build.
@@ -63,42 +63,42 @@ Maybe you need to build ia32 app on x64 platform or something like that, you can
 -   Windows x64
 
 ```bash
-npm install node-nim --save-dev --arch=x64 --platform=win32
+npm install node-nim --arch=x64 --platform=win32
 ```
 
 -   Windows x86
 
 ```bash
-npm install node-nim --save-dev --arch=ia32 --platform=win32
+npm install node-nim --arch=ia32 --platform=win32
 ```
 
 -   macOS x64
 
 ```bash
-npm install node-nim --save-dev --arch=x64 --platform=darwin
+npm install node-nim --arch=x64 --platform=darwin
 ```
 
 -   macOS arm64
 
 ```bash
-npm install node-nim --save-dev --arch=arm64 --platform=darwin
+npm install node-nim --arch=arm64 --platform=darwin
 ```
 
 -   Linux x64
 
 ```bash
-npm install node-nim --save-dev --arch=x64 --platform=linux
+npm install node-nim --arch=x64 --platform=linux
 ```
 
 -   Linux arm64
 
 ```bash
-npm install node-nim --save-dev --arch=arm64 --platform=linux
+npm install node-nim --arch=arm64 --platform=linux
 ```
 
 ## Build From Source
 
-Technically, native nim sdk is shipped with a prebuilt node-nim.node binary file, so `there is no need to build it yourself.`.  
+Technically, native NIM SDK is shipped with a prebuilt node-nim.node binary file, so `there is no need to build it yourself.`.  
 But if you want to add personal features or simply prefer to do so, feel free to build it!  
 Build Requirements:
 

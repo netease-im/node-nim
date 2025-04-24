@@ -1,5 +1,6 @@
 import { NIMClientType, NIMResCode } from './client_def'
 import { NIMSessionType } from './session_def'
+import { NIMAIMessageRAGInfo } from './ai_def'
 
 /** @enum NIMNotificationId 通知类型 */
 export enum NIMNotificationId {
@@ -252,6 +253,24 @@ export enum NIMAIMessageStatus {
   kNIMMessageAIStatusResponse = 2,
 }
 
+/** @brief AI 流式消息状态 @since v10.8.30 */
+export enum NIMAIStreamingMessageStatus {
+  /** 流式过程中（本地状态，其他为服务器状态） */
+  kNIMAIStreamingMessageStreaming = -1,
+  /** 非流式状态 */
+  kNIMAIStreamingMessageNone,
+  /** 占位 */
+  kNIMAIStreamingMessagePlaceholder,
+  /** 停止输出 */
+  kNIMAIStreamingMessageCancelled,
+  /** 停止并更新 */
+  kNIMAIStreamingMessageUpdated,
+  /** 输出完成 */
+  kNIMAIStreamingMessageCompleted,
+  /** 服务器异常终止 */
+  kNIMAIStreamingMessageAborted
+}
+
 export interface QueryMsgOnlineAsyncParam {
   /** 查询id，对方的account id或者群组tid */
   id_?: string
@@ -395,12 +414,34 @@ export interface IMMessageRobotInfo {
   account_?: string
 }
 
+/** @brief 消息 AI 流式消息分片信息 @since v10.8.30 */
+export interface NIMAIStreamingMessageChunk {
+  /** 流式消息回复分片文本 */
+  content_: string
+  /** 流式消息时间，即占位消息时间 */
+  message_time_: number
+  /** 流式消息当前分片时间 */
+  chunk_time_: number
+  /** 类型，当前仅支持 0 表示文本 */
+  type_: number
+  /** 分片序号，从 0 开始 */
+  index_: number
+}
+
 /** @brief AI 数字人消息信息 */
 export interface IMMessageAIConfig {
-  /// 数字人账号信息，发送消息时指定该字段代表要 @ AI 数字人
+  /** 数字人账号信息，发送消息时指定该字段代表要 @ AI 数字人 */
   account_id_: string
-  /// 数字人消息状态
+  /** 数字人消息状态 */
   ai_status_: NIMAIMessageStatus
+  /** 是否是流式消息 @since v10.8.30 */
+  streaming_: boolean
+  /** 流式消息状态 @since v10.8.30 */
+  streaming_message_status_: NIMAIStreamingMessageStatus
+  /** AI RAG(Retrieval-Augmented Generation) 信息 @since v10.8.30 */
+  rags_?: Array<NIMAIMessageRAGInfo>
+  /** 流式消息的分片信息 @since v10.8.30 */
+  chunk_?: NIMAIStreamingMessageChunk
 }
 
 export interface IMMessage {
@@ -416,6 +457,10 @@ export interface IMMessage {
   sender_accid_?: string
   /** 消息时间戳（毫秒） */
   timetag_?: number
+  /** 消息更新时间（毫秒）@since v10.8.30 */
+  update_timetag_?: number
+  /** 消息更新者 @since v10.8.30 */
+  update_accid_?: string
   /** 消息内容,长度限制10000 */
   content_?: string
   /** 消息类型 */

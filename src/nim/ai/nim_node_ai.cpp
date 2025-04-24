@@ -13,13 +13,15 @@ Napi::Object NIMAI::Init(Napi::Env env, Napi::Object exports) {
     return InternalInit("NIMAI", env, exports, {
         RegApi("InitEventHandlers", &NIMAI::InitEventHandlers),
         RegApi("GetAIUserList", &AI::GetAIUserList),
-        RegApi("ProxyAIModelCall", &AI::ProxyAIModelCall)
+        RegApi("ProxyAIModelCall", &AI::ProxyAIModelCall),
+        RegApi("StopProxyAIModelStreamingCall", &AI::StopProxyAIModelStreamingCall)
     });
     // clang-format on
 }
 
 void NIMAI::InitEventHandlers() {
     RegisterSDKNotifyCallback("proxyAIModelCall", &AI::RegProxyAIModelCallCb);
+    RegisterSDKNotifyCallback("proxyAIModelStreamingCall", &AI::RegProxyAIModelStreamingCallCb);
 }
 
 NIMAI::NIMAI(const Napi::CallbackInfo& info)
