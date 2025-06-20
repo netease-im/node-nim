@@ -67,4 +67,47 @@ describe('******************** Conversation ********************', function () {
       assert.ok(readTime > 0)
     })
   })
+
+  describe('#getStickTopConversationList', function () {
+    before(async function () {
+      await v2.conversationService.createConversation(GlobalVariable.toP2PConversationId)
+      await v2.conversationService.stickTopConversation(GlobalVariable.toP2PConversationId, true)
+    })
+    it('Get stick top conversation list should return a non-empty list.', async function () {
+      const result = await v2.conversationService.getStickTopConversationList()
+      assert.notStrictEqual(result, [])
+      let hasToConversation = false
+      result.map((item) => {
+        if (item.conversationId === GlobalVariable.toP2PConversationId) {
+          hasToConversation = true
+        }
+      })
+      assert.strictEqual(hasToConversation, true)
+    })
+    after(async function () {
+      await v2.conversationService.stickTopConversation(GlobalVariable.toP2PConversationId, false)
+      await v2.conversationService.getStickTopConversationList()
+    })
+  })
+
+  describe('#localConversation.getStickTopConversationList', function () {
+    before(async function () {
+      await v2.localConversationService.createConversation(GlobalVariable.toP2PConversationId)
+      await v2.localConversationService.stickTopConversation(GlobalVariable.toP2PConversationId, true)
+    })
+    it('Get stick top conversation list should return a non-empty list.', async function () {
+      const result = await v2.localConversationService.getStickTopConversationList()
+      assert.notStrictEqual(result, [])
+      let hasToConversation = false
+      result.map((item) => {
+        if (item.conversationId === GlobalVariable.toP2PConversationId) {
+          hasToConversation = true
+        }
+      })
+    })
+    after(async function () {
+      await v2.localConversationService.stickTopConversation(GlobalVariable.toP2PConversationId, false)
+      await v2.localConversationService.deleteConversation(GlobalVariable.toP2PConversationId, false)
+    })
+  })
 })

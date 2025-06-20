@@ -55,6 +55,7 @@ export class V2NIMStorageService extends EventEmitter<V2NIMStorageListener> {
   /**
    * @brief 文件上传
    * @param fileTask 文件上传任务
+   * @param progress 上传进度回调
    * @returns Promise<string>
    * @example
    * ```javascript
@@ -66,7 +67,7 @@ export class V2NIMStorageService extends EventEmitter<V2NIMStorageListener> {
    * })
    * ```
    */
-  uploadFile (fileTask: V2NIMUploadFileTask): Promise<string> {
+  uploadFile (fileTask: V2NIMUploadFileTask, progress: V2NIMProgressCallback): Promise<string> {
     return new Promise((resolve, reject) => {
       this.instance.uploadFile(
         fileTask,
@@ -75,6 +76,9 @@ export class V2NIMStorageService extends EventEmitter<V2NIMStorageListener> {
         },
         (error: V2NIMError) => {
           reject(error)
+        },
+        (progressValue: number) => {
+          progress(progressValue)
         }
       )
     })

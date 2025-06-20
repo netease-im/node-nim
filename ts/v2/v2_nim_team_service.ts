@@ -892,4 +892,27 @@ export class V2NIMTeamService extends EventEmitter<V2NIMTeamListener> {
       )
     })
   }
+
+  /**
+   * @brief 获取自己所有加入的群的自己群成员信息
+   * @param teamTypes 群组类型列表, 为空表示查询所有群类型
+   * @returns Promise<Array<V2NIMTeamMember>>
+   * @example
+   * ```javascript
+   * const members = await v2.teamService.getJoinedTeamMembers(teamTypes)
+   * ```
+   */
+  getJoinedTeamMembers(teamTypes: Array<V2NIMTeamType>): Promise<Array<V2NIMTeamMember>> {
+    return new Promise((resolve, reject) => {
+      this.instance.getJoinedTeamMembers(
+        teamTypes,
+        (members: Array<V2NIMTeamMember>) => {
+          resolve(members)
+        },
+        (error: V2NIMError) => {
+          reject(error)
+        }
+      )
+    })
+  }
 }

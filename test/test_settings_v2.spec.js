@@ -2,29 +2,28 @@ import { v2 } from '../dist/node-nim'
 import assert from 'assert'
 import * as GlobalVariables from "./test_variables";
 import {assistantAccounts, mainAccount} from "./test_variables";
+import sinon from 'sinon'
 
-
-let dndConfig = {
-    dndOn: true,
-    showDetail: true,
-    fromH: 0,
-    fromM: 0,
-    toH: 1,
-    toM: 10,
-}
-describe('#DndConfig', function () {
-    before(async function () {
-        await v2.settingService.setDndConfig(dndConfig);
-        await v2.loginService.logout()
-        await v2.loginService.login(
-            GlobalVariables.mainAccount,
-            GlobalVariables.assistantAccounts,
-            {}
-        )
+describe('Settings services', function () {
+    describe('#getPushMobileOnDesktopOnline', function () {
+        before(async function () {
+            await v2.settingService.setPushMobileOnDesktopOnline(true)
+        })
+        it('get push mobile on desktop online should return true', async function () {
+            const need = await v2.settingService.getPushMobileOnDesktopOnline()
+            assert.strictEqual(need, true)
+        })
+        after(async function () {
+            await v2.settingService.setPushMobileOnDesktopOnline(false)
+        })
     })
-
-    it('getDndConfig return config', function (done) {
-        const config = v2.settingService.getDndConfig();
-        assert.strictEqual(config.dndOn, true);
+    describe('pushMobileOnDesktopOnline event', function () {
+        it('pushMobileOnDesktopOnline event should be triggered', async function () {
+            const spy = sinon.spy()
+            v2.settingService.on('pushMobileOnDesktopOnline', spy)
+            await v2.settingService.setPushMobileOnDesktopOnline(true)
+            assert.strictEqual(spy.calledOnce, true)
+            assert.strictEqual(spy.firstCall.args[0], true)
+        })
     })
 })

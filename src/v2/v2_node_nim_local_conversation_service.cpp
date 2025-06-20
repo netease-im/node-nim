@@ -30,7 +30,8 @@ Napi::Object V2NodeNIMLocalConversationService::Init(Napi::Env env, Napi::Object
         RegApi("markConversationRead", &V2NIMLocalConversationService::markConversationRead),
         RegApi("getConversationReadTime", &V2NIMLocalConversationService::getConversationReadTime),
         RegApi("subscribeUnreadCountByFilter", &V2NIMLocalConversationService::subscribeUnreadCountByFilter),
-        RegApi("unsubscribeUnreadCountByFilter", &V2NIMLocalConversationService::unsubscribeUnreadCountByFilter)
+        RegApi("unsubscribeUnreadCountByFilter", &V2NIMLocalConversationService::unsubscribeUnreadCountByFilter),
+        RegApi("getStickTopConversationList", &V2NIMLocalConversationService::getStickTopConversationList),
     });
     // clang-format on
 }

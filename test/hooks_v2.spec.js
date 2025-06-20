@@ -6,7 +6,10 @@ const testEnv = true
 export const mochaHooks = {
   async beforeAll () {
     let initOptions = {
-      appkey: testEnv ? GlobalVariables.testAppKey : GlobalVariables.onlineAppKey
+      appkey: testEnv ? GlobalVariables.testAppKey : GlobalVariables.onlineAppKey,
+      basicOption: {
+        enableCloudConversation: true
+      }
     }
     if (testEnv) {
       Object.assign(initOptions, {

@@ -16,6 +16,14 @@ let replyMessageClientId = ''
 let secondReplyMessageClientId = ''
 let sendMessageBody = ''
 describe('******************** Messages ********************', function () {
+  describe('#getCloudMessageList', function () {
+    it('Get cloud message list should return a non-empty list.', async function () {
+      const result = await v2.messageService.getCloudMessageList({
+        conversationId: GlobalVariables.toP2PConversationId
+      })
+      assert.notStrictEqual(result.messages, [])
+    })
+  })
   describe('#sendMessage', () => {
     it('Send message should trigger onSendMessage notify', async function () {
       const spy = sinon.spy()
@@ -205,7 +213,6 @@ describe('******************** Messages ********************', function () {
       assert.ok(result.replyList.length > 0)
       assert.strictEqual(result.message.messageClientId, messageClientId)
       assert.strictEqual(result.replyList[0].messageClientId, replyMessageClientId)
-
     })
   })
 })

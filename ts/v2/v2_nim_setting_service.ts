@@ -8,6 +8,8 @@ export declare interface V2NIMSettingListener {
   teamMessageMuteModeChanged: [string, V2NIMTeamType, V2NIMTeamMessageMuteMode]
   /** 点对点消息免打扰回调 */
   p2pMessageMuteModeChanged: [string, V2NIMP2PMessageMuteMode]
+  /** 当桌面端在线时，移动端是否需要推送配置 @since v10.9.0 */
+  pushMobileOnDesktopOnline: [boolean]
 }
 
 /** @brief 设置服务 */
@@ -71,6 +73,26 @@ export class V2NIMSettingService extends EventEmitter<V2NIMSettingListener> {
    */
   getTeamMessageMuteMode (teamId: string, teamType: V2NIMTeamType): V2NIMTeamMessageMuteMode {
     return this.instance.getTeamMessageMuteMode(teamId, teamType)
+  }
+
+  /**
+   * @brief 获取我所在的所有群消息免打扰模式
+   * @param teamType 群组类型
+   * @returns Map<string, V2NIMTeamMessageMuteMode> 所有群消息免打扰模式
+   * @since v10.9.0
+   * @example
+   * ```javascript
+   * const muteModeList = await v2.settingService.getAllTeamMessageMuteMode(teamType)
+   * ```
+   */
+  getAllTeamMessageMuteMode (teamType: V2NIMTeamType): Promise<Map<string, V2NIMTeamMessageMuteMode>> {
+    return new Promise((resolve, reject) => {
+      this.instance.getAllTeamMessageMuteMode(teamType, (muteModeList: Map<string, V2NIMTeamMessageMuteMode>) => {
+        resolve(muteModeList)
+      }, (error: V2NIMError) => {
+        reject(error)
+      })
+    })
   }
 
   /**
@@ -152,6 +174,25 @@ export class V2NIMSettingService extends EventEmitter<V2NIMSettingListener> {
           reject(error)
         }
       )
+    })
+  }
+
+  /**
+   * @brief 获取当桌面端在线时, 移动端是否需要推送
+   * @returns Promise<boolean> 是否需要推送
+   * @since v10.9.0
+   * @example
+   * ```javascript
+   * const need = await v2.settingService.getPushMobileOnDesktopOnline()
+   * ```
+   */
+  getPushMobileOnDesktopOnline (): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      this.instance.getPushMobileOnDesktopOnline((need: boolean) => {
+        resolve(need)
+      }, (error: V2NIMError) => {
+        reject(error)
+      })
     })
   }
 

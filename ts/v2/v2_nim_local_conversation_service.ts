@@ -499,4 +499,26 @@ export class V2NIMLocalConversationService extends EventEmitter<V2NIMLocalConver
   unsubscribeUnreadCountByFilter (filter: V2NIMLocalConversationFilter): null | V2NIMError {
     return this.instance.unsubscribeUnreadCountByFilter(filter)
   }
+
+  /**
+   * @brief 获取本地置顶会话列表
+   * @since v10.9.0
+   * @returns Promise<Array<V2NIMLocalConversation>> 置顶会话列表
+   * @example
+   * ```javascript
+   * const list = await v2.localConversationService.getStickTopConversationList()
+   * ```
+   */
+  getStickTopConversationList (): Promise<Array<V2NIMLocalConversation>> {
+    return new Promise((resolve, reject) => {
+      this.instance.getStickTopConversationList(
+        (list: Array<V2NIMLocalConversation>) => {
+          resolve(list)
+        },
+        (error: V2NIMError) => {
+          reject(error)
+        }
+      )
+    })
+  }
 }

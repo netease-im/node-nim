@@ -863,7 +863,9 @@ export enum V2NIMLoginStatus {
   /** 已登录 */
   V2NIM_LOGIN_STATUS_LOGINED = 1,
   /** 登录中 */
-  V2NIM_LOGIN_STATUS_LOGINING = 2
+  V2NIM_LOGIN_STATUS_LOGINING = 2,
+  /** 未登录 */
+  V2NIM_LOGIN_STATUS_UNLOGIN = 3,
 }
 
 export enum V2NIMKickedOfflineReason {
@@ -1252,7 +1254,9 @@ export enum V2NIMSignallingEventType {
   /** 离开信令频道房间 */
   V2NIM_SIGNALLING_EVENT_TYPE_LEAVE,
   /** 自定义控制命令 */
-  V2NIM_SIGNALLING_EVENT_TYPE_CONTROL
+  V2NIM_SIGNALLING_EVENT_TYPE_CONTROL,
+  /** 被服务器踢出 @since v10.9.10 */
+  V2NIM_SIGNALLING_EVENT_TYPE_KICK
 }
 
 export enum V2NIMUserStatusType {
@@ -1290,7 +1294,9 @@ export enum V2NIMClearHistoryMode {
   /** 同时删除云端和本地 */
   V2NIM_CLEAR_HISTORY_MODE_ALL,
   /** 仅删除本地, 云端拉取可以恢复 */
-  V2NIM_CLEAR_HISTORY_MODE_LOCAL
+  V2NIM_CLEAR_HISTORY_MODE_LOCAL,
+  /** 仅删除本地, 云端拉取也不可能恢复。状态记录在本地，卸载重装后数据会重新出现 @since v10.9.0 */
+  V2NIM_CLEAR_HISTORY_MODE_LOCAL_IRREPARABLY
 }
 
 /** @brief AI 流式消息状态 @since v10.8.30 */
@@ -1324,7 +1330,7 @@ export enum V2NIMMessageAIStreamStopOpType {
 /** @brief AI 消息重生操作类型 @since v10.8.30 */
 export enum V2NIMMessageAIRegenOpType {
   /** 更新消息，不会生成新消息，基于原有消息更新 */
-  V2NIM_MESSAGE_AI_REGEN_OP_UPDATE,
+  V2NIM_MESSAGE_AI_REGEN_OP_UPDATE = 1,
   /** 生成一条新消息 */
   V2NIM_MESSAGE_AI_REGEN_OP_NEW
 }
@@ -1339,4 +1345,38 @@ export enum V2NIMAIModelStreamCallStatus {
   V2NIM_AI_MODEL_STREAM_CALL_STATUS_GENERATED,
   /** 服务器异常终止 */
   V2NIM_AI_MODEL_STREAM_CALL_STATUS_ABORTED
+}
+
+/** @brief 消息查询方向 @since v10.9.0 */
+export enum V2NIMSearchDirection {
+  /** 表示时间从新到旧查询 */
+  V2NIM_SEARCH_DIRECTION_BACKWARD,
+  /** 表示时间从旧到新查询 */
+  V2NIM_SEARCH_DIRECTION_FORWARD
+}
+
+/** @brief 消息检索策略 @since v10.9.0 */
+export enum V2NIMSearchStrategy {
+  /** 表示使用 SQL LIKE 语句进行检索 */
+  V2NIM_SEARCH_STRATEGY_SQL_LIKE,
+  /** 表示使用 FTS 进行检索 */
+  V2NIM_SEARCH_STRATEGY_FTS
+}
+
+/** @brief 流式消息状态 @since v10.9.10 */
+export enum V2NIMMessageStreamStatus {
+  /** 流式过程中（本地状态，其他为服务器状态） */
+  V2NIM_MESSAGE_STREAM_STATUS_STREAMING = -1,
+  /** 非流式状态 */
+  V2NIM_MESSAGE_STREAM_STATUS_NONE,
+  /** 占位 */
+  V2NIM_MESSAGE_STREAM_STATUS_PLACEHOLDER,
+  /** 停止输出 */
+  V2NIM_MESSAGE_STREAM_STATUS_STOPPED,
+  /** 停止并更新 */
+  V2NIM_MESSAGE_STREAM_STATUS_UPDATED,
+  /** 输出完成 */
+  V2NIM_MESSAGE_STREAM_STATUS_GENERATED,
+  /** 服务器异常终止 */
+  V2NIM_MESSAGE_STREAM_STATUS_ABORTED
 }

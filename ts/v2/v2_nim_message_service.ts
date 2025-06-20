@@ -32,7 +32,10 @@ import {
   V2NIMMessageSearchResult,
   V2NIMMessageAIStreamStopParams,
   V2NIMMessageAIRegenParams,
-  V2NIMMessageFilter
+  V2NIMMessageFilter,
+  V2NIMMessageListResult,
+  V2NIMUpdateLocalMessageParams,
+  V2NIMCloudMessageListOption
 } from 'ts/v2_def/v2_nim_struct_def'
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
@@ -214,6 +217,57 @@ export class V2NIMMessageService extends EventEmitter<V2NIMMessageListener> {
       this.instance.getMessageList(
         option,
         (result: Array<V2NIMMessage>) => {
+          resolve(result)
+        },
+        (error: V2NIMError) => {
+          reject(error)
+        }
+      )
+    })
+  }
+
+  /**
+   * @brief 查询消息
+   * @param option 查询消息配置选项
+   * @returns V2NIMMessageListResult
+   * @since v10.9.0
+   * @example
+   * ```javascript
+   * const result = await v2.messageService.getMessageListEx({
+   *     conversationId: 'conversationId'
+   * })
+   */
+  getMessageListEx (option: V2NIMMessageListOption): Promise<V2NIMMessageListResult> {
+    return new Promise((resolve, reject) => {
+      this.instance.getMessageListEx(
+        option,
+        (result: V2NIMMessageListResult) => {
+          resolve(result)
+        },
+        (error: V2NIMError) => {
+          reject(error)
+        }
+      )
+    })
+  }
+
+  /**
+   * 查询云端消息，默认不入库
+   * @param option 查询消息配置选项
+   * @returns V2NIMMessageListResult
+   * @since v10.9.1
+   * @example
+   * ```javascript
+   * const result = await v2.messageService.getCloudMessageList({
+   *     conversationId: 'conversationId'
+   * })
+   * ```
+   */
+  getCloudMessageList(option: V2NIMCloudMessageListOption): Promise<V2NIMMessageListResult> {
+    return new Promise((resolve, reject) => {
+      this.instance.getCloudMessageList(
+        option,
+        (result: V2NIMMessageListResult) => {
           resolve(result)
         },
         (error: V2NIMError) => {
@@ -436,6 +490,33 @@ export class V2NIMMessageService extends EventEmitter<V2NIMMessageListener> {
         conversationId,
         senderId,
         createTime,
+        (result: V2NIMMessage) => {
+          resolve(result)
+        },
+        (error: V2NIMError) => {
+          reject(error)
+        }
+      )
+    })
+  }
+
+  /**
+   * @brief 更新本地消息
+   * @param message 要更新的消息
+   * @param params 更新参数
+   * @returns V2NIMMessage
+   * @since v10.9.0
+   * @example
+   * ```javascript
+   * const message = await v2.messageService.updateLocalMessage(message, {
+   *     text: 'Hello NTES IM'
+   * })
+   */
+  updateLocalMessage(message: V2NIMMessage, params: V2NIMUpdateLocalMessageParams): Promise<V2NIMMessage> {
+    return new Promise((resolve, reject) => {
+      this.instance.updateLocalMessage(
+        message,
+        params,
         (result: V2NIMMessage) => {
           resolve(result)
         },
@@ -1056,13 +1137,23 @@ export class V2NIMMessageService extends EventEmitter<V2NIMMessageListener> {
    * @since v10.8.30
    * @example
    * ```javascript
-   * v2.messageService.installMessageFilter({
+   * v2.messageService.setMessageFilter({
    *    shouldIgnore: (message) => {
    *        // 过滤消息
    *    }
    * })
    */
   setMessageFilter(filter: V2NIMMessageFilter): void {
-    this.instance.setMessageFilter(filter)
+    if (filter && (filter.__messageClientId || filter.__messageType)) {
+      filter.shouldIgnore = (message: V2NIMMessage) => {
+        if (filter.__messageClientId && message.messageClientId === filter.__messageClientId) {
+          return true
+        }
+        return !!(filter.__messageType && message.messageType === filter.__messageType);
+      }
+      this.instance.setMessageFilter(filter)
+    } else {
+      this.instance.setMessageFilter(filter)
+    }
   }
 }

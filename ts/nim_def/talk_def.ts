@@ -151,7 +151,7 @@ export enum NIMStopStreamingMessageOptType {
   kNIMStopStreamingMessageOptTypeUpdate
 }
 
-/** @brief 重新生成数字人消息操作类型，@since v10.8.3 */
+/** @brief 重新生成数字人消息操作类型，@since v10.8.30 */
 export enum NIMRedoAIMessageOptType {
   /** 更新消息 */
   kNIMRedoAIMessageOptTypeUpdate = 1,

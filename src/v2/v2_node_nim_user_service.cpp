@@ -12,6 +12,7 @@ Napi::Object node_nim::V2NodeNIMUserService::Init(Napi::Env env, Napi::Object ex
             RegApi("removeUserFromBlockList", &V2NIMUserService::removeUserFromBlockList),
             RegApi("getBlockList", &V2NIMUserService::getBlockList),
             RegApi("searchUserByOption", &V2NIMUserService::searchUserByOption),
+            RegApi("checkBlock", &V2NIMUserService::checkBlock),
         });
     // clang-format on
 }

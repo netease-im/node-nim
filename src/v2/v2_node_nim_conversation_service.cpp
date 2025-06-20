@@ -5,7 +5,8 @@ namespace node_nim {
 
 Napi::Object node_nim::V2NodeNIMConversationService::Init(Napi::Env env, Napi::Object exports) {
     return InternalInit("V2NIMConversationService", env, exports,
-        {RegApi("createConversation", &V2NIMConversationService::createConversation),
+        {
+            RegApi("createConversation", &V2NIMConversationService::createConversation),
             RegApi("deleteConversation", &V2NIMConversationService::deleteConversation),
             RegApi("deleteConversationListByIds", &V2NIMConversationService::deleteConversationListByIds),
             RegApi("stickTopConversation", &V2NIMConversationService::stickTopConversation),
@@ -25,7 +26,9 @@ Napi::Object node_nim::V2NodeNIMConversationService::Init(Napi::Env env, Napi::O
             RegApi("markConversationRead", &V2NIMConversationService::markConversationRead),
             RegApi("getConversationReadTime", &V2NIMConversationService::getConversationReadTime),
             RegApi("subscribeUnreadCountByFilter", &V2NIMConversationService::subscribeUnreadCountByFilter),
-            RegApi("unsubscribeUnreadCountByFilter", &V2NIMConversationService::unsubscribeUnreadCountByFilter)});
+            RegApi("unsubscribeUnreadCountByFilter", &V2NIMConversationService::unsubscribeUnreadCountByFilter),
+            RegApi("getStickTopConversationList", &V2NIMConversationService::getStickTopConversationList),
+        });
 }
 
 node_nim::V2NodeNIMConversationService::V2NodeNIMConversationService(const Napi::CallbackInfo& info)

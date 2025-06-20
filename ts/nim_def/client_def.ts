@@ -408,6 +408,14 @@ export interface SDKConfig {
   fcs_auth_type_?: number
   /** 是否开启融合云存储 */
   custom_enable_fcs_?: boolean
+  /** 是否启用 SSL 连接，默认启用，目前仅在使用 WebSocket 链接是使用 @since v10.9.0 */
+  ssl_connection?: boolean
+  /** 是否允许自签证书，默认不允许 @since v10.9.0 */
+  allow_self_signed_cert_?: boolean
+  /** 是否跳过主机证书检查，默认不跳过 @since v10.9.0 */
+  skip_host_cert_check_?: boolean
+  /** 自定义 SSL CA 证书位置，pem 格式，留空使用内置默认证书 @since v10.9.0 */
+  client_ca_file_path_?: string
 }
 
 /** @brief 登录结果回调信息 */

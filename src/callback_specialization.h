@@ -155,9 +155,11 @@ CallbackSpecialization(V2NIMProgressCallback);
 CallbackSpecialization(V2NIMReconnectDelayProvider);
 CallbackSpecialization(V2NIMSuccessCallback<void>);
 CallbackSpecialization(V2NIMSuccessCallback<V2NIMConversation>);
+CallbackSpecialization(V2NIMSuccessCallback<const V2NIMConversation&>);
 CallbackSpecialization(V2NIMSuccessCallback<nstd::vector<V2NIMConversationOperationResult>>);
 CallbackSpecialization(V2NIMSuccessCallback<V2NIMConversationResult>);
 CallbackSpecialization(V2NIMSuccessCallback<nstd::vector<V2NIMConversation>>);
+CallbackSpecialization(V2NIMSuccessCallback<const nstd::vector<V2NIMConversation>&>);
 CallbackSpecialization(V2NIMSuccessCallback<nstd::string>);
 CallbackSpecialization(V2NIMSuccessCallback<const nstd::string&>);
 CallbackSpecialization(V2NIMSuccessCallback<uint32_t>);
@@ -220,6 +222,12 @@ CallbackSpecialization(V2NIMSuccessCallback<const V2NIMLocalConversationResult&>
 CallbackSpecialization(V2NIMSuccessCallback<const nstd::vector<V2NIMLocalConversation>&>);
 CallbackSpecialization(V2NIMSuccessCallback<const V2NIMLocalConversation&>);
 CallbackSpecialization(V2NIMSuccessCallback<const nstd::vector<V2NIMLocalConversationOperationResult>&>);
+CallbackSpecialization(V2NIMSuccessCallback<const V2NIMMessageListResult&>);
+using V2NIMCallbackSpecializationTempType4 = nstd::map<nstd::string, V2NIMTeamMessageMuteMode>;
+CallbackSpecialization(V2NIMSuccessCallback<const V2NIMCallbackSpecializationTempType4&>);
+CallbackSpecialization(V2NIMSuccessCallback<bool>);
+CallbackSpecialization(V2NIMSuccessCallback<const V2NIMMessage&>);
+CallbackSpecialization(V2NIMSuccessCallback<const nstd::vector<V2NIMTeamMember>&>);
 
 namespace xpack {
 // std::function

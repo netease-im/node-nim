@@ -271,6 +271,24 @@ export enum NIMAIStreamingMessageStatus {
   kNIMAIStreamingMessageAborted
 }
 
+/** @brief AI 流式消息状态 @since v10.9.10 */
+export enum NIMStreamingMessageStatus {
+  /** 流式过程中（本地状态，其他为服务器状态） */
+  kNIMAIStreamingMessageStreaming = -1,
+  /** 非流式状态 */
+  kNIMAIStreamingMessageNone,
+  /** 占位 */
+  kNIMAIStreamingMessagePlaceholder,
+  /** 停止输出 */
+  kNIMAIStreamingMessageCancelled,
+  /** 停止并更新 */
+  kNIMAIStreamingMessageUpdated,
+  /** 输出完成 */
+  kNIMAIStreamingMessageCompleted,
+  /** 服务器异常终止 */
+  kNIMAIStreamingMessageAborted
+}
+
 export interface QueryMsgOnlineAsyncParam {
   /** 查询id，对方的account id或者群组tid */
   id_?: string
@@ -428,6 +446,20 @@ export interface NIMAIStreamingMessageChunk {
   index_: number
 }
 
+/** @brief 消息 AI 流式消息分片信息 @since v10.9.10 */
+export interface NIMStreamingMessageChunk {
+  /** 流式消息回复分片文本 */
+  content_: string
+  /** 流式消息时间，即占位消息时间 */
+  message_time_: number
+  /** 流式消息当前分片时间 */
+  chunk_time_: number
+  /** 类型，当前仅支持 0 表示文本 */
+  type_: number
+  /** 分片序号，从 0 开始 */
+  index_: number
+}
+
 /** @brief AI 数字人消息信息 */
 export interface IMMessageAIConfig {
   /** 数字人账号信息，发送消息时指定该字段代表要 @ AI 数字人 */
@@ -442,6 +474,17 @@ export interface IMMessageAIConfig {
   rags_?: Array<NIMAIMessageRAGInfo>
   /** 流式消息的分片信息 @since v10.8.30 */
   chunk_?: NIMAIStreamingMessageChunk
+}
+
+
+/** @brief IM 消息通用流式消息配置 @since v10.9.10 */
+export interface IMMessageStreamingConfig {
+  /** 是否是流式消息 */
+  streaming_: boolean
+  /** 流式消息状态，仅当 streaming_ 为 true 时有效 */
+  status_: NIMStreamingMessageStatus
+  /** 流式消息的分片信息，仅当 streaming_ 为 true 时有效 */
+  chunk_?: NIMStreamingMessageChunk
 }
 
 export interface IMMessage {
@@ -491,6 +534,8 @@ export interface IMMessage {
   robot_info_?: IMMessageRobotInfo
   /** AI 数字人消息相关信息 */
   ai_config_?: IMMessageAIConfig
+  /**  IM 消息通用流式消息配置 @since v10.9.10 */
+  streaming_config_?: IMMessageStreamingConfig
   /** 发送者客户端类型（只读） */
   readonly_sender_client_type_?: NIMClientType
   /** 发送者客户端设备ID（只读） */

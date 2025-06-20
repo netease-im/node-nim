@@ -51,7 +51,11 @@ import {
   V2NIMMessageAIStreamStatus,
   V2NIMAIModelStreamCallStatus,
   V2NIMMessageAIStreamStopOpType,
-  V2NIMMessageAIRegenOpType
+  V2NIMMessageAIRegenOpType,
+  V2NIMKickedOfflineReason,
+  V2NIMSearchDirection,
+  V2NIMSearchStrategy,
+  V2NIMMessageStreamStatus
 } from './v2_nim_enum_def'
 
 export interface V2NIMError {
@@ -70,6 +74,18 @@ export interface V2NIMSize {
   height: number
 }
 
+/** @biref V2NIMTransportLayerSecurityOption TLS 配置 @since v10.9.0 */
+export interface V2NIMTransportLayerSecurityOption {
+  /** 是否启用 SSL/TLS 加密，默认启用，目前仅在使用 WebSocket 链接时使用 @since v10.9.0 */
+  sslConnection?: boolean
+  /** 是否允许自签证书，默认不允许 @since v10.9.0 */
+  allowSelfSignedCert?: boolean
+  /** 是否跳过主机证书检查，默认不跳过 @since v10.9.0 */
+  skipHostCertCheck?: boolean
+  /** 自定义 SSL CA 证书位置，pem 格式，留空使用内置默认证书 @since v10.9.0 */
+  clientCAFilePath?: string
+}
+
 export interface V2NIMLinkOption {
   /** 连接超时, 单位毫秒 */
   linkTimeout?: number
@@ -81,6 +97,8 @@ export interface V2NIMLinkOption {
   asymmetricEncryptionAlgorithm?: V2NIMAsymmetricEncryptionAlgorithm
   /** 对称加密通信加密算法 */
   symmetricEncryptionAlgorithm?: V2NIMSymmetricEncryptionAlgorithm
+  /** TLS 选项，目前仅在使用 WebSocket 链接时使用 @since v10.9.0 */
+  tlsOption?: V2NIMTransportLayerSecurityOption
 }
 
 export interface V2NIMFCSOption {
@@ -113,6 +131,8 @@ export interface V2NIMPrivateServerOption {
   nosAccelerateHosts?: Array<string>
   /** nos 加速地址拼接模板, 用于获得加速后的下载地址 */
   nosAccelerateAddress?: string
+  /** nos 默认上传分片大小，单位字节。如您想设置分片大小为 5MB，则应设置为 5 * 1024 * 1024 @since v10.9.10 */
+  nosMaxUploadPartSize?: number
   /** 探测 ipv4 地址类型使用的 url */
   probeIpv4Url?: string
   /** 探测 ipv6 地址类型使用的 url */
@@ -153,6 +173,8 @@ export interface V2NIMBasicOption {
   logReserveDays?: number
   /** SDK日志级别 */
   sdkLogLevel?: V2NIMSDKLogLevel
+  /** 自定义日志收集目录，当需要上报日志时可单独指定一个目录，SDK 会主动收集该目录下的所有文件 @since v10.9.0 */
+  customizeLogCollectionDirectory?: string
   /** 是否禁用 macOS 下的 App Nap 功能 */
   disableAppNap?: boolean
   /** 云信指南针数据上报开关 */
@@ -621,6 +643,28 @@ export interface V2NIMMessageAIConfig {
   aiStreamLastChunk?: V2NIMMessageAIStreamChunk;
 }
 
+/** @brief 消息流式消息分片信息 @since v10.9.10 */
+export interface V2NIMMessageStreamChunk {
+  /** 流式消息回复分片文本 */
+  content: string
+  /** 流式消息时间，即占位消息时间 */
+  messageTime: number
+  /** 流式消息当前分片时间，chunkTime >= messageTime */
+  chunkTime: number
+  /** 类型，当前仅支持 0 表示文本 */
+  type: number
+  /** 分片序号，从 0 开始 */
+  index: number
+}
+
+/** @brief 消息体当中的流式相关配置字段 @since v10.9.10 */
+export interface V2NIMMessageStreamConfig {
+  /** 流式消息状态 */
+  status: V2NIMMessageStreamStatus;
+  /** 流式消息最近一个分片，流式过程中才有该字段，最终完整消息无此字段 */
+  lastChunk?: V2NIMMessageStreamChunk;
+};
+
 export interface V2NIMMessage {
   /** 客户端消息 id */
   messageClientId?: string
@@ -642,6 +686,8 @@ export interface V2NIMMessage {
   messageType?: V2NIMMessageType
   /** 消息内容 */
   subType?: number
+  /** 音频消息状态 @since v10.9.1 */
+  audioState?: number
   /** 消息文本 */
   text?: string
   /** 消息附属附件 */
@@ -678,6 +724,8 @@ export interface V2NIMMessage {
   isDeleted?: boolean
   /** AI 数字人相关信息 */
   aiConfig?: V2NIMMessageAIConfig
+  /** 消息流式相关配置 @since v10.9.10 */
+  streamConfig?: V2NIMMessageStreamConfig
   /** 消息更新时间 */
   modifyTime?: number
   /** 消息更新者账号 */
@@ -816,6 +864,8 @@ export interface V2NIMMessageRevokeParams {
 export interface V2NIMMessageRevokeNotification {
   /** 被撤回的消息引用 */
   messageRefer?: V2NIMMessageRefer
+  /** 原始消息 @since v10.9.1 */
+  message?: V2NIMMessage
   /** 扩展信息 */
   serverExtension?: string
   /** 附言 */
@@ -936,6 +986,24 @@ export interface V2NIMMessageListOption {
   onlyQueryLocal?: boolean
 }
 
+/** @brief 消息查询结果 @since v10.9.1 */
+export interface V2NIMCloudMessageListOption {
+  /** 消息所属会话 ID */
+  conversationId: string
+  /** 消息查询开始时间，小于等于 endTime */
+  beginTime?: number
+  /** 消息查询结束时间 */
+  endTime?: number
+  /** 每次查询条数，默认 50 */
+  limit?: number
+  /** 消息查询方向 */
+  direction?: V2NIMQueryDirection
+  /** 根据消息类型查询会话，不指定或空列表，则表示查询所有消息类型 */
+  messageTypes?: Array<V2NIMMessageType>
+  /** 锚点消息，根据锚点消息查询，不包含该消息 */
+  anchorMessage?: V2NIMMessage
+}
+
 export interface V2NIMClearHistoryMessageOption {
   /** 需要清空消息的对应的会话 ID */
   conversationId?: string
@@ -985,6 +1053,8 @@ export interface V2NIMMessageQuickCommentNotification {
 export interface V2NIMMessageDeletedNotification {
   /** 被删除的消息引用 */
   messageRefer?: V2NIMMessageRefer
+  /** 原始消息 @since v10.9.1 */
+  message?: V2NIMMessage
   /** 被删除的时间 */
   deleteTime?: number
   /** 被删除时填入的扩展字段 */
@@ -1121,7 +1191,7 @@ export interface V2NIMLoginClient {
 
 export interface V2NIMKickedOfflineDetail {
   /** 原因 */
-  reason?: V2NIMKickedOfflineDetail
+  reason?: V2NIMKickedOfflineReason
   /** 说明 */
   reasonDesc?: string
   /** 客户端类型 */
@@ -1193,6 +1263,8 @@ export interface V2NIMConversation {
   createTime?: number
   /** 会话更新时间 */
   updateTime?: number
+  /** 会话最后已读时间戳 @since v10.9.0 */
+  lastReadTime?: number
 }
 
 export interface V2NIMConversationResult {
@@ -1335,6 +1407,8 @@ export interface V2NIMTeam {
   chatBannedMode?: V2NIMTeamChatBannedMode
   /** 是否为自己所在且有效的群, 群存在且我在群组中 */
   isValidTeam?: boolean
+  /** 单纯表示群组是否有效 @since v10.9.1 */
+  isTeamEffective?: boolean
 }
 
 export interface V2NIMTeamMember {
@@ -1664,7 +1738,9 @@ export interface V2NIMTeamMemberSearchOption {
   teamType: V2NIMTeamType
   /** 群组ID，如果不传则检索所有群，如果需要检索特定的群，则需要同时传入 teamId + teamType */
   teamId?: string
-  // 起始位置，首次传空， 后续传上次返回的 nextToken
+  /** 是否按账号 ID 查询 @since v10.9.1 */
+  searchAccountId?: boolean
+  /** 起始位置，首次传空， 后续传上次返回的 nextToken */
   nextToken: string
   /** 按照 joinTime 排序，默认时间降序排列 */
   order: V2NIMSortOrder
@@ -2325,6 +2401,8 @@ export interface V2NIMSignallingCancelInviteParams {
   serverExtension?: string
   /** 是否存离线，true 表示存离线，false 表示不存离线 */
   offlineEnabled?: boolean
+  /** 推送相关配置 @since v10.9.10 */
+  pushConfig?: V2NIMSignallingPushConfig
 }
 
 export interface V2NIMSignallingRejectInviteParams {
@@ -2493,6 +2571,10 @@ export interface V2NIMMessageSearchExParams {
   searchStartTime: number
   /** 从起始时间点开始的过去时间范围，默认为 0（不限制时间范围）。24 x 60 x 60 x 1000 代表过去一天，单位：毫秒 */
   searchTimePeriod: number
+  /** 检索方向 {@link V2NIMSearchDirection}，默认为 V2NIM_SEARCH_DIRECTION_BACKWARD @since v10.9.0 */
+  direction?: V2NIMSearchDirection
+  /** 检索策略 {@link V2NIMSearchStrategy}，默认为 V2NIM_SEARCH_STRATEGY_FTS @since v10.9.0 */
+  strategy?: V2NIMSearchStrategy
   /** 搜索的数量限制，默认为 20，最大为 100 */
   limit: number
   /** 下一页的 token，用于分页查询 */
@@ -2685,5 +2767,28 @@ export interface V2NIMAIModelStreamCallStopParams {
 
 /** @brief 消息过滤器对象 @since v10.8.30 */
 export interface V2NIMMessageFilter {
+  [x: string]: any
   shouldIgnore: V2NIMMessageFilterProvider
+}
+
+/** @brief 消息列表结果 @since v10.9.0 */
+export interface V2NIMMessageListResult {
+  /** 消息列表 */
+  messages: Array<V2NIMMessage>
+  /** 下次查询的锚点消息 */
+  anchorMessage: V2NIMMessage
+}
+
+/** @brief 更新本地消息参数 @since v10.9.0 */
+export interface V2NIMUpdateLocalMessageParams {
+  /** 消息子类型，需要 >= 0 */
+  subType?: number
+  /** 消息内容 */
+  text?: string
+  /** 消息附属附件 */
+  attachment?: V2NIMMessageAttachment
+  /** 消息本地扩展 */
+  localExtension?: string;
+  /** 消息发送状态 @since v10.9.1 */
+  sendingState?: V2NIMMessageSendingState
 }

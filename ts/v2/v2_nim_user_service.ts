@@ -187,4 +187,29 @@ export class V2NIMUserService extends EventEmitter<V2NIMUserListener> {
       )
     })
   }
+
+  /**
+   * @brief 根据账号 ID 检查是否在黑名单中
+   * @param accountIds 账号 ID 列表
+   * @returns void
+   * @since v10.9.0
+   * @example
+   * ```javascript
+   * const result = await v2.userService.checkBlock(['accountId1', 'accountId2'])
+   * // handle result
+   * ```
+   */
+  checkBlock(accountIds: Array<string>): Promise<Map<string, boolean>> {
+    return new Promise((resolve, reject) => {
+      this.instance.checkBlock(
+        accountIds,
+        (result: Map<string, boolean>) => {
+          resolve(result)
+        },
+        (error: V2NIMError) => {
+          reject(error)
+        }
+      )
+    })
+  }
 }

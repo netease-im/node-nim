@@ -1,9 +1,6 @@
 # Node-gyp
 build
 
-# macOS
-.DS_Store
-
 # NPM
 package-lock.json
 
