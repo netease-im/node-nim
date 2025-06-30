@@ -16,6 +16,7 @@ import { V2NIMAIService } from './v2_nim_ai_service'
 import { V2NIMSignallingService } from './v2_nim_signalling_service'
 import { V2NIMSubscriptionService } from './v2_nim_subscription_service'
 import { V2NIMPassthroughService } from './v2_nim_passthrough_service'
+import { V2NIMStatisticsService } from './v2_nim_statistics_service'
 import {
   V2NIMConversationIdUtil,
   V2NIMMessageCreator,
@@ -50,6 +51,7 @@ export class V2NIMClient extends EventEmitter<V2NIMClientListener> {
   signallingService: V2NIMSignallingService | null
   subscriptionService: V2NIMSubscriptionService | null
   passthroughService: V2NIMPassthroughService | null
+  statisticsService: V2NIMStatisticsService | null
 
   constructor () {
     super()
@@ -79,6 +81,7 @@ export class V2NIMClient extends EventEmitter<V2NIMClientListener> {
     this.signallingService = null
     this.subscriptionService = null
     this.passthroughService = null
+    this.statisticsService = null
   }
 
   /**
@@ -119,6 +122,7 @@ export class V2NIMClient extends EventEmitter<V2NIMClientListener> {
     this.signallingService = new V2NIMSignallingService()
     this.subscriptionService = new V2NIMSubscriptionService()
     this.passthroughService = new V2NIMPassthroughService()
+    this.statisticsService = new V2NIMStatisticsService()
     try {
       this.conversationService = new V2NIMConversationService()
       this.conversationGroupService = new V2NIMConversationGroupService()
@@ -159,6 +163,7 @@ export class V2NIMClient extends EventEmitter<V2NIMClientListener> {
     this.signallingService = null
     this.subscriptionService = null
     this.passthroughService = null
+    this.statisticsService = null
     return this.instance.uninit()
   }
 
@@ -333,5 +338,17 @@ export class V2NIMClient extends EventEmitter<V2NIMClientListener> {
    */
   getPasseThroughService (): V2NIMPassthroughService | null {
     return this.passthroughService
+  }
+
+  /**
+   * @brief 获取统计服务
+   * @returns V2NIMStatisticsService
+   * @example
+   * ```javascript
+   * const statisticsService = client.getStatisticsService()
+   * ```
+   */
+  getStatisticsService (): V2NIMStatisticsService | null {
+    return this.statisticsService
   }
 }

@@ -34,6 +34,7 @@
 #include "qchat/server/qchat_server.h"
 #include "qchat/system_notification/qchat_system_notification.h"
 #include "ts_cpp_conversion.h"
+#include "v2/v2_nim_statistics_service.hpp"
 #include "v2/v2_node_nim_ai_service.h"
 #include "v2/v2_node_nim_conversation_group_service.h"
 #include "v2/v2_node_nim_conversation_service.h"
@@ -46,6 +47,7 @@
 #include "v2/v2_node_nim_passthrough_service.h"
 #include "v2/v2_node_nim_setting_service.h"
 #include "v2/v2_node_nim_signalling_service.h"
+#include "v2/v2_node_nim_statistics_service.h"
 #include "v2/v2_node_nim_storage_service.h"
 #include "v2/v2_node_nim_subscription_service.h"
 #include "v2/v2_node_nim_team_service.h"
@@ -57,6 +59,30 @@
 #include "v2_chatroom/v2_node_nim_chatroom_service.h"
 
 namespace {
+
+#if defined(WIN32) || defined(_WIN32)
+std::wstring GetNodeModulePath() {
+    TCHAR dllPath[MAX_PATH];
+    HMODULE hModule = NULL;
+
+    // 正确获取当前DLL模块句柄的方法
+    // 使用当前函数地址作为标识
+    GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS, (LPCTSTR)GetNodeModulePath, &hModule);
+
+    if (GetModuleFileName(hModule, dllPath, MAX_PATH) == 0)
+        return L"";
+    return dllPath;
+}
+
+std::wstring GetNodeModuleDirectory() {
+    std::wstring dllPath = GetNodeModulePath();
+    size_t pos = dllPath.find_last_of(L"\\/");
+    if (pos != std::wstring::npos) {
+        return dllPath.substr(0, pos);
+    }
+    return L"";
+}
+#endif
 
 Napi::Object RegisterModule(Napi::Env env, Napi::Object exports) {
     Napi::HandleScope scope(env);
@@ -103,12 +129,19 @@ Napi::Object RegisterModule(Napi::Env env, Napi::Object exports) {
     node_nim::V2NodeNIMFriendService::Init(env, exports);
     node_nim::V2NodeNIMAIService::Init(env, exports);
     node_nim::V2NodeNIMSignallingService::Init(env, exports);
+    node_nim::V2NodeNIMStatisticsService::Init(env, exports);
     node_nim::V2NodeNIMChatroomSdk::Init(env, exports);
     node_nim::V2NodeNIMChatroomClient::Init(env, exports);
     node_nim::V2NodeNIMChatroomService::Init(env, exports);
     node_nim::V2NodeNIMChatroomQueueService::Init(env, exports);
     node_nim::V2NodeNIMSubscriptionService::Init(env, exports);
     node_nim::V2NodeNIMPassthroughService::Init(env, exports);
+#if defined(WIN32) || defined(_WIN32)
+    std::wstring moduleDirectory = GetNodeModuleDirectory();
+    if (!moduleDirectory.empty())
+        SetDllDirectory(moduleDirectory.c_str());
+#endif
+
     return exports;
 }
 

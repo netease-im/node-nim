@@ -915,4 +915,23 @@ export class V2NIMTeamService extends EventEmitter<V2NIMTeamListener> {
       )
     })
   }
+
+  /**
+   * @brief 获取群申请/邀请未读数量
+   * @returns Promise<number>
+   * @since v10.9.20
+   * @example
+   * ```javascript
+   * const count = await v2.teamService.getTeamJoinActionInfoUnreadCount()
+   * ```
+   */
+  getTeamJoinActionInfoUnreadCount(): Promise<number> {
+    return new Promise((resolve, reject) => {
+      this.instance.getTeamJoinActionInfoUnreadCount((count: number) => {
+        resolve(count)
+      }, (error: V2NIMError) => {
+        reject(error)
+      })
+    })
+  }
 }

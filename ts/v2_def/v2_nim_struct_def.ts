@@ -183,6 +183,8 @@ export interface V2NIMBasicOption {
   teamNotificationBadge?: boolean
   /** 收到撤回消息通知时是否减少指定会话的未读计数 */
   reduceUnreadOnMessageRecall?: boolean
+  /** 查询会话时是否仅返回会话快照信息。设置为 true 有助于加快会话查询速度，减少构建完整会话信息耗时 @since  v10.9.20 */
+  conversationSnapshot?: boolean
   /** 云信指南针数据上报地址，为空则使用默认地址 */
   compassDataEndpoint?: string
 }
