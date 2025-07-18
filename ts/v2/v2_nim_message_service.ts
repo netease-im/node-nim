@@ -1131,6 +1131,30 @@ export class V2NIMMessageService extends EventEmitter<V2NIMMessageListener> {
   }
 
   /**
+   * @brief 清除漫游消息
+   * @param conversationIds 会话 ID 列表
+   * @returns void
+   * @since v10.9.30
+   * @example
+   * ```javascript
+   * await v2.messageService.clearRoamingMessage(['conversationId1', 'conversationId2'])
+   * ```
+   */
+  clearRoamingMessage(conversationIds: Array<string>): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.instance.clearRoamingMessage(
+        conversationIds,
+        () => {
+          resolve()
+        },
+        (error: V2NIMError) => {
+          reject(error)
+        }
+      )
+    })
+  }
+
+  /**
    * @brief 安装消息过滤器，全局唯一，只能注册一个。一旦注册该过滤器，所有消息均经过该过滤器，返回 true 表示将消息过滤，返回 false 表示不过滤消息
    * @param filter 消息过滤器
    * @returns void

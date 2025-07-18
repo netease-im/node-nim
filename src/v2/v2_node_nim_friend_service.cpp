@@ -16,6 +16,7 @@ Napi::Object node_nim::V2NodeNIMFriendService::Init(Napi::Env env, Napi::Object 
             RegApi("getAddApplicationList", &V2NIMFriendService::getAddApplicationList),
             RegApi("getAddApplicationUnreadCount", &V2NIMFriendService::getAddApplicationUnreadCount),
             RegApi("setAddApplicationRead", &V2NIMFriendService::setAddApplicationRead),
+            RegApi("setAddApplicationReadEx", &V2NIMFriendService::setAddApplicationReadEx),
             RegApi("searchFriendByOption", &V2NIMFriendService::searchFriendByOption),
             RegApi("clearAllAddApplication", &V2NIMFriendService::clearAllAddApplication),
             RegApi("deleteAddApplication", &V2NIMFriendService::deleteAddApplication),

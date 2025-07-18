@@ -48,6 +48,7 @@ Napi::Object V2NodeNIMMessageService::Init(Napi::Env env, Napi::Object exports) 
         RegApi("searchLocalMessages", &V2NIMMessageService::searchLocalMessages),
         RegApi("stopAIStreamMessage", &V2NIMMessageService::stopAIStreamMessage),
         RegApi("regenAIMessage", &V2NIMMessageService::regenAIMessage),
+        RegApi("clearRoamingMessage", &V2NIMMessageService::clearRoamingMessage),
         RegApi("setMessageFilter", &V2NIMMessageService::setMessageFilter)
     });
     // clang-format on

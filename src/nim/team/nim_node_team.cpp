@@ -17,7 +17,6 @@ Napi::Object NIMTeam::Init(Napi::Env env, Napi::Object exports) {
         RegApi("InviteAsync", &Team::InviteAsync2),
         RegApi("KickAsync", &Team::KickAsync),
         RegApi("LeaveAsync", &Team::LeaveAsync),
-        RegApi("KickAsync", &Team::KickAsync),
         RegApi("DismissAsync", &Team::DismissAsync),
         RegApi("UpdateTeamInfoAsync", &Team::UpdateTeamInfoAsync),
         RegApi("ApplyJoinAsync", &Team::ApplyJoinAsync),

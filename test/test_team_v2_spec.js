@@ -197,4 +197,13 @@ describe('******************** Team v2 ********************', function () {
       assert.ok(result.length > 0)
     })
   })
+  describe('#setTeamJoinActionInfoRead', async function () {
+    it('Set team join action info read should return success', async function () {
+      try {
+        await v2.teamService.setTeamJoinActionInfoRead(null)
+      } catch (error) {
+        assert.ok(false)
+      }
+    })
+  })
 })

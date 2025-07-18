@@ -98,4 +98,10 @@ async function downloadSDK(custom_sdk_url) {
         console.error(`[node-nim] Failed to download, error: ${err}`)
     }
 }
+if (require.main === module) {
+    const args = process.argv
+    const downloadUrlIndex = args.indexOf('--nimSdkUrl');
+    const url = downloadUrlIndex !== -1 ? args[downloadUrlIndex + 1] : '';
+    downloadSDK(url)
+}
 exports.downloadSDK = downloadSDK

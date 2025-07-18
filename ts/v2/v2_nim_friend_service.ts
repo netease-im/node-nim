@@ -279,7 +279,7 @@ export class V2NIMFriendService extends EventEmitter<V2NIMFriendListener> {
   }
 
   /**
-   * @brief 设置申请添加好友已读
+   * @brief 设置所有申请添加好友已读
    * @returns void
    * @example
    * ```javascript
@@ -295,6 +295,28 @@ export class V2NIMFriendService extends EventEmitter<V2NIMFriendListener> {
         (error: V2NIMError) => {
           reject(error)
         }
+      )
+    })
+  }
+
+  /**
+   * @brief 设置单条申请添加好友已读
+   * @returns void
+   * @example
+   * ```javascript
+   * await v2.friendService.setAddApplicationReadEx(application)
+   * ```
+   */
+  setAddApplicationReadEx (application: V2NIMFriendAddApplication): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.instance.setAddApplicationReadEx(
+          application,
+          () => {
+            resolve()
+          },
+          (error: V2NIMError) => {
+            reject(error)
+          }
       )
     })
   }

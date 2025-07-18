@@ -13,7 +13,8 @@ import {
   V2NIMTeamJoinActionInfo,
   V2NIMTeamJoinActionInfoResult,
   V2NIMTeamJoinActionInfoQueryOption,
-  V2NIMTeamMemberSearchOption
+  V2NIMTeamMemberSearchOption,
+  V2NIMUpdateMemberNickParams
 } from 'ts/v2_def/v2_nim_struct_def'
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
@@ -273,15 +274,15 @@ export class V2NIMTeamService extends EventEmitter<V2NIMTeamListener> {
   inviteMemberEx (teamId: string, teamType: V2NIMTeamType, inviteeParams: V2NIMTeamInviteParams): Promise<Array<string>> {
     return new Promise((resolve, reject) => {
       this.instance.inviteMemberEx(
-          teamId,
-          teamType,
-          inviteeParams,
-          (accountIds: Array<string>) => {
-            resolve(accountIds)
-          },
-          (error: V2NIMError) => {
-            reject(error)
-          }
+        teamId,
+        teamType,
+        inviteeParams,
+        (accountIds: Array<string>) => {
+          resolve(accountIds)
+        },
+        (error: V2NIMError) => {
+          reject(error)
+        }
       )
     })
   }
@@ -526,7 +527,7 @@ export class V2NIMTeamService extends EventEmitter<V2NIMTeamListener> {
    * @param teamId 群组 id
    * @param teamType 群组类型
    * @param accountId 群成员 id
-   * @param nick 群成员昵称
+   * @param teamNick 群成员昵称
    * @returns void
    * @example
    * ```javascript
@@ -540,6 +541,41 @@ export class V2NIMTeamService extends EventEmitter<V2NIMTeamListener> {
         teamType,
         accountId,
         teamNick,
+        () => {
+          resolve()
+        },
+        (error: V2NIMError) => {
+          reject(error)
+        }
+      )
+    })
+  }
+
+  /**
+   * @brief 修改群成员昵称
+   * @param teamId 群组 ID
+   * @param teamType 群组类型
+   * @param nickParams 修改群成员昵称参数
+   * @returns void
+   * @since v10.9.30
+   * @example
+   * ```javascript
+   * await v2.teamService.updateTeamMemberNickEx(teamId, teamType, {
+   *    accountId: 'member1',
+   *    teamNick: 'newNick',
+   * })
+   * ```
+   */
+  updateTeamMemberNickEx (
+    teamId: string,
+    teamType: V2NIMTeamType,
+    nickParams: V2NIMUpdateMemberNickParams
+  ): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.instance.updateTeamMemberNickEx(
+        teamId,
+        teamType,
+        nickParams,
         () => {
           resolve()
         },
@@ -902,7 +938,7 @@ export class V2NIMTeamService extends EventEmitter<V2NIMTeamListener> {
    * const members = await v2.teamService.getJoinedTeamMembers(teamTypes)
    * ```
    */
-  getJoinedTeamMembers(teamTypes: Array<V2NIMTeamType>): Promise<Array<V2NIMTeamMember>> {
+  getJoinedTeamMembers (teamTypes: Array<V2NIMTeamType>): Promise<Array<V2NIMTeamMember>> {
     return new Promise((resolve, reject) => {
       this.instance.getJoinedTeamMembers(
         teamTypes,
@@ -925,10 +961,20 @@ export class V2NIMTeamService extends EventEmitter<V2NIMTeamListener> {
    * const count = await v2.teamService.getTeamJoinActionInfoUnreadCount()
    * ```
    */
-  getTeamJoinActionInfoUnreadCount(): Promise<number> {
+  getTeamJoinActionInfoUnreadCount (): Promise<number> {
     return new Promise((resolve, reject) => {
       this.instance.getTeamJoinActionInfoUnreadCount((count: number) => {
         resolve(count)
+      }, (error: V2NIMError) => {
+        reject(error)
+      })
+    })
+  }
+
+  setTeamJoinActionInfoRead (applicationInfo: V2NIMTeamJoinActionInfo): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.instance.setTeamJoinActionInfoRead(applicationInfo, () => {
+        resolve()
       }, (error: V2NIMError) => {
         reject(error)
       })

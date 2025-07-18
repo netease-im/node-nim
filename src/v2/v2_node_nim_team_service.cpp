@@ -22,6 +22,7 @@ Napi::Object node_nim::V2NodeNIMTeamService::Init(Napi::Env env, Napi::Object ex
         RegApi("transferTeamOwner", &V2NIMTeamService::transferTeamOwner),
         RegApi("updateSelfTeamMemberInfo", &V2NIMTeamService::updateSelfTeamMemberInfo),
         RegApi("updateTeamMemberNick", &V2NIMTeamService::updateTeamMemberNick),
+        RegApi("updateTeamMemberNickEx", &V2NIMTeamService::updateTeamMemberNickEx),
         RegApi("setTeamChatBannedMode", &V2NIMTeamService::setTeamChatBannedMode),
         RegApi("setTeamMemberChatBannedStatus", &V2NIMTeamService::setTeamMemberChatBannedStatus),
         RegApi("getJoinedTeamList", &V2NIMTeamService::getJoinedTeamList),
@@ -37,7 +38,8 @@ Napi::Object node_nim::V2NodeNIMTeamService::Init(Napi::Env env, Napi::Object ex
         RegApi("clearAllTeamJoinActionInfo", &V2NIMTeamService::clearAllTeamJoinActionInfo),
         RegApi("deleteTeamJoinActionInfo", &V2NIMTeamService::deleteTeamJoinActionInfo),
         RegApi("getJoinedTeamMembers", &V2NIMTeamService::getJoinedTeamMembers),
-        RegApi("getTeamJoinActionInfoUnreadCount", &V2NIMTeamService::getTeamJoinActionInfoUnreadCount)
+        RegApi("getTeamJoinActionInfoUnreadCount", &V2NIMTeamService::getTeamJoinActionInfoUnreadCount),
+        RegApi("setTeamJoinActionInfoRead", &V2NIMTeamService::setTeamJoinActionInfoRead)
     });
     // clang-format on
 }

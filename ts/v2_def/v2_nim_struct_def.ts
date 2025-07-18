@@ -156,6 +156,8 @@ export interface V2NIMDatabaseOption {
   backupFolder?: string
   /** SQLCipher 版本, 仅 macOS / Linux 平台有效 */
   sqlcipherVersion?: V2NIMSQLCipherVersion
+  /** 数据库备份间隔时间（秒），为 0 表示使用默认值（3 天备份一次）@since v10.9.30 */
+  backupIntervalTimeInSeconds?: number
 }
 
 export interface V2NIMBasicOption {
@@ -188,6 +190,14 @@ export interface V2NIMBasicOption {
   /** 云信指南针数据上报地址，为空则使用默认地址 */
   compassDataEndpoint?: string
 }
+
+/** @brief 登陆路由（抄送）配置 @since v10.9.30 */
+export interface V2NIMRouteConfig {
+  /** 是否需要路由（抄送）本次登录事件，抄送需要打开控制台抄送配置 */
+  routeEnabled?: boolean
+  /** 路由地址 */
+  routeEnvironment?: string
+};
 
 export interface V2NIMInitOption {
   /** app key */
@@ -1172,6 +1182,8 @@ export interface V2NIMLoginOption {
   loginExtensionProvider?: V2NIMLoginExtensionProvider
   /** 数据同步等级 */
   syncLevel?: V2NIMDataSyncDetail
+  /** 登录路由（抄送）配置 @since v10.9.30 */
+  routeConfig?: V2NIMRouteConfig
 }
 
 export interface V2NIMLoginClient {
@@ -1546,12 +1558,29 @@ export interface V2NIMCreateTeamResult {
   failedList?: Array<string>
 }
 
+export interface V2NIMAntispamConfig {
+  /** 易盾业务 ID */
+  antispamBusinessId?: string
+}
+
 export interface V2NIMUpdateSelfMemberInfoParams {
   /** 设置的群昵称 */
   teamNick?: string
   /** 设置的群成员扩展字段 */
   serverExtension?: string
+  /** 昵称相关的安全配置 @since v10.9.30 */
+  antispamConfig?: V2NIMAntispamConfig
 }
+
+/** @brief 更新群成员昵称参数 @since v10.9.30 */
+export interface V2NIMUpdateMemberNickParams {
+  /** 群成员 ID */
+  accountId?: string
+  /** 昵称 */
+  teamNick?: string
+  /** 昵称相关的安全配置 */
+  antispamConfig?: V2NIMAntispamConfig
+};
 
 export interface V2NIMTeamMemberListResult {
   /** 数据是否拉取完毕 */
@@ -1561,7 +1590,6 @@ export interface V2NIMTeamMemberListResult {
   /** 拉取的成员列表 */
   memberList?: Array<V2NIMTeamMember>
 }
-
 
 export interface V2NIMTeamInviteParams {
   /** 被邀请加入群的成员账号列表, 为 Null || size 为 0, 返回参数错误 */
@@ -1589,11 +1617,8 @@ export interface V2NIMTeamJoinActionInfo {
   actionStatus?: V2NIMTeamJoinActionStatus
   /** 邀请入群的扩展字段 */
   serverExtension?: string
-}
-
-export interface V2NIMAntispamConfig {
-  /** 易盾业务 ID */
-  antispamBusinessId?: string
+  /** 是否已读 @since v10.9.20 */
+  read?: boolean
 }
 
 export interface V2NIMUser {
@@ -1777,6 +1802,8 @@ export interface V2NIMChatroomLoginOption {
   tokenProvider?: V2NIMChatroomTokenProvider
   /** 登陆扩展回调 */
   loginExtensionProvider?: V2NIMChatroomLoginExtensionProvider
+  /** 登录路由（抄送）配置 */
+  routeConfig?: V2NIMRouteConfig
 }
 
 export interface V2NIMChatroomTagConfig {

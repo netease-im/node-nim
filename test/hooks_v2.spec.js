@@ -22,9 +22,6 @@ export const mochaHooks = {
       })
     }
     v2.init(initOptions)
-    v2.statisticsService.on('databaseException', function (error) {
-      console.log(error)
-    })
     await v2.loginService.login(
       GlobalVariables.mainAccount,
       GlobalVariables.accountPassword,
