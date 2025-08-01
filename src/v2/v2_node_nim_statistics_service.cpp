@@ -5,7 +5,9 @@ namespace node_nim {
 
 Napi::Object V2NodeNIMStatisticsService::Init(Napi::Env env, Napi::Object exports) {
     // clang-format off
-    return InternalInit("V2NIMStatisticsService", env, exports,{});
+    return InternalInit("V2NIMStatisticsService", env, exports,{
+        RegApi("getDatabaseInfos", &V2NIMStatisticsService::getDatabaseInfos),
+    });
     // clang-format on
 }
 

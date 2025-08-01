@@ -55,7 +55,8 @@ import {
   V2NIMKickedOfflineReason,
   V2NIMSearchDirection,
   V2NIMSearchStrategy,
-  V2NIMMessageStreamStatus
+  V2NIMMessageStreamStatus,
+  V2NIMDataSyncLevel
 } from './v2_nim_enum_def'
 
 export interface V2NIMError {
@@ -212,6 +213,8 @@ export interface V2NIMInitOption {
   databaseOption?: V2NIMDatabaseOption
   /** 融合存储配置 */
   fcsOption?: V2NIMFCSOption
+  /** 登录路由（抄送）配置 */
+  routeConfig?: V2NIMRouteConfig
   /** 私有化配置 */
   privateServerOption?: V2NIMPrivateServerOption
 }
@@ -1181,7 +1184,7 @@ export interface V2NIMLoginOption {
   /** 登陆扩展信息获取回调 */
   loginExtensionProvider?: V2NIMLoginExtensionProvider
   /** 数据同步等级 */
-  syncLevel?: V2NIMDataSyncDetail
+  syncLevel?: V2NIMDataSyncLevel
   /** 登录路由（抄送）配置 @since v10.9.30 */
   routeConfig?: V2NIMRouteConfig
 }
@@ -2608,6 +2611,8 @@ export interface V2NIMMessageSearchExParams {
   limit: number
   /** 下一页的 token，用于分页查询 */
   pageToken?: string
+  /** 所有返回关联内容总数，为 true 时将计算搜索条件命中的所有数据总数，有性能损耗 @since v10.9.40 */
+  totalCount?: boolean
 }
 
 /** @brief 查询消息返回的结果项 @since v10.7.0 */
@@ -2820,4 +2825,14 @@ export interface V2NIMUpdateLocalMessageParams {
   localExtension?: string;
   /** 消息发送状态 @since v10.9.1 */
   sendingState?: V2NIMMessageSendingState
+}
+
+/** @brief 数据库信息 @since v10.9.40 */
+export interface V2NIMDatabaseInfo {
+  /** 数据库路径 */
+  path: string
+  /** 数据库名称 */
+  name: string
+  /** 数据库大小字节 */
+  size: number
 }

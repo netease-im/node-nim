@@ -226,6 +226,7 @@ CallbackSpecialization(V2NIMSuccessCallback<const V2NIMMessageListResult&>);
 using V2NIMCallbackSpecializationTempType4 = nstd::map<nstd::string, V2NIMTeamMessageMuteMode>;
 CallbackSpecialization(V2NIMSuccessCallback<const V2NIMCallbackSpecializationTempType4&>);
 CallbackSpecialization(V2NIMSuccessCallback<bool>);
+CallbackSpecialization(V2NIMSuccessCallback<const nstd::vector<V2NIMDatabaseInfo>&>);
 
 namespace xpack {
 // std::function
