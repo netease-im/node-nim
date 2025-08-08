@@ -15,11 +15,14 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include "extension/log/log.h"
 // clang-format off
 #include "reflection/reflection_include.h"
 #include "callback_specialization.h"
 // clang-format on
+
 namespace {
+
 namespace traits {
 template <class T>
 struct _is_callable;
@@ -169,28 +172,34 @@ private:
 
     template <typename TR, typename... Args, typename std::enable_if<std::is_void<TR>::value, std::nullptr_t>::type = nullptr>
     TR NotifyCallback(const std::string& flag, Args... args) {
-        auto callback = [this, flag, args...](const Napi::Env& env, const Napi::Function& js_callback, const void* value) {
+        auto uuid = base::extension::UUIDGenerate();
+        auto callback = [this, flag, uuid, args...](const Napi::Env& env, const Napi::Function& js_callback, const void* value) {
             try {
+                QLOG_APP("[TR NotifyCallback - 0] running flag: {0}, uuid: {1}") << flag << uuid;
                 Napi::Value res = emitter_.Call({Napi::String::New(env, flag), ts_cpp_conversion::StructToObject(env, args)...});
             } catch (const std::exception& error) {
                 Napi::Error::New(env, error.what()).ThrowAsJavaScriptException();
             }
         };
+        QLOG_APP("[TR NotifyCallback - 0] dispatch flag: {0}, uuid: {1}") << flag << uuid;
         tsfn_.NonBlockingCall(reinterpret_cast<void*>(0), callback);
     }
 
     template <typename TR, typename... Args, typename std::enable_if<!std::is_void<TR>::value, std::nullptr_t>::type = nullptr>
     TR NotifyCallback(const std::string& flag, Args... args) {
+        auto uuid = base::extension::UUIDGenerate();
         std::promise<TR> promise;
         std::future<TR> future = promise.get_future();
-        auto callback = [this, flag, &promise, args...](const Napi::Env& env, const Napi::Function& js_callback, const void* value) {
+        auto callback = [this, flag, uuid, &promise, args...](const Napi::Env& env, const Napi::Function& js_callback, const void* value) {
             try {
+                QLOG_APP("[TR NotifyCallback 1] running flag: {0}, uuid: {1}") << flag << uuid;
                 Napi::Value res = emitter_.Call({Napi::String::New(env, flag), ts_cpp_conversion::StructToObject(env, args)...});
                 promise.set_value(ts_cpp_conversion::ObjectToStruct<TR>(env, res, -1));
             } catch (const std::exception& error) {
                 Napi::Error::New(env, error.what()).ThrowAsJavaScriptException();
             }
         };
+        QLOG_APP("[TR NotifyCallback 1] dispatch flag: {0}, uuid: {1}") << flag << uuid;
         tsfn_.NonBlockingCall(reinterpret_cast<void*>(0), callback);
         return future.get();
     }
@@ -211,7 +220,9 @@ protected:
 }  // namespace node_nim
 
 #ifndef RegApi
-#define RegApi(api_name, api) InstanceMethod(api_name, &node_nim::ServiceBase::InvokeApi<decltype(api), api>)
-#define RegAmbApi(api_name, api, api_t) InstanceMethod(api_name, &node_nim::ServiceBase::InvokeApi<api_t, api>)
+#define RegApi(api_name, api) \
+    InstanceMethod(api_name, &node_nim::ServiceBase::InvokeApi<decltype(api), api>, napi_default, Napi::String::New(env, api_name))
+#define RegAmbApi(api_name, api, api_t) \
+    InstanceMethod(api_name, &node_nim::ServiceBase::InvokeApi<api_t, api>, napi_default, Napi::String::New(env, api_name))
 #endif
 #endif  // SRC_SERVICES_SERVICE_BASE_H_

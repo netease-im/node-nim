@@ -472,6 +472,21 @@ export class V2NIMLocalConversationService extends EventEmitter<V2NIMLocalConver
     })
   }
 
+
+  /**
+   * @brief 设置当前聊天会话
+   * @param conversationId 当前聊天会话 ID
+   * @returns null | V2NIMError
+   * @since v10.9.40
+   * @example
+   * ```javascript
+   * await v2.localConversationService.setCurrentConversation('conversation1')
+   * ```
+   */
+  setCurrentConversation (conversationId: string): null | V2NIMError {
+    return this.instance.setCurrentConversation(conversationId)
+  }
+
   /**
    * @brief 订阅指定过滤条件的会话未读数
    * @param filter 过滤条件

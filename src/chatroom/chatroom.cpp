@@ -1,7 +1,9 @@
 #include "chatroom.h"
+#include "common_helper.h"
 #include "reflection/reflection_include.h"
 
 namespace node_nim {
+
 Napi::Object NIMChatRoom::Init(Napi::Env env, Napi::Object exports) {
     // clang-format off
     return InternalInit("NIMChatRoom", env, exports, {

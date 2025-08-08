@@ -6,6 +6,8 @@
  */
 #include <napi.h>
 #include "chatroom/chatroom.h"
+#include "extension/log/log.h"
+#include "extension/util/init.h"
 #include "nim/ai/nim_node_ai.h"
 #include "nim/client/nim_node_client.h"
 #include "nim/data_sync/nim_node_data_sync.h"
@@ -60,6 +62,8 @@
 
 namespace {
 
+std::shared_ptr<base::AtExitManager> at_exit_ = nullptr;
+
 #if defined(WIN32) || defined(_WIN32)
 std::wstring GetNodeModulePath() {
     TCHAR dllPath[MAX_PATH];
@@ -85,6 +89,7 @@ std::wstring GetNodeModuleDirectory() {
 #endif
 
 Napi::Object RegisterModule(Napi::Env env, Napi::Object exports) {
+    at_exit_ = base::extension::getAtExitManager();
     Napi::HandleScope scope(env);
     node_nim::NIMChatRoom::Init(env, exports);
     node_nim::NIMClient::Init(env, exports);

@@ -24,6 +24,7 @@ import {
   V2NIMMessagePinState,
   V2NIMMessageRevokeType,
   V2NIMMessageSendingState,
+  V2NIMMessageSource,
   V2NIMMessageType,
   V2NIMProxyRequestMethod,
   V2NIMQueryDirection,
@@ -745,6 +746,8 @@ export interface V2NIMMessage {
   modifyTime?: number
   /** 消息更新者账号 */
   modifyAccountId?: string
+  /** 消息来源 */
+  messageSource?: V2NIMMessageSource
 }
 
 export interface V2NIMModifyMessageResult {

@@ -646,6 +646,15 @@ export enum V2NIMMessageSendingState {
   V2NIM_MESSAGE_SENDING_STATE_SENDING = 3
 }
 
+export enum V2NIMMessageSource {
+  /**  在线消息 */
+  V2NIM_MESSAGE_SOURCE_ONLINE = 0,
+   /**  离线消息 */
+  V2NIM_MESSAGE_SOURCE_OFFLINE = 1,
+   /**  漫游消息 */
+  V2NIM_MESSAGE_SOURCE_ROAMING = 2,
+}
+
 export enum V2NIMLastMessageState {
   /** 默认 */
   V2NIM_MESSAGE_STATE_DEFAULT = 0,

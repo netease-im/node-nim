@@ -67,6 +67,7 @@ export {
   QChatSystemNotificationModule,
   QChatAttachmentModule,
   QChatRoleModule,
+  V2NIMClient,
   V2NIMChatroomClient,
   V2NIMMessageCreator,
   V2NIMMessageConverter,
@@ -191,8 +192,3 @@ export class QChat {
     this.role.initEventHandlers()
   }
 }
-
-export const nim = new NIM()
-export const chatroom = new ChatRoom()
-export const qchat = new QChat()
-export const v2 = new V2NIMClient()

@@ -139,7 +139,13 @@ target_link_libraries(${TARGET_NAME}
     nim_chatroom_cpp_wrapper
     nim_tools_cpp_wrapper
     nim_qchat_cpp_wrapper
-    nim_wrapper_util)
+    nim_wrapper_util
+    ${CONAN_LIBS_NE_CHROMIUM_BASE}
+    ${CONAN_LIBS_OPENSSL}
+)
+if (WIN32)
+    target_link_libraries(${TARGET_NAME} Psapi Dbghelp Version Ws2_32)
+endif ()
 
 set_target_properties(${TARGET_NAME} PROPERTIES PREFIX "" SUFFIX ".node")
 if (APPLE)
@@ -147,6 +153,11 @@ if (APPLE)
         PROPERTIES
         BUILD_WITH_INSTALL_RPATH 1
         INSTALL_RPATH "@loader_path")
+    target_link_libraries(${TARGET_NAME}
+        "-framework AppKit"
+        "-framework SystemConfiguration"
+        "-framework Security"
+    )
 endif ()
 
 # installation

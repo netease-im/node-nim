@@ -10,6 +10,10 @@ public:
     static Napi::Object Init(Napi::Env env, Napi::Object exports);
 
     explicit V2NodeNIMInstance(const Napi::CallbackInfo& info);
+
+private:
+    Napi::Value Init(const Napi::CallbackInfo& info);
+    Napi::Value Uninit(const Napi::CallbackInfo& info);
 };
 }  // namespace node_nim
 #endif

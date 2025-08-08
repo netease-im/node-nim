@@ -28,6 +28,7 @@ Napi::Object V2NodeNIMLocalConversationService::Init(Napi::Env env, Napi::Object
         RegApi("clearUnreadCountByIds", &V2NIMLocalConversationService::clearUnreadCountByIds),
         RegApi("clearUnreadCountByTypes", &V2NIMLocalConversationService::clearUnreadCountByTypes),
         RegApi("markConversationRead", &V2NIMLocalConversationService::markConversationRead),
+        RegApi("setCurrentConversation", &V2NIMLocalConversationService::setCurrentConversation),
         RegApi("getConversationReadTime", &V2NIMLocalConversationService::getConversationReadTime),
         RegApi("subscribeUnreadCountByFilter", &V2NIMLocalConversationService::subscribeUnreadCountByFilter),
         RegApi("unsubscribeUnreadCountByFilter", &V2NIMLocalConversationService::unsubscribeUnreadCountByFilter),

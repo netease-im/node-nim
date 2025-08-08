@@ -9,6 +9,10 @@ public:
     static Napi::Object Init(Napi::Env env, Napi::Object exports);
     explicit V2NodeNIMChatroomSdk(const Napi::CallbackInfo& info);
     static std::vector<uint32_t> getInstanceIdList();
+
+private:
+    Napi::Value Init(const Napi::CallbackInfo& info);
+    Napi::Value Uninit(const Napi::CallbackInfo& info);
 };
 }  // namespace node_nim
 #endif

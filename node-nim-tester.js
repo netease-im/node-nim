@@ -129,7 +129,11 @@ program
     if (options.nimSdkUrl) {
       await downloadSDK(options.nimSdkUrl)
     }
-    const NIM = require('./dist/node-nim')
+    const nimInstance = require('./dist/node-nim')
+    nimInstance.v2 = new nimInstance.V2NIMClient()
+    nimInstance.nim = new nimInstance.NIM()
+    nimInstance.qchat = new nimInstance.QChat()
+    nimInstance.chatroom = new nimInstance.ChatRoom()
     new WebAT({
       applicationName: 'nim',
       platform: 'Windows&MacOS',
@@ -138,7 +142,7 @@ program
       deviceId: options.deviceId,
       taskId: options.taskId,
       targets: {
-        NIM
+        NIM: nimInstance
       },
       oncompleted: () => {
         // 执行完成后退出进程
