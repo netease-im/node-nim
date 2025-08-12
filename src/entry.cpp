@@ -62,7 +62,7 @@
 
 namespace {
 
-std::shared_ptr<base::AtExitManager> at_exit_ = nullptr;
+// std::shared_ptr<base::AtExitManager> at_exit_ = nullptr;
 
 #if defined(WIN32) || defined(_WIN32)
 std::wstring GetNodeModulePath() {
@@ -89,7 +89,7 @@ std::wstring GetNodeModuleDirectory() {
 #endif
 
 Napi::Object RegisterModule(Napi::Env env, Napi::Object exports) {
-    at_exit_ = base::extension::getAtExitManager();
+    // at_exit_ = base::extension::getAtExitManager();
     Napi::HandleScope scope(env);
     node_nim::NIMChatRoom::Init(env, exports);
     node_nim::NIMClient::Init(env, exports);

@@ -8,8 +8,10 @@ namespace node_nim {
 Napi::Object V2NodeNIMInstance::Init(Napi::Env env, Napi::Object exports) {
     // clang-format off
     return InternalInit("V2NIMClient", env, exports, {
-        InstanceMethod("init", &V2NodeNIMInstance::Init),
-        InstanceMethod("uninit", &V2NodeNIMInstance::Uninit),
+        // InstanceMethod("init", &V2NodeNIMInstance::Init),
+        // InstanceMethod("uninit", &V2NodeNIMInstance::Uninit),
+        RegApi("init", &V2NIMClient::init),
+        RegApi("uninit", &V2NIMClient::uninit),
         RegApi("updateAppKey", &V2NIMClient::updateAppKey)
     });
     // clang-format on

@@ -121,7 +121,7 @@ public:
             if constexpr (!std::is_void<TReturn>::value) {
                 if (std::this_thread::get_id() == thread_id) {
                     // nodejs thread, call directly
-                    QLOG_APP("[ToThreadSafeCallback - 0] Call in Node.js thread, function: {0}") << fun_location_name;
+                    // QLOG_APP("[ToThreadSafeCallback - 0] Call in Node.js thread, function: {0}") << fun_location_name;
                     auto&& args = TupleToCbArgs(env, tup);
                     auto return_value = fun.Call(args);
                     return ts_cpp_conversion::ObjectToStruct<TReturn>(env, return_value, -1);
@@ -131,8 +131,8 @@ public:
                 auto tsfn_cb = [tup, &promise, fun_location_name, uuid](
                                    const Napi::Env& env, const Napi::Function& js_callback, const void* value) -> Napi::Value {
                     try {
-                        QLOG_APP("[ToThreadSafeCallback - 0] NonBlockingCall with promise function running: {0}, uuid: {1}")
-                            << fun_location_name << uuid;
+                        // QLOG_APP("[ToThreadSafeCallback - 0] NonBlockingCall with promise function running: {0}, uuid: {1}")
+                        //     << fun_location_name << uuid;
                         auto&& args = TupleToCbArgs(env, tup);
                         auto return_value = js_callback.Call(args);
                         promise.set_value(ts_cpp_conversion::ObjectToStruct<TReturn>(env, return_value, -1));
@@ -141,15 +141,15 @@ public:
                     }
                     return env.Null();
                 };
-                QLOG_APP("[ToThreadSafeCallback - 0] NonBlockingCall with promise function dispatch: {0}, uuid: {1}") << fun_location_name << uuid;
+                // QLOG_APP("[ToThreadSafeCallback - 0] NonBlockingCall with promise function dispatch: {0}, uuid: {1}") << fun_location_name << uuid;
                 tsfn.NonBlockingCall((void*)0, tsfn_cb);
                 auto result = future.get();
-                QLOG_APP("[ToThreadSafeCallback - 0] NonBlockingCall with promise function done: {0}, uuid: {1}") << fun_location_name << uuid;
+                // QLOG_APP("[ToThreadSafeCallback - 0] NonBlockingCall with promise function done: {0}, uuid: {1}") << fun_location_name << uuid;
                 return result;
             } else {
                 if (std::this_thread::get_id() == thread_id) {
                     // nodejs thread, call directly
-                    QLOG_APP("[ToThreadSafeCallback - 0] NonBlockingCall in Node.js thread, function: {0}") << fun_location_name;
+                    // QLOG_APP("[ToThreadSafeCallback - 0] NonBlockingCall in Node.js thread, function: {0}") << fun_location_name;
                     auto&& args = TupleToCbArgs(env, tup);
                     fun.Call(args);
                     return;
@@ -157,7 +157,7 @@ public:
                 auto tsfn_cb = [tup, fun_location_name, uuid](
                                    const Napi::Env& env, const Napi::Function& js_callback, const void* value) -> Napi::Value {
                     try {
-                        QLOG_APP("[ToThreadSafeCallback - 0] NonBlockingCall function running: {0}, uuid: {1}") << fun_location_name << uuid;
+                        // QLOG_APP("[ToThreadSafeCallback - 0] NonBlockingCall function running: {0}, uuid: {1}") << fun_location_name << uuid;
                         auto&& args = TupleToCbArgs(env, tup);
                         js_callback.Call(args);
                     } catch (const std::exception& e) {
@@ -165,7 +165,7 @@ public:
                     }
                     return env.Null();
                 };
-                QLOG_APP("[ToThreadSafeCallback - 0] NonBlockingCall function dispatch: {0}, uuid: {1}") << fun_location_name << uuid;
+                // QLOG_APP("[ToThreadSafeCallback - 0] NonBlockingCall function dispatch: {0}, uuid: {1}") << fun_location_name << uuid;
                 tsfn.NonBlockingCall((void*)0, tsfn_cb);
             }
         };
@@ -188,7 +188,7 @@ public:
             if constexpr (!std::is_void<TReturn>::value) {
                 if (std::this_thread::get_id() == thread_id) {
                     // nodejs thread, call directly
-                    QLOG_APP("[ToThreadSafeCallback - 1] Call in Node.js thread, function: {0}") << fun_location_name;
+                    // QLOG_APP("[ToThreadSafeCallback - 1] Call in Node.js thread, function: {0}") << fun_location_name;
                     auto&& args = TupleToCbArgs(env, tup);
                     auto return_value = fun.Call(args);
                     return ts_cpp_conversion::ObjectToStruct<TReturn>(env, return_value, -1);
@@ -198,8 +198,8 @@ public:
                 auto tsfn_cb = [tup, &promise, fun_location_name, uuid](
                                    const Napi::Env& env, const Napi::Function& js_callback, const void* value) -> Napi::Value {
                     try {
-                        QLOG_APP("[ToThreadSafeCallback - 1] NonBlockingCall with promise function running: {0}, uuid: {1}")
-                            << fun_location_name << uuid;
+                        // QLOG_APP("[ToThreadSafeCallback - 1] NonBlockingCall with promise function running: {0}, uuid: {1}")
+                        //     << fun_location_name << uuid;
                         auto&& args = TupleToCbArgs(env, tup);
                         auto return_value = js_callback.Call(args);
                         promise.set_value(ts_cpp_conversion::ObjectToStruct<TReturn>(env, return_value, -1));
@@ -208,15 +208,15 @@ public:
                     }
                     return env.Null();
                 };
-                QLOG_APP("[ToThreadSafeCallback - 1] NonBlockingCall with promise function dispatch: {0}, uuid: {1}") << fun_location_name << uuid;
+                // QLOG_APP("[ToThreadSafeCallback - 1] NonBlockingCall with promise function dispatch: {0}, uuid: {1}") << fun_location_name << uuid;
                 tsfn.NonBlockingCall((void*)0, tsfn_cb);
                 auto result = future.get();
-                QLOG_APP("[ToThreadSafeCallback - 1] NonBlockingCall with promise function done: {0}, uuid: {1}") << fun_location_name << uuid;
+                // QLOG_APP("[ToThreadSafeCallback - 1] NonBlockingCall with promise function done: {0}, uuid: {1}") << fun_location_name << uuid;
                 return result;
             } else {
                 if (std::this_thread::get_id() == thread_id) {
                     // nodejs thread, call directly
-                    QLOG_APP("[ToThreadSafeCallback - 1] Call in Node.js thread, function: {0}") << fun_location_name;
+                    // QLOG_APP("[ToThreadSafeCallback - 1] Call in Node.js thread, function: {0}") << fun_location_name;
                     auto&& args = TupleToCbArgs(env, tup);
                     fun.Call(args);
                     return;
@@ -224,7 +224,7 @@ public:
                 auto tsfn_cb = [tup, fun_location_name, uuid](
                                    const Napi::Env& env, const Napi::Function& js_callback, const void* value) -> Napi::Value {
                     try {
-                        QLOG_APP("[ToThreadSafeCallback - 1] NonBlockingCall function running: {0}, uuid: {1}") << fun_location_name << uuid;
+                        // QLOG_APP("[ToThreadSafeCallback - 1] NonBlockingCall function running: {0}, uuid: {1}") << fun_location_name << uuid;
                         auto&& args = TupleToCbArgs(env, tup);
                         js_callback.Call(args);
                     } catch (const std::exception& e) {
@@ -232,7 +232,7 @@ public:
                     }
                     return env.Null();
                 };
-                QLOG_APP("[ToThreadSafeCallback - 1] NonBlockingCall function dispatch: {0}, uuid: {1}") << fun_location_name << uuid;
+                // QLOG_APP("[ToThreadSafeCallback - 1] NonBlockingCall function dispatch: {0}, uuid: {1}") << fun_location_name << uuid;
                 tsfn.NonBlockingCall((void*)0, tsfn_cb);
             }
         };
