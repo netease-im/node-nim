@@ -485,6 +485,8 @@ export interface IMMessageStreamingConfig {
   status_: NIMStreamingMessageStatus
   /** 流式消息的分片信息，仅当 streaming_ 为 true 时有效 */
   chunk_?: NIMStreamingMessageChunk
+  /** AI RAG(Retrieval-Augmented Generation) 信息 @since v10.9.50 */
+  rags_?: Array<NIMAIMessageRAGInfo>
 }
 
 export interface IMMessage {

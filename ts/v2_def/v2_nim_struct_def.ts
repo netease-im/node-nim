@@ -570,8 +570,10 @@ export interface V2NIMAIModelConfig {
 }
 
 export interface V2NIMAIUser extends V2NIMUser {
-  /** 模型选择 */
+  /** 模型选择 @deprecated 请使用新的 `aiModelType` 代替 */
   modelType?: V2NIMAIModelType
+  /** 数字人类型 @since v10.9.50 */
+  aiModelType?: number
   /** 模型相关配置文件 */
   modelConfig?: V2NIMAIModelConfig
 }
@@ -679,6 +681,8 @@ export interface V2NIMMessageStreamConfig {
   status: V2NIMMessageStreamStatus;
   /** 流式消息最近一个分片，流式过程中才有该字段，最终完整消息无此字段 */
   lastChunk?: V2NIMMessageStreamChunk;
+  /** AI RAG(Retrieval-Augmented Generation) 信息 @since v10.9.50 */
+  rags: Array<V2NIMAIRAGInfo>
 };
 
 export interface V2NIMMessage {
@@ -746,7 +750,7 @@ export interface V2NIMMessage {
   modifyTime?: number
   /** 消息更新者账号 */
   modifyAccountId?: string
-  /** 消息来源 */
+  /** 消息来源 @since v10.9.40 */
   messageSource?: V2NIMMessageSource
 }
 
@@ -1386,6 +1390,14 @@ export interface V2NIMVoiceToTextParams {
   sceneName?: string
 }
 
+/** @brief 群摘要 @since v10.9.50 */
+export interface V2NIMTeamRefer {
+  /** 群组ID */
+  teamId?: string
+  /** 群组类型 */
+  teamType?: V2NIMTeamType
+}
+
 export interface V2NIMTeam {
   /** 群组ID */
   teamId?: string
@@ -1562,6 +1574,38 @@ export interface V2NIMCreateTeamResult {
   team?: V2NIMTeam
   /** 被邀请成员失败列表 */
   failedList?: Array<string>
+}
+
+/** @brief 群信息检索参数 @since v10.9.50 */
+export interface V2NIMTeamSearchParams {
+  /** 要查询的关键字列表，最多支持 5 个 */
+  keywordList: Array<string>
+  /** 指定关键字列表匹配类型，见 {@link V2NIMSearchKeywordMathType}，默认为 V2NIM_SEARCH_KEYWORD_MATH_TYPE_OR */
+  keywordMatchType?: V2NIMSearchKeywordMathType
+  /** 匹配群类型，为空则匹配所有类型 */
+  teamTypes?: Array<V2NIMTeamType>
+  /** 搜索的数量限制，默认为 20，不建议超过 100，该参数仅云端检索有效 */
+  limit?: number
+  /** 起始位置，首次传“”， 后续传上次返回的nextToken，该参数仅云端检索有效 */
+  nextToken?: string
+}
+
+/** @brief 群成员检索参数 @since v10.9.50 */
+export interface V2NIMSearchTeamMemberParams {
+  /** 要查询的关键字列表，最多支持 5 个 */
+  keywordList: Array<string>
+  /** 指定关键字列表匹配类型，见 {@link V2NIMSearchKeywordMathType}，默认为 V2NIM_SEARCH_KEYWORD_MATH_TYPE_OR */
+  keywordMatchType?: V2NIMSearchKeywordMathType
+  /** 需要检索的群ID列表，为空则匹配全部群成员，最大为 50 */
+  teamRefers?: Array<V2NIMTeamRefer>
+  /** 是否搜索用户账号，默认 false */
+  searchAccountId: boolean;
+  /** 是否同时搜索群昵称, 默认 true，searchAccountId 和 searchTeamNick 不能同时为 false， 否返回参数错误 */
+  searchTeamNick: boolean;
+  /** 搜索的数量限制，默认为 20，不建议超过 100，该参数仅云端检索有效 */
+  limit?: number
+  /** 起始位置，首次传“”， 后续传上次返回的nextToken，该参数仅云端检索有效 */
+  nextToken?: string
 }
 
 export interface V2NIMAntispamConfig {

@@ -43,22 +43,27 @@ V2NodeNIMLocalConversationService::V2NodeNIMLocalConversationService(const Napi:
     initEventHandler();
 }
 
+V2NodeNIMLocalConversationService::~V2NodeNIMLocalConversationService() {
+    auto& conversation_service = v2::V2NIMClient::get().getLocalConversationService();
+    conversation_service.removeConversationListener(conversation_listener_);
+}
+
 void V2NodeNIMLocalConversationService::initEventHandler() {
     auto& conversation_service = v2::V2NIMClient::get().getLocalConversationService();
-    V2NIMLocalConversationListener conversation_listener;
-    conversation_listener.onSyncStarted = MakeNotifyCallback<nstd::function<void()>>("syncStarted");
-    conversation_listener.onSyncFinished = MakeNotifyCallback<nstd::function<void()>>("syncFinished");
-    conversation_listener.onSyncFailed = MakeNotifyCallback<nstd::function<void(V2NIMError error)>>("syncFailed");
-    conversation_listener.onConversationCreated = MakeNotifyCallback<nstd::function<void(const V2NIMLocalConversation&)>>("conversationCreated");
-    conversation_listener.onConversationDeleted = MakeNotifyCallback<nstd::function<void(const nstd::vector<nstd::string>&)>>("conversationDeleted");
-    conversation_listener.onConversationChanged =
+
+    conversation_listener_.onSyncStarted = MakeNotifyCallback<nstd::function<void()>>("syncStarted");
+    conversation_listener_.onSyncFinished = MakeNotifyCallback<nstd::function<void()>>("syncFinished");
+    conversation_listener_.onSyncFailed = MakeNotifyCallback<nstd::function<void(V2NIMError error)>>("syncFailed");
+    conversation_listener_.onConversationCreated = MakeNotifyCallback<nstd::function<void(const V2NIMLocalConversation&)>>("conversationCreated");
+    conversation_listener_.onConversationDeleted = MakeNotifyCallback<nstd::function<void(const nstd::vector<nstd::string>&)>>("conversationDeleted");
+    conversation_listener_.onConversationChanged =
         MakeNotifyCallback<nstd::function<void(const nstd::vector<V2NIMLocalConversation>&)>>("conversationChanged");
-    conversation_listener.onTotalUnreadCountChanged = MakeNotifyCallback<nstd::function<void(uint32_t)>>("totalUnreadCountChanged");
-    conversation_listener.onUnreadCountChangedByFilter =
+    conversation_listener_.onTotalUnreadCountChanged = MakeNotifyCallback<nstd::function<void(uint32_t)>>("totalUnreadCountChanged");
+    conversation_listener_.onUnreadCountChangedByFilter =
         MakeNotifyCallback<nstd::function<void(const V2NIMLocalConversationFilter&, uint32_t)>>("unreadCountChangedByFilter");
-    conversation_listener.onConversationReadTimeUpdated =
+    conversation_listener_.onConversationReadTimeUpdated =
         MakeNotifyCallback<nstd::function<void(const nstd::string&, time_t)>>("conversationReadTimeUpdated");
-    conversation_service.addConversationListener(conversation_listener);
+    conversation_service.addConversationListener(conversation_listener_);
 }
 
 }  // namespace node_nim

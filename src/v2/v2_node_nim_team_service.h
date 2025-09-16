@@ -7,7 +7,11 @@ class V2NodeNIMTeamService : public BizService<V2NodeNIMTeamService> {
 public:
     static Napi::Object Init(Napi::Env env, Napi::Object exports);
     explicit V2NodeNIMTeamService(const Napi::CallbackInfo& info);
+    ~V2NodeNIMTeamService() override;
     void initEventHandler();
+
+private:
+    V2NIMTeamListener listener_;
 };
 }  // namespace node_nim
 #endif

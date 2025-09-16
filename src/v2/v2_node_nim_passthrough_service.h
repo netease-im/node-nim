@@ -17,7 +17,11 @@ class V2NodeNIMPassthroughService : public BizService<V2NodeNIMPassthroughServic
 public:
     static Napi::Object Init(Napi::Env env, Napi::Object exports);
     explicit V2NodeNIMPassthroughService(const Napi::CallbackInfo& info);
+    ~V2NodeNIMPassthroughService() override;
     void initEventHandler();
+
+private:
+    V2NIMPassthroughListener listener_;
 };
 
 }  // namespace node_nim

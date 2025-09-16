@@ -23,16 +23,20 @@ node_nim::V2NodeNIMConversationGroupService::V2NodeNIMConversationGroupService(c
     }
 }
 
+V2NodeNIMConversationGroupService::~V2NodeNIMConversationGroupService() {
+    auto& conversation_group_service = v2::V2NIMClient::get().getConversationGroupService();
+    conversation_group_service.removeConversationGroupListener(listener_);
+}
+
 void V2NodeNIMConversationGroupService::initEventHandler() {
     auto& conversation_group_service = v2::V2NIMClient::get().getConversationGroupService();
-    V2NIMConversationGroupListener listener;
-    listener.onConversationGroupCreated = MakeNotifyCallback<nstd::function<void(V2NIMConversationGroup)>>("conversationGroupCreated");
-    listener.onConversationGroupDeleted = MakeNotifyCallback<nstd::function<void(nstd::string)>>("conversationGroupDeleted");
-    listener.onConversationGroupChanged = MakeNotifyCallback<nstd::function<void(V2NIMConversationGroup)>>("conversationGroupChanged");
-    listener.onConversationsAddedToGroup =
+    listener_.onConversationGroupCreated = MakeNotifyCallback<nstd::function<void(V2NIMConversationGroup)>>("conversationGroupCreated");
+    listener_.onConversationGroupDeleted = MakeNotifyCallback<nstd::function<void(nstd::string)>>("conversationGroupDeleted");
+    listener_.onConversationGroupChanged = MakeNotifyCallback<nstd::function<void(V2NIMConversationGroup)>>("conversationGroupChanged");
+    listener_.onConversationsAddedToGroup =
         MakeNotifyCallback<nstd::function<void(nstd::string, nstd::vector<V2NIMConversation>)>>("conversationsAddedToGroup");
-    listener.onConversationsRemovedFromGroup =
+    listener_.onConversationsRemovedFromGroup =
         MakeNotifyCallback<nstd::function<void(nstd::string, nstd::vector<nstd::string>)>>("conversationsRemovedFromGroup");
-    conversation_group_service.addConversationGroupListener(listener);
+    conversation_group_service.addConversationGroupListener(listener_);
 }
 }  // namespace node_nim

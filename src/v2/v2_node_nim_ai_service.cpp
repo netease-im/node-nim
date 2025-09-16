@@ -19,13 +19,17 @@ V2NodeNIMAIService::V2NodeNIMAIService(const Napi::CallbackInfo& info)
     initEventHandler();
 }
 
+V2NodeNIMAIService::~V2NodeNIMAIService() {
+    auto& service = v2::V2NIMClient::get().getAIService();
+    service.removeAIListener(listener_);
+}
+
 void V2NodeNIMAIService::initEventHandler() {
     auto& service = v2::V2NIMClient::get().getAIService();
-    V2NIMAIListener listener;
-    listener.onProxyAIModelCall = MakeNotifyCallback<nstd::function<void(const V2NIMAIModelCallResult& response)>>("proxyAIModelCall");
-    listener.onProxyAIModelStreamCall =
+    listener_.onProxyAIModelCall = MakeNotifyCallback<nstd::function<void(const V2NIMAIModelCallResult& response)>>("proxyAIModelCall");
+    listener_.onProxyAIModelStreamCall =
         MakeNotifyCallback<nstd::function<void(const V2NIMAIModelStreamCallResult& response)>>("proxyAIModelStreamCall");
-    service.addAIListener(listener);
+    service.addAIListener(listener_);
 }
 
 }  // namespace node_nim

@@ -32,7 +32,9 @@ Napi::Object node_nim::V2NodeNIMTeamService::Init(Napi::Env env, Napi::Object ex
         RegApi("getTeamMemberInvitor", &V2NIMTeamService::getTeamMemberInvitor),
         RegApi("getTeamJoinActionInfoList", &V2NIMTeamService::getTeamJoinActionInfoList),
         RegApi("searchTeamByKeyword", &V2NIMTeamService::searchTeamByKeyword),
+        RegApi("searchTeams", &V2NIMTeamService::searchTeams),
         RegApi("searchTeamMembers", &V2NIMTeamService::searchTeamMembers),
+        RegApi("searchTeamMembersEx", &V2NIMTeamService::searchTeamMembersEx),
         RegApi("addTeamMembersFollow", &V2NIMTeamService::addTeamMembersFollow),
         RegApi("removeTeamMembersFollow", &V2NIMTeamService::removeTeamMembersFollow),
         RegApi("clearAllTeamJoinActionInfo", &V2NIMTeamService::clearAllTeamJoinActionInfo),
@@ -50,22 +52,26 @@ node_nim::V2NodeNIMTeamService::V2NodeNIMTeamService(const Napi::CallbackInfo& i
     initEventHandler();
 }
 
+V2NodeNIMTeamService::~V2NodeNIMTeamService() {
+    auto& team_service = v2::V2NIMClient::get().getTeamService();
+    team_service.removeTeamListener(listener_);
+}
+
 void V2NodeNIMTeamService::initEventHandler() {
     auto& team_service = v2::V2NIMClient::get().getTeamService();
-    V2NIMTeamListener listener;
-    listener.onSyncStarted = MakeNotifyCallback<nstd::function<void()>>("syncStarted");
-    listener.onSyncFinished = MakeNotifyCallback<nstd::function<void()>>("syncFinished");
-    listener.onSyncFailed = MakeNotifyCallback<nstd::function<void(V2NIMError)>>("syncFailed");
-    listener.onTeamCreated = MakeNotifyCallback<nstd::function<void(V2NIMTeam)>>("teamCreated");
-    listener.onTeamDismissed = MakeNotifyCallback<nstd::function<void(const V2NIMTeam&)>>("teamDismissed");
-    listener.onTeamJoined = MakeNotifyCallback<nstd::function<void(V2NIMTeam)>>("teamJoined");
-    listener.onTeamLeft = MakeNotifyCallback<nstd::function<void(V2NIMTeam, bool)>>("teamLeft");
-    listener.onTeamInfoUpdated = MakeNotifyCallback<nstd::function<void(V2NIMTeam)>>("teamInfoUpdated");
-    listener.onTeamMemberJoined = MakeNotifyCallback<nstd::function<void(nstd::vector<V2NIMTeamMember>)>>("teamMemberJoined");
-    listener.onTeamMemberKicked = MakeNotifyCallback<nstd::function<void(nstd::string, nstd::vector<V2NIMTeamMember>)>>("teamMemberKicked");
-    listener.onTeamMemberLeft = MakeNotifyCallback<nstd::function<void(nstd::vector<V2NIMTeamMember>)>>("teamMemberLeft");
-    listener.onTeamMemberInfoUpdated = MakeNotifyCallback<nstd::function<void(nstd::vector<V2NIMTeamMember>)>>("teamMemberInfoUpdated");
-    listener.onReceiveTeamJoinActionInfo = MakeNotifyCallback<nstd::function<void(V2NIMTeamJoinActionInfo)>>("receiveTeamJoinActionInfo");
-    team_service.addTeamListener(listener);
+    listener_.onSyncStarted = MakeNotifyCallback<nstd::function<void()>>("syncStarted");
+    listener_.onSyncFinished = MakeNotifyCallback<nstd::function<void()>>("syncFinished");
+    listener_.onSyncFailed = MakeNotifyCallback<nstd::function<void(V2NIMError)>>("syncFailed");
+    listener_.onTeamCreated = MakeNotifyCallback<nstd::function<void(V2NIMTeam)>>("teamCreated");
+    listener_.onTeamDismissed = MakeNotifyCallback<nstd::function<void(const V2NIMTeam&)>>("teamDismissed");
+    listener_.onTeamJoined = MakeNotifyCallback<nstd::function<void(V2NIMTeam)>>("teamJoined");
+    listener_.onTeamLeft = MakeNotifyCallback<nstd::function<void(V2NIMTeam, bool)>>("teamLeft");
+    listener_.onTeamInfoUpdated = MakeNotifyCallback<nstd::function<void(V2NIMTeam)>>("teamInfoUpdated");
+    listener_.onTeamMemberJoined = MakeNotifyCallback<nstd::function<void(nstd::vector<V2NIMTeamMember>)>>("teamMemberJoined");
+    listener_.onTeamMemberKicked = MakeNotifyCallback<nstd::function<void(nstd::string, nstd::vector<V2NIMTeamMember>)>>("teamMemberKicked");
+    listener_.onTeamMemberLeft = MakeNotifyCallback<nstd::function<void(nstd::vector<V2NIMTeamMember>)>>("teamMemberLeft");
+    listener_.onTeamMemberInfoUpdated = MakeNotifyCallback<nstd::function<void(nstd::vector<V2NIMTeamMember>)>>("teamMemberInfoUpdated");
+    listener_.onReceiveTeamJoinActionInfo = MakeNotifyCallback<nstd::function<void(V2NIMTeamJoinActionInfo)>>("receiveTeamJoinActionInfo");
+    team_service.addTeamListener(listener_);
 }
 }  // namespace node_nim

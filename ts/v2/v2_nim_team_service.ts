@@ -14,7 +14,9 @@ import {
   V2NIMTeamJoinActionInfoResult,
   V2NIMTeamJoinActionInfoQueryOption,
   V2NIMTeamMemberSearchOption,
-  V2NIMUpdateMemberNickParams
+  V2NIMUpdateMemberNickParams,
+  V2NIMTeamSearchParams,
+  V2NIMSearchTeamMemberParams, V2NIMTeamRefer
 } from 'ts/v2_def/v2_nim_struct_def'
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
@@ -809,6 +811,29 @@ export class V2NIMTeamService extends EventEmitter<V2NIMTeamListener> {
   }
 
   /**
+   * @brief 本地搜索群组，混合搜索高级群和超大群，使用 FTS 方式匹配，搜索群名称
+   * @param params 群信息检索参数
+   * @returns Promise<Array<V2NIMTeam>>
+   * @example
+   * ```javascript
+   * const teams = await v2.teamService.searchTeams(params)
+   * ```
+   */
+  searchTeams (params: V2NIMTeamSearchParams): Promise<Array<V2NIMTeam>> {
+    return new Promise((resolve, reject) => {
+      this.instance.searchTeams(
+          params,
+          (teams: Array<V2NIMTeam>) => {
+            resolve(teams)
+          },
+          (error: V2NIMError) => {
+            reject(error)
+          }
+      )
+    })
+  }
+
+  /**
    * @brief 根据关键字搜索群组成员
    * @param option 搜索选项
    * @returns Promise<V2NIMTeamMemberListResult>
@@ -827,6 +852,29 @@ export class V2NIMTeamService extends EventEmitter<V2NIMTeamListener> {
         (error: V2NIMError) => {
           reject(error)
         }
+      )
+    })
+  }
+
+  /**
+   * @brief 本地全文检索群成员信息，可以指定是否检索群成员ID或者群成员昵称
+   * @param params 群成员检索参数
+   * @returns Promise<Map<V2NIMTeamRefer, Array<V2NIMTeamMember>>>
+   * @example
+   * ```javascript
+   * const teams = await v2.teamService.searchTeamMembersEx(params)
+   * ```
+   */
+  searchTeamMembersEx (params: V2NIMSearchTeamMemberParams): Promise<Map<V2NIMTeamRefer, Array<V2NIMTeamMember>>> {
+    return new Promise((resolve, reject) => {
+      this.instance.searchTeamMembersEx(
+          params,
+          (memberMap: Map<V2NIMTeamRefer, Array<V2NIMTeamMember>>) => {
+            resolve(memberMap)
+          },
+          (error: V2NIMError) => {
+            reject(error)
+          }
       )
     })
   }

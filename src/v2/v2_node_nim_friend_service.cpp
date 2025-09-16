@@ -30,15 +30,19 @@ node_nim::V2NodeNIMFriendService::V2NodeNIMFriendService(const Napi::CallbackInf
     initEventHandler();
 }
 
+V2NodeNIMFriendService::~V2NodeNIMFriendService() {
+    auto& service = v2::V2NIMClient::get().getFriendService();
+    service.removeFriendListener(listener_);
+}
+
 void V2NodeNIMFriendService::initEventHandler() {
     auto& service = v2::V2NIMClient::get().getFriendService();
-    V2NIMFriendListener listener;
-    listener.onFriendAdded = MakeNotifyCallback<nstd::function<void(V2NIMFriend friendInfo)>>("friendAdded");
-    listener.onFriendDeleted =
+    listener_.onFriendAdded = MakeNotifyCallback<nstd::function<void(V2NIMFriend friendInfo)>>("friendAdded");
+    listener_.onFriendDeleted =
         MakeNotifyCallback<nstd::function<void(nstd::string accountId, V2NIMFriendDeletionType deletionType)>>("friendDeleted");
-    listener.onFriendAddApplication = MakeNotifyCallback<nstd::function<void(V2NIMFriendAddApplication applicationInfo)>>("friendAddApplication");
-    listener.onFriendAddRejected = MakeNotifyCallback<nstd::function<void(V2NIMFriendAddApplication rejectionInfo)>>("friendAddRejected");
-    listener.onFriendInfoChanged = MakeNotifyCallback<nstd::function<void(V2NIMFriend friendInfo)>>("friendInfoChanged");
-    service.addFriendListener(listener);
+    listener_.onFriendAddApplication = MakeNotifyCallback<nstd::function<void(V2NIMFriendAddApplication applicationInfo)>>("friendAddApplication");
+    listener_.onFriendAddRejected = MakeNotifyCallback<nstd::function<void(V2NIMFriendAddApplication rejectionInfo)>>("friendAddRejected");
+    listener_.onFriendInfoChanged = MakeNotifyCallback<nstd::function<void(V2NIMFriend friendInfo)>>("friendInfoChanged");
+    service.addFriendListener(listener_);
 }
 }  // namespace node_nim

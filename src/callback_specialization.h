@@ -178,6 +178,8 @@ CallbackSpecialization(V2NIMSuccessCallback<V2NIMP2PMessageReadReceipt>);
 CallbackSpecialization(V2NIMSuccessCallback<V2NIMCollection>);
 CallbackSpecialization(V2NIMSuccessCallback<V2NIMSendMessageResult>);
 CallbackSpecialization(V2NIMSuccessCallback<const V2NIMCreateTeamResult&>);
+using V2NIMCallbackSpecializationTempType5 = nstd::map<V2NIMTeamRefer, nstd::vector<V2NIMTeamMember>>;
+CallbackSpecialization(V2NIMSuccessCallback<const V2NIMCallbackSpecializationTempType5&>);
 CallbackSpecialization(V2NIMSuccessCallback<const V2NIMTeam&>);
 CallbackSpecialization(V2NIMSuccessCallback<const V2NIMTeamMemberListResult&>);
 CallbackSpecialization(V2NIMSuccessCallback<nstd::vector<nstd::string>>);

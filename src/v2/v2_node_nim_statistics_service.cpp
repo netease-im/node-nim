@@ -17,11 +17,15 @@ V2NodeNIMStatisticsService::V2NodeNIMStatisticsService(const Napi::CallbackInfo&
     initEventHandler();
 }
 
+V2NodeNIMStatisticsService::~V2NodeNIMStatisticsService() {
+    auto& service = v2::V2NIMClient::get().getStatisticsService();
+    service.removeStatisticsListener(listener_);
+}
+
 void V2NodeNIMStatisticsService::initEventHandler() {
     auto& service = v2::V2NIMClient::get().getStatisticsService();
-    v2::V2NIMStatisticsListener listener;
-    listener.onDatabaseException = MakeNotifyCallback<nstd::function<void(const V2NIMError& error)>>("databaseException");
-    service.addStatisticsListener(listener);
+    listener_.onDatabaseException = MakeNotifyCallback<nstd::function<void(const V2NIMError& error)>>("databaseException");
+    service.addStatisticsListener(listener_);
 }
 
 }  // namespace node_nim

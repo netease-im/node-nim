@@ -17,7 +17,11 @@ class V2NodeNIMSubscriptionService : public BizService<V2NodeNIMSubscriptionServ
 public:
     static Napi::Object Init(Napi::Env env, Napi::Object exports);
     explicit V2NodeNIMSubscriptionService(const Napi::CallbackInfo& info);
+    ~V2NodeNIMSubscriptionService() override;
     void initEventHandler();
+
+private:
+    V2NIMSubscribeListener listener_;
 };
 
 }  // namespace node_nim

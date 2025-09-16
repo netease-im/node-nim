@@ -23,11 +23,15 @@ V2NodeNIMPassthroughService::V2NodeNIMPassthroughService(const Napi::CallbackInf
     initEventHandler();
 }
 
+V2NodeNIMPassthroughService::~V2NodeNIMPassthroughService() {
+    auto& passthrough_service = v2::V2NIMClient::get().getPassthroughService();
+    passthrough_service.removePassthroughListener(listener_);
+}
+
 void V2NodeNIMPassthroughService::initEventHandler() {
     auto& passthrough_service = v2::V2NIMClient::get().getPassthroughService();
-    V2NIMPassthroughListener listener;
-    listener.onProxyNotify = MakeNotifyCallback<nstd::function<void(const V2NIMProxyNotify& time)>>("proxyNotify");
-    passthrough_service.addPassthroughListener(listener);
+    listener_.onProxyNotify = MakeNotifyCallback<nstd::function<void(const V2NIMProxyNotify& time)>>("proxyNotify");
+    passthrough_service.addPassthroughListener(listener_);
 }
 
 }  // namespace node_nim

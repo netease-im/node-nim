@@ -8,7 +8,12 @@ class V2NodeNIMLoginService : public BizService<V2NodeNIMLoginService> {
 public:
     static Napi::Object Init(Napi::Env env, Napi::Object exports);
     explicit V2NodeNIMLoginService(const Napi::CallbackInfo& info);
+    ~V2NodeNIMLoginService() override;
     void initEventHandler();
+
+private:
+    V2NIMLoginListener login_listener_;
+    V2NIMLoginDetailListener login_detail_listener_;
 };
 }  // namespace node_nim
 #endif

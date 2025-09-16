@@ -8,7 +8,11 @@ class V2NodeNIMFriendService : public BizService<V2NodeNIMFriendService> {
 public:
     static Napi::Object Init(Napi::Env env, Napi::Object exports);
     explicit V2NodeNIMFriendService(const Napi::CallbackInfo& info);
+    ~V2NodeNIMFriendService() override;
     void initEventHandler();
+
+private:
+    V2NIMFriendListener listener_;
 };
 }  // namespace node_nim
 #endif

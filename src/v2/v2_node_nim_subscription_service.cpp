@@ -24,12 +24,15 @@ V2NodeNIMSubscriptionService::V2NodeNIMSubscriptionService(const Napi::CallbackI
     service_instance_ = &v2::V2NIMClient::get().getSubscriptionService();
     initEventHandler();
 }
+V2NodeNIMSubscriptionService::~V2NodeNIMSubscriptionService() {
+    auto& subscription_service = v2::V2NIMClient::get().getSubscriptionService();
+    subscription_service.removeSubscribeListener(listener_);
+}
 
 void V2NodeNIMSubscriptionService::initEventHandler() {
     auto& subscription_service = v2::V2NIMClient::get().getSubscriptionService();
-    V2NIMSubscribeListener listener;
-    listener.onUserStatusChanged = MakeNotifyCallback<nstd::function<void(const nstd::vector<V2NIMUserStatus>& status)>>("userStatusChanged");
-    subscription_service.addSubscribeListener(listener);
+    listener_.onUserStatusChanged = MakeNotifyCallback<nstd::function<void(const nstd::vector<V2NIMUserStatus>& status)>>("userStatusChanged");
+    subscription_service.addSubscribeListener(listener_);
 }
 
 }  // namespace node_nim

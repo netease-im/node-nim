@@ -16,6 +16,7 @@
 #include <utility>
 #include <vector>
 #include "extension/log/log.h"
+#include "utilities.h"
 // clang-format off
 #include "reflection/reflection_include.h"
 #include "callback_specialization.h"
@@ -172,34 +173,50 @@ private:
 
     template <typename TR, typename... Args, typename std::enable_if<std::is_void<TR>::value, std::nullptr_t>::type = nullptr>
     TR NotifyCallback(const std::string& flag, Args... args) {
-        auto uuid = base::extension::UUIDGenerate();
+        auto uuid = node_nim::Utilities::GenerateUUID();
         auto callback = [this, flag, uuid, args...](const Napi::Env& env, const Napi::Function& js_callback, const void* value) {
             try {
-                // QLOG_APP("[TR NotifyCallback - 0] running flag: {0}, uuid: {1}") << flag << uuid;
+#if defined(USING_NIM_LOG)
+                QLOG_APP("[TR NotifyCallback - 0] running flag: {0}, uuid: {1}") << flag << uuid;
+#else
+                LOG(INFO) << "[TR NotifyCallback - 0] running flag: " << flag << ", uuid: " << uuid;
+#endif
                 Napi::Value res = emitter_.Call({Napi::String::New(env, flag), ts_cpp_conversion::StructToObject(env, args)...});
             } catch (const std::exception& error) {
                 Napi::Error::New(env, error.what()).ThrowAsJavaScriptException();
             }
         };
-        // QLOG_APP("[TR NotifyCallback - 0] dispatch flag: {0}, uuid: {1}") << flag << uuid;
+#if defined(USING_NIM_LOG)
+        QLOG_APP("[TR NotifyCallback - 0] dispatch flag: {0}, uuid: {1}") << flag << uuid;
+#else
+        LOG(INFO) << "[TR NotifyCallback - 0] dispatch flag: " << flag << ", uuid: " << uuid;
+#endif
         tsfn_.NonBlockingCall(reinterpret_cast<void*>(0), callback);
     }
 
     template <typename TR, typename... Args, typename std::enable_if<!std::is_void<TR>::value, std::nullptr_t>::type = nullptr>
     TR NotifyCallback(const std::string& flag, Args... args) {
-        auto uuid = base::extension::UUIDGenerate();
+        auto uuid = node_nim::Utilities::GenerateUUID();
         std::promise<TR> promise;
         std::future<TR> future = promise.get_future();
         auto callback = [this, flag, uuid, &promise, args...](const Napi::Env& env, const Napi::Function& js_callback, const void* value) {
             try {
-                // QLOG_APP("[TR NotifyCallback 1] running flag: {0}, uuid: {1}") << flag << uuid;
+#if defined(USING_NIM_LOG)
+                QLOG_APP("[TR NotifyCallback 1] running flag: {0}, uuid: {1}") << flag << uuid;
+#else
+                LOG(INFO) << "[TR NotifyCallback 1] running flag: " << flag << ", uuid: " << uuid;
+#endif
                 Napi::Value res = emitter_.Call({Napi::String::New(env, flag), ts_cpp_conversion::StructToObject(env, args)...});
                 promise.set_value(ts_cpp_conversion::ObjectToStruct<TR>(env, res, -1));
             } catch (const std::exception& error) {
                 Napi::Error::New(env, error.what()).ThrowAsJavaScriptException();
             }
         };
-        // QLOG_APP("[TR NotifyCallback 1] dispatch flag: {0}, uuid: {1}") << flag << uuid;
+#if defined(USING_NIM_LOG)
+        QLOG_APP("[TR NotifyCallback 1] dispatch flag: {0}, uuid: {1}") << flag << uuid;
+#else
+        LOG(INFO) << "[TR NotifyCallback 1] dispatch flag: " << flag << ", uuid: " << uuid;
+#endif
         tsfn_.NonBlockingCall(reinterpret_cast<void*>(0), callback);
         return future.get();
     }

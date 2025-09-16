@@ -60,26 +60,30 @@ V2NodeNIMMessageService::V2NodeNIMMessageService(const Napi::CallbackInfo& info)
     initEventHandler();
 }
 
+V2NodeNIMMessageService::~V2NodeNIMMessageService() {
+    auto& message_service = v2::V2NIMClient::get().getMessageService();
+    message_service.removeMessageListener(listener_);
+}
+
 void V2NodeNIMMessageService::initEventHandler() {
     auto& message_service = v2::V2NIMClient::get().getMessageService();
-    V2NIMMessageListener listener;
-    listener.onReceiveMessages = MakeNotifyCallback<nstd::function<void(nstd::vector<V2NIMMessage>)>>("receiveMessages");
-    listener.onReceiveP2PMessageReadReceipts =
+    listener_.onReceiveMessages = MakeNotifyCallback<nstd::function<void(nstd::vector<V2NIMMessage>)>>("receiveMessages");
+    listener_.onReceiveP2PMessageReadReceipts =
         MakeNotifyCallback<nstd::function<void(nstd::vector<V2NIMP2PMessageReadReceipt>)>>("receiveP2PMessageReadReceipts");
-    listener.onReceiveTeamMessageReadReceipts =
+    listener_.onReceiveTeamMessageReadReceipts =
         MakeNotifyCallback<nstd::function<void(nstd::vector<V2NIMTeamMessageReadReceipt>)>>("receiveTeamMessageReadReceipts");
-    listener.onMessageRevokeNotifications =
+    listener_.onMessageRevokeNotifications =
         MakeNotifyCallback<nstd::function<void(nstd::vector<V2NIMMessageRevokeNotification>)>>("messageRevokeNotifications");
-    listener.onMessagePinNotification = MakeNotifyCallback<nstd::function<void(V2NIMMessagePinNotification)>>("messagePinNotification");
-    listener.onMessageQuickCommentNotification =
+    listener_.onMessagePinNotification = MakeNotifyCallback<nstd::function<void(V2NIMMessagePinNotification)>>("messagePinNotification");
+    listener_.onMessageQuickCommentNotification =
         MakeNotifyCallback<nstd::function<void(V2NIMMessageQuickCommentNotification)>>("messageQuickCommentNotification");
-    listener.onMessageDeletedNotifications =
+    listener_.onMessageDeletedNotifications =
         MakeNotifyCallback<nstd::function<void(nstd::vector<V2NIMMessageDeletedNotification>)>>("messageDeletedNotifications");
-    listener.onClearHistoryNotifications =
+    listener_.onClearHistoryNotifications =
         MakeNotifyCallback<nstd::function<void(nstd::vector<V2NIMClearHistoryNotification>)>>("clearHistoryNotifications");
-    listener.onSendMessage = MakeNotifyCallback<nstd::function<void(const V2NIMMessage& message)>>("sendMessage");
-    listener.onReceiveMessagesModified = MakeNotifyCallback<nstd::function<void(nstd::vector<V2NIMMessage>)>>("receiveMessagesModified");
-    message_service.addMessageListener(listener);
+    listener_.onSendMessage = MakeNotifyCallback<nstd::function<void(const V2NIMMessage& message)>>("sendMessage");
+    listener_.onReceiveMessagesModified = MakeNotifyCallback<nstd::function<void(nstd::vector<V2NIMMessage>)>>("receiveMessagesModified");
+    message_service.addMessageListener(listener_);
 }
 
 }  // namespace node_nim

@@ -19,6 +19,7 @@ if (UNIX)
         set(CMAKE_POSITION_INDEPENDENT_CODE ON)
     endif ()
     add_compile_options(-fvisibility=hidden)
+    add_compile_options(-Wno-macro-redefined)
 endif ()
 
 if (MSVC)
@@ -140,6 +141,8 @@ target_link_libraries(${TARGET_NAME}
     nim_tools_cpp_wrapper
     nim_qchat_cpp_wrapper
     nim_wrapper_util
+    ${CONAN_LIBS_GLOG}
+    ${CONAN_LIBS_GFLAGS}
     ${CONAN_LIBS_NE_CHROMIUM_BASE}
     ${CONAN_LIBS_OPENSSL}
 )

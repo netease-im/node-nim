@@ -8,7 +8,11 @@ class V2NodeNIMNotificationService : public BizService<V2NodeNIMNotificationServ
 public:
     static Napi::Object Init(Napi::Env env, Napi::Object exports);
     explicit V2NodeNIMNotificationService(const Napi::CallbackInfo& info);
+    ~V2NodeNIMNotificationService() override;
     void initEventHandler();
+
+private:
+    V2NIMNotificationListener listener_;
 };
 }  // namespace node_nim
 #endif

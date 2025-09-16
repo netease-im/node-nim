@@ -23,12 +23,16 @@ node_nim::V2NodeNIMUserService::V2NodeNIMUserService(const Napi::CallbackInfo& i
     initEventHandler();
 }
 
+V2NodeNIMUserService::~V2NodeNIMUserService() {
+    auto& service = v2::V2NIMClient::get().getUserService();
+    service.removeUserListener(listener_);
+}
+
 void V2NodeNIMUserService::initEventHandler() {
     auto& service = v2::V2NIMClient::get().getUserService();
-    V2NIMUserListener listener;
-    listener.onUserProfileChanged = MakeNotifyCallback<nstd::function<void(nstd::vector<V2NIMUser> users)>>("userProfileChanged");
-    listener.onBlockListAdded = MakeNotifyCallback<nstd::function<void(V2NIMUser user)>>("blockListAdded");
-    listener.onBlockListRemoved = MakeNotifyCallback<nstd::function<void(nstd::string accountId)>>("blockListRemoved");
-    service.addUserListener(listener);
+    listener_.onUserProfileChanged = MakeNotifyCallback<nstd::function<void(nstd::vector<V2NIMUser> users)>>("userProfileChanged");
+    listener_.onBlockListAdded = MakeNotifyCallback<nstd::function<void(V2NIMUser user)>>("blockListAdded");
+    listener_.onBlockListRemoved = MakeNotifyCallback<nstd::function<void(nstd::string accountId)>>("blockListRemoved");
+    service.addUserListener(listener_);
 }
 }  // namespace node_nim

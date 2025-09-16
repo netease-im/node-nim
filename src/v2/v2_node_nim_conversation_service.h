@@ -8,7 +8,11 @@ class V2NodeNIMConversationService : public BizService<V2NodeNIMConversationServ
 public:
     static Napi::Object Init(Napi::Env env, Napi::Object exports);
     explicit V2NodeNIMConversationService(const Napi::CallbackInfo& info);
+    ~V2NodeNIMConversationService() override;
     void initEventHandler();
+
+private:
+    V2NIMConversationListener conversation_listener_;
 };
 }  // namespace node_nim
 #endif

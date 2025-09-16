@@ -12,13 +12,17 @@ node_nim::V2NodeNIMNotificationService::V2NodeNIMNotificationService(const Napi:
     initEventHandler();
 }
 
+V2NodeNIMNotificationService::~V2NodeNIMNotificationService() {
+    auto& notification_service = v2::V2NIMClient::get().getNotificationService();
+    notification_service.removeNotificationListener(listener_);
+}
+
 void V2NodeNIMNotificationService::initEventHandler() {
     auto& notification_service = v2::V2NIMClient::get().getNotificationService();
-    V2NIMNotificationListener listener;
-    listener.onReceiveCustomNotifications =
+    listener_.onReceiveCustomNotifications =
         MakeNotifyCallback<nstd::function<void(nstd::vector<V2NIMCustomNotification>)>>("receiveCustomNotifications");
-    listener.onReceiveBroadcastNotifications =
+    listener_.onReceiveBroadcastNotifications =
         MakeNotifyCallback<nstd::function<void(nstd::vector<V2NIMBroadcastNotification>)>>("receiveBroadcastNotifications");
-    notification_service.addNotificationListener(listener);
+    notification_service.addNotificationListener(listener_);
 }
 }  // namespace node_nim

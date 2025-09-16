@@ -26,21 +26,25 @@ node_nim::V2NodeNIMLoginService::V2NodeNIMLoginService(const Napi::CallbackInfo&
     initEventHandler();
 }
 
+V2NodeNIMLoginService::~V2NodeNIMLoginService() {
+    auto& login_service = v2::V2NIMClient::get().getLoginService();
+    login_service.removeLoginListener(login_listener_);
+    login_service.removeLoginDetailListener(login_detail_listener_);
+}
+
 void V2NodeNIMLoginService::initEventHandler() {
     auto& login_service = v2::V2NIMClient::get().getLoginService();
-    V2NIMLoginListener login_listener;
-    login_listener.onLoginStatus = MakeNotifyCallback<nstd::function<void(V2NIMLoginStatus)>>("loginStatus");
-    login_listener.onLoginFailed = MakeNotifyCallback<nstd::function<void(V2NIMError)>>("loginFailed");
-    login_listener.onKickedOffline = MakeNotifyCallback<nstd::function<void(V2NIMKickedOfflineDetail)>>("kickedOffline");
-    login_listener.onLoginClientChanged =
+    login_listener_.onLoginStatus = MakeNotifyCallback<nstd::function<void(V2NIMLoginStatus)>>("loginStatus");
+    login_listener_.onLoginFailed = MakeNotifyCallback<nstd::function<void(V2NIMError)>>("loginFailed");
+    login_listener_.onKickedOffline = MakeNotifyCallback<nstd::function<void(V2NIMKickedOfflineDetail)>>("kickedOffline");
+    login_listener_.onLoginClientChanged =
         MakeNotifyCallback<nstd::function<void(V2NIMLoginClientChange, nstd::vector<V2NIMLoginClient>)>>("loginClientChanged");
-    login_service.addLoginListener(login_listener);
-    V2NIMLoginDetailListener login_detail_listener;
-    login_detail_listener.onConnectStatus = MakeNotifyCallback<nstd::function<void(V2NIMConnectStatus)>>("connectStatus");
-    login_detail_listener.onDisconnected = MakeNotifyCallback<nstd::function<void(nstd::optional<V2NIMError>)>>("disconnected");
-    login_detail_listener.onConnectFailed = MakeNotifyCallback<nstd::function<void(V2NIMError)>>("connectFailed");
-    login_detail_listener.onDataSync =
+    login_service.addLoginListener(login_listener_);
+    login_detail_listener_.onConnectStatus = MakeNotifyCallback<nstd::function<void(V2NIMConnectStatus)>>("connectStatus");
+    login_detail_listener_.onDisconnected = MakeNotifyCallback<nstd::function<void(nstd::optional<V2NIMError>)>>("disconnected");
+    login_detail_listener_.onConnectFailed = MakeNotifyCallback<nstd::function<void(V2NIMError)>>("connectFailed");
+    login_detail_listener_.onDataSync =
         MakeNotifyCallback<nstd::function<void(V2NIMDataSyncType, V2NIMDataSyncState, nstd::optional<V2NIMError>)>>("dataSync");
-    login_service.addLoginDetailListener(login_detail_listener);
+    login_service.addLoginDetailListener(login_detail_listener_);
 }
 }  // namespace node_nim

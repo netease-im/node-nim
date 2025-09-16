@@ -24,15 +24,19 @@ node_nim::V2NodeNIMSettingService::V2NodeNIMSettingService(const Napi::CallbackI
     initEventHandler();
 }
 
+V2NodeNIMSettingService::~V2NodeNIMSettingService() {
+    auto& setting_service = v2::V2NIMClient::get().getSettingService();
+    setting_service.removeSettingListener(listener_);
+}
+
 void V2NodeNIMSettingService::initEventHandler() {
     auto& setting_service = v2::V2NIMClient::get().getSettingService();
-    V2NIMSettingListener listener;
-    listener.onTeamMessageMuteModeChanged =
+    listener_.onTeamMessageMuteModeChanged =
         MakeNotifyCallback<nstd::function<void(nstd::string teamId, V2NIMTeamType teamType, V2NIMTeamMessageMuteMode muteMode)>>(
             "teamMessageMuteModeChanged");
-    listener.onP2PMessageMuteModeChanged =
+    listener_.onP2PMessageMuteModeChanged =
         MakeNotifyCallback<nstd::function<void(nstd::string accountId, V2NIMP2PMessageMuteMode muteMode)>>("p2pMessageMuteModeChanged");
-    listener.onPushMobileOnDesktopOnline = MakeNotifyCallback<nstd::function<void(bool need)>>("pushMobileOnDesktopOnline");
-    setting_service.addSettingListener(listener);
+    listener_.onPushMobileOnDesktopOnline = MakeNotifyCallback<nstd::function<void(bool need)>>("pushMobileOnDesktopOnline");
+    setting_service.addSettingListener(listener_);
 }
 }  // namespace node_nim

@@ -33,15 +33,19 @@ V2NodeNIMSignallingService::V2NodeNIMSignallingService(const Napi::CallbackInfo&
     initEventHandler();
 }
 
+V2NodeNIMSignallingService::~V2NodeNIMSignallingService() {
+    auto& signalling_service = v2::V2NIMClient::get().getSignallingService();
+    signalling_service.removeSignallingListener(listener_);
+}
+
 void V2NodeNIMSignallingService::initEventHandler() {
     auto& signalling_service = v2::V2NIMClient::get().getSignallingService();
-    V2NIMSignallingListener listener;
-    listener.onOnlineEvent = MakeNotifyCallback<nstd::function<void(const V2NIMSignallingEvent& event)>>("onlineEvent");
-    listener.onOfflineEvent = MakeNotifyCallback<nstd::function<void(const nstd::vector<V2NIMSignallingEvent>& events)>>("offlineEvent");
-    listener.onMultiClientEvent = MakeNotifyCallback<nstd::function<void(const V2NIMSignallingEvent& event)>>("multiClientEvent");
-    listener.onSyncRoomInfoList =
+    listener_.onOnlineEvent = MakeNotifyCallback<nstd::function<void(const V2NIMSignallingEvent& event)>>("onlineEvent");
+    listener_.onOfflineEvent = MakeNotifyCallback<nstd::function<void(const nstd::vector<V2NIMSignallingEvent>& events)>>("offlineEvent");
+    listener_.onMultiClientEvent = MakeNotifyCallback<nstd::function<void(const V2NIMSignallingEvent& event)>>("multiClientEvent");
+    listener_.onSyncRoomInfoList =
         MakeNotifyCallback<nstd::function<void(const nstd::vector<V2NIMSignallingRoomInfo>& roomInfoList)>>("syncRoomInfoList");
-    signalling_service.addSignallingListener(listener);
+    signalling_service.addSignallingListener(listener_);
 }
 
 }  // namespace node_nim

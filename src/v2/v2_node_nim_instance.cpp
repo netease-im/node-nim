@@ -1,17 +1,28 @@
 #include "v2_node_nim_instance.h"
+#include <glog/logging.h>
 #include "common_helper.h"
 #include "extension/log/log.h"
 #include "v2_node_nim_login_service.h"
 
 namespace node_nim {
 
+void CleanupFunction() {
+#if !defined(USING_NIM_LOG)
+    google::ShutdownGoogleLogging();
+#endif
+}
+
 Napi::Object V2NodeNIMInstance::Init(Napi::Env env, Napi::Object exports) {
+#if !defined(USING_NIM_LOG)
+    google::InitGoogleLogging("node-nim");
+    env.AddCleanupHook(CleanupFunction);
+#endif
     // clang-format off
     return InternalInit("V2NIMClient", env, exports, {
-        // InstanceMethod("init", &V2NodeNIMInstance::Init),
-        // InstanceMethod("uninit", &V2NodeNIMInstance::Uninit),
-        RegApi("init", &V2NIMClient::init),
-        RegApi("uninit", &V2NIMClient::uninit),
+        InstanceMethod("init", &V2NodeNIMInstance::Init),
+        InstanceMethod("uninit", &V2NodeNIMInstance::Uninit),
+        // RegApi("init", &V2NIMClient::init),
+        // RegApi("uninit", &V2NIMClient::uninit),
         RegApi("updateAppKey", &V2NIMClient::updateAppKey)
     });
     // clang-format on
@@ -48,25 +59,28 @@ Napi::Value V2NodeNIMInstance::Init(const Napi::CallbackInfo& info) {
     if (!nbase::FilePathIsExist(app_log_path, true)) {
         nbase::CreateDirectory(app_log_path);
     }
+#if defined(USING_NIM_LOG)
     nbase::QLogImpl::GetInstance()->SetLogFile(app_log_path, NIM_LOG_FILE_PREFIX);
 #if defined(DEBUG) || defined(_DEBUG)
     nbase::QLogImpl::GetInstance()->SetLogLevel(nbase::LV_PRO);
 #else
     nbase::QLogImpl::GetInstance()->SetLogLevel(static_cast<nbase::LOG_LEVEL>(init_option.basicOption.sdkLogLevel));
 #endif
-
     QLOG_PRO("[V2NodeNIMInstance] init object: {0}") << option.As<Napi::String>().Utf8Value();
+#else
+    FLAGS_logtostderr = false;
+    FLAGS_log_dir = app_log_path;
+    FLAGS_alsologtostderr = true;
+    FLAGS_max_log_size = 10;
+    FLAGS_stop_logging_if_full_disk = true;
+    FLAGS_minloglevel = google::GLOG_INFO;
+    LOG(INFO) << "[V2NodeNIMInstance] init object: " << option.As<Napi::String>().Utf8Value();
+#endif
     auto value = V2NIMClient::get().init(init_option);
     return Napi::Value::From(info.Env(), ts_cpp_conversion::StructToObject(info.Env(), value));
 }
 
 Napi::Value V2NodeNIMInstance::Uninit(const Napi::CallbackInfo& info) {
-    // if (at_exit_) {
-    //     if (at_exit_.use_count() == 1) {
-    //         base::AtExitManager::ProcessCallbacksNow();
-    //         at_exit_ = nullptr;
-    //     }
-    // }
     auto value = V2NIMClient::get().uninit();
     return Napi::Value::From(info.Env(), ts_cpp_conversion::StructToObject(info.Env(), value));
 }
