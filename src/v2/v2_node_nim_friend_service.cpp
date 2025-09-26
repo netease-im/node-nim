@@ -31,8 +31,12 @@ node_nim::V2NodeNIMFriendService::V2NodeNIMFriendService(const Napi::CallbackInf
 }
 
 V2NodeNIMFriendService::~V2NodeNIMFriendService() {
-    auto& service = v2::V2NIMClient::get().getFriendService();
-    service.removeFriendListener(listener_);
+    try {
+        auto& service = v2::V2NIMClient::get().getFriendService();
+        service.removeFriendListener(listener_);
+    } catch (const std::exception& e) {
+        // Do nothing
+    }
 }
 
 void V2NodeNIMFriendService::initEventHandler() {

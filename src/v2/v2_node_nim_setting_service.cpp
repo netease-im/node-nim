@@ -25,8 +25,12 @@ node_nim::V2NodeNIMSettingService::V2NodeNIMSettingService(const Napi::CallbackI
 }
 
 V2NodeNIMSettingService::~V2NodeNIMSettingService() {
-    auto& setting_service = v2::V2NIMClient::get().getSettingService();
-    setting_service.removeSettingListener(listener_);
+    try {
+        auto& setting_service = v2::V2NIMClient::get().getSettingService();
+        setting_service.removeSettingListener(listener_);
+    } catch (const std::exception& e) {
+        // Do nothing
+    }
 }
 
 void V2NodeNIMSettingService::initEventHandler() {

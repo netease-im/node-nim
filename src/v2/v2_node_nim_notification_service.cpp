@@ -13,8 +13,12 @@ node_nim::V2NodeNIMNotificationService::V2NodeNIMNotificationService(const Napi:
 }
 
 V2NodeNIMNotificationService::~V2NodeNIMNotificationService() {
-    auto& notification_service = v2::V2NIMClient::get().getNotificationService();
-    notification_service.removeNotificationListener(listener_);
+    try {
+        auto& notification_service = v2::V2NIMClient::get().getNotificationService();
+        notification_service.removeNotificationListener(listener_);
+    } catch (const std::exception& e) {
+        // Do nothing
+    }
 }
 
 void V2NodeNIMNotificationService::initEventHandler() {

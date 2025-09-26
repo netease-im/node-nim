@@ -34,8 +34,12 @@ V2NodeNIMSignallingService::V2NodeNIMSignallingService(const Napi::CallbackInfo&
 }
 
 V2NodeNIMSignallingService::~V2NodeNIMSignallingService() {
-    auto& signalling_service = v2::V2NIMClient::get().getSignallingService();
-    signalling_service.removeSignallingListener(listener_);
+    try {
+        auto& signalling_service = v2::V2NIMClient::get().getSignallingService();
+        signalling_service.removeSignallingListener(listener_);
+    } catch (const std::exception& e) {
+        // Do nothing
+    }
 }
 
 void V2NodeNIMSignallingService::initEventHandler() {

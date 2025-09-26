@@ -53,8 +53,12 @@ node_nim::V2NodeNIMTeamService::V2NodeNIMTeamService(const Napi::CallbackInfo& i
 }
 
 V2NodeNIMTeamService::~V2NodeNIMTeamService() {
-    auto& team_service = v2::V2NIMClient::get().getTeamService();
-    team_service.removeTeamListener(listener_);
+    try {
+        auto& team_service = v2::V2NIMClient::get().getTeamService();
+        team_service.removeTeamListener(listener_);
+    } catch (const std::exception& e) {
+        // Do nothing
+    }
 }
 
 void V2NodeNIMTeamService::initEventHandler() {

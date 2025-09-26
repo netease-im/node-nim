@@ -18,8 +18,12 @@ V2NodeNIMStatisticsService::V2NodeNIMStatisticsService(const Napi::CallbackInfo&
 }
 
 V2NodeNIMStatisticsService::~V2NodeNIMStatisticsService() {
-    auto& service = v2::V2NIMClient::get().getStatisticsService();
-    service.removeStatisticsListener(listener_);
+    try {
+        auto& service = v2::V2NIMClient::get().getStatisticsService();
+        service.removeStatisticsListener(listener_);
+    } catch (const std::exception& e) {
+        // Do nothing
+    }
 }
 
 void V2NodeNIMStatisticsService::initEventHandler() {

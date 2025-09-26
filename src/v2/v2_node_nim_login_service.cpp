@@ -27,9 +27,13 @@ node_nim::V2NodeNIMLoginService::V2NodeNIMLoginService(const Napi::CallbackInfo&
 }
 
 V2NodeNIMLoginService::~V2NodeNIMLoginService() {
-    auto& login_service = v2::V2NIMClient::get().getLoginService();
-    login_service.removeLoginListener(login_listener_);
-    login_service.removeLoginDetailListener(login_detail_listener_);
+    try {
+        auto& login_service = v2::V2NIMClient::get().getLoginService();
+        login_service.removeLoginListener(login_listener_);
+        login_service.removeLoginDetailListener(login_detail_listener_);
+    } catch (const std::exception& e) {
+        // Do nothing
+    }
 }
 
 void V2NodeNIMLoginService::initEventHandler() {

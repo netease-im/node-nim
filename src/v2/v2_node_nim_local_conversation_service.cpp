@@ -44,8 +44,12 @@ V2NodeNIMLocalConversationService::V2NodeNIMLocalConversationService(const Napi:
 }
 
 V2NodeNIMLocalConversationService::~V2NodeNIMLocalConversationService() {
-    auto& conversation_service = v2::V2NIMClient::get().getLocalConversationService();
-    conversation_service.removeConversationListener(conversation_listener_);
+    try {
+        auto& conversation_service = v2::V2NIMClient::get().getLocalConversationService();
+        conversation_service.removeConversationListener(conversation_listener_);
+    } catch (const std::exception& e) {
+        // Do nothing
+    }
 }
 
 void V2NodeNIMLocalConversationService::initEventHandler() {

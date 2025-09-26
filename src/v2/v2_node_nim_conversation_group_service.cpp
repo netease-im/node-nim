@@ -24,8 +24,12 @@ node_nim::V2NodeNIMConversationGroupService::V2NodeNIMConversationGroupService(c
 }
 
 V2NodeNIMConversationGroupService::~V2NodeNIMConversationGroupService() {
-    auto& conversation_group_service = v2::V2NIMClient::get().getConversationGroupService();
-    conversation_group_service.removeConversationGroupListener(listener_);
+    try {
+        auto& conversation_group_service = v2::V2NIMClient::get().getConversationGroupService();
+        conversation_group_service.removeConversationGroupListener(listener_);
+    } catch (const std::exception& e) {
+        // Do nothing
+    }
 }
 
 void V2NodeNIMConversationGroupService::initEventHandler() {

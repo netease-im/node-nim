@@ -20,8 +20,12 @@ V2NodeNIMAIService::V2NodeNIMAIService(const Napi::CallbackInfo& info)
 }
 
 V2NodeNIMAIService::~V2NodeNIMAIService() {
-    auto& service = v2::V2NIMClient::get().getAIService();
-    service.removeAIListener(listener_);
+    try {
+        auto& service = v2::V2NIMClient::get().getAIService();
+        service.removeAIListener(listener_);
+    } catch (const std::exception& e) {
+        // Do nothing
+    }
 }
 
 void V2NodeNIMAIService::initEventHandler() {

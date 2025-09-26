@@ -523,9 +523,9 @@ export interface V2NIMThreadMessageListOption {
   /** 需要查询的消息引用，如果该消息为根消息，则参数为当前消息 */
   messageRefer?: V2NIMMessageRefer
   /** 查询开始时间，小于等于 endTime */
-  begin?: number
+  beginTime?: number
   /** 查询结束时间 */
-  end?: number
+  endTime?: number
   /** 锚点消息ServerId，该消息必须处于端点，暨消息时间必须等于 beginTime 或 endTime */
   excludeMessageServerId?: string
   /** 每次查询条数，默认50 */

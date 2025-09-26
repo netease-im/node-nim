@@ -24,8 +24,12 @@ V2NodeNIMPassthroughService::V2NodeNIMPassthroughService(const Napi::CallbackInf
 }
 
 V2NodeNIMPassthroughService::~V2NodeNIMPassthroughService() {
-    auto& passthrough_service = v2::V2NIMClient::get().getPassthroughService();
-    passthrough_service.removePassthroughListener(listener_);
+    try {
+        auto& passthrough_service = v2::V2NIMClient::get().getPassthroughService();
+        passthrough_service.removePassthroughListener(listener_);
+    } catch (const std::exception& e) {
+        // Do nothing
+    }
 }
 
 void V2NodeNIMPassthroughService::initEventHandler() {

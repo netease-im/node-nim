@@ -61,8 +61,12 @@ V2NodeNIMMessageService::V2NodeNIMMessageService(const Napi::CallbackInfo& info)
 }
 
 V2NodeNIMMessageService::~V2NodeNIMMessageService() {
-    auto& message_service = v2::V2NIMClient::get().getMessageService();
-    message_service.removeMessageListener(listener_);
+    try {
+        auto& message_service = v2::V2NIMClient::get().getMessageService();
+        message_service.removeMessageListener(listener_);
+    } catch (const std::exception& e) {
+        // Do nothing
+    }
 }
 
 void V2NodeNIMMessageService::initEventHandler() {

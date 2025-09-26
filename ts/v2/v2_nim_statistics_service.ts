@@ -18,10 +18,10 @@ export class V2NIMStatisticsService extends EventEmitter<V2NIMStatisticsListener
     this.instance = new sdk.V2NIMStatisticsService({ emit: this.emit.bind(this) })
   }
 
-  getDatabaseInfos (): Promise<V2NIMDatabaseInfo> {
+  getDatabaseInfos (): Promise<Array<V2NIMDatabaseInfo>> {
     return new Promise((resolve, reject) => {
       this.instance.getDatabaseInfos(
-        (result: V2NIMDatabaseInfo) => {
+        (result: Array<V2NIMDatabaseInfo>) => {
           resolve(result)
         },
         (error: V2NIMError) => {

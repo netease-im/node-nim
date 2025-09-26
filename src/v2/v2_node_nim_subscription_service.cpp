@@ -25,8 +25,12 @@ V2NodeNIMSubscriptionService::V2NodeNIMSubscriptionService(const Napi::CallbackI
     initEventHandler();
 }
 V2NodeNIMSubscriptionService::~V2NodeNIMSubscriptionService() {
-    auto& subscription_service = v2::V2NIMClient::get().getSubscriptionService();
-    subscription_service.removeSubscribeListener(listener_);
+    try {
+        auto& subscription_service = v2::V2NIMClient::get().getSubscriptionService();
+        subscription_service.removeSubscribeListener(listener_);
+    } catch (const std::exception& e) {
+        // Do nothing
+    }
 }
 
 void V2NodeNIMSubscriptionService::initEventHandler() {

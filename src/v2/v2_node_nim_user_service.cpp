@@ -24,8 +24,12 @@ node_nim::V2NodeNIMUserService::V2NodeNIMUserService(const Napi::CallbackInfo& i
 }
 
 V2NodeNIMUserService::~V2NodeNIMUserService() {
-    auto& service = v2::V2NIMClient::get().getUserService();
-    service.removeUserListener(listener_);
+    try {
+        auto& service = v2::V2NIMClient::get().getUserService();
+        service.removeUserListener(listener_);
+    } catch (const std::exception& e) {
+        // Do nothing
+    }
 }
 
 void V2NodeNIMUserService::initEventHandler() {
