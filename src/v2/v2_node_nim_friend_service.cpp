@@ -19,6 +19,7 @@ Napi::Object node_nim::V2NodeNIMFriendService::Init(Napi::Env env, Napi::Object 
             RegApi("setAddApplicationReadEx", &V2NIMFriendService::setAddApplicationReadEx),
             RegApi("searchFriendByOption", &V2NIMFriendService::searchFriendByOption),
             RegApi("clearAllAddApplication", &V2NIMFriendService::clearAllAddApplication),
+            RegApi("clearAllAddApplicationEx", &V2NIMFriendService::clearAllAddApplicationEx),
             RegApi("deleteAddApplication", &V2NIMFriendService::deleteAddApplication),
         });
     // clang-format on

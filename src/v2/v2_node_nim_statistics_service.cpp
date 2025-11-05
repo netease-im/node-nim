@@ -2,7 +2,6 @@
 #include "v2_nim_api.hpp"
 
 namespace node_nim {
-
 Napi::Object V2NodeNIMStatisticsService::Init(Napi::Env env, Napi::Object exports) {
     // clang-format off
     return InternalInit("V2NIMStatisticsService", env, exports,{
@@ -29,7 +28,8 @@ V2NodeNIMStatisticsService::~V2NodeNIMStatisticsService() {
 void V2NodeNIMStatisticsService::initEventHandler() {
     auto& service = v2::V2NIMClient::get().getStatisticsService();
     listener_.onDatabaseException = MakeNotifyCallback<nstd::function<void(const V2NIMError& error)>>("databaseException");
+    listener_.onLbsSingleRequestRecord = MakeNotifyCallback<nstd::function<void(const std::string& content)>>("lbsSingleRequestRecord");
+    listener_.onConnectRecord = MakeNotifyCallback<nstd::function<void(const V2NIMConnectionInfo& connectionInfo)>>("connectRecord");
     service.addStatisticsListener(listener_);
 }
-
 }  // namespace node_nim

@@ -105,6 +105,8 @@ export * from './qchat_def/attachment_def'
 export * from './qchat_def/role_def'
 export * from './v2_def/v2_nim_enum_def'
 
+export * as V2NIMConst from './v2_def/v2_nim_enum_def'
+
 export class NIM {
   /** 客户端模块 */
   client: NIMClient = new NIMClient()

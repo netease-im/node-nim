@@ -8,6 +8,7 @@ import {
   V2NIMFriendDeleteParams,
   V2NIMFriendSearchOption,
   V2NIMFriendSetParams,
+  V2NIMFriendClearAddApplicationOption
 } from 'ts/v2_def/v2_nim_struct_def'
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
@@ -362,6 +363,32 @@ export class V2NIMFriendService extends EventEmitter<V2NIMFriendListener> {
   clearAllAddApplication (): Promise<void> {
     return new Promise((resolve, reject) => {
       this.instance.clearAllAddApplication(
+        () => {
+          resolve()
+        },
+        (error: V2NIMError) => {
+          reject(error)
+        }
+      )
+    })
+  }
+
+  /**
+   * @brief 清空所有添加好友申请（高级接口，可指定清理类型）
+   * @returns Promise<void>
+   * @since v10.9.60
+   * @example
+   * ```javascript
+   * await v2.friendService.clearAllAddApplicationEx({
+   *     type: 1
+   * })
+   * ```
+   * @param option
+   */
+  clearAllAddApplicationEx (option: V2NIMFriendClearAddApplicationOption): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.instance.clearAllAddApplicationEx(
+        option,
         () => {
           resolve()
         },

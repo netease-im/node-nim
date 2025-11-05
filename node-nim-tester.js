@@ -142,7 +142,9 @@ program
       deviceId: options.deviceId,
       taskId: options.taskId,
       targets: {
-        NIM: nimInstance
+        NIM: nimInstance,
+        fs,
+        os
       },
       oncompleted: () => {
         // 执行完成后退出进程

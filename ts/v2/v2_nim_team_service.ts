@@ -209,6 +209,32 @@ export class V2NIMTeamService extends EventEmitter<V2NIMTeamListener> {
   }
 
   /**
+   * @brief 从云端获取群组信息
+   * @param teamId 群组 id
+   * @param teamType 群组类型
+   * @returns Promise<V2NIMTeam>
+   * @since v10.9.60
+   * @example
+   * ```javascript
+   * const team = await v2.teamService.getTeamInfoFromCloud(teamId, teamType)
+   * ```
+   */
+  getTeamInfoFromCloud (teamId: string, teamType: V2NIMTeamType): Promise<V2NIMTeam> {
+    return new Promise((resolve, reject) => {
+      this.instance.getTeamInfoFromCloud(
+          teamId,
+          teamType,
+          (team: V2NIMTeam) => {
+            resolve(team)
+          },
+          (error: V2NIMError) => {
+            reject(error)
+          }
+      )
+    })
+  }
+
+  /**
    * @brief 解散群组
    * @param teamId 群组 id
    * @param teamType 群组类型
@@ -646,7 +672,7 @@ export class V2NIMTeamService extends EventEmitter<V2NIMTeamListener> {
 
   /**
    * @brief 获取当前已经加入的群组列表
-   * @param teamType 群组类型
+   * @param teamTypes 群组类型
    * @returns Promise<Array<V2NIMTeam>>
    * @example
    * ```javascript
@@ -678,6 +704,54 @@ export class V2NIMTeamService extends EventEmitter<V2NIMTeamListener> {
    */
   getJoinedTeamCount (teamTypes: Array<V2NIMTeamType>): number {
     return this.instance.getJoinedTeamCount(teamTypes)
+  }
+
+  /**
+   * @brief 获取当前自己为群主的群组列表
+   * @param teamTypes 群组类型
+   * @returns Promise<Array<V2NIMTeam>>
+   * @since v10.9.60
+   * @example
+   * ```javascript
+   * const teams = await v2.teamService.getOwnerTeamList(teamTypes)
+   * ```
+   */
+  getOwnerTeamList (teamTypes: Array<V2NIMTeamType>): Promise<Array<V2NIMTeam>> {
+    return new Promise((resolve, reject) => {
+      this.instance.getOwnerTeamList(
+          teamTypes,
+          (teams: Array<V2NIMTeam>) => {
+            resolve(teams)
+          },
+          (error: V2NIMError) => {
+            reject(error)
+          }
+      )
+    })
+  }
+
+  /**
+   * @brief 获取当前自己为管理员的群组列表（包括自己是群主的群）
+   * @param teamTypes 群组类型
+   * @returns Promise<Array<V2NIMTeam>>
+   * @since v10.9.60
+   * @example
+   * ```javascript
+   * const teams = await v2.teamService.getManagerTeamList(teamTypes)
+   * ```
+   */
+  getManagerTeamList (teamTypes: Array<V2NIMTeamType>): Promise<Array<V2NIMTeam>> {
+    return new Promise((resolve, reject) => {
+      this.instance.getManagerTeamList(
+          teamTypes,
+          (teams: Array<V2NIMTeam>) => {
+            resolve(teams)
+          },
+          (error: V2NIMError) => {
+            reject(error)
+          }
+      )
+    })
   }
 
   /**

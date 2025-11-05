@@ -1389,3 +1389,35 @@ export enum V2NIMMessageStreamStatus {
   /** 服务器异常终止 */
   V2NIM_MESSAGE_STREAM_STATUS_ABORTED
 }
+
+/** @enum 长连接类型 @since v10.9.60 */
+export enum V2NIMConnectionType {
+  /** 未知类型 */
+  V2NIM_CONNECTION_TYPE_UNKNOWN,
+  /** 普通 TCP */
+  V2NIM_CONNECTION_TYPE_TCP,
+  /** QUIC 协议 */
+  V2NIM_CONNECTION_TYPE_QUIC,
+  /** WebSocket 协议 */
+  V2NIM_CONNECTION_TYPE_WEBSOCKET,
+}
+
+/** @enum IP 地址协议族 @since v10.9.60 */
+export enum V2NIMAddressFamily {
+  /** 未知类型 */
+  V2NIM_ADDRESS_FAMILY_UNKNOWN,
+  /** IPv4 类型 */
+  V2NIM_ADDRESS_FAMILY_IPV4,
+  /** IPv6 类型 */
+  V2NIM_ADDRESS_FAMILY_IPV6
+}
+
+/** @brief 好友申请查询类型 @since v10.9.60 */
+export enum V2NIMFriendAddApplicationType {
+  /** 我发起的好友申请 */
+  V2NIM_FRIEND_ADD_APPLICATION_TYPE_FROM_SELF = 1,
+  /** 我收到的好友申请 */
+  V2NIM_FRIEND_ADD_APPLICATION_TYPE_TO_SELF,
+  /** 所有好友申请 */
+  V2NIM_FRIEND_ADD_APPLICATION_TYPE_ALL
+}

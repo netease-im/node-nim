@@ -57,7 +57,10 @@ import {
   V2NIMSearchDirection,
   V2NIMSearchStrategy,
   V2NIMMessageStreamStatus,
-  V2NIMDataSyncLevel
+  V2NIMDataSyncLevel,
+  V2NIMConnectionType,
+  V2NIMAddressFamily,
+  V2NIMFriendAddApplicationType
 } from './v2_nim_enum_def'
 
 export interface V2NIMError {
@@ -169,10 +172,14 @@ export interface V2NIMBasicOption {
   useHttpdns?: boolean
   /** 是否使用云端会话和会话分组服务 */
   enableCloudConversation?: boolean
+  /** 是否使用云端好友申请托管服务 @since v10.9.60 */
+  enableCloudFriendAddApplication?: boolean
   /** 自定义客户端类型 */
   customClientType?: number
   /** 登录自定义信息, 最大 32 个字符 */
   customTag?: string
+  /** 日志文件大小上限, 单位字节，当文件超过最大文件大小时，SDK 会将已有日志文件对半裁剪，默认 50MB @since v10.9.60 */
+  logMaxSize?: number
   /** 日志保留天数 */
   logReserveDays?: number
   /** SDK日志级别 */
@@ -752,6 +759,8 @@ export interface V2NIMMessage {
   modifyAccountId?: string
   /** 消息来源 @since v10.9.40 */
   messageSource?: V2NIMMessageSource
+  /** 发送此消息的客户端类型 @since v10.9.60 */
+  fromClientType?: V2NIMLoginClientType
 }
 
 export interface V2NIMModifyMessageResult {
@@ -1441,6 +1450,8 @@ export interface V2NIMTeam {
   isValidTeam?: boolean
   /** 单纯表示群组是否有效 @since v10.9.1 */
   isTeamEffective?: boolean
+  /** 是否为讨论组 @since v10.9.60 */
+  isDiscussion?: boolean
 }
 
 export interface V2NIMTeamMember {
@@ -1750,21 +1761,37 @@ export interface V2NIMFriendAddParams {
   postscript?: string
 }
 
+/** @brief 好友申请附言历史 @since v10.9.60 */
+export interface V2NIMPostscript {
+  /** 产生附言的账号 */
+  fromAccount: string
+  /** 附言产生的时间 */
+  time: number
+  /** 附言内容 */
+  content: string
+}
+
 export interface V2NIMFriendAddApplication {
+  /** 申请记录 ID @since v10.9.60 */
+  serverId: string
   /** 申请者账号 */
   applicantAccountId: string
   /** 被申请者账号 */
   recipientAccountId: string
   /** 操作者账号 */
   operatorAccountId?: string
-  /** 附言 */
+  /** 最新附言 */
   postscript?: string
   /** 状态 */
   status?: V2NIMFriendAddApplicationStatus
   /** 时间 */
   timestamp?: number
+  /** 更新时间 @since v10.9.60 */
+  updateTimestamp: number
   /** 是否已读 */
   read?: boolean;
+  /** 附言历史 @since v10.9.60 */
+  V2NIMPostscript?: Array<V2NIMPostscript>
 }
 
 export interface V2NIMFriendDeleteParams {
@@ -2659,7 +2686,14 @@ export interface V2NIMMessageSearchExParams {
   /** 下一页的 token，用于分页查询 */
   pageToken?: string
   /** 所有返回关联内容总数，为 true 时将计算搜索条件命中的所有数据总数，有性能损耗 @since v10.9.40 */
-  totalCount?: boolean
+  totalCount?: boolean,
+  /**
+   * 是否启用内置检索分词器，分词逻辑将中文按单字拆分，将连续的英文和数字进行拆分
+   * 启用内置分词器后，SDK 将只处理 keywordList 第一个关键字，且 keywordMatchType 将被忽略
+   * 仅在本地搜索 FTS 模式下有效。默认不启用
+   * @since v10.9.60
+   */
+  tokenizer?: boolean
 }
 
 /** @brief 查询消息返回的结果项 @since v10.7.0 */
@@ -2882,4 +2916,26 @@ export interface V2NIMDatabaseInfo {
   name: string
   /** 数据库大小字节 */
   size: number
+}
+
+/** @struct 长链接建连信息 @since v10.9.60 */
+export interface V2NIMConnectionInfo {
+  /** 地址类型 @link{ V2NIMConnectionType } */
+  type: V2NIMConnectionType
+  /** 地址协议族 @link{ V2NIMAddressFamily } */
+  family: V2NIMAddressFamily
+  /** 目标域名，有可能是 IP 地址与 ipAddress 一致 */
+  hostname: string
+  /** 一个域名可能解析出多个 IP 地址，最终选择建连的地址 */
+  ipAddress: string
+  /** 目标端口 */
+  port: number
+}
+
+/// @brief 清除好友申请选项 @since v10.9.60
+export interface V2NIMFriendClearAddApplicationOption {
+  /// 时间戳，默认当前时间戳，会删除这个时间之前的所有记录
+  timestamp?: number
+  /// 好友申请类型，默认全部
+  type: V2NIMFriendAddApplicationType
 }
