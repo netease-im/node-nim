@@ -6,7 +6,7 @@ import {
   V2NIMCustomUserStatusPublishResult,
   V2NIMUserStatusSubscribeResult,
   V2NIMUserStatus,
-} from 'ts/v2_def/v2_nim_struct_def'
+} from '../v2_def/v2_nim_struct_def'
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
 

@@ -60,7 +60,9 @@ import {
   V2NIMDataSyncLevel,
   V2NIMConnectionType,
   V2NIMAddressFamily,
-  V2NIMFriendAddApplicationType
+  V2NIMFriendAddApplicationType,
+  V2NIMTeamJoinActionTeamType,
+  V2NIMLastMessageState
 } from './v2_nim_enum_def'
 
 export interface V2NIMError {
@@ -174,6 +176,8 @@ export interface V2NIMBasicOption {
   enableCloudConversation?: boolean
   /** 是否使用云端好友申请托管服务 @since v10.9.60 */
   enableCloudFriendAddApplication?: boolean
+  /** 是否使用云端群申请托管服务 @since v10.9.70 */
+  enableCloudTeamJoinActionInfo?: boolean
   /** 自定义客户端类型 */
   customClientType?: number
   /** 登录自定义信息, 最大 32 个字符 */
@@ -198,6 +202,8 @@ export interface V2NIMBasicOption {
   conversationSnapshot?: boolean
   /** 云信指南针数据上报地址，为空则使用默认地址 */
   compassDataEndpoint?: string
+  /** 云信 A/B Test 策略获取地址，为空则使用默认地址 @since v10.9.60 */
+  abTestEndpoint?: string
 }
 
 /** @brief 登陆路由（抄送）配置 @since v10.9.30 */
@@ -1048,6 +1054,14 @@ export interface V2NIMClearHistoryMessageOption {
   clearMode: V2NIMClearHistoryMode
 }
 
+/** @brief 清空删除本地消息参数 @since v10.9.70 */
+export interface V2NIMClearLocalMessageParams {
+  /** 清理指定时间之前的所有消息，默认值为 0， 表示当前时间，表示清理当前时间之前的所有消息，单位：毫秒 */
+  anchorTime?: number
+  /** 是否同步删除会话入口，主要删除本地会话 */
+  deleteConversation?: boolean
+}
+
 export interface V2NIMMessageQuickCommentPushConfig {
   /** 是否需要推送 */
   needPush?: boolean
@@ -1242,7 +1256,7 @@ export interface V2NIMDataSyncDetail {
 
 export interface V2NIMLastMessage {
   /** 最后一条消息状态 */
-  lastMessageState?: V2NIMMessagePinState
+  lastMessageState?: V2NIMLastMessageState
   /** 最后一条消息引用 */
   messageRefer?: V2NIMMessageRefer
   /** 最后一条消息类型 */
@@ -1680,6 +1694,14 @@ export interface V2NIMTeamJoinActionInfo {
   serverExtension?: string
   /** 是否已读 @since v10.9.20 */
   read?: boolean
+  /* 申请来源账号，开启 {@link V2NIMBasicOption} 中 enableCloudTeamJoinActionInfo 配置生效 @since v10.9.70 */
+  fromAccountId?: string
+  /* 目标的唯一 ID，开启 {@link V2NIMBasicOption} 中 enableCloudTeamJoinActionInfo 配置生效 @since v10.9.70 */
+  targetAccountId?: string
+  /* 申请的唯一 ID，开启 {@link V2NIMBasicOption} 中 enableCloudTeamJoinActionInfo 配置生效 @since v10.9.70 */
+  serverId?: string
+  /* 申请更新时间，开启 {@link V2NIMBasicOption} 中 enableCloudTeamJoinActionInfo 配置生效 @since v10.9.70 */
+  updateTimestamp: number
 }
 
 export interface V2NIMUser {
@@ -2924,18 +2946,56 @@ export interface V2NIMConnectionInfo {
   type: V2NIMConnectionType
   /** 地址协议族 @link{ V2NIMAddressFamily } */
   family: V2NIMAddressFamily
-  /** 目标域名，有可能是 IP 地址与 ipAddress 一致 */
-  hostname: string
+  /** 目标域名和端口，有可能是 IP 地址 */
+  target: string
   /** 一个域名可能解析出多个 IP 地址，最终选择建连的地址 */
   ipAddress: string
-  /** 目标端口 */
-  port: number
+  /** 错误码 */
+  code: number
 }
 
-/// @brief 清除好友申请选项 @since v10.9.60
+/* @brief 清除好友申请选项 @since v10.9.60 */
 export interface V2NIMFriendClearAddApplicationOption {
-  /// 时间戳，默认当前时间戳，会删除这个时间之前的所有记录
+  /* 时间戳，默认当前时间戳，会删除这个时间之前的所有记录 */
   timestamp?: number
-  /// 好友申请类型，默认全部
+  /* 好友申请类型，默认全部 */
   type: V2NIMFriendAddApplicationType
+}
+
+export interface V2NIMTeamClearJoinActionInfoOption {
+  /** 时间戳，默认当前时间戳，会删除这个时间之前的所有记录 */
+  timestamp?: number
+  /** 操作类型，默认全部 */
+  type: V2NIMTeamJoinActionTeamType
+}
+
+export interface V2NIMLbsResponse {
+  name: string
+  lbs: string
+  backup: string
+  nos: string
+  defaultLink: Array<string>
+  httpdns: Array<string>
+  nosdl: Array<string>
+  link: Array<string>
+  weblink: Array<string>
+  quiclink: Array<string>
+}
+
+export interface V2NIMLbsRecord {
+  code: number
+  duration: number
+  response: V2NIMLbsResponse
+  index: number
+  message: string
+  requestTime: number
+  requestUrl: string
+  useHttpDNS: boolean
+}
+
+export interface V2NIMLbsTransaction {
+  startTime: number
+  endTime: number
+  succeed: boolean
+  records: Array<V2NIMLbsRecord>
 }

@@ -2,7 +2,8 @@ import {
   V2NIMDatabaseInfo,
   V2NIMConnectionInfo,
   V2NIMError,
-} from 'ts/v2_def/v2_nim_struct_def'
+  V2NIMLbsTransaction,
+} from '../v2_def/v2_nim_struct_def'
 import { EventEmitter } from 'eventemitter3'
 import sdk from '../loader'
 
@@ -10,7 +11,7 @@ export declare interface V2NIMStatisticsListener {
   /** 数据库异常 */
   databaseException: [V2NIMError]
   /** 请求 LBS 的记录 @since v10.9.60 */
-  lbsSingleRequestRecord: [string]
+  lbsSingleRequestRecord: [V2NIMLbsTransaction]
   /** 建立长连接结果记录 @since v10.9.60 */
   connectRecord: [V2NIMConnectionInfo]
 }

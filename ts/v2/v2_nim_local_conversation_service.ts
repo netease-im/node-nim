@@ -5,10 +5,10 @@ import {
   V2NIMLocalConversationOperationResult,
   V2NIMLocalConversationResult,
   V2NIMLocalConversationOption,
-} from 'ts/v2_def/v2_nim_struct_def'
+} from '../v2_def/v2_nim_struct_def'
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
-import { V2NIMConversationType } from 'ts/v2_def/v2_nim_enum_def'
+import { V2NIMConversationType } from '../v2_def/v2_nim_enum_def'
 
 export declare interface V2NIMLocalConversationListener {
   /** 会话同步开始通知 */

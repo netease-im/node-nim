@@ -1421,3 +1421,13 @@ export enum V2NIMFriendAddApplicationType {
   /** 所有好友申请 */
   V2NIM_FRIEND_ADD_APPLICATION_TYPE_ALL
 }
+
+/* @brief 群申请类型分类枚举 @since v10.9.70 */
+export enum V2NIMTeamJoinActionTeamType {
+  /* 高级群 */
+  V2NIM_TEAM_JOIN_ACTION_TEAM_TYPE_NORMAL = 1,
+  /* 超大群 */
+  V2NIM_TEAM_JOIN_ACTION_TEAM_TYPE_SUPER,
+  /* 所有群 */
+  V2NIM_TEAM_JOIN_ACTION_TEAM_TYPE_ALL,
+}

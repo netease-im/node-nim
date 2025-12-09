@@ -35,11 +35,11 @@ import {
   V2NIMMessageFilter,
   V2NIMMessageListResult,
   V2NIMUpdateLocalMessageParams,
-  V2NIMCloudMessageListOption
-} from 'ts/v2_def/v2_nim_struct_def'
+  V2NIMCloudMessageListOption, V2NIMClearLocalMessageParams
+} from '../v2_def/v2_nim_struct_def'
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
-import { V2NIMProgressCallback } from 'ts/v2_def/v2_nim_callback_def'
+import { V2NIMProgressCallback } from '../v2_def/v2_nim_callback_def'
 
 export declare interface V2NIMMessageListener {
   /** 收到一条新消息 */
@@ -442,6 +442,29 @@ export class V2NIMMessageService extends EventEmitter<V2NIMMessageListener> {
         (error: V2NIMError) => {
           reject(error)
         }
+      )
+    })
+  }
+
+  /**
+   * @brief 清空本地消息
+   * @param params 清空本地消息配置选项
+   * @returns void
+   * @example
+   * ```javascript
+   * await v2.messageService.clearLocalMessage(params)
+   * ```
+   */
+  clearLocalMessage (params: V2NIMClearLocalMessageParams): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.instance.clearLocalMessage(
+          params,
+          () => {
+            resolve()
+          },
+          (error: V2NIMError) => {
+            reject(error)
+          }
       )
     })
   }

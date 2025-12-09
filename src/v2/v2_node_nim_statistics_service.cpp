@@ -28,7 +28,7 @@ V2NodeNIMStatisticsService::~V2NodeNIMStatisticsService() {
 void V2NodeNIMStatisticsService::initEventHandler() {
     auto& service = v2::V2NIMClient::get().getStatisticsService();
     listener_.onDatabaseException = MakeNotifyCallback<nstd::function<void(const V2NIMError& error)>>("databaseException");
-    listener_.onLbsSingleRequestRecord = MakeNotifyCallback<nstd::function<void(const std::string& content)>>("lbsSingleRequestRecord");
+    listener_.onLbsRequestTransaction = MakeNotifyCallback<nstd::function<void(const V2NIMLbsTransaction& transaction)>>("lbsSingleRequestRecord");
     listener_.onConnectRecord = MakeNotifyCallback<nstd::function<void(const V2NIMConnectionInfo& connectionInfo)>>("connectRecord");
     service.addStatisticsListener(listener_);
 }

@@ -20,6 +20,7 @@ Napi::Object V2NodeNIMMessageService::Init(Napi::Env env, Napi::Object exports) 
         RegApi("deleteMessage", &V2NIMMessageService::deleteMessage),
         RegApi("deleteMessages", &V2NIMMessageService::deleteMessages),
         RegApi("clearHistoryMessage", &V2NIMMessageService::clearHistoryMessage),
+        RegApi("clearLocalMessage", &V2NIMMessageService::clearLocalMessage),
         RegApi("updateMessageLocalExtension", &V2NIMMessageService::updateMessageLocalExtension),
         RegApi("insertMessageToLocal", &V2NIMMessageService::insertMessageToLocal),
         RegApi("updateLocalMessage", &V2NIMMessageService::updateLocalMessage),

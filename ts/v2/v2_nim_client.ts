@@ -1,4 +1,4 @@
-import { V2NIMInitOption, V2NIMError } from 'ts/v2_def/v2_nim_struct_def'
+import { V2NIMInitOption, V2NIMError } from '../v2_def/v2_nim_struct_def'
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
 import { V2NIMLoginService } from './v2_nim_login_service'

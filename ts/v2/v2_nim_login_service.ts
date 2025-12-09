@@ -4,17 +4,17 @@ import {
   V2NIMKickedOfflineDetail,
   V2NIMLoginClient,
   V2NIMLoginOption
-} from 'ts/v2_def/v2_nim_struct_def'
+} from '../v2_def/v2_nim_struct_def'
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
-import { V2NIMReconnectDelayProvider } from 'ts/v2_def/v2_nim_callback_def'
+import { V2NIMReconnectDelayProvider } from '../v2_def/v2_nim_callback_def'
 import {
   V2NIMConnectStatus,
   V2NIMDataSyncState,
   V2NIMDataSyncType,
   V2NIMLoginClientChange,
   V2NIMLoginStatus
-} from 'ts/v2_def/v2_nim_enum_def'
+} from '../v2_def/v2_nim_enum_def'
 
 export declare interface V2NIMLoginListener {
   /** 登录状态变更回调 */

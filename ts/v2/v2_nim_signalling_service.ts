@@ -13,8 +13,8 @@ import {
   V2NIMSignallingEvent,
   V2NIMSignallingJoinResult,
   V2NIMError,
-} from 'ts/v2_def/v2_nim_struct_def'
-import { V2NIMSignallingChannelType } from 'ts/v2_def/v2_nim_enum_def'
+} from '../v2_def/v2_nim_struct_def'
+import { V2NIMSignallingChannelType } from '../v2_def/v2_nim_enum_def'
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
 

@@ -1,5 +1,5 @@
 import { EventEmitter } from 'eventemitter3'
-import { V2NIMChatroomQueueElement, V2NIMChatroomQueueOfferParams, V2NIMError } from 'ts/v2_def/v2_nim_struct_def'
+import { V2NIMChatroomQueueElement, V2NIMChatroomQueueOfferParams, V2NIMError } from '../v2_def/v2_nim_struct_def'
 import sdk from '../loader'
 
 export declare interface V2NIMChatroomQueueListener {

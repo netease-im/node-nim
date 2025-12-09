@@ -70,7 +70,11 @@ Napi::Value V2NodeNIMInstance::Init(const Napi::CallbackInfo& info) {
 #else
     FLAGS_logtostderr = false;
     FLAGS_log_dir = app_log_path;
+#if defined(DEBUG) || defined(_DEBUG)
     FLAGS_alsologtostderr = true;
+#else
+    FLAGS_alsologtostderr = false;
+#endif
     FLAGS_max_log_size = 10;
     FLAGS_stop_logging_if_full_disk = true;
     FLAGS_minloglevel = google::GLOG_INFO;

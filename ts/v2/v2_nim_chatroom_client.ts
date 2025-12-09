@@ -5,7 +5,7 @@ import {
   V2NIMChatroomEnterResult,
   V2NIMChatroomInfo,
   V2NIMChatroomKickedInfo
-} from 'ts/v2_def/v2_nim_struct_def'
+} from '../v2_def/v2_nim_struct_def'
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
 import { V2NIMChatroomService } from './v2_nim_chatroom_service'

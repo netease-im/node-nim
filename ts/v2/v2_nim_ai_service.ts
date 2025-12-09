@@ -3,7 +3,7 @@ import {
   V2NIMAIModelCallResult,
   V2NIMProxyAIModelCallParams,
   V2NIMError, V2NIMAIModelStreamCallStopParams, V2NIMAIModelStreamCallResult
-} from 'ts/v2_def/v2_nim_struct_def'
+} from '../v2_def/v2_nim_struct_def'
 import { EventEmitter } from 'eventemitter3'
 import sdk from '../loader'
 

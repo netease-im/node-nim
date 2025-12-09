@@ -3,7 +3,7 @@ import {
   V2NIMCustomNotification,
   V2NIMError,
   V2NIMSendCustomNotificationParams
-} from 'ts/v2_def/v2_nim_struct_def'
+} from '../v2_def/v2_nim_struct_def'
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
 

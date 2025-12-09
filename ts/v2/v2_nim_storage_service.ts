@@ -7,7 +7,7 @@ import {
   V2NIMMessageAttachment,
   V2NIMGetMediaResourceInfoResult,
   V2NIMSize
-} from 'ts/v2_def/v2_nim_struct_def'
+} from '../v2_def/v2_nim_struct_def'
 import sdk from '../loader'
 import { EventEmitter } from 'eventemitter3'
 import { V2NIMProgressCallback } from '../v2_def/v2_nim_callback_def'

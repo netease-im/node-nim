@@ -1,5 +1,5 @@
 export const testAppKey = 'fe416640c8e8a72734219e1847ad2547'
-export const onlineAppKey = '45c6af3c98409b18a84451215d0bdd6e'
+export const onlineAppKey = '3e215d27b6a6a9e27dad7ef36dd5b65c'
 
 export const testLbsAddress = ['https://imtest-gy.netease.im/lbs/conf']
 export const testDefaultLinkAddress = '111.124.202.90:9092'

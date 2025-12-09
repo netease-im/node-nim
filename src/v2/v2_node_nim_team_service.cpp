@@ -41,6 +41,7 @@ Napi::Object node_nim::V2NodeNIMTeamService::Init(Napi::Env env, Napi::Object ex
         RegApi("addTeamMembersFollow", &V2NIMTeamService::addTeamMembersFollow),
         RegApi("removeTeamMembersFollow", &V2NIMTeamService::removeTeamMembersFollow),
         RegApi("clearAllTeamJoinActionInfo", &V2NIMTeamService::clearAllTeamJoinActionInfo),
+        RegApi("clearAllTeamJoinActionInfoEx", &V2NIMTeamService::clearAllTeamJoinActionInfoEx),
         RegApi("deleteTeamJoinActionInfo", &V2NIMTeamService::deleteTeamJoinActionInfo),
         RegApi("getJoinedTeamMembers", &V2NIMTeamService::getJoinedTeamMembers),
         RegApi("getTeamJoinActionInfoUnreadCount", &V2NIMTeamService::getTeamJoinActionInfoUnreadCount),
