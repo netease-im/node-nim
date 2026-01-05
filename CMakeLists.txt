@@ -134,6 +134,7 @@ else ()
     )
     add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/sdk/wrapper)
 endif ()
+message(STATUS "=============================== ${CMAKE_JS_LIB}")
 target_link_libraries(${TARGET_NAME}
     ${CMAKE_JS_LIB}
     nim_cpp_wrapper

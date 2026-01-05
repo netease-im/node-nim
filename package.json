@@ -1,6 +1,6 @@
 {
     "name": "node-nim",
-    "version": "10.9.70",
+    "version": "10.9.72",
     "description": "NetEase IM nodejs wrapper based on NetEase IM C++ SDK",
     "main": "dist/node-nim.js",
     "bin": {
@@ -20,8 +20,8 @@
         "build_ts": "rimraf ./dist && rimraf ./types && tsc",
         "build_html_doc": "typedoc --plugin typedoc-github-theme",
         "prepublishOnly": "npm run build_ts",
-        "install": "npm run download_sdk",
-        "download_sdk": "node -e \"require('./script/download-sdk.js').downloadSDK()\"",
+        "postinstall": "node script/download-sdk.js",
+        "download_sdk": "node script/download-sdk.js",
         "publish_to_netease_npm": "node script/publish-to-netease-npm.js http://npm.netease.im/",
         "publish_to_npmjs": "node script/publish-to-netease-npm.js https://registry.npmjs.org",
         "test": "npx cross-env BABEL_ENV=test mocha"
@@ -33,10 +33,10 @@
         ]
     },
     "dependencies": {
+        "axios": "^1.6.2",
         "compare-versions": "^4.1.4",
-        "download": "^8.0.0",
-        "eventemitter3": "^4.0.7",
-        "node-fetch": "^2.6.9"
+        "decompress": "^4.2.1",
+        "eventemitter3": "^4.0.7"
     },
     "devDependencies": {
         "@babel/preset-env": "^7.24.0",
