@@ -20,6 +20,8 @@ import {
   V2NIMTeamMessageReadReceipt,
   V2NIMTeamMessageReadReceiptDetail,
   V2NIMVoiceToTextParams,
+  V2NIMTextTranslateParams,
+  V2NIMTextTranslationResult,
   V2NIMMessageSearchParams,
   V2NIMClearHistoryNotification,
   V2NIMMessageDeletedNotification,
@@ -988,6 +990,33 @@ export class V2NIMMessageService extends EventEmitter<V2NIMMessageListener> {
       this.instance.voiceToText(
         params,
         (result: string) => {
+          resolve(result)
+        },
+        (error: V2NIMError) => {
+          reject(error)
+        }
+      )
+    })
+  }
+
+  /**
+   * @brief 文本翻译
+   * @param params 文本翻译参数
+   * @returns V2NIMTextTranslationResult
+   * @since v10.9.75
+   * @example
+   * ```javascript
+   * const result = await v2.messageService.translateText({
+   *     text: 'Hello',
+   *     targetLanguage: 'zh'
+   * })
+   * ```
+   */
+  translateText (params: V2NIMTextTranslateParams): Promise<V2NIMTextTranslationResult> {
+    return new Promise((resolve, reject) => {
+      this.instance.translateText(
+        params,
+        (result: V2NIMTextTranslationResult) => {
           resolve(result)
         },
         (error: V2NIMError) => {

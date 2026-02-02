@@ -229,6 +229,7 @@ using V2NIMCallbackSpecializationTempType4 = nstd::map<nstd::string, V2NIMTeamMe
 CallbackSpecialization(V2NIMSuccessCallback<const V2NIMCallbackSpecializationTempType4&>);
 CallbackSpecialization(V2NIMSuccessCallback<bool>);
 CallbackSpecialization(V2NIMSuccessCallback<const nstd::vector<V2NIMDatabaseInfo>&>);
+CallbackSpecialization(V2NIMSuccessCallback<const V2NIMTextTranslationResult&>);
 
 namespace xpack {
 // std::function

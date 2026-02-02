@@ -196,8 +196,12 @@ async function downloadSDK(customPackageUrl) {
     // Use custom URL if provided, otherwise fetch from official server
     let downloadUrl = customPackageUrl
     if (!downloadUrl) {
+        let baseUrl = 'https://admin.netease.im/public-service/free/publish/list?application=message&page=1&pageSize=50'
+        if (version && version !== '0.0.0') {
+            baseUrl = `${baseUrl}&version=${version}`
+        }
         // Fetch package list from official server
-        const res = await axios.get('https://admin.netease.im/public-service/free/publish/list')
+        const res = await axios.get(baseUrl)
         const publishData = res.data.data[channel]
         // Find package URL for specified version or latest
         downloadUrl = findPackageUrl(publishData, version, platform, arch, product)
@@ -457,7 +461,7 @@ async function findPackage(buildUrl, nodePlatform, nodeArch) {
 // Build package URL from branch name
 async function buildPackageUrlFromBranch(branch, nodePlatform, nodeArch) {
     // Base64 encoded internal server URL (decode when needed)
-    const encodedBaseUrl = 'aHR0cDovLzEwLjIxOS4yNS4xMjc6ODgvSU0tTmF0aXZlL0Rlc2t0b3A='
+    const encodedBaseUrl = 'aHR0cDovLzEwLjI0NC43Ni4wOjg4L0lNLU5hdGl2ZS9EZXNrdG9wLw=='
     const baseUrl = Buffer.from(encodedBaseUrl, 'base64').toString('utf-8')
     log(` 🌿 Resolving package URL for branch: ${branch}`)
 

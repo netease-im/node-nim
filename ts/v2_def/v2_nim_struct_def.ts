@@ -81,7 +81,7 @@ export interface V2NIMSize {
   height: number
 }
 
-/** @biref V2NIMTransportLayerSecurityOption TLS 配置 @since v10.9.0 */
+/** @brief V2NIMTransportLayerSecurityOption TLS 配置 @since v10.9.0 */
 export interface V2NIMTransportLayerSecurityOption {
   /** 是否启用 SSL/TLS 加密，默认启用，目前仅在使用 WebSocket 链接时使用 @since v10.9.0 */
   sslConnection?: boolean
@@ -292,9 +292,9 @@ export interface V2NIMMessageAudioAttachment extends V2NIMMessageFileAttachment 
 export interface V2NIMMessageVideoAttachment extends V2NIMMessageFileAttachment {
   /** 视频文件播放时长 */
   duration?: number
-  /** 图片宽度 */
+  /** 视频宽度 */
   width?: number
-  /** 图片高度 */
+  /** 视频高度 */
   height?: number
 }
 
@@ -1411,6 +1411,26 @@ export interface V2NIMVoiceToTextParams {
   duration?: number
   /** 文件存储场景 */
   sceneName?: string
+}
+
+/** @brief 文本翻译参数 @since v10.9.75 */
+export interface V2NIMTextTranslateParams {
+  /** 待翻译的文本内容，长度上限为 5000 字符 */
+  text: string
+  /** 源语言，可选，为空时由服务端自动检测 */
+  sourceLanguage?: string
+  /** 目标语言 */
+  targetLanguage: string
+}
+
+/** @brief 文本翻译结果 @since v10.9.75 */
+export interface V2NIMTextTranslationResult {
+  /** 翻译后的文本 */
+  translatedText: string
+  /** 源语言 */
+  sourceLanguage: string
+  /** 目标语言 */
+  targetLanguage: string
 }
 
 /** @brief 群摘要 @since v10.9.50 */

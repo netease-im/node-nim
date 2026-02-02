@@ -43,6 +43,7 @@ Napi::Object V2NodeNIMMessageService::Init(Napi::Env env, Napi::Object exports) 
         RegApi("getTeamMessageReceipts", &V2NIMMessageService::getTeamMessageReceipts),
         RegApi("getTeamMessageReceiptDetail", &V2NIMMessageService::getTeamMessageReceiptDetail),
         RegApi("voiceToText", &V2NIMMessageService::voiceToText),
+        RegApi("translateText", &V2NIMMessageService::translateText),
         RegApi("cancelMessageAttachmentUpload", &V2NIMMessageService::cancelMessageAttachmentUpload),
         RegApi("searchCloudMessages", &V2NIMMessageService::searchCloudMessages),
         RegApi("searchCloudMessagesEx", &V2NIMMessageService::searchCloudMessagesEx),

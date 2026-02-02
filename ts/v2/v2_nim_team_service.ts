@@ -33,9 +33,9 @@ export declare interface V2NIMTeamListener {
   syncFailed: [V2NIMError]
   /** 群组创建 */
   teamCreated: [V2NIMTeam]
-  /** 加入群组 */
+  /** 群组解散 */
   teamDismissed: [V2NIMTeam]
-  /** 群组创建 */
+  /** 加入群组 */
   teamJoined: [V2NIMTeam]
   /** 离开群组 */
   teamLeft: [team: V2NIMTeam, isKicked: boolean]
@@ -53,7 +53,7 @@ export declare interface V2NIMTeamListener {
   receiveTeamJoinActionInfo: [V2NIMTeamJoinActionInfo]
 }
 
-/** @brief 存储服务 */
+/** @brief 群组服务 */
 export class V2NIMTeamService extends EventEmitter<V2NIMTeamListener> {
   instance: any
 
